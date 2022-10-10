@@ -22,6 +22,12 @@ namespace Childrens_Social_Care_CPD.Controllers
             return View(products);
         }
 
+        public IActionResult LandingPage()
+        {
+            var result = _client.GetEntries<Page>().Result;
+            return View(result);
+        }
+
         public IActionResult Privacy()
         {
             return View();
