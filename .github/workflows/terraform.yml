@@ -2,6 +2,9 @@ name: 'Terraform'
 
 on: workflow_dispatch
 
+permissions:
+  contents: read
+
 jobs:
   terraform:
     name: 'Terraform'
@@ -18,6 +21,9 @@ jobs:
       run:
         shell: bash
 
+    steps:
+
+    # Checkout code
     - name: Checkout
       uses: actions/checkout@v3
 
