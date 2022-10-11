@@ -41,7 +41,7 @@ jobs:
 
     # Validate Terraform before planning
     - name: Terraform Validate
-      run: terraform -chdir=Terraform validate -input=false
+      run: terraform -chdir=Terraform validate
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
