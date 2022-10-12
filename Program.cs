@@ -1,6 +1,11 @@
+using Azure.Identity;
 using Contentful.AspNetCore;
 using Contentful.AspNetCore.MiddleWare;
 using Contentful.Core.Models;
+using Microsoft.Azure.KeyVault;
+using Microsoft.Azure.Services.AppAuthentication;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.AzureKeyVault;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +13,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 ConfigurationManager configuration = builder.Configuration;
 builder.Services.AddContentful(configuration);
+
+var keyVaultEndpoint = new Uri(configuration["AppCredentials:keyVaultEndpoint"]);
+
+var clientSecretCredential = new ClientSecretCredential(configuration["AppCredentials:TenantId"], configuration["AppCredentials:ClientId"], configuration["AppCredentials:ClientSecret"]);
+
+builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, clientSecretCredential);
 
 var app = builder.Build();
 
