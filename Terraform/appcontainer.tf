@@ -18,6 +18,6 @@ resource "azurerm_app_service" "app-service" {
   app_service_plan_id = azurerm_app_service_plan.service-plan.id
 
   site_config {
-    linux_fx_version = "DOTNETCORE|6.0"
+    linux_fx_version = "DOCKER|s185dcontainerregistry.azurecr.io/dfe-digital/childrens-social-care-cpd:4.8.0-python3.9"
   }
 }
