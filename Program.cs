@@ -7,31 +7,42 @@ using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.AzureKeyVault;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 ConfigurationManager configuration = builder.Configuration;
-builder.Services.AddContentful(configuration);
 
-var keyVaultEndpoint = new Uri(configuration["AppCredentials:keyVaultEndpoint"]);
+bool enableContentfulIntegration = configuration.GetValue<bool>("EnableContentfulIntegration");
 
-var clientSecretCredential = new ClientSecretCredential(configuration["AppCredentials:TenantId"], configuration["AppCredentials:ClientId"], configuration["AppCredentials:ClientSecret"]);
+if (enableContentfulIntegration)
+{
+    builder.Services.AddContentful(configuration);
 
-builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, clientSecretCredential);
+    var keyVaultEndpoint = new Uri(configuration["AppCredentials:keyVaultEndpoint"]);
+
+    var clientSecretCredential = new ClientSecretCredential(configuration["AppCredentials:TenantId"], configuration["AppCredentials:ClientId"], configuration["AppCredentials:ClientSecret"]);
+
+    builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, clientSecretCredential);
+}
 
 var app = builder.Build();
 
-app.UseContentfulWebhooks(consumers => {
-    consumers.AddConsumer<dynamic>("PrototypeWebHook", "Entry", "create", (s) =>
+if (enableContentfulIntegration)
+{
+    app.UseContentfulWebhooks(consumers =>
     {
+        consumers.AddConsumer<dynamic>("PrototypeWebHook", "Entry", "create", (s) =>
+        {
         //Code to notify someone a new entry has been created
 
         //Return an object that will be serialized into Json and viewable in the Contentful web app
         return new { Result = "Ok" };
-    }
-    );
-});
+        }
+        );
+    });
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

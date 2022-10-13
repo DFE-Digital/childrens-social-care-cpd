@@ -7,7 +7,7 @@
 @{var pageContents = @Model.FirstOrDefault();}
 
 <div class="text-center" style="width:100%">
-    <h1 class="display-4">@pageContents.PageHeader</h1>
+    <h1 class="display-4">@pageContents.PageTitle</h1>
     <br />
 
     <P>
@@ -16,8 +16,6 @@
      <P>
         @pageContents.Section2
     </p>
-    <P>
-        @pageContents.PageFooter
-    </p>
 
 </div>
+
