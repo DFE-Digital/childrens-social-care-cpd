@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Childrens_Social_Care_CPD.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController: Controller
     {
         private readonly ILogger<ContentfulController> _logger;
        

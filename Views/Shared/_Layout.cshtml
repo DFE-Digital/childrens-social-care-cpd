@@ -1,4 +1,9 @@
-﻿
+﻿@using Contentful.Core.Models;
+@addTagHelper *, Contentful.AspNetCore
+
+@{
+   var headerModel = (ViewBag.PageHeader as PageHeader);
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +22,8 @@
         <div class="govuk-header__logo">
             <a href="/" class="govuk-header__link govuk-header__link--homepage">
                 <span class="govuk-header__product-name">
-                    Social worker career development
+                    @*Social worker career development*@
+                    @headerModel.Header
                 </span>
             </a>
         </div>
@@ -43,10 +49,10 @@
             <div class="govuk-phase-banner">
                 <p class="govuk-phase-banner__content">
                     <strong class="govuk-tag govuk-phase-banner__content__tag">
-                        prototype
+                        @headerModel.Section1Header
                     </strong>
                     <span class="govuk-phase-banner__text">
-                        This is a prototype of a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.
+                     This is a prototype of a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.
                     </span>
                 </p>
             </div>
@@ -60,7 +66,7 @@
             @RenderBody()
         </main>
     </div>
-    <footer class="border-top footer text-muted">
+     <footer class="border-top footer text-muted">
        <div class="govuk-width-container">
     
     <div class="govuk-footer__meta">

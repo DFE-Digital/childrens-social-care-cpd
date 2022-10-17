@@ -6,12 +6,13 @@ using System.Diagnostics;
 
 namespace Childrens_Social_Care_CPD.Controllers
 {
-    public class ContentfulController : Controller
+    public class ContentfulController : BaseController
     {
         private readonly ILogger<ContentfulController> _logger;
         private readonly IContentfulClient _client;
 
-        public ContentfulController(ILogger<ContentfulController> logger, IContentfulClient client)
+        public ContentfulController(ILogger<ContentfulController> logger, IContentfulClient client) :
+ base(client)
         {
             _logger = logger;
             _client = client;
@@ -24,6 +25,13 @@ namespace Childrens_Social_Care_CPD.Controllers
         }
 
         public async Task<IActionResult> LandingPage()
+        {
+            var queryBuilder = QueryBuilder<Page>.New.ContentTypeIs("page").FieldEquals("fields.pageName", "Home");
+            var result = await _client.GetEntries<Page>(queryBuilder);
+            return View(result);
+        }
+
+        public async Task<IActionResult> Footer()
         {
             var queryBuilder = QueryBuilder<Page>.New.ContentTypeIs("page").FieldEquals("fields.pageName", "Home");
             var result = await _client.GetEntries<Page>(queryBuilder);
