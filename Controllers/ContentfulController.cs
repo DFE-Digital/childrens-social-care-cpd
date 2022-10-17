@@ -1,5 +1,6 @@
 ﻿using Childrens_Social_Care_CPD.Models;
 using Contentful.Core;
+using Contentful.Core.Search;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -22,9 +23,10 @@ namespace Childrens_Social_Care_CPD.Controllers
             return View(products);
         }
 
-        public IActionResult LandingPage()
+        public async Task<IActionResult> LandingPage()
         {
-            var result = _client.GetEntries<Page>().Result;
+            var queryBuilder = QueryBuilder<Page>.New.ContentTypeIs("page").FieldEquals("fields.pageName", "Home");
+            var result = await _client.GetEntries<Page>(queryBuilder);
             return View(result);
         }
 

@@ -17,6 +17,7 @@
         public string Section6 { get; set; }
         public string Section7Header { get; set; }
         public string Section7 { get; set; }
+        public string PageName { get; set; }
 
     }
 }
