@@ -32,6 +32,44 @@ namespace Childrens_Social_Care_CPD.Controllers
             };
 
             ViewBag.PageHeader = pageHeader;
+
+            var footerQueryBuilder = QueryBuilder<PageFooter>.New.ContentTypeIs("pageFooter");
+             var footerResult = _client.GetEntries<PageFooter>(footerQueryBuilder).Result;
+             var footer = footerResult.FirstOrDefault();
+           
+
+            PageFooter pageFooter = new PageFooter
+            {
+                PrivacyLinkText = footer.PrivacyLinkText,
+
+                PrivacyLinkURL = footer.PrivacyLinkURL,
+
+                AccessibilityLinkText = footer.AccessibilityLinkText,
+
+                AccessibilityLinkURL = footer.AccessibilityLinkURL,
+
+                CookiesLinkText = footer.CookiesLinkText,
+
+                CookiesLinkURL = footer.CookiesLinkURL,
+
+                TermsAndConditionsLinkText = footer.TermsAndConditionsLinkText,
+
+                TermsAndConditionsLinkURL = footer.TermsAndConditionsLinkURL,
+
+                GOVPrototypeLinkText = footer.GOVPrototypeLinkText,
+
+                GOVPrototypeLinkURL = footer.GOVPrototypeLinkURL,
+
+                ClearDataLinkText = footer.ClearDataLinkText,
+
+                ClearDataLinkURL = footer.ClearDataLinkURL,
+
+                CopyrightLinkText = footer.CopyrightLinkText,
+
+                CopyrightLinkURL = footer.CopyrightLinkURL
+            };
+
+            ViewBag.PageFooter = pageFooter;
         }
     }
 }

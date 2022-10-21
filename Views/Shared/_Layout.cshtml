@@ -3,6 +3,8 @@
 
 @{
    var headerModel = (ViewBag.PageHeader as PageHeader);
+
+   var footerModel = (ViewBag.PageFooter as PageFooter);
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -74,33 +76,33 @@
           <h2 class="govuk-visually-hidden">Footer links</h2>
             <ul class="govuk-footer__inline-list">
                 <li class="govuk-footer__inline-list-item">
-                  <a class="govuk-footer__link" href="#">
-                    Privacy
+                  <a class="govuk-footer__link" href="@{ @footerModel.PrivacyLinkURL}">
+                    @footerModel.PrivacyLinkText
                   </a>
                 </li>
                 <li class="govuk-footer__inline-list-item">
-                  <a class="govuk-footer__link" href="#">
-                    Accessibility
+                  <a class="govuk-footer__link" href="@{ @footerModel.AccessibilityLinkURL}">
+                     @footerModel.AccessibilityLinkText
                   </a>
                 </li>
                 <li class="govuk-footer__inline-list-item">
-                  <a class="govuk-footer__link" href="#">
-                    Cookies
+                  <a class="govuk-footer__link" href="@{ @footerModel.CookiesLinkURL}">
+                    @footerModel.CookiesLinkText
                   </a>
                 </li>
                 <li class="govuk-footer__inline-list-item">
-                  <a class="govuk-footer__link" href="#">
-                    Terms and conditions
+                  <a class="govuk-footer__link" href="@footerModel.TermsAndConditionsLinkURL">
+                    @footerModel.TermsAndConditionsLinkText
                   </a>
                 </li>
                 <li class="govuk-footer__inline-list-item">
-                  <a class="govuk-footer__link" href="https://govuk-prototype-kit.herokuapp.com/">
-                    GOV.UK Prototype Kit v12.2.0
+                  <a class="govuk-footer__link" href="@footerModel.GOVPrototypeLinkURL">
+                     @footerModel.GOVPrototypeLinkText
                   </a>
                 </li>
                 <li class="govuk-footer__inline-list-item">
-                  <a class="govuk-footer__link" href="/prototype-admin/clear-data">
-                    Clear data
+                  <a class="govuk-footer__link" href="@footerModel.ClearDataLinkURL">
+                     @footerModel.ClearDataLinkText
                   </a>
                 </li>
             </ul>
@@ -113,7 +115,7 @@
         </span>
       </div>
       <div class="govuk-footer__meta-item">
-        <a class="govuk-footer__link govuk-footer__copyright-logo" href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/">© Crown copyright</a>
+        <a class="govuk-footer__link govuk-footer__copyright-logo" href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/">@footerModel.CopyrightLinkText</a>
       </div>
     </div>
   </div>
