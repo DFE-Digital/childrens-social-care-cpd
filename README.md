@@ -4,3 +4,6 @@
 
 # childrens-social-care-cpd
 Children's Social Care Career Development
+
+---
+Copyright (c) 2022 Crown Copyright (Department for Education)
