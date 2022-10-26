@@ -33,10 +33,12 @@ variable "tenant_id" {
 
 variable "contentful_apikey" {
   type      = string
+  default   = "<APIKEY>"
   sensitive = true
 }
 
 variable "contentful_space" {
   type      = string
+  default   = "<SPACE>"
   sensitive = true
 }
