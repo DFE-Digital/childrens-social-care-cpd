@@ -1,26 +1,13 @@
 ﻿@using Contentful.Core.Models;
 @model ContentfulCollection<Product>
 @{
+  Layout = null;
+}
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center" style="width:100%">
-    <h1 class="display-4">Contentful Prototype</h1>
-    <br />
-
-    <table style="width:60%">
-        <tr>
-            <th>ProductId</th>
-            <th>ProductName</th>
-            <th>ProductType</th>
-        </tr>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.ProductId</td>
-                <td>@item.ProductName</td>
-                <td>@item.ProductType</td>
-            </tr>
-        }
-    </table>
+    <h1 class="display-4">Hello World - Test Application</h1>
 </div>
+
