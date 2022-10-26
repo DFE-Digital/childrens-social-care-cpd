@@ -18,8 +18,3 @@ provider "azurerm" {
   features {}
   tenant_id = var.tenant_id
 }
-
-variable "tenant_id" {
-  type      = string
-  sensitive = true
-}
