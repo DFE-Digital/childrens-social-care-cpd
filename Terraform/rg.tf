@@ -4,8 +4,8 @@ resource "azurerm_resource_group" "rg" {
 
   tags = {
     "Environment"  = "Dev",
-    "Portfolio"    = "Children’s and families",
+    "Portfolio"    = "Newly Onboarded",
     "Service Line" = "Childrens Social Care Improvement and Learning",
-    "Service"      = "Social Worker Career Progression"
+    "Service"      = "Newly Onboarded"
   }
 }
