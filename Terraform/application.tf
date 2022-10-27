@@ -1,5 +1,5 @@
 resource "azurerm_service_plan" "service-plan" {
-  name                = "s185d01-chidrens-social-care-cpd-app-service-plan"
+  name                = "s185d01-csc-cpd-app-service-plan"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   os_type             = "Linux"
