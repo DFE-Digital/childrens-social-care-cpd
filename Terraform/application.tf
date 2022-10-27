@@ -3,7 +3,7 @@ resource "azurerm_service_plan" "service-plan" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   os_type             = "Linux"
-  sku_name            = "B1"
+  sku_name            = "S1"
   tags                = azurerm_resource_group.rg.tags
 }
 
