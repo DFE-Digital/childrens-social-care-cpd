@@ -5,7 +5,7 @@ resource "azurerm_resource_group" "rg" {
   tags = {
     "Environment"  = "Dev",
     "Portfolio"    = "Newly Onboarded",
-    "Service Line" = "Childrens Social Care Improvement and Learning",
+    "Service Line" = "Newly Onboarded",
     "Service"      = "Newly Onboarded"
   }
 }
