@@ -1,6 +1,6 @@
 resource "azurerm_resource_group" "rg" {
   name     = "s185d01-childrens-social-care-rg"
-  location = "northeurope"
+  location = "westeurope"
 
   tags = {
     "Environment"      = "Dev",
@@ -14,4 +14,3 @@ resource "azurerm_resource_group" "rg" {
     # "Service"          = "Children and Social care",
     "Product" = "Social Workforce"
   }
-}
