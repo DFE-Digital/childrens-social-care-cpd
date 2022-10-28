@@ -1,11 +1,14 @@
 resource "azurerm_resource_group" "rg" {
   name     = "s185d01-childrens-social-care-rg"
-  location = "westeurope"
+  location = "northeurope"
 
   tags = {
-    "Environment"  = "Dev",
-    "Portfolio"    = "Newly Onboarded",
-    "Service Line" = "Newly Onboarded",
-    "Service"      = "Newly Onboarded"
+    "Environment"      = "Dev",
+    "Parent Business"  = "Children’s Care",
+    "Service Offering" = "Social Workforce",
+    "Portfolio"        = "Vulnerable Children and Families",
+    "Service Line"     = "Children and Social care",
+    "Service"          = "Children and Social care",
+    "Product"          = "Social Workforce"
   }
 }
