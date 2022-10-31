@@ -23,10 +23,6 @@ resource "azurerm_linux_web_app" "linux-web-app" {
   site_config {
     container_registry_use_managed_identity = true
 
-    identity {
-      type = "SystemAssigned"
-    }
-
     ip_restriction {
       name       = "AGW-PIP"
       ip_address = "${azurerm_public_ip.pip1.ip_address}/32"
