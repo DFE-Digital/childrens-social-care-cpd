@@ -16,7 +16,7 @@ on: workflow_dispatch
 
 env:
   # Use docker.io for Docker Hub if empty
-  REGISTRY: s185dcontainerregistry.azurecr.io
+  REGISTRY: s185d01coreacr.azurecr.io
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
 
