@@ -15,9 +15,9 @@ resource "azurerm_linux_web_app" "linux-web-app" {
 
   app_settings = {
     CPD_KEYVAULTENDPOINT = var.cpd_keyvaultendpoint
-    CPD_CLIENTID         = data.azurerm_client_config.current.client_id
-    CPD_CLIENTSECRET     = data.azurerm_client_config.current.client_secret
-    CPD_TENANTID         = data.azurerm_client_config.current.tenant_id
+    CPD_CLIENTID         = var.cpd_client_id
+    CPD_CLIENTSECRET     = var.cpd_client_secret
+    CPD_TENANTID         = var.tenant_id
   }
 
   site_config {

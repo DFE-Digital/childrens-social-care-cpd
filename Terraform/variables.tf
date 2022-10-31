@@ -31,8 +31,17 @@ variable "tenant_id" {
   sensitive = true
 }
 
+variable "cpd_client_id" {
+  type      = string
+  sensitive = true
+}
+
+variable "cpd_client_secret" {
+  type      = string
+  sensitive = true
+}
+
 variable "cpd_keyvaultendpoint" {
   type      = string
-  default   = "<KEYVAULTENDPOINT>"
   sensitive = true
 }
