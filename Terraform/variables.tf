@@ -31,14 +31,8 @@ variable "tenant_id" {
   sensitive = true
 }
 
-variable "contentful_apikey" {
+variable "cpd_keyvaultendpoint" {
   type      = string
-  default   = "<APIKEY>"
-  sensitive = true
-}
-
-variable "contentful_space" {
-  type      = string
-  default   = "<SPACE>"
+  default   = "<KEYVAULTENDPOINT>"
   sensitive = true
 }

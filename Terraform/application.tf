@@ -14,8 +14,10 @@ resource "azurerm_linux_web_app" "linux-web-app" {
   service_plan_id     = azurerm_service_plan.service-plan.id
 
   app_settings = {
-    CONTENTFUL_SPACE  = var.contentful_space
-    CONTENTFUL_APIKEY = var.contentful_apikey
+    CPD_KEYVAULTENDPOINT = var.cpd_keyvaultendpoint
+    CPD_CLIENTID         = data.azurerm_client_config.current.client_id
+    CPD_CLIENTSECRET     = data.azurerm_client_config.current.client_secret
+    CPD_TENANTID         = data.azurerm_client_config.current.tenant_id
   }
 
   site_config {
