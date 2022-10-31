@@ -41,8 +41,8 @@ resource "azurerm_linux_web_app" "linux-web-app" {
     }
 
     application_stack {
-      docker_image     = "nginx"
-      docker_image_tag = "latest"
+      docker_image     = "DOCKER|s185d01coreacr.azurecr.io/dfe-digital/childrens-social-care-cpd"
+      docker_image_tag = "master"
     }
   }
 
