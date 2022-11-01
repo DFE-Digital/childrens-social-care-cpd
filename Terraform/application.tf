@@ -20,12 +20,12 @@ resource "azurerm_linux_web_app" "linux-web-app" {
     CPD_TENANTID         = var.tenant_id
   }
 
+  identity {
+    type = "SystemAssigned"
+  }
+
   site_config {
     container_registry_use_managed_identity = true
-
-    identity {
-      type = "SystemAssigned"
-    }
 
     ip_restriction {
       name       = "AGW-PIP"
@@ -55,4 +55,15 @@ resource "azurerm_linux_web_app" "linux-web-app" {
   }
 
   tags = azurerm_resource_group.rg.tags
+}
+
+data "azurerm_container_registry" "acr" {
+  name                = "s185d01coreacr"
+  resource_group_name = "s185d01-core"
+}
+
+resource "azurerm_role_assignment" "acr_Pull" {
+  scope                = data.azurerm_container_registry.acr.id
+  role_definition_name = "AcrPull"
+  principal_id         = azurerm_linux_web_app.linux-web-app.identity[0].principal_id
 }
