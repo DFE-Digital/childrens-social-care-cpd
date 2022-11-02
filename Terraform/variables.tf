@@ -45,3 +45,8 @@ variable "cpd_keyvaultendpoint" {
   type      = string
   sensitive = true
 }
+
+variable "acr_password" {
+  type      = string
+  sensitive = true
+}

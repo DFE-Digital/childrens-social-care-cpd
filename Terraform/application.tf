@@ -14,10 +14,13 @@ resource "azurerm_linux_web_app" "linux-web-app" {
   service_plan_id     = azurerm_service_plan.service-plan.id
 
   app_settings = {
-    CPD_KEYVAULTENDPOINT = var.cpd_keyvaultendpoint
-    CPD_CLIENTID         = var.cpd_client_id
-    CPD_CLIENTSECRET     = var.cpd_client_secret
-    CPD_TENANTID         = var.tenant_id
+    CPD_KEYVAULTENDPOINT            = var.cpd_keyvaultendpoint
+    CPD_CLIENTID                    = var.cpd_client_id
+    CPD_CLIENTSECRET                = var.cpd_client_secret
+    CPD_TENANTID                    = var.tenant_id
+    DOCKER_REGISTRY_SERVER_URL      = "https://s185d01coreacr.azurecr.io"
+    DOCKER_REGISTRY_SERVER_USERNAME = "s185d01coreacr"
+    DOCKER_REGISTRY_SERVER_PASSWORD = var.acr_password
   }
 
   identity {
@@ -49,6 +52,7 @@ resource "azurerm_linux_web_app" "linux-web-app" {
     }
 
     application_stack {
+
       docker_image     = "s185d01coreacr.azurecr.io/dfe-digital/childrens-social-care-cpd"
       docker_image_tag = "master"
     }
