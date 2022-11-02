@@ -33,10 +33,10 @@ resource "azurerm_application_gateway" "appgw" {
     name                                = var.http_setting_name
     pick_host_name_from_backend_address = true
     cookie_based_affinity               = "Disabled"
-    path                                = "/"
-    port                                = 80
-    protocol                            = "Http"
-    request_timeout                     = 60
+    #    path                                = "/"
+    port            = 80
+    protocol        = "Http"
+    request_timeout = 60
   }
 
   http_listener {
