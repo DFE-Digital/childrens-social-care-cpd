@@ -6,7 +6,7 @@ namespace Childrens_Social_Care_CPD.Controllers
 {
     public class HomeController: Controller
     {
-        private readonly ILogger<ContentfulController> _logger;
+        private readonly ILogger<CPDController> _logger;
        
         public IActionResult Index()
         {

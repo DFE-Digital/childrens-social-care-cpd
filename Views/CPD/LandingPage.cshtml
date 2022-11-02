@@ -1,0 +1,26 @@
+﻿@using Contentful.Core.Models;
+@using Childrens_Social_Care_CPD.Enums;
+@model PageViewModel;
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@{
+    if (@Model != null)
+    {
+        switch (Model.PageType)
+        {
+            case PageTypes.Master:
+               {await Html.RenderPartialAsync("../Templates/Master",@Model);}
+                break;
+            case PageTypes.Roles:
+               {await Html.RenderPartialAsync("../Templates/Role",@Model);}
+                break;
+            case PageTypes.SubRoles:
+                 {await Html.RenderPartialAsync("../Templates/SubRole",@Model);}
+                break;
+            default:
+                break;
+        }
+    }
+}
