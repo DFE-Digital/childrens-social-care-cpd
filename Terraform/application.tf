@@ -23,9 +23,9 @@ resource "azurerm_linux_web_app" "linux-web-app" {
     DOCKER_REGISTRY_SERVER_PASSWORD = var.acr_password
   }
 
-  identity {
-    type = "SystemAssigned"
-  }
+  # identity {
+  #   type = "SystemAssigned"
+  # }
 
   site_config {
     container_registry_use_managed_identity = true
@@ -66,8 +66,8 @@ data "azurerm_container_registry" "acr" {
   resource_group_name = "s185d01-core"
 }
 
-resource "azurerm_role_assignment" "acr_Pull" {
-  scope                = data.azurerm_container_registry.acr.id
-  role_definition_name = "AcrPull"
-  principal_id         = azurerm_linux_web_app.linux-web-app.identity[0].principal_id
-}
+# resource "azurerm_role_assignment" "acr_Pull" {
+#   scope                = data.azurerm_container_registry.acr.id
+#   role_definition_name = "AcrPull"
+#   principal_id         = azurerm_linux_web_app.linux-web-app.identity[0].principal_id
+# }
