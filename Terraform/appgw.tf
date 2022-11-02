@@ -26,7 +26,6 @@ resource "azurerm_application_gateway" "appgw" {
 
   backend_address_pool {
     name  = var.backend_address_pool_name
-    fqdns = [azurerm_linux_web_app.linux-web-app.default_hostname]
   }
 
   backend_http_settings {
