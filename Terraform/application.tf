@@ -23,12 +23,15 @@ resource "azurerm_linux_web_app" "linux-web-app" {
     DOCKER_REGISTRY_SERVER_PASSWORD = var.acr_password
   }
 
-  # identity {
-  #   type = "SystemAssigned"
-  # }
-
   site_config {
     container_registry_use_managed_identity = true
+
+    ip_restriction {
+      name       = "Allow-Al"
+      ip_address = "86.10.229.100/32"
+      priority   = 500
+      action     = "Allow"
+    }
 
     ip_restriction {
       name       = "AGW-PIP"
@@ -52,8 +55,7 @@ resource "azurerm_linux_web_app" "linux-web-app" {
     }
 
     application_stack {
-      # docker_image     = "s185d01coreacr.azurecr.io/dfe-digital/childrens-social-care-cpd"
-      docker_image     = "dfe-digital/childrens-social-care-cpd"
+      docker_image     = "s185d01coreacr.azurecr.io/dfe-digital/childrens-social-care-cpd"
       docker_image_tag = "master"
     }
   }
