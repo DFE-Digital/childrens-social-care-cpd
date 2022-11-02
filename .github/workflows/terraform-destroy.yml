@@ -1,13 +1,10 @@
-name: 'Terraform'
+name: 'Terraform Destroy'
 
 on: workflow_dispatch
 
-permissions:
-  contents: read
-
 jobs:
-  terraform:
-    name: 'Terraform'
+  terraform-destroy:
+    name: 'Terraform Destroy'
     runs-on: ubuntu-latest
     environment: Dev
     env:
@@ -26,8 +23,7 @@ jobs:
         shell: bash
 
     steps:
-
-    # Checkout code
+  
     - name: Checkout
       uses: actions/checkout@v3
 
@@ -39,19 +35,5 @@ jobs:
     - name: Terraform Init
       run: terraform -chdir=Terraform init
 
-    # Checks that all Terraform configuration files adhere to a canonical format
-    - name: Terraform Format
-      run: terraform -chdir=Terraform fmt -check -recursive
-
-    # Validate Terraform before planning
-    - name: Terraform Validate
-      run: terraform -chdir=Terraform validate
-
-    # Generates an execution plan for Terraform
-    - name: Terraform Plan
-      run: terraform -chdir=Terraform plan -input=false
-
-      # On push to "main", build or change infrastructure according to Terraform configuration files
-    - name: Terraform Apply
-      # if: github.ref == 'refs/heads/main' 
-      run: terraform -chdir=Terraform apply -auto-approve -input=false
+    - name: Terraform Destroy
+      run: terraform -chdir=Terraform destroy -auto-approve -input=false

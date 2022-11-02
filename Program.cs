@@ -20,9 +20,12 @@ if (enableContentfulIntegration)
 {
     builder.Services.AddContentful(configuration);
 
-    var keyVaultEndpoint = new Uri(configuration["AppCredentials:keyVaultEndpoint"]);
+    var keyVaultEndpoint = new Uri(Environment.GetEnvironmentVariable("CPD_KEYVAULTENDPOINT")?? String.Empty);
+    var clientId = Environment.GetEnvironmentVariable("CPD_CLIENTID") ?? String.Empty;
+    var clientSecret = Environment.GetEnvironmentVariable("CPD_CLIENTSECRET") ?? String.Empty;
+    var tenantId = Environment.GetEnvironmentVariable("CPD_TENANTID") ?? String.Empty;
 
-    var clientSecretCredential = new ClientSecretCredential(configuration["AppCredentials:TenantId"], configuration["AppCredentials:ClientId"], configuration["AppCredentials:ClientSecret"]);
+    var clientSecretCredential = new ClientSecretCredential(tenantId, clientId, clientSecret);
 
     builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, clientSecretCredential);
 }

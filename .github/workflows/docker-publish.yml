@@ -5,17 +5,18 @@ name: Docker Publish
 # separate terms of service, privacy policy, and support
 # documentation.
 
-on:
-  push:
-    branches: [ "master" ]
-    # Publish semver tags as releases.
-    tags: [ 'v*.*.*' ]
-  pull_request:
-    branches: [ "master" ]
+on: workflow_dispatch
+#on:
+#  push:
+#    branches: [ "master" ]
+#    # Publish semver tags as releases.
+#    tags: [ 'v*.*.*' ]
+#  pull_request:
+#    branches: [ "master" ]
 
 env:
   # Use docker.io for Docker Hub if empty
-  REGISTRY: s185dcontainerregistry.azurecr.io
+  REGISTRY: s185d01coreacr.azurecr.io
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
 
@@ -85,6 +86,12 @@ jobs:
       # repository is public to avoid leaking data.  If you would like to publish
       # transparency data even for private images, pass --force to cosign below.
       # https://github.com/sigstore/cosign
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@main
+        with:
+          cosign-release: 'v1.13.1'
+      - name: Check install!
+        run: cosign version
       - name: Sign the published Docker image
         if: ${{ github.event_name != 'pull_request' }}
         env:
