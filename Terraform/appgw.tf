@@ -69,8 +69,8 @@ resource "azurerm_application_gateway" "appgw" {
 
   tags = azurerm_resource_group.rg.tags
 
-  # depends_on = [
-  #   azurerm_network_security_group.nsg,
-  #   azurerm_subnet_network_security_group_association.blockall
-  # ]
+  depends_on = [
+    azurerm_network_security_group.nsg,
+    azurerm_subnet_network_security_group_association.blockall
+  ]
 }
