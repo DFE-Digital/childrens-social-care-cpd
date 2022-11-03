@@ -30,13 +30,13 @@ resource "azurerm_application_gateway" "appgw" {
   }
 
   backend_http_settings {
-    name = var.http_setting_name
-    #pick_host_name_from_backend_address = true
-    cookie_based_affinity = "Disabled"
-    path                  = "/"
-    port                  = 80
-    protocol              = "Http"
-    request_timeout       = 60
+    name                                = var.http_setting_name
+    pick_host_name_from_backend_address = true
+    cookie_based_affinity               = "Disabled"
+    path                                = "/"
+    port                                = 80
+    protocol                            = "Http"
+    request_timeout                     = 60
   }
 
   http_listener {
@@ -56,13 +56,13 @@ resource "azurerm_application_gateway" "appgw" {
   }
 
   probe {
-    name = "s185d01AGProbe"
-    #    pick_host_name_from_backend_http_settings = true
-    path                = "/"
-    interval            = 30
-    timeout             = 30
-    unhealthy_threshold = 3
-    protocol            = "Http"
+    name                                      = "s185d01AGProbe"
+    pick_host_name_from_backend_http_settings = true
+    path                                      = "/"
+    interval                                  = 30
+    timeout                                   = 30
+    unhealthy_threshold                       = 3
+    protocol                                  = "Http"
   }
 
   tags = azurerm_resource_group.rg.tags
