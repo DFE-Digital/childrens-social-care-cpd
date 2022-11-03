@@ -18,12 +18,15 @@ bool enableContentfulIntegration = configuration.GetValue<bool>("EnableContentfu
 
 if (enableContentfulIntegration)
 {
-    builder.Services.AddContentful(configuration);
-
+    var contentfulEnvironment = Environment.GetEnvironmentVariable("CPD_CONTENTFUL_ENVIRONMENT") ?? String.Empty;
     var keyVaultEndpoint = new Uri(Environment.GetEnvironmentVariable("CPD_KEYVAULTENDPOINT")?? String.Empty);
     var clientId = Environment.GetEnvironmentVariable("CPD_CLIENTID") ?? String.Empty;
     var clientSecret = Environment.GetEnvironmentVariable("CPD_CLIENTSECRET") ?? String.Empty;
     var tenantId = Environment.GetEnvironmentVariable("CPD_TENANTID") ?? String.Empty;
+
+    configuration["ContentfulOptions:Environment"] = contentfulEnvironment;
+
+    builder.Services.AddContentful(configuration);
 
     var clientSecretCredential = new ClientSecretCredential(tenantId, clientId, clientSecret);
 
