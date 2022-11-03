@@ -25,14 +25,14 @@ resource "azurerm_application_gateway" "appgw" {
   }
 
   backend_address_pool {
-    name  = var.backend_address_pool_name
-    fqdns = [azurerm_linux_web_app.linux-web-app.default_hostname]
+    name = var.backend_address_pool_name
+    # fqdns = [azurerm_linux_web_app.linux-web-app.default_hostname]
   }
 
   backend_http_settings {
-    name                                = var.http_setting_name
-    pick_host_name_from_backend_address = true
-    cookie_based_affinity               = "Disabled"
+    name = var.http_setting_name
+    #pick_host_name_from_backend_address = true
+    cookie_based_affinity = "Disabled"
     #    path                                = "/"
     port            = 80
     protocol        = "Http"
