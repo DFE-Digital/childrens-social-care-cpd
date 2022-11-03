@@ -3,9 +3,15 @@ resource "azurerm_application_gateway" "appgw" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
 
+  # sku {
+  #   name     = "Standard_v2"
+  #   tier     = "Standard_v2"
+  #   capacity = 2
+  # }
+
   sku {
-    name     = "Standard_v2"
-    tier     = "Standard_v2"
+    name     = "Standard_Small"
+    tier     = "Standard"
     capacity = 2
   }
 
