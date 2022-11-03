@@ -56,13 +56,13 @@ resource "azurerm_application_gateway" "appgw" {
   }
 
   probe {
-    name                                      = "s185d01AGProbe"
-    pick_host_name_from_backend_http_settings = true
-    path                                      = "/"
-    interval                                  = 30
-    timeout                                   = 30
-    unhealthy_threshold                       = 3
-    protocol                                  = "Http"
+    name = "s185d01AGProbe"
+    #    pick_host_name_from_backend_http_settings = true
+    path                = "/"
+    interval            = 30
+    timeout             = 30
+    unhealthy_threshold = 3
+    protocol            = "Http"
   }
 
   tags = azurerm_resource_group.rg.tags
