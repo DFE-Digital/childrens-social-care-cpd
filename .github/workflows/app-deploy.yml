@@ -1,0 +1,24 @@
+name: App Deploy
+
+on: workflow_dispatch
+
+jobs:
+  app-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sign in to Azure 
+        uses: azure/login@v1
+        with:
+          creds: '{"clientId":"${{ secrets.TF_ARM_CLIENT_ID }}","clientSecret":"${{ secrets.TF_ARM_CLIENT_SECRET }}","subscriptionId":"${{ secrets.TF_ARM_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TF_ARM_TENANT_ID }}"}'
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 's185d01-chidrens-social-care-cpd-app-service'
+          # slot-name: 'dev'
+          images: 's185d01coreacr.azurecr.io/dfe-digital/childrens-social-care-cpd:master'
+
+      - name: Sign out of Azure
+        run: |
+          az logout
+  
