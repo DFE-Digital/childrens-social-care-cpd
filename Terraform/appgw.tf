@@ -58,7 +58,7 @@ resource "azurerm_application_gateway" "appgw" {
   probe {
     name                                      = "s185d01AGProbe"
     pick_host_name_from_backend_http_settings = true
-    path                                      = "/"
+    path                                      = "/CPD/Landingpage"
     interval                                  = 30
     timeout                                   = 30
     unhealthy_threshold                       = 3

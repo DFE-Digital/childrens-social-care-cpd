@@ -18,6 +18,7 @@ resource "azurerm_linux_web_app" "linux-web-app" {
     CPD_CLIENTID                    = var.cpd_client_id
     CPD_CLIENTSECRET                = var.cpd_client_secret
     CPD_TENANTID                    = var.tenant_id
+    CPD_CONTENTFUL_ENVIRONMENT      = "dev"
     DOCKER_REGISTRY_SERVER_URL      = "https://s185d01coreacr.azurecr.io"
     DOCKER_REGISTRY_SERVER_USERNAME = "s185d01coreacr"
     DOCKER_REGISTRY_SERVER_PASSWORD = var.acr_password
@@ -55,10 +56,10 @@ resource "azurerm_linux_web_app" "linux-web-app" {
     }
 
     application_stack {
-      # docker_image     = "s185d01coreacr.azurecr.io/dfe-digital/childrens-social-care-cpd"
-      docker_image = "nginx"
-      # docker_image_tag = "master"
-      docker_image_tag = "latest"
+      docker_image     = "s185d01coreacr.azurecr.io/dfe-digital/childrens-social-care-cpd"
+      #docker_image = "nginx"
+      docker_image_tag = "master"
+      #docker_image_tag = "latest"
     }
   }
 
