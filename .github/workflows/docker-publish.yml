@@ -5,14 +5,13 @@ name: Docker Publish
 # separate terms of service, privacy policy, and support
 # documentation.
 
-on: workflow_dispatch
-#on:
-#  push:
-#    branches: [ "master" ]
-#    # Publish semver tags as releases.
-#    tags: [ 'v*.*.*' ]
-#  pull_request:
-#    branches: [ "master" ]
+on:
+  push:
+    branches: [ "master" ]
+    # Publish semver tags as releases.
+    tags: [ 'v*.*.*' ]
+  pull_request:
+    branches: [ "master" ]
 
 env:
   # Use docker.io for Docker Hub if empty
