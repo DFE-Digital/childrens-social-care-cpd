@@ -15,7 +15,7 @@ locals {
 resource "azurerm_network_security_rule" "whitelist-rules" {
   count                       = length(local.ips)
   name                        = "Allow-WhiteList-${count.index}"
-  priority                    = 500 + count.index
+  priority                    = 1500 + count.index
   direction                   = "Inbound"
   access                      = "Allow"
   protocol                    = "Tcp"
