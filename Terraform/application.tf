@@ -25,7 +25,7 @@ resource "azurerm_linux_web_app" "linux-web-app" {
   }
 
   site_config {
-    container_registry_use_managed_identity = true
+#    container_registry_use_managed_identity = true
 
     ip_restriction {
       name       = "Allow-Al"
