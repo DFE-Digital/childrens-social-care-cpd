@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System;
 using Childrens_Social_Care_CPD.Enums;
+using Childrens_Social_Care_CPD.Constants;
 
 namespace Childrens_Social_Care_CPD.Controllers
 {
@@ -41,12 +42,12 @@ namespace Childrens_Social_Care_CPD.Controllers
                 pageViewModel.PageType = pageType;
             }
 
-            var queryBuilder = QueryBuilder<Role>.New.ContentTypeIs("section").FieldEquals("fields.rolePageName", pageName).OrderBy("fields.sortOrder");
+            var queryBuilder = QueryBuilder<Role>.New.ContentTypeIs(ContentTypes.SECTION).FieldEquals("fields.rolePageName", pageName).OrderBy("fields.sortOrder");
             var result = await _client.GetEntries<Role>(queryBuilder);
            
             pageViewModel.Roles = result;
 
-            var paragraphQueryBuilder = QueryBuilder<Childrens_Social_Care_CPD.Models.Paragraph>.New.ContentTypeIs("paragraph").FieldEquals("fields.paragraphPageName", pageName).OrderBy("fields.sortOrder");
+            var paragraphQueryBuilder = QueryBuilder<Childrens_Social_Care_CPD.Models.Paragraph>.New.ContentTypeIs(ContentTypes.PARAGRAPH).FieldEquals("fields.paragraphPageName", pageName).OrderBy("fields.sortOrder");
             var paragraphsResult = await _client.GetEntries<Childrens_Social_Care_CPD.Models.Paragraph>(paragraphQueryBuilder);
             pageViewModel.Paragraphs = paragraphsResult;
 
