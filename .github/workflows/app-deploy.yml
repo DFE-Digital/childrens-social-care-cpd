@@ -16,7 +16,7 @@ jobs:
         with:
           app-name: 's185d01-chidrens-social-care-cpd-app-service'
           # slot-name: 'dev'
-          images: 's185d01coreacr.azurecr.io/dfe-digital/childrens-social-care-cpd:master'
+          images: 'ghcr.io/dfe-digital/childrens-social-care-cpd:master'
 
       - name: Sign out of Azure
         run: |
