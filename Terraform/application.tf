@@ -22,10 +22,11 @@ resource "azurerm_linux_web_app" "linux-web-app" {
     DOCKER_REGISTRY_SERVER_URL      = "https://s185d01coreacr.azurecr.io"
     DOCKER_REGISTRY_SERVER_USERNAME = "s185d01coreacr"
     DOCKER_REGISTRY_SERVER_PASSWORD = var.acr_password
+    DOCKER_ENABLE_CI                = "true"
   }
 
   site_config {
-    container_registry_use_managed_identity = true
+    #    container_registry_use_managed_identity = true
 
     ip_restriction {
       name       = "Allow-Al"

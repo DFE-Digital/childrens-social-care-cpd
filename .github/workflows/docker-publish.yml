@@ -24,6 +24,7 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    environment: Dev
     permissions:
       contents: read
       packages: write
