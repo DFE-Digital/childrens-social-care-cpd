@@ -15,7 +15,7 @@ on:
 
 env:
   # Use docker.io for Docker Hub if empty
-  REGISTRY: s185d01coreacr.azurecr.io
+  REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
 
@@ -24,6 +24,7 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    environment: Dev
     permissions:
       contents: read
       packages: write
@@ -55,8 +56,8 @@ jobs:
         uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
         with:
           registry: ${{ env.REGISTRY }}
-          username: ${{ secrets.TF_ARM_CLIENT_ID }}
-          password: ${{ secrets.TF_ARM_CLIENT_SECRET }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       # Extract metadata (tags, labels) for Docker
       # https://github.com/docker/metadata-action

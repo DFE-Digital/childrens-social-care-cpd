@@ -1,4 +1,5 @@
-﻿using Childrens_Social_Care_CPD.Models;
+﻿using Childrens_Social_Care_CPD.Constants;
+using Childrens_Social_Care_CPD.Models;
 using Contentful.Core;
 using Contentful.Core.Models;
 using Contentful.Core.Search;
@@ -18,7 +19,7 @@ namespace Childrens_Social_Care_CPD.Controllers
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            var queryBuilder = QueryBuilder<PageHeader>.New.ContentTypeIs("pageHeader");
+            var queryBuilder = QueryBuilder<PageHeader>.New.ContentTypeIs(ContentTypes.PAGEHEADER);
             var result = _client.GetEntries<PageHeader>(queryBuilder).Result;
             var header = result.FirstOrDefault();
             var htmlRenderer = new HtmlRenderer();
@@ -33,7 +34,7 @@ namespace Childrens_Social_Care_CPD.Controllers
 
             ViewBag.PageHeader = pageHeader;
 
-            var footerQueryBuilder = QueryBuilder<PageFooter>.New.ContentTypeIs("pageFooter");
+            var footerQueryBuilder = QueryBuilder<PageFooter>.New.ContentTypeIs(ContentTypes.PAGEFOOTER);
              var footerResult = _client.GetEntries<PageFooter>(footerQueryBuilder).Result;
              var footer = footerResult.FirstOrDefault();
            

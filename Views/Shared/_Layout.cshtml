@@ -13,55 +13,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Childrens_Social_Care_CPD</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-@*    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Childrens_Social_Care_CPD.styles.css" asp-append-version="true" />*@
-    <link rel="stylesheet" href="~/css/application.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/application.css" asp-append-version="true"/>
 
 </head>
 <body>
-     <header class="govuk-header app-header" role="banner" data-module="govuk-header">
-    <div class="govuk-header__container govuk-width-container">
-        <div class="govuk-header__logo">
-            <a href="/" class="govuk-header__link govuk-header__link--homepage">
-                <span class="govuk-header__product-name">
-                    @*Social worker career development*@
-                    @headerModel.Header
-                </span>
-            </a>
-        </div>
-        <div class="govuk-header__content">
-            <!--<nav class="govuk-header__navigation govuk-header__navigation--end" aria-label="Menu">
-              <button type="button" class="govuk-header__menu-button govuk-js-header-toggle" aria-controls="navigation" aria-label="Show or hide menu" aria-expanded="false">Menu</button>
-              <ul id="navigation" class="govuk-header__navigation-list">
-                  <li class="govuk-header__navigation-item">
-                    <a class="govuk-header__link" href="/contribute.html">Contribute</a>
-                  </li>
-                  <li class="govuk-header__navigation-item">
-                    <a class="govuk-header__link" href="https://forms.gle/WfLUr8K6SDVERwzbA">Feedback</a>
-                  </li>
-              </ul>
-            </nav>-->
-        </div>
-    </div>
-</header>
 
-<div class="govuk-width-container">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <div class="govuk-phase-banner">
-                <p class="govuk-phase-banner__content">
-                    <strong class="govuk-tag govuk-phase-banner__content__tag">
-                        @headerModel.Section1Header
-                    </strong>
-                    <span class="govuk-phase-banner__text">
-                     This is a prototype of a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.
-                    </span>
-                </p>
-            </div>
-
-        </div>
-    </div>
-</div>
+    @{await Html.RenderPartialAsync("../PartialViews/Header");}
  
     <div>
         <main role="main" class="pb-3">
