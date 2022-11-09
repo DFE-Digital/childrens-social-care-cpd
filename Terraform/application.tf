@@ -70,7 +70,7 @@ resource "azurerm_lb" "frontend-lb" {
 
   frontend_ip_configuration {
     name                          = "s185d01-app-private-link-fe-ip"
-    subnet_id                     = azurerm_subnet.frontend.id
+    subnet_id                     = azurerm_subnet.backend.id
     private_ip_address_allocation = "Dynamic"
   }
 
