@@ -69,8 +69,9 @@ resource "azurerm_lb" "frontend-lb" {
   resource_group_name = azurerm_resource_group.rg.name
 
   frontend_ip_configuration {
-    name                 = azurerm_public_ip.pip1.name
-    public_ip_address_id = azurerm_public_ip.pip1.id
+    name                          = "s185d01-app-private-link-fe-ip"
+    subnet_id                     = azurerm_subnet.frontend.id
+    private_ip_address_allocation = "Dynamic"
   }
 
   tags = azurerm_resource_group.rg.tags
