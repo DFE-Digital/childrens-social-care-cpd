@@ -66,7 +66,7 @@ resource "azurerm_private_link_service" "private-link" {
   name                                        = "s185d01-app-private-link"
   resource_group_name                         = azurerm_resource_group.rg.name
   location                                    = azurerm_resource_group.rg.location
-  load_balancer_frontend_ip_configuration_ids = azurerm_public_ip.pip1.zones
+  load_balancer_frontend_ip_configuration_ids = [azurerm_public_ip.pip1.id]
 
   nat_ip_configuration {
     name      = "s185d01-nat-ip-app-private-link"
