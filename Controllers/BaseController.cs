@@ -19,25 +19,21 @@ namespace Childrens_Social_Care_CPD.Controllers
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            var queryBuilder = QueryBuilder<PageHeader>.New.ContentTypeIs(ContentTypes.PAGEHEADER);
-            var result = _client.GetEntries<PageHeader>(queryBuilder).Result;
-            var header = result.FirstOrDefault();
-            var htmlRenderer = new HtmlRenderer();
-            var html = htmlRenderer.ToHtml(header.Section1).Result;
-
-            PageHeader pageHeader = new PageHeader
-            {
-                Header = header.Header,
-                Section1Html = html,
-                Section1Header = header.Section1Header 
-            };
+            PageHeader pageHeader = GetHeader();
 
             ViewBag.PageHeader = pageHeader;
 
+            PageFooter pageFooter = GetFooter();
+
+            ViewBag.PageFooter = pageFooter;
+        }
+      
+        private PageFooter GetFooter()
+        {
             var footerQueryBuilder = QueryBuilder<PageFooter>.New.ContentTypeIs(ContentTypes.PAGEFOOTER);
-             var footerResult = _client.GetEntries<PageFooter>(footerQueryBuilder).Result;
-             var footer = footerResult.FirstOrDefault();
-           
+            var footerResult = _client.GetEntries<PageFooter>(footerQueryBuilder).Result;
+            var footer = footerResult.FirstOrDefault();
+
 
             PageFooter pageFooter = new PageFooter
             {
@@ -69,8 +65,24 @@ namespace Childrens_Social_Care_CPD.Controllers
 
                 CopyrightLinkURL = footer.CopyrightLinkURL
             };
+            return pageFooter;
+        }
 
-            ViewBag.PageFooter = pageFooter;
+        private PageHeader GetHeader()
+        {
+            var queryBuilder = QueryBuilder<PageHeader>.New.ContentTypeIs(ContentTypes.PAGEHEADER);
+            var result = _client.GetEntries<PageHeader>(queryBuilder).Result;
+            var header = result.FirstOrDefault();
+            var htmlRenderer = new HtmlRenderer();
+            var html = htmlRenderer.ToHtml(header.PrototypeText).Result;
+
+            PageHeader pageHeader = new PageHeader
+            {
+                Header = header.Header,
+                PrototypeTextHtml = html,
+                PrototypeHeader = header.PrototypeHeader
+            };
+            return pageHeader;
         }
     }
 }
