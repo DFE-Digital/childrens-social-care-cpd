@@ -62,17 +62,17 @@ resource "azurerm_linux_web_app" "linux-web-app" {
   tags = azurerm_resource_group.rg.tags
 }
 
-resource "azurerm_private_link_service" "private-link" {
-  name                                        = "s185d01-app-private-link"
-  resource_group_name                         = azurerm_resource_group.rg.name
-  location                                    = azurerm_resource_group.rg.location
-  load_balancer_frontend_ip_configuration_ids = azurerm_public_ip.pip1.zones
+# resource "azurerm_private_link_service" "private-link" {
+#   name                                        = "s185d01-app-private-link"
+#   resource_group_name                         = azurerm_resource_group.rg.name
+#   location                                    = azurerm_resource_group.rg.location
+#   load_balancer_frontend_ip_configuration_ids = azurerm_public_ip.pip1.zones
 
-  nat_ip_configuration {
-    name      = "s185d01-nat-ip-app-private-link"
-    primary   = true
-    subnet_id = azurerm_subnet.backend.id
-  }
+#   nat_ip_configuration {
+#     name      = "s185d01-nat-ip-app-private-link"
+#     primary   = true
+#     subnet_id = azurerm_subnet.backend.id
+#   }
 
-  tags = azurerm_resource_group.rg.tags
-}
+#   tags = azurerm_resource_group.rg.tags
+# }
