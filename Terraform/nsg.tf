@@ -5,7 +5,7 @@ resource "azurerm_network_security_group" "nsg" {
   tags                = azurerm_resource_group.rg.tags
 }
 
-resource "azurerm_network_security_rule" "nsg-rule-01" {
+resource "azurerm_network_security_rule" "nsg-rule-03" {
   name                        = "AllowAzureLoadBalancerInBound"
   priority                    = 3651
   direction                   = "Inbound"
