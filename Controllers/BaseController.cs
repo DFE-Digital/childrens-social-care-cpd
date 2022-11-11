@@ -33,38 +33,17 @@ namespace Childrens_Social_Care_CPD.Controllers
             var footerQueryBuilder = QueryBuilder<PageFooter>.New.ContentTypeIs(ContentTypes.PAGEFOOTER);
             var footerResult = _client.GetEntries<PageFooter>(footerQueryBuilder).Result;
             var footer = footerResult.FirstOrDefault();
+            PageFooter pageFooter = new PageFooter();
 
-
-            PageFooter pageFooter = new PageFooter
+            if(footer!= null)
             {
-                PrivacyLinkText = footer.PrivacyLinkText,
+                var htmlRenderer = new HtmlRenderer();
 
-                PrivacyLinkURL = footer.PrivacyLinkURL,
-
-                AccessibilityLinkText = footer.AccessibilityLinkText,
-
-                AccessibilityLinkURL = footer.AccessibilityLinkURL,
-
-                CookiesLinkText = footer.CookiesLinkText,
-
-                CookiesLinkURL = footer.CookiesLinkURL,
-
-                TermsAndConditionsLinkText = footer.TermsAndConditionsLinkText,
-
-                TermsAndConditionsLinkURL = footer.TermsAndConditionsLinkURL,
-
-                GOVPrototypeLinkText = footer.GOVPrototypeLinkText,
-
-                GOVPrototypeLinkURL = footer.GOVPrototypeLinkURL,
-
-                ClearDataLinkText = footer.ClearDataLinkText,
-
-                ClearDataLinkURL = footer.ClearDataLinkURL,
-
-                CopyrightLinkText = footer.CopyrightLinkText,
-
-                CopyrightLinkURL = footer.CopyrightLinkURL
-            };
+                pageFooter.FooterLinks = footer.FooterLinks.OrderBy(x => x.SortOrder).ToList();
+                pageFooter.CopyrightLink = footer.CopyrightLink;
+                pageFooter.LicenceDescriptionText = htmlRenderer.ToHtml(footer.LicenceDescription).Result;
+            }
+           
             return pageFooter;
         }
 

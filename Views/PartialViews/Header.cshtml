@@ -34,7 +34,7 @@
                         <span class="govuk-phase-banner__text">
                             @if (!string.IsNullOrEmpty(@headerModel.PrototypeTextHtml))
                             {
-                                @Html.Raw(@Regex.Replace(@headerModel.PrototypeTextHtml, "<.P?>", String.Empty));                                ;
+                                @Html.Raw(@Regex.Replace(@headerModel.PrototypeTextHtml, "<.P?>", String.Empty));
                             }
                         </span>
                     </p>
