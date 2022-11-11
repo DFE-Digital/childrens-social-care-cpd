@@ -65,6 +65,15 @@ resource "azurerm_application_gateway" "appgw" {
     protocol                                  = "Http"
   }
 
-  tags = azurerm_resource_group.rg.tags
+  private_link_configuration {
+    name = "s185d01-csc-cpd-app-gateway-private-link"
+    ip_configuration {
+      name                          = "s185d01-csc-cpd-app-gateway-private-link-ip-conf"
+      subnet_id                     = azurerm_subnet.backend.id
+      private_ip_address_allocation = "Dynamic"
+      primary                       = true
+    }
+  }
 
+  tags = azurerm_resource_group.rg.tags
 }

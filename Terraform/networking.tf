@@ -14,10 +14,11 @@ resource "azurerm_subnet" "frontend" {
 }
 
 resource "azurerm_subnet" "backend" {
-  name                 = "s185d01-chidrens-social-care-cpd-sn02"
-  resource_group_name  = azurerm_resource_group.rg.name
-  virtual_network_name = azurerm_virtual_network.vnet1.name
-  address_prefixes     = ["10.0.0.128/26"]
+  name                                          = "s185d01-chidrens-social-care-cpd-sn02"
+  resource_group_name                           = azurerm_resource_group.rg.name
+  virtual_network_name                          = azurerm_virtual_network.vnet1.name
+  address_prefixes                              = ["10.0.0.128/26"]
+  private_link_service_network_policies_enabled = false
 }
 
 resource "azurerm_public_ip" "pip1" {
