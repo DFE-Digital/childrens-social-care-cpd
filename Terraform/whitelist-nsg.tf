@@ -1,6 +1,6 @@
 data "azurerm_key_vault" "kv" {
-  name                = "s185d01-core-kv-01"
-  resource_group_name = "s185d01-core"
+  name                = "cpd-key-vault"
+  resource_group_name = "s185d01-childrens-social-care-shared-rg"
 }
 
 data "azurerm_key_vault_secret" "ips" {
