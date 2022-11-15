@@ -34,7 +34,7 @@ variable "service_plan_sku" {
     Dev      = "B1"
     Test     = "B1"
     Pre-Prod = "B1"
-    Prod     = "B1"
+    Prod     = "S1"
   }
 }
 
@@ -154,7 +154,7 @@ variable "appgw_tier" {
     Dev      = "Standard_v2"
     Test     = "Standard_v2"
     Pre-Prod = "Standard_v2"
-    Prod     = "Standard_v2"
+    Prod     = "WAF_v2"
   }
 }
 
@@ -285,11 +285,6 @@ variable "cpd_client_secret" {
 }
 
 variable "cpd_keyvaultendpoint" {
-  type      = string
-  sensitive = true
-}
-
-variable "acr_password" {
   type      = string
   sensitive = true
 }
