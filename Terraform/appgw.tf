@@ -1,36 +1,36 @@
 resource "azurerm_application_gateway" "appgw" {
-  name                = "s185d01-csc-cpd-app-gateway"
+  name                = var.appgw_name[terraform.workspace]
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
 
   sku {
-    name     = "Standard_v2"
-    tier     = "Standard_v2"
+    name     = var.appgw_tier[terraform.workspace]
+    tier     = var.appgw_tier[terraform.workspace]
     capacity = 2
   }
 
   gateway_ip_configuration {
-    name      = "s185d01-gateway-ip-configuration"
+    name      = var.gateway_ip_configuration[terraform.workspace]
     subnet_id = azurerm_subnet.frontend.id
   }
 
   frontend_port {
-    name = var.frontend_port_name
+    name = var.frontend_port_name[terraform.workspace]
     port = 80
   }
 
   frontend_ip_configuration {
-    name                 = var.frontend_ip_configuration_name
+    name                 = var.frontend_ip_configuration_name[terraform.workspace]
     public_ip_address_id = azurerm_public_ip.pip1.id
   }
 
   backend_address_pool {
-    name  = var.backend_address_pool_name
+    name  = var.backend_address_pool_name[terraform.workspace]
     fqdns = [azurerm_linux_web_app.linux-web-app.default_hostname]
   }
 
   backend_http_settings {
-    name                                = var.http_setting_name
+    name                                = var.http_setting_name[terraform.workspace]
     pick_host_name_from_backend_address = true
     cookie_based_affinity               = "Disabled"
     path                                = "/"
@@ -40,23 +40,23 @@ resource "azurerm_application_gateway" "appgw" {
   }
 
   http_listener {
-    name                           = var.listener_name
-    frontend_ip_configuration_name = var.frontend_ip_configuration_name
-    frontend_port_name             = var.frontend_port_name
+    name                           = var.listener_name[terraform.workspace]
+    frontend_ip_configuration_name = var.frontend_ip_configuration_name[terraform.workspace]
+    frontend_port_name             = var.frontend_port_name[terraform.workspace]
     protocol                       = "Http"
   }
 
   request_routing_rule {
-    name                       = var.request_routing_rule_name
+    name                       = var.request_routing_rule_name[terraform.workspace]
     rule_type                  = "Basic"
     priority                   = 2000
-    http_listener_name         = var.listener_name
-    backend_address_pool_name  = var.backend_address_pool_name
-    backend_http_settings_name = var.http_setting_name
+    http_listener_name         = var.listener_name[terraform.workspace]
+    backend_address_pool_name  = var.backend_address_pool_name[terraform.workspace]
+    backend_http_settings_name = var.http_setting_name[terraform.workspace]
   }
 
   probe {
-    name                                      = "s185d01AGProbe"
+    name                                      = var.appgw_probe[terraform.workspace]
     pick_host_name_from_backend_http_settings = true
     path                                      = "/"
     interval                                  = 30
@@ -66,9 +66,9 @@ resource "azurerm_application_gateway" "appgw" {
   }
 
   private_link_configuration {
-    name = "s185d01-csc-cpd-app-gateway-private-link"
+    name = var.private_link_name[terraform.workspace]
     ip_configuration {
-      name                          = "s185d01-csc-cpd-app-gateway-private-link-ip-conf"
+      name                          = var.private_link_ip_conf_name[terraform.workspace]
       subnet_id                     = azurerm_subnet.backend.id
       private_ip_address_allocation = "Dynamic"
       primary                       = true
