@@ -1,6 +1,18 @@
 name: 'Terraform'
 
-on: workflow_dispatch
+on: 
+  workflow_dispatch:
+    inputs:
+      workspace:
+        description: 'Terraform Workspace which should map to GitHub Environment'
+        required: true
+        default: 'Dev'
+        type: choice
+        options:
+          - Dev
+          - Test
+          - Pre-Prod
+          - Prod
 
 permissions:
   contents: read
@@ -19,7 +31,6 @@ jobs:
       TF_VAR_cpd_client_id: ${{secrets.TF_VAR_CPD_CLIENT_ID}}
       TF_VAR_cpd_client_secret: ${{secrets.TF_VAR_CPD_CLIENT_SECRET}}
       TF_VAR_cpd_keyvaultendpoint: ${{secrets.TF_VAR_CPD_KEYVAULTENDPOINT}}
-      TF_VAR_acr_password: ${{secrets.TF_VAR_ACR_PASSWORD}}
 
     defaults:
       run:
