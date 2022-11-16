@@ -25,7 +25,8 @@ resource "azurerm_linux_web_app" "linux-web-app" {
   site_config {
     application_stack {
       docker_image     = "ghcr.io/dfe-digital/childrens-social-care-cpd"
-      docker_image_tag = lower(terraform.workspace)
+      docker_image_tag = "master"
+      # docker_image_tag = lower(terraform.workspace)
     }
   }
 
