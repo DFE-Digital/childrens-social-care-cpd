@@ -34,7 +34,7 @@ variable "service_plan_sku" {
     Dev      = "B1"
     Test     = "B1"
     Pre-Prod = "B1"
-    Prod     = "S1"
+    Prod     = "P1v2"
   }
 }
 
