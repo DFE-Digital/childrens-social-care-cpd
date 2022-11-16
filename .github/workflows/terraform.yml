@@ -31,6 +31,7 @@ jobs:
       TF_VAR_cpd_client_id: ${{secrets.TF_VAR_CPD_CLIENT_ID}}
       TF_VAR_cpd_client_secret: ${{secrets.TF_VAR_CPD_CLIENT_SECRET}}
       TF_VAR_cpd_keyvaultendpoint: ${{secrets.TF_VAR_CPD_KEYVAULTENDPOINT}}
+      TF_WORKSPACE: ${{inputs.workspace}}
 
     defaults:
       run:
@@ -49,6 +50,7 @@ jobs:
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       run: terraform -chdir=Terraform init
+      
 
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
