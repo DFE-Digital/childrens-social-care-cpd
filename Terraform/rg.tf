@@ -1,9 +1,9 @@
 resource "azurerm_resource_group" "rg" {
-  name     = "s185d01-childrens-social-care-rg"
+  name     = var.rg_name[terraform.workspace]
   location = "westeurope"
 
   tags = {
-    "Environment"      = "Dev"
+    "Environment"      = terraform.workspace
     "Parent Business"  = "Children’s Care"
     "Service Offering" = "Social Workforce"
     "Portfolio"        = "Newly Onboarded"
