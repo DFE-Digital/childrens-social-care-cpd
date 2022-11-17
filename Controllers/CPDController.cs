@@ -24,34 +24,38 @@ namespace Childrens_Social_Care_CPD.Controllers
         
         public async Task<IActionResult> LandingPage(string PageName, string PageType)
         {
-            PageViewModel pageViewModel = await GetViewModel(PageName, PageType);
+            ContentfulCollection<PageViewModel> pageViewModel = await GetViewModel(PageName, PageType);
+            foreach (PageViewModel viewModel in pageViewModel)
+            {
+                viewModel.Roles = viewModel.Roles?.OrderBy(x => x.SortOrder).ToList();
+                viewModel.Paragraphs = viewModel.Paragraphs?.OrderBy(x => x.SortOrder).ToList();
+            }
+
             return View(pageViewModel);
         }
 
-        private async Task<PageViewModel> GetViewModel(string pageName, string PageType)
+        private async Task<ContentfulCollection<PageViewModel>> GetViewModel(string pageName, string pageType)
         {
             var pageViewModel = new PageViewModel();
-            if(string.IsNullOrEmpty(pageName) && string.IsNullOrEmpty(PageType))
+            if (string.IsNullOrEmpty(pageName) && string.IsNullOrEmpty(pageType))
             {
                 pageName = PageNames.HomePage.ToString();
-                pageViewModel.PageType = PageTypes.Master;
+                pageViewModel.PageType = new ContentPageType { PageType = PageTypes.Master.ToString() };
             }
-            else 
+            else
             {
-                PageTypes pageType = (PageTypes)Enum.Parse(typeof(PageTypes), PageType);
-                pageViewModel.PageType = pageType;
+                pageViewModel.PageType = new ContentPageType { PageType = pageType };
             }
 
-            var queryBuilder = QueryBuilder<Role>.New.ContentTypeIs(ContentTypes.SECTION).FieldEquals("fields.rolePageName", pageName).OrderBy("fields.sortOrder");
-            var result = await _client.GetEntries<Role>(queryBuilder);
-           
-            pageViewModel.Roles = result;
+            var queryBuildera = QueryBuilder<PageViewModel>.New.ContentTypeIs(ContentTypes.PAGE)
+                .FieldEquals("fields.pageName.fields.pageName", pageName)
+                .FieldEquals("fields.pageName.sys.contentType.sys.id", ContentTypes.PAGENAMES);
 
-            var paragraphQueryBuilder = QueryBuilder<Childrens_Social_Care_CPD.Models.Paragraph>.New.ContentTypeIs(ContentTypes.PARAGRAPH).FieldEquals("fields.paragraphPageName", pageName).OrderBy("fields.sortOrder");
-            var paragraphsResult = await _client.GetEntries<Childrens_Social_Care_CPD.Models.Paragraph>(paragraphQueryBuilder);
-            pageViewModel.Paragraphs = paragraphsResult;
+            var result = await _client.GetEntries<PageViewModel>(queryBuildera);
 
-            return pageViewModel;
+            return result;
+
         }
+      
     }
 }

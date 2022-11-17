@@ -10,5 +10,6 @@
         public int SortOrder { get; set; }
         public ContentPageType PageType { get; set; }
         public RedirectPageName RedirectPageName { get; set; }
-}
+        public ContentPageName PageName { get; set; }
+    }
 }

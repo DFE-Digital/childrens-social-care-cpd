@@ -9462,6 +9462,11 @@ body {
     margin-bottom: 20px;
 }
 
+.section-card__clearwborder {
+    padding: 15px;
+    border: 1px solid #b1b4b6;
+}
+
 /* clear section card */
 /* Remove this if I don't add any formatting */
 .section-card-clear {
@@ -9756,11 +9761,11 @@ body {
 }
 
 .app-header .govuk-header__logo {
-    width: 65%;
+    width: 85%;
 }
 
 .app-header .govuk-header__content {
-    width: 30%;
+    width: 0%;
 }
 
 .govuk-header__logotype-crown-fallback-image {
@@ -9778,7 +9783,6 @@ body {
     background-position-x: 0px;
     background-position-y: -5px;
 }
-
 .govuk-header__navigation-item--active a:link,
 .govuk-header__navigation-item--active a:hover,
 .govuk-header__navigation-item--active a:visited {
@@ -9786,4 +9790,18 @@ body {
     text-decoration: underline;
     text-decoration-thickness: 3px;
     text-underline-offset: 0.1em;
+}
+
+@media (max-width: 40.0625em) {
+    .govuk-header__product-name {
+        max-width: 80%;
+        line-height: 1.2rem !important;
+        font-size: 1rem;
+    }
+
+    .govuk-header__logotype-text {
+        min-width: 100%;
+        line-height: 2.2rem !important;
+        font-size: 1rem;
+    }
 }

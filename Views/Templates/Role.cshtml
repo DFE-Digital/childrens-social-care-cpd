@@ -1,5 +1,5 @@
 ﻿@using Contentful.Core.Models;
-@model ContentfulCollection<Role>
+@model List<Role>
 
 @foreach (var roleGroup in Model.Select((e, i) => new { Role = e, Grouping = (i / 2) }).GroupBy(e => e.Grouping))
     {
@@ -9,8 +9,6 @@
             <div class='govuk-grid-column-one-half govuk-!-margin-bottom-4'>
                 <div class="section-card">
                     <h3 class="govuk-heading-m">
-                        @* <a href="@{@role.RoleHeaderURL}" class="govuk-link">@role.RoleHeader</a>*@
-
                         @{
                             var pageName = role.RedirectPageName?.PageName;
                             var pageType = role.PageType?.PageType;
