@@ -47,11 +47,11 @@ namespace Childrens_Social_Care_CPD.Controllers
                 pageViewModel.PageType = new ContentPageType { PageType = pageType };
             }
 
-            var queryBuildera = QueryBuilder<PageViewModel>.New.ContentTypeIs(ContentTypes.PAGE)
+            var queryBuilder = QueryBuilder<PageViewModel>.New.ContentTypeIs(ContentTypes.PAGE)
                 .FieldEquals("fields.pageName.fields.pageName", pageName)
                 .FieldEquals("fields.pageName.sys.contentType.sys.id", ContentTypes.PAGENAMES);
 
-            var result = await _client.GetEntries<PageViewModel>(queryBuildera);
+            var result = await _client.GetEntries<PageViewModel>(queryBuilder);
 
             return result;
 
