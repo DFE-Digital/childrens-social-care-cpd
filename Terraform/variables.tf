@@ -6,6 +6,7 @@ variable "rg_name" {
     Pre-Prod = "s185t01-childrens-social-care-cpd-rg"
     Prod     = "s185p01-childrens-social-care-cpd-rg"
   }
+  description = "Name of Resource Group"
 }
 
 variable "nsg_name" {
@@ -16,6 +17,7 @@ variable "nsg_name" {
     Pre-Prod = "s185t01-chidrens-social-care-cpd-sn01-nsg"
     Prod     = "s185p01-chidrens-social-care-cpd-sn01-nsg"
   }
+  description = "Name of Network Security Group"
 }
 
 variable "service_plan_name" {
@@ -26,6 +28,7 @@ variable "service_plan_name" {
     Pre-Prod = "s185t01-csc-cpd-app-service-plan"
     Prod     = "s185p01-csc-cpd-app-service-plan"
   }
+  description = "Name of Service Plan"
 }
 
 variable "service_plan_sku" {
@@ -36,6 +39,7 @@ variable "service_plan_sku" {
     Pre-Prod = "B1"
     Prod     = "P1v2"
   }
+  description = "SKU for Service Plan"
 }
 
 variable "web_app_name" {
@@ -46,6 +50,7 @@ variable "web_app_name" {
     Pre-Prod = "s185t01-chidrens-social-care-cpd-app-service"
     Prod     = "s185p01-chidrens-social-care-cpd-app-service"
   }
+  description = "Name of Web Application"
 }
 
 variable "network_nic_ip_conf_name" {
@@ -56,6 +61,7 @@ variable "network_nic_ip_conf_name" {
     Pre-Prod = "s185t01nic-ipconfig-1"
     Prod     = "s185p01nic-ipconfig-1"
   }
+  description = "Name of NIC IP Configuration"
 }
 
 variable "vnet_name" {
@@ -66,6 +72,7 @@ variable "vnet_name" {
     Pre-Prod = "s185t01-chidrens-social-care-cpd-vn01"
     Prod     = "s185p01-chidrens-social-care-cpd-vn01"
   }
+  description = "Name of Address Space"
 }
 
 variable "vnet_address_space" {
@@ -76,6 +83,7 @@ variable "vnet_address_space" {
     Pre-Prod = "10.0.0.0/16"
     Prod     = "10.0.0.0/16"
   }
+  description = "Subnets used for Address Space"
 }
 
 variable "vnet_frontend_name" {
@@ -86,6 +94,7 @@ variable "vnet_frontend_name" {
     Pre-Prod = "s185t01-chidrens-social-care-cpd-sn01"
     Prod     = "s185p01-chidrens-social-care-cpd-sn01"
   }
+  description = "Name of Frontend VNET"
 }
 
 variable "vnet_frontend_prefixes" {
@@ -96,6 +105,7 @@ variable "vnet_frontend_prefixes" {
     Pre-Prod = "10.0.0.0/26"
     Prod     = "10.0.0.0/26"
   }
+  description = "Subnets used for Frontend VENT"
 }
 
 variable "vnet_backend_name" {
@@ -106,6 +116,7 @@ variable "vnet_backend_name" {
     Pre-Prod = "s185t01-chidrens-social-care-cpd-sn02"
     Prod     = "s185p01-chidrens-social-care-cpd-sn02"
   }
+  description = "Name of Backend VNET"
 }
 
 variable "vnet_backend_prefixes" {
@@ -116,6 +127,7 @@ variable "vnet_backend_prefixes" {
     Pre-Prod = "10.0.0.64/26"
     Prod     = "10.0.0.64/26"
   }
+  description = "Subnets used for Backend VNET"
 }
 
 variable "pip_name" {
@@ -126,6 +138,7 @@ variable "pip_name" {
     Pre-Prod = "s185t01AGPublicIPAddress"
     Prod     = "s185p01AGPublicIPAddress"
   }
+  description = "Name of Public IP address"
 }
 
 variable "nic_name" {
@@ -136,6 +149,7 @@ variable "nic_name" {
     Pre-Prod = "s185t01nic-1"
     Prod     = "s185p01nic-1"
   }
+  description = "Name of Network Interface"
 }
 
 variable "appgw_name" {
@@ -146,6 +160,7 @@ variable "appgw_name" {
     Pre-Prod = "s185t01-csc-cpd-app-gateway"
     Prod     = "s185p01-csc-cpd-app-gateway"
   }
+  description = "Name of the Application Gateway"
 }
 
 variable "appgw_tier" {
@@ -156,6 +171,7 @@ variable "appgw_tier" {
     Pre-Prod = "Standard_v2"
     Prod     = "WAF_v2"
   }
+  description = "SKU for Application Gateway Tier"
 }
 
 variable "appgw_probe" {
@@ -166,6 +182,7 @@ variable "appgw_probe" {
     Pre-Prod = "s185t01AGProbe"
     Prod     = "s185p01AGProbe"
   }
+  description = "Name of App Gateway Health Probe"
 }
 
 variable "private_link_ip_conf_name" {
@@ -176,6 +193,7 @@ variable "private_link_ip_conf_name" {
     Pre-Prod = "s185t01-csc-cpd-app-gateway-private-link-ip-conf"
     Prod     = "s185p01-csc-cpd-app-gateway-private-link-ip-conf"
   }
+  description = "Name of Private Link IP Configuration"
 }
 
 variable "private_link_name" {
@@ -186,6 +204,7 @@ variable "private_link_name" {
     Pre-Prod = "s185t01-csc-cpd-app-gateway-private-link"
     Prod     = "s185p01-csc-cpd-app-gateway-private-link"
   }
+  description = "Name of Private Link"
 }
 
 variable "gateway_ip_configuration" {
@@ -196,6 +215,7 @@ variable "gateway_ip_configuration" {
     Pre-Prod = "s185t01-gateway-ip-configuration"
     Prod     = "s185p01-gateway-ip-configuration"
   }
+  description = "Name of Gateway IP Configuration"
 }
 
 
@@ -207,6 +227,7 @@ variable "backend_address_pool_name" {
     Pre-Prod = "s185t01BackendPool"
     Prod     = "s185p01BackendPool"
   }
+  description = "Name of Backend Address Pool"
 }
 
 variable "frontend_port_name" {
@@ -217,6 +238,7 @@ variable "frontend_port_name" {
     Pre-Prod = "s185t01FrontendPort"
     Prod     = "s185p01FrontendPort"
   }
+  description = "Name of Frontend Port"
 }
 
 variable "frontend_ip_configuration_name" {
@@ -227,6 +249,7 @@ variable "frontend_ip_configuration_name" {
     Pre-Prod = "s185t01AGIPConfig"
     Prod     = "s185p01AGIPConfig"
   }
+  description = "Name of Frontend IP Configuration"
 }
 
 variable "http_setting_name" {
@@ -237,6 +260,7 @@ variable "http_setting_name" {
     Pre-Prod = "s185t01HTTPsetting"
     Prod     = "s185p01HTTPsetting"
   }
+  description = "Name of HTTP Setting"
 }
 
 variable "listener_name" {
@@ -247,6 +271,7 @@ variable "listener_name" {
     Pre-Prod = "s185t01Listener"
     Prod     = "s185p01Listener"
   }
+  description = "Name of HTTP Listener"
 }
 
 variable "request_routing_rule_name" {
@@ -257,34 +282,29 @@ variable "request_routing_rule_name" {
     Pre-Prod = "s185t01RoutingRule"
     Prod     = "s185p01RoutingRule"
   }
-}
-
-variable "redirect_configuration_name" {
-  type = map(string)
-  default = {
-    Dev      = "s185d01RedirectConfig"
-    Test     = "s185d02RedirectConfig"
-    Pre-Prod = "s185t01RedirectConfig"
-    Prod     = "s185p01RedirectConfig"
-  }
+  description = "Name of Request Routing Rule"
 }
 
 variable "tenant_id" {
   type      = string
   sensitive = true
+  description = "The Tenant ID of the subscription being used"
 }
 
 variable "cpd_client_id" {
   type      = string
   sensitive = true
+  description = "Client ID used by the application to access Key Vault in Azure"
 }
 
 variable "cpd_client_secret" {
   type      = string
   sensitive = true
+  description = "Secret used by the application to access Key Vault in Azure"
 }
 
 variable "cpd_keyvaultendpoint" {
   type      = string
   sensitive = true
+  description = "URL Endpoitn for Key Vault in Azure"
 }
