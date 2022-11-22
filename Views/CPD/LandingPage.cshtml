@@ -10,9 +10,8 @@
 @{
     if (pageViewModel != null)
     {
-
-        PageTypes PageType;
-        Enum.TryParse(pageViewModel.PageName.PageName, out PageType);
+        PageTypes PageType = Enum.Parse<PageTypes>(pageViewModel.PageType.PageType, true);
+       
         switch (PageType)
         {
             case PageTypes.Master:
@@ -21,8 +20,8 @@
             case PageTypes.Roles:
                {await Html.RenderPartialAsync("../Templates/Role",@pageViewModel);}
                 break;
-            case PageTypes.SubRoles:
-                 {await Html.RenderPartialAsync("../Templates/Program",@pageViewModel);}
+            case PageTypes.Programmes:
+                 {await Html.RenderPartialAsync("../Templates/Programmes",@pageViewModel);}
                 break;
             default:
                 break;

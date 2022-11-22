@@ -4,7 +4,7 @@
     {
         Master,
         Roles,
-        SubRoles,
+        Programmes,
         RoleDetails,
         PathwayDetails
     }

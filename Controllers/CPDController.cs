@@ -31,30 +31,34 @@ namespace Childrens_Social_Care_CPD.Controllers
                 viewModel.Paragraphs = viewModel.Paragraphs?.OrderBy(x => x.SortOrder).ToList();
             }
 
+            
             return View(pageViewModel);
         }
 
         private async Task<ContentfulCollection<PageViewModel>> GetViewModel(string pageName, string pageType)
         {
-            var pageViewModel = new PageViewModel();
+            int contentLevel = 10;
+            ContentPageType contentPageType;
+
             if (string.IsNullOrEmpty(pageName) && string.IsNullOrEmpty(pageType))
             {
                 pageName = PageNames.HomePage.ToString();
-                pageViewModel.PageType = new ContentPageType { PageType = PageTypes.Master.ToString() };
+                contentPageType = new ContentPageType { PageType = PageTypes.Master.ToString() };
             }
             else
             {
-                pageViewModel.PageType = new ContentPageType { PageType = pageType };
+                contentPageType = new ContentPageType { PageType = pageType };
             }
 
             var queryBuilder = QueryBuilder<PageViewModel>.New.ContentTypeIs(ContentTypes.PAGE)
                 .FieldEquals("fields.pageName.fields.pageName", pageName)
-                .FieldEquals("fields.pageName.sys.contentType.sys.id", ContentTypes.PAGENAMES);
+                .FieldEquals("fields.pageName.sys.contentType.sys.id", ContentTypes.PAGENAMES)
+                .Include(contentLevel);
 
             var result = await _client.GetEntries<PageViewModel>(queryBuilder);
-
+            result.All(c => { c.PageType = contentPageType; return true; });
+            
             return result;
-
         }
       
     }
