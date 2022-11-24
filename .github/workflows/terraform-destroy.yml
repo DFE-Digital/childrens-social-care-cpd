@@ -37,6 +37,7 @@ jobs:
 
     steps:
   
+    # Checkout code
     - name: Checkout
       uses: actions/checkout@v3
 
@@ -46,7 +47,7 @@ jobs:
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
-      run: terraform -chdir=Terraform init
+      run: terraform -chdir=Terraform init -backend-config=${TF_WORKSPACE}-backend.conf
 
     - name: Terraform Destroy
       run: terraform -chdir=Terraform destroy -auto-approve -input=false
