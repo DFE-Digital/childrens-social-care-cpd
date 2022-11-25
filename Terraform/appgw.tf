@@ -1,7 +1,7 @@
 resource "azurerm_application_gateway" "appgw" {
   name                = var.appgw_name[terraform.workspace]
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
 
   sku {
     name     = var.appgw_tier[terraform.workspace]
@@ -21,7 +21,7 @@ resource "azurerm_application_gateway" "appgw" {
 
   frontend_ip_configuration {
     name                 = var.frontend_ip_configuration_name[terraform.workspace]
-    public_ip_address_id = azurerm_public_ip.pip1.id
+    public_ip_address_id = data.azurerm_public_ip.pip1.id
   }
 
   backend_address_pool {
@@ -75,5 +75,5 @@ resource "azurerm_application_gateway" "appgw" {
     }
   }
 
-  tags = azurerm_resource_group.rg.tags
+  tags = data.azurerm_resource_group.rg.tags
 }

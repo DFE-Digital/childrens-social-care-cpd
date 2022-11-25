@@ -1,8 +1,8 @@
 resource "azurerm_network_security_group" "nsg" {
   name                = var.nsg_name[terraform.workspace]
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
-  tags                = azurerm_resource_group.rg.tags
+  location            = data.azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
+  tags                = data.azurerm_resource_group.rg.tags
 }
 
 resource "azurerm_network_security_rule" "nsg-rule-03" {
@@ -15,6 +15,6 @@ resource "azurerm_network_security_rule" "nsg-rule-03" {
   destination_port_range      = "65200-65535"
   source_address_prefix       = "*"
   destination_address_prefix  = "*" # azurerm_subnet.frontend.address_prefixes
-  resource_group_name         = azurerm_resource_group.rg.name
+  resource_group_name         = data.azurerm_resource_group.rg.name
   network_security_group_name = azurerm_network_security_group.nsg.name
 }

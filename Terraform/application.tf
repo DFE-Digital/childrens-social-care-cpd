@@ -1,16 +1,16 @@
 resource "azurerm_service_plan" "service-plan" {
   name                = var.service_plan_name[terraform.workspace]
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
   os_type             = "Linux"
   sku_name            = var.service_plan_sku[terraform.workspace]
-  tags                = azurerm_resource_group.rg.tags
+  tags                = data.azurerm_resource_group.rg.tags
 }
 
 resource "azurerm_linux_web_app" "linux-web-app" {
   name                = var.web_app_name[terraform.workspace]
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
   service_plan_id     = azurerm_service_plan.service-plan.id
 
   app_settings = {
@@ -30,5 +30,5 @@ resource "azurerm_linux_web_app" "linux-web-app" {
     }
   }
 
-  tags = azurerm_resource_group.rg.tags
+  tags = data.azurerm_resource_group.rg.tags
 }

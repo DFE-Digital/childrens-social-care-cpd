@@ -1,44 +1,44 @@
 resource "azurerm_virtual_network" "vnet1" {
   name                = var.vnet_name[terraform.workspace]
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
   address_space       = [var.vnet_address_space[terraform.workspace]]
-  tags                = azurerm_resource_group.rg.tags
+  tags                = data.azurerm_resource_group.rg.tags
 }
 
 resource "azurerm_subnet" "frontend" {
   name                 = var.vnet_frontend_name[terraform.workspace]
-  resource_group_name  = azurerm_resource_group.rg.name
+  resource_group_name  = data.azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.vnet1.name
   address_prefixes     = [var.vnet_frontend_prefixes[terraform.workspace]]
 }
 
 resource "azurerm_subnet" "backend" {
   name                                          = var.vnet_backend_name[terraform.workspace]
-  resource_group_name                           = azurerm_resource_group.rg.name
+  resource_group_name                           = data.azurerm_resource_group.rg.name
   virtual_network_name                          = azurerm_virtual_network.vnet1.name
   address_prefixes                              = [var.vnet_backend_prefixes[terraform.workspace]]
   private_link_service_network_policies_enabled = false
 }
 
-resource "azurerm_public_ip" "pip1" {
+data "azurerm_public_ip" "pip1" {
   name                = var.pip_name[terraform.workspace]
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
-  allocation_method   = "Static"
-  sku                 = "Standard"
+  resource_group_name = data.azurerm_resource_group.rg.name
+  # location            = data.azurerm_resource_group.rg.location
+  # allocation_method   = "Static"
+  # sku                 = "Standard"
 
   # lifecycle {
   #   prevent_destroy = true
   # }
 
-  tags = azurerm_resource_group.rg.tags
+  # tags = data.azurerm_resource_group.rg.tags
 }
 
 resource "azurerm_network_interface" "nic" {
   name                = var.nic_name[terraform.workspace]
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
 
   ip_configuration {
     name                          = var.network_nic_ip_conf_name[terraform.workspace]
@@ -46,7 +46,7 @@ resource "azurerm_network_interface" "nic" {
     private_ip_address_allocation = "Dynamic"
   }
 
-  tags = azurerm_resource_group.rg.tags
+  tags = data.azurerm_resource_group.rg.tags
 }
 
 resource "azurerm_network_interface_application_gateway_backend_address_pool_association" "nic-assoc01" {

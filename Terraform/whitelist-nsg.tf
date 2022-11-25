@@ -29,7 +29,7 @@ resource "azurerm_network_security_rule" "whitelist-rules" {
   destination_port_range      = "*"
   source_address_prefix       = local.ips[count.index]
   destination_address_prefix  = "*"
-  resource_group_name         = azurerm_resource_group.rg.name
+  resource_group_name         = data.azurerm_resource_group.rg.name
   network_security_group_name = azurerm_network_security_group.nsg.name
 }
 
@@ -44,6 +44,6 @@ resource "azurerm_network_security_rule" "dev-whitelist-rules" {
   destination_port_range      = "*"
   source_address_prefix       = local.dev-ips[count.index]
   destination_address_prefix  = "*"
-  resource_group_name         = azurerm_resource_group.rg.name
+  resource_group_name         = data.azurerm_resource_group.rg.name
   network_security_group_name = azurerm_network_security_group.nsg.name
 }

@@ -26,8 +26,6 @@ No modules.
 | [azurerm_network_security_rule.dev-whitelist-rules](https://registry.terraform.io/providers/hashicorp/azurerm/3.29.1/docs/resources/network_security_rule) | resource |
 | [azurerm_network_security_rule.nsg-rule-03](https://registry.terraform.io/providers/hashicorp/azurerm/3.29.1/docs/resources/network_security_rule) | resource |
 | [azurerm_network_security_rule.whitelist-rules](https://registry.terraform.io/providers/hashicorp/azurerm/3.29.1/docs/resources/network_security_rule) | resource |
-| [azurerm_public_ip.pip1](https://registry.terraform.io/providers/hashicorp/azurerm/3.29.1/docs/resources/public_ip) | resource |
-| [azurerm_resource_group.rg](https://registry.terraform.io/providers/hashicorp/azurerm/3.29.1/docs/resources/resource_group) | resource |
 | [azurerm_service_plan.service-plan](https://registry.terraform.io/providers/hashicorp/azurerm/3.29.1/docs/resources/service_plan) | resource |
 | [azurerm_subnet.backend](https://registry.terraform.io/providers/hashicorp/azurerm/3.29.1/docs/resources/subnet) | resource |
 | [azurerm_subnet.frontend](https://registry.terraform.io/providers/hashicorp/azurerm/3.29.1/docs/resources/subnet) | resource |
@@ -37,6 +35,8 @@ No modules.
 | [azurerm_key_vault.kv](https://registry.terraform.io/providers/hashicorp/azurerm/3.29.1/docs/data-sources/key_vault) | data source |
 | [azurerm_key_vault_secret.dev-ips](https://registry.terraform.io/providers/hashicorp/azurerm/3.29.1/docs/data-sources/key_vault_secret) | data source |
 | [azurerm_key_vault_secret.ips](https://registry.terraform.io/providers/hashicorp/azurerm/3.29.1/docs/data-sources/key_vault_secret) | data source |
+| [azurerm_public_ip.pip1](https://registry.terraform.io/providers/hashicorp/azurerm/3.29.1/docs/data-sources/public_ip) | data source |
+| [azurerm_resource_group.rg](https://registry.terraform.io/providers/hashicorp/azurerm/3.29.1/docs/data-sources/resource_group) | data source |
 
 ## Inputs
 
