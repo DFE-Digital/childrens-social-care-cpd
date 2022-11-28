@@ -19,7 +19,9 @@ No modules.
 | Name | Type |
 |------|------|
 | [azurerm_application_gateway.appgw](https://registry.terraform.io/providers/hashicorp/azurerm/3.29.1/docs/resources/application_gateway) | resource |
+| [azurerm_application_insights.appinsights](https://registry.terraform.io/providers/hashicorp/azurerm/3.29.1/docs/resources/application_insights) | resource |
 | [azurerm_linux_web_app.linux-web-app](https://registry.terraform.io/providers/hashicorp/azurerm/3.29.1/docs/resources/linux_web_app) | resource |
+| [azurerm_log_analytics_workspace.log-analytics-ws](https://registry.terraform.io/providers/hashicorp/azurerm/3.29.1/docs/resources/log_analytics_workspace) | resource |
 | [azurerm_network_interface.nic](https://registry.terraform.io/providers/hashicorp/azurerm/3.29.1/docs/resources/network_interface) | resource |
 | [azurerm_network_interface_application_gateway_backend_address_pool_association.nic-assoc01](https://registry.terraform.io/providers/hashicorp/azurerm/3.29.1/docs/resources/network_interface_application_gateway_backend_address_pool_association) | resource |
 | [azurerm_network_security_group.nsg](https://registry.terraform.io/providers/hashicorp/azurerm/3.29.1/docs/resources/network_security_group) | resource |
@@ -45,6 +47,7 @@ No modules.
 | <a name="input_appgw_name"></a> [appgw\_name](#input\_appgw\_name) | Name of the Application Gateway | `map(string)` | <pre>{<br>  "Dev": "s185d01-csc-cpd-app-gateway",<br>  "Pre-Prod": "s185t01-csc-cpd-app-gateway",<br>  "Prod": "s185p01-csc-cpd-app-gateway",<br>  "Test": "s185d02-csc-cpd-app-gateway"<br>}</pre> | no |
 | <a name="input_appgw_probe"></a> [appgw\_probe](#input\_appgw\_probe) | Name of App Gateway Health Probe | `map(string)` | <pre>{<br>  "Dev": "s185d01AGProbe",<br>  "Pre-Prod": "s185t01AGProbe",<br>  "Prod": "s185p01AGProbe",<br>  "Test": "s185d02AGProbe"<br>}</pre> | no |
 | <a name="input_appgw_tier"></a> [appgw\_tier](#input\_appgw\_tier) | SKU for Application Gateway Tier | `map(string)` | <pre>{<br>  "Dev": "Standard_v2",<br>  "Pre-Prod": "Standard_v2",<br>  "Prod": "WAF_v2",<br>  "Test": "Standard_v2"<br>}</pre> | no |
+| <a name="input_appinsights_name"></a> [appinsights\_name](#input\_appinsights\_name) | Name of Appplication Insights | `map(string)` | <pre>{<br>  "Dev": "s185d01AppInsights",<br>  "Pre-Prod": "s185t01AppInsights",<br>  "Prod": "s185p01AppInsights",<br>  "Test": "s185d02AppInsights"<br>}</pre> | no |
 | <a name="input_backend_address_pool_name"></a> [backend\_address\_pool\_name](#input\_backend\_address\_pool\_name) | Name of Backend Address Pool | `map(string)` | <pre>{<br>  "Dev": "s185d01BackendPool",<br>  "Pre-Prod": "s185t01BackendPool",<br>  "Prod": "s185p01BackendPool",<br>  "Test": "s185d02BackendPool"<br>}</pre> | no |
 | <a name="input_cpd_client_id"></a> [cpd\_client\_id](#input\_cpd\_client\_id) | Client ID used by the application to access Key Vault in Azure | `string` | n/a | yes |
 | <a name="input_cpd_client_secret"></a> [cpd\_client\_secret](#input\_cpd\_client\_secret) | Secret used by the application to access Key Vault in Azure | `string` | n/a | yes |
@@ -54,6 +57,7 @@ No modules.
 | <a name="input_gateway_ip_configuration"></a> [gateway\_ip\_configuration](#input\_gateway\_ip\_configuration) | Name of Gateway IP Configuration | `map(string)` | <pre>{<br>  "Dev": "s185d01-gateway-ip-configuration",<br>  "Pre-Prod": "s185t01-gateway-ip-configuration",<br>  "Prod": "s185p01-gateway-ip-configuration",<br>  "Test": "s185d02-gateway-ip-configuration"<br>}</pre> | no |
 | <a name="input_http_setting_name"></a> [http\_setting\_name](#input\_http\_setting\_name) | Name of HTTP Setting | `map(string)` | <pre>{<br>  "Dev": "s185d01HTTPsetting",<br>  "Pre-Prod": "s185t01HTTPsetting",<br>  "Prod": "s185p01HTTPsetting",<br>  "Test": "s185d02HTTPsetting"<br>}</pre> | no |
 | <a name="input_listener_name"></a> [listener\_name](#input\_listener\_name) | Name of HTTP Listener | `map(string)` | <pre>{<br>  "Dev": "s185d01Listener",<br>  "Pre-Prod": "s185t01Listener",<br>  "Prod": "s185p01Listener",<br>  "Test": "s185d02Listener"<br>}</pre> | no |
+| <a name="input_log_analytics_ws_name"></a> [log\_analytics\_ws\_name](#input\_log\_analytics\_ws\_name) | Name of Log Analytics Workspace | `map(string)` | <pre>{<br>  "Dev": "s185d01LogAnalyticsWS",<br>  "Pre-Prod": "s185t01LogAnalyticsWS",<br>  "Prod": "s185p01LogAnalyticsWS",<br>  "Test": "s185d02LogAnalyticsWS"<br>}</pre> | no |
 | <a name="input_network_nic_ip_conf_name"></a> [network\_nic\_ip\_conf\_name](#input\_network\_nic\_ip\_conf\_name) | Name of NIC IP Configuration | `map(string)` | <pre>{<br>  "Dev": "s185d01nic-ipconfig-1",<br>  "Pre-Prod": "s185t01nic-ipconfig-1",<br>  "Prod": "s185p01nic-ipconfig-1",<br>  "Test": "s185d02nic-ipconfig-1"<br>}</pre> | no |
 | <a name="input_nic_name"></a> [nic\_name](#input\_nic\_name) | Name of Network Interface | `map(string)` | <pre>{<br>  "Dev": "s185d01nic-1",<br>  "Pre-Prod": "s185t01nic-1",<br>  "Prod": "s185p01nic-1",<br>  "Test": "s185d02nic-1"<br>}</pre> | no |
 | <a name="input_nsg_name"></a> [nsg\_name](#input\_nsg\_name) | Name of Network Security Group | `map(string)` | <pre>{<br>  "Dev": "s185d01-chidrens-social-care-cpd-sn01-nsg",<br>  "Pre-Prod": "s185t01-chidrens-social-care-cpd-sn01-nsg",<br>  "Prod": "s185p01-chidrens-social-care-cpd-sn01-nsg",<br>  "Test": "s185d02-chidrens-social-care-cpd-sn01-nsg"<br>}</pre> | no |
@@ -77,4 +81,6 @@ No modules.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_app_id"></a> [app\_id](#output\_app\_id) | n/a |
+| <a name="output_instrumentation_key"></a> [instrumentation\_key](#output\_instrumentation\_key) | n/a |
 | <a name="output_public_ip_address"></a> [public\_ip\_address](#output\_public\_ip\_address) | n/a |
