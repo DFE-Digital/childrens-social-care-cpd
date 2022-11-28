@@ -285,6 +285,28 @@ variable "request_routing_rule_name" {
   description = "Name of Request Routing Rule"
 }
 
+variable "appinsights_name" {
+  type = map(string)
+  default = {
+    Dev      = "s185d01AppInsights"
+    Test     = "s185d02AppInsights"
+    Pre-Prod = "s185t01AppInsights"
+    Prod     = "s185p01AppInsights"
+  }
+  description = "Name of Appplication Insights"
+}
+
+variable "log_analytics_ws_name" {
+  type = map(string)
+  default = {
+    Dev      = "s185d01LogAnalyticsWS"
+    Test     = "s185d02LogAnalyticsWS"
+    Pre-Prod = "s185t01LogAnalyticsWS"
+    Prod     = "s185p01LogAnalyticsWS"
+  }
+  description = "Name of Log Analytics Workspace"
+}
+
 variable "tenant_id" {
   type        = string
   sensitive   = true
