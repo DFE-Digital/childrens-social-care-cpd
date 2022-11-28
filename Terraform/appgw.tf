@@ -19,6 +19,11 @@ resource "azurerm_application_gateway" "appgw" {
     port = 80
   }
 
+  frontend_port {
+    name = var.frontend_ssl_port_name[terraform.workspace]
+    port = 443
+  }
+
   frontend_ip_configuration {
     name                 = var.frontend_ip_configuration_name[terraform.workspace]
     public_ip_address_id = data.azurerm_public_ip.pip1.id
@@ -39,6 +44,16 @@ resource "azurerm_application_gateway" "appgw" {
     request_timeout                     = 60
   }
 
+  backend_http_settings {
+    name                                = var.https_setting_name[terraform.workspace]
+    pick_host_name_from_backend_address = true
+    cookie_based_affinity               = "Disabled"
+    path                                = "/"
+    port                                = 443
+    protocol                            = "Https"
+    request_timeout                     = 60
+  }
+
   http_listener {
     name                           = var.listener_name[terraform.workspace]
     frontend_ip_configuration_name = var.frontend_ip_configuration_name[terraform.workspace]
@@ -46,11 +61,38 @@ resource "azurerm_application_gateway" "appgw" {
     protocol                       = "Http"
   }
 
+  http_listener {
+    name                           = var.ssl_listener_name[terraform.workspace]
+    frontend_ip_configuration_name = var.frontend_ip_configuration_name[terraform.workspace]
+    frontend_port_name             = var.frontend_ssl_port_name[terraform.workspace]
+    protocol                       = "Https"
+    ssl_certificate_name           = "develop-child-family-social-work-career"
+  }
+
+  identity {
+    type         = "UserAssigned"
+    identity_ids = [azurerm_user_assigned_identity.uai.id]
+  }
+
+  ssl_certificate {
+    name                = "develop-child-family-social-work-career"
+    key_vault_secret_id = "https://cpd-key-vault.vault.azure.net/secrets/develop-child-family-social-work-career"
+  }
+
   request_routing_rule {
     name                       = var.request_routing_rule_name[terraform.workspace]
     rule_type                  = "Basic"
     priority                   = 2000
     http_listener_name         = var.listener_name[terraform.workspace]
+    backend_address_pool_name  = var.backend_address_pool_name[terraform.workspace]
+    backend_http_settings_name = var.http_setting_name[terraform.workspace]
+  }
+
+  request_routing_rule {
+    name                       = var.request_ssl_routing_rule_name[terraform.workspace]
+    rule_type                  = "Basic"
+    priority                   = 2001
+    http_listener_name         = var.ssl_listener_name[terraform.workspace]
     backend_address_pool_name  = var.backend_address_pool_name[terraform.workspace]
     backend_http_settings_name = var.http_setting_name[terraform.workspace]
   }
@@ -63,6 +105,16 @@ resource "azurerm_application_gateway" "appgw" {
     timeout                                   = 30
     unhealthy_threshold                       = 3
     protocol                                  = "Http"
+  }
+
+  probe {
+    name                                      = var.appgw_ssl_probe[terraform.workspace]
+    pick_host_name_from_backend_http_settings = true
+    path                                      = "/"
+    interval                                  = 30
+    timeout                                   = 30
+    unhealthy_threshold                       = 3
+    protocol                                  = "Https"
   }
 
   private_link_configuration {
