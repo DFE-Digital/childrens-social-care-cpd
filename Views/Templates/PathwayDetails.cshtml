@@ -1,131 +1,114 @@
 ﻿@using Contentful.Core.Models;
+@using Microsoft.AspNetCore.Html;
+@using System.Text
 @model PageViewModel;
-@{
-    ViewData["Title"] = "Home Page";
-}
 
 @if (Model != null)
 {
-
-    <div class="govuk-width-container ">
-        <div class="govuk-breadcrumbs">
-            <ol class="govuk-breadcrumbs__list">
-                <li class="govuk-breadcrumbs__list-item">
-                    <a class="govuk-breadcrumbs__link" href="home">Home</a>
-                </li>
-        </ol>
-        </div>
-
-
+    <div class="govuk-width-container">
         <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
-
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-two-thirds">
-                    <span class="govuk-caption-l">Practice supervisors</span>
-                    <h1 class="govuk-heading-xl">Pathway 1: practice supervisors</h1>
+                    @if (!String.IsNullOrEmpty(@Model.PageSubHeading))
+                    {
+                        <span class="govuk-caption-l">@Model.PageSubHeading</span>
+                    }
+                     @if (!String.IsNullOrEmpty(@Model.PageHeading))
+                    {
+                        <h1 class="govuk-heading-xl">@Model.PageHeading</h1>
+                    }
                 </div>
             </div>
-
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-two-thirds">
                     <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row">
-                        <dt class="govuk-summary-list__key">
-                            For
-                        </dt>
-                        <dd class="govuk-summary-list__value">
-                            Practice supervisors, senior or consultant social workers, assistant team managers, advanced practitioners, practice educators
-                        </dd>
+                        @foreach (var label in @Model.Labels)
+                        {
+                            <div class="govuk-summary-list__row">
+                                <dt class="govuk-summary-list__key">@label.labelHeading</dt>
+                                @if (@label.LabelType == "Text")
+                                {
+                                   <dd>@label.LabelText</dd>
+                                }
+                                else
+                                {
+                                  <dd><a class="govuk-!-font-size-19" href="@{@label.LabelTextLink}">@label.LabelText</a></dd>
+                                }
+                            </div>
+                        }
+                    </dl>
+                    @foreach(var richText in @Model.RichTexts) 
+                    {
+                        @if(!String.IsNullOrEmpty(@richText.Heading))
+                        {
+                            <h2 class="govuk-heading-l">@richText.Heading</h2>
+                        }
+
+                        @foreach (IContent node in @richText.RichTextContents.Content)
+                        {
+                            switch (node)
+                            {
+                                case Contentful.Core.Models.Paragraph paragraph:
+
+                                    if (@paragraph.Content.Any(c => c.GetType() == typeof(Hyperlink)))
+                                    {
+                                        StringBuilder contentBuilder = new StringBuilder();
+                                        @foreach (var content in @paragraph.Content)
+                                        {
+                                            if (@content.GetType() == typeof(Text))
+                                            {
+                                                contentBuilder.Append((((Contentful.Core.Models.Text)@content).Value));
+                                            }
+                                            if (@content.GetType() == typeof(Hyperlink))
+                                            {
+                                                var linkElement = ((Contentful.Core.Models.Hyperlink)@content);
+                                                var linkText = ((Contentful.Core.Models.Text)(linkElement).Content[0]).Value;
+                                                contentBuilder.Append(String.Format(("<a href={0}>{1}</a>"), linkElement.Data.Uri, linkText));
+                                            }
+                                        }
+
+                                        @Html.Raw(String.Format("<p class={0}>{1}</p>","govuk-body-m",@contentBuilder.ToString()));
+                                    }
+                                    else
+                                    {
+                                        @foreach (var content in @paragraph.Content)
+                                        {
+                                            if (@content.GetType() == typeof(Text))
+                                            {
+
+                                                <p class="govuk-body-m">@(((Contentful.Core.Models.Text)@content).Value)</p>
+                                            }
+                                           
+                                        }
+                                    }
+
+                                    break;
+                                case Contentful.Core.Models.List list:
+
+                                    @if (@list.Content.Count > 0)
+                                    {
+                                        <ul class="govuk-list govuk-list--bullet">
+
+                                            @foreach (var link in @list.Content)
+                                            {
+                                                var innerElement = (Contentful.Core.Models.Paragraph)(((Contentful.Core.Models.ListItem)@link).Content[0]);
+                                                <li>@(((Contentful.Core.Models.Text)@innerElement.Content[0]).Value)</li>
+                                            }
+
+                                        </ul>
+                                    }
+
+                                    break;
+                            }
+
+                        }
+
+                    }
+
+
                 </div>
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">
-                        Duration
-                    </dt>
-                    <dd class="govuk-summary-list__value">
-                        3 months
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">
-                        Time commitment
-                    </dt>
-                    <dd class="govuk-summary-list__value">
-                        About 4 days (including a residential component)
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">
-                        Cost
-                    </dt>
-                    <dd class="govuk-summary-list__value">
-                        <p class="govuk-body">Free (except for travel for the residential component)</p>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">
-                        Website
-                    </dt>
-                    <dd class="govuk-summary-list__value">
-                        <a class="govuk-!-font-size-19" href="https://thefrontline.org.uk/pathways-programme/">Frontline</a>
-                    </dd>
-                </div>
-                </dl>
-                <h2 class="govuk-heading-l">Who it’s for</h2>
-                <p class="govuk-body-m">Pathway 1 is for senior social workers who supervise the day-to-day work of child and family practitioners.</p>
-                <h2 class="govuk-heading-l">What you’ll learn</h2>
-                <p class="govuk-body-m">Pathway 1 will help you develop excellent social work practice and leadership in others, with a focus on:</p>
-                <ul class="govuk-list govuk-list--bullet">
-                    <li>prioritising the mental health and wellbeing of practitioners</li>
-                    <li>promoting a team culture of open and honest feedback</li>
-                    <li>putting in place high-quality reflective supervision</li>
-                    <li>managing competing demands</li>
-                </ul>
-                <h2 class="govuk-heading-l">What you’ll get</h2>
-                <p class="govuk-body-m">When you finish Pathway 1 you’ll get:</p>
-                <ul class="govuk-list govuk-list--bullet">
-                    <li>a certificate which can contribute towards your continuous professional development (CPD) hours</li>
-                    <li>ongoing access to the practice supervisor network to support your development</li>
-                </ul>
-                <p class="govuk-body-m">It also prepares you for accessing Pathway 2 for middle managers.</p>
-                <h2 class="govuk-heading-l">How it’s delivered</h2>
-                <p class="govuk-body-m">Pathway 1 has a time commitment of about 4 days spread over 4 months.</p>
-                <p class="govuk-body-m">It combines online and in-person learning, including:</p>
-                <ul class="govuk-list govuk-list--bullet">
-                    <li>a residential component at the University of Warwick (2 days)</li>
-                    <li>3 one-to-one coaching sessions (1.5 hours each)</li>
-                    <li>2 online workshops (3 hours each)</li>
-                    <li>2 self-directed study sessions (1.5 hours)</li>
-                </ul>
-                <h2 class="govuk-heading-l">Funding</h2>
-                <p class="govuk-body-m">Pathway 1 is fully funded by the Department for Education.</p>
-                <p class="govuk-body-m">However, travel costs for the residential component are the responsibility of your employer.</p>
-                <h2 class="govuk-heading-l">How to apply</h2>
-                <p class="govuk-body-m">Speak to your line manager to get support for you doing Pathway 1.</p>
-                <p class="govuk-body-m"><a href="https://thefrontline.org.uk/pathways-programme/pathways-programme-apply/">Apply for Pathway 1 for practice supervisors</a> on the Frontline website.</p>
             </div>
 
-            <!--RIGHT HAND NAV -->
-        <div class="govuk-grid-column-one-third govuk-!-padding-left-7">
-
-                <!-- SHOW IF GROUPING IS NEWLY QUALIFIED SOCIAL WORKERS ('NQ') -->
-                <!-- SHOW IF GROUPING IS PRACTITIONERS ('P') -->
-
-            <aside class="app-related-items" role="complementary">
-                    <h2 class="govuk-heading-s">
-                        Social work post-qualifying standards
-                    </h2>
-                    <nav role="navigation" aria-labelledby="related-nav__section">
-                        <ul class="govuk-list govuk-!-font-size-16">
-                            <li>
-                                <a href="https://www.gov.uk/government/publications/knowledge-and-skills-statements-for-child-and-family-social-work">
-                                    Knowledge and skills statements
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </aside>
-        </div>
-   
-            </main>
-          </div>
+        </main>
+    </div>
 }

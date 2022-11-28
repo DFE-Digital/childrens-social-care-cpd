@@ -23,6 +23,9 @@
             case PageTypes.Programmes:
                  {await Html.RenderPartialAsync("../Templates/Programmes",@pageViewModel);}
                 break;
+            case PageTypes.PathwayDetails:
+                 {await Html.RenderPartialAsync("../Templates/PathwayDetails",@pageViewModel);}
+                break;
             default:
                 break;
         }
