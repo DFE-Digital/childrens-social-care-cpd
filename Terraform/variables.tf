@@ -288,10 +288,10 @@ variable "request_routing_rule_name" {
 variable "appinsights_name" {
   type = map(string)
   default = {
-    Dev      = "s185d01AppInsights"
-    Test     = "s185d02AppInsights"
-    Pre-Prod = "s185t01AppInsights"
-    Prod     = "s185p01AppInsights"
+    Dev      = "s185d01-chidrens-social-care-cpd-ai"
+    Test     = "s185d02-chidrens-social-care-cpd-ai"
+    Pre-Prod = "s185t01-chidrens-social-care-cpd-ai"
+    Prod     = "s185p01-chidrens-social-care-cpd-ai"
   }
   description = "Name of Appplication Insights"
 }
@@ -299,10 +299,10 @@ variable "appinsights_name" {
 variable "log_analytics_ws_name" {
   type = map(string)
   default = {
-    Dev      = "s185d01LogAnalyticsWS"
-    Test     = "s185d02LogAnalyticsWS"
-    Pre-Prod = "s185t01LogAnalyticsWS"
-    Prod     = "s185p01LogAnalyticsWS"
+    Dev      = "s185d01-chidrens-social-care-cpd-la"
+    Test     = "s185d02-chidrens-social-care-cpd-la"
+    Pre-Prod = "s185t01-chidrens-social-care-cpd-la"
+    Prod     = "s185p01-chidrens-social-care-cpd-la"
   }
   description = "Name of Log Analytics Workspace"
 }
