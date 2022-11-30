@@ -307,6 +307,17 @@ variable "listener_name" {
   description = "Name of HTTP Listener"
 }
 
+variable "redirect_config_name" {
+  type = map(string)
+  default = {
+    Dev      = "s185d01Redirect"
+    Test     = "s185d02Redirect"
+    Pre-Prod = "s185t01Redirect"
+    Prod     = "s185p01Redirect"
+  }
+  description = "Name of the redirect configuration"
+}
+
 variable "ssl_listener_name" {
   type = map(string)
   default = {
@@ -339,7 +350,6 @@ variable "request_ssl_routing_rule_name" {
   }
   description = "Name of Request SSL Routing Rule"
 }
-
 
 variable "appinsights_name" {
   type = map(string)
@@ -384,5 +394,5 @@ variable "cpd_client_secret" {
 variable "cpd_keyvaultendpoint" {
   type        = string
   sensitive   = true
-  description = "URL Endpoitn for Key Vault in Azure"
+  description = "URL Endpoint for Key Vault in Azure"
 }

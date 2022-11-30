@@ -34,15 +34,15 @@ resource "azurerm_application_gateway" "appgw" {
     fqdns = [azurerm_linux_web_app.linux-web-app.default_hostname]
   }
 
-  backend_http_settings {
-    name                                = var.http_setting_name[terraform.workspace]
-    pick_host_name_from_backend_address = true
-    cookie_based_affinity               = "Disabled"
-    path                                = "/"
-    port                                = 80
-    protocol                            = "Http"
-    request_timeout                     = 60
-  }
+  # backend_http_settings {
+  #   name                                = var.http_setting_name[terraform.workspace]
+  #   pick_host_name_from_backend_address = true
+  #   cookie_based_affinity               = "Disabled"
+  #   path                                = "/"
+  #   port                                = 80
+  #   protocol                            = "Http"
+  #   request_timeout                     = 60
+  # }
 
   backend_http_settings {
     name                                = var.https_setting_name[terraform.workspace]
@@ -79,13 +79,22 @@ resource "azurerm_application_gateway" "appgw" {
     key_vault_secret_id = "https://cpd-key-vault.vault.azure.net/secrets/develop-child-family-social-work-career"
   }
 
+  redirect_configuration {
+    name                 = var.redirect_config_name[terraform.workspace]
+    redirect_type        = "Permanent"
+    include_path         = true
+    include_query_string = true
+    target_listener_name = var.ssl_listener_name[terraform.workspace]
+  }
+
   request_routing_rule {
-    name                       = var.request_routing_rule_name[terraform.workspace]
-    rule_type                  = "Basic"
-    priority                   = 2000
-    http_listener_name         = var.listener_name[terraform.workspace]
-    backend_address_pool_name  = var.backend_address_pool_name[terraform.workspace]
-    backend_http_settings_name = var.http_setting_name[terraform.workspace]
+    name                        = var.request_routing_rule_name[terraform.workspace]
+    rule_type                   = "Basic"
+    redirect_configuration_name = var.redirect_config_name[terraform.workspace]
+    priority                    = 2000
+    http_listener_name          = var.listener_name[terraform.workspace]
+    # backend_address_pool_name  = var.backend_address_pool_name[terraform.workspace]
+    # backend_http_settings_name = var.http_setting_name[terraform.workspace]
   }
 
   request_routing_rule {
