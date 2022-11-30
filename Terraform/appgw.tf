@@ -79,6 +79,10 @@ resource "azurerm_application_gateway" "appgw" {
     key_vault_secret_id = "https://cpd-key-vault.vault.azure.net/secrets/develop-child-family-social-work-career"
   }
 
+  ssl_policy {
+    disabled_protocols = ["TLSv1_0", "TLSv1_1"]
+  }
+
   redirect_configuration {
     name                 = var.redirect_config_name[terraform.workspace]
     redirect_type        = "Permanent"
