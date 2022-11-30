@@ -71,7 +71,7 @@ resource "azurerm_application_gateway" "appgw" {
 
   identity {
     type         = "UserAssigned"
-    identity_ids = [azurerm_user_assigned_identity.uai.id]
+    identity_ids = [data.azurerm_user_assigned_identity.uai.id]
   }
 
   ssl_certificate {
@@ -94,7 +94,7 @@ resource "azurerm_application_gateway" "appgw" {
     priority                   = 2001
     http_listener_name         = var.ssl_listener_name[terraform.workspace]
     backend_address_pool_name  = var.backend_address_pool_name[terraform.workspace]
-    backend_http_settings_name = var.http_setting_name[terraform.workspace]
+    backend_http_settings_name = var.https_setting_name[terraform.workspace]
   }
 
   probe {
