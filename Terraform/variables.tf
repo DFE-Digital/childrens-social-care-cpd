@@ -185,6 +185,17 @@ variable "appgw_probe" {
   description = "Name of App Gateway Health Probe"
 }
 
+variable "appgw_ssl_probe" {
+  type = map(string)
+  default = {
+    Dev      = "s185d01AGSSLProbe"
+    Test     = "s185d02AGSSLProbe"
+    Pre-Prod = "s185t01AGSSLProbe"
+    Prod     = "s185p01AGSSLProbe"
+  }
+  description = "Name of App Gateway SSL Health Probe"
+}
+
 variable "private_link_ip_conf_name" {
   type = map(string)
   default = {
@@ -241,6 +252,17 @@ variable "frontend_port_name" {
   description = "Name of Frontend Port"
 }
 
+variable "frontend_ssl_port_name" {
+  type = map(string)
+  default = {
+    Dev      = "s185d01FrontendSSLPort"
+    Test     = "s185d02FrontendSSLPort"
+    Pre-Prod = "s185t01FrontendSSLPort"
+    Prod     = "s185p01FrontendSSLPort"
+  }
+  description = "Name of Frontend SSL Port"
+}
+
 variable "frontend_ip_configuration_name" {
   type = map(string)
   default = {
@@ -263,6 +285,17 @@ variable "http_setting_name" {
   description = "Name of HTTP Setting"
 }
 
+variable "https_setting_name" {
+  type = map(string)
+  default = {
+    Dev      = "s185d01HTTPSsetting"
+    Test     = "s185d02HTTPSsetting"
+    Pre-Prod = "s185t01HTTPSsetting"
+    Prod     = "s185p01HTTPSsetting"
+  }
+  description = "Name of HTTPS Setting"
+}
+
 variable "listener_name" {
   type = map(string)
   default = {
@@ -272,6 +305,17 @@ variable "listener_name" {
     Prod     = "s185p01Listener"
   }
   description = "Name of HTTP Listener"
+}
+
+variable "ssl_listener_name" {
+  type = map(string)
+  default = {
+    Dev      = "s185d01SSLListener"
+    Test     = "s185d02SSLListener"
+    Pre-Prod = "s185t01SSLListener"
+    Prod     = "s185p01SSLListener"
+  }
+  description = "Name of SSL HTTPS Listener"
 }
 
 variable "request_routing_rule_name" {
@@ -285,13 +329,25 @@ variable "request_routing_rule_name" {
   description = "Name of Request Routing Rule"
 }
 
+variable "request_ssl_routing_rule_name" {
+  type = map(string)
+  default = {
+    Dev      = "s185d01SSLRoutingRule"
+    Test     = "s185d02SSLRoutingRule"
+    Pre-Prod = "s185t01SSLRoutingRule"
+    Prod     = "s185p01SSLRoutingRule"
+  }
+  description = "Name of Request SSL Routing Rule"
+}
+
+
 variable "appinsights_name" {
   type = map(string)
   default = {
-    Dev      = "s185d01AppInsights"
-    Test     = "s185d02AppInsights"
-    Pre-Prod = "s185t01AppInsights"
-    Prod     = "s185p01AppInsights"
+    Dev      = "s185d01-chidrens-social-care-cpd-ai"
+    Test     = "s185d02-chidrens-social-care-cpd-ai"
+    Pre-Prod = "s185t01-chidrens-social-care-cpd-ai"
+    Prod     = "s185p01-chidrens-social-care-cpd-ai"
   }
   description = "Name of Appplication Insights"
 }
@@ -299,10 +355,10 @@ variable "appinsights_name" {
 variable "log_analytics_ws_name" {
   type = map(string)
   default = {
-    Dev      = "s185d01LogAnalyticsWS"
-    Test     = "s185d02LogAnalyticsWS"
-    Pre-Prod = "s185t01LogAnalyticsWS"
-    Prod     = "s185p01LogAnalyticsWS"
+    Dev      = "s185d01-chidrens-social-care-cpd-la"
+    Test     = "s185d02-chidrens-social-care-cpd-la"
+    Pre-Prod = "s185t01-chidrens-social-care-cpd-la"
+    Prod     = "s185p01-chidrens-social-care-cpd-la"
   }
   description = "Name of Log Analytics Workspace"
 }
