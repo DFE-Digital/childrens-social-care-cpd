@@ -81,7 +81,7 @@ resource "azurerm_application_gateway" "appgw" {
 
   ssl_policy {
     min_protocol_version = "TLSv1_2"
-    disabled_protocols   = ["TLSv1_2", "TLSv1_1"]
+    disabled_protocols   = ["TLSv1_0", "TLSv1_1"]
   }
 
   redirect_configuration {
