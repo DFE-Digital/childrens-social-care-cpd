@@ -99,6 +99,18 @@
                                     }
 
                                     break;
+
+                                    case Contentful.Core.Models.Heading2 heading2:
+
+                                     @foreach (var content in @heading2.Content)
+                                        {
+                                            if (@content.GetType() == typeof(Text))
+                                            {
+                                               <h2 class="govuk-heading-m">@(((Contentful.Core.Models.Text)@content).Value)</h2>
+                                            }
+                                        }
+
+                                    break;
                             }
 
                         }
