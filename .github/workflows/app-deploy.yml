@@ -1,11 +1,26 @@
 name: App Deploy
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      workspace:
+        description: 'Environment to deploy to on Azure'
+        required: true
+        default: 'Dev'
+        type: choice
+        options:
+          - Dev
+          - Test
+          - Pre-Prod
+          - Prod
 
 jobs:
   app-deploy:
     runs-on: ubuntu-latest
+    environment: ${{inputs.workspace}}
+
     steps:
+
       - name: Sign in to Azure 
         uses: azure/login@v1
         with:
@@ -15,8 +30,33 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: 's185d01-chidrens-social-care-cpd-app-service'
-          # slot-name: 'dev'
+          # slot-name: 'Dev'
           images: 'ghcr.io/dfe-digital/childrens-social-care-cpd:master'
+        if: ${{ inputs.workspace == 'Dev' }}
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 's185d02-chidrens-social-care-cpd-app-service'
+          # slot-name: 'Test'
+          images: 'ghcr.io/dfe-digital/childrens-social-care-cpd:master'
+        if: ${{ inputs.workspace == 'Test' }}
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 's185t01-chidrens-social-care-cpd-app-service'
+          # slot-name: 'Pre-Prod'
+          images: 'ghcr.io/dfe-digital/childrens-social-care-cpd:master'
+        if: ${{ inputs.workspace == 'Pre-Prod' }}
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 's185p01-chidrens-social-care-cpd-app-service'
+          # slot-name: 'Prod'
+          images: 'ghcr.io/dfe-digital/childrens-social-care-cpd:master'
+        if: ${{ inputs.workspace == 'Prod' }}
 
       - name: Sign out of Azure
         run: |
