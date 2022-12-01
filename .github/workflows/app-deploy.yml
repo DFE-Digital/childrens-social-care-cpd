@@ -17,7 +17,10 @@ on:
 jobs:
   app-deploy:
     runs-on: ubuntu-latest
+    environment: ${{inputs.workspace}}
+
     steps:
+
       - name: Sign in to Azure 
         uses: azure/login@v1
         with:
