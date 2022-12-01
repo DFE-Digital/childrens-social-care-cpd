@@ -17,6 +17,10 @@ namespace Childrens_Social_Care_CPD.Controllers
             this._client = client;
         }
 
+        /// <summary>
+        /// Action filter to get Header and Footer contents
+        /// </summary>
+        /// <param name="filterContext"></param>
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             PageHeader pageHeader = GetHeader();
@@ -28,6 +32,10 @@ namespace Childrens_Social_Care_CPD.Controllers
             ViewBag.PageFooter = pageFooter;
         }
       
+        /// <summary>
+        /// Method to get Footer using Contentful API call
+        /// </summary>
+        /// <returns></returns>
         private PageFooter GetFooter()
         {
             var footerQueryBuilder = QueryBuilder<PageFooter>.New.ContentTypeIs(ContentTypes.PAGEFOOTER);
@@ -47,6 +55,10 @@ namespace Childrens_Social_Care_CPD.Controllers
             return pageFooter;
         }
 
+        /// <summary>
+        /// Method to get Header using Contentful API call
+        /// </summary>
+        /// <returns></returns>
         private PageHeader GetHeader()
         {
             var queryBuilder = QueryBuilder<PageHeader>.New.ContentTypeIs(ContentTypes.PAGEHEADER);
