@@ -7,13 +7,13 @@ data "azurerm_user_assigned_identity" "uai" {
 # resource "azurerm_role_assignment" "uai-assignment" {
 #   scope                = data.azurerm_key_vault.kv.id
 #   role_definition_name = "Reader"
-#   principal_id         = azurerm_user_assigned_identity.uai.principal_id
+#   principal_id         = data.azurerm_user_assigned_identity.uai.principal_id
 # }
 
 # resource "azurerm_key_vault_access_policy" "uai-access-policy" {
 #   key_vault_id = data.azurerm_key_vault.kv.id
 #   tenant_id    = data.azurerm_client_config.current.tenant_id
-#   object_id    = azurerm_user_assigned_identity.uai.principal_id
+#   object_id    = data.azurerm_user_assigned_identity.uai.principal_id
 
 #   key_permissions = [
 #     "Get", "List",
