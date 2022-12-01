@@ -1,0 +1,24 @@
+﻿@using Contentful.Core.Models;
+@model List<Card>
+
+@foreach (var cardGroup in Model.Select((e, i) => new { Card = e, Grouping = (i / 2) }).GroupBy(e => e.Grouping))
+    {
+        <div class='govuk-grid-row'>
+            @foreach (var card in cardGroup.Select(x => x.Card))
+            {
+            <div class='govuk-grid-column-one-half govuk-!-margin-bottom-4'>
+                <div class="section-card">
+                    <h3 class="govuk-heading-m">
+                        @{
+                            var pageName = card.RedirectPageName?.PageName;
+                            var pageType = card.PageType?.PageType;
+                        }
+
+                            @Html.ActionLink(@card.CardHeader,"LandingPage","CPD",new{pageName, pageType }, new { @class= "govuk-link"})
+                        </h3>
+                        <p class="govuk-!-margin-bottom-6">@card.CardContents</p>
+                    </div>
+                </div>
+            }
+        </div>
+    }

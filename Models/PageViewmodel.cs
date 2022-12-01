@@ -14,7 +14,7 @@ namespace Childrens_Social_Care_CPD.Models
 
         public ContentPageType PageType { get; set; }
 
-        public List<Role> Roles { get; set; }
+        public List<Card> Cards { get; set; }
 
         public List<Paragraph> Paragraphs { get; set; }
 

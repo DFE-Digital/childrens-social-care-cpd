@@ -24,9 +24,9 @@
                 </div>
             </div>
 
-            @if (@Model.Roles != null)
+            @if (@Model.Cards != null)
             {
-                { await Html.RenderPartialAsync("../Templates/Role", @Model.Roles); }
+                { await Html.RenderPartialAsync("../Templates/Card", @Model.Cards); }
             }
         </main>
 

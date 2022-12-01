@@ -1,10 +1,10 @@
 ﻿namespace Childrens_Social_Care_CPD.Models
 {
-    public class Role
+    public class Card
     {
-        public string RoleHeader { get; set; }
-        public string RoleContents { get; set; }
-        public string RoleDescription { get; set; }
+        public string CardHeader { get; set; }
+        public string CardContents { get; set; }
+        public string CardDescription { get; set; }
         public int SortOrder { get; set; }
         public ContentPageType PageType { get; set; }
         public RedirectPageName RedirectPageName { get; set; }

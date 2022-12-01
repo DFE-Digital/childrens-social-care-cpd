@@ -36,7 +36,7 @@ namespace Childrens_Social_Care_CPD.Controllers
                 pageViewModel = await GetViewModel(PageName, PageType);
                 foreach (PageViewModel viewModel in pageViewModel)
                 {
-                    viewModel.Roles = viewModel.Roles?.OrderBy(x => x.SortOrder).ToList();
+                    viewModel.Cards = viewModel.Cards?.OrderBy(x => x.SortOrder).ToList();
                     viewModel.Paragraphs = viewModel.Paragraphs?.OrderBy(x => x.SortOrder).ToList();
                     viewModel.Labels = viewModel.Labels?.OrderBy(x => x.SortOrder).ToList();
                     viewModel.RichTexts = viewModel.RichTexts?.OrderBy(x => x.SortOrder).ToList();

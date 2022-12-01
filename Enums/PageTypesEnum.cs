@@ -3,7 +3,7 @@
     public enum PageTypes
     {
         Master,
-        Roles,
+        Cards,
         Programmes,
         RoleDetails,
         PathwayDetails
