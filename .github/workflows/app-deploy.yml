@@ -47,7 +47,8 @@ jobs:
           images: 'ghcr.io/dfe-digital/childrens-social-care-cpd:master'
         if: ${{ inputs.workspace == 'Pre-Prod' }}
 
-      - name: Deploy to Azure Web App'        uses: azure/webapps-deplo'@v2
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
         with:
           app-name: 's185p01-chidrens-social-care-cpd-app-service'
           # slot-name: 'Prod'
