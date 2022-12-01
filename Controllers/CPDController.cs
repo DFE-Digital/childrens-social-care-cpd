@@ -21,21 +21,41 @@ namespace Childrens_Social_Care_CPD.Controllers
             _logger = logger;
             _client = client;
         }
-        
+
+        /// <summary>
+        /// Common method to return any view (page).
+        /// </summary>
+        /// <param name="PageName">Contentful page name</param>
+        /// <param name="PageType">Contentful page type</param>
+        /// <returns>View with required view model based on page type and page name</returns>
         public async Task<IActionResult> LandingPage(string PageName, string PageType)
         {
-            ContentfulCollection<PageViewModel> pageViewModel = await GetViewModel(PageName, PageType);
-            foreach (PageViewModel viewModel in pageViewModel)
+            ContentfulCollection<PageViewModel> pageViewModel = new ContentfulCollection<PageViewModel>();
+            try
             {
-                viewModel.Roles = viewModel.Roles?.OrderBy(x => x.SortOrder).ToList();
-                viewModel.Paragraphs = viewModel.Paragraphs?.OrderBy(x => x.SortOrder).ToList();
-                viewModel.Labels = viewModel.Labels?.OrderBy(x => x.SortOrder).ToList();
-                viewModel.RichTexts = viewModel.RichTexts?.OrderBy(x => x.SortOrder).ToList();
+                pageViewModel = await GetViewModel(PageName, PageType);
+                foreach (PageViewModel viewModel in pageViewModel)
+                {
+                    viewModel.Roles = viewModel.Roles?.OrderBy(x => x.SortOrder).ToList();
+                    viewModel.Paragraphs = viewModel.Paragraphs?.OrderBy(x => x.SortOrder).ToList();
+                    viewModel.Labels = viewModel.Labels?.OrderBy(x => x.SortOrder).ToList();
+                    viewModel.RichTexts = viewModel.RichTexts?.OrderBy(x => x.SortOrder).ToList();
+                }
             }
-            
+            catch (Exception ex)
+            {
+                // To-do - Logging (AppInsights?)
+            }
+
             return View(pageViewModel);
         }
 
+        /// <summary>
+        /// Method to get contentful content using API call
+        /// </summary>
+        /// <param name="pageName">Contentful page name</param>
+        /// <param name="pageType">Contentful page type</param>
+        /// <returns></returns>
         private async Task<ContentfulCollection<PageViewModel>> GetViewModel(string pageName, string pageType)
         {
             int contentLevel = 10;
