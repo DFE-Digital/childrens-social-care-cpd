@@ -29,7 +29,7 @@ jobs:
           app-name: 's185d01-chidrens-social-care-cpd-app-service'
           # slot-name: 'Dev'
           images: 'ghcr.io/dfe-digital/childrens-social-care-cpd:master'
-        if: ${{ inputs.workspace == "Dev" }}
+        if: ${{ inputs.workspace == 'Dev' }}
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
@@ -37,7 +37,7 @@ jobs:
           app-name: 's185d02-chidrens-social-care-cpd-app-service'
           # slot-name: 'Test'
           images: 'ghcr.io/dfe-digital/childrens-social-care-cpd:master'
-        if: ${{ inputs.workspace == "Test" }} 
+        if: ${{ inputs.workspace == 'Test' }}
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
@@ -45,15 +45,14 @@ jobs:
           app-name: 's185t01-chidrens-social-care-cpd-app-service'
           # slot-name: 'Pre-Prod'
           images: 'ghcr.io/dfe-digital/childrens-social-care-cpd:master'
-        if: ${{ inputs.workspace == "Pre-Prod" }}
+        if: ${{ inputs.workspace == 'Pre-Prod' }}
 
-      - name: Deploy to Azure Web App
-        uses: azure/webapps-deploy@v2
+      - name: Deploy to Azure Web App'        uses: azure/webapps-deplo'@v2
         with:
           app-name: 's185p01-chidrens-social-care-cpd-app-service'
           # slot-name: 'Prod'
           images: 'ghcr.io/dfe-digital/childrens-social-care-cpd:master'
-        if: ${{ inputs.workspace == "Prod" }}
+        if: ${{ inputs.workspace == 'Prod' }}
 
       - name: Sign out of Azure
         run: |
