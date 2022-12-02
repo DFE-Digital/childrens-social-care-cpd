@@ -188,10 +188,10 @@ variable "appgw_probe" {
 variable "appgw_ssl_probe" {
   type = map(string)
   default = {
-    Dev      = "s185d01AGSSLProbe"
-    Test     = "s185d02AGSSLProbe"
-    Pre-Prod = "s185t01AGSSLProbe"
-    Prod     = "s185p01AGSSLProbe"
+    Dev      = "s185d01-chidrens-social-care-cpd-ssl-hp"
+    Test     = "s185d02-chidrens-social-care-cpd-ssl-hp"
+    Pre-Prod = "s185t01-chidrens-social-care-cpd-ssl-hp"
+    Prod     = "s185p01-chidrens-social-care-cpd-ssl-hp"
   }
   description = "Name of App Gateway SSL Health Probe"
 }

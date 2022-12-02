@@ -49,11 +49,11 @@ resource "azurerm_network_interface" "nic" {
   tags = data.azurerm_resource_group.rg.tags
 }
 
-resource "azurerm_network_interface_application_gateway_backend_address_pool_association" "nic-assoc01" {
-  ip_configuration_name   = var.network_nic_ip_conf_name[terraform.workspace]
-  network_interface_id    = azurerm_network_interface.nic.id
-  backend_address_pool_id = tolist(azurerm_application_gateway.appgw.backend_address_pool).0.id
-}
+# resource "azurerm_network_interface_application_gateway_backend_address_pool_association" "nic-assoc01" {
+#   ip_configuration_name   = var.network_nic_ip_conf_name[terraform.workspace]
+#   network_interface_id    = azurerm_network_interface.nic.id
+#   backend_address_pool_id = tolist(azurerm_application_gateway.appgw.backend_address_pool).0.id
+# }
 
 resource "azurerm_subnet_network_security_group_association" "blockall" {
   subnet_id                 = azurerm_subnet.frontend.id

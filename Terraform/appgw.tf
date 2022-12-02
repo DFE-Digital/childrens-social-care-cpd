@@ -34,15 +34,16 @@ resource "azurerm_application_gateway" "appgw" {
     fqdns = [azurerm_linux_web_app.linux-web-app.default_hostname]
   }
 
-  # backend_http_settings {
-  #   name                                = var.http_setting_name[terraform.workspace]
-  #   pick_host_name_from_backend_address = true
-  #   cookie_based_affinity               = "Disabled"
-  #   path                                = "/"
-  #   port                                = 80
-  #   protocol                            = "Http"
-  #   request_timeout                     = 60
-  # }
+  backend_http_settings {
+    name                                = var.http_setting_name[terraform.workspace]
+    pick_host_name_from_backend_address = true
+    cookie_based_affinity               = "Disabled"
+    path                                = "/"
+    port                                = 80
+    protocol                            = "Http"
+    request_timeout                     = 30
+    probe_name                          = var.appgw_probe[terraform.workspace]
+  }
 
   backend_http_settings {
     name                                = var.https_setting_name[terraform.workspace]
@@ -51,7 +52,8 @@ resource "azurerm_application_gateway" "appgw" {
     path                                = "/"
     port                                = 443
     protocol                            = "Https"
-    request_timeout                     = 60
+    request_timeout                     = 30
+    probe_name                          = var.appgw_ssl_probe[terraform.workspace]
   }
 
   http_listener {
@@ -80,8 +82,8 @@ resource "azurerm_application_gateway" "appgw" {
   }
 
   ssl_policy {
-    policy_name        = "AppGwSslPolicy20170401S"
-    disabled_protocols = ["TLSv1_0", "TLSv1_1"]
+    policy_type = "Predefined"
+    policy_name = "AppGwSslPolicy20170401S"
   }
 
   redirect_configuration {
