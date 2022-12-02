@@ -8,6 +8,7 @@ using System.Linq;
 using System;
 using Childrens_Social_Care_CPD.Enums;
 using Childrens_Social_Care_CPD.Constants;
+using Microsoft.AspNetCore.Diagnostics;
 
 namespace Childrens_Social_Care_CPD.Controllers
 {
@@ -31,20 +32,13 @@ namespace Childrens_Social_Care_CPD.Controllers
         public async Task<IActionResult> LandingPage(string PageName, string PageType)
         {
             ContentfulCollection<PageViewModel> pageViewModel = new ContentfulCollection<PageViewModel>();
-            try
+            pageViewModel = await GetViewModel(PageName, PageType);
+            foreach (PageViewModel viewModel in pageViewModel)
             {
-                pageViewModel = await GetViewModel(PageName, PageType);
-                foreach (PageViewModel viewModel in pageViewModel)
-                {
-                    viewModel.Cards = viewModel.Cards?.OrderBy(x => x.SortOrder).ToList();
-                    viewModel.Paragraphs = viewModel.Paragraphs?.OrderBy(x => x.SortOrder).ToList();
-                    viewModel.Labels = viewModel.Labels?.OrderBy(x => x.SortOrder).ToList();
-                    viewModel.RichTexts = viewModel.RichTexts?.OrderBy(x => x.SortOrder).ToList();
-                }
-            }
-            catch (Exception ex)
-            {
-                // To-do - Logging (AppInsights?)
+                viewModel.Cards = viewModel.Cards?.OrderBy(x => x.SortOrder).ToList();
+                viewModel.Paragraphs = viewModel.Paragraphs?.OrderBy(x => x.SortOrder).ToList();
+                viewModel.Labels = viewModel.Labels?.OrderBy(x => x.SortOrder).ToList();
+                viewModel.RichTexts = viewModel.RichTexts?.OrderBy(x => x.SortOrder).ToList();
             }
 
             return View(pageViewModel);
@@ -81,6 +75,26 @@ namespace Childrens_Social_Care_CPD.Controllers
             
             return result;
         }
-      
+
+        /// <summary>
+        /// Application global exception handler
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult Error()
+        {
+            var execeptionHandlerPathFeture = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
+            return View(
+                new ErrorViewModel
+                {
+                    RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier,
+                    ErrorMessage = execeptionHandlerPathFeture.Error.Message,
+                    Source = execeptionHandlerPathFeture.Error.Source,
+                    ErrorPath = execeptionHandlerPathFeture.Path,
+                    StackTrace = execeptionHandlerPathFeture.Error.StackTrace,
+                    InnerException = Convert.ToString(execeptionHandlerPathFeture.Error.InnerException)
+                }
+                );
+        }
+
     }
 }
