@@ -45,17 +45,6 @@ resource "azurerm_application_gateway" "appgw" {
     probe_name                          = var.appgw_probe[terraform.workspace]
   }
 
-  backend_http_settings {
-    name                                = var.https_setting_name[terraform.workspace]
-    pick_host_name_from_backend_address = true
-    cookie_based_affinity               = "Disabled"
-    path                                = "/"
-    port                                = 443
-    protocol                            = "Https"
-    request_timeout                     = 30
-    probe_name                          = var.appgw_ssl_probe[terraform.workspace]
-  }
-
   http_listener {
     name                           = var.listener_name[terraform.workspace]
     frontend_ip_configuration_name = var.frontend_ip_configuration_name[terraform.workspace]
@@ -98,19 +87,17 @@ resource "azurerm_application_gateway" "appgw" {
     name                        = var.request_routing_rule_name[terraform.workspace]
     rule_type                   = "Basic"
     redirect_configuration_name = var.redirect_config_name[terraform.workspace]
-    priority                    = 2000
+    priority                    = 2001
     http_listener_name          = var.listener_name[terraform.workspace]
-    # backend_address_pool_name  = var.backend_address_pool_name[terraform.workspace]
-    # backend_http_settings_name = var.http_setting_name[terraform.workspace]
   }
 
   request_routing_rule {
     name                       = var.request_ssl_routing_rule_name[terraform.workspace]
     rule_type                  = "Basic"
-    priority                   = 2001
+    priority                   = 2000
     http_listener_name         = var.ssl_listener_name[terraform.workspace]
     backend_address_pool_name  = var.backend_address_pool_name[terraform.workspace]
-    backend_http_settings_name = var.https_setting_name[terraform.workspace]
+    backend_http_settings_name = var.http_setting_name[terraform.workspace]
   }
 
   probe {
@@ -121,16 +108,6 @@ resource "azurerm_application_gateway" "appgw" {
     timeout                                   = 30
     unhealthy_threshold                       = 3
     protocol                                  = "Http"
-  }
-
-  probe {
-    name                                      = var.appgw_ssl_probe[terraform.workspace]
-    pick_host_name_from_backend_http_settings = true
-    path                                      = "/"
-    interval                                  = 30
-    timeout                                   = 30
-    unhealthy_threshold                       = 3
-    protocol                                  = "Https"
   }
 
   private_link_configuration {
