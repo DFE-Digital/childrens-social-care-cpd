@@ -177,10 +177,10 @@ variable "appgw_tier" {
 variable "appgw_probe" {
   type = map(string)
   default = {
-    Dev      = "s185d01AGProbe"
-    Test     = "s185d02AGProbe"
-    Pre-Prod = "s185t01AGProbe"
-    Prod     = "s185p01AGProbe"
+    Dev      = "s185d01-chidrens-social-care-cpd-hp"
+    Test     = "s185d02-chidrens-social-care-cpd-hp"
+    Pre-Prod = "s185t01-chidrens-social-care-cpd-hp"
+    Prod     = "s185p01-chidrens-social-care-cpd-hp"
   }
   description = "Name of App Gateway Health Probe"
 }
@@ -229,14 +229,13 @@ variable "gateway_ip_configuration" {
   description = "Name of Gateway IP Configuration"
 }
 
-
 variable "backend_address_pool_name" {
   type = map(string)
   default = {
-    Dev      = "s185d01BackendPool"
-    Test     = "s185d02BackendPool"
-    Pre-Prod = "s185t01BackendPool"
-    Prod     = "s185p01BackendPool"
+    Dev      = "s185d01-chidrens-social-care-cpd-bep"
+    Test     = "s185d02-chidrens-social-care-cpd-bep"
+    Pre-Prod = "s185t01-chidrens-social-care-cpd-bep"
+    Prod     = "s185p01-chidrens-social-care-cpd-bep"
   }
   description = "Name of Backend Address Pool"
 }
@@ -277,10 +276,10 @@ variable "frontend_ip_configuration_name" {
 variable "http_setting_name" {
   type = map(string)
   default = {
-    Dev      = "s185d01HTTPsetting"
-    Test     = "s185d02HTTPsetting"
-    Pre-Prod = "s185t01HTTPsetting"
-    Prod     = "s185p01HTTPsetting"
+    Dev      = "s185d01-chidrens-social-care-cpd-bes-http"
+    Test     = "s185d02-chidrens-social-care-cpd-bes-http"
+    Pre-Prod = "s185t01-chidrens-social-care-cpd-bes-http"
+    Prod     = "s185p01-chidrens-social-care-cpd-bes-http"
   }
   description = "Name of HTTP Setting"
 }
@@ -288,10 +287,10 @@ variable "http_setting_name" {
 variable "https_setting_name" {
   type = map(string)
   default = {
-    Dev      = "s185d01HTTPSsetting"
-    Test     = "s185d02HTTPSsetting"
-    Pre-Prod = "s185t01HTTPSsetting"
-    Prod     = "s185p01HTTPSsetting"
+    Dev      = "s185d01-chidrens-social-care-cpd-bes-https"
+    Test     = "s185d02-chidrens-social-care-cpd-bes-https"
+    Pre-Prod = "s185t01-chidrens-social-care-cpd-bes-https"
+    Prod     = "s185p01-chidrens-social-care-cpd-bes-https"
   }
   description = "Name of HTTPS Setting"
 }
@@ -299,10 +298,10 @@ variable "https_setting_name" {
 variable "listener_name" {
   type = map(string)
   default = {
-    Dev      = "s185d01Listener"
-    Test     = "s185d02Listener"
-    Pre-Prod = "s185t01Listener"
-    Prod     = "s185p01Listener"
+    Dev      = "s185d01-chidrens-social-care-cpd-listener-http"
+    Test     = "s185d02-chidrens-social-care-cpd-listener-http"
+    Pre-Prod = "s185t01-chidrens-social-care-cpd-listener-http"
+    Prod     = "s185p01-chidrens-social-care-cpd-listener-http"
   }
   description = "Name of HTTP Listener"
 }
@@ -321,10 +320,10 @@ variable "redirect_config_name" {
 variable "ssl_listener_name" {
   type = map(string)
   default = {
-    Dev      = "s185d01SSLListener"
-    Test     = "s185d02SSLListener"
-    Pre-Prod = "s185t01SSLListener"
-    Prod     = "s185p01SSLListener"
+    Dev      = "s185d01-chidrens-social-care-cpd-listener-https"
+    Test     = "s185d02-chidrens-social-care-cpd-listener-https"
+    Pre-Prod = "s185t01-chidrens-social-care-cpd-listener-https"
+    Prod     = "s185p01-chidrens-social-care-cpd-listener-https"
   }
   description = "Name of SSL HTTPS Listener"
 }
@@ -332,10 +331,10 @@ variable "ssl_listener_name" {
 variable "request_routing_rule_name" {
   type = map(string)
   default = {
-    Dev      = "s185d01RoutingRule"
-    Test     = "s185d02RoutingRule"
-    Pre-Prod = "s185t01RoutingRule"
-    Prod     = "s185p01RoutingRule"
+    Dev      = "s185d01-chidrens-social-care-cpd-rule-http"
+    Test     = "s185d02-chidrens-social-care-cpd-rule-http"
+    Pre-Prod = "s185t01-chidrens-social-care-cpd-rule-http"
+    Prod     = "s185p01-chidrens-social-care-cpd-rule-http"
   }
   description = "Name of Request Routing Rule"
 }
@@ -343,10 +342,10 @@ variable "request_routing_rule_name" {
 variable "request_ssl_routing_rule_name" {
   type = map(string)
   default = {
-    Dev      = "s185d01SSLRoutingRule"
-    Test     = "s185d02SSLRoutingRule"
-    Pre-Prod = "s185t01SSLRoutingRule"
-    Prod     = "s185p01SSLRoutingRule"
+    Dev      = "s185d01-chidrens-social-care-cpd-rule-https"
+    Test     = "s185d02-chidrens-social-care-cpd-rule-https"
+    Pre-Prod = "s185t01-chidrens-social-care-cpd-rule-https"
+    Prod     = "s185p01-chidrens-social-care-cpd-rule-https"
   }
   description = "Name of Request SSL Routing Rule"
 }

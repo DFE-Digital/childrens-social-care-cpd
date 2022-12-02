@@ -80,7 +80,7 @@ resource "azurerm_application_gateway" "appgw" {
   }
 
   ssl_policy {
-    policy_name        = "AppGwSslPolicy20220101"
+    policy_name        = "AppGwSslPolicy20170401S"
     disabled_protocols = ["TLSv1_0", "TLSv1_1"]
   }
 
