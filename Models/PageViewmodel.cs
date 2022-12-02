@@ -20,8 +20,8 @@ namespace Childrens_Social_Care_CPD.Models
 
         public List<Link> Links { get; set; }
 
-        public List<Label> Labels { get; set; }
+        public List<Label> Labels { get; set; } = new List<Label>();
 
-        public List<RichText> RichTexts { get; set; }
+        public List<RichText> RichTexts { get; set; } 
     }
 }
