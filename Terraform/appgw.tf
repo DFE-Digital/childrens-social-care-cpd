@@ -67,7 +67,7 @@ resource "azurerm_application_gateway" "appgw" {
 
   ssl_certificate {
     name                = "develop-child-family-social-work-career"
-    key_vault_secret_id = "https://cpd-key-vault.vault.azure.net/secrets/develop-child-family-social-work-career"
+    key_vault_secret_id = "${var.key_vault_url[terraform.workspace]}secrets/develop-child-family-social-work-career"
   }
 
   ssl_policy {

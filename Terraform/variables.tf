@@ -372,6 +372,28 @@ variable "log_analytics_ws_name" {
   description = "Name of Log Analytics Workspace"
 }
 
+variable "key_vault_name" {
+  type = map(string)
+  default = {
+    Dev      = "cpd-key-vault"
+    Test     = "cpd-key-vault"
+    Pre-Prod = "s185t-cpd-key-vault"
+    Prod     = "s185p-cpd-key-vault"
+  }
+  description = "Name of Key Vault"
+}
+
+variable "key_vault_url" {
+  type = map(string)
+  default = {
+    Dev      = "https://cpd-key-vault.vault.azure.net/"
+    Test     = "https://cpd-key-vault.vault.azure.net/"
+    Pre-Prod = "https://s185t-cpd-key-vault.vault.azure.net/"
+    Prod     = "https://s185p-cpd-key-vault.vault.azure.net/"
+  }
+  description = "URL of Key Vault"
+}
+
 variable "tenant_id" {
   type        = string
   sensitive   = true

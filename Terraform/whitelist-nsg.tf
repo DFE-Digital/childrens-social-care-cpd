@@ -1,5 +1,5 @@
 data "azurerm_key_vault" "kv" {
-  name                = "cpd-key-vault"
+  name                = var.key_vault_name[terraform.workspace]
   resource_group_name = "s185d01-childrens-social-care-shared-rg"
 }
 
