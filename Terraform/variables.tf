@@ -408,9 +408,9 @@ variable "autoscale_min" {
 variable "autoscale_max" {
   type = map(string)
   default = {
-    Dev      = 1
-    Test     = 1
-    Pre-Prod = 1
+    Dev      = 2
+    Test     = 2
+    Pre-Prod = 2
     Prod     = 10
   }
   description = "Maximum Autoscale Value"
