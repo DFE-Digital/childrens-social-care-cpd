@@ -394,6 +394,29 @@ variable "key_vault_url" {
   description = "URL of Key Vault"
 }
 
+variable "autoscale_min" {
+  type = map(string)
+  default = {
+    Dev      = 1
+    Test     = 1
+    Pre-Prod = 1
+    Prod     = 3
+  }
+  description = "Minimum Autoscale Value"
+}
+
+variable "autoscale_max" {
+  type = map(string)
+  default = {
+    Dev      = 1
+    Test     = 1
+    Pre-Prod = 1
+    Prod     = 10
+  }
+  description = "Maximum Autoscale Value"
+}
+
+
 variable "tenant_id" {
   type        = string
   sensitive   = true
