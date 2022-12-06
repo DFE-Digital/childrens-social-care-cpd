@@ -127,8 +127,8 @@ resource "azurerm_application_gateway" "appgw" {
   tags = data.azurerm_resource_group.rg.tags
 }
 
-resource "azurerm_monitor_autoscale_setting" "example" {
-  name                = "${var.appgw_name[terraform.workspace]}-Autoscale"
+resource "azurerm_monitor_autoscale_setting" "autoscale" {
+  name                = var.autoscale_name[terraform.workspace]
   resource_group_name = data.azurerm_resource_group.rg.name
   location            = data.azurerm_resource_group.rg.location
   target_resource_id  = azurerm_application_gateway.appgw.id

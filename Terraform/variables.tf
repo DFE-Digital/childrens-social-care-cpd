@@ -394,6 +394,18 @@ variable "key_vault_url" {
   description = "URL of Key Vault"
 }
 
+variable "autoscale_name" {
+  type = map(string)
+  default = {
+    Dev      = "s185d01-app-autoscale"
+    Test     = "s185d02-app-autoscale"
+    Pre-Prod = "s185t01-app-autoscale"
+    Prod     = "s185p01-app-autoscale"
+  }
+  description = "Name of Key Vault"
+}
+
+
 variable "autoscale_min" {
   type = map(string)
   default = {
