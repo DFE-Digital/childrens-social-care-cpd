@@ -133,7 +133,7 @@ resource "azurerm_monitor_autoscale_setting" "autoscale" {
   location            = data.azurerm_resource_group.rg.location
   target_resource_id  = azurerm_application_gateway.appgw.id
 
-  # count = terraform.workspace == "Prod" ? 1 : 0
+  count = terraform.workspace == "Prod" ? 1 : 0
 
   profile {
     name = "defaultProfile"
