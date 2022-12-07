@@ -372,13 +372,24 @@ variable "log_analytics_ws_name" {
   description = "Name of Log Analytics Workspace"
 }
 
+variable "key_vault_rg" {
+  type = map(string)
+  default = {
+    Dev      = "s185d01-childrens-social-care-shared-rg"
+    Test     = "s185d01-childrens-social-care-shared-rg"
+    Pre-Prod = "s185t01-childrens-social-care-shared-rg"
+    Prod     = "s185p01-childrens-social-care-shared-rg"
+  }
+  description = "Name of Key Vault Resource Group"
+}
+
 variable "key_vault_name" {
   type = map(string)
   default = {
     Dev      = "cpd-key-vault"
     Test     = "cpd-key-vault"
-    Pre-Prod = "s185t-cpd-key-vault"
-    Prod     = "s185p-cpd-key-vault"
+    Pre-Prod = "s185t-CPD-Key-Vault"
+    Prod     = "s185p-CPD-Key-Vault"
   }
   description = "Name of Key Vault"
 }
