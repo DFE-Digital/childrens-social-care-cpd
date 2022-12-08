@@ -10,11 +10,11 @@ namespace Childrens_Social_Care_CPD.Controllers
 {
     public class BaseController : Controller
     {
-        private IContentfulClient _client;
+        private readonly IContentfulClient _client;
 
         public BaseController(IContentfulClient client)
         {
-            this._client = client;
+            _client = client;
         }
 
         /// <summary>
@@ -23,6 +23,11 @@ namespace Childrens_Social_Care_CPD.Controllers
         /// <param name="filterContext"></param>
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+            ViewBag.pageName = filterContext.ActionArguments.ContainsKey("pageName")? filterContext.ActionArguments["pageName"] ?? string.Empty:string.Empty;
+            ViewBag.pageType = filterContext.ActionArguments.ContainsKey("pageType") ? filterContext.ActionArguments["pageType"] ?? string.Empty : string.Empty;
+            ViewBag.sendingPage = filterContext.ActionArguments.ContainsKey("sendingPage") ? filterContext.ActionArguments["sendingPage"] ?? string.Empty : string.Empty;
+            ViewBag.sendingPageType = filterContext.ActionArguments.ContainsKey("sendingPageType") ? filterContext.ActionArguments["sendingPageType"] ?? string.Empty : string.Empty;
+
             PageHeader pageHeader = GetHeader();
 
             ViewBag.PageHeader = pageHeader;
@@ -31,7 +36,7 @@ namespace Childrens_Social_Care_CPD.Controllers
 
             ViewBag.PageFooter = pageFooter;
         }
-      
+
         /// <summary>
         /// Method to get Footer using Contentful API call
         /// </summary>
@@ -65,13 +70,13 @@ namespace Childrens_Social_Care_CPD.Controllers
             var result = _client.GetEntries<PageHeader>(queryBuilder).Result;
             var header = result.FirstOrDefault();
             var htmlRenderer = new HtmlRenderer();
-            var html = htmlRenderer.ToHtml(header.PrototypeText).Result;
+            var html = htmlRenderer.ToHtml(header?.PrototypeText).Result;
 
             PageHeader pageHeader = new PageHeader
             {
-                Header = header.Header,
+                Header =  header == null ? string.Empty : header.Header,
                 PrototypeTextHtml = html,
-                PrototypeHeader = header.PrototypeHeader
+                PrototypeHeader = header == null ? string.Empty : header.PrototypeHeader
             };
             return pageHeader;
         }

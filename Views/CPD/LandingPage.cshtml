@@ -2,7 +2,7 @@
 @using Childrens_Social_Care_CPD.Enums;
 @model ContentfulCollection<PageViewModel>;
 
-@{var pageViewModel = @Model.FirstOrDefault();}
+@{var pageViewModel = Model.FirstOrDefault();}
 @{
     ViewData["Title"] = pageViewModel?.PageTitle;
 }
@@ -15,18 +15,16 @@
         switch (PageType)
         {
             case PageTypes.Master:
-               {await Html.RenderPartialAsync("../Templates/Master",@pageViewModel);}
+               {await Html.RenderPartialAsync("../Templates/Master", pageViewModel);}
                 break;
             case PageTypes.Cards:
-               {await Html.RenderPartialAsync("../Templates/Card",@pageViewModel);}
+               {await Html.RenderPartialAsync("../Templates/Card", pageViewModel);}
                 break;
             case PageTypes.Programmes:
-                 {await Html.RenderPartialAsync("../Templates/Programmes",@pageViewModel);}
+                 {await Html.RenderPartialAsync("../Templates/Programmes", pageViewModel);}
                 break;
             case PageTypes.PathwayDetails:
-                 {await Html.RenderPartialAsync("../Templates/PathwayDetails",@pageViewModel);}
-                break;
-            default:
+                 {await Html.RenderPartialAsync("../Templates/PathwayDetails", pageViewModel);}
                 break;
         }
     }

@@ -5,7 +5,6 @@
         Master,
         Cards,
         Programmes,
-        RoleDetails,
         PathwayDetails
     }
 }

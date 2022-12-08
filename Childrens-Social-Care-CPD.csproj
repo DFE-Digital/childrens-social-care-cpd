@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>Childrens_Social_Care_CPD</RootNamespace>
     <UserSecretsId>c3a2dec8-e3df-4bb6-bd99-16e214dd7d6f</UserSecretsId>

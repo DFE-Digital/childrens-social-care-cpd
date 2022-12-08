@@ -1,5 +1,4 @@
-﻿@using Contentful.Core.Models;
-@model PageViewModel;
+﻿@model PageViewModel;
 
 @if (Model != null)
 {
@@ -24,9 +23,9 @@
                 </div>
             </div>
 
-            @if (@Model.Cards != null)
+            @if (Model.Cards != null)
             {
-                { await Html.RenderPartialAsync("../Templates/Card", @Model.Cards); }
+                { await Html.RenderPartialAsync("../Templates/Card", Model); }
             }
         </main>
 

@@ -1,6 +1,4 @@
-﻿using Childrens_Social_Care_CPD.Models;
-using Contentful.Core;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Childrens_Social_Care_CPD.Controllers
 {

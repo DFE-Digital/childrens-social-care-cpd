@@ -1,5 +1,4 @@
 ﻿@using System.Text.RegularExpressions;
-@using Contentful.Core.Models;
 @addTagHelper *, Contentful.AspNetCore
 
 
@@ -32,9 +31,9 @@
                             @headerModel.PrototypeHeader
                         </strong>
                         <span class="govuk-phase-banner__text">
-                            @if (!string.IsNullOrEmpty(@headerModel.PrototypeTextHtml))
+                            @if (!string.IsNullOrEmpty(headerModel.PrototypeTextHtml))
                             {
-                                @Html.Raw(@Regex.Replace(@headerModel.PrototypeTextHtml, "<.P?>", String.Empty));
+                                @Html.Raw(Regex.Replace(headerModel.PrototypeTextHtml, "<.P?>", string.Empty));
                             }
                         </span>
                     </p>

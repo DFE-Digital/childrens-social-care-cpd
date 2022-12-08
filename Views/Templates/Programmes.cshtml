@@ -1,27 +1,29 @@
-﻿@using Contentful.Core.Models;
-@model PageViewModel;
+﻿@model PageViewModel;
 
-@if (@Model != null)
+@if (Model != null)
 {
     <div class="govuk-width-container ">
+          @{
+        await Html.RenderPartialAsync("../PartialViews/Breadcrumb");
+         }
         <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
-            @foreach (var paragraph in @Model.Paragraphs)
+            @foreach (var paragraph in Model.Paragraphs)
             {
                 <div class="govuk-grid-row">
                     <div class="govuk-grid-column-two-thirds">
-                        @if (!string.IsNullOrEmpty(@paragraph.Heading))
+                        @if (!string.IsNullOrEmpty(paragraph.Heading))
                         {
                             <h1 class="govuk-heading-l">@paragraph.Heading</h1>
                         }
 
                         @{
-                            var listItems = @paragraph.Contents.Split('\n').ToList();
-                            if (listItems.Count > 0 && @paragraph.Contents.Contains('\n'))
+                            var listItems = paragraph.Contents.Split('\n').ToList();
+                            if (listItems.Count > 0 && paragraph.Contents.Contains('\n'))
                             {
                                 <ul class="govuk-list govuk-list--bullet">
                                     @foreach (var item in listItems)
                                     {
-                                        @if (!string.IsNullOrEmpty(item) && @item.Substring(0, 1) == "-")
+                                        @if (!string.IsNullOrEmpty(item) && item.Substring(0, 1) == "-")
                                         {
                                              <li>@item.Substring(1)</li>
                                         }
@@ -38,9 +40,9 @@
                 </div>
             }
 
-            @if (@Model.Cards != null)
+            @if (Model.Cards != null)
             {
-                { await Html.RenderPartialAsync("../Templates/Card", @Model.Cards); }
+                { await Html.RenderPartialAsync("../Templates/Card", Model); }
             }
         </main>
     </div>

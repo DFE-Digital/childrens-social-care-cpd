@@ -4,12 +4,12 @@ namespace Childrens_Social_Care_CPD.Models
 {
     public class PageFooter
     {
-        public List<Link> FooterLinks { get; set; }
+        public List<Link> FooterLinks { get; set; } = new();
 
         public Document LicenceDescription { get; set; }
 
-        public Link CopyrightLink { get; set; } = new Link();
+        public Link CopyrightLink { get; set; } = new();
 
-        public string LicenceDescriptionText { get; set; }
+        public string LicenceDescriptionText { get; set; }  
     }
 }

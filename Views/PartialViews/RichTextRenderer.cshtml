@@ -1,52 +1,50 @@
-﻿@using System.Text.RegularExpressions;
-@using Contentful.Core.Models;
+﻿@using Contentful.Core.Models;
 @using System.Text
 @addTagHelper *, Contentful.AspNetCore
 @model List<RichText>;
 
-@if (@Model != null)
+@if (Model != null)
 {
-    @foreach (var richText in @Model)
+    @foreach (var richText in Model)
     {
-        @if (!String.IsNullOrEmpty(@richText.Heading))
+        @if (!String.IsNullOrEmpty(richText.Heading))
         {
             <h2 class="govuk-heading-l">@richText.Heading</h2>
         }
 
-        @foreach (IContent node in @richText.RichTextContents.Content)
+        @foreach (IContent node in richText.RichTextContents.Content)
         {
             switch (node)
             {
                 case Contentful.Core.Models.Paragraph paragraph:
 
-                    if (@paragraph.Content.Any(c => c.GetType() == typeof(Hyperlink)))
+                    if (paragraph.Content.Any(c => c.GetType() == typeof(Hyperlink)))
                     {
                         StringBuilder contentBuilder = new StringBuilder();
-                        @foreach (var content in @paragraph.Content)
+                        @foreach (var content in paragraph.Content)
                         {
-                            if (@content.GetType() == typeof(Text))
+                            if (content.GetType() == typeof(Text))
                             {
-                                contentBuilder.Append((((Contentful.Core.Models.Text)@content).Value));
+                                contentBuilder.Append((((Contentful.Core.Models.Text)content).Value));
                             }
-                            if (@content.GetType() == typeof(Hyperlink))
+                            if (content.GetType() == typeof(Hyperlink))
                             {
-                                var linkElement = ((Contentful.Core.Models.Hyperlink)@content);
+                                var linkElement = ((Contentful.Core.Models.Hyperlink)content);
                                 var linkText = ((Contentful.Core.Models.Text)(linkElement).Content[0]).Value;
-                                contentBuilder.Append(String.Format(("<a href={0}>{1}</a>"), linkElement.Data.Uri, linkText));
+                                contentBuilder.Append(string.Format(("<a href={0}>{1}</a>"), linkElement.Data.Uri, linkText));
                             }
                         }
 
-                        @Html.Raw(String.Format("<p class={0}>{1}</p>","govuk-body-m",@contentBuilder.ToString()))
-                        ;
+                        @Html.Raw($"<p class={"govuk-body-m"}>{contentBuilder.ToString()}</p>")
                     }
                     else
                     {
-                        @foreach (var content in @paragraph.Content)
+                        @foreach (var content in paragraph.Content)
                         {
-                            if (@content.GetType() == typeof(Text))
+                            if (content.GetType() == typeof(Text))
                             {
 
-                                <p class="govuk-body-m">@(((Contentful.Core.Models.Text)@content).Value)</p>
+                                <p class="govuk-body-m">@(((Contentful.Core.Models.Text)content).Value)</p>
                             }
 
                         }
@@ -55,14 +53,14 @@
                     break;
                 case Contentful.Core.Models.List list:
 
-                    @if (@list.Content.Count > 0)
+                    @if (list.Content.Count > 0)
                     {
                         <ul class="govuk-list govuk-list--bullet">
 
-                            @foreach (var link in @list.Content)
+                            @foreach (var link in list.Content)
                             {
-                                var innerElement = (Contentful.Core.Models.Paragraph)(((Contentful.Core.Models.ListItem)@link).Content[0]);
-                                <li>@(((Contentful.Core.Models.Text)@innerElement.Content[0]).Value)</li>
+                                var innerElement = (Contentful.Core.Models.Paragraph)(((Contentful.Core.Models.ListItem)link).Content[0]);
+                                <li>@(((Contentful.Core.Models.Text)innerElement.Content[0]).Value)</li>
                             }
 
                         </ul>
@@ -72,11 +70,11 @@
 
                 case Contentful.Core.Models.Heading2 heading2:
 
-                    @foreach (var content in @heading2.Content)
+                    @foreach (var content in heading2.Content)
                     {
-                        if (@content.GetType() == typeof(Text))
+                        if (content.GetType() == typeof(Text))
                         {
-                            <h2 class="govuk-heading-m">@(((Contentful.Core.Models.Text)@content).Value)</h2>
+                            <h2 class="govuk-heading-m">@(((Contentful.Core.Models.Text)content).Value)</h2>
                         }
                     }
 

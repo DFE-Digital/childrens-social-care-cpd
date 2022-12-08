@@ -4,8 +4,6 @@ using Contentful.Core.Models;
 using Contentful.Core.Search;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using System.Linq;
-using System;
 using Childrens_Social_Care_CPD.Enums;
 using Childrens_Social_Care_CPD.Constants;
 using Microsoft.AspNetCore.Diagnostics;
@@ -26,21 +24,22 @@ namespace Childrens_Social_Care_CPD.Controllers
         /// <summary>
         /// Common method to return any view (page).
         /// </summary>
-        /// <param name="PageName">Contentful page name</param>
-        /// <param name="PageType">Contentful page type</param>
+        /// <param name="pageName">Application page name</param>
+        /// <param name="pageType">Application page type</param>
+        /// <param name="sendingPage">Previous page</param>
+        /// <param name="sendingPageType">Previous page type</param>
         /// <returns>View with required view model based on page type and page name</returns>
-        public async Task<IActionResult> LandingPage(string PageName, string PageType)
+        public async Task<IActionResult> LandingPage(string pageName, string pageType, string sendingPage, string sendingPageType)
         {
-            ContentfulCollection<PageViewModel> pageViewModel = new ContentfulCollection<PageViewModel>();
-            pageViewModel = await GetViewModel(PageName, PageType);
+            var pageViewModel = await GetViewModel(pageName, pageType);
             foreach (PageViewModel viewModel in pageViewModel)
             {
-                viewModel.Cards = viewModel.Cards?.OrderBy(x => x.SortOrder).ToList();
-                viewModel.Paragraphs = viewModel.Paragraphs?.OrderBy(x => x.SortOrder).ToList();
-                viewModel.Labels = viewModel.Labels?.OrderBy(x => x.SortOrder).ToList();
-                viewModel.RichTexts = viewModel.RichTexts?.OrderBy(x => x.SortOrder).ToList();
+                viewModel.Cards = viewModel.Cards.OrderBy(x => x.SortOrder).ToList();
+                viewModel.Paragraphs = viewModel.Paragraphs.OrderBy(x => x.SortOrder).ToList();
+                viewModel.Labels = viewModel.Labels.OrderBy(x => x.SortOrder).ToList();
+                viewModel.RichTexts = viewModel.RichTexts.OrderBy(x => x.SortOrder).ToList();
             }
-
+            
             return View(pageViewModel);
         }
 
@@ -82,16 +81,16 @@ namespace Childrens_Social_Care_CPD.Controllers
         /// <returns></returns>
         public IActionResult Error()
         {
-            var execeptionHandlerPathFeture = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
+            var exceptionHandlerPathFeature = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
             return View(
                 new ErrorViewModel
                 {
                     RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier,
-                    ErrorMessage = execeptionHandlerPathFeture.Error.Message,
-                    Source = execeptionHandlerPathFeture.Error.Source,
-                    ErrorPath = execeptionHandlerPathFeture.Path,
-                    StackTrace = execeptionHandlerPathFeture.Error.StackTrace,
-                    InnerException = Convert.ToString(execeptionHandlerPathFeture.Error.InnerException)
+                    ErrorMessage = exceptionHandlerPathFeature?.Error.Message,
+                    Source = exceptionHandlerPathFeature?.Error.Source,
+                    ErrorPath = exceptionHandlerPathFeature?.Path,
+                    StackTrace = exceptionHandlerPathFeature?.Error.StackTrace,
+                    InnerException = Convert.ToString(exceptionHandlerPathFeature?.Error.InnerException)
                 }
                 );
         }

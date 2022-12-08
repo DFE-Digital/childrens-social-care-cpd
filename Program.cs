@@ -1,6 +1,5 @@
 using Azure.Identity;
 using Contentful.AspNetCore;
-using Contentful.AspNetCore.MiddleWare;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,21 +27,6 @@ if (enableContentfulIntegration)
 }
 
 var app = builder.Build();
-
-if (enableContentfulIntegration)
-{
-    app.UseContentfulWebhooks(consumers =>
-    {
-        consumers.AddConsumer<dynamic>("PrototypeWebHook", "Entry", "create", (s) =>
-        {
-        //Code to notify someone a new entry has been created
-
-        //Return an object that will be serialized into Json and viewable in the Contentful web app
-        return new { Result = "Ok" };
-        }
-        );
-    });
-}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

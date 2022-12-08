@@ -1,0 +1,48 @@
+﻿@using Childrens_Social_Care_CPD.Enums
+@using Contentful.AspNetCore.TagHelpers
+@addTagHelper *, Contentful.AspNetCore
+
+@{
+    var pageName = ViewBag.pageName;
+    var pageType = ViewBag.pageType;
+    var sendingPage = ViewBag.sendingPage;
+    var sendingPageType = ViewBag.sendingPageType;
+    var actionName = "LandingPage";
+    var controllerName = "CPD";
+    RouteValueDictionary routeValues;
+   
+}
+<div class="govuk-breadcrumbs">
+    <ol class="govuk-breadcrumbs__list">
+        @if (sendingPageType == PageTypes.Master.ToString() || sendingPageType == PageTypes.Programmes.ToString())
+        {
+                routeValues = new RouteValueDictionary
+                {
+                    { "pageName", null },
+                    { "pageType", null },
+                    { "sendingPage", null },
+                    { "sendingPageType", null }
+                };
+        
+            <li class="govuk-breadcrumbs__list-item">
+                @Html.ActionLink("Home", actionName, controllerName, routeValues, new { @class = "govuk-breadcrumbs__link" })
+            </li>
+        }
+        @if (sendingPageType == PageTypes.Programmes.ToString())
+        {
+            <li class="govuk-breadcrumbs__list-item">
+                @{
+                    string linkText = sendingPage;
+                    routeValues = new RouteValueDictionary
+                    {
+                        { "pageName", linkText },
+                        { "pageType", sendingPageType },
+                        { "sendingPage","Home" },
+                        { "sendingPageType", "Master" }
+                    };
+                }
+                @Html.ActionLink(linkText, actionName, controllerName, routeValues, new { @class = "govuk-breadcrumbs__link" })
+            </li>
+        }
+    </ol>
+</div>

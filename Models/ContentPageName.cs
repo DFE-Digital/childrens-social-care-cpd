@@ -2,7 +2,6 @@
 {
     public class ContentPageName
     {
-        public string PageName { get; set; }
-       
-}
+        public string PageName { get; set; } = string.Empty;
+    }
 }
