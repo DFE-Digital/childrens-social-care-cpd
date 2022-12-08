@@ -372,6 +372,74 @@ variable "log_analytics_ws_name" {
   description = "Name of Log Analytics Workspace"
 }
 
+variable "key_vault_rg" {
+  type = map(string)
+  default = {
+    Dev      = "s185d01-childrens-social-care-shared-rg"
+    Test     = "s185d01-childrens-social-care-shared-rg"
+    Pre-Prod = "s185t01-childrens-social-care-shared-rg"
+    Prod     = "s185p01-childrens-social-care-shared-rg"
+  }
+  description = "Name of Key Vault Resource Group"
+}
+
+variable "key_vault_name" {
+  type = map(string)
+  default = {
+    Dev      = "cpd-key-vault"
+    Test     = "cpd-key-vault"
+    Pre-Prod = "s185t-CPD-Key-Vault"
+    Prod     = "s185p-CPD-Key-Vault"
+  }
+  description = "Name of Key Vault"
+}
+
+variable "key_vault_url" {
+  type = map(string)
+  default = {
+    Dev      = "https://cpd-key-vault.vault.azure.net/"
+    Test     = "https://cpd-key-vault.vault.azure.net/"
+    Pre-Prod = "https://s185t-cpd-key-vault.vault.azure.net/"
+    Prod     = "https://s185p-cpd-key-vault.vault.azure.net/"
+  }
+  description = "URL of Key Vault"
+}
+
+variable "autoscale_name" {
+  type = map(string)
+  default = {
+    Dev      = "s185d01-app-autoscale"
+    Test     = "s185d02-app-autoscale"
+    Pre-Prod = "s185t01-app-autoscale"
+    Prod     = "s185p01-app-autoscale"
+  }
+  description = "Name of Key Vault"
+}
+
+
+variable "autoscale_min" {
+  type = map(string)
+  default = {
+    Dev      = 1
+    Test     = 1
+    Pre-Prod = 1
+    Prod     = 3
+  }
+  description = "Minimum Autoscale Value"
+}
+
+variable "autoscale_max" {
+  type = map(string)
+  default = {
+    Dev      = 2
+    Test     = 2
+    Pre-Prod = 2
+    Prod     = 10
+  }
+  description = "Maximum Autoscale Value"
+}
+
+
 variable "tenant_id" {
   type        = string
   sensitive   = true
