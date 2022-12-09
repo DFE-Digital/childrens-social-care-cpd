@@ -18,4 +18,4 @@ jobs:
       id: vars
       run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag childrens-social-care-cpd:${{ steps.vars.outputs.sha_short }}
+      run: cd Childrens-Social-Care-CPD; docker build . --file Dockerfile --tag childrens-social-care-cpd:${{ steps.vars.outputs.sha_short }}
