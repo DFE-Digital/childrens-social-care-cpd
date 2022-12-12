@@ -9776,7 +9776,7 @@ body {
 .govuk-header__product-name::before {
     content: "Department for Education ";
     font-weight: 600;
-    background-image: url(../Assets/images/crest.png) !important;
+    background-image: url(../assets/images/crest.png) !important;
     padding: 8px 10px 10px 55px;
     background-size: 45px;
     background-repeat: no-repeat;
