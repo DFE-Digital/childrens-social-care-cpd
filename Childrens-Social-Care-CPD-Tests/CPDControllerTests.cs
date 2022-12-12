@@ -3,6 +3,7 @@ using Childrens_Social_Care_CPD.Controllers;
 using Childrens_Social_Care_CPD.Models;
 using Contentful.Core;
 using Contentful.Core.Models;
+using Contentful.Core.Search;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
@@ -24,8 +25,9 @@ namespace Childrens_Social_Care_CPD_Tests
             SetupModels();
 
             _contentfulClient = new Mock<IContentfulClient>();
-
-            //_contentfulClient.Setup(c => c.GetEntries<PageViewModel>()).re
+            _contentfulClient.Setup(c => c.GetEntries<PageViewModel>(new QueryBuilder<PageViewModel>(), default)).ReturnsAsync(_pages);
+            _contentfulClient.Setup(c => c.GetEntries<PageHeader>(new QueryBuilder<PageHeader>(), default)).ReturnsAsync(_header);
+            _contentfulClient.Setup(c => c.GetEntries<PageFooter>(new QueryBuilder<PageFooter>(), default)).ReturnsAsync(_footer);
         }
 
         [Test]
