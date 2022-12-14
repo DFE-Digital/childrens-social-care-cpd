@@ -1,6 +1,7 @@
 resource "azurerm_private_dns_zone" "dnsprivatezone" {
   name                = "privatelink.azurewebsites.net"
   resource_group_name = data.azurerm_resource_group.rg.name
+  tags                = data.azurerm_resource_group.rg.tags
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "dnszonelink" {
@@ -8,6 +9,7 @@ resource "azurerm_private_dns_zone_virtual_network_link" "dnszonelink" {
   resource_group_name   = data.azurerm_resource_group.rg.name
   private_dns_zone_name = azurerm_private_dns_zone.dnsprivatezone.name
   virtual_network_id    = azurerm_virtual_network.vnet1.id
+  tags                  = data.azurerm_resource_group.rg.tags
 }
 
 resource "azurerm_private_endpoint" "privateendpoint" {
@@ -27,4 +29,6 @@ resource "azurerm_private_endpoint" "privateendpoint" {
     subresource_names              = ["sites"]
     is_manual_connection           = false
   }
+
+  tags = data.azurerm_resource_group.rg.tags
 }
