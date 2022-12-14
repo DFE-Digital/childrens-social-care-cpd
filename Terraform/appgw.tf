@@ -114,16 +114,6 @@ resource "azurerm_application_gateway" "appgw" {
     protocol                                  = "Http"
   }
 
-  private_link_configuration {
-    name = var.private_link_name[terraform.workspace]
-    ip_configuration {
-      name                          = var.private_link_ip_conf_name[terraform.workspace]
-      subnet_id                     = azurerm_subnet.backend.id
-      private_ip_address_allocation = "Dynamic"
-      primary                       = true
-    }
-  }
-
   tags = data.azurerm_resource_group.rg.tags
 }
 
