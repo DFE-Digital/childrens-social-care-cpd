@@ -5,6 +5,7 @@
         Master,
         Cards,
         Programmes,
-        PathwayDetails
+        PathwayDetails,
+        ViewAllCards
     }
 }
