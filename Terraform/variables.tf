@@ -439,6 +439,49 @@ variable "autoscale_max" {
   description = "Maximum Autoscale Value"
 }
 
+variable "private_dns_zone_vn_link_name" {
+  type = map(string)
+  default = {
+    Dev      = "s185d01-dnszonelink"
+    Test     = "s185d02-dnszonelink"
+    Pre-Prod = "s185t01-dnszonelink"
+    Prod     = "s185p01-dnszonelink"
+  }
+  description = "Name of Private DNS Zone Virtual Network Link"
+}
+
+variable "private_endpoint_name" {
+  type = map(string)
+  default = {
+    Dev      = "s185d01-backwebappprivateendpoint"
+    Test     = "s185d02-backwebappprivateendpoint"
+    Pre-Prod = "s185t01-backwebappprivateendpoint"
+    Prod     = "s185p01-backwebappprivateendpoint"
+  }
+  description = "Name of Private Endpoint"
+}
+
+variable "private_dns_zone_group_name" {
+  type = map(string)
+  default = {
+    Dev      = "s185d01-privatednszonegroup"
+    Test     = "s185d02-privatednszonegroup"
+    Pre-Prod = "s185t01-privatednszonegroup"
+    Prod     = "s185p01-privatednszonegroup"
+  }
+  description = "Name of Private DNS Zone Group"
+}
+
+variable "private_endpoint_conn_name" {
+  type = map(string)
+  default = {
+    Dev      = "s185d01-privateendpointconnection"
+    Test     = "s185d02-privateendpointconnection"
+    Pre-Prod = "s185t01-privateendpointconnection"
+    Prod     = "s185p01-privateendpointconnection"
+  }
+  description = "Name of Private Endpoint Connection"
+}
 
 variable "tenant_id" {
   type        = string
