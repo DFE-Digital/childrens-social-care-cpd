@@ -10,5 +10,10 @@ namespace Childrens_Social_Care_CPD.Controllers
         {
             return View();
         }
+
+        public IActionResult Redirect()
+        {
+            return RedirectPermanent("/");
+        }
     }
 }
