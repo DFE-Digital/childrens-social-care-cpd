@@ -1,0 +1,54 @@
+﻿@model PageViewModel;
+
+@if (Model != null)
+{
+    <div class="govuk-width-container ">
+        @{
+            await Html.RenderPartialAsync("../PartialViews/Breadcrumb");
+        }
+        <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds">
+                    @if (!String.IsNullOrEmpty(Model.PageHeading))
+                    {
+                        <h1 class="govuk-heading-l">@Model.PageHeading</h1>
+                    }
+                    @{
+                        await Html.RenderPartialAsync("../PartialViews/RichTextRenderer", Model.RichTexts);
+                    }
+                </div>
+            </div>
+            @{
+                var cardGroups = Model.Cards.GroupBy(c => c.CardGroup).OrderBy(g => g.Key?.SortOrder);
+                foreach (var grouping in cardGroups)
+                {
+                    @if (grouping.Key != null)
+                    {
+                        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible govuk-!-margin-bottom-6"/>
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-two-thirds">
+                                @{
+                                    var richTextCollection = new List<RichText>
+                                    {
+                                        new RichText()
+                                        {
+                                            RichTextContents = grouping.Key.GroupContents
+                                        }
+                                    };
+                                    await Html.RenderPartialAsync("../PartialViews/RichTextRenderer", richTextCollection);
+                                }
+                            </div>
+                        </div>
+                        @if (Model.Cards != null)
+                        {
+                            Model.Cards = grouping.ToList();
+                            {
+                                await Html.RenderPartialAsync("../Templates/Card", Model);
+                            }
+                        }
+                    }
+                }
+            }
+        </main>
+    </div>
+}

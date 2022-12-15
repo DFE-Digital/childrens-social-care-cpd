@@ -26,6 +26,9 @@
             case PageTypes.PathwayDetails:
                  {await Html.RenderPartialAsync("../Templates/PathwayDetails", pageViewModel);}
                 break;
+            case PageTypes.ViewAllCards:
+            {await Html.RenderPartialAsync("../Templates/ViewAllCards", pageViewModel);}
+                break;
         }
     }
 }
