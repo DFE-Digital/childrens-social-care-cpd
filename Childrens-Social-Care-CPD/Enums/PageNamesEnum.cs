@@ -3,6 +3,7 @@
     public enum PageNames
     {
         HomePage,
-        SeniorManagersAndLeaders
+        SeniorManagersAndLeaders,
+        ViewAllProgrammes
     }
 }

@@ -4,6 +4,7 @@
     {
         public string LinkText { get; set; }
         public string LinkURL { get; set; }
+        public string LinkSection { get; set; }
         public int SortOrder { get; set; }
     }
 }
