@@ -1,13 +1,16 @@
 using System.Collections.Generic;
+using System.Linq;
 using Childrens_Social_Care_CPD.Controllers;
+using Childrens_Social_Care_CPD.Enums;
 using Childrens_Social_Care_CPD.Models;
 using Contentful.Core;
 using Contentful.Core.Models;
 using Contentful.Core.Search;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
+using Paragraph = Childrens_Social_Care_CPD.Models.Paragraph;
 
 namespace Childrens_Social_Care_CPD_Tests
 {
@@ -18,22 +21,40 @@ namespace Childrens_Social_Care_CPD_Tests
         private ContentfulCollection<PageViewModel> _pages;
         private ContentfulCollection<PageFooter> _footer;
         private ContentfulCollection<PageHeader> _header;
+        private CPDController _target;
 
         [SetUp]
         public void Setup()
         {
             SetupModels();
 
-            _contentfulClient = new Mock<IContentfulClient>();
-            _contentfulClient.Setup(c => c.GetEntries<PageViewModel>(new QueryBuilder<PageViewModel>(), default)).ReturnsAsync(_pages);
+            _contentfulClient = new Mock<IContentfulClient>(MockBehavior.Strict);
+            _contentfulClient.Setup(c => c.GetEntries<PageViewModel>(It.IsAny<QueryBuilder<PageViewModel>>(), default)).ReturnsAsync(_pages);
             _contentfulClient.Setup(c => c.GetEntries<PageHeader>(new QueryBuilder<PageHeader>(), default)).ReturnsAsync(_header);
             _contentfulClient.Setup(c => c.GetEntries<PageFooter>(new QueryBuilder<PageFooter>(), default)).ReturnsAsync(_footer);
+           _logger = new Mock<ILogger<CPDController>>();
+           _target = new CPDController(_logger.Object, _contentfulClient.Object);
         }
 
         [Test]
-        public void Test1()
+        public void LandingPageReturnsModelOfTypePageViewModelTest()
         {
-            Assert.Pass();
+            var actual= _target.LandingPage(null, null, null, null);
+            ViewResult viewResult = (ViewResult) actual.Result;
+            Assert.IsInstanceOf<ContentfulCollection<PageViewModel>>(viewResult.Model);
+        }
+
+        [Test]
+        [TestCase("Master")]
+        [TestCase("Card")]
+        [TestCase("PathwayDetails")]
+        [TestCase("Programmes")]
+        public void LandingPageReturnsCorrectPageTemplateTest(string pageType)
+        {
+            var actual = _target.LandingPage(null, pageType, null, null);
+            ViewResult viewResult = (ViewResult)actual.Result;
+            var model = viewResult.ViewData.Model as ContentfulCollection<PageViewModel>;
+            Assert.AreEqual(model.Items.First().PageType.PageType, pageType);
         }
 
         private void SetupModels()
@@ -61,7 +82,6 @@ namespace Childrens_Social_Care_CPD_Tests
                                 RedirectPageName = null
                             }
                         },
-                        Paragraphs = null,
                         Links = new List<Link>
                         {
                             new Link
@@ -89,6 +109,16 @@ namespace Childrens_Social_Care_CPD_Tests
                                 Heading = "TestHeading",
                                 SubHeading = "TestSubHeading",
                                 RichTextContents = new Document(),
+                                SortOrder = 0
+                            }
+                        },
+                        Paragraphs = new List<Paragraph>
+                        {
+                            new Paragraph
+                            {
+                                Heading = "TestHeading",
+                                Contents = "TestContents",
+                                ParagraphPageName = "",
                                 SortOrder = 0
                             }
                         }
