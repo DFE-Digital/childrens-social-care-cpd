@@ -483,6 +483,72 @@ variable "private_endpoint_conn_name" {
   description = "Name of Private Endpoint Connection"
 }
 
+variable "alert_container_avg_resp_time" {
+  type = map(string)
+  default = {
+    Dev      = "s185d01-container-avg-resp-time"
+    Test     = "s185d02-container-avg-resp-time"
+    Pre-Prod = "s185t01-container-avg-resp-time"
+    Prod     = "s185p01-container-avg-resp-time"
+  }
+  description = "Name of container average response time alert"
+}
+
+variable "alert_appgw_health" {
+  type = map(string)
+  default = {
+    Dev      = "s185d01-appgw-heatlh"
+    Test     = "s185d02-appgw-heatlh"
+    Pre-Prod = "s185t01-appgw-heatlh"
+    Prod     = "s185p01-appgw-heatlh"
+  }
+  description = "Name of application gateway health alert"
+}
+
+variable "alert_appgw_backend_connect_time" {
+  type = map(string)
+  default = {
+    Dev      = "s185d01-backend-connect-times"
+    Test     = "s185d02-backend-connect-times"
+    Pre-Prod = "s185t01-backend-connect-times"
+    Prod     = "s185p01-backend-connect-times"
+  }
+  description = "Name of application gateway backend connection time alert"
+}
+
+variable "alert_container_cpu" {
+  type = map(string)
+  default = {
+    Dev      = "s185d01-container-cpu-average"
+    Test     = "s185d02-container-cpu-average"
+    Pre-Prod = "s185t01-container-cpu-average"
+    Prod     = "s185p01-container-cpu-average"
+  }
+  description = "Name of container cpu average alert"
+}
+
+variable "monitor_action_group_name" {
+  type = map(string)
+  default = {
+    Dev      = "s185d01-actiongroup"
+    Test     = "s185d02-actiongroup"
+    Pre-Prod = "s185t01-actiongroup"
+    Prod     = "s185p01-actiongroup"
+  }
+  description = "Name of monitor action group name alert"
+}
+
+variable "monitor_action_group_shortname" {
+  type = map(string)
+  default = {
+    Dev      = "s185d01actgp"
+    Test     = "s185d02actgp"
+    Pre-Prod = "s185t01actgp"
+    Prod     = "s185p01actgp"
+  }
+  description = "Name of monitor action group short name"
+}
+
 variable "tenant_id" {
   type        = string
   sensitive   = true
