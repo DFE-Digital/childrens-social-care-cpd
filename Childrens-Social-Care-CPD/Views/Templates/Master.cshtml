@@ -32,8 +32,8 @@
             {
                 var routeValues = new RouteValueDictionary
                 {
-                    { "pageName", "Development programmes for social workers" },
-                    { "pageType", PageTypes.ViewAllCards },
+                    { "pageName", link.RedirectPageName.PageName},
+                    { "pageType", link.PageType.PageType },
                     { "sendingPage", Model.PageName.PageName },
                     { "sendingPageType", Model.PageType.PageType }
                 };
