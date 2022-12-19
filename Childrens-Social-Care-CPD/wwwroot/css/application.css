@@ -9446,6 +9446,12 @@ body {
     box-shadow: 0px 2px #1d70b8;
 }
 
+.section-card__wfullborder {
+    padding: 15px;
+    /*box-shadow: inset 0 0 0 2px $colour-drop-shadow;*/
+    border: 2px solid #1d70b8;
+}
+
 .section-card__wbutton {
     background-color: #F3F2F1;
     padding: 30px;
@@ -9467,10 +9473,8 @@ body {
     border: 1px solid #b1b4b6;
 }
 
-/* clear section card */
-/* Remove this if I don't add any formatting */
-.section-card-clear {
-    padding: 0px;
+.section-card__clear {
+    padding: 15px;
 }
 
 /* IMAGES
@@ -9508,7 +9512,7 @@ body {
 /* LANDING PAGE FORMATS
 ----------------------- */
 .features-cards__desc {
-    color: hero-colour("dark-grey");
+    color: #505a5f;
 }
 
 /* CONTENT PAGES
@@ -9544,6 +9548,10 @@ body {
     .app-related-items .govuk-list > li {
         margin-bottom: 10px;
     }
+
+.govuk-inset-text {
+    border-left: 10px solid #347ca9;
+}
 
 /* FACETED BLOCK
 ---------------- */
@@ -9637,17 +9645,13 @@ body {
 }
 
     .hero-breadcrumbs__list-item:before {
-        content: "";
         display: block;
         position: absolute;
         top: 0;
         bottom: 0;
         left: -3.31px;
-        width: 7px;
-        height: 7px;
         margin: auto 0;
         border: solid;
-        border-width: 1px 1px 0 0;
         border-color: #ffffff;
         content: ">";
         width: auto;
@@ -9765,7 +9769,7 @@ body {
 }
 
 .app-header .govuk-header__content {
-    width: 0%;
+    width: 0;
 }
 
 .govuk-header__logotype-crown-fallback-image {
@@ -9773,16 +9777,25 @@ body {
     width: 45px;
 }
 
+/*
 .govuk-header__product-name::before {
     content: "Department for Education ";
     font-weight: 600;
-    background-image: url(../assets/images/crest.png) !important;
+    background-image: url(../images/crest.png) !important;
     padding: 8px 10px 10px 55px;
     background-size: 45px;
     background-repeat: no-repeat;
     background-position-x: 0px;
     background-position-y: -5px;
+}*/
+.govuk-header__logotype-text::after {
+    content: "|";
 }
+
+.govuk-header__logotype {
+    margin-right: 0;
+}
+
 .govuk-header__navigation-item--active a:link,
 .govuk-header__navigation-item--active a:hover,
 .govuk-header__navigation-item--active a:visited {
@@ -9804,4 +9817,320 @@ body {
         line-height: 2.2rem !important;
         font-size: 1rem;
     }
+}
+/* Lifted from DfE service standards service */
+/* ==========================================================================
+   COMPONENTS/ #ACTION-LINK
+   ========================================================================== */
+/**
+ * 1. Display is inline-block so the top and bottom margins/paddings are
+ *    respected.
+ * 2. 'Random number' is used to properly have sufficient space between icon
+ *    and text.
+ * 3. Position is relative so the arrow icon can display absolute.
+ * 4. Text decoration none used to override default <a> styling.
+ * 5. Box shadow 8px used instead of the default 4px.
+ * 6. Text decoration underline used to override default <a> styling.
+ */
+.dfeuk-action-link {
+    margin-bottom: 32px;
+    clear: both;
+    display: block;
+}
+
+@media (min-width: 40.0625em) {
+    .dfeuk-action-link {
+        margin-bottom: 20px;
+    }
+}
+
+.dfeuk-action-link.dfeuk-action-link--back-to-top {
+    margin-bottom: 16px;
+}
+
+@media (min-width: 40.0625em) {
+    .dfeuk-action-link.dfeuk-action-link--back-to-top {
+        margin-bottom: 24px;
+    }
+}
+
+.dfeuk-action-link + .dfeuk-action-link {
+    margin-bottom: 20px;
+}
+
+.dfeuk-action-link__link {
+    font-size: 18px;
+    line-height: 1.55556;
+    display: inline-block;
+    /* [1] */
+    font-weight: 600;
+    padding-left: 38px;
+    /* [2] */
+    position: relative;
+    /* [3] */
+    text-decoration: none;
+    /* [4] */
+}
+
+@media (min-width: 40.0625em) {
+    .dfeuk-action-link__link {
+        font-size: 22px;
+        line-height: 1.45455;
+    }
+}
+
+@media print {
+    .dfeuk-action-link__link {
+        font-size: 18pt;
+        line-height: 1.15;
+    }
+}
+
+.dfeuk-action-link__link:hover .dfeuk-action-link__text {
+    text-decoration: underline;
+    /* [6] */
+}
+
+.dfeuk-action-link__link:focus {
+    background-color: #ffdd00;
+    box-shadow: 0 -2px #ffdd00, 0 4px #0b0c0c;
+    color: #0b0c0c;
+    outline: 4px solid transparent;
+    text-decoration: none;
+}
+
+    .dfeuk-action-link__link:focus:hover .dfeuk-action-link__text {
+        color: #0b0c0c;
+        text-decoration: none;
+    }
+
+@media (max-width: 40.0525em) {
+    .dfeuk-action-link__link {
+        padding-left: 26px;
+        /* [2] */
+    }
+}
+
+@media print {
+    .dfeuk-action-link__link {
+        color: #0b0c0c;
+    }
+
+        .dfeuk-action-link__link:visited {
+            color: #0b0c0c;
+        }
+}
+
+.dfeuk-action-link__link .dfeuk-icon__arrow-right-circle {
+    fill: #003a69;
+    height: 36px;
+    left: -3px;
+    position: absolute;
+    top: -2px;
+    width: 36px;
+}
+
+@media print {
+    .dfeuk-action-link__link .dfeuk-icon__arrow-right-circle {
+        color: #0b0c0c;
+        fill: #0b0c0c;
+    }
+
+        .dfeuk-action-link__link .dfeuk-icon__arrow-right-circle:active,
+        .dfeuk-action-link__link .dfeuk-icon__arrow-right-circle:focus,
+        .dfeuk-action-link__link .dfeuk-icon__arrow-right-circle:visited {
+            color: #0b0c0c;
+        }
+}
+
+@media (max-width: 40.0525em) {
+    .dfeuk-action-link__link .dfeuk-icon__arrow-right-circle {
+        height: 24px;
+        left: -2px;
+        margin-bottom: 0;
+        top: 2px;
+        width: 24px;
+    }
+}
+
+.dfeuk-action-link__link .dfeuk-icon__arrow-right-circle--up {
+    transform: rotate(-90deg);
+}
+
+/*
+
+/* some colours */
+/* ==========================================================================
+   #TAG
+   ========================================================================== */
+.dfeuk-tag {
+    font-weight: 600;
+    font-size: 0.875rem;
+    line-height: 1;
+    background-color: #00345f;
+    border: 1px solid #00345f;
+    color: #ffffff;
+    display: inline-block;
+    outline: 2px solid transparent;
+    outline-offset: -2px;
+    padding: 4px 8px;
+    text-decoration: none;
+}
+
+@media (min-width: 40.0625em) {
+    .dfeuk-tag {
+        font-size: 1rem;
+        line-height: 1;
+    }
+}
+
+@media print {
+    .dfeuk-tag {
+        font-size: 14pt;
+        line-height: 1;
+    }
+}
+/* ==========================================================================
+   #EXAMPLE-CALLOUT
+   ========================================================================== */
+.dfeuk-example-callout {
+    margin: 30px 0px;
+    padding: 40px 24px 24px;
+    border: 1px solid #aeb7bd;
+    position: relative;
+}
+
+    .dfeuk-example-callout > *:first-child {
+        margin-top: 0;
+    }
+
+    .dfeuk-example-callout > *:last-child {
+        margin-bottom: 0;
+    }
+
+@media (min-width: 40.0625em) {
+    .dfeuk-example-callout {
+        margin-bottom: 40px;
+    }
+}
+
+@media (min-width: 40.0625em) {
+    .dfeuk-example-callout {
+        margin-top: 40px;
+    }
+}
+
+@media (min-width: 40.0625em) {
+    .dfeuk-example-callout {
+        padding-bottom: 32px;
+    }
+}
+
+@media (min-width: 40.0625em) {
+    .dfeuk-example-callout {
+        padding-left: 32px;
+    }
+}
+
+@media (min-width: 40.0625em) {
+    .dfeuk-example-callout {
+        padding-right: 32px;
+    }
+}
+
+@media (min-width: 40.0625em) {
+    .dfeuk-example-callout {
+        padding-top: 38px;
+    }
+}
+
+.dfeuk-example-callout__heading {
+    background: #00345f;
+    border: 0;
+    left: -1px;
+    position: absolute;
+    top: -1px;
+    padding: 8px 16px;
+}
+
+.dfeuk-example-callout--white {
+    background: #ffffff;
+}
+
+.dfeuk-example-callout--image + h3 {
+    padding-top: 16px;
+}
+
+@media (min-width: 40.0625em) {
+    .dfeuk-example-callout--image + h3 {
+        padding-top: 24px;
+    }
+}
+
+.dfeuk-u-visually-hidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    -webkit-clip-path: inset(50%);
+    clip-path: inset(50%);
+    height: 1px;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
+
+/* Aside page adjustments */
+.swcd-tag {
+    padding: 90px 15px 150px 15px;
+    margin-top: 10px;
+    border: 2px solid #aeb7bd;
+}
+
+/* Style code examples on component example pages */
+.code-example {
+    font-size: 19px;
+    background-color: #eee;
+    display: block;
+    padding: 10px;
+}
+
+/* Prototype landing page styling */
+.landing-page__highlighting {
+    background-color: rgba(213, 56, 128, 0.25);
+}
+
+/* Content pages */
+.govuk-inset-text__ptk {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 1.25;
+    padding: 15px;
+    clear: both;
+    border-left: 10px solid #d4351c;
+}
+
+.content-page-status {
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 1.25;
+}
+
+.content-page-status__draft {
+    padding: 15px;
+    margin-bottom: 60px;
+    border: 5px solid #d4351c;
+    background-color: #ffffff;
+    color: #0b0c0c;
+}
+
+.content-page-status__ready {
+    padding: 15px;
+    margin-bottom: 60px;
+    border: 5px solid #347ca9;
+    background-color: #ffffff;
+    color: #0b0c0c;
 }
