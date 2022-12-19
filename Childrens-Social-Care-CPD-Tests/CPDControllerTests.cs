@@ -56,7 +56,7 @@ namespace Childrens_Social_Care_CPD_Tests
             var actual = _target.LandingPage(null, pageType.ToString(), null, null);
             ViewResult viewResult = (ViewResult)actual.Result;
             var model = viewResult.ViewData.Model as ContentfulCollection<PageViewModel>;
-            Assert.AreEqual(model.Items.First().PageType.PageType, pageType);
+            Assert.AreEqual(model.Items.First().PageType.PageType, pageType.ToString());
         }
 
         private void SetupModels()
