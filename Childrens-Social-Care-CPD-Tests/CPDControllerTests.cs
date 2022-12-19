@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Childrens_Social_Care_CPD.Controllers;
@@ -14,6 +15,7 @@ using Paragraph = Childrens_Social_Care_CPD.Models.Paragraph;
 
 namespace Childrens_Social_Care_CPD_Tests
 {
+
     public class CPDControllerTests
     {
         private Mock<IContentfulClient> _contentfulClient;
@@ -45,13 +47,13 @@ namespace Childrens_Social_Care_CPD_Tests
         }
 
         [Test]
-        [TestCase("Master")]
-        [TestCase("Card")]
-        [TestCase("PathwayDetails")]
-        [TestCase("Programmes")]
-        public void LandingPageReturnsCorrectPageTemplateTest(string pageType)
+        [TestCase(PageTypes.Master)]
+        [TestCase(PageTypes.Cards)]
+        [TestCase(PageTypes.PathwayDetails)]
+        [TestCase(PageTypes.Programmes)]
+        public void LandingPageReturnsCorrectPageTemplateTest(PageTypes pageType)
         {
-            var actual = _target.LandingPage(null, pageType, null, null);
+            var actual = _target.LandingPage(null, pageType.ToString(), null, null);
             ViewResult viewResult = (ViewResult)actual.Result;
             var model = viewResult.ViewData.Model as ContentfulCollection<PageViewModel>;
             Assert.AreEqual(model.Items.First().PageType.PageType, pageType);
