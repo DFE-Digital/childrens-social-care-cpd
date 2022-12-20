@@ -121,7 +121,7 @@ resource "azurerm_monitor_autoscale_setting" "autoscale" {
   name                = var.autoscale_name[terraform.workspace]
   resource_group_name = data.azurerm_resource_group.rg.name
   location            = data.azurerm_resource_group.rg.location
-  target_resource_id  = azurerm_application_gateway.appgw.id
+  target_resource_id  = azurerm_service_plan.service-plan.id
 
   count = terraform.workspace == "Prod" ? 1 : 0
 
@@ -136,8 +136,8 @@ resource "azurerm_monitor_autoscale_setting" "autoscale" {
 
     rule {
       metric_trigger {
-        metric_name        = "CpuUtilization"
-        metric_resource_id = azurerm_application_gateway.appgw.id
+        metric_name        = "CpuPercentage"
+        metric_resource_id = azurerm_service_plan.service-plan.id
         time_grain         = "PT1M"
         statistic          = "Average"
         time_window        = "PT5M"
@@ -156,8 +156,8 @@ resource "azurerm_monitor_autoscale_setting" "autoscale" {
 
     rule {
       metric_trigger {
-        metric_name        = "CpuUtilization"
-        metric_resource_id = azurerm_application_gateway.appgw.id
+        metric_name        = "CpuPercentage"
+        metric_resource_id = azurerm_service_plan.service-plan.id
         time_grain         = "PT1M"
         statistic          = "Average"
         time_window        = "PT5M"
