@@ -386,8 +386,8 @@ variable "key_vault_rg" {
 variable "key_vault_name" {
   type = map(string)
   default = {
-    Dev      = "cpd-key-vault"
-    Test     = "cpd-key-vault"
+    Dev      = "s185d-CPD-Key-Vault"
+    Test     = "s185d-CPD-Key-Vault"
     Pre-Prod = "s185t-CPD-Key-Vault"
     Prod     = "s185p-CPD-Key-Vault"
   }
@@ -397,8 +397,8 @@ variable "key_vault_name" {
 variable "key_vault_url" {
   type = map(string)
   default = {
-    Dev      = "https://cpd-key-vault.vault.azure.net/"
-    Test     = "https://cpd-key-vault.vault.azure.net/"
+    Dev      = "https://s185d-cpd-key-vault.vault.azure.net/"
+    Test     = "https://s185d-cpd-key-vault.vault.azure.net/"
     Pre-Prod = "https://s185t-cpd-key-vault.vault.azure.net/"
     Prod     = "https://s185p-cpd-key-vault.vault.azure.net/"
   }
