@@ -1,0 +1,31 @@
+﻿@model List<Link>;
+@using Contentful.AspNetCore.TagHelpers
+@addTagHelper *, Contentful.AspNetCore
+
+<div class="govuk-grid-column-one-third">
+    @{
+        var linkGroups = Model.GroupBy(c => c.SideNaveGroupText); 
+    }
+    @foreach (var grouping in linkGroups)
+    {
+        @grouping.OrderBy(g => g.SortOrder);
+        <aside class="app-related-items" role="complementary">
+            <h2 class="govuk-heading-s">
+                @grouping.Key
+            </h2>
+            <nav role="navigation" aria-labelledby="related-nav__section">
+                <ul class="govuk-list govuk-!-font-size-16">
+                    @foreach (var link in @grouping)
+                    {
+                        <li>
+                            <a href="{@link.LinkURL}">
+                                @link.LinkText
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </nav>
+        </aside>
+    }
+
+</div>
