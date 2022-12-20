@@ -8,7 +8,7 @@
     }
     @foreach (var grouping in linkGroups)
     {
-        @grouping.OrderBy(g => g.SortOrder);
+        grouping.OrderBy(g => g.SortOrder);
         <aside class="app-related-items" role="complementary">
             <h2 class="govuk-heading-s">
                 @grouping.Key

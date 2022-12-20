@@ -1,4 +1,5 @@
-﻿@model PageViewModel;
+﻿@using Childrens_Social_Care_CPD.Enums
+@model PageViewModel;
 
 @if (Model != null)
 {
@@ -28,19 +29,26 @@
                                 <dt class="govuk-summary-list__key">@label.labelHeading</dt>
                                 @if (label.LabelType == "Text")
                                 {
-                                   <dd>@label.LabelText</dd>
+                                    <dd>@label.LabelText</dd>
                                 }
                                 else
                                 {
-                                  <dd><a class="govuk-!-font-size-19" href="@{@label.LabelTextLink}">@label.LabelText</a></dd>
+                                    <dd><a class="govuk-!-font-size-19" href="@{@label.LabelTextLink}">@label.LabelText</a></dd>
                                 }
                             </div>
                         }
                     </dl>
                     @{await Html.RenderPartialAsync("../PartialViews/RichTextRenderer",Model.RichTexts);}
                 </div>
+                
+                @{
+                    var sideNaveLinks = Model.Links.Where(l => l.LinkSection == LinkSection.SideNav.ToString()).ToList();
+                }
+                @if (sideNaveLinks.Any())
+                {
+                    {await Html.RenderPartialAsync("../PartialViews/SideNav",sideNaveLinks);}
+                }
             </div>
-
         </main>
     </div>
 }
