@@ -1,4 +1,5 @@
-﻿using Childrens_Social_Care_CPD.Constants;
+﻿
+using Childrens_Social_Care_CPD.Constants;
 using Childrens_Social_Care_CPD.Models;
 using Contentful.Core;
 using Contentful.Core.Models;
@@ -23,10 +24,10 @@ namespace Childrens_Social_Care_CPD.Controllers
         /// <param name="filterContext"></param>
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            ViewBag.pageName = filterContext.ActionArguments.ContainsKey("pageName")? filterContext.ActionArguments["pageName"] ?? string.Empty:string.Empty;
-            ViewBag.pageType = filterContext.ActionArguments.ContainsKey("pageType") ? filterContext.ActionArguments["pageType"] ?? string.Empty : string.Empty;
-            ViewBag.sendingPage = filterContext.ActionArguments.ContainsKey("sendingPage") ? filterContext.ActionArguments["sendingPage"] ?? string.Empty : string.Empty;
-            ViewBag.sendingPageType = filterContext.ActionArguments.ContainsKey("sendingPageType") ? filterContext.ActionArguments["sendingPageType"] ?? string.Empty : string.Empty;
+            ViewBag.pageName = filterContext.ActionArguments.ContainsKey(SiteConstants.PAGENAME)? filterContext.ActionArguments[SiteConstants.PAGENAME] ?? string.Empty:string.Empty;
+            ViewBag.pageType = filterContext.ActionArguments.ContainsKey(SiteConstants.PAGETYPE) ? filterContext.ActionArguments[SiteConstants.PAGETYPE] ?? string.Empty : string.Empty;
+            ViewBag.sendingPage = filterContext.ActionArguments.ContainsKey(SiteConstants.SENDINGPAGE) ? filterContext.ActionArguments[SiteConstants.SENDINGPAGE] ?? string.Empty : string.Empty;
+            ViewBag.sendingPageType = filterContext.ActionArguments.ContainsKey(SiteConstants.SENDINGPAGETYPE) ? filterContext.ActionArguments[SiteConstants.SENDINGPAGETYPE] ?? string.Empty : string.Empty;
 
             PageHeader pageHeader = GetHeader();
 
@@ -43,7 +44,7 @@ namespace Childrens_Social_Care_CPD.Controllers
         /// <returns></returns>
         private PageFooter GetFooter()
         {
-            var footerQueryBuilder = QueryBuilder<PageFooter>.New.ContentTypeIs(ContentTypes.PAGEFOOTER);
+            var footerQueryBuilder = QueryBuilder<PageFooter>.New.ContentTypeIs(SiteConstants.PAGEFOOTER);
             var footerResult = _client.GetEntries<PageFooter>(footerQueryBuilder).Result;
             var footer = footerResult.FirstOrDefault();
             PageFooter pageFooter = new PageFooter();
@@ -66,7 +67,7 @@ namespace Childrens_Social_Care_CPD.Controllers
         /// <returns></returns>
         private PageHeader GetHeader()
         {
-            var queryBuilder = QueryBuilder<PageHeader>.New.ContentTypeIs(ContentTypes.PAGEHEADER);
+            var queryBuilder = QueryBuilder<PageHeader>.New.ContentTypeIs(SiteConstants.PAGEHEADER);
             var result = _client.GetEntries<PageHeader>(queryBuilder).Result;
             var header = result.FirstOrDefault();
             var htmlRenderer = new HtmlRenderer();
