@@ -21,16 +21,12 @@
     </script>
 
 </head>
-<body>
+<body class="govuk-template__body">
 
     @{
         await Html.RenderPartialAsync("../PartialViews/Header");
     }
-
-    <div>
         @RenderBody()
-    </div>
-
     @{
         await Html.RenderPartialAsync("../PartialViews/Footer");
     }
