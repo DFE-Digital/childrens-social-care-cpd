@@ -3,7 +3,7 @@ name: Auto Deploy
 
 on:
   workflow_run:
-    workflows: Build Image
+    workflows: Docker Publish
     types: [completed] #requested
 
 jobs:
