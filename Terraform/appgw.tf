@@ -160,7 +160,6 @@ resource "azurerm_application_gateway" "appgw" {
     }
   }
 
-
   tags = data.azurerm_resource_group.rg.tags
 }
 
@@ -220,7 +219,5 @@ resource "azurerm_monitor_autoscale_setting" "autoscale" {
         cooldown  = "PT1M"
       }
     }
-
   }
-
 }
