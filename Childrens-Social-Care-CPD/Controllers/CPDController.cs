@@ -35,7 +35,6 @@ namespace Childrens_Social_Care_CPD.Controllers
             foreach (PageViewModel viewModel in pageViewModel)
             {
                 viewModel.Cards = viewModel.Cards.OrderBy(x => x.SortOrder).ToList();
-                viewModel.Paragraphs = viewModel.Paragraphs.OrderBy(x => x.SortOrder).ToList();
                 viewModel.Labels = viewModel.Labels.OrderBy(x => x.SortOrder).ToList();
                 viewModel.RichTexts = viewModel.RichTexts.OrderBy(x => x.SortOrder).ToList();
             }
