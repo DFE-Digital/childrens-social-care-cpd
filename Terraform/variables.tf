@@ -163,6 +163,28 @@ variable "appgw_name" {
   description = "Name of the Application Gateway"
 }
 
+variable "appgw_rewrite_rule_set" {
+  type = map(string)
+  default = {
+    Dev      = "s185d01-csc-cpd-app-gw-rewrite-rule-set"
+    Test     = "s185d02-csc-cpd-app-gw-rewrite-rule-set"
+    Pre-Prod = "s185t01-csc-cpd-app-gw-rewrite-rule-set"
+    Prod     = "s185p01-csc-cpd-app-gw-rewrite-rule-set"
+  }
+  description = "Name of the Application Gateway Rewrite Rule Set"
+}
+
+variable "appgw_rewrite_rule" {
+  type = map(string)
+  default = {
+    Dev      = "s185d01-csc-cpd-app-gw-rewrite-rule"
+    Test     = "s185d02-csc-cpd-app-gw-rewrite-rule"
+    Pre-Prod = "s185t01-csc-cpd-app-gw-rewrite-rule"
+    Prod     = "s185p01-csc-cpd-app-gw-rewrite-rule"
+  }
+  description = "Name of the Application Gateway Rewrite Rule"
+}
+
 variable "appgw_tier" {
   type = map(string)
   default = {

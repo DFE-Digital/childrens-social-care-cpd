@@ -102,6 +102,7 @@ resource "azurerm_application_gateway" "appgw" {
     http_listener_name         = var.ssl_listener_name[terraform.workspace]
     backend_address_pool_name  = var.backend_address_pool_name[terraform.workspace]
     backend_http_settings_name = var.http_setting_name[terraform.workspace]
+    rewrite_rule_set_name      = var.appgw_rewrite_rule_set[terraform.workspace]
   }
 
   probe {
@@ -113,6 +114,52 @@ resource "azurerm_application_gateway" "appgw" {
     unhealthy_threshold                       = 3
     protocol                                  = "Http"
   }
+
+  rewrite_rule_set {
+    name = var.appgw_rewrite_rule_set[terraform.workspace]
+
+
+    rewrite_rule {
+      name          = var.appgw_rewrite_rule[terraform.workspace]
+      rule_sequence = 1
+
+      response_header_configuration {
+        header_name  = "X-Frame-Options"
+        header_value = "SAMEORIGIN"
+      }
+
+      response_header_configuration {
+        header_name  = "X-Xss-Protection"
+        header_value = "1"
+      }
+
+      response_header_configuration {
+        header_name  = "X-Content-Type-Options"
+        header_value = "nosniff"
+      }
+
+      response_header_configuration {
+        header_name  = "Content-Security-Policy"
+        header_value = "upgrade-insecure-requests; base-uri 'self'; frame-ancestors 'self'; form-action 'self'; object-src 'none';"
+      }
+
+      response_header_configuration {
+        header_name  = "Referrer-Policy"
+        header_value = "strict-origin-when-cross-origin"
+      }
+
+      response_header_configuration {
+        header_name  = "Strict-Transport-Security"
+        header_value = "max-age=31536000; includeSubDomains; preload"
+      }
+
+      # response_header_configuration {
+      #   header_name  = "Permissions-Policy"
+      #   header_value = ""
+      # }
+    }
+  }
+
 
   tags = data.azurerm_resource_group.rg.tags
 }
