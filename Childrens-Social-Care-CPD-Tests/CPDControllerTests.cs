@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Childrens_Social_Care_CPD.Controllers;
@@ -11,7 +10,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
-using Paragraph = Childrens_Social_Care_CPD.Models.Paragraph;
 
 namespace Childrens_Social_Care_CPD_Tests
 {
@@ -56,7 +54,7 @@ namespace Childrens_Social_Care_CPD_Tests
             var actual = _target.LandingPage(null, pageType.ToString(), null, null);
             ViewResult viewResult = (ViewResult)actual.Result;
             var model = viewResult.ViewData.Model as ContentfulCollection<PageViewModel>;
-            Assert.AreEqual(model.Items.First().PageType.PageType, pageType.ToString());
+            Assert.AreEqual(model?.Items.First().PageType.PageType, pageType.ToString());
         }
 
         private void SetupModels()
@@ -111,16 +109,6 @@ namespace Childrens_Social_Care_CPD_Tests
                                 Heading = "TestHeading",
                                 SubHeading = "TestSubHeading",
                                 RichTextContents = new Document(),
-                                SortOrder = 0
-                            }
-                        },
-                        Paragraphs = new List<Paragraph>
-                        {
-                            new Paragraph
-                            {
-                                Heading = "TestHeading",
-                                Contents = "TestContents",
-                                ParagraphPageName = "",
                                 SortOrder = 0
                             }
                         }
