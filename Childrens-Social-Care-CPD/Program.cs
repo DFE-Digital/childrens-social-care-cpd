@@ -6,6 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 ConfigurationManager configuration = builder.Configuration;
+builder.WebHost.UseSetting(WebHostDefaults.DetailedErrorsKey, "true");
+builder.WebHost.CaptureStartupErrors(true);
 
 bool enableContentfulIntegration = configuration.GetValue<bool>("EnableContentfulIntegration");
 
