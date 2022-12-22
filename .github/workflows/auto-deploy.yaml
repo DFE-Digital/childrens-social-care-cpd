@@ -1,13 +1,13 @@
-name: App Deploy
+name: Auto Deploy
 
 
 on:
   workflow_run:
-    workflows: Build Image
+    workflows: Docker Publish
     types: [completed] #requested
 
 jobs:
-  app-deploy:
+  auto-deploy:
     runs-on: ubuntu-latest
     environment: Dev
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
@@ -18,7 +18,7 @@ jobs:
         with:
           creds: '{"clientId":"${{ secrets.TF_ARM_CLIENT_ID }}","clientSecret":"${{ secrets.TF_ARM_CLIENT_SECRET }}","subscriptionId":"${{ secrets.TF_ARM_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TF_ARM_TENANT_ID }}"}'
 
-      - name: Deploy Dev to Azure Web App
+      - name: Automatically Deploy Dev to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
           app-name: 's185d01-chidrens-social-care-cpd-app-service'
