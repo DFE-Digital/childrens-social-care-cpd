@@ -435,9 +435,8 @@ variable "autoscale_name" {
     Pre-Prod = "s185t01-app-autoscale"
     Prod     = "s185p01-app-autoscale"
   }
-  description = "Name of Key Vault"
+  description = "Name of autoscale settings"
 }
-
 
 variable "autoscale_min" {
   type = map(string)
