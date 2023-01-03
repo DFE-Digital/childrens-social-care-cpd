@@ -13,6 +13,19 @@ resource "azurerm_application_gateway" "appgw" {
     max_capacity = var.autoscale_max[terraform.workspace]
   }
 
+  dynamic "waf_configuration" {
+    for_each = [
+      for rg in var.rg_name : rg
+      if data.azurerm_resource_group.rg.name  == "s185p01-childrens-social-care-cpd-rg" && rg == "s185p01-childrens-social-care-cpd-rg"
+    ]
+
+    content {
+      enabled = true 
+      firewall_mode = "Prevention"
+      rule_set_version = "3.0"
+    }
+  }
+
   gateway_ip_configuration {
     name      = var.gateway_ip_configuration[terraform.workspace]
     subnet_id = azurerm_subnet.frontend.id
