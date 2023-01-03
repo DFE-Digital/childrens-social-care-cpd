@@ -16,12 +16,12 @@ resource "azurerm_application_gateway" "appgw" {
   dynamic "waf_configuration" {
     for_each = [
       for rg in var.rg_name : rg
-      if data.azurerm_resource_group.rg.name  == "s185p01-childrens-social-care-cpd-rg" && rg == "s185p01-childrens-social-care-cpd-rg"
+      if data.azurerm_resource_group.rg.name == "s185p01-childrens-social-care-cpd-rg" && rg == "s185p01-childrens-social-care-cpd-rg"
     ]
 
     content {
-      enabled = true 
-      firewall_mode = "Prevention"
+      enabled          = true
+      firewall_mode    = "Prevention"
       rule_set_version = "3.0"
     }
   }
