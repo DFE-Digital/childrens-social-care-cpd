@@ -166,10 +166,10 @@ resource "azurerm_application_gateway" "appgw" {
         header_value = "max-age=31536000; includeSubDomains; preload"
       }
 
-      # response_header_configuration {
-      #   header_name  = "Permissions-Policy"
-      #   header_value = ""
-      # }
+      response_header_configuration {
+        header_name  = "Permissions-Policy"
+        header_value = "microphone=(), camera=()"
+      }
     }
   }
 
