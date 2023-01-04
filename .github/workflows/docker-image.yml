@@ -7,7 +7,7 @@ on:
 jobs:
 
   build:
-
+    name: 'Docker Image CI'
     runs-on: ubuntu-latest
 
     steps:

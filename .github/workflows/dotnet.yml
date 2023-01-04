@@ -9,7 +9,7 @@ on:
 
 jobs:
   test:
-
+    name: '.NET Test'
     runs-on: ubuntu-latest
 
     steps:
