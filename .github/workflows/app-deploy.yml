@@ -16,6 +16,7 @@ on:
 
 jobs:
   app-deploy:
+    name: 'App Deploy'
     runs-on: ubuntu-latest
     environment: ${{inputs.workspace}}
 
