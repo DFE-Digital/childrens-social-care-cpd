@@ -128,9 +128,18 @@ resource "azurerm_application_gateway" "appgw" {
     protocol                                  = "Http"
   }
 
+  custom_error_configuration {
+    status_code           = "HttpStatus403"
+    custom_error_page_url = "https://s185errorpage.blob.core.windows.net/s185errorpage/403.html"
+  }
+
+  custom_error_configuration {
+    status_code           = "HttpStatus502"
+    custom_error_page_url = "https://s185errorpage.blob.core.windows.net/s185errorpage/502.html"
+  }
+
   rewrite_rule_set {
     name = var.appgw_rewrite_rule_set[terraform.workspace]
-
 
     rewrite_rule {
       name          = var.appgw_rewrite_rule[terraform.workspace]
