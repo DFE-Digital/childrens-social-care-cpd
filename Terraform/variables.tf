@@ -427,6 +427,17 @@ variable "key_vault_url" {
   description = "URL of Key Vault"
 }
 
+variable "cpd_contentful_env" {
+  type = map(string)
+  default = {
+    Dev      = "dev"
+    Test     = "test"
+    Pre-Prod = "prod"
+    Prod     = "prod"
+  }
+  description = "Contentful Environment Name"
+}
+
 variable "autoscale_name" {
   type = map(string)
   default = {
