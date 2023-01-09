@@ -13,5 +13,3 @@ provider "azurerm" {
   features {}
   tenant_id = var.tenant_id
 }
-
-data "azurerm_client_config" "current" {}
