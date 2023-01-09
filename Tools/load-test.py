@@ -1,12 +1,21 @@
+#!/usr/bin/python3
 import threading
 import time
 import requests
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--url", default="https://test.develop-child-family-social-work-career.education.gov.uk/", help="URL to use")
+args = parser.parse_args()
+
+# URL of the website to stress test
+url = args.url
+
+# Use the URL
+print(f"Using URL: {url}")
 
 # Number of threads to create
 thread_count = 25
-
-# URL of the website to stress test
-url = "https://test.develop-child-family-social-work-career.education.gov.uk/CPD/LandingPage"
 
 def make_request():
     # Send a GET request to the website
@@ -21,7 +30,7 @@ def make_request():
 # Create a list to store the threads
 threads = []
 
-# Run the stress test in a loop until the user presses 'q' or 'Q'
+# Run the stress test in a loop 
 while True:
     # Create the specified number of threads
     for i in range(thread_count):
