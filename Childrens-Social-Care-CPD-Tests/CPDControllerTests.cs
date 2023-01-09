@@ -10,10 +10,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
-using Paragraph = Childrens_Social_Care_CPD.Models.Paragraph;
 
 namespace Childrens_Social_Care_CPD_Tests
 {
+
     public class CPDControllerTests
     {
         private Mock<IContentfulClient> _contentfulClient;
@@ -45,16 +45,16 @@ namespace Childrens_Social_Care_CPD_Tests
         }
 
         [Test]
-        [TestCase("Master")]
-        [TestCase("Card")]
-        [TestCase("PathwayDetails")]
-        [TestCase("Programmes")]
-        public void LandingPageReturnsCorrectPageTemplateTest(string pageType)
+        [TestCase(PageTypes.Master)]
+        [TestCase(PageTypes.Cards)]
+        [TestCase(PageTypes.PathwayDetails)]
+        [TestCase(PageTypes.Programmes)]
+        public void LandingPageReturnsCorrectPageTemplateTest(PageTypes pageType)
         {
-            var actual = _target.LandingPage(null, pageType, null, null);
+            var actual = _target.LandingPage(null, pageType.ToString(), null, null);
             ViewResult viewResult = (ViewResult)actual.Result;
             var model = viewResult.ViewData.Model as ContentfulCollection<PageViewModel>;
-            Assert.AreEqual(model.Items.First().PageType.PageType, pageType);
+            Assert.AreEqual(model?.Items.First().PageType.PageType, pageType.ToString());
         }
 
         private void SetupModels()
@@ -109,16 +109,6 @@ namespace Childrens_Social_Care_CPD_Tests
                                 Heading = "TestHeading",
                                 SubHeading = "TestSubHeading",
                                 RichTextContents = new Document(),
-                                SortOrder = 0
-                            }
-                        },
-                        Paragraphs = new List<Paragraph>
-                        {
-                            new Paragraph
-                            {
-                                Heading = "TestHeading",
-                                Contents = "TestContents",
-                                ParagraphPageName = "",
                                 SortOrder = 0
                             }
                         }

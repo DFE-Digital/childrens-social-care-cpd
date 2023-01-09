@@ -1,11 +1,14 @@
 using Azure.Identity;
 using Contentful.AspNetCore;
+using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 ConfigurationManager configuration = builder.Configuration;
+builder.WebHost.UseSetting(WebHostDefaults.DetailedErrorsKey, "true");
+builder.WebHost.CaptureStartupErrors(true);
 
 bool enableContentfulIntegration = configuration.GetValue<bool>("EnableContentfulIntegration");
 
@@ -25,6 +28,9 @@ if (enableContentfulIntegration)
 
     builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, clientSecretCredential);
 }
+
+var options = new ApplicationInsightsServiceOptions { ConnectionString = "InstrumentationKey=13cbca44-e50d-4444-ab56-6c151cad789d;IngestionEndpoint=https://westeurope-5.in.applicationinsights.azure.com/;LiveEndpoint=https://westeurope.livediagnostics.monitor.azure.com/" };
+builder.Services.AddApplicationInsightsTelemetry(options: options);
 
 var app = builder.Build();
 

@@ -1,0 +1,32 @@
+name: Auto Deploy
+
+
+on:
+  workflow_run:
+    workflows: Docker Publish
+    types: [completed] #requested
+
+jobs:
+  auto-deploy:
+    name: 'Auto Deploy'
+    runs-on: ubuntu-latest
+    environment: Dev
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+
+      - name: Sign in to Azure 
+        uses: azure/login@v1
+        with:
+          creds: '{"clientId":"${{ secrets.TF_ARM_CLIENT_ID }}","clientSecret":"${{ secrets.TF_ARM_CLIENT_SECRET }}","subscriptionId":"${{ secrets.TF_ARM_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TF_ARM_TENANT_ID }}"}'
+
+      - name: Automatically Deploy Dev to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 's185d01-chidrens-social-care-cpd-app-service'
+          # slot-name: 'Dev'
+          images: 'ghcr.io/dfe-digital/childrens-social-care-cpd:master'
+
+      - name: Sign out of Azure
+        run: |
+          az logout
+  

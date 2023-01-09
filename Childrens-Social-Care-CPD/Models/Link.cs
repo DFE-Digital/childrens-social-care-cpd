@@ -7,7 +7,7 @@
         public string LinkSection { get; set; }
         public ContentPageType PageType { get; set; }
         public ContentPageName RedirectPageName { get; set; }
-
+        public string SideNaveGroupText { get; set; }
         public int SortOrder { get; set; }
     }
 }

@@ -5,11 +5,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Childrens_Social_Care_CPD</title>
+    <title>@ViewData["Title"]</title>
     <link rel="shortcut icon" sizes="16x16 32x32 48x48" href="../assets/images/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/application.css" asp-append-version="true" />
-
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5HLRT2H3SW"></script>
     <script>
@@ -21,16 +19,12 @@
     </script>
 
 </head>
-<body>
+<body class="govuk-template__body">
 
     @{
         await Html.RenderPartialAsync("../PartialViews/Header");
     }
-
-    <div>
         @RenderBody()
-    </div>
-
     @{
         await Html.RenderPartialAsync("../PartialViews/Footer");
     }

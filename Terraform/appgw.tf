@@ -13,6 +13,19 @@ resource "azurerm_application_gateway" "appgw" {
     max_capacity = var.autoscale_max[terraform.workspace]
   }
 
+  dynamic "waf_configuration" {
+    for_each = [
+      for rg in var.rg_name : rg
+      if data.azurerm_resource_group.rg.name == "s185p01-childrens-social-care-cpd-rg" && rg == "s185p01-childrens-social-care-cpd-rg"
+    ]
+
+    content {
+      enabled          = true
+      firewall_mode    = "Prevention"
+      rule_set_version = "3.0"
+    }
+  }
+
   gateway_ip_configuration {
     name      = var.gateway_ip_configuration[terraform.workspace]
     subnet_id = azurerm_subnet.frontend.id
@@ -102,6 +115,7 @@ resource "azurerm_application_gateway" "appgw" {
     http_listener_name         = var.ssl_listener_name[terraform.workspace]
     backend_address_pool_name  = var.backend_address_pool_name[terraform.workspace]
     backend_http_settings_name = var.http_setting_name[terraform.workspace]
+    rewrite_rule_set_name      = var.appgw_rewrite_rule_set[terraform.workspace]
   }
 
   probe {
@@ -114,6 +128,70 @@ resource "azurerm_application_gateway" "appgw" {
     protocol                                  = "Http"
   }
 
+  custom_error_configuration {
+    status_code           = "HttpStatus403"
+    custom_error_page_url = "https://s185errorpage.blob.core.windows.net/s185errorpage/403.html"
+  }
+
+  custom_error_configuration {
+    status_code           = "HttpStatus502"
+    custom_error_page_url = "https://s185errorpage.blob.core.windows.net/s185errorpage/502.html"
+  }
+
+  rewrite_rule_set {
+    name = var.appgw_rewrite_rule_set[terraform.workspace]
+
+    rewrite_rule {
+      name          = var.appgw_rewrite_rule[terraform.workspace]
+      rule_sequence = 1
+
+      response_header_configuration {
+        header_name  = "X-Frame-Options"
+        header_value = "SAMEORIGIN"
+      }
+
+      response_header_configuration {
+        header_name  = "X-Xss-Protection"
+        header_value = "1"
+      }
+
+      response_header_configuration {
+        header_name  = "X-Content-Type-Options"
+        header_value = "nosniff"
+      }
+
+      response_header_configuration {
+        header_name  = "Content-Security-Policy"
+        header_value = "upgrade-insecure-requests; base-uri 'self'; frame-ancestors 'self'; form-action 'self'; object-src 'none';"
+      }
+
+      response_header_configuration {
+        header_name  = "Referrer-Policy"
+        header_value = "strict-origin-when-cross-origin"
+      }
+
+      response_header_configuration {
+        header_name  = "Strict-Transport-Security"
+        header_value = "max-age=31536000; includeSubDomains; preload"
+      }
+
+      response_header_configuration {
+        header_name  = "Permissions-Policy"
+        header_value = "accelerometer=(), ambient-light-sensor=(), autoplay=(), camera=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), speaker=(), sync-xhr=self, usb=(), vr=()"
+      }
+
+      response_header_configuration {
+        header_name  = "Server"
+        header_value = ""
+      }
+
+      response_header_configuration {
+        header_name  = "X-Powered-By"
+        header_value = ""
+      }
+    }
+  }
+
   tags = data.azurerm_resource_group.rg.tags
 }
 
@@ -121,7 +199,7 @@ resource "azurerm_monitor_autoscale_setting" "autoscale" {
   name                = var.autoscale_name[terraform.workspace]
   resource_group_name = data.azurerm_resource_group.rg.name
   location            = data.azurerm_resource_group.rg.location
-  target_resource_id  = azurerm_application_gateway.appgw.id
+  target_resource_id  = azurerm_service_plan.service-plan.id
 
   count = terraform.workspace == "Prod" ? 1 : 0
 
@@ -136,8 +214,8 @@ resource "azurerm_monitor_autoscale_setting" "autoscale" {
 
     rule {
       metric_trigger {
-        metric_name        = "CpuUtilization"
-        metric_resource_id = azurerm_application_gateway.appgw.id
+        metric_name        = "CpuPercentage"
+        metric_resource_id = azurerm_service_plan.service-plan.id
         time_grain         = "PT1M"
         statistic          = "Average"
         time_window        = "PT5M"
@@ -156,8 +234,8 @@ resource "azurerm_monitor_autoscale_setting" "autoscale" {
 
     rule {
       metric_trigger {
-        metric_name        = "CpuUtilization"
-        metric_resource_id = azurerm_application_gateway.appgw.id
+        metric_name        = "CpuPercentage"
+        metric_resource_id = azurerm_service_plan.service-plan.id
         time_grain         = "PT1M"
         statistic          = "Average"
         time_window        = "PT5M"
@@ -173,7 +251,5 @@ resource "azurerm_monitor_autoscale_setting" "autoscale" {
         cooldown  = "PT1M"
       }
     }
-
   }
-
 }

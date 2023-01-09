@@ -163,6 +163,28 @@ variable "appgw_name" {
   description = "Name of the Application Gateway"
 }
 
+variable "appgw_rewrite_rule_set" {
+  type = map(string)
+  default = {
+    Dev      = "s185d01-csc-cpd-app-gw-rewrite-rule-set"
+    Test     = "s185d02-csc-cpd-app-gw-rewrite-rule-set"
+    Pre-Prod = "s185t01-csc-cpd-app-gw-rewrite-rule-set"
+    Prod     = "s185p01-csc-cpd-app-gw-rewrite-rule-set"
+  }
+  description = "Name of the Application Gateway Rewrite Rule Set"
+}
+
+variable "appgw_rewrite_rule" {
+  type = map(string)
+  default = {
+    Dev      = "s185d01-csc-cpd-app-gw-rewrite-rule"
+    Test     = "s185d02-csc-cpd-app-gw-rewrite-rule"
+    Pre-Prod = "s185t01-csc-cpd-app-gw-rewrite-rule"
+    Prod     = "s185p01-csc-cpd-app-gw-rewrite-rule"
+  }
+  description = "Name of the Application Gateway Rewrite Rule"
+}
+
 variable "appgw_tier" {
   type = map(string)
   default = {
@@ -386,8 +408,8 @@ variable "key_vault_rg" {
 variable "key_vault_name" {
   type = map(string)
   default = {
-    Dev      = "cpd-key-vault"
-    Test     = "cpd-key-vault"
+    Dev      = "s185d-CPD-Key-Vault"
+    Test     = "s185d-CPD-Key-Vault"
     Pre-Prod = "s185t-CPD-Key-Vault"
     Prod     = "s185p-CPD-Key-Vault"
   }
@@ -397,12 +419,23 @@ variable "key_vault_name" {
 variable "key_vault_url" {
   type = map(string)
   default = {
-    Dev      = "https://cpd-key-vault.vault.azure.net/"
-    Test     = "https://cpd-key-vault.vault.azure.net/"
+    Dev      = "https://s185d-cpd-key-vault.vault.azure.net/"
+    Test     = "https://s185d-cpd-key-vault.vault.azure.net/"
     Pre-Prod = "https://s185t-cpd-key-vault.vault.azure.net/"
     Prod     = "https://s185p-cpd-key-vault.vault.azure.net/"
   }
   description = "URL of Key Vault"
+}
+
+variable "cpd_contentful_env" {
+  type = map(string)
+  default = {
+    Dev      = "dev"
+    Test     = "test"
+    Pre-Prod = "prod"
+    Prod     = "prod"
+  }
+  description = "Contentful Environment Name"
 }
 
 variable "autoscale_name" {
@@ -413,9 +446,8 @@ variable "autoscale_name" {
     Pre-Prod = "s185t01-app-autoscale"
     Prod     = "s185p01-app-autoscale"
   }
-  description = "Name of Key Vault"
+  description = "Name of autoscale settings"
 }
-
 
 variable "autoscale_min" {
   type = map(string)
