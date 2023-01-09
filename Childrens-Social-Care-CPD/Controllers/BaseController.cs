@@ -77,8 +77,8 @@ namespace Childrens_Social_Care_CPD.Controllers
             {
                 Header =  header == null ? string.Empty : header.Header,
                 PrototypeTextHtml = html,
-                PrototypeHeader = header == null ? string.Empty : header.PrototypeHeader
-            };
+                PrototypeHeader = header == null ? string.Empty : header.PrototypeHeader,
+                HeaderLinkTitle = header.HeaderLinkTitle            };
             return pageHeader;
         }
     }
