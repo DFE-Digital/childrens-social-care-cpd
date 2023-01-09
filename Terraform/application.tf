@@ -14,6 +14,7 @@ resource "azurerm_linux_web_app" "linux-web-app" {
   service_plan_id     = azurerm_service_plan.service-plan.id
 
   app_settings = {
+    CPD_GOOGLEANALYTICSTAG     = var.cpd_googleanalyticstag
     CPD_KEYVAULTENDPOINT       = var.cpd_keyvaultendpoint
     CPD_CLIENTID               = var.cpd_client_id
     CPD_CLIENTSECRET           = var.cpd_client_secret

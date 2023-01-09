@@ -207,39 +207,6 @@ variable "appgw_probe" {
   description = "Name of App Gateway Health Probe"
 }
 
-variable "appgw_ssl_probe" {
-  type = map(string)
-  default = {
-    Dev      = "s185d01-chidrens-social-care-cpd-ssl-hp"
-    Test     = "s185d02-chidrens-social-care-cpd-ssl-hp"
-    Pre-Prod = "s185t01-chidrens-social-care-cpd-ssl-hp"
-    Prod     = "s185p01-chidrens-social-care-cpd-ssl-hp"
-  }
-  description = "Name of App Gateway SSL Health Probe"
-}
-
-variable "private_link_ip_conf_name" {
-  type = map(string)
-  default = {
-    Dev      = "s185d01-csc-cpd-app-gateway-private-link-ip-conf"
-    Test     = "s185d02-csc-cpd-app-gateway-private-link-ip-conf"
-    Pre-Prod = "s185t01-csc-cpd-app-gateway-private-link-ip-conf"
-    Prod     = "s185p01-csc-cpd-app-gateway-private-link-ip-conf"
-  }
-  description = "Name of Private Link IP Configuration"
-}
-
-variable "private_link_name" {
-  type = map(string)
-  default = {
-    Dev      = "s185d01-csc-cpd-app-gateway-private-link"
-    Test     = "s185d02-csc-cpd-app-gateway-private-link"
-    Pre-Prod = "s185t01-csc-cpd-app-gateway-private-link"
-    Prod     = "s185p01-csc-cpd-app-gateway-private-link"
-  }
-  description = "Name of Private Link"
-}
-
 variable "gateway_ip_configuration" {
   type = map(string)
   default = {
@@ -304,17 +271,6 @@ variable "http_setting_name" {
     Prod     = "s185p01-chidrens-social-care-cpd-bes-http"
   }
   description = "Name of HTTP Setting"
-}
-
-variable "https_setting_name" {
-  type = map(string)
-  default = {
-    Dev      = "s185d01-chidrens-social-care-cpd-bes-https"
-    Test     = "s185d02-chidrens-social-care-cpd-bes-https"
-    Pre-Prod = "s185t01-chidrens-social-care-cpd-bes-https"
-    Prod     = "s185p01-chidrens-social-care-cpd-bes-https"
-  }
-  description = "Name of HTTPS Setting"
 }
 
 variable "listener_name" {
@@ -603,4 +559,10 @@ variable "cpd_keyvaultendpoint" {
   type        = string
   sensitive   = true
   description = "URL Endpoint for Key Vault in Azure"
+}
+
+variable "cpd_googleanalyticstag" {
+  type        = string
+  sensitive   = true
+  description = "Google Analytics Tag "
 }
