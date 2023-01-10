@@ -1,0 +1,110 @@
+﻿/* SECTION CARDS
+---------------- */
+/* shaded section card */
+.section-card {
+    background-color: #F3F2F1;
+    padding: 15px;
+}
+
+.section-card__wborder {
+    background-color: #F3F2F1;
+    padding: 15px;
+    box-shadow: 0px 2px #1d70b8;
+}
+
+.section-card__wfullborder {
+    padding: 15px;
+    /*box-shadow: inset 0 0 0 2px $colour-drop-shadow;*/
+    border: 2px solid #1d70b8;
+}
+
+.section-card__wbutton {
+    background-color: #F3F2F1;
+    padding: 30px;
+}
+
+.section-card__wimage img {
+    max-width: 100%;
+    margin-bottom: 20px;
+}
+
+.section-card__noborder {
+    background-color: #F3F2F1;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.section-card__clearwborder {
+    padding: 15px;
+    border: 1px solid #b1b4b6;
+}
+
+.section-card__clear {
+    padding: 15px;
+}
+
+.app-section {
+    padding: 30px 0;
+}
+
+.app-section--blue {
+    background-color: #1d70b8;
+}
+
+.app-section-beta--blue {
+    background-color: #347ca9;
+}
+
+
+
+/* USE IF ON .EDUCATION BANNER
+---------------- */
+.govuk-header {
+    background-color: #003a69;
+}
+
+.govuk-header__container {
+    position: relative;
+    margin-bottom: -10px;
+    padding-top: 25px;
+    padding-bottom: 15px;
+    border-bottom: 10px solid #347ca9;
+}
+
+.govuk-header__product-name, .govuk-header__logotype-text {
+    line-height: 2.5rem !important;
+    font-size: 1.2rem;
+}
+
+.app-header .govuk-header__logo {
+    width: 85%;
+}
+
+.app-header .govuk-header__content {
+    width: 0;
+}
+
+.govuk-header__logotype-crown-fallback-image {
+    height: 45px;
+    width: 45px;
+}
+
+.govuk-header__logotype-text::after {
+    content: "|";
+}
+
+.govuk-header__logotype {
+    margin-right: 0;
+}
+
+.govuk-header__navigation-item--active a:link,
+.govuk-header__navigation-item--active a:hover,
+.govuk-header__navigation-item--active a:visited {
+    color: #f3f2f1;
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 0.1em;
+}
+
+
+

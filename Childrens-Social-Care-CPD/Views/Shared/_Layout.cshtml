@@ -3,11 +3,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"]</title>
-    <link rel="shortcut icon" sizes="16x16 32x32 48x48" href="../assets/images/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="~/css/application.css" asp-append-version="true" />
+     <title>@ViewData["Title"]</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <link rel="stylesheet" href="/stylesheets/custom.css">
+    <!--[if !IE 8]><!-->
+    <link rel="stylesheet" href="/stylesheets/govuk-frontend-4.4.1.min.css">
+    <!--<![endif]-->
+    <!--[if IE 8]>
+      <link rel="stylesheet" href="/stylesheets/govuk-frontend-ie8-4.4.1.min.css">
+    <![endif]-->
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5HLRT2H3SW"></script>
     <script>
@@ -17,21 +21,31 @@
 
         gtag('config', 'G-5HLRT2H3SW');
     </script>
-
+     <link rel="shortcut icon" sizes="16x16 32x32 48x48" href="../assets/images/favicon.ico" type="image/x-icon">
 </head>
 <body class="govuk-template__body">
-
+     <div id="skiplink-container">
+        <div>
+        <a href="#main-content" class="skiplink">Skip to main content</a>
+        </div>
+        </div>
     @{
         await Html.RenderPartialAsync("../PartialViews/Header");
     }
-        @RenderBody()
+    @RenderBody()
     @{
         await Html.RenderPartialAsync("../PartialViews/Footer");
     }
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
+    </script>
+    <!-- component HTML -->
+    <script src="/javascript/govuk-frontend-4.4.1.min.js"></script>
+    <script>
+        window.GOVUKFrontend.initAll()
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
