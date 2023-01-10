@@ -15,9 +15,8 @@ resource "azurerm_application_gateway" "appgw" {
 
   dynamic "waf_configuration" {
     for_each = [
-      for sp in var.service_plan_sku : sp
-      if var.service_plan_sku == "P1v2"
-      #if data.azurerm_resource_group.rg.name == "s185p01-childrens-social-care-cpd-rg" && rg == "s185p01-childrens-social-care-cpd-rg"
+      for rg in data.azurerm_resource_group.rg : rg
+      if data.azurerm_resource_group.rg.name == "s185p01-childrens-social-care-cpd-rg" && rg == "s185p01-childrens-social-care-cpd-rg" || data.azurerm_resource_group.rg.name == "s185d03-childrens-social-care-cpd-rg" && rg == "s185d03-childrens-social-care-cpd-rg"
     ]
 
     content {
