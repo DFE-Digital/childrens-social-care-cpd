@@ -71,23 +71,24 @@ body {
     padding-top: 20px;
 }
 
-    .aside-list__related:last-child {
-        border-bottom: 3px solid #1d70b8;
-        padding-top: 20px;
-    }
+.aside-list__related:last-child {
+    border-bottom: 3px solid #1d70b8;
+    padding-top: 20px;
+}
 
 .app-related-items {
     border-top: 2px solid #347ca9;
     padding-top: govuk-spacing(2);
 }
 
-    .app-related-items .govuk-list > li {
-        margin-bottom: govuk-spacing(2);
-    }
+.app-related-items .govuk-list > li {
+    margin-bottom: govuk-spacing(2);
+}
 
 .govuk-inset-text {
     border-left: 10px solid #347ca9;
 }
+
 /* HOMEPAGE HERO BANNER ----------------------- */
 .app-section-beta {
     padding: 30px 0;
@@ -100,6 +101,7 @@ body {
 .body-header-font {
     color: white;
 }
+
 /* DFE HEADER - CODE FROM DFE DESIGN GUIDE AND WITH EDITS --------------------------------------------------------- */
 .govuk-header {
     background-color: #003a69;
@@ -130,17 +132,7 @@ body {
     height: 45px;
     width: 45px;
 }
-/* .govuk-header__product-name::before {
-	 content: "Department for Education ";
-	 font-weight: 600;
-	 background-image: url(../images/crest.png) !important;
-	 padding: 8px 10px 10px 55px;
-	 background-size: 45px;
-	 background-repeat: no-repeat;
-	 background-position-x: 0px;
-	 background-position-y: -5px;
-}
-*/
+
 .govuk-header__logotype-text::after {
     content: "|";
 }
@@ -169,6 +161,7 @@ body {
         font-size: 1rem;
     }
 }
+
 /* Lifted from DfE service standards service */
 /* ========================================================================== COMPONENTS/ #ACTION-LINK ========================================================================== */
 /** * 1. Display is inline-block so the top and bottom margins/paddings are * respected. * 2. 'Random number' is used to properly have sufficient space between icon * and text. * 3. Position is relative so the arrow icon can display absolute. * 4. Text decoration none used to override default <a> styling. * 5. Box shadow 8px used instead of the default 4px. * 6. Text decoration underline used to override default <a> styling. */
@@ -239,10 +232,10 @@ body {
     text-decoration: none;
 }
 
-    .dfeuk-action-link__link:focus:hover .dfeuk-action-link__text {
-        color: #0b0c0c;
-        text-decoration: none;
-    }
+.dfeuk-action-link__link:focus:hover .dfeuk-action-link__text {
+    color: #0b0c0c;
+    text-decoration: none;
+}
 
 @media (max-width: 40.0525em) {
     .dfeuk-action-link__link {
