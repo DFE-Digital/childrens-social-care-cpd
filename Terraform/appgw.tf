@@ -15,14 +15,14 @@ resource "azurerm_application_gateway" "appgw" {
 
   dynamic "waf_configuration" {
     for_each = [
-      for rg in var.rg_name : rg
-      if data.azurerm_resource_group.rg.name == "s185p01-childrens-social-care-cpd-rg" && rg == "s185p01-childrens-social-care-cpd-rg"
+      for rg in data.azurerm_resource_group.rg : rg
+      if data.azurerm_resource_group.rg.name == "s185p01-childrens-social-care-cpd-rg" && rg == "s185p01-childrens-social-care-cpd-rg" || data.azurerm_resource_group.rg.name == "s185d03-childrens-social-care-cpd-rg" && rg == "s185d03-childrens-social-care-cpd-rg"
     ]
 
     content {
       enabled          = true
       firewall_mode    = "Prevention"
-      rule_set_version = "3.0"
+      rule_set_version = "3.2"
     }
   }
 
