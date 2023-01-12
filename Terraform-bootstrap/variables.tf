@@ -37,9 +37,9 @@ variable "key_vault_rg" {
 variable "key_vault_name" {
   type = map(string)
   default = {
-    Dev       = "cpd-key-vault"
-    Test      = "cpd-key-vault"
-    Load-Test = "cpd-key-vault"
+    Dev       = "s185d-CPD-Key-Vault"
+    Test      = "s185d-CPD-Key-Vault"
+    Load-Test = "s185d-CPD-Key-Vault"
     Pre-Prod  = "s185t-CPD-Key-Vault"
     Prod      = "s185p-CPD-Key-Vault"
   }
