@@ -1,0 +1,289 @@
+﻿/* STANDARD COLOURS */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+}
+
+.logo {
+    display: block;
+    max-height: 32px;
+    max-width: 100%;
+}
+/* SECTION CARDS ---------------- */
+/* shaded section card - used in current version */
+.section-card {
+    background-color: #f3f2f1;
+    padding: 15px;
+}
+
+.section-card__wborder {
+    background-color: #f3f2f1;
+    padding: 15px;
+    box-shadow: 0px 2px #1d70b8;
+}
+
+.section-card__wfullborder {
+    padding: 15px;
+    /*box-shadow: inset 0 0 0 2px $colour-drop-shadow;
+	*/
+    border: 2px solid #1d70b8;
+}
+
+.section-card__wbutton {
+    background-color: #f3f2f1;
+    padding: 30px;
+}
+
+.section-card__wimage img {
+    max-width: 100%;
+    margin-bottom: 20px;
+}
+
+.section-card__noborder {
+    background-color: #f3f2f1;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.section-card__clearwborder {
+    padding: 15px;
+    border: 1px solid #b1b4b6;
+}
+
+.section-card__clear {
+    padding: 15px;
+}
+/* CONTENT PAGES ---------------- */
+.aside-list__block {
+    margin-bottom: 50px;
+}
+
+.aside-list__indent {
+    padding-left: 10px;
+}
+
+.aside-list__heading {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.aside-list__related {
+    border-top: 3px solid #1d70b8;
+    padding-top: 20px;
+}
+
+.aside-list__related:last-child {
+    border-bottom: 3px solid #1d70b8;
+    padding-top: 20px;
+}
+
+.app-related-items {
+    border-top: 2px solid #347ca9;
+    padding-top: govuk-spacing(2);
+}
+
+.app-related-items .govuk-list > li {
+    margin-bottom: govuk-spacing(2);
+}
+
+.govuk-inset-text {
+    border-left: 10px solid #347ca9;
+}
+
+/* HOMEPAGE HERO BANNER ----------------------- */
+.app-section-beta {
+    padding: 30px 0;
+}
+
+.app-section-beta__blue {
+    background-color: #347ca9;
+}
+
+.body-header-font {
+    color: white;
+}
+
+/* DFE HEADER - CODE FROM DFE DESIGN GUIDE AND WITH EDITS --------------------------------------------------------- */
+.govuk-header {
+    background-color: #003a69;
+}
+
+.govuk-header__container {
+    position: relative;
+    margin-bottom: -10px;
+    padding-top: 25px;
+    padding-bottom: 15px;
+    border-bottom: 10px solid #347ca9;
+}
+
+.govuk-header__product-name, .govuk-header__logotype-text {
+    line-height: 2.5rem !important;
+    font-size: 1.2rem;
+}
+
+.app-header .govuk-header__logo {
+    width: 85%;
+}
+
+.app-header .govuk-header__content {
+    width: 0;
+}
+
+.govuk-header__logotype-crown-fallback-image {
+    height: 45px;
+    width: 45px;
+}
+
+.govuk-header__logotype-text::after {
+    content: "|";
+}
+
+.govuk-header__logotype {
+    margin-right: 0;
+}
+
+.govuk-header__navigation-item--active a:link, .govuk-header__navigation-item--active a:hover, .govuk-header__navigation-item--active a:visited {
+    color: #f3f2f1;
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 0.1em;
+}
+
+@media (max-width: 40.0625em) {
+    .govuk-header__product-name {
+        max-width: 80%;
+        line-height: 1.2rem !important;
+        font-size: 1rem;
+    }
+
+    .govuk-header__logotype-text {
+        min-width: 100%;
+        line-height: 2.2rem !important;
+        font-size: 1rem;
+    }
+}
+
+/* Lifted from DfE service standards service */
+/* ========================================================================== COMPONENTS/ #ACTION-LINK ========================================================================== */
+/** * 1. Display is inline-block so the top and bottom margins/paddings are * respected. * 2. 'Random number' is used to properly have sufficient space between icon * and text. * 3. Position is relative so the arrow icon can display absolute. * 4. Text decoration none used to override default <a> styling. * 5. Box shadow 8px used instead of the default 4px. * 6. Text decoration underline used to override default <a> styling. */
+.dfeuk-action-link {
+    margin-bottom: 32px;
+    clear: both;
+    display: block;
+}
+
+@media (min-width: 40.0625em) {
+    .dfeuk-action-link {
+        margin-bottom: 20px;
+    }
+}
+
+.dfeuk-action-link.dfeuk-action-link--back-to-top {
+    margin-bottom: 16px;
+}
+
+@media (min-width: 40.0625em) {
+    .dfeuk-action-link.dfeuk-action-link--back-to-top {
+        margin-bottom: 24px;
+    }
+}
+
+.dfeuk-action-link + .dfeuk-action-link {
+    margin-bottom: 20px;
+}
+
+.dfeuk-action-link__link {
+    font-size: 18px;
+    line-height: 1.55556;
+    display: inline-block;
+    /* [1] */
+    font-weight: 600;
+    padding-left: 38px;
+    /* [2] */
+    position: relative;
+    /* [3] */
+    text-decoration: none;
+    /* [4] */
+}
+
+@media (min-width: 40.0625em) {
+    .dfeuk-action-link__link {
+        font-size: 22px;
+        line-height: 1.45455;
+    }
+}
+
+@media print {
+    .dfeuk-action-link__link {
+        font-size: 18pt;
+        line-height: 1.15;
+    }
+}
+
+.dfeuk-action-link__link:hover .dfeuk-action-link__text {
+    text-decoration: underline;
+    /* [6] */
+}
+
+.dfeuk-action-link__link:focus {
+    background-color: #fd0;
+    box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;
+    color: #0b0c0c;
+    outline: 4px solid transparent;
+    text-decoration: none;
+}
+
+.dfeuk-action-link__link:focus:hover .dfeuk-action-link__text {
+    color: #0b0c0c;
+    text-decoration: none;
+}
+
+@media (max-width: 40.0525em) {
+    .dfeuk-action-link__link {
+        padding-left: 26px;
+        /* [2] */
+    }
+}
+
+@media print {
+    .dfeuk-action-link__link {
+        color: #0b0c0c;
+    }
+
+        .dfeuk-action-link__link:visited {
+            color: #0b0c0c;
+        }
+}
+
+.dfeuk-action-link__link .dfeuk-icon__arrow-right-circle {
+    fill: #003a69;
+    height: 36px;
+    left: -3px;
+    position: absolute;
+    top: -2px;
+    width: 36px;
+}
+
+@media print {
+    .dfeuk-action-link__link .dfeuk-icon__arrow-right-circle {
+        color: #0b0c0c;
+        fill: #0b0c0c;
+    }
+
+        .dfeuk-action-link__link .dfeuk-icon__arrow-right-circle:active, .dfeuk-action-link__link .dfeuk-icon__arrow-right-circle:focus, .dfeuk-action-link__link .dfeuk-icon__arrow-right-circle:visited {
+            color: #0b0c0c;
+        }
+}
+
+@media (max-width: 40.0525em) {
+    .dfeuk-action-link__link .dfeuk-icon__arrow-right-circle {
+        height: 24px;
+        left: -2px;
+        margin-bottom: 0;
+        top: 2px;
+        width: 24px;
+    }
+}
+
+.dfeuk-action-link__link .dfeuk-icon__arrow-right-circle--up {
+    transform: rotate(-90deg);
+}
