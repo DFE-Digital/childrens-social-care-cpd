@@ -9,13 +9,18 @@
     <link rel="shortcut icon" sizes="16x16 32x32 48x48" href="../assets/images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="~/css/application.css" asp-append-version="true" />
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5HLRT2H3SW"></script>
+    @{
+        var googleAnalyticsKey = Environment.GetEnvironmentVariable("CPD_GOOGLEANALYTICSTAG") ?? String.Empty;
+        var googleAnalyticsUrl = string.Format("https://www.googletagmanager.com/gtag/js?id={0}", googleAnalyticsKey);
+    }
+    <script async src="@{@googleAnalyticsUrl}"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
-
-        gtag('config', 'G-5HLRT2H3SW');
+        gtag('config', '@{
+            @googleAnalyticsKey
+        }');
     </script>
 
 </head>
