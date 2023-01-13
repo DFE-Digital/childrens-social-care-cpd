@@ -82,18 +82,6 @@ variable "vnet_name" {
   description = "Name of Address Space"
 }
 
-variable "vnet_address_space" {
-  type = map(string)
-  default = {
-    Dev       = "10.0.0.0/16"
-    Test      = "10.1.0.0/16"
-    Load-Test = "10.2.0.0/16"
-    Pre-Prod  = "10.0.0.0/16"
-    Prod      = "10.0.0.0/16"
-  }
-  description = "Subnets used for Address Space"
-}
-
 variable "vnet_frontend_name" {
   type = map(string)
   default = {

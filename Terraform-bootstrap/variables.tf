@@ -57,3 +57,27 @@ variable "dfe-dev-ips" {
   sensitive   = true
   description = "List of developer IP addresses for whitelisting"
 }
+
+variable "vnet_name" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-chidrens-social-care-cpd-vn01"
+    Test      = "s185d02-chidrens-social-care-cpd-vn01"
+    Load-Test = "s185d03-chidrens-social-care-cpd-vn01"
+    Pre-Prod  = "s185t01-chidrens-social-care-cpd-vn01"
+    Prod      = "s185p01-chidrens-social-care-cpd-vn01"
+  }
+  description = "Name of Address Space"
+}
+
+variable "vnet_address_space" {
+  type = map(string)
+  default = {
+    Dev       = "10.0.0.0/16"
+    Test      = "10.1.0.0/16"
+    Load-Test = "10.2.0.0/16"
+    Pre-Prod  = "10.0.0.0/16"
+    Prod      = "10.0.0.0/16"
+  }
+  description = "Subnets used for Address Space"
+}
