@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  webapp:
+    build:
+      context: ./Childrens-Social-Care-CPD
+    environment:
+      - ASPNETCORE_URLS=http://+:80
+      - CPD_CLIENTID=c3594788-4bd1-4cb5-9a72-a66c2a79a56a
+      - CPD_CLIENTSECRET=***REMOVED***
+      - CPD_CONTENTFUL_ENVIRONMENT=dev
+      - CPD_KEYVAULTENDPOINT=https://cpd-key-vault.vault.azure.net/
+      - CPD_TENANTID=***REMOVED***
+    ports:
+      - 5001:80
