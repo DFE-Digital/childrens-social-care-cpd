@@ -8,49 +8,25 @@ body {
     max-height: 32px;
     max-width: 100%;
 }
-/* SECTION CARDS ---------------- */
-/* shaded section card - used in current version */
-.section-card {
-    background-color: #f3f2f1;
-    padding: 15px;
-}
-
-.section-card__wborder {
-    background-color: #f3f2f1;
-    padding: 15px;
-    box-shadow: 0px 2px #1d70b8;
-}
-
-.section-card__wfullborder {
-    padding: 15px;
-    /*box-shadow: inset 0 0 0 2px $colour-drop-shadow;
-	*/
-    border: 2px solid #1d70b8;
-}
-
-.section-card__wbutton {
-    background-color: #f3f2f1;
-    padding: 30px;
-}
-
-.section-card__wimage img {
-    max-width: 100%;
+/* DFE CARD COMPONENT - NEW
+--------------------------- */
+.dfe-section-card {
+    padding: 16px;
     margin-bottom: 20px;
+    flex: 1;
+    background-color: #F3F2F1;
 }
 
-.section-card__noborder {
-    background-color: #f3f2f1;
-    padding: 15px;
-    margin-bottom: 20px;
+.dfe-section-card__container {
+    display: flex;
+    width: 100;
 }
 
-.section-card__clearwborder {
-    padding: 15px;
-    border: 1px solid #b1b4b6;
-}
-
-.section-card__clear {
-    padding: 15px;
+@media (max-width: 40.0525em) {
+    .dfe-section-card__container {
+        display: grid;
+        width: 100;
+    }
 }
 /* CONTENT PAGES ---------------- */
 .aside-list__block {
