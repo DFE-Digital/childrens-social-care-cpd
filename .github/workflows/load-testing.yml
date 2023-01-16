@@ -1,4 +1,4 @@
-name: Locust oad testing
+name: Locust load testing
 jobs:
   build:
     runs-on: ubuntu-latest
