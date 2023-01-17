@@ -11,5 +11,6 @@
         public const string PAGETYPE = "pageType";
         public const string SENDINGPAGE = "sendingPage";
         public const string SENDINGPAGETYPE = "sendingPageType";
+        public const string COOKIEBANNER = "cookieBanner";
     }
 }
