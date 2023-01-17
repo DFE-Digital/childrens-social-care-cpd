@@ -1,8 +1,15 @@
-    <!-- Google tag (gtag.js) -->
-    <script async src='https://www.googletagmanager.com/gtag/js?id=G-WKNX8L83E6'></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'https://www.googletagmanager.com/gtag/js?id=G-WKNX8L83E6');
-    </script>
+<!-- Google tag (gtag.js) -->
+@{
+    var googleAnalyticsKey = Environment.GetEnvironmentVariable("CPD_GOOGLEANALYTICSTAG") ?? String.Empty;
+    var googleAnalyticsUrl = string.Format("https://www.googletagmanager.com/gtag/js?id={0}", googleAnalyticsKey);
+
+    if (!String.IsNullOrEmpty(googleAnalyticsKey)) {
+        <script async src='@googleAnalyticsUrl'></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+            gtag('config', '@googleAnalyticsKey');
+        </script>    
+    }
+}

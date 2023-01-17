@@ -11,6 +11,6 @@ services:
       - CPD_CONTENTFUL_ENVIRONMENT=dev
       - CPD_KEYVAULTENDPOINT=https://cpd-key-vault.vault.azure.net/
       - CPD_TENANTID=$CPD_TENANTID
-      - CPD_GOOGLEANALYTICS_ENABLED=True
+      - CPD_GOOGLEANALYTICSTAG=blah
     ports:
       - 5001:80
