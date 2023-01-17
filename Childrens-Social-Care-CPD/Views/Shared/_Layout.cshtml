@@ -12,18 +12,11 @@
       <link rel="stylesheet" href="/stylesheets/govuk-frontend-ie8-4.4.1.min.css">
     <![endif]-->
      <link rel="stylesheet" href="/stylesheets/custom.css">
-    <!-- Google tag (gtag.js) -->
-    @{
-        var googleAnalyticsKey = Environment.GetEnvironmentVariable("CPD_GOOGLEANALYTICSTAG") ?? String.Empty;
-        var googleAnalyticsUrl = string.Format("https://www.googletagmanager.com/gtag/js?id={0}", googleAnalyticsKey);
-     }
-    <script async src="@{@googleAnalyticsUrl}"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', '@{@googleAnalyticsKey}');
-    </script>
+
+    @if (!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("CPD_GOOGLEANALYTICS_ENABLED"))) {
+        await Html.RenderPartialAsync("../PartialViews/GoogleAnalytics");
+    }
+    
      <link rel="shortcut icon" sizes="16x16 32x32 48x48" href="../assets/images/favicon.ico" type="image/x-icon">
 </head>
 <body class="govuk-template__body">
