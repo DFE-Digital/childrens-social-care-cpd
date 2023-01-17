@@ -1,6 +1,8 @@
 name: Locust load testing
+
+on: [workflow_dispatch]
+
 jobs:
-  on: [workflow_dispatch]
   
   build:
     runs-on: ubuntu-latest
