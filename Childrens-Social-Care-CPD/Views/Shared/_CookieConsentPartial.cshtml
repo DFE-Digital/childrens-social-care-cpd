@@ -1,18 +1,21 @@
 ﻿@using Contentful.Core.Models
 @using Microsoft.AspNetCore.Http.Features
 @using System.Text
-@model CookieBanner
+
+ @{
+    var cookieBannerViewModel = (ViewBag.CookieBanner as CookieBanner);
+ }
 
 @{
     var acceptsAnalytics = Context.Request.Cookies["accepts_analytics"]?.Equals("accept");
 }
 
-@if (acceptsAnalytics == null)
+@if (acceptsAnalytics == null && cookieBannerViewModel != null)
 {
     @using (@Html.BeginForm("LandingPage", "CPD", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
-        <div class="govuk-cookie-banner " data-nosnippet="" role="region" aria-label="@{@Model.CookieBannerHeading}">
+        <div class="govuk-cookie-banner " data-nosnippet="" role="region" aria-label="@{@cookieBannerViewModel.CookieBannerHeading}">
 
             @if (ViewBag.analyticsCookieSet == true)
             {
@@ -20,7 +23,7 @@
                     <div class="govuk-grid-row">
                         <div class="govuk-grid-column-two-thirds">
                             <div class="govuk-cookie-banner__content">
-                                @foreach (IContent node in @Model.AcceptedCookieMessage.Content)
+                                @foreach (IContent node in cookieBannerViewModel.AcceptedCookieMessage.Content)
                                 {
                                     switch (node)
                                     {
@@ -67,7 +70,7 @@
                     </div>
                     <div class="govuk-button-group">
                         <a href="javascript:void(0);" onclick="hideCookieMessage();" role="button" draggable="false" class="govuk-button" data-module="govuk-button">
-                            @Model.HideCookieMessageButtonText
+                            cookieBannerViewModel.HideCookieMessageButtonText
                         </a>
                     </div>
                 </div>
@@ -79,7 +82,7 @@
                         <div class="govuk-grid-column-two-thirds">
                             <h2 class="govuk-cookie-banner__heading govuk-heading-m">Cookies on Develop your career in child and family social work</h2>
                             <div class="govuk-cookie-banner__content">
-                                @foreach (IContent node in @Model.CookieMessageBody.Content)
+                                @foreach (IContent node in @cookieBannerViewModel.CookieMessageBody.Content)
                                 {
                                     switch (node)
                                     {
@@ -101,12 +104,12 @@
                     </div>
                     <div class="govuk-button-group">
                         <button value="accept" type="submit" name="analyticsCookieConsent" id="btnAccept" class="govuk-button" data-module="govuk-button">
-                            @Model.AcceptCookieButtonText
+                            @cookieBannerViewModel.AcceptCookieButtonText
                         </button>
                         <button value="reject" type="submit" name="analyticsCookieConsent" id="btnReject" class="govuk-button" data-module="govuk-button">
-                            @Model.RejectCookieButtonText
+                            @cookieBannerViewModel.RejectCookieButtonText
                         </button>
-                        <a class="govuk-link" href="cookies">@Model.ViewCookiesLinkText.LinkText</a>
+                        <a class="govuk-link" href="cookies">@cookieBannerViewModel.ViewCookiesLink.LinkText</a>
                     </div>
                 </div>
             }
