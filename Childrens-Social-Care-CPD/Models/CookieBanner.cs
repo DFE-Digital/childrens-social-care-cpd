@@ -8,7 +8,7 @@ namespace Childrens_Social_Care_CPD.Models
         public Document CookieMessageBody { get; set; }
         public string AcceptCookieButtonText { get; set; }
         public string RejectCookieButtonText { get; set; }
-        public Link ViewCookiesLinkText { get; set; }
+        public Link ViewCookiesLink { get; set; }
         public string HideCookieMessageButtonText { get; set; }
         public Document AcceptedCookieMessage { get; set; }
         public Document RejectedCookieMessage { get; set; }
