@@ -42,6 +42,7 @@ namespace Childrens_Social_Care_CPD.Controllers
             if (acceptsAnalytics == null)
             {
                 CookieBanner cookieBanner = GetCookieBanner();
+                ViewBag.CookieBanner = cookieBanner;
             }
         }
 
