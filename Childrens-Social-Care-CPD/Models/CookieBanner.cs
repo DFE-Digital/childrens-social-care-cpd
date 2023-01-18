@@ -1,14 +1,17 @@
-﻿namespace Childrens_Social_Care_CPD.Models
+﻿using Contentful.Core.Models;
+
+namespace Childrens_Social_Care_CPD.Models
 {
     public class CookieBanner
     {
-        public string BannerHeader { get; set; }
-        public List<string> BannerDescription { get; set; }
-        public string AcceptButtonText { get; set; }
-        public string RejectButtonText { get; set; }
-        public string ViewCookiesLinkText { get; set; }
+        public string CookieBannerHeading { get; set; }
+        public Document CookieMessageBody { get; set; }
+        public string AcceptCookieButtonText { get; set; }
+        public string RejectCookieButtonText { get; set; }
+        public Link ViewCookiesLinkText { get; set; }
         public string HideCookieMessageButtonText { get; set; }
-        public string AcceptedCookieMessage { get; set; }
-        public string RejectedCookieMessage { get; set; }
+        public Document AcceptedCookieMessage { get; set; }
+        public Document RejectedCookieMessage { get; set; }
+        public string ChangeCookieSettingsMessage { get; set; }
     }
 }

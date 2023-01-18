@@ -98,10 +98,8 @@ namespace Childrens_Social_Care_CPD.Controllers
         private CookieBanner GetCookieBanner()
         {
             var cookieBannerQueryBuilder = QueryBuilder<CookieBanner>.New.ContentTypeIs(SiteConstants.COOKIEBANNER);
-            //TO-DO Implement API call
-            //var footerResult = _client.GetEntries<CookieBanner>(cookieBannerQueryBuilder).Result;
-            //var footer = footerResult.FirstOrDefault();
-            CookieBanner cookieBanner = new CookieBanner();
+            var cookieBannerResult = _client.GetEntries<CookieBanner>(cookieBannerQueryBuilder).Result;
+            var cookieBanner = cookieBannerResult.FirstOrDefault();
             return cookieBanner;
         }
     }
