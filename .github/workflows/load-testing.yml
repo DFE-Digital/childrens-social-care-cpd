@@ -12,7 +12,7 @@ jobs:
       - name: Run Load Test
         uses: apardo04/locust-github-action@master
         with:
-          LOCUSTFILE: "./LoadTest/locustfile.py"
+          LOCUSTFILE: "./LoadTest/locust.py"
           URL:  "https://dev.develop-child-family-social-work-career.education.gov.uk"
           USERS: "1"
           RATE: "1"
