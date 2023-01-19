@@ -21,5 +21,5 @@ output "instrumentation_key" {
 }
 
 output "app_id" {
-   value = data.azurerm_application_insights.appinsights.app_id
+  value = data.azurerm_application_insights.appinsights.app_id
 }
