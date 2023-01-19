@@ -5,6 +5,10 @@ resource "azurerm_log_analytics_workspace" "log-analytics-ws" {
   sku                 = "PerGB2018"
   retention_in_days   = 30
   tags                = data.azurerm_resource_group.rg.tags
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "azurerm_application_insights" "appinsights" {
@@ -14,6 +18,10 @@ resource "azurerm_application_insights" "appinsights" {
   workspace_id        = azurerm_log_analytics_workspace.log-analytics-ws.id
   application_type    = "web"
   tags                = data.azurerm_resource_group.rg.tags
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 output "instrumentation_key" {

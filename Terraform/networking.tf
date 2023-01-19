@@ -4,6 +4,10 @@ resource "azurerm_virtual_network" "vnet1" {
   location            = data.azurerm_resource_group.rg.location
   address_space       = [var.vnet_address_space[terraform.workspace]]
   tags                = data.azurerm_resource_group.rg.tags
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "azurerm_subnet" "frontend" {
