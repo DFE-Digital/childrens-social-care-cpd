@@ -1,29 +1,76 @@
-﻿@using Microsoft.AspNetCore.Http.Features
+﻿@using Contentful.Core.Models
+@using Microsoft.AspNetCore.Http.Features
+@using System.Text
+
+ @{
+    var cookieBannerViewModel = (ViewBag.CookieBanner as CookieBanner);
+ }
 
 @{
     var acceptsAnalytics = Context.Request.Cookies["accepts_analytics"]?.Equals("accept");
 }
 
-@if (acceptsAnalytics == null)
+@if (acceptsAnalytics == null && cookieBannerViewModel != null)
 {
     @using (@Html.BeginForm("LandingPage", "CPD", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
-        <div class="govuk-cookie-banner " data-nosnippet="" role="region" aria-label="Cookies on Develop your career in child and family social work">
-           
+        <div class="govuk-cookie-banner " data-nosnippet="" role="region" aria-label="@{@cookieBannerViewModel.CookieBannerHeading}">
+
             @if (ViewBag.analyticsCookieSet == true)
             {
                 <div class="govuk-cookie-banner__message govuk-width-container" id="divCookieMessageActioned">
                     <div class="govuk-grid-row">
                         <div class="govuk-grid-column-two-thirds">
                             <div class="govuk-cookie-banner__content">
-                                <p class="govuk-body">You’ve accepted essential and analytics cookies. You can <a class="govuk-link" href="/supporting-pages/cookies">change your cookie settings</a> at any time.</p>
+                                @foreach (IContent node in cookieBannerViewModel.AcceptedCookieMessage.Content)
+                                {
+                                    switch (node)
+                                    {
+                                        case Contentful.Core.Models.Paragraph paragraph:
+
+                                            if (paragraph.Content.Any(c => c.GetType() == typeof(Hyperlink)))
+                                            {
+                                                StringBuilder contentBuilder = new StringBuilder();
+                                                @foreach (var content in paragraph.Content)
+                                                {
+                                                    if (content.GetType() == typeof(Text))
+                                                    {
+                                                        contentBuilder.Append((((Contentful.Core.Models.Text)content).Value));
+                                                    }
+                                                    if (content.GetType() == typeof(Hyperlink))
+                                                    {
+                                                        var linkElement = ((Contentful.Core.Models.Hyperlink)content);
+                                                        var linkText = ((Contentful.Core.Models.Text)(linkElement).Content[0]).Value;
+                                                        contentBuilder.Append(string.Format(("<a href={0}>{1}</a>"), linkElement.Data.Uri, linkText));
+                                                    }
+                                                }
+
+                                                @Html.Raw($"<p class={"govuk-body"}>{contentBuilder.ToString()}</p>")
+                                            }
+                                            else
+                                            {
+                                                @foreach (var content in paragraph.Content)
+                                                {
+                                                    if (content.GetType() == typeof(Text))
+                                                    {
+
+                                                        <p class="govuk-body">@(((Contentful.Core.Models.Text)content).Value)</p>
+                                                    }
+
+                                                }
+                                            }
+
+                                            break;
+                                    }
+
+                                }
                             </div>
                         </div>
                     </div>
                     <div class="govuk-button-group">
                         <a href="javascript:void(0);" onclick="hideCookieMessage();" role="button" draggable="false" class="govuk-button" data-module="govuk-button">
-                            Hide cookie message
+                            cookieBannerViewModel.HideCookieMessageButtonText
                         </a>
                     </div>
                 </div>
@@ -35,19 +82,34 @@
                         <div class="govuk-grid-column-two-thirds">
                             <h2 class="govuk-cookie-banner__heading govuk-heading-m">Cookies on Develop your career in child and family social work</h2>
                             <div class="govuk-cookie-banner__content">
-                                <p class="govuk-body">We use some essential cookies to make this service work.</p>
-                                <p class="govuk-body">We’d also like to use analytics cookies so we can understand how you use the service and make improvements.</p>
+                                @foreach (IContent node in @cookieBannerViewModel.CookieMessageBody.Content)
+                                {
+                                    switch (node)
+                                    {
+                                        case Contentful.Core.Models.Paragraph paragraph:
+                                            @foreach (var content in paragraph.Content)
+                                            {
+                                                if (content.GetType() == typeof(Text))
+                                                {
+
+                                                    <p class="govuk-body">@(((Contentful.Core.Models.Text)content).Value)</p>
+                                                }
+
+                                            }
+                                            break;
+                                    }
+                                }
                             </div>
                         </div>
                     </div>
                     <div class="govuk-button-group">
                         <button value="accept" type="submit" name="analyticsCookieConsent" id="btnAccept" class="govuk-button" data-module="govuk-button">
-                            Accept analytics cookies
+                            @cookieBannerViewModel.AcceptCookieButtonText
                         </button>
                         <button value="reject" type="submit" name="analyticsCookieConsent" id="btnReject" class="govuk-button" data-module="govuk-button">
-                            Reject analytics cookies
+                            @cookieBannerViewModel.RejectCookieButtonText
                         </button>
-                        <a class="govuk-link" href="cookies">View cookies</a>
+                        <a class="govuk-link" href="cookies">@cookieBannerViewModel.ViewCookiesLink.LinkText</a>
                     </div>
                 </div>
             }
