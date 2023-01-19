@@ -13,6 +13,7 @@ on:
           - Test
           - Pre-Prod
           - Prod
+          - Load-Test
 
 jobs:
   terraform-destroy:
@@ -28,7 +29,7 @@ jobs:
       TF_VAR_cpd_client_id: ${{secrets.TF_VAR_CPD_CLIENT_ID}}
       TF_VAR_cpd_client_secret: ${{secrets.TF_VAR_CPD_CLIENT_SECRET}}
       TF_VAR_cpd_keyvaultendpoint: ${{secrets.TF_VAR_CPD_KEYVAULTENDPOINT}}
-      TF_VAR_acr_password: ${{secrets.TF_VAR_ACR_PASSWORD}}
+      TF_VAR_cpd_googleanalyticstag: ${{secrets.TF_VAR_CPD_GOOGLEANALYTICSTAG}}
       TF_WORKSPACE: ${{inputs.workspace}}
 
     defaults:

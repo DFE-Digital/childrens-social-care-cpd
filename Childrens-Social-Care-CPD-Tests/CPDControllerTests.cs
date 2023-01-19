@@ -6,10 +6,19 @@ using Childrens_Social_Care_CPD.Models;
 using Contentful.Core;
 using Contentful.Core.Models;
 using Contentful.Core.Search;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
+using ActionDescriptor = Microsoft.AspNetCore.Mvc.Abstractions.ActionDescriptor;
+using ActionExecutedContext = Microsoft.AspNetCore.Mvc.Filters.ActionExecutedContext;
+using ActionExecutingContext = Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext;
+using ModelStateDictionary = Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary;
+using RouteData = Microsoft.AspNetCore.Routing.RouteData;
+using ViewResult = Microsoft.AspNetCore.Mvc.ViewResult;
+
 
 namespace Childrens_Social_Care_CPD_Tests
 {
@@ -21,6 +30,7 @@ namespace Childrens_Social_Care_CPD_Tests
         private ContentfulCollection<PageViewModel> _pages;
         private ContentfulCollection<PageFooter> _footer;
         private ContentfulCollection<PageHeader> _header;
+        private ContentfulCollection<CookieBanner> _banner;
         private CPDController _target;
 
         [SetUp]
@@ -28,19 +38,21 @@ namespace Childrens_Social_Care_CPD_Tests
         {
             SetupModels();
 
+
             _contentfulClient = new Mock<IContentfulClient>(MockBehavior.Strict);
             _contentfulClient.Setup(c => c.GetEntries<PageViewModel>(It.IsAny<QueryBuilder<PageViewModel>>(), default)).ReturnsAsync(_pages);
-            _contentfulClient.Setup(c => c.GetEntries<PageHeader>(new QueryBuilder<PageHeader>(), default)).ReturnsAsync(_header);
-            _contentfulClient.Setup(c => c.GetEntries<PageFooter>(new QueryBuilder<PageFooter>(), default)).ReturnsAsync(_footer);
-           _logger = new Mock<ILogger<CPDController>>();
-           _target = new CPDController(_logger.Object, _contentfulClient.Object);
+            _contentfulClient.Setup(c => c.GetEntries<PageHeader>(It.IsAny<QueryBuilder<PageHeader>>(), default)).ReturnsAsync(_header);
+            _contentfulClient.Setup(c => c.GetEntries<PageFooter>(It.IsAny<QueryBuilder<PageFooter>>(), default)).ReturnsAsync(_footer);
+            _contentfulClient.Setup(c => c.GetEntries<CookieBanner>(It.IsAny<QueryBuilder<CookieBanner>>(), default)).ReturnsAsync(_banner);
+            _logger = new Mock<ILogger<CPDController>>();
+            _target = new CPDController(_logger.Object, _contentfulClient.Object);
         }
 
         [Test]
         public void LandingPageReturnsModelOfTypePageViewModelTest()
         {
-            var actual= _target.LandingPage(null, null, null, null);
-            ViewResult viewResult = (ViewResult) actual.Result;
+            var actual = _target.LandingPage(null, null, null, null);
+            ViewResult viewResult = (ViewResult)actual.Result;
             Assert.IsInstanceOf<ContentfulCollection<PageViewModel>>(viewResult.Model);
         }
 
@@ -54,7 +66,46 @@ namespace Childrens_Social_Care_CPD_Tests
             var actual = _target.LandingPage(null, pageType.ToString(), null, null);
             ViewResult viewResult = (ViewResult)actual.Result;
             var model = viewResult.ViewData.Model as ContentfulCollection<PageViewModel>;
-            Assert.AreEqual(model?.Items.First().PageType.PageType, pageType.ToString());
+            Assert.IsNotNull(model);
+            Assert.AreEqual(model.Items.First().PageType.PageType, pageType.ToString());
+        }
+
+        [Test]
+        public void ActionFilterSetsPageHeaderTest()
+        {
+            var context = SetActionExecutingContext();
+            _target.OnActionExecuting(context);
+            var actual = _target.ViewData["PageHeader"] as PageHeader;
+            Assert.IsNotNull(actual);
+            Assert.AreEqual("TestPageHeader", actual.Header);
+        }
+
+        [Test]
+        public void ActionFilterSetsPageFooterTest()
+        {
+            var context = SetActionExecutingContext();
+            _target.OnActionExecuting(context);
+            var actual = _target.ViewData["PageFooter"] as PageFooter;
+            Assert.IsNotNull(actual);
+            Assert.AreEqual(1, actual.FooterLinks.Count);
+            Assert.AreEqual("TestLink", actual.FooterLinks.First().LinkText);
+        }
+
+        private ActionExecutingContext SetActionExecutingContext()
+        {
+            var modelState = new ModelStateDictionary();
+            var httpContext = new DefaultHttpContext();
+            var context = new Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext(
+                new ActionContext(
+                    httpContext: httpContext,
+                    routeData: new RouteData(),
+                    actionDescriptor: new ActionDescriptor(),
+                    modelState: modelState
+                ),
+                new List<IFilterMetadata>(),
+                new Dictionary<string, object>(),
+                _target);
+            return context;
         }
 
         private void SetupModels()
@@ -127,6 +178,48 @@ namespace Childrens_Social_Care_CPD_Tests
                         PrototypeText =  new Document(),
                         PrototypeTextHtml = "TestHtml",
                     }
+                }
+            };
+
+            _footer = new ContentfulCollection<PageFooter>
+            {
+                Items = new List<PageFooter>
+                {
+                    new PageFooter
+                    {
+                        FooterLinks = new()
+                        {
+                            new Link
+                            {
+                                LinkText = "TestLink",
+                                LinkURL = "TestUrl",
+                                LinkSection = null,
+                                PageType = null,
+                                RedirectPageName = null,
+                                SideNaveGroupText = null,
+                                SortOrder = 1
+                            }
+                        },
+                        LicenceDescription = new Document(),
+                        CopyrightLink = new Link(),
+                        LicenceDescriptionText = "TestDescription"
+                    }
+                },
+            };
+
+            _banner = new ContentfulCollection<CookieBanner>()
+            {
+                Items = new List<CookieBanner>()
+                {
+                   new CookieBanner ()
+                   {
+                    AcceptCookieButtonText = "AcceptAnalytics",
+                    AcceptedCookieMessage = new Document(),
+                    CookieBannerHeading = "TestCookie",
+                    ViewCookiesLink = new Link(),
+                    RejectedCookieMessage = new Document(),
+                    HideCookieMessageButtonText = "HideMessage"
+                   }
                 }
             };
         }
