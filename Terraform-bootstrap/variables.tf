@@ -10,6 +10,18 @@ variable "rg_name" {
   description = "Name of Resource Group"
 }
 
+variable "env_name" {
+  type = map(string)
+  default = {
+    Dev       = "Dev"
+    Test      = "Test"
+    Load-Test = "Dev"
+    Pre-Prod  = "Pre-Pro"
+    Prod      = "Prod"
+  }
+  description = "Name of Environment"
+}
+
 variable "pip_name" {
   type = map(string)
   default = {
