@@ -562,6 +562,18 @@ variable "alert_container_cpu" {
   description = "Name of container cpu average alert"
 }
 
+variable "alert_failed_requests" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-failed-requests"
+    Test      = "s185d02-failed-requests"
+    Load-Test = "s185d03-failed-requests"
+    Pre-Prod  = "s185t01-failed-requests"
+    Prod      = "s185p01-failed-requests"
+  }
+  description = "Name of failed requests count alert"
+}
+
 variable "monitor_action_group_name" {
   type = map(string)
   default = {
