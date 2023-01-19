@@ -2,11 +2,11 @@
 
 @foreach (var cardGroup in Model.Cards.Select((e, i) => new { Card = e, Grouping = (i / 2) }).GroupBy(e => e.Grouping))
     {
-        <div class='govuk-grid-row'>
+        <div class="govuk-grid-row dfe-section-card__container">
             @foreach (var card in cardGroup.Select(x => x.Card))
             {
-            <div class='govuk-grid-column-one-half govuk-!-margin-bottom-4'>
-                <div class="section-card">
+           <div class="govuk-grid-column-one-half dfe-section-card__container">
+                <div class="dfe-section-card">
                     <h3 class="govuk-heading-m">
                         @{
                             var pageName = card.RedirectPageName?.PageName;
@@ -22,7 +22,7 @@
                         }
                             @Html.ActionLink(card.CardHeader,"LandingPage","CPD",routeValues , new { @class= "govuk-link"})
                         </h3>
-                        <p class="govuk-!-margin-bottom-6">@card.CardContents</p>
+                        <p class="govuk-body">@card.CardContents</p>
                     </div>
                 </div>
             }

@@ -8,5 +8,7 @@ namespace Childrens_Social_Care_CPD.Models
         public Document PrototypeText { get; set; }
         public string PrototypeHeader { get; set; } = string.Empty;
         public string PrototypeTextHtml { get; set; } = string.Empty;
+
+        public string HeaderLinkTitle { get; set; }
     }
 }

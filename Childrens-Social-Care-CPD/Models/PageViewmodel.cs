@@ -15,8 +15,6 @@ namespace Childrens_Social_Care_CPD.Models
 
         public List<Card> Cards { get; set; } = new();
 
-        //public List<Paragraph> Paragraphs { get; set; } = new();
-
         public List<Link> Links { get; set; } = new();
 
         public List<Label> Labels { get; set; } = new();

@@ -12,7 +12,7 @@ data "azurerm_user_assigned_identity" "uai" {
 
 # resource "azurerm_key_vault_access_policy" "uai-access-policy" {
 #   key_vault_id = data.azurerm_key_vault.kv.id
-#   tenant_id    = data.azurerm_client_config.current.tenant_id
+#   tenant_id    = var.tenant_id
 #   object_id    = data.azurerm_user_assigned_identity.uai.principal_id
 
 #   key_permissions = [

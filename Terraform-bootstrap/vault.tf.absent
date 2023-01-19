@@ -1,0 +1,19 @@
+:resource "azurerm_key_vault" "kv" {
+  name                = var.key_vault_name[terraform.workspace]
+  resource_group_name = var.key_vault_rg[terraform.workspace]
+  location            = azurerm_resource_group.rg.location
+  tenant_id           = data.azurerm_client_config.current.tenant_id
+  sku_name            = "standard"
+}
+
+resource "azurerm_key_vault_secret" "ips" {
+  name         = "dfe-ips"
+  key_vault_id = azurerm_key_vault.kv.id
+  value        = var.dfe-ips
+}
+
+resource "azurerm_key_vault_secret" "dev-ips" {
+  name         = "dfe-dev-ips"
+  key_vault_id = azurerm_key_vault.kv.id
+  value        = var.dfe-dev-ips
+}

@@ -83,7 +83,6 @@ resource "azurerm_monitor_metric_alert" "container-cpu" {
   tags = data.azurerm_resource_group.rg.tags
 }
 
-
 resource "azurerm_monitor_metric_alert" "container-avg-resp-time" {
   name                = var.alert_container_avg_resp_time[terraform.workspace]
   resource_group_name = data.azurerm_resource_group.rg.name
@@ -98,6 +97,29 @@ resource "azurerm_monitor_metric_alert" "container-avg-resp-time" {
     aggregation      = "Average"
     operator         = "GreaterThan"
     threshold        = 1000
+  }
+
+  action {
+    action_group_id = azurerm_monitor_action_group.main.id
+  }
+
+  tags = data.azurerm_resource_group.rg.tags
+}
+
+resource "azurerm_monitor_metric_alert" "failed-requests" {
+  name                = var.alert_failed_requests[terraform.workspace]
+  resource_group_name = data.azurerm_resource_group.rg.name
+  scopes              = [azurerm_application_insights.appinsights.id]
+  description         = "Action will be triggered when failed requests is greater than 1"
+  window_size         = "PT5M"
+  frequency           = "PT1M"
+
+  criteria {
+    metric_namespace = "microsoft.insights/components"
+    metric_name      = "requests/failed"
+    aggregation      = "Count"
+    operator         = "GreaterThan"
+    threshold        = 1
   }
 
   action {

@@ -3,8 +3,7 @@
 
 @if (Model != null)
 {
-
-    <section class="app-section app-section-beta--blue govuk-!-margin-top-6">
+    <section class="app-section-beta app-section-beta__blue govuk-!-margin-top-6">
         <div class="govuk-width-container">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-two-thirds-from-desktop">
@@ -36,7 +35,7 @@
                     { "sendingPage", Model.PageName.PageName },
                     { "sendingPageType", Model.PageType.PageType }
                 };
-                <p>
+                <p class="govuk-body">
                     @Html.ActionLink(link.LinkText, "LandingPage", "CPD", routeValues, new { @class = "govuk-link" })
                 </p>
             }

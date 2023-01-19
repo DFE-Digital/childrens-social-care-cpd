@@ -24,7 +24,7 @@ namespace Childrens_Social_Care_CPD.Controllers
         /// <param name="filterContext"></param>
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            ViewBag.pageName = filterContext.ActionArguments.ContainsKey(SiteConstants.PAGENAME)? filterContext.ActionArguments[SiteConstants.PAGENAME] ?? string.Empty:string.Empty;
+            ViewBag.pageName = filterContext.ActionArguments.ContainsKey(SiteConstants.PAGENAME) ? filterContext.ActionArguments[SiteConstants.PAGENAME] ?? string.Empty : string.Empty;
             ViewBag.pageType = filterContext.ActionArguments.ContainsKey(SiteConstants.PAGETYPE) ? filterContext.ActionArguments[SiteConstants.PAGETYPE] ?? string.Empty : string.Empty;
             ViewBag.sendingPage = filterContext.ActionArguments.ContainsKey(SiteConstants.SENDINGPAGE) ? filterContext.ActionArguments[SiteConstants.SENDINGPAGE] ?? string.Empty : string.Empty;
             ViewBag.sendingPageType = filterContext.ActionArguments.ContainsKey(SiteConstants.SENDINGPAGETYPE) ? filterContext.ActionArguments[SiteConstants.SENDINGPAGETYPE] ?? string.Empty : string.Empty;
@@ -36,7 +36,17 @@ namespace Childrens_Social_Care_CPD.Controllers
             PageFooter pageFooter = GetFooter();
 
             ViewBag.PageFooter = pageFooter;
+
+            var acceptsAnalytics = HttpContext?.Request.Cookies["accepts_analytics"]?.Equals("accept");
+
+            if (acceptsAnalytics == null)
+            {
+                CookieBanner cookieBanner = GetCookieBanner();
+                ViewBag.CookieBanner = cookieBanner;
+            }
         }
+
+       
 
         /// <summary>
         /// Method to get Footer using Contentful API call
@@ -77,9 +87,21 @@ namespace Childrens_Social_Care_CPD.Controllers
             {
                 Header =  header == null ? string.Empty : header.Header,
                 PrototypeTextHtml = html,
-                PrototypeHeader = header == null ? string.Empty : header.PrototypeHeader
-            };
+                PrototypeHeader = header == null ? string.Empty : header.PrototypeHeader,
+                HeaderLinkTitle = header.HeaderLinkTitle            };
             return pageHeader;
+        }
+
+        /// <summary>
+        /// To get contents for Cookie banner
+        /// </summary>
+        /// <returns></returns>
+        private CookieBanner GetCookieBanner()
+        {
+            var cookieBannerQueryBuilder = QueryBuilder<CookieBanner>.New.ContentTypeIs(SiteConstants.COOKIEBANNER);
+            var cookieBannerResult = _client.GetEntries<CookieBanner>(cookieBannerQueryBuilder).Result;
+            var cookieBanner = cookieBannerResult.FirstOrDefault();
+            return cookieBanner;
         }
     }
 }
