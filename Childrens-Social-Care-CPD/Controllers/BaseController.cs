@@ -37,7 +37,7 @@ namespace Childrens_Social_Care_CPD.Controllers
 
             ViewBag.PageFooter = pageFooter;
 
-            var acceptsAnalytics = HttpContext.Request.Cookies["accepts_analytics"]?.Equals("accept");
+            var acceptsAnalytics = HttpContext?.Request.Cookies["accepts_analytics"]?.Equals("accept");
 
             if (acceptsAnalytics == null)
             {
