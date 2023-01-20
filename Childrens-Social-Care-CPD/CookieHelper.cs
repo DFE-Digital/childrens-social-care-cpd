@@ -8,7 +8,7 @@ namespace Childrens_Social_Care_CPD
         {
             var options = new CookieOptions
             {
-                Expires = DateTime.Now.AddDays(28),
+                Expires = DateTime.Now.AddDays(365),
                 HttpOnly = true,
                 SameSite = SameSiteMode.Strict,
                 IsEssential = true,
