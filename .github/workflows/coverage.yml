@@ -14,9 +14,17 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore    
     - name: Code Coverage 
       uses: dodopizza/dotcover-action@v1
       with:
         dotCoverCommand: cover
-        configFile: coverage.xml
+        configFile: .github/workflows/coverage.xml
       
