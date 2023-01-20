@@ -21,7 +21,7 @@ resource "azurerm_linux_web_app" "linux-web-app" {
     CPD_TENANTID               = var.tenant_id
     CPD_AZURE_ENVIRONMENT      = lower(terraform.workspace)
     CPD_CONTENTFUL_ENVIRONMENT = var.cpd_contentful_env[terraform.workspace]
-    CPD_INSTRUMENTATION_KEY    = azurerm_application_insights.appinsights.instrumentation_key
+    CPD_INSTRUMENTATION_KEY    = data.azurerm_application_insights.appinsights.instrumentation_key
     DOCKER_ENABLE_CI           = "true"
   }
 

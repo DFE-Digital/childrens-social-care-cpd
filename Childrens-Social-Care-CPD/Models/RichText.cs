@@ -1,4 +1,5 @@
-﻿using Contentful.Core.Models;
+﻿using Childrens_Social_Care_CPD.Enums;
+using Contentful.Core.Models;
 
 namespace Childrens_Social_Care_CPD.Models
 {
@@ -11,5 +12,7 @@ namespace Childrens_Social_Care_CPD.Models
         public Document RichTextContents { get; set; }
 
         public int SortOrder { get; set; }
+
+        public RichTextRenderType RenderType { get; set; }
     }
 }
