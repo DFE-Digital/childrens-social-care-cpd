@@ -1,4 +1,5 @@
-﻿@using Contentful.Core.Models;
+﻿@using Childrens_Social_Care_CPD.Enums
+@using Contentful.Core.Models;
 @using System.Text
 @addTagHelper *, Contentful.AspNetCore
 @model List<RichText>;
@@ -35,7 +36,14 @@
                             }
                         }
 
-                        @Html.Raw($"<p class={"govuk-body-m"}>{contentBuilder.ToString()}</p>")
+                        if (richText.RenderType == RichTextRenderType.CookieBanner)
+                        {
+                            @Html.Raw($"<p class={"govuk-body"}>{contentBuilder.ToString()}</p>")
+                        }
+                        else
+                        {
+                            @Html.Raw($"<p class={"govuk-body-m"}>{contentBuilder.ToString()}</p>")
+                        }
                     }
                     else
                     {
@@ -43,10 +51,15 @@
                         {
                             if (content.GetType() == typeof(Text))
                             {
-
-                                <p class="govuk-body-m">@(((Contentful.Core.Models.Text)content).Value)</p>
+                                if (richText.RenderType == RichTextRenderType.CookieBanner)
+                                {
+                                    <p class="govuk-body">@(((Contentful.Core.Models.Text)content).Value)</p>
+                                }
+                                else
+                                {
+                                 <p class="govuk-body-m">@(((Contentful.Core.Models.Text)content).Value)</p>
+                                }
                             }
-
                         }
                     }
 
