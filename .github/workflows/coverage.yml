@@ -22,6 +22,8 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore    
+    - name: Find nunit-console
+      run: find / -n nunit -t file
     - name: Code Coverage 
       uses: dodopizza/dotcover-action@v1
       with:
