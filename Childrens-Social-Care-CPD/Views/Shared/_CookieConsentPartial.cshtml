@@ -1,19 +1,23 @@
-﻿@using Contentful.Core.Models
+﻿@using Childrens_Social_Care_CPD.Enums
+@using Contentful.Core.Models
 @using Microsoft.AspNetCore.Http.Features
 @using System.Text
+@using Childrens_Social_Care_CPD.Constants;
 
  @{
     var cookieBannerViewModel = (ViewBag.CookieBanner as CookieBanner);
  }
 
 @{
-    var acceptsAnalytics = Context.Request.Cookies["accepts_analytics"]?.Equals("accept");
+    var acceptsAnalytics = Context.Request.Cookies[SiteConstants.ANALYTICSCOOKIENAME]?.Equals("accept");
 }
 
 @if (acceptsAnalytics == null && cookieBannerViewModel != null)
 {
     @using (@Html.BeginForm("LandingPage", "CPD", FormMethod.Post))
     {
+        <input type="hidden" id="pageNameId" value="@{@ViewBag.pageName}" name="pageName"/>
+        <input type="hidden" id="pageTypeId" value="@{@ViewBag.pageType}" name="pageType"/>
         @Html.AntiForgeryToken()
         <div class="govuk-cookie-banner " data-nosnippet="" role="region" aria-label="@{@cookieBannerViewModel.CookieBannerHeading}">
 
@@ -23,54 +27,16 @@
                     <div class="govuk-grid-row">
                         <div class="govuk-grid-column-two-thirds">
                             <div class="govuk-cookie-banner__content">
-                                @foreach (IContent node in cookieBannerViewModel.AcceptedCookieMessage.Content)
-                                {
-                                    switch (node)
-                                    {
-                                        case Contentful.Core.Models.Paragraph paragraph:
-
-                                            if (paragraph.Content.Any(c => c.GetType() == typeof(Hyperlink)))
-                                            {
-                                                StringBuilder contentBuilder = new StringBuilder();
-                                                @foreach (var content in paragraph.Content)
-                                                {
-                                                    if (content.GetType() == typeof(Text))
-                                                    {
-                                                        contentBuilder.Append((((Contentful.Core.Models.Text)content).Value));
-                                                    }
-                                                    if (content.GetType() == typeof(Hyperlink))
-                                                    {
-                                                        var linkElement = ((Contentful.Core.Models.Hyperlink)content);
-                                                        var linkText = ((Contentful.Core.Models.Text)(linkElement).Content[0]).Value;
-                                                        contentBuilder.Append(string.Format(("<a href={0}>{1}</a>"), linkElement.Data.Uri, linkText));
-                                                    }
-                                                }
-
-                                                @Html.Raw($"<p class={"govuk-body"}>{contentBuilder.ToString()}</p>")
-                                            }
-                                            else
-                                            {
-                                                @foreach (var content in paragraph.Content)
-                                                {
-                                                    if (content.GetType() == typeof(Text))
-                                                    {
-
-                                                        <p class="govuk-body">@(((Contentful.Core.Models.Text)content).Value)</p>
-                                                    }
-
-                                                }
-                                            }
-
-                                            break;
-                                    }
-
+                                @{
+                                    var richTexts = new List<RichText>() { new RichText { RichTextContents = cookieBannerViewModel.AcceptedCookieMessage, RenderType = RichTextRenderType.CookieBanner } };
+                                    await Html.RenderPartialAsync("../PartialViews/RichTextRenderer", richTexts);
                                 }
                             </div>
                         </div>
                     </div>
                     <div class="govuk-button-group">
                         <a href="javascript:void(0);" onclick="hideCookieMessage();" role="button" draggable="false" class="govuk-button" data-module="govuk-button">
-                            cookieBannerViewModel.HideCookieMessageButtonText
+                            @cookieBannerViewModel.HideCookieMessageButtonText
                         </a>
                     </div>
                 </div>
@@ -82,22 +48,9 @@
                         <div class="govuk-grid-column-two-thirds">
                             <h2 class="govuk-cookie-banner__heading govuk-heading-m">Cookies on Develop your career in child and family social work</h2>
                             <div class="govuk-cookie-banner__content">
-                                @foreach (IContent node in @cookieBannerViewModel.CookieMessageBody.Content)
-                                {
-                                    switch (node)
-                                    {
-                                        case Contentful.Core.Models.Paragraph paragraph:
-                                            @foreach (var content in paragraph.Content)
-                                            {
-                                                if (content.GetType() == typeof(Text))
-                                                {
-
-                                                    <p class="govuk-body">@(((Contentful.Core.Models.Text)content).Value)</p>
-                                                }
-
-                                            }
-                                            break;
-                                    }
+                                @{
+                                    var richTexts = new List<RichText>() { new RichText { RichTextContents = cookieBannerViewModel.CookieMessageBody, RenderType = RichTextRenderType.CookieBanner } };
+                                    await Html.RenderPartialAsync("../PartialViews/RichTextRenderer", richTexts);
                                 }
                             </div>
                         </div>
