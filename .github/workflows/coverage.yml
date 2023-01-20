@@ -21,7 +21,9 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore    
+      run: dotnet build --no-restore
+    - name: Install unit console  
+      run: dotnet add package NUnit.ConsoleRunner
     - name: Find nunit-console
       run: find / -name nunit -type f
     - name: Code Coverage 
