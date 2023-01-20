@@ -109,7 +109,7 @@ resource "azurerm_monitor_metric_alert" "container-avg-resp-time" {
 resource "azurerm_monitor_metric_alert" "failed-requests" {
   name                = var.alert_failed_requests[terraform.workspace]
   resource_group_name = data.azurerm_resource_group.rg.name
-  scopes              = [azurerm_application_insights.appinsights.id]
+  scopes              = [data.azurerm_application_insights.appinsights.id]
   description         = "Action will be triggered when failed requests is greater than 1"
   window_size         = "PT5M"
   frequency           = "PT1M"
