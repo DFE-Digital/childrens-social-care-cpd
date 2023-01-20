@@ -23,7 +23,7 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Install unit console  
-      run: dotnet add Childrens-Social-Care-CPD-Tests package NUnit.ConsoleRunner
+      run: dotnet add Childrens-Social-Care-CPD-Tests package NUnit.ConsoleRunner --version 3.16.2
     - name: Code Coverage 
       uses: dodopizza/dotcover-action@v1
       with:
