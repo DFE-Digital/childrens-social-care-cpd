@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <AnalyseParams>
-    <TargetExecutable>/home/runner/.nuget/packages/nunit.consolerunner/3.16.2/tools/nunit3-console.exe</TargetExecutable>
+    <!--<TargetExecutable>/home/runner/.nuget/packages/nunit.consolerunner/3.16.2/tools/nunit3-console.exe</TargetExecutable>-->
     <TargetArguments>/home/runner/work/childrens-social-care-cpd/childrens-social-care-cpd/Childrens-Social-Care-CPD-Tests/bin/Debug/net6.0/Childrens-Social-Care-CPD-Tests.dll</TargetArguments>
-    <Output>AppCoverageReport.html</Output>
-    <ReportType>html</ReportType>
+    <Output>AppCoverageReport.json</Output>
+    <ReportType>json</ReportType>
 </AnalyseParams>
