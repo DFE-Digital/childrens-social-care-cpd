@@ -1,22 +1,22 @@
-resource "azurerm_virtual_network" "vnet1" {
+data "azurerm_virtual_network" "vnet1" {
   name                = var.vnet_name[terraform.workspace]
   resource_group_name = data.azurerm_resource_group.rg.name
-  location            = data.azurerm_resource_group.rg.location
-  address_space       = [var.vnet_address_space[terraform.workspace]]
-  tags                = data.azurerm_resource_group.rg.tags
+  # location            = data.azurerm_resource_group.rg.location
+  # address_space       = [var.vnet_address_space[terraform.workspace]]
+  # tags                = data.azurerm_resource_group.rg.tags
 }
 
 resource "azurerm_subnet" "frontend" {
   name                 = var.vnet_frontend_name[terraform.workspace]
   resource_group_name  = data.azurerm_resource_group.rg.name
-  virtual_network_name = azurerm_virtual_network.vnet1.name
+  virtual_network_name = data.azurerm_virtual_network.vnet1.name
   address_prefixes     = [var.vnet_frontend_prefixes[terraform.workspace]]
 }
 
 resource "azurerm_subnet" "backend" {
   name                                          = var.vnet_backend_name[terraform.workspace]
   resource_group_name                           = data.azurerm_resource_group.rg.name
-  virtual_network_name                          = azurerm_virtual_network.vnet1.name
+  virtual_network_name                          = data.azurerm_virtual_network.vnet1.name
   address_prefixes                              = [var.vnet_backend_prefixes[terraform.workspace]]
   private_link_service_network_policies_enabled = false
 }

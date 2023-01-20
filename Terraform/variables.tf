@@ -82,18 +82,6 @@ variable "vnet_name" {
   description = "Name of Address Space"
 }
 
-variable "vnet_address_space" {
-  type = map(string)
-  default = {
-    Dev       = "10.0.0.0/16"
-    Test      = "10.1.0.0/16"
-    Load-Test = "10.2.0.0/16"
-    Pre-Prod  = "10.0.0.0/16"
-    Prod      = "10.0.0.0/16"
-  }
-  description = "Subnets used for Address Space"
-}
-
 variable "vnet_frontend_name" {
   type = map(string)
   default = {
@@ -367,7 +355,7 @@ variable "appinsights_name" {
     Pre-Prod  = "s185t01-chidrens-social-care-cpd-ai"
     Prod      = "s185p01-chidrens-social-care-cpd-ai"
   }
-  description = "Name of Appplication Insights"
+  description = "Name of Application Insights"
 }
 
 variable "log_analytics_ws_name" {
@@ -560,6 +548,18 @@ variable "alert_container_cpu" {
     Prod      = "s185p01-container-cpu-average"
   }
   description = "Name of container cpu average alert"
+}
+
+variable "alert_failed_requests" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-failed-requests"
+    Test      = "s185d02-failed-requests"
+    Load-Test = "s185d03-failed-requests"
+    Pre-Prod  = "s185t01-failed-requests"
+    Prod      = "s185p01-failed-requests"
+  }
+  description = "Name of failed requests count alert"
 }
 
 variable "monitor_action_group_name" {
