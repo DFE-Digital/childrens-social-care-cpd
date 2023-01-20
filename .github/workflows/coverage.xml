@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AnalyseParams>
+    <TargetExecutable>nunit-console</TargetExecutable>
+    <TargetArguments>/home/runner/work/childrens-social-care-cpd/childrens-social-care-cpd/Childrens-Social-Care-CPD-Tests/bin/Debug/net6.0/Childrens-Social-Care-CPD-Tests.dll</TargetArguments>
+    <Output>AppCoverageReport.html</Output>
+    <ReportType>html</ReportType>
+</AnalyseParams>
