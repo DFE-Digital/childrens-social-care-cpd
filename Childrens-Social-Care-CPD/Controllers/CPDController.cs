@@ -32,14 +32,29 @@ namespace Childrens_Social_Care_CPD.Controllers
         public async Task<IActionResult> LandingPage(string pageName, string pageType, string sendingPage, string sendingPageType)
         {
             var pageViewModel = await GetViewModel(pageName, pageType);
-            foreach (PageViewModel viewModel in pageViewModel)
-            {
-                viewModel.Cards = viewModel.Cards.OrderBy(x => x.SortOrder).ToList();
-                viewModel.Labels = viewModel.Labels.OrderBy(x => x.SortOrder).ToList();
-                viewModel.RichTexts = viewModel.RichTexts.OrderBy(x => x.SortOrder).ToList();
-            }
-            
+            SetDisplayOrder(pageViewModel);
             return View(pageViewModel);
+        }
+
+        /// <summary>
+        /// Method to set Google analytics cookie consent from user
+        /// </summary>
+        /// <param name="analyticsCookieConsent">
+        /// Cookie consent - Accept or Reject
+        /// </param>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> LandingPage(string analyticsCookieConsent, string pageName, string pageType)
+        {
+            CookieHelper.SetAnalyticsCookie(analyticsCookieConsent, HttpContext);
+
+            ViewBag.analyticsCookieSet = analyticsCookieConsent;
+
+            var pageViewModel = await GetViewModel(pageName, pageType);
+            SetDisplayOrder(pageViewModel);
+
+            return View("LandingPage", pageViewModel);
         }
 
         /// <summary>
@@ -92,6 +107,16 @@ namespace Childrens_Social_Care_CPD.Controllers
                     InnerException = Convert.ToString(exceptionHandlerPathFeature?.Error.InnerException)
                 }
                 );
+        }
+
+        private void SetDisplayOrder(ContentfulCollection<PageViewModel> pageViewModel)
+        {
+            foreach (PageViewModel viewModel in pageViewModel)
+            {
+                viewModel.Cards = viewModel.Cards.OrderBy(x => x.SortOrder).ToList();
+                viewModel.Labels = viewModel.Labels.OrderBy(x => x.SortOrder).ToList();
+                viewModel.RichTexts = viewModel.RichTexts.OrderBy(x => x.SortOrder).ToList();
+            }
         }
 
     }

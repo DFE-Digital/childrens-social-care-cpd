@@ -8,7 +8,7 @@ resource "azurerm_private_dns_zone_virtual_network_link" "dnszonelink" {
   name                  = var.private_dns_zone_vn_link_name[terraform.workspace]
   resource_group_name   = data.azurerm_resource_group.rg.name
   private_dns_zone_name = azurerm_private_dns_zone.dnsprivatezone.name
-  virtual_network_id    = azurerm_virtual_network.vnet1.id
+  virtual_network_id    = data.azurerm_virtual_network.vnet1.id
   tags                  = data.azurerm_resource_group.rg.tags
 }
 
