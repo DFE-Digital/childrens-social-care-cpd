@@ -49,7 +49,7 @@ namespace Childrens_Social_Care_CPD.Controllers
         {
             CookieHelper.SetAnalyticsCookie(analyticsCookieConsent, HttpContext);
 
-            ViewBag.analyticsCookieSet = true;
+            ViewBag.analyticsCookieSet = analyticsCookieConsent;
 
             var pageViewModel = await GetViewModel(pageName, pageType);
             SetDisplayOrder(pageViewModel);
