@@ -8,7 +8,7 @@ This repository contains the code needed to host the Social Workforce career pro
 
 ## Live examples
 
-The live site can be found [here](https://www.evelop-child-family-social-work-career.education.gov.uk)
+The live site can be found [here](https://www.develop-child-family-social-work-career.education.gov.uk)
 
 ## Nomenclature
 
@@ -28,9 +28,10 @@ The following environment variables are to be configured
 | ---  | --- |
 | CPD_GOOGLEANALYTICSTAG | The google analytics API (optional) |
 | CPD_CONTENTFUL_ENVIRONMENT | The contentful environment being consumed |
-| CPD_SERVICE_ENVIRONMENT | The service environment |
 | CPD_DELIVERY_API_KEY | The live content for the environment set |
 | CPD_PREVIEW_API_KEY | The preview content for the environment set |
+| CPD_AZURE_ENVIRONMENT | The environment for the system |
+| CPD_INSTRUMENTATION_KEY | Application insights key |
 
 In order to run the application locally, you can either open the solution, build and run in the IDE of your choice or there is a [docker-compose](~/docker-compose.yml) file that allows for local running of the app.
 
