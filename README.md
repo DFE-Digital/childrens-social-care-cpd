@@ -51,5 +51,7 @@ followed by
 
 ### Further documentation
 
+More information on contentful and working as a headless CMS can be found [here](https://www.contentful.com/)
+
 ---
-Copyright (c) 2022 Crown Copyright (Department for Education)
+Copyright (c) 2023 Crown Copyright (Department for Education)
