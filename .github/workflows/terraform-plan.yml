@@ -1,4 +1,4 @@
-name: 'Terraform Apply'
+name: 'Terraform Plan'
 
 on: 
   workflow_dispatch:
@@ -19,8 +19,8 @@ permissions:
   contents: read
 
 jobs:
-  terraform-apply:
-    name: 'Terraform Apply'
+  terraform-plan:
+    name: 'Terraform Plan'
     runs-on: ubuntu-latest
     environment: ${{inputs.workspace}}
     env:
@@ -61,7 +61,6 @@ jobs:
     - name: Terraform Validate
       run: terraform -chdir=Terraform validate
 
-    # On push to "main", build or change infrastructure according to Terraform configuration files
-    - name: Terraform Apply
-      # if: github.ref == 'refs/heads/main' 
-      run: terraform -chdir=Terraform apply -auto-approve -input=false
+    # Generates an execution plan for Terraform
+    - name: Terraform Plan
+      run: terraform -chdir=Terraform plan -input=false
