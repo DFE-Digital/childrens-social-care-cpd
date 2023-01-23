@@ -57,7 +57,7 @@
                                 }
                                 else
                                 {
-                                 <p class="govuk-body-m">@(((Contentful.Core.Models.Text)content).Value)</p>
+                                    <p class="govuk-body-m">@(((Contentful.Core.Models.Text)content).Value)</p>
                                 }
                             }
                         }
@@ -80,27 +80,40 @@
                     }
 
                     break;
+                case Contentful.Core.Models.Table table:
 
-                case Contentful.Core.Models.Heading2 heading2:
-
-                    @foreach (var content in heading2.Content)
+                    @if (table.Content.Any())
                     {
-                        if (content.GetType() == typeof(Text))
-                        {
-                            <h2 class="govuk-heading-m">@(((Contentful.Core.Models.Text)content).Value)</h2>
-                        }
-                    }
-
-                    break;
-
-                    case Contentful.Core.Models.Heading1 heading1:
-
-                    @foreach (var content in heading1.Content)
-                    {
-                        if (content.GetType() == typeof(Text))
-                        {
-                            <h1 class="govuk-heading-l">@(((Contentful.Core.Models.Text)content).Value)</h1>
-                        }
+                        <table class="govuk-table">
+                            @foreach (TableRow row in table.Content)
+                            {
+                                if (@row.Content.Any(x => x.GetType() == typeof(Contentful.Core.Models.TableHeader)))
+                                {
+                                    <thead class="govuk-table__head">
+                                        <tr class="govuk-table__row">
+                                            @foreach (TableHeader header in @row.Content)
+                                            {
+                                                <th scope="col" class="govuk-table__header">@(((Contentful.Core.Models.Text)((Contentful.Core.Models.Paragraph)header.Content[0]).Content[0]).Value)</th>
+                                            }
+                                        </tr>
+                                    </thead>
+                                }
+                            }
+                             <tbody class="govuk-table__body">
+                             @foreach (TableRow row in table.Content)
+                            {
+                                if (@row.Content.Any(x => x.GetType() == typeof(Contentful.Core.Models.TableCell)))
+                                {
+                                    <tr class="govuk-table__row">
+                                            @foreach (TableCell tableCell in @row.Content)
+                                            {
+                                                <td class="govuk-table__cell">@(((Contentful.Core.Models.Text)((Contentful.Core.Models.Paragraph)tableCell.Content[0]).Content[0]).Value)</td>
+                                            }
+                                    </tr>
+                                }
+                            }
+                             </tbody>
+                        </table>
                     }
 
                     break;
