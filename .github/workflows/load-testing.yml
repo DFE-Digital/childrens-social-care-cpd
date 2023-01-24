@@ -6,6 +6,7 @@ jobs:
   
   build:
     runs-on: ubuntu-latest
+    environment: Load-Test
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -15,7 +16,13 @@ jobs:
         uses: azure/login@v1
         with:
           creds: '{"clientId":"${{ secrets.TF_ARM_CLIENT_ID }}","clientSecret":"${{ secrets.TF_ARM_CLIENT_SECRET }}","subscriptionId":"${{ secrets.TF_ARM_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TF_ARM_TENANT_ID }}"}'
+      - name: Get the IP
+        run: echo "theIP=$(curl https://ifconfig.tsew.com/)" >> $GITHUB_ENV
+      - name: Echo the IP
+        run: echo "IP is ${{ env.theIP }}"
       - name: Whitelist Runner IP
-        run: theIP=$(curl https://ifconfig.co/) az network nsg rule create -g s185d03-childrens-social-care-cpd-rg --nsg-name s185d03-chidrens-social-care-cpd-sn01-nsg -n GitHubRunnerRule --priority 4000 --source-address-prefixes $theIP --source-port-ranges '*' --destination-address-prefixes '*' --destination-port-ranges '*' --access Allow --protocol Tcp --description "Allow Access from GitHub Action"
+        run: az network nsg rule create -g s185d03-childrens-social-care-cpd-rg --nsg-name s185d03-chidrens-social-care-cpd-sn01-nsg -n GitHubRunnerRule --priority 4000 --source-address-prefixes ${{ env.theIP }} --source-port-ranges '*' --destination-address-prefixes '*' --destination-port-ranges '*' --access Allow --protocol Tcp --description "Allow Access from GitHub Action"
+      - name: Sleep for 30 seconds
+        run: sleep 30s
       - name: Run Load Test
         run: locust -f ./LoadTest/locust.py --headless -u 1 -r 1 --run-time 60s -H https://20.107.65.156/        
