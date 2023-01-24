@@ -1,0 +1,15 @@
+﻿@using Childrens_Social_Care_CPD.Constants
+@{
+    var googleAnalyticsKey = Environment.GetEnvironmentVariable(SiteConstants.CPDGOOGLEANALYTICSTAG) ?? String.Empty;
+    var googleAnalyticsUrl = string.Format("https://www.googletagmanager.com/gtag/js?id={0}", googleAnalyticsKey);
+
+    if (!String.IsNullOrEmpty(googleAnalyticsKey)) {
+        <script async src='@googleAnalyticsUrl'></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+            gtag('config', '@googleAnalyticsKey');
+        </script>    
+    }
+}
