@@ -12,8 +12,9 @@
         public const string SENDINGPAGE = "sendingPage";
         public const string SENDINGPAGETYPE = "sendingPageType";
         public const string COOKIEBANNER = "cookieBanner";
-        public const string ANALYTICSCOOKIENAME = "accepts_analytics";
+        public const string ANALYTICSCOOKIENAME = "cookie_consent";
         public const string ANALYTICSCOOKIEACCEPTED = "accept";
         public const string ANALYTICSCOOKIEREJECTED = "reject";
+        public const string CPDGOOGLEANALYTICSTAG = "CPD_GOOGLEANALYTICSTAG";
     }
 }
