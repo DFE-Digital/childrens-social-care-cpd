@@ -1,4 +1,4 @@
-name: Locust load testing
+name: Locust Load Testing
 
 on: [workflow_dispatch]
 
@@ -16,7 +16,7 @@ jobs:
       - name: Whitelist Runner IP
         run: theIP=$(curl https://ifconfig.co/) az network nsg rule create -g s185d03-childrens-social-care-cpd-rg --nsg-name s185d03-chidrens-social-care-cpd-sn01-nsg -n GitHubRunnerRule --priority 4000 --source-address-prefixes $theIP --source-port-ranges '*' --destination-address-prefixes '*' --destination-port-ranges '*' --access Allow --protocol Tcp --description "Allow Access from GitHub Action"
       - name: Run Load Test
-        uses: apardo04/locust-github-action@master
+        uses: tsew/locust-github-action@1.0 
         with:
           LOCUSTFILE: "./LoadTest/locust.py"
           URL: "https://20.107.65.156/"
