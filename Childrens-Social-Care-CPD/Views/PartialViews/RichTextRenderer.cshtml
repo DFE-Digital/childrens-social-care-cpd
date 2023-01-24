@@ -80,6 +80,28 @@
                     }
 
                     break;
+                case Contentful.Core.Models.Heading2 heading2:
+
+                    @foreach (var content in heading2.Content)
+                    {
+                        if (content.GetType() == typeof(Text))
+                        {
+                            <h2 class="govuk-heading-m">@(((Contentful.Core.Models.Text)content).Value)</h2>
+                        }
+                    }
+
+                    break;
+                case Contentful.Core.Models.Heading1 heading1:
+
+                    @foreach (var content in heading1.Content)
+                    {
+                        if (content.GetType() == typeof(Text))
+                        {
+                            <h1 class="govuk-heading-l">@(((Contentful.Core.Models.Text)content).Value)</h1>
+                        }
+                    }
+
+                    break;
                 case Contentful.Core.Models.Table table:
 
                     @if (table.Content.Any())
