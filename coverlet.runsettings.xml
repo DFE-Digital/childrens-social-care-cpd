@@ -4,10 +4,13 @@
     <DataCollectors>
       <DataCollector friendlyName="XPlat code coverage">
         <Configuration>
+          <Format>cobertura</Format>                              
+          <Exclude>[*]AspNetCoreGeneratedDocument.*</Exclude> <!-- [Assembly-Filter]Type-Filter -->
           <ExcludeByFile>**/Program.cs</ExcludeByFile>
           <SingleHit>false</SingleHit>
           <UseSourceLink>False</UseSourceLink>
           <IncludeTestAssembly>false</IncludeTestAssembly>
+          <ExcludeAssembliesWithoutSources>MissingAll,MissingAny,None</ExcludeAssembliesWithoutSources>
         </Configuration>
       </DataCollector>
     </DataCollectors>
