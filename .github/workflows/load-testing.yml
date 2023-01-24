@@ -1,4 +1,4 @@
-name: Locust load testing
+name: Locust Load Testing
 
 on: [workflow_dispatch]
 
@@ -9,11 +9,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v1
+      - name: Sign in to Azure 
+        uses: azure/login@v1
+        with:
+          creds: '{"clientId":"${{ secrets.TF_ARM_CLIENT_ID }}","clientSecret":"${{ secrets.TF_ARM_CLIENT_SECRET }}","subscriptionId":"${{ secrets.TF_ARM_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TF_ARM_TENANT_ID }}"}'
+      - name: Whitelist Runner IP
+        run: theIP=$(curl https://ifconfig.co/) az network nsg rule create -g s185d03-childrens-social-care-cpd-rg --nsg-name s185d03-chidrens-social-care-cpd-sn01-nsg -n GitHubRunnerRule --priority 4000 --source-address-prefixes $theIP --source-port-ranges '*' --destination-address-prefixes '*' --destination-port-ranges '*' --access Allow --protocol Tcp --description "Allow Access from GitHub Action"
       - name: Run Load Test
-        uses: apardo04/locust-github-action@master
+        uses: tsew/locust-github-action@1.0 
         with:
           LOCUSTFILE: "./LoadTest/locust.py"
-          URL:  "https://dev.develop-child-family-social-work-career.education.gov.uk"
+          URL: "https://20.107.65.156/"
           USERS: "1"
           RATE: "1"
           RUNTIME: "60s"

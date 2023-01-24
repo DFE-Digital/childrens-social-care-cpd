@@ -15,18 +15,7 @@
      <link rel="stylesheet" href="/stylesheets/custom.css">
   @if(Context.Request.Cookies.ContainsKey(SiteConstants.ANALYTICSCOOKIENAME) && Context.Request.Cookies[SiteConstants.ANALYTICSCOOKIENAME].Equals("accept"))
   {
-    <!-- Google tag (gtag.js) -->
-    
-        var googleAnalyticsKey = Environment.GetEnvironmentVariable("CPD_GOOGLEANALYTICSTAG") ?? String.Empty;
-        var googleAnalyticsUrl = string.Format("https://www.googletagmanager.com/gtag/js?id={0}", googleAnalyticsKey);
-     
-    <script async src="@{@googleAnalyticsUrl}"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', '@{@googleAnalyticsKey}');
-    </script>
+    await Html.RenderPartialAsync("../PartialViews/GoogleAnalyticsPartial");
   }
 
      <link rel="shortcut icon" sizes="16x16 32x32 48x48" href="../assets/images/favicon.ico" type="image/x-icon">
