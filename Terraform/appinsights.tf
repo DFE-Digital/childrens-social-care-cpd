@@ -15,11 +15,3 @@ data "azurerm_application_insights" "appinsights" {
   # application_type    = "web"
   # tags                = data.azurerm_resource_group.rg.tags
 }
-
-output "instrumentation_key" {
-  value = data.azurerm_application_insights.appinsights.instrumentation_key
-}
-
-output "app_id" {
-  value = data.azurerm_application_insights.appinsights.app_id
-}

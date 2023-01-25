@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<RunSettings>
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector friendlyName="XPlat code coverage">
+        <Configuration>
+          <Format>cobertura</Format>                              
+          <Exclude>[*]AspNetCoreGeneratedDocument.*,[*]Childrens_Social_Care_CPD.Models.*</Exclude> <!-- [Assembly-Filter]Type-Filter -->
+          <ExcludeByFile>**/Program.cs</ExcludeByFile>
+          <SingleHit>false</SingleHit>
+          <UseSourceLink>False</UseSourceLink>
+          <IncludeTestAssembly>false</IncludeTestAssembly>
+          <ExcludeAssembliesWithoutSources>MissingAll,MissingAny,None</ExcludeAssembliesWithoutSources>
+        </Configuration>
+      </DataCollector>
+    </DataCollectors>
+  </DataCollectionRunSettings>
+</RunSettings>
