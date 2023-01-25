@@ -69,7 +69,7 @@
                             var sendingPage = String.IsNullOrEmpty(@ViewBag.pageName) ? PageNames.HomePage : @ViewBag.pageName;
                             var sendingPageType = String.IsNullOrEmpty(ViewBag.pageType)?PageTypes.Master:ViewBag.pageType;
                             var viewCookiesUrl = $"{@cookieBannerViewModel.ViewCookiesLink.LinkURL}&sendingPage={sendingPage}&sendingPageType={sendingPageType}";
-                         }
+                        }
 
                         <a class="govuk-link" href="@{@viewCookiesUrl}">@cookieBannerViewModel.ViewCookiesLink.LinkText</a>
                     </div>
