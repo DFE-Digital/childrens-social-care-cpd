@@ -1,5 +1,6 @@
 ﻿@using Childrens_Social_Care_CPD.Enums
 @model PageViewModel;
+@{var pageName = ViewBag.pageName;}
 
 @if (Model != null)
 {
@@ -39,6 +40,10 @@
                         }
                     </dl>
                     @{await Html.RenderPartialAsync("../PartialViews/RichTextRenderer",Model.RichTexts);}
+                    @if(pageName == PageNames.ViewCookies.ToString())
+                    {
+                         {await Html.RenderPartialAsync("../PartialViews/CookieSetting");}
+                    }
                 </div>
                 
                 @{
