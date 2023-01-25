@@ -31,12 +31,13 @@ if (enableContentfulIntegration)
     builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, clientSecretCredential);
 }
 
-var options = new ApplicationInsightsServiceOptions { ConnectionString = "InstrumentationKey=13cbca44-e50d-4444-ab56-6c151cad789d;IngestionEndpoint=https://westeurope-5.in.applicationinsights.azure.com/;LiveEndpoint=https://westeurope.livediagnostics.monitor.azure.com/" };
+var options = new ApplicationInsightsServiceOptions {
+    ConnectionString = Environment.GetEnvironmentVariable(SiteConstants.CPD_INSTRUMENTATION_KEY)??String.Empty
+};
+
+//"InstrumentationKey=13cbca44-e50d-4444-ab56-6c151cad789d;IngestionEndpoint=https://westeurope-5.in.applicationinsights.azure.com/;LiveEndpoint=https://westeurope.livediagnostics.monitor.azure.com/" 
+
 builder.Services.AddApplicationInsightsTelemetry(options: options);
-
-var telemetryConfiguration = TelemetryConfiguration.CreateDefault();
-telemetryConfiguration.ConnectionString = Environment.GetEnvironmentVariable(SiteConstants.CPD_INSTRUMENTATION_KEY);
-
 
 var app = builder.Build();
 
