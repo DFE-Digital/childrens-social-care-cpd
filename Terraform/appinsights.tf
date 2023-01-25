@@ -16,8 +16,8 @@ data "azurerm_application_insights" "appinsights" {
   # tags                = data.azurerm_resource_group.rg.tags
 }
 
-output "instrumentation_key" {
-  value = data.azurerm_application_insights.appinsights.instrumentation_key
+output "instrumentation_connection_string" {
+  value = data.azurerm_application_insights.appinsights.connection_string
 }
 
 output "app_id" {
