@@ -14,15 +14,15 @@ resource "azurerm_linux_web_app" "linux-web-app" {
   service_plan_id     = azurerm_service_plan.service-plan.id
 
   app_settings = {
-    CPD_GOOGLEANALYTICSTAG     = var.cpd_googleanalyticstag
-    CPD_KEYVAULTENDPOINT       = var.cpd_keyvaultendpoint
-    CPD_CLIENTID               = var.cpd_client_id
-    CPD_CLIENTSECRET           = var.cpd_client_secret
-    CPD_TENANTID               = var.tenant_id
-    CPD_AZURE_ENVIRONMENT      = lower(terraform.workspace)
-    CPD_CONTENTFUL_ENVIRONMENT = var.cpd_contentful_env[terraform.workspace]
-    CPD_INSTRUMENTATION_KEY    = data.azurerm_application_insights.appinsights.instrumentation_key
-    DOCKER_ENABLE_CI           = "true"
+    CPD_GOOGLEANALYTICSTAG               = var.cpd_googleanalyticstag
+    CPD_KEYVAULTENDPOINT                 = var.cpd_keyvaultendpoint
+    CPD_CLIENTID                         = var.cpd_client_id
+    CPD_CLIENTSECRET                     = var.cpd_client_secret
+    CPD_TENANTID                         = var.tenant_id
+    CPD_AZURE_ENVIRONMENT                = lower(terraform.workspace)
+    CPD_CONTENTFUL_ENVIRONMENT           = var.cpd_contentful_env[terraform.workspace]
+    CPD_INSTRUMENTATION_CONNECTIONSTRING = data.azurerm_application_insights.appinsights.connection_string
+    DOCKER_ENABLE_CI                     = "true"
   }
 
   site_config {
