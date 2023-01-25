@@ -25,4 +25,4 @@ jobs:
       - name: Sleep for 30 seconds
         run: sleep 30s
       - name: Run Load Test
-        run: locust -f ./LoadTest/locust.py --headless -u 1 -r 1 --run-time 60s -H https://20.107.65.156/        
+        run: locust -f ./LoadTest/locustfile.py --headless -u 1 -r 1 --run-time 60s -H https://20.107.65.156/        
