@@ -3,6 +3,7 @@
     public enum RichTextRenderType
     {
        Generic,
-       CookieBanner
+       CookieBanner,
+       SupportingPages
     }
 }

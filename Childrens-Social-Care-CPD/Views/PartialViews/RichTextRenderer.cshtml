@@ -36,7 +36,8 @@
                             }
                         }
 
-                        if (richText.RenderType == RichTextRenderType.CookieBanner)
+                        if (richText.RichTextRenderType == RichTextRenderType.CookieBanner.ToString() ||
+                        richText.RichTextRenderType == RichTextRenderType.SupportingPages.ToString())
                         {
                             @Html.Raw($"<p class={"govuk-body"}>{contentBuilder.ToString()}</p>")
                         }
@@ -51,7 +52,8 @@
                         {
                             if (content.GetType() == typeof(Text))
                             {
-                                if (richText.RenderType == RichTextRenderType.CookieBanner)
+                                if (richText.RichTextRenderType == RichTextRenderType.CookieBanner.ToString() ||
+                                   richText.RichTextRenderType == RichTextRenderType.SupportingPages.ToString())
                                 {
                                     <p class="govuk-body">@(((Contentful.Core.Models.Text)content).Value)</p>
                                 }
