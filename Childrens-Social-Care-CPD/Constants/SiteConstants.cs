@@ -16,5 +16,7 @@
         public const string ANALYTICSCOOKIEACCEPTED = "accept";
         public const string ANALYTICSCOOKIEREJECTED = "reject";
         public const string CPDGOOGLEANALYTICSTAG = "CPD_GOOGLEANALYTICSTAG";
+
+        public const string CPD_INSTRUMENTATION_KEY = "CPD_INSTRUMENTATION_KEY";
     }
 }
