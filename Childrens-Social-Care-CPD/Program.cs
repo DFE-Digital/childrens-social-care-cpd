@@ -1,6 +1,8 @@
 using Azure.Identity;
+using Childrens_Social_Care_CPD.Constants;
 using Contentful.AspNetCore;
 using Microsoft.ApplicationInsights.AspNetCore.Extensions;
+using Microsoft.ApplicationInsights.Extensibility;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +33,10 @@ if (enableContentfulIntegration)
 
 var options = new ApplicationInsightsServiceOptions { ConnectionString = "InstrumentationKey=13cbca44-e50d-4444-ab56-6c151cad789d;IngestionEndpoint=https://westeurope-5.in.applicationinsights.azure.com/;LiveEndpoint=https://westeurope.livediagnostics.monitor.azure.com/" };
 builder.Services.AddApplicationInsightsTelemetry(options: options);
+
+var telemetryConfiguration = TelemetryConfiguration.CreateDefault();
+telemetryConfiguration.ConnectionString = Environment.GetEnvironmentVariable(SiteConstants.CPD_INSTRUMENTATION_KEY);
+
 
 var app = builder.Build();
 
