@@ -3,6 +3,10 @@ name: App Deploy
 on:
   workflow_dispatch:
     inputs:
+      tag:
+        description: 'Docker image tag to deploy (use @ or :)'
+        required: true
+        default: ':master'
       workspace:
         description: 'Environment to deploy to on Azure'
         required: true
@@ -33,7 +37,7 @@ jobs:
         with:
           app-name: 's185d01-chidrens-social-care-cpd-app-service'
           # slot-name: 'Dev'
-          images: 'ghcr.io/dfe-digital/childrens-social-care-cpd:master'
+          images: 'ghcr.io/dfe-digital/childrens-social-care-cpd${{ inputs.tag }}'
         if: ${{ inputs.workspace == 'Dev' }}
 
       - name: Deploy Test to Azure Web App
@@ -41,7 +45,7 @@ jobs:
         with:
           app-name: 's185d02-chidrens-social-care-cpd-app-service'
           # slot-name: 'Test'
-          images: 'ghcr.io/dfe-digital/childrens-social-care-cpd:master'
+          images: 'ghcr.io/dfe-digital/childrens-social-care-cpd${{ inputs.tag }}'
         if: ${{ inputs.workspace == 'Test' }}
 
       - name: Deploy Load-Test to Azure Web App
@@ -49,7 +53,7 @@ jobs:
         with:
           app-name: 's185d03-chidrens-social-care-cpd-app-service'
           # slot-name: 'Test'
-          images: 'ghcr.io/dfe-digital/childrens-social-care-cpd:master'
+          images: 'ghcr.io/dfe-digital/childrens-social-care-cpd${{ inputs.tag }}'
         if: ${{ inputs.workspace == 'Load-Test' }}
 
       - name: Deploy Pre-Prod to Azure Web App
@@ -57,7 +61,7 @@ jobs:
         with:
           app-name: 's185t01-chidrens-social-care-cpd-app-service'
           # slot-name: 'Pre-Prod'
-          images: 'ghcr.io/dfe-digital/childrens-social-care-cpd:master'
+          images: 'ghcr.io/dfe-digital/childrens-social-care-cpd${{ inputs.tag }}'
         if: ${{ inputs.workspace == 'Pre-Prod' }}
 
       - name: Deploy Prod to Azure Web App
@@ -65,7 +69,7 @@ jobs:
         with:
           app-name: 's185p01-chidrens-social-care-cpd-app-service'
           # slot-name: 'Prod'
-          images: 'ghcr.io/dfe-digital/childrens-social-care-cpd:master'
+          images: 'ghcr.io/dfe-digital/childrens-social-care-cpd${{ inputs.tag }}'
         if: ${{ inputs.workspace == 'Prod' }}
 
       - name: Sign out of Azure
