@@ -32,10 +32,8 @@ if (enableContentfulIntegration)
 }
 
 var options = new ApplicationInsightsServiceOptions {
-    ConnectionString = Environment.GetEnvironmentVariable(SiteConstants.CPD_INSTRUMENTATION_KEY)??String.Empty
+    ConnectionString = Environment.GetEnvironmentVariable(SiteConstants.CPD_INSTRUMENTATION_CONNECTIONSTRING)??String.Empty
 };
-
-//"InstrumentationKey=13cbca44-e50d-4444-ab56-6c151cad789d;IngestionEndpoint=https://westeurope-5.in.applicationinsights.azure.com/;LiveEndpoint=https://westeurope.livediagnostics.monitor.azure.com/" 
 
 builder.Services.AddApplicationInsightsTelemetry(options: options);
 
