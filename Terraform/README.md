@@ -114,6 +114,4 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_app_id"></a> [app\_id](#output\_app\_id) | n/a |
-| <a name="output_instrumentation_key"></a> [instrumentation\_key](#output\_instrumentation\_key) | n/a |
 | <a name="output_public_ip_address"></a> [public\_ip\_address](#output\_public\_ip\_address) | n/a |
