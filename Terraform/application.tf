@@ -33,5 +33,14 @@ resource "azurerm_linux_web_app" "linux-web-app" {
     }
   }
 
+  logs {
+    http_logs {
+      file_system {
+        retention_in_days = 31
+        retention_in_mb   = 100
+      }
+    }
+  }
+
   tags = data.azurerm_resource_group.rg.tags
 }
