@@ -1,5 +1,6 @@
 ﻿
 using Childrens_Social_Care_CPD.Constants;
+using Childrens_Social_Care_CPD.Enums;
 using Childrens_Social_Care_CPD.Models;
 using Contentful.Core;
 using Contentful.Core.Models;
@@ -43,6 +44,11 @@ namespace Childrens_Social_Care_CPD.Controllers
             {
                 CookieBanner cookieBanner = GetCookieBanner();
                 ViewBag.CookieBanner = cookieBanner;
+            }
+
+            if (ViewBag.pageName == PageNames.ViewCookies.ToString())
+            {
+                ViewBag.Referer = Request.Headers["Referer"].ToString();
             }
         }
 

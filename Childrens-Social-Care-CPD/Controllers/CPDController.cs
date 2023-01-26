@@ -45,15 +45,15 @@ namespace Childrens_Social_Care_CPD.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> LandingPage(string analyticsCookieConsent, string pageName, string pageType)
+        [ActionName("LandingPage")]
+        public async Task<IActionResult> SetCookies(string analyticsCookieConsent, string pageName, string pageType, string referer)
         {
             CookieHelper.SetAnalyticsCookie(analyticsCookieConsent, HttpContext);
 
             ViewBag.analyticsCookieSet = analyticsCookieConsent;
-
+            ViewBag.Referer = referer;
             var pageViewModel = await GetViewModel(pageName, pageType);
             SetDisplayOrder(pageViewModel);
-
             return View("LandingPage", pageViewModel);
         }
 

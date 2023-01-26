@@ -1,4 +1,5 @@
-﻿@using Childrens_Social_Care_CPD.Enums
+﻿@using Childrens_Social_Care_CPD.Constants
+@using Childrens_Social_Care_CPD.Enums
 @using Contentful.AspNetCore.TagHelpers
 @addTagHelper *, Contentful.AspNetCore
 
@@ -6,6 +7,7 @@
 {
     <input type="hidden" id="pageNameId" value="@{@ViewBag.pageName}" name="pageName"/>
     <input type="hidden" id="pageTypeId" value="@{@ViewBag.pageType}" name="pageType"/>
+    <input type="hidden" id="referer" value="@{@ViewBag.referer}" name="referer"/>
 
     <div class="govuk-form-group">
         <fieldset class="govuk-fieldset">
@@ -14,18 +16,33 @@
             </legend>
             <div class="govuk-radios" data-module="govuk-radios">
                 <div class="govuk-radios__item">
-                    <input class="govuk-radios__input" id="analytics-cookies" name="analyticsCookieConsent" type="radio" value="accept">
+                     @if(((Context.Request.Cookies.ContainsKey(SiteConstants.ANALYTICSCOOKIENAME)) && Context.Request.Cookies[SiteConstants.ANALYTICSCOOKIENAME] == SiteConstants.ANALYTICSCOOKIEACCEPTED)  || ViewBag.analyticsCookieSet == SiteConstants.ANALYTICSCOOKIEACCEPTED)
+                     {
+                        <input class="govuk-radios__input" id="analytics-cookies" name="analyticsCookieConsent" type="radio" value="accept" checked = "checked">
+                     }
+                    else
+                    {
+                      <input class="govuk-radios__input" id="analytics-cookies" name="analyticsCookieConsent" type="radio" value="accept">
+                    }
+
                     <label class="govuk-label govuk-radios__label" for="analytics-cookies">
                         Yes
                     </label>
                 </div>
                 <div class="govuk-radios__item">
-                    <input class="govuk-radios__input" id="analytics-cookies-2" name="analyticsCookieConsent" type="radio" value="reject">
+                      @if(((Context.Request.Cookies.ContainsKey(SiteConstants.ANALYTICSCOOKIENAME)) && Context.Request.Cookies[SiteConstants.ANALYTICSCOOKIENAME] == SiteConstants.ANALYTICSCOOKIEREJECTED)  || ViewBag.analyticsCookieSet == SiteConstants.ANALYTICSCOOKIEREJECTED)
+                     {
+                       <input class="govuk-radios__input" id="analytics-cookies-2" name="analyticsCookieConsent" type="radio" value="reject" checked = "checked">
+                    }
+                    else
+                    {
+                        <input class="govuk-radios__input" id="analytics-cookies-2" name="analyticsCookieConsent" type="radio" value="reject">
+                    }
                     <label class="govuk-label govuk-radios__label" for="analytics-cookies-2">
                         No
                     </label>
                 </div>
-            </div>
+            </div> 
         </fieldset>
     </div>
     <button class="govuk-button" type="submit" data-module="govuk-button">
