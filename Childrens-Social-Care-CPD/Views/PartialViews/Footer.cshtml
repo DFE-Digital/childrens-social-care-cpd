@@ -1,4 +1,5 @@
 ﻿@using System.Text.RegularExpressions;
+@using Childrens_Social_Care_CPD.Constants
 @addTagHelper *, Contentful.AspNetCore
 
 @{
@@ -17,8 +18,13 @@
                 {
                     foreach (var link in footerModel.FooterLinks)
                     {
-                        <li class="govuk-footer__inline-list-item">
-                            <a class="govuk-footer__link" href="@{@link.LinkURL}">
+                                var url = @link.LinkURL;
+                                if(!String.IsNullOrEmpty(@link.PageType?.PageType) && !String.IsNullOrEmpty(@link.RedirectPageName?.PageName))
+                                {
+                                   url = String.Format(SiteConstants.CPDURLFORMAT, link.RedirectPageName.PageName, link.PageType.PageType, ViewBag.pageName, ViewBag.pageType);
+                                }
+                                <li class="govuk-footer__inline-list-item">
+                            <a class="govuk-footer__link" href="@{@url}">
                                 @link.LinkText
                             </a>
                         </li>
