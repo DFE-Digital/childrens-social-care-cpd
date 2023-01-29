@@ -60,7 +60,8 @@ namespace Childrens_Social_Care_CPD.Controllers
         /// <returns></returns>
         private PageFooter GetFooter()
         {
-            var footerQueryBuilder = QueryBuilder<PageFooter>.New.ContentTypeIs(SiteConstants.PAGEFOOTER);
+            var footerQueryBuilder = QueryBuilder<PageFooter>.New.ContentTypeIs(SiteConstants.PAGEFOOTER)
+                                    .Include(SiteConstants.CONTENTLEVEL);
             var footerResult = _client.GetEntries<PageFooter>(footerQueryBuilder).Result;
             var footer = footerResult.FirstOrDefault();
             PageFooter pageFooter = new PageFooter();
