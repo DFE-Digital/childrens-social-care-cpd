@@ -4,6 +4,7 @@
     {
         HomePage,
         SeniorManagersAndLeaders,
-        ViewAllProgrammes
+        ViewAllProgrammes,
+        ViewCookies
     }
 }
