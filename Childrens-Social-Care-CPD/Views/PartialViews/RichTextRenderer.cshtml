@@ -88,7 +88,14 @@
                     {
                         if (content.GetType() == typeof(Text))
                         {
-                            <h2 class="govuk-heading-m">@(((Contentful.Core.Models.Text)content).Value)</h2>
+                            if (richText.RichTextRenderType == RichTextRenderType.SupportingPages.ToString())
+                            {
+                                 <h2 class="govuk-heading-l">@(((Contentful.Core.Models.Text)content).Value)</h2>
+                            }
+                            else
+                            {
+                                <h2 class="govuk-heading-m">@(((Contentful.Core.Models.Text)content).Value)</h2>
+                            }
                         }
                     }
 
