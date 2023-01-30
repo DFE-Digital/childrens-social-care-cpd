@@ -29,6 +29,7 @@ namespace Childrens_Social_Care_CPD.Controllers
         /// <param name="sendingPage">Previous page</param>
         /// <param name="sendingPageType">Previous page type</param>
         /// <returns>View with required view model based on page type and page name</returns>
+        [HttpGet]
         public async Task<IActionResult> LandingPage(string pageName, string pageType, string sendingPage, string sendingPageType)
         {
             var pageViewModel = await GetViewModel(pageName, pageType);
@@ -44,7 +45,6 @@ namespace Childrens_Social_Care_CPD.Controllers
         /// </param>
         /// <returns></returns>
         [HttpPost]
-        [ValidateAntiForgeryToken]
         [ActionName("LandingPage")]
         public async Task<IActionResult> SetCookies(string analyticsCookieConsent, string pageName, string pageType, string referer)
         {
