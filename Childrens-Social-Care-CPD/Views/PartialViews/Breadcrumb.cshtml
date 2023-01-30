@@ -10,21 +10,21 @@
     var actionName = "LandingPage";
     var controllerName = "CPD";
     RouteValueDictionary routeValues;
-   
+
 }
 <div class="govuk-breadcrumbs">
     <ol class="govuk-breadcrumbs__list">
         @if (sendingPageType == PageTypes.Master.ToString() || sendingPageType == PageTypes.Programmes.ToString()
-             || sendingPageType == PageTypes.ViewAllCards.ToString())
+        || sendingPageType == PageTypes.ViewAllCards.ToString())
         {
-                routeValues = new RouteValueDictionary
-                {
-                    { "pageName", null },
-                    { "pageType", null },
-                    { "sendingPage", null },
-                    { "sendingPageType", null }
-                };
-        
+            routeValues = new RouteValueDictionary
+        {
+        { "pageName", null },
+        { "pageType", null },
+        { "sendingPage", null },
+        { "sendingPageType", null }
+        };
+
             <li class="govuk-breadcrumbs__list-item">
                 @Html.ActionLink("Home", actionName, controllerName, routeValues, new { @class = "govuk-breadcrumbs__link" })
             </li>
@@ -37,15 +37,32 @@
                     @{
                         string linkText = sendingPage;
                         routeValues = new RouteValueDictionary
-                    {
-                        { "pageName", linkText },
-                        { "pageType", sendingPageType },
-                        { "sendingPage","Home" },
-                        { "sendingPageType", "Master" }
-                    };
+            {
+            { "pageName", linkText },
+            { "pageType", sendingPageType },
+            { "sendingPage","Home" },
+            { "sendingPageType", "Master" }
+            };
                     }
                     @Html.ActionLink(linkText, actionName, controllerName, routeValues, new { @class = "govuk-breadcrumbs__link" })
-            </li>
+                </li>
+            }
+        }
+        @if (sendingPageType == PageTypes.PathwayDetails.ToString())
+        {
+            if (pageType != PageTypes.ViewAllCards.ToString())
+            {
+                routeValues = new RouteValueDictionary
+        {
+        { "pageName", null },
+        { "pageType", null },
+        { "sendingPage", null },
+        { "sendingPageType", null }
+        };
+
+                <li class="govuk-breadcrumbs__list-item">
+                    @Html.ActionLink("Home", actionName, controllerName, routeValues, new { @class = "govuk-breadcrumbs__link" })
+                </li>
             }
         }
     </ol>
