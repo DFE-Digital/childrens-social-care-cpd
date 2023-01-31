@@ -257,7 +257,7 @@ resource "azurerm_monitor_autoscale_setting" "autoscale" {
 }
 
 resource "azurerm_web_application_firewall_policy" "fwpol" {
-  name                = "app_gateway_firewall.policy"
+  name                = "app-gateway-firewall-policy"
   location            = data.azurerm_resource_group.rg.location
   resource_group_name = data.azurerm_resource_group.rg.name
 
