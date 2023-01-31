@@ -33,6 +33,9 @@ jobs:
       TF_VAR_cpd_client_secret: ${{secrets.TF_VAR_CPD_CLIENT_SECRET}}
       TF_VAR_cpd_keyvaultendpoint: ${{secrets.TF_VAR_CPD_KEYVAULTENDPOINT}}
       TF_VAR_cpd_googleanalyticstag: ${{secrets.TF_VAR_CPD_GOOGLEANALYTICSTAG}}
+      TF_VAR_cpd_space_id: ${{secrets.TF_VAR_CPD_SPACE_ID}}
+      TF_VAR_cpd_preview_key: ${{secrets.TF_VAR_CPD_PREVIEW_KEY}}
+      TF_VAR_cpd_delivery_key: ${{secrets.TF_VAR_CPD_DELIVERY_KEY}}
       TF_WORKSPACE: ${{inputs.workspace}}
 
     defaults:
