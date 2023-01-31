@@ -406,18 +406,6 @@ variable "key_vault_url" {
   description = "URL of Key Vault"
 }
 
-variable "cpd_contentful_env" {
-  type = map(string)
-  default = {
-    Dev       = "dev"
-    Test      = "test"
-    Load-Test = "dev"
-    Pre-Prod  = "prod"
-    Prod      = "prod"
-  }
-  description = "Contentful Environment Name"
-}
-
 variable "autoscale_name" {
   type = map(string)
   default = {
@@ -614,4 +602,34 @@ variable "cpd_googleanalyticstag" {
   type        = string
   sensitive   = true
   description = "Google Analytics Tag "
+}
+
+variable "cpd_space_id" {
+  type        = string
+  sensitive   = true
+  description = "Contentful Space ID"
+}
+
+variable "cpd_preview_key" {
+  type        = string
+  sensitive   = true
+  description = "Contentful Preview Key"
+}
+
+variable "cpd_delivery_key" {
+  type        = string
+  sensitive   = true
+  description = "Contentful Delivery Key"
+}
+
+variable "cpd_contentful_env" {
+  type = map(string)
+  default = {
+    Dev       = "dev"
+    Test      = "test"
+    Load-Test = "dev"
+    Pre-Prod  = "prod"
+    Prod      = "prod"
+  }
+  description = "Contentful Environment Name"
 }
