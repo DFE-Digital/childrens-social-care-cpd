@@ -11,8 +11,9 @@ namespace Childrens_Social_Care_CPD.Models
 
         public Document RichTextContents { get; set; }
 
-        public int SortOrder { get; set; }
+        public string RichTextRenderType { get; set; }
 
-        public RichTextRenderType RenderType { get; set; }
+        public int SortOrder { get; set; }
+   
     }
 }

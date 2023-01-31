@@ -1,5 +1,6 @@
 ﻿
 using Childrens_Social_Care_CPD.Constants;
+using Childrens_Social_Care_CPD.Enums;
 using Childrens_Social_Care_CPD.Models;
 using Contentful.Core;
 using Contentful.Core.Models;
@@ -44,6 +45,11 @@ namespace Childrens_Social_Care_CPD.Controllers
                 CookieBanner cookieBanner = GetCookieBanner();
                 ViewBag.CookieBanner = cookieBanner;
             }
+
+            if (ViewBag.pageName == PageNames.ViewCookies.ToString())
+            {
+                ViewBag.Referer = Request.Headers["Referer"].ToString();
+            }
         }
 
        
@@ -54,7 +60,8 @@ namespace Childrens_Social_Care_CPD.Controllers
         /// <returns></returns>
         private PageFooter GetFooter()
         {
-            var footerQueryBuilder = QueryBuilder<PageFooter>.New.ContentTypeIs(SiteConstants.PAGEFOOTER);
+            var footerQueryBuilder = QueryBuilder<PageFooter>.New.ContentTypeIs(SiteConstants.PAGEFOOTER)
+                                    .Include(SiteConstants.CONTENTLEVEL);
             var footerResult = _client.GetEntries<PageFooter>(footerQueryBuilder).Result;
             var footer = footerResult.FirstOrDefault();
             PageFooter pageFooter = new PageFooter();

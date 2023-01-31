@@ -31,7 +31,7 @@ The following environment variables are to be configured
 | CPD_DELIVERY_API_KEY | The live content for the environment set |
 | CPD_PREVIEW_API_KEY | The preview content for the environment set |
 | CPD_AZURE_ENVIRONMENT | The environment for the system |
-| CPD_INSTRUMENTATION_KEY | Application insights key |
+| CPD_INSTRUMENTATION_CONNECTIONSTRING | Application insights connection string |
 
 In order to run the application locally, you can either open the solution, build and run in the IDE of your choice or there is a [docker-compose](~/docker-compose.yml) file that allows for local running of the app.
 

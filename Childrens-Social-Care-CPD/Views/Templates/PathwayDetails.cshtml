@@ -1,5 +1,6 @@
 ﻿@using Childrens_Social_Care_CPD.Enums
 @model PageViewModel;
+@{var pageName = ViewBag.pageName;}
 
 @if (Model != null)
 {
@@ -10,6 +11,10 @@
         <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-two-thirds">
+                     @if (pageName == PageNames.ViewCookies.ToString() && @ViewBag.analyticsCookieSet != null)
+                    {
+                        await Html.RenderPartialAsync("../PartialViews/NotificationBanner");
+                    }
                     @if (!String.IsNullOrEmpty(Model.PageSubHeading))
                     {
                         <span class="govuk-caption-l">@Model.PageSubHeading</span>
@@ -39,6 +44,10 @@
                         }
                     </dl>
                     @{await Html.RenderPartialAsync("../PartialViews/RichTextRenderer",Model.RichTexts);}
+                    @if(pageName == PageNames.ViewCookies.ToString())
+                    {
+                         {await Html.RenderPartialAsync("../PartialViews/CookieSetting");}
+                    }
                 </div>
                 
                 @{

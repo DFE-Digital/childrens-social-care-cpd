@@ -31,7 +31,7 @@
                                 @{
                                     var richTextDocument = ViewBag.analyticsCookieSet == SiteConstants.ANALYTICSCOOKIEACCEPTED ? 
                                     cookieBannerViewModel.AcceptedCookieMessage : cookieBannerViewModel.RejectedCookieMessage;
-                                    var richTexts = new List<RichText>() { new RichText { RichTextContents = richTextDocument, RenderType = RichTextRenderType.CookieBanner } };
+                                    var richTexts = new List<RichText>() { new RichText { RichTextContents = richTextDocument, RichTextRenderType = RichTextRenderType.CookieBanner.ToString() } };
                                     await Html.RenderPartialAsync("../PartialViews/RichTextRenderer", richTexts);
                                 }
                             </div>
@@ -52,7 +52,7 @@
                             <h2 class="govuk-cookie-banner__heading govuk-heading-m">Cookies on Develop your career in child and family social work</h2>
                             <div class="govuk-cookie-banner__content">
                                 @{
-                                    var richTexts = new List<RichText>() { new RichText { RichTextContents = cookieBannerViewModel.CookieMessageBody, RenderType = RichTextRenderType.CookieBanner } };
+                                    var richTexts = new List<RichText>() { new RichText { RichTextContents = cookieBannerViewModel.CookieMessageBody, RichTextRenderType = RichTextRenderType.CookieBanner.ToString() } };
                                     await Html.RenderPartialAsync("../PartialViews/RichTextRenderer", richTexts);
                                 }
                             </div>
@@ -65,7 +65,13 @@
                         <button value="reject" type="submit" name="analyticsCookieConsent" id="btnReject" class="govuk-button" data-module="govuk-button">
                             @cookieBannerViewModel.RejectCookieButtonText
                         </button>
-                        <a class="govuk-link" href="cookies">@cookieBannerViewModel.ViewCookiesLink.LinkText</a>
+                        @{
+                            var sendingPage = String.IsNullOrEmpty(@ViewBag.pageName) ? PageNames.HomePage : @ViewBag.pageName;
+                            var sendingPageType = String.IsNullOrEmpty(ViewBag.pageType)?PageTypes.Master:ViewBag.pageType;
+                            var viewCookiesUrl = $"{@cookieBannerViewModel.ViewCookiesLink.LinkURL}&sendingPage={sendingPage}&sendingPageType={sendingPageType}";
+                        }
+
+                        <a class="govuk-link" href="@{@viewCookiesUrl}">@cookieBannerViewModel.ViewCookiesLink.LinkText</a>
                     </div>
                 </div>
             }
