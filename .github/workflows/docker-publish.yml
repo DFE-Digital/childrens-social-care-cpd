@@ -34,6 +34,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Get short hash
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
       # Install the cosign tool except on PR
       # https://github.com/sigstore/cosign-installer
       - name: Install cosign
@@ -75,6 +78,7 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          buildArgs: VCS-REF=${{ env.sha_short }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
