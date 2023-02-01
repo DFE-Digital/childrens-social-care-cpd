@@ -26,7 +26,7 @@ resource "azurerm_application_gateway" "appgw" {
     }
   }
 
-  firewall_policy_id = azurerm_web_application_firewall_policy.fwpol.id
+  firewall_policy_id = var.appgw_tier[terraform.workspace] == "WAF_v2" ? azurerm_web_application_firewall_policy.fwpol.id : null
 
   gateway_ip_configuration {
     name      = var.gateway_ip_configuration[terraform.workspace]
