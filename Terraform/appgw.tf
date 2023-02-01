@@ -26,6 +26,8 @@ resource "azurerm_application_gateway" "appgw" {
     }
   }
 
+  firewall_policy_id = var.appgw_tier[terraform.workspace] == "WAF_v2" ? azurerm_web_application_firewall_policy.fwpol.id : null
+
   gateway_ip_configuration {
     name      = var.gateway_ip_configuration[terraform.workspace]
     subnet_id = azurerm_subnet.frontend.id
@@ -201,7 +203,7 @@ resource "azurerm_monitor_autoscale_setting" "autoscale" {
   location            = data.azurerm_resource_group.rg.location
   target_resource_id  = azurerm_service_plan.service-plan.id
 
-  count = terraform.workspace == "Prod" ? 1 : 0
+  count = terraform.workspace == "Prod" || terraform.workspace == "Load-Test" ? 1 : 0
 
   profile {
     name = "defaultProfile"
@@ -251,5 +253,29 @@ resource "azurerm_monitor_autoscale_setting" "autoscale" {
         cooldown  = "PT1M"
       }
     }
+  }
+}
+
+resource "azurerm_web_application_firewall_policy" "fwpol" {
+  name                = "app-gateway-firewall-policy"
+  location            = data.azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
+
+  count = terraform.workspace == "Prod" || terraform.workspace == "Load-Test" ? 1 : 0
+
+  managed_rules {
+    managed_rule_set {
+      type    = "OWASP"
+      version = "3.2"
+    }
+
+    managed_rule_set {
+      type    = "Microsoft_BotManagerRuleSet"
+      version = "0.1"
+    }
+  }
+
+  policy_settings {
+    mode = "Prevention"
   }
 }
