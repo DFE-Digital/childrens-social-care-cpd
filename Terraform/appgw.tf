@@ -261,8 +261,6 @@ resource "azurerm_web_application_firewall_policy" "fwpol" {
   location            = data.azurerm_resource_group.rg.location
   resource_group_name = data.azurerm_resource_group.rg.name
 
-  count = terraform.workspace == "Prod" || terraform.workspace == "Load-Test" ? 1 : 0
-
   managed_rules {
     managed_rule_set {
       type    = "OWASP"
