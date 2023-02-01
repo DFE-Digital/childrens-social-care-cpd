@@ -38,6 +38,26 @@ namespace Childrens_Social_Care_CPD.Controllers
         }
 
         /// <summary>
+        /// Method to get Application information
+        /// </summary>
+        /// <returns>
+        /// Application information
+        /// </returns>
+        [HttpGet]
+        public JsonResult AppInfo()
+        {
+            var applicationInfo = new ApplicationInfo()
+            {
+                Environment = Environment.GetEnvironmentVariable(SiteConstants.ENVIRONMENT) ?? String.Empty,
+                ContentfulEnvironment = Environment.GetEnvironmentVariable(SiteConstants.AZUREENVIRONMENT) ?? String.Empty,
+                AppInsightsConnectionString  = Environment.GetEnvironmentVariable(SiteConstants.CPD_INSTRUMENTATION_CONNECTIONSTRING) ?? String.Empty,
+                GitShortHash = Environment.GetEnvironmentVariable(SiteConstants.VCSREF) ?? String.Empty
+            };
+
+            return Json(applicationInfo);
+        }
+
+        /// <summary>
         /// Method to set Google analytics cookie consent from user
         /// </summary>
         /// <param name="analyticsCookieConsent">

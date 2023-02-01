@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 using Moq;
+using Newtonsoft.Json;
 using NUnit.Framework;
 using ActionDescriptor = Microsoft.AspNetCore.Mvc.Abstractions.ActionDescriptor;
 using ActionExecutedContext = Microsoft.AspNetCore.Mvc.Filters.ActionExecutedContext;
@@ -68,6 +69,15 @@ namespace Childrens_Social_Care_CPD_Tests
             var model = viewResult.ViewData.Model as ContentfulCollection<PageViewModel>;
             Assert.IsNotNull(model);
             Assert.AreEqual(model.Items.First().PageType.PageType, pageType.ToString());
+        }
+
+        [Test]
+        public void AppInfoReturnsApplicationInfoTest()
+        {
+            var actual = _target.AppInfo();
+            var c = actual.Value;
+            Assert.IsInstanceOf<JsonResult>(actual);
+            Assert.AreEqual("dev", ((ApplicationInfo)actual.Value).Environment);
         }
 
         [Test]
