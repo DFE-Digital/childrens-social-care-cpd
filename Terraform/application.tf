@@ -18,6 +18,9 @@ resource "azurerm_linux_web_app" "linux-web-app" {
     CPD_KEYVAULTENDPOINT                 = var.cpd_keyvaultendpoint
     CPD_CLIENTID                         = var.cpd_client_id
     CPD_CLIENTSECRET                     = var.cpd_client_secret
+    CPD_SPACE_ID                         = var.cpd_space_id
+    CPD_PREVIEW_KEY                      = var.cpd_preview_key
+    CPD_DELIVERY_KEY                     = var.cpd_delivery_key
     CPD_TENANTID                         = var.tenant_id
     CPD_AZURE_ENVIRONMENT                = lower(terraform.workspace)
     CPD_CONTENTFUL_ENVIRONMENT           = var.cpd_contentful_env[terraform.workspace]
