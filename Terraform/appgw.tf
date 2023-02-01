@@ -276,4 +276,6 @@ resource "azurerm_web_application_firewall_policy" "fwpol" {
   policy_settings {
     mode = "Prevention"
   }
+
+  tags = data.azurerm_resource_group.rg.tags
 }

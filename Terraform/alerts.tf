@@ -12,6 +12,8 @@ resource "azurerm_monitor_action_group" "main" {
     name          = "DfE"
     email_address = data.azurerm_key_vault_secret.email.value
   }
+
+  tags = data.azurerm_resource_group.rg.tags
 }
 
 resource "azurerm_monitor_metric_alert" "appgw-backend-connect-time" {
