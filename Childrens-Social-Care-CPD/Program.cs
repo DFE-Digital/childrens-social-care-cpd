@@ -16,19 +16,24 @@ bool enableContentfulIntegration = configuration.GetValue<bool>("EnableContentfu
 
 if (enableContentfulIntegration)
 {
-    var contentfulEnvironment = Environment.GetEnvironmentVariable("CPD_CONTENTFUL_ENVIRONMENT") ?? String.Empty;
-    var keyVaultEndpoint = new Uri(Environment.GetEnvironmentVariable("CPD_KEYVAULTENDPOINT")?? String.Empty);
-    var clientId = Environment.GetEnvironmentVariable("CPD_CLIENTID") ?? String.Empty;
-    var clientSecret = Environment.GetEnvironmentVariable("CPD_CLIENTSECRET") ?? String.Empty;
-    var tenantId = Environment.GetEnvironmentVariable("CPD_TENANTID") ?? String.Empty;
+    var contentfulEnvironment = Environment.GetEnvironmentVariable(SiteConstants.ENVIRONMENT) ?? String.Empty;
+    var appEnvironment = Environment.GetEnvironmentVariable(SiteConstants.AZUREENVIRONMENT) ?? String.Empty;
+    var deliveryApiKey = Environment.GetEnvironmentVariable(SiteConstants.DELIVERYAPIKEY) ?? String.Empty;
+    var spaceId = Environment.GetEnvironmentVariable(SiteConstants.CONTENTFULSPACEID) ?? String.Empty;
 
     configuration["ContentfulOptions:Environment"] = contentfulEnvironment;
+    configuration["ContentfulOptions:SpaceId"] = spaceId;
+    configuration["ContentfulOptions:DeliveryApiKey"] = deliveryApiKey;
+
+    if ((contentfulEnvironment.ToLower() != appEnvironment.ToLower()) && !String.IsNullOrEmpty(appEnvironment))
+    {
+        var previewApiKey = Environment.GetEnvironmentVariable(SiteConstants.PREVIEWAPIKEY) ?? String.Empty;
+        configuration["ContentfulOptions:host"] = SiteConstants.CONTENTFULPREVIEWHOST;
+        configuration["ContentfulOptions:UsePreviewApi"] = "true";
+        configuration["ContentfulOptions:PreviewApiKey"] = previewApiKey;
+    }
 
     builder.Services.AddContentful(configuration);
-
-    var clientSecretCredential = new ClientSecretCredential(tenantId, clientId, clientSecret);
-
-    builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, clientSecretCredential);
 }
 
 var options = new ApplicationInsightsServiceOptions {
