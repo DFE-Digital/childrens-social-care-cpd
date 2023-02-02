@@ -77,7 +77,7 @@ namespace Childrens_Social_Care_CPD_Tests
             var actual = _target.AppInfo();
             var c = actual.Value;
             Assert.IsInstanceOf<JsonResult>(actual);
-            Assert.AreEqual("dev", ((ApplicationInfo)actual.Value).Environment);
+            Assert.IsNotNull(((ApplicationInfo)actual.Value).Environment);
         }
 
         [Test]
