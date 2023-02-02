@@ -28,8 +28,9 @@ The following environment variables are to be configured
 | ---  | --- |
 | CPD_GOOGLEANALYTICSTAG | The google analytics API (optional) |
 | CPD_CONTENTFUL_ENVIRONMENT | The contentful environment being consumed |
-| CPD_DELIVERY_API_KEY | The live content for the environment set |
-| CPD_PREVIEW_API_KEY | The preview content for the environment set |
+| CPD_SPACE_ID | The contentful space id |
+| CPD_DELIVERY_KEY | The live content for the environment set |
+| CPD_PREVIEW_KEY | The preview content for the environment set |
 | CPD_AZURE_ENVIRONMENT | The environment for the system |
 | CPD_INSTRUMENTATION_CONNECTIONSTRING | Application insights connection string |
 
