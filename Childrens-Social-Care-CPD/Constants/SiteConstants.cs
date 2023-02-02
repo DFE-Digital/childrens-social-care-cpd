@@ -19,7 +19,7 @@
         public const string CPD_INSTRUMENTATION_CONNECTIONSTRING = "CPD_INSTRUMENTATION_CONNECTIONSTRING";
         public const string CPDURLFORMAT = "/?pageName={0}&pageType={1}&sendingPage={2}&sendingPageType={3}";
         public const int CONTENTLEVEL = 10;
-        public const string CONTENTFULPREVIEWHOST = "cdn.contentful.com";
+        public const string CONTENTFULPREVIEWHOST = "preview.contentful.com";
         public const string ENVIRONMENT = "CPD_CONTENTFUL_ENVIRONMENT";
         public const string AZUREENVIRONMENT = "CPD_AZURE_ENVIRONMENT";
         public const string DELIVERYAPIKEY = "CPD_DELIVERY_KEY";
