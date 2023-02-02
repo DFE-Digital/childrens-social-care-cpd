@@ -19,6 +19,6 @@ RUN dotnet publish "Childrens-Social-Care-CPD.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ARG VCS-REF=0
-ENV VCS-REF=$VCS-REF
+ARG VCSREF=0
+ENV VCS-REF=$VCSREF
 ENTRYPOINT ["dotnet", "Childrens-Social-Care-CPD.dll"]
