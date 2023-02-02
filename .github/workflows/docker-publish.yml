@@ -78,7 +78,7 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          buildArgs: VCS-REF=${{ env.sha_short }}
+          build-args: VCSREF=${{ env.sha_short }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
