@@ -6,7 +6,6 @@ namespace Childrens_Social_Care_CPD.Models
     {
         public string Environment { get; set; }
         public string ContentfulEnvironment { get; set; }
-        public string AppInsightsConnectionString { get; set; }
         public string GitShortHash { get; set; }
     }
 }
