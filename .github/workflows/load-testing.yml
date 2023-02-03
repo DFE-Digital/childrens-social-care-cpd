@@ -7,22 +7,82 @@ jobs:
   build:
     runs-on: ubuntu-latest
     environment: Load-Test
+    env:
+      ARM_CLIENT_ID: ${{secrets.TF_ARM_CLIENT_ID}}
+      ARM_CLIENT_SECRET: ${{secrets.TF_ARM_CLIENT_SECRET}}
+      ARM_SUBSCRIPTION_ID: ${{secrets.TF_ARM_SUBSCRIPTION_ID}}
+      ARM_TENANT_ID: ${{secrets.TF_ARM_TENANT_ID}}
+      TF_VAR_tenant_id: ${{secrets.TF_ARM_TENANT_ID}}
+      TF_VAR_cpd_client_id: ${{secrets.TF_VAR_CPD_CLIENT_ID}}
+      TF_VAR_cpd_client_secret: ${{secrets.TF_VAR_CPD_CLIENT_SECRET}}
+      TF_VAR_cpd_keyvaultendpoint: ${{secrets.TF_VAR_CPD_KEYVAULTENDPOINT}}
+      TF_VAR_cpd_googleanalyticstag: ${{secrets.TF_VAR_CPD_GOOGLEANALYTICSTAG}}
+      TF_VAR_cpd_space_id: ${{secrets.TF_VAR_CPD_SPACE_ID}}
+      TF_VAR_cpd_preview_key: ${{secrets.TF_VAR_CPD_PREVIEW_KEY}}
+      TF_VAR_cpd_delivery_key: ${{secrets.TF_VAR_CPD_DELIVERY_KEY}}      
+      TF_WORKSPACE: ${{inputs.workspace}}
+      SITE_URL: https://20.107.65.156/
     steps:
       - name: Checkout
         uses: actions/checkout@v1
+
+      # Install the latest version of Terraform CLI
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+      - name: Terraform Init
+        run: terraform -chdir=Terraform init -backend-config=${TF_WORKSPACE}-backend.conf
+
+      - name: Terraform Destroy 1
+        run: terraform -chdir=Terraform destroy -auto-approve -input=false
+        continue-on-error: true
+
+      - name: Terraform Destroy 2
+        run: terraform -chdir=Terraform destroy -auto-approve -input=false
+
+      # Checks that all Terraform configuration files adhere to a canonical format
+      - name: Terraform Format
+        run: terraform -chdir=Terraform fmt -check -recursive
+
+      # Validate Terraform before planning
+      - name: Terraform Validate
+        run: terraform -chdir=Terraform validate
+
+      # Change infrastructure according to Terraform configuration files
+      - name: Terraform Apply
+        run: terraform -chdir=Terraform apply -auto-approve -input=false
+
       - name: Install Locust Load Test Tool
         run: pip3 install locust
+
       - name: Sign in to Azure 
         uses: azure/login@v1
         with:
           creds: '{"clientId":"${{ secrets.TF_ARM_CLIENT_ID }}","clientSecret":"${{ secrets.TF_ARM_CLIENT_SECRET }}","subscriptionId":"${{ secrets.TF_ARM_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TF_ARM_TENANT_ID }}"}'
+
       - name: Get the IP
         run: echo "theIP=$(curl https://ifconfig.tsew.com/)" >> $GITHUB_ENV
+
       - name: Echo the IP
         run: echo "IP is ${{ env.theIP }}"
+
       - name: Whitelist Runner IP
         run: az network nsg rule create -g s185d03-childrens-social-care-cpd-rg --nsg-name s185d03-chidrens-social-care-cpd-sn01-nsg -n GitHubRunnerRule --priority 4000 --source-address-prefixes ${{ env.theIP }} --source-port-ranges '*' --destination-address-prefixes '*' --destination-port-ranges '*' --access Allow --protocol Tcp --description "Allow Access from GitHub Action"
-      - name: Sleep for 30 seconds
-        run: sleep 30s
+
+      - name: Wait for 200
+        uses: cygnetdigital/wait_for_response@v2.0.0
+        with:
+          url: ${SITE_URL}
+          responseCode: '200'
+          timeout: 3600000
+          interval: 10000
       - name: Run Load Test
-        run: locust -f ./LoadTest/locustfile.py --headless -u 1 -r 1 --run-time 60s -H https://20.107.65.156/        
+        run: locust -f ./LoadTest/locustfile.py --headless -u 1 -r 1 --run-time 60s -H ${SITE_URL}        
+
+      - name: Terraform Destroy 3
+        run: terraform -chdir=Terraform destroy -auto-approve -input=false
+        continue-on-error: true
+
+      - name: Terraform Destroy 4
+        run: terraform -chdir=Terraform destroy -auto-approve -input=false
