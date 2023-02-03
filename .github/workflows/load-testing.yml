@@ -73,12 +73,12 @@ jobs:
       - name: Wait for 200
         uses: cygnetdigital/wait_for_response@v2.0.0
         with:
-          url: ${SITE_URL}
+          url: https://20.107.65.156/
           responseCode: '200'
           timeout: 3600000
           interval: 10000
       - name: Run Load Test
-        run: locust -f ./LoadTest/locustfile.py --headless -u 1 -r 1 --run-time 60s -H ${SITE_URL}        
+        run: locust -f ./LoadTest/locustfile.py --headless -u 1 -r 1 --run-time 60s -H https://20.107.65.156/       
 
       - name: Terraform Destroy 3
         run: terraform -chdir=Terraform destroy -auto-approve -input=false
