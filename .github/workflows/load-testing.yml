@@ -4,7 +4,7 @@ on: [workflow_dispatch]
 
 jobs:
   
-  build:
+  load-test:
     runs-on: ubuntu-latest
     environment: Load-Test
     env:
@@ -20,7 +20,7 @@ jobs:
       TF_VAR_cpd_space_id: ${{secrets.TF_VAR_CPD_SPACE_ID}}
       TF_VAR_cpd_preview_key: ${{secrets.TF_VAR_CPD_PREVIEW_KEY}}
       TF_VAR_cpd_delivery_key: ${{secrets.TF_VAR_CPD_DELIVERY_KEY}}      
-      TF_WORKSPACE: ${{inputs.workspace}}
+      TF_WORKSPACE: Load-Test
       SITE_URL: https://20.107.65.156/
     steps:
       - name: Checkout
