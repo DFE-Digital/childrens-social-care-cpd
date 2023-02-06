@@ -82,4 +82,5 @@ jobs:
         continue-on-error: true
 
       - name: Terraform Destroy 4
+        if: always()
         run: terraform -chdir=Terraform destroy -auto-approve -input=false
