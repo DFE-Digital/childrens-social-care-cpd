@@ -1,3 +1,5 @@
+using System.Net;
+
 namespace Childrens_Social_Care_CPD.Models
 {
     public class ErrorViewModel
@@ -9,5 +11,6 @@ namespace Childrens_Social_Care_CPD.Models
         public string StackTrace { get; set; }
         public string ErrorPath { get; set; }
         public string InnerException { get; set; }
+        public HttpStatusCode ErrorCode { get; internal set; }
     }
 }
