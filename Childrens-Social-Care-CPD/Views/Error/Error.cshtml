@@ -1,0 +1,42 @@
+﻿@model ErrorViewModel
+
+@if (@Model.ErrorCode == System.Net.HttpStatusCode.NotFound)
+{
+    <div class="govuk-width-container ">
+        @{
+            await Html.RenderPartialAsync("../PartialViews/Breadcrumb");
+        }
+
+        <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds">
+                    <h1 class="govuk-heading-xl">Page not found</h1>
+                    <p class="govuk-body">
+                        If you typed the web address, check it is correct.
+                    </p>
+                    <p class="govuk-body">
+                        If you pasted the web address, check you copied the entire address.
+                    </p>
+                    <p class="govuk-body">
+                        If the web address is correct or you selected a link or button, <a href="mailto:develop-child-family-social-work-career-team@digital.education.gov.uk" class="govuk-link">contact the Develop your career in child and family social work team</a> if you need to speak to someone.
+                    </p>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+}
+else
+{
+    <div class="govuk-width-container">
+        <h2>Error Message</h2>
+        <p class="govuk-body">@Model.ErrorMessage</p>
+        <h2>Inner Exception</h2>
+        <p class="govuk-body">@Model.InnerException</p>
+        <h2>Exception Source</h2>
+        <p class="govuk-body">@Model.Source</p>
+        <h2>Stack trace</h2>
+        <p class="govuk-body">@Model.StackTrace</p>
+    </div>
+}
