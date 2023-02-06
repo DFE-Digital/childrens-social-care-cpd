@@ -77,8 +77,10 @@ jobs:
         run: locust -f ./LoadTest/locustfile.py --headless -u 1 -r 1 --run-time 60s -H https://20.107.65.156/       
 
       - name: Terraform Destroy 3
+        if: always()
         run: terraform -chdir=Terraform destroy -auto-approve -input=false
         continue-on-error: true
 
       - name: Terraform Destroy 4
+        if: always()
         run: terraform -chdir=Terraform destroy -auto-approve -input=false
