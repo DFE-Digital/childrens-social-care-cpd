@@ -108,26 +108,6 @@ namespace Childrens_Social_Care_CPD.Controllers
             return result;
         }
 
-        /// <summary>
-        /// Application global exception handler
-        /// </summary>
-        /// <returns></returns>
-        public IActionResult Error()
-        {
-            var exceptionHandlerPathFeature = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
-            return View(
-                new ErrorViewModel
-                {
-                    RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier,
-                    ErrorMessage = exceptionHandlerPathFeature?.Error.Message,
-                    Source = exceptionHandlerPathFeature?.Error.Source,
-                    ErrorPath = exceptionHandlerPathFeature?.Path,
-                    StackTrace = exceptionHandlerPathFeature?.Error.StackTrace,
-                    InnerException = Convert.ToString(exceptionHandlerPathFeature?.Error.InnerException)
-                }
-                );
-        }
-
         private void SetDisplayOrder(ContentfulCollection<PageViewModel> pageViewModel)
         {
             foreach (PageViewModel viewModel in pageViewModel)
