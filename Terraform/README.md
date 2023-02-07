@@ -40,6 +40,7 @@ No modules.
 | [azurerm_subnet.backend](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/resources/subnet) | resource |
 | [azurerm_subnet.frontend](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/resources/subnet) | resource |
 | [azurerm_subnet_network_security_group_association.blockall](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/resources/subnet_network_security_group_association) | resource |
+| [azurerm_web_application_firewall_policy.fwpol](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/resources/web_application_firewall_policy) | resource |
 | [azurerm_application_insights.appinsights](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/data-sources/application_insights) | data source |
 | [azurerm_key_vault.kv](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/data-sources/key_vault) | data source |
 | [azurerm_key_vault_secret.dev-ips](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/data-sources/key_vault_secret) | data source |
