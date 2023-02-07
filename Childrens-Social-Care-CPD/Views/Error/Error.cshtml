@@ -42,17 +42,3 @@
         </main>
     }
 </div>
-
-@if (Environment.GetEnvironmentVariable(SiteConstants.ENVIRONMENT) == AppEnvironment.dev.ToString())
-{
-    <div class="govuk-width-container">
-        <h2>Error Message</h2>
-        <p class="govuk-body">@Model.ErrorMessage</p>
-        <h2>Inner Exception</h2>
-        <p class="govuk-body">@Model.InnerException</p>
-        <h2>Exception Source</h2>
-        <p class="govuk-body">@Model.Source</p>
-        <h2>Stack trace</h2>
-        <p class="govuk-body">@Model.StackTrace</p>
-    </div>
-}
