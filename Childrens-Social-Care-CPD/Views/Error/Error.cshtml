@@ -1,12 +1,13 @@
-﻿@model ErrorViewModel
+﻿@using Childrens_Social_Care_CPD.Constants
+@using Childrens_Social_Care_CPD.Enums
+@model ErrorViewModel
 
-@if (@Model.ErrorCode == System.Net.HttpStatusCode.NotFound)
-{
-    <div class="govuk-width-container ">
-        @{
-            await Html.RenderPartialAsync("../PartialViews/Breadcrumb");
-        }
-
+<div class="govuk-width-container ">
+    @{
+        await Html.RenderPartialAsync("../PartialViews/Breadcrumb");
+    }
+    @if (@Model.ErrorCode == System.Net.HttpStatusCode.NotFound)
+    {
         <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-two-thirds">
@@ -24,10 +25,25 @@
             </div>
 
         </main>
-    </div>
+    }
+    else if (@Model.ErrorCode == System.Net.HttpStatusCode.InternalServerError)
+    {
+        <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
 
-}
-else
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds">
+                    <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+                    <p class="govuk-body">Try again later.</p>
+                    <p class="govuk-body">
+                        <a class="govuk-link" href="mailto:develop-child-family-social-work-career-team@digital.education.gov.uk">Contact the Develop your career in child and family social work team</a> if you need to speak to someone.
+                    </p>
+                </div>
+            </div>
+        </main>
+    }
+</div>
+
+@if (Environment.GetEnvironmentVariable(SiteConstants.ENVIRONMENT) == AppEnvironment.dev.ToString())
 {
     <div class="govuk-width-container">
         <h2>Error Message</h2>
