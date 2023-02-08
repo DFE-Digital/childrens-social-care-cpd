@@ -1,3 +1,4 @@
+# An application gateway for the web service
 resource "azurerm_application_gateway" "appgw" {
   name                = var.appgw_name[terraform.workspace]
   resource_group_name = data.azurerm_resource_group.rg.name
@@ -13,6 +14,7 @@ resource "azurerm_application_gateway" "appgw" {
     max_capacity = var.autoscale_max[terraform.workspace]
   }
 
+  # Dynamic block that only applies to Load-Test and Prod environments
   dynamic "waf_configuration" {
     for_each = [
       for rg in data.azurerm_resource_group.rg : rg
@@ -26,6 +28,7 @@ resource "azurerm_application_gateway" "appgw" {
     }
   }
 
+  # A firewall policy that should only be populated for Load-Test and Prod environments 
   firewall_policy_id = var.appgw_tier[terraform.workspace] == "WAF_v2" ? azurerm_web_application_firewall_policy.fwpol.id : null
 
   gateway_ip_configuration {
@@ -197,6 +200,7 @@ resource "azurerm_application_gateway" "appgw" {
   tags = data.azurerm_resource_group.rg.tags
 }
 
+# The autoscaling settings for Load-Test and Prod environments
 resource "azurerm_monitor_autoscale_setting" "autoscale" {
   name                = var.autoscale_name[terraform.workspace]
   resource_group_name = data.azurerm_resource_group.rg.name
@@ -256,6 +260,7 @@ resource "azurerm_monitor_autoscale_setting" "autoscale" {
   }
 }
 
+# A firewall policy that is only attached for Load-Test and Prod environments
 resource "azurerm_web_application_firewall_policy" "fwpol" {
   name                = "app-gateway-firewall-policy"
   location            = data.azurerm_resource_group.rg.location

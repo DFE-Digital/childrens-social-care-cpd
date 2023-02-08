@@ -1,8 +1,10 @@
+# Definition of the dns zone
 resource "azurerm_private_dns_zone" "dnsprivatezone" {
   name                = "privatelink.azurewebsites.net"
   resource_group_name = data.azurerm_resource_group.rg.name
 }
 
+# Definition of the dns zone link
 resource "azurerm_private_dns_zone_virtual_network_link" "dnszonelink" {
   name                  = var.private_dns_zone_vn_link_name[terraform.workspace]
   resource_group_name   = data.azurerm_resource_group.rg.name
@@ -10,6 +12,7 @@ resource "azurerm_private_dns_zone_virtual_network_link" "dnszonelink" {
   virtual_network_id    = data.azurerm_virtual_network.vnet1.id
 }
 
+# Definition of the private end point for the web app
 resource "azurerm_private_endpoint" "privateendpoint" {
   name                = var.private_endpoint_name[terraform.workspace]
   location            = data.azurerm_resource_group.rg.location

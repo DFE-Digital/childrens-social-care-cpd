@@ -1,3 +1,4 @@
+# Definition of a service plan for a Linux Container
 resource "azurerm_service_plan" "service-plan" {
   name                = var.service_plan_name[terraform.workspace]
   resource_group_name = data.azurerm_resource_group.rg.name
@@ -7,6 +8,7 @@ resource "azurerm_service_plan" "service-plan" {
   tags                = data.azurerm_resource_group.rg.tags
 }
 
+# Definition of the linux web app for the service
 resource "azurerm_linux_web_app" "linux-web-app" {
   name                = var.web_app_name[terraform.workspace]
   resource_group_name = data.azurerm_resource_group.rg.name

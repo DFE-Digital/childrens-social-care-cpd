@@ -1,8 +1,10 @@
+# Setup an alert to email using the contact address in keyvault
 data "azurerm_key_vault_secret" "email" {
   name         = "dfe-email-alert-address"
   key_vault_id = data.azurerm_key_vault.kv.id
 }
 
+# This is the main action group that sends an email
 resource "azurerm_monitor_action_group" "main" {
   name                = var.monitor_action_group_name[terraform.workspace]
   resource_group_name = data.azurerm_resource_group.rg.name
@@ -16,6 +18,7 @@ resource "azurerm_monitor_action_group" "main" {
   tags = data.azurerm_resource_group.rg.tags
 }
 
+# An alert for the backend connection time 
 resource "azurerm_monitor_metric_alert" "appgw-backend-connect-time" {
   name                = var.alert_appgw_backend_connect_time[terraform.workspace]
   resource_group_name = data.azurerm_resource_group.rg.name
@@ -39,6 +42,7 @@ resource "azurerm_monitor_metric_alert" "appgw-backend-connect-time" {
   tags = data.azurerm_resource_group.rg.tags
 }
 
+# An alert for the application gateway health
 resource "azurerm_monitor_activity_log_alert" "appgw-health" {
   name                = var.alert_appgw_health[terraform.workspace]
   resource_group_name = data.azurerm_resource_group.rg.name
@@ -62,6 +66,7 @@ resource "azurerm_monitor_activity_log_alert" "appgw-health" {
   tags = data.azurerm_resource_group.rg.tags
 }
 
+# An alert that is raised with cpu usage is high
 resource "azurerm_monitor_metric_alert" "container-cpu" {
   name                = var.alert_container_cpu[terraform.workspace]
   resource_group_name = data.azurerm_resource_group.rg.name
@@ -85,6 +90,7 @@ resource "azurerm_monitor_metric_alert" "container-cpu" {
   tags = data.azurerm_resource_group.rg.tags
 }
 
+# An alert when the average response time is high
 resource "azurerm_monitor_metric_alert" "container-avg-resp-time" {
   name                = var.alert_container_avg_resp_time[terraform.workspace]
   resource_group_name = data.azurerm_resource_group.rg.name
@@ -108,6 +114,7 @@ resource "azurerm_monitor_metric_alert" "container-avg-resp-time" {
   tags = data.azurerm_resource_group.rg.tags
 }
 
+# An alert for failed requests
 resource "azurerm_monitor_metric_alert" "failed-requests" {
   name                = var.alert_failed_requests[terraform.workspace]
   resource_group_name = data.azurerm_resource_group.rg.name

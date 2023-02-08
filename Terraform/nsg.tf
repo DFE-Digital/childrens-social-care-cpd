@@ -1,3 +1,4 @@
+# Creation of the network security group
 resource "azurerm_network_security_group" "nsg" {
   name                = var.nsg_name[terraform.workspace]
   location            = data.azurerm_resource_group.rg.location
@@ -5,6 +6,7 @@ resource "azurerm_network_security_group" "nsg" {
   tags                = data.azurerm_resource_group.rg.tags
 }
 
+# Rule required for the application gateway
 resource "azurerm_network_security_rule" "nsg-rule-03" {
   name                        = "AllowAzureLoadBalancerInBound"
   priority                    = 3651
