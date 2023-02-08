@@ -1,3 +1,4 @@
+# Creation of an assigned identity to access the certificate for the application gateway
 data "azurerm_user_assigned_identity" "uai" {
   resource_group_name = data.azurerm_resource_group.rg.name
   # location            = data.azurerm_resource_group.rg.location

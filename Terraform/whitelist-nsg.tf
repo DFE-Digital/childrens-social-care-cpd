@@ -1,23 +1,28 @@
+# The keyvault to be used for secrets
 data "azurerm_key_vault" "kv" {
   name                = var.key_vault_name[terraform.workspace]
   resource_group_name = var.key_vault_rg[terraform.workspace]
 }
 
+# A secret to define the internal DfE IP addresses
 data "azurerm_key_vault_secret" "ips" {
   name         = "dfe-ips"
   key_vault_id = data.azurerm_key_vault.kv.id
 }
 
+# A secret to define IP addresses of developer and select users
 data "azurerm_key_vault_secret" "dev-ips" {
   name         = "dfe-dev-ips"
   key_vault_id = data.azurerm_key_vault.kv.id
 }
 
+# Locals used within the security rules
 locals {
   ips     = compact((split(" ", data.azurerm_key_vault_secret.ips.value)))
   dev-ips = compact((split(" ", data.azurerm_key_vault_secret.dev-ips.value)))
 }
 
+# Network security rules for the DfE IP addresses
 resource "azurerm_network_security_rule" "whitelist-rules" {
   count                       = length(local.ips)
   name                        = "Allow-WhiteList-${count.index}"
@@ -33,6 +38,7 @@ resource "azurerm_network_security_rule" "whitelist-rules" {
   network_security_group_name = azurerm_network_security_group.nsg.name
 }
 
+# Network security rules for the Developer IP Addresses
 resource "azurerm_network_security_rule" "dev-whitelist-rules" {
   count                       = length(local.dev-ips)
   name                        = "Allow-WhiteList-Dev-${count.index}"
