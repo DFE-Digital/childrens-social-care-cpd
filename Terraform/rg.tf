@@ -1,3 +1,4 @@
+# A reference to the Azure Resource Group for this environment
 data "azurerm_resource_group" "rg" {
   name = var.rg_name[terraform.workspace]
   #name = "s185d01-childrens-social-care-cpd-rg"
