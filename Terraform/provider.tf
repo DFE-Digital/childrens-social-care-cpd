@@ -1,3 +1,4 @@
+# Terraform provider using Azure - also for the backend
 terraform {
   required_providers {
     azurerm = {

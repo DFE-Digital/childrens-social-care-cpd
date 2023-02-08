@@ -1,3 +1,5 @@
+# Variables for all 5 environments - the environments match with what are defined in GitHub
+
 variable "rg_name" {
   type = map(string)
   default = {

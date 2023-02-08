@@ -1,3 +1,4 @@
+# Import of the log analytics workspace
 data "azurerm_log_analytics_workspace" "log-analytics-ws" {
   name                = var.log_analytics_ws_name[terraform.workspace]
   resource_group_name = data.azurerm_resource_group.rg.name
@@ -7,6 +8,7 @@ data "azurerm_log_analytics_workspace" "log-analytics-ws" {
   # tags                = data.azurerm_resource_group.rg.tags
 }
 
+# Import of application insights 
 data "azurerm_application_insights" "appinsights" {
   name                = var.appinsights_name[terraform.workspace]
   resource_group_name = data.azurerm_resource_group.rg.name
