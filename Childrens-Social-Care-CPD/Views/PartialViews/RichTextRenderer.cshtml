@@ -52,14 +52,20 @@
                         {
                             if (content.GetType() == typeof(Text))
                             {
+                                var innerText = (((Contentful.Core.Models.Text)content).Value);
+                                if(@richText.InsetText)
+                                {
+                                     @Html.Raw($"<div class={"govuk-inset-text"}>{@innerText}</div>") 
+                                }
+                                else
                                 if (richText.RichTextRenderType == RichTextRenderType.CookieBanner.ToString() ||
                                    richText.RichTextRenderType == RichTextRenderType.SupportingPages.ToString())
                                 {
-                                    <p class="govuk-body">@(((Contentful.Core.Models.Text)content).Value)</p>
+                                   <p class="govuk-body">@Html.Raw(@innerText)</p>
                                 }
                                 else
                                 {
-                                    <p class="govuk-body-m">@(((Contentful.Core.Models.Text)content).Value)</p>
+                                    <p class="govuk-body-m">@Html.Raw(@innerText)</p>
                                 }
                             }
                         }
