@@ -13,6 +13,8 @@ namespace Childrens_Social_Care_CPD.Models
 
         public string RichTextRenderType { get; set; }
 
+        public bool InsetText { get; set; }
+
         public int SortOrder { get; set; }
    
     }
