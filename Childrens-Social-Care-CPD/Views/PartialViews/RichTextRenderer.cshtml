@@ -73,15 +73,36 @@
 
                     break;
                 case Contentful.Core.Models.List list:
-
                     @if (list.Content.Count > 0)
                     {
                         <ul class="govuk-list govuk-list--bullet">
 
                             @foreach (var link in list.Content)
                             {
-                                var innerElement = (Contentful.Core.Models.Paragraph)(((Contentful.Core.Models.ListItem)link).Content[0]);
-                                <li>@(((Contentful.Core.Models.Text)innerElement.Content[0]).Value)</li>
+                                  var innerElement = (Contentful.Core.Models.Paragraph)(((Contentful.Core.Models.ListItem)link).Content[0]);
+                                  StringBuilder contentBuilder = new StringBuilder();
+
+                                if (@innerElement.Content.Any(c => c.GetType() == typeof(Hyperlink)))
+                                {
+                                    @foreach (var content in @innerElement.Content)
+                                    {
+                                        if (content.GetType() == typeof(Text))
+                                        {
+                                            contentBuilder.Append((((Contentful.Core.Models.Text)content).Value));
+                                        }
+                                        if (content.GetType() == typeof(Hyperlink))
+                                        {
+                                            var linkElement = ((Contentful.Core.Models.Hyperlink)content);
+                                            var linkText = ((Contentful.Core.Models.Text)(linkElement).Content[0]).Value;
+                                            contentBuilder.Append(string.Format(("<a href={0}>{1}</a>"), linkElement.Data.Uri, linkText));
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    contentBuilder.Append((((Contentful.Core.Models.Text)innerElement.Content[0]).Value));
+                                }
+                                <li>@Html.Raw(contentBuilder.ToString())</li>
                             }
 
                         </ul>
@@ -155,8 +176,6 @@
 
                     break;
             }
-
         }
-
     }
 }
