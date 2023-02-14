@@ -75,7 +75,7 @@ namespace Childrens_Social_Care_CPD.Controllers
         }
 
         /// <summary>
-        /// Method to set Google analytics cookie consent from user
+        /// Method to accept post and redirect to get method
         /// </summary>
         /// <param name="analyticsCookieConsent">
         /// Cookie consent - Accept or Reject
