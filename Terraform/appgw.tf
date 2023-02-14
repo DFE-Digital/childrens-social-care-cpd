@@ -157,7 +157,7 @@ resource "azurerm_application_gateway" "appgw" {
 
       response_header_configuration {
         header_name  = "X-Xss-Protection"
-        header_value = "1"
+        header_value = "0"
       }
 
       response_header_configuration {
