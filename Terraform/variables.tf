@@ -641,7 +641,7 @@ variable "cpd_contentful_env" {
   default = {
     Dev       = "dev"
     Test      = "test"
-    Load-Test = "dev"
+    Load-Test = "test"
     Pre-Prod  = "prod"
     Prod      = "prod"
   }
