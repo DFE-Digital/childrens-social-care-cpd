@@ -516,6 +516,18 @@ variable "alert_appgw_health" {
   description = "Name of application gateway health alert"
 }
 
+variable "alert_appgw_managed_rules" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-appgw-managed-rules"
+    Test      = "s185d02-appgw-managed-rules"
+    Load-Test = "s185d03-appgw-managed-rules"
+    Pre-Prod  = "s185t01-appgw-managed-rules"
+    Prod      = "s185p01-appgw-managed-rules"
+  }
+  description = "Name of application gateway managed rules"
+}
+
 variable "alert_appgw_backend_connect_time" {
   type = map(string)
   default = {
