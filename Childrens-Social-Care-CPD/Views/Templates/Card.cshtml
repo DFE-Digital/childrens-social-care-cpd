@@ -7,7 +7,7 @@
             {
            <div class="govuk-grid-column-one-half dfe-section-card__container">
                 <div class="dfe-section-card">
-                    <h2 class="govuk-heading-m">
+                    <h3 class="govuk-heading-m">
                         @{
                             var pageName = card.RedirectPageName?.PageName;
                             var pageType = card.PageType?.PageType;
@@ -21,7 +21,7 @@
                         };
                         }
                             @Html.ActionLink(card.CardHeader,"LandingPage","CPD",routeValues , new { @class= "govuk-link"})
-                        </h2>
+                        </h3>
                         <p class="govuk-body">@card.CardContents</p>
                     </div>
                 </div>
