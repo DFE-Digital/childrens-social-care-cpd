@@ -4,6 +4,17 @@
 @addTagHelper *, Contentful.AspNetCore
 @model List<RichText>;
 
+@functions 
+{
+    public static string ParseHyperlinkHelper(IContent content)
+    {
+        var linkElement = ((Contentful.Core.Models.Hyperlink)content);
+        var linkText = ((Contentful.Core.Models.Text)(linkElement).Content[0]).Value;
+        var linkHtmlString = string.Format(("<a class=\"{0}\" href={1}>{2}</a>"),"govuk-link", linkElement.Data.Uri, linkText);
+        return linkHtmlString;
+    }
+}
+
 @if (Model != null)
 {
     @foreach (var richText in Model)
@@ -113,7 +124,7 @@
 
                     @foreach (var content in heading2.Content)
                     {
-                        if (content.GetType() == typeof(Text))
+                        if (content.GetType() == typeof(Text) && !string.IsNullOrEmpty((((Contentful.Core.Models.Text)content).Value)))
                         {
                             if (richText.RichTextRenderType == RichTextRenderType.SupportingPages.ToString())
                             {
@@ -124,6 +135,10 @@
                                 <h2 class="govuk-heading-m">@(((Contentful.Core.Models.Text)content).Value)</h2>
                             }
                         }
+                        if (content.GetType() == typeof(Hyperlink))
+                        {
+                           <h2 class="govuk-heading-m">@Html.Raw(@ParseHyperlinkHelper(content))</h2>
+                        }
                     }
 
                     break;
@@ -131,9 +146,13 @@
 
                     @foreach (var content in heading1.Content)
                     {
-                        if (content.GetType() == typeof(Text))
+                        if (content.GetType() == typeof(Text) && !string.IsNullOrEmpty((((Contentful.Core.Models.Text)content).Value)))
                         {
                             <h1 class="govuk-heading-l">@(((Contentful.Core.Models.Text)content).Value)</h1>
+                        }
+                        if (content.GetType() == typeof(Hyperlink))
+                        {
+                           <h1 class="govuk-heading-m">@Html.Raw(@ParseHyperlinkHelper(content))</h1>
                         }
                     }
 
