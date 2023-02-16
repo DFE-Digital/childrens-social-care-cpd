@@ -1,0 +1,79 @@
+﻿@using Childrens_Social_Care_CPD.Enums
+@model PageViewModel;
+
+@if (Model != null)
+{
+    <div class="govuk-width-container ">
+        @{
+            await Html.RenderPartialAsync("../PartialViews/Breadcrumb");
+        }
+        <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds">
+                    @if (!String.IsNullOrEmpty(Model.PageHeading))
+                    {
+                        <h1 class="govuk-heading-l">@Model.PageHeading</h1>
+                    }
+                    @{
+                        await Html.RenderPartialAsync("../PartialViews/RichTextRenderer", Model.RichTexts.Where(x=>x.SortOrder ==1).ToList());
+                    }
+                </div>
+            </div>
+            @{
+                var cardGroups = Model.Cards.GroupBy(c => c.CardGroup).OrderBy(g => g.Key?.SortOrder);
+                foreach (var grouping in cardGroups)
+                {
+                    @if (grouping.Key != null)
+                    {
+                        @if (grouping.Key.GroupName != "ASYE")
+                        {
+                            <div class="govuk-grid-row">
+                                <div class="govuk-grid-column-two-thirds">
+                                    @{
+                                        var richTextCollection = new List<RichText>
+                                    {
+                                        new RichText()
+                                        {
+                                            RichTextContents = grouping.Key.GroupContents
+                                        }
+                                    };
+                                        await Html.RenderPartialAsync("../PartialViews/RichTextRenderer", richTextCollection);
+                                    }
+                                </div>
+                        </div>
+                        }
+                        @if (Model.Cards != null)
+                        {
+                            Model.Cards = grouping.ToList();
+                            {
+                                await Html.RenderPartialAsync("../Templates/Card", Model);
+                            }
+                        }
+                          @foreach (var link in Model.Links.Where(link => link.LinkSection == LinkSection.AllCards.ToString()))
+                            {
+                                    var routeValues = new RouteValueDictionary
+                                    {
+                                        { "pageName", link.RedirectPageName.PageName},
+                                        { "pageType", link.PageType.PageType },
+                                        { "sendingPage", Model.PageName.PageName },
+                                        { "sendingPageType", Model.PageType.PageType }
+                                    };
+                                    <p class="govuk-body">
+                                        @Html.ActionLink(link.LinkText, "LandingPage", "CPD", routeValues, new { @class = "govuk-link" })
+                                    </p>
+                            }
+                        <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+                    }
+                }
+                 <div class='govuk-grid-row'>
+                    <div class='govuk-grid-column-two-thirds'>
+                      @{
+                        await Html.RenderPartialAsync("../PartialViews/RichTextRenderer", Model.RichTexts.Where(x=>x.SortOrder !=1).ToList());
+                       }
+                    </div>
+                </div>
+
+            }
+        </main>
+    </div>
+}
