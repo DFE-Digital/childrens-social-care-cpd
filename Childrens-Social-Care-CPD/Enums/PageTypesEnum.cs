@@ -6,6 +6,7 @@
         Cards,
         Programmes,
         PathwayDetails,
-        ViewAllCards
+        ViewAllCards,
+        SubNavAlternate
     }
 }
