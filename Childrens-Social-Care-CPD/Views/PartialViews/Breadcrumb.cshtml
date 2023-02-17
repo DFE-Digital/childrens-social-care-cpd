@@ -15,7 +15,7 @@
 <div class="govuk-breadcrumbs">
     <ol class="govuk-breadcrumbs__list">
         @if (sendingPageType == PageTypes.Master.ToString() || sendingPageType == PageTypes.Programmes.ToString()
-        || sendingPageType == PageTypes.ViewAllCards.ToString())
+        || sendingPageType == PageTypes.ViewAllCards.ToString() || sendingPageType == PageTypes.SubNavAlternate.ToString())
         {
             routeValues = new RouteValueDictionary
         {
@@ -29,7 +29,8 @@
                 @Html.ActionLink("Home", actionName, controllerName, routeValues, new { @class = "govuk-breadcrumbs__link" })
             </li>
         }
-        @if (sendingPageType == PageTypes.Programmes.ToString() || sendingPageType == PageTypes.ViewAllCards.ToString())
+        @if (sendingPageType == PageTypes.Programmes.ToString() || sendingPageType == PageTypes.ViewAllCards.ToString()
+        || sendingPageType == PageTypes.SubNavAlternate.ToString())
         {
             if (pageType != PageTypes.ViewAllCards.ToString())
             {
