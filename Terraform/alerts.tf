@@ -66,6 +66,32 @@ resource "azurerm_monitor_activity_log_alert" "appgw-health" {
   tags = data.azurerm_resource_group.rg.tags
 }
 
+# An alert for the application gateway managed rules
+resource "azurerm_monitor_metric_alert" "appgw-managed-rules" {
+  name                     = var.alert_appgw_managed_rules[terraform.workspace]
+  resource_group_name      = data.azurerm_resource_group.rg.name
+  scopes                   = [azurerm_application_gateway.appgw.id]
+  description              = "Action will be triggered when backend managed rules have been broken"
+  window_size              = "PT30M"
+  frequency                = "PT30M"
+  target_resource_type     = "Microsoft.Network/applicationGateways"
+  target_resource_location = data.azurerm_resource_group.rg.location
+
+  criteria {
+    metric_namespace = "Microsoft.Network/applicationGateways"
+    metric_name      = "AzwafSecRule"
+    aggregation      = "Total"
+    operator         = "GreaterThan"
+    threshold        = 1
+  }
+
+  action {
+    action_group_id = azurerm_monitor_action_group.main.id
+  }
+
+  tags = data.azurerm_resource_group.rg.tags
+}
+
 # An alert that is raised with cpu usage is high
 resource "azurerm_monitor_metric_alert" "container-cpu" {
   name                = var.alert_container_cpu[terraform.workspace]
