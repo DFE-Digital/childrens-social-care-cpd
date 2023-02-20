@@ -10,7 +10,7 @@
     {
         grouping.OrderBy(g => g.SortOrder);
         <aside class="app-related-items" role="complementary">
-            <h2 class="govuk-heading-s">
+            <h2 id="related-nav__section" class="govuk-heading-s">
                 @grouping.Key
             </h2>
             <nav role="navigation" aria-labelledby="related-nav__section">
@@ -18,7 +18,7 @@
                     @foreach (var link in grouping)
                     {
                         <li>
-                            <a href="@{@link.LinkURL}">
+                            <a class="govuk-link" href="@{@link.LinkURL}">
                                 @link.LinkText
                             </a>
                         </li>
