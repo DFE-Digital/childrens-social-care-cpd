@@ -120,24 +120,6 @@
                     }
 
                     break;
-                case Contentful.Core.Models.Heading3 heading3:
-
-                    @foreach (var content in heading3.Content)
-                    {
-                        if (content.GetType() == typeof(Text))
-                        {
-                            if (richText.RichTextRenderType == RichTextRenderType.SupportingPages.ToString())
-                            {
-                                <h3 class="govuk-heading-l">@(((Contentful.Core.Models.Text)content).Value)</h3>
-                            }
-                            else
-                            {
-                                <h3 class="govuk-heading-m">@(((Contentful.Core.Models.Text)content).Value)</h3>
-                            }
-                        }
-                    }
-
-                    break;
                 case Contentful.Core.Models.Heading2 heading2:
 
                     @foreach (var content in heading2.Content)
