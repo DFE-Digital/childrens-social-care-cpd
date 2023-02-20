@@ -25,6 +25,7 @@ No modules.
 | [azurerm_monitor_activity_log_alert.appgw-health](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/resources/monitor_activity_log_alert) | resource |
 | [azurerm_monitor_autoscale_setting.autoscale](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/resources/monitor_autoscale_setting) | resource |
 | [azurerm_monitor_metric_alert.appgw-backend-connect-time](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/resources/monitor_metric_alert) | resource |
+| [azurerm_monitor_metric_alert.appgw-managed-rules](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/resources/monitor_metric_alert) | resource |
 | [azurerm_monitor_metric_alert.container-avg-resp-time](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/resources/monitor_metric_alert) | resource |
 | [azurerm_monitor_metric_alert.container-cpu](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/resources/monitor_metric_alert) | resource |
 | [azurerm_monitor_metric_alert.failed-requests](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/resources/monitor_metric_alert) | resource |
@@ -58,6 +59,7 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_alert_appgw_backend_connect_time"></a> [alert\_appgw\_backend\_connect\_time](#input\_alert\_appgw\_backend\_connect\_time) | Name of application gateway backend connection time alert | `map(string)` | <pre>{<br>  "Dev": "s185d01-backend-connect-times",<br>  "Load-Test": "s185d03-backend-connect-times",<br>  "Pre-Prod": "s185t01-backend-connect-times",<br>  "Prod": "s185p01-backend-connect-times",<br>  "Test": "s185d02-backend-connect-times"<br>}</pre> | no |
 | <a name="input_alert_appgw_health"></a> [alert\_appgw\_health](#input\_alert\_appgw\_health) | Name of application gateway health alert | `map(string)` | <pre>{<br>  "Dev": "s185d01-appgw-heatlh",<br>  "Load-Test": "s185d03-appgw-heatlh",<br>  "Pre-Prod": "s185t01-appgw-heatlh",<br>  "Prod": "s185p01-appgw-heatlh",<br>  "Test": "s185d02-appgw-heatlh"<br>}</pre> | no |
+| <a name="input_alert_appgw_managed_rules"></a> [alert\_appgw\_managed\_rules](#input\_alert\_appgw\_managed\_rules) | Name of application gateway managed rules | `map(string)` | <pre>{<br>  "Dev": "s185d01-appgw-managed-rules",<br>  "Load-Test": "s185d03-appgw-managed-rules",<br>  "Pre-Prod": "s185t01-appgw-managed-rules",<br>  "Prod": "s185p01-appgw-managed-rules",<br>  "Test": "s185d02-appgw-managed-rules"<br>}</pre> | no |
 | <a name="input_alert_container_avg_resp_time"></a> [alert\_container\_avg\_resp\_time](#input\_alert\_container\_avg\_resp\_time) | Name of container average response time alert | `map(string)` | <pre>{<br>  "Dev": "s185d01-container-avg-resp-time",<br>  "Load-Test": "s185d03-container-avg-resp-time",<br>  "Pre-Prod": "s185t01-container-avg-resp-time",<br>  "Prod": "s185p01-container-avg-resp-time",<br>  "Test": "s185d02-container-avg-resp-time"<br>}</pre> | no |
 | <a name="input_alert_container_cpu"></a> [alert\_container\_cpu](#input\_alert\_container\_cpu) | Name of container cpu average alert | `map(string)` | <pre>{<br>  "Dev": "s185d01-container-cpu-average",<br>  "Load-Test": "s185d03-container-cpu-average",<br>  "Pre-Prod": "s185t01-container-cpu-average",<br>  "Prod": "s185p01-container-cpu-average",<br>  "Test": "s185d02-container-cpu-average"<br>}</pre> | no |
 | <a name="input_alert_failed_requests"></a> [alert\_failed\_requests](#input\_alert\_failed\_requests) | Name of failed requests count alert | `map(string)` | <pre>{<br>  "Dev": "s185d01-failed-requests",<br>  "Load-Test": "s185d03-failed-requests",<br>  "Pre-Prod": "s185t01-failed-requests",<br>  "Prod": "s185p01-failed-requests",<br>  "Test": "s185d02-failed-requests"<br>}</pre> | no |
@@ -73,7 +75,7 @@ No modules.
 | <a name="input_backend_address_pool_name"></a> [backend\_address\_pool\_name](#input\_backend\_address\_pool\_name) | Name of Backend Address Pool | `map(string)` | <pre>{<br>  "Dev": "s185d01-chidrens-social-care-cpd-bep",<br>  "Load-Test": "s185d03-chidrens-social-care-cpd-bep",<br>  "Pre-Prod": "s185t01-chidrens-social-care-cpd-bep",<br>  "Prod": "s185p01-chidrens-social-care-cpd-bep",<br>  "Test": "s185d02-chidrens-social-care-cpd-bep"<br>}</pre> | no |
 | <a name="input_cpd_client_id"></a> [cpd\_client\_id](#input\_cpd\_client\_id) | Client ID used by the application to access Key Vault in Azure | `string` | n/a | yes |
 | <a name="input_cpd_client_secret"></a> [cpd\_client\_secret](#input\_cpd\_client\_secret) | Secret used by the application to access Key Vault in Azure | `string` | n/a | yes |
-| <a name="input_cpd_contentful_env"></a> [cpd\_contentful\_env](#input\_cpd\_contentful\_env) | Contentful Environment Name | `map(string)` | <pre>{<br>  "Dev": "dev",<br>  "Load-Test": "dev",<br>  "Pre-Prod": "prod",<br>  "Prod": "prod",<br>  "Test": "test"<br>}</pre> | no |
+| <a name="input_cpd_contentful_env"></a> [cpd\_contentful\_env](#input\_cpd\_contentful\_env) | Contentful Environment Name | `map(string)` | <pre>{<br>  "Dev": "dev",<br>  "Load-Test": "test",<br>  "Pre-Prod": "prod",<br>  "Prod": "prod",<br>  "Test": "test"<br>}</pre> | no |
 | <a name="input_cpd_delivery_key"></a> [cpd\_delivery\_key](#input\_cpd\_delivery\_key) | Contentful Delivery Key | `string` | n/a | yes |
 | <a name="input_cpd_googleanalyticstag"></a> [cpd\_googleanalyticstag](#input\_cpd\_googleanalyticstag) | Google Analytics Tag | `string` | n/a | yes |
 | <a name="input_cpd_keyvaultendpoint"></a> [cpd\_keyvaultendpoint](#input\_cpd\_keyvaultendpoint) | URL Endpoint for Key Vault in Azure | `string` | n/a | yes |
@@ -118,4 +120,4 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_public_ip_address"></a> [public\_ip\_address](#output\_public\_ip\_address) | n/a |
+| <a name="output_public_ip_address"></a> [public\_ip\_address](#output\_public\_ip\_address) | The public IP attached to the Application Gateway |
