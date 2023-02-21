@@ -1,4 +1,5 @@
-﻿@using Childrens_Social_Care_CPD.Enums
+﻿@using Childrens_Social_Care_CPD.Constants
+@using Childrens_Social_Care_CPD.Enums
 @using Contentful.Core.Models;
 @using System.Text
 @addTagHelper *, Contentful.AspNetCore
@@ -13,6 +14,36 @@
         var linkHtmlString = string.Format(("<a class=\"{0}\" href={1}>{2}</a>"),"govuk-link", linkElement.Data.Uri, linkText);
         return linkHtmlString;
     }
+    public static string GetHeadingTagString(IContent content, string tag, string renderType)
+    {
+          string headerHTMLTag = string.Empty;
+          @foreach (var headerContent in ((IHeading)content).Content)
+                    {
+                        if (headerContent.GetType() == typeof(Text) && !string.IsNullOrEmpty((((Contentful.Core.Models.Text)headerContent).Value)))
+                        {
+                            var headingText = (((Contentful.Core.Models.Text)headerContent).Value);
+                            if (renderType == RichTextRenderType.SupportingPages.ToString())
+                            {
+                                headerHTMLTag = $"<{@tag} class=\"govuk-heading-l\">{@headingText}</{@tag}>";
+                            }
+                            else
+                            {
+                                headerHTMLTag = $"<{@tag} class=\"govuk-heading-m\">{@headingText}</{@tag}>";
+                            }
+                        }
+                        if (headerContent.GetType() == typeof(Hyperlink))
+                        {
+                            var hyperlinkTagString = @ParseHyperlinkHelper(headerContent);
+                            headerHTMLTag = $"<{@tag} class=\"govuk-heading-m\">{@hyperlinkTagString}</{@tag}>";
+                        }
+                       
+                    }
+
+        return headerHTMLTag;
+
+
+    }
+    
 }
 
 @if (Model != null)
@@ -120,27 +151,20 @@
                     }
 
                     break;
-                case Contentful.Core.Models.Heading2 heading2:
-
-                    @foreach (var content in heading2.Content)
-                    {
-                        if (content.GetType() == typeof(Text) && !string.IsNullOrEmpty((((Contentful.Core.Models.Text)content).Value)))
-                        {
-                            if (richText.RichTextRenderType == RichTextRenderType.SupportingPages.ToString())
-                            {
-                                 <h2 class="govuk-heading-l">@(((Contentful.Core.Models.Text)content).Value)</h2>
-                            }
-                            else
-                            {
-                                <h2 class="govuk-heading-m">@(((Contentful.Core.Models.Text)content).Value)</h2>
-                            }
-                        }
-                        if (content.GetType() == typeof(Hyperlink))
-                        {
-                           <h2 class="govuk-heading-m">@Html.Raw(@ParseHyperlinkHelper(content))</h2>
-                        }
-                    }
-
+                case Contentful.Core.Models.Heading2:
+                    @Html.Raw(GetHeadingTagString(node, SiteConstants.HEADING2, richText.RichTextRenderType));
+                    break;
+                case Contentful.Core.Models.Heading3:
+                    @Html.Raw(GetHeadingTagString(node, SiteConstants.HEADING3, richText.RichTextRenderType));
+                    break;
+                case Contentful.Core.Models.Heading4:
+                    @Html.Raw(GetHeadingTagString(node, SiteConstants.HEADING4, richText.RichTextRenderType));
+                    break;
+                case Contentful.Core.Models.Heading5:
+                    @Html.Raw(GetHeadingTagString(node, SiteConstants.HEADING5, richText.RichTextRenderType));
+                    break;
+                case Contentful.Core.Models.Heading6:
+                    @Html.Raw(GetHeadingTagString(node, SiteConstants.HEADING6, richText.RichTextRenderType));
                     break;
                 case Contentful.Core.Models.Heading1 heading1:
 
