@@ -35,5 +35,6 @@
         public const string GOVUKHEADINGXL = "govuk-heading-xl";
         public const string GOVUKHEADINGL = "govuk-heading-l";
         public const string GOVUKHEADINGM = "govuk-heading-m";
+        public const string GOVUKHEADINGS = "govuk-heading-s";
     }
 }

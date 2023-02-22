@@ -8,9 +8,10 @@
             {
             var cardHeaderTag = string.IsNullOrEmpty(card.CardHeadingLevel) ? SiteConstants.HEADING3 : card.CardHeadingLevel;
             var cardHeaderEndTag = $"</{cardHeaderTag}>";
+            var cardCssClass = string.IsNullOrEmpty(card.CardHeadingCSS) ? SiteConstants.GOVUKHEADINGM : card.CardHeadingCSS;
             <div class="govuk-grid-column-one-half dfe-section-card__container">
                 <div class="dfe-section-card">
-                   @Html.Raw($"<{@cardHeaderTag} class=\"govuk-heading-m\">")
+                   @Html.Raw($"<{@cardHeaderTag} class=\"{@cardCssClass}\">")
                         @{
                             var pageName = card.RedirectPageName?.PageName;
                             var pageType = card.PageType?.PageType;
