@@ -32,5 +32,8 @@
         public const string HEADING4 = "h4";
         public const string HEADING5 = "h5";
         public const string HEADING6 = "h6";
+        public const string GOVUKHEADINGXL = "govuk-heading-xl";
+        public const string GOVUKHEADINGL = "govuk-heading-l";
+        public const string GOVUKHEADINGM = "govuk-heading-m";
     }
 }

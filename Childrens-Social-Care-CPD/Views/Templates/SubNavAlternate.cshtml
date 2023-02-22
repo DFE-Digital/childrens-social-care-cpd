@@ -12,7 +12,7 @@
                 <div class="govuk-grid-column-two-thirds">
                     @if (!String.IsNullOrEmpty(Model.PageHeading))
                     {
-                        <h1 class="govuk-heading-l">@Model.PageHeading</h1>
+                        <h1 class="govuk-heading-xl">@Model.PageHeading</h1>
                     }
                     @{
                         await Html.RenderPartialAsync("../PartialViews/RichTextRenderer", Model.RichTexts.Where(x=>x.SortOrder ==1).ToList());
