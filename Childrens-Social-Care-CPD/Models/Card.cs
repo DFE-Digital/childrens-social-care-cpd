@@ -3,6 +3,7 @@
     public class Card
     {
         public string CardHeader { get; set; }
+        public string CardHeadingLevel { get; set; }
         public string CardContents { get; set; }
         public string CardDescription { get; set; }
         public int SortOrder { get; set; }
