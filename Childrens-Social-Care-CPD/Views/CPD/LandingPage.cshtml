@@ -29,6 +29,9 @@
             case PageTypes.ViewAllCards:
             {await Html.RenderPartialAsync("../Templates/ViewAllCards", pageViewModel);}
                 break;
+            case PageTypes.SubNavAlternate:
+            {await Html.RenderPartialAsync("../Templates/SubNavAlternate", pageViewModel);}
+                break;
         }
     }
 }

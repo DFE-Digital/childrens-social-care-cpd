@@ -1,8 +1,43 @@
-﻿@using Childrens_Social_Care_CPD.Enums
+﻿@using Childrens_Social_Care_CPD.Constants
+@using Childrens_Social_Care_CPD.Enums
 @using Contentful.Core.Models;
 @using System.Text
 @addTagHelper *, Contentful.AspNetCore
 @model List<RichText>;
+
+@functions 
+{
+    public static string ParseHyperlinkHelper(IContent content)
+    {
+        var linkElement = ((Contentful.Core.Models.Hyperlink)content);
+        var linkText = ((Contentful.Core.Models.Text)(linkElement).Content[0]).Value;
+        var linkHtmlString = string.Format(("<a class=\"{0}\" href={1}>{2}</a>"),"govuk-link", linkElement.Data.Uri, linkText);
+        return linkHtmlString;
+    }
+    public static string GetHeadingTagString(IContent content, string tag, string className)
+    {
+          string headerHTMLTag = string.Empty;
+          @foreach (var headerContent in ((IHeading)content).Content)
+                    {
+                        if (headerContent.GetType() == typeof(Text) && !string.IsNullOrEmpty((((Contentful.Core.Models.Text)headerContent).Value)))
+                        {
+                            var headingText = (((Contentful.Core.Models.Text)headerContent).Value);
+                           
+                                headerHTMLTag = $"<{@tag} class=\"{className}\">{@headingText}</{@tag}>";
+                        }
+                        if (headerContent.GetType() == typeof(Hyperlink))
+                        {
+                            var hyperlinkTagString = @ParseHyperlinkHelper(headerContent);
+                            headerHTMLTag = $"<{@tag} class=\"{className}\">{@hyperlinkTagString}</{@tag}>";
+                        }
+                       
+                    }
+
+        return headerHTMLTag;
+
+    }
+    
+}
 
 @if (Model != null)
 {
@@ -109,35 +144,25 @@
                     }
 
                     break;
-                case Contentful.Core.Models.Heading2 heading2:
-
-                    @foreach (var content in heading2.Content)
-                    {
-                        if (content.GetType() == typeof(Text))
-                        {
-                            if (richText.RichTextRenderType == RichTextRenderType.SupportingPages.ToString())
-                            {
-                                 <h2 class="govuk-heading-l">@(((Contentful.Core.Models.Text)content).Value)</h2>
-                            }
-                            else
-                            {
-                                <h2 class="govuk-heading-m">@(((Contentful.Core.Models.Text)content).Value)</h2>
-                            }
-                        }
-                    }
-
+                case Contentful.Core.Models.Heading1:
+                    @Html.Raw(GetHeadingTagString(node, SiteConstants.HEADING1, SiteConstants.GOVUKHEADINGXL));
                     break;
-                case Contentful.Core.Models.Heading1 heading1:
-
-                    @foreach (var content in heading1.Content)
-                    {
-                        if (content.GetType() == typeof(Text))
-                        {
-                            <h1 class="govuk-heading-l">@(((Contentful.Core.Models.Text)content).Value)</h1>
-                        }
-                    }
-
+                case Contentful.Core.Models.Heading2:
+                    @Html.Raw(GetHeadingTagString(node, SiteConstants.HEADING2, SiteConstants.GOVUKHEADINGL));
                     break;
+                case Contentful.Core.Models.Heading3:
+                    @Html.Raw(GetHeadingTagString(node, SiteConstants.HEADING3, SiteConstants.GOVUKHEADINGM));
+                    break;
+                case Contentful.Core.Models.Heading4:
+                    @Html.Raw(GetHeadingTagString(node, SiteConstants.HEADING4, SiteConstants.GOVUKHEADINGM));
+                    break;
+                case Contentful.Core.Models.Heading5:
+                    @Html.Raw(GetHeadingTagString(node, SiteConstants.HEADING5, SiteConstants.GOVUKHEADINGM));
+                    break;
+                case Contentful.Core.Models.Heading6:
+                    @Html.Raw(GetHeadingTagString(node, SiteConstants.HEADING6, SiteConstants.GOVUKHEADINGM));
+                    break;
+              
                 case Contentful.Core.Models.Table table:
 
                     @if (table.Content.Any())
