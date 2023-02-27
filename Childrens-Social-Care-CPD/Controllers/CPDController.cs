@@ -64,7 +64,7 @@ namespace Childrens_Social_Care_CPD.Controllers
         /// </param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetCookies(string analyticsCookieConsent, string pageName, string pageType, string referer, string sendingPageType)
+        public async Task<IActionResult> GetCookies(string analyticsCookieConsent, string pageName, string pageType, string referer, string sendingPageType, string sendingPage)
         {
             CookieHelper.SetAnalyticsCookie(analyticsCookieConsent, HttpContext);
             ViewBag.analyticsCookieSet = analyticsCookieConsent;
@@ -83,9 +83,9 @@ namespace Childrens_Social_Care_CPD.Controllers
         /// <returns></returns>
         [HttpPost]
         [ActionName("LandingPage")]
-        public IActionResult SetCookies(string analyticsCookieConsent, string pageName, string pageType, string referer)
+        public IActionResult SetCookies(string analyticsCookieConsent, string pageName, string pageType, string referer, string sendingPageType, string sendingPage)
         {
-            return RedirectToAction("GetCookies", new { analyticsCookieConsent, pageName, pageType, referer });
+            return RedirectToAction("GetCookies", new { analyticsCookieConsent, pageName, pageType, referer, sendingPageType, sendingPage });
         }
 
         /// <summary>
