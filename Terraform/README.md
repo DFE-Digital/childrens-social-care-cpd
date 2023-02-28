@@ -3,13 +3,13 @@
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0 |
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | 3.21.1 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | 3.41.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.21.1 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.41.0 |
 
 ## Modules
 
@@ -19,39 +19,39 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [azurerm_application_gateway.appgw](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/resources/application_gateway) | resource |
-| [azurerm_linux_web_app.linux-web-app](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/resources/linux_web_app) | resource |
-| [azurerm_monitor_action_group.main](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/resources/monitor_action_group) | resource |
-| [azurerm_monitor_activity_log_alert.appgw-health](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/resources/monitor_activity_log_alert) | resource |
-| [azurerm_monitor_autoscale_setting.autoscale](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/resources/monitor_autoscale_setting) | resource |
-| [azurerm_monitor_metric_alert.appgw-backend-connect-time](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/resources/monitor_metric_alert) | resource |
-| [azurerm_monitor_metric_alert.appgw-managed-rules](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/resources/monitor_metric_alert) | resource |
-| [azurerm_monitor_metric_alert.container-avg-resp-time](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/resources/monitor_metric_alert) | resource |
-| [azurerm_monitor_metric_alert.container-cpu](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/resources/monitor_metric_alert) | resource |
-| [azurerm_monitor_metric_alert.failed-requests](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/resources/monitor_metric_alert) | resource |
-| [azurerm_network_interface.nic](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/resources/network_interface) | resource |
-| [azurerm_network_security_group.nsg](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/resources/network_security_group) | resource |
-| [azurerm_network_security_rule.dev-whitelist-rules](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/resources/network_security_rule) | resource |
-| [azurerm_network_security_rule.nsg-rule-03](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/resources/network_security_rule) | resource |
-| [azurerm_network_security_rule.whitelist-rules](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/resources/network_security_rule) | resource |
-| [azurerm_private_dns_zone.dnsprivatezone](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/resources/private_dns_zone) | resource |
-| [azurerm_private_dns_zone_virtual_network_link.dnszonelink](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/resources/private_dns_zone_virtual_network_link) | resource |
-| [azurerm_private_endpoint.privateendpoint](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/resources/private_endpoint) | resource |
-| [azurerm_service_plan.service-plan](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/resources/service_plan) | resource |
-| [azurerm_subnet.backend](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/resources/subnet) | resource |
-| [azurerm_subnet.frontend](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/resources/subnet) | resource |
-| [azurerm_subnet_network_security_group_association.blockall](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/resources/subnet_network_security_group_association) | resource |
-| [azurerm_web_application_firewall_policy.fwpol](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/resources/web_application_firewall_policy) | resource |
-| [azurerm_application_insights.appinsights](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/data-sources/application_insights) | data source |
-| [azurerm_key_vault.kv](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/data-sources/key_vault) | data source |
-| [azurerm_key_vault_secret.dev-ips](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/data-sources/key_vault_secret) | data source |
-| [azurerm_key_vault_secret.email](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/data-sources/key_vault_secret) | data source |
-| [azurerm_key_vault_secret.ips](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/data-sources/key_vault_secret) | data source |
-| [azurerm_log_analytics_workspace.log-analytics-ws](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/data-sources/log_analytics_workspace) | data source |
-| [azurerm_public_ip.pip1](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/data-sources/public_ip) | data source |
-| [azurerm_resource_group.rg](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/data-sources/resource_group) | data source |
-| [azurerm_user_assigned_identity.uai](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/data-sources/user_assigned_identity) | data source |
-| [azurerm_virtual_network.vnet1](https://registry.terraform.io/providers/hashicorp/azurerm/3.21.1/docs/data-sources/virtual_network) | data source |
+| [azurerm_application_gateway.appgw](https://registry.terraform.io/providers/hashicorp/azurerm/3.41.0/docs/resources/application_gateway) | resource |
+| [azurerm_linux_web_app.linux-web-app](https://registry.terraform.io/providers/hashicorp/azurerm/3.41.0/docs/resources/linux_web_app) | resource |
+| [azurerm_monitor_action_group.main](https://registry.terraform.io/providers/hashicorp/azurerm/3.41.0/docs/resources/monitor_action_group) | resource |
+| [azurerm_monitor_activity_log_alert.appgw-health](https://registry.terraform.io/providers/hashicorp/azurerm/3.41.0/docs/resources/monitor_activity_log_alert) | resource |
+| [azurerm_monitor_autoscale_setting.autoscale](https://registry.terraform.io/providers/hashicorp/azurerm/3.41.0/docs/resources/monitor_autoscale_setting) | resource |
+| [azurerm_monitor_metric_alert.appgw-backend-connect-time](https://registry.terraform.io/providers/hashicorp/azurerm/3.41.0/docs/resources/monitor_metric_alert) | resource |
+| [azurerm_monitor_metric_alert.appgw-managed-rules](https://registry.terraform.io/providers/hashicorp/azurerm/3.41.0/docs/resources/monitor_metric_alert) | resource |
+| [azurerm_monitor_metric_alert.container-avg-resp-time](https://registry.terraform.io/providers/hashicorp/azurerm/3.41.0/docs/resources/monitor_metric_alert) | resource |
+| [azurerm_monitor_metric_alert.container-cpu](https://registry.terraform.io/providers/hashicorp/azurerm/3.41.0/docs/resources/monitor_metric_alert) | resource |
+| [azurerm_monitor_metric_alert.failed-requests](https://registry.terraform.io/providers/hashicorp/azurerm/3.41.0/docs/resources/monitor_metric_alert) | resource |
+| [azurerm_network_interface.nic](https://registry.terraform.io/providers/hashicorp/azurerm/3.41.0/docs/resources/network_interface) | resource |
+| [azurerm_network_security_group.nsg](https://registry.terraform.io/providers/hashicorp/azurerm/3.41.0/docs/resources/network_security_group) | resource |
+| [azurerm_network_security_rule.dev-whitelist-rules](https://registry.terraform.io/providers/hashicorp/azurerm/3.41.0/docs/resources/network_security_rule) | resource |
+| [azurerm_network_security_rule.nsg-rule-03](https://registry.terraform.io/providers/hashicorp/azurerm/3.41.0/docs/resources/network_security_rule) | resource |
+| [azurerm_network_security_rule.whitelist-rules](https://registry.terraform.io/providers/hashicorp/azurerm/3.41.0/docs/resources/network_security_rule) | resource |
+| [azurerm_private_dns_zone.dnsprivatezone](https://registry.terraform.io/providers/hashicorp/azurerm/3.41.0/docs/resources/private_dns_zone) | resource |
+| [azurerm_private_dns_zone_virtual_network_link.dnszonelink](https://registry.terraform.io/providers/hashicorp/azurerm/3.41.0/docs/resources/private_dns_zone_virtual_network_link) | resource |
+| [azurerm_private_endpoint.privateendpoint](https://registry.terraform.io/providers/hashicorp/azurerm/3.41.0/docs/resources/private_endpoint) | resource |
+| [azurerm_service_plan.service-plan](https://registry.terraform.io/providers/hashicorp/azurerm/3.41.0/docs/resources/service_plan) | resource |
+| [azurerm_subnet.backend](https://registry.terraform.io/providers/hashicorp/azurerm/3.41.0/docs/resources/subnet) | resource |
+| [azurerm_subnet.frontend](https://registry.terraform.io/providers/hashicorp/azurerm/3.41.0/docs/resources/subnet) | resource |
+| [azurerm_subnet_network_security_group_association.blockall](https://registry.terraform.io/providers/hashicorp/azurerm/3.41.0/docs/resources/subnet_network_security_group_association) | resource |
+| [azurerm_web_application_firewall_policy.fwpol](https://registry.terraform.io/providers/hashicorp/azurerm/3.41.0/docs/resources/web_application_firewall_policy) | resource |
+| [azurerm_application_insights.appinsights](https://registry.terraform.io/providers/hashicorp/azurerm/3.41.0/docs/data-sources/application_insights) | data source |
+| [azurerm_key_vault.kv](https://registry.terraform.io/providers/hashicorp/azurerm/3.41.0/docs/data-sources/key_vault) | data source |
+| [azurerm_key_vault_secret.dev-ips](https://registry.terraform.io/providers/hashicorp/azurerm/3.41.0/docs/data-sources/key_vault_secret) | data source |
+| [azurerm_key_vault_secret.email](https://registry.terraform.io/providers/hashicorp/azurerm/3.41.0/docs/data-sources/key_vault_secret) | data source |
+| [azurerm_key_vault_secret.ips](https://registry.terraform.io/providers/hashicorp/azurerm/3.41.0/docs/data-sources/key_vault_secret) | data source |
+| [azurerm_log_analytics_workspace.log-analytics-ws](https://registry.terraform.io/providers/hashicorp/azurerm/3.41.0/docs/data-sources/log_analytics_workspace) | data source |
+| [azurerm_public_ip.pip1](https://registry.terraform.io/providers/hashicorp/azurerm/3.41.0/docs/data-sources/public_ip) | data source |
+| [azurerm_resource_group.rg](https://registry.terraform.io/providers/hashicorp/azurerm/3.41.0/docs/data-sources/resource_group) | data source |
+| [azurerm_user_assigned_identity.uai](https://registry.terraform.io/providers/hashicorp/azurerm/3.41.0/docs/data-sources/user_assigned_identity) | data source |
+| [azurerm_virtual_network.vnet1](https://registry.terraform.io/providers/hashicorp/azurerm/3.41.0/docs/data-sources/virtual_network) | data source |
 
 ## Inputs
 
