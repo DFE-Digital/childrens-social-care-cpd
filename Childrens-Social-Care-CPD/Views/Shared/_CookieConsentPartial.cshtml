@@ -14,11 +14,13 @@
 
 @if (acceptsAnalytics == null && cookieBannerViewModel != null)
 {
-    @using (@Html.BeginForm("LandingPage", "CPD", FormMethod.Post))
+    @using (@Html.BeginForm("LandingPage", "CPD",null, FormMethod.Post,false, null))
     {
         <input type="hidden" id="pageNameId" value="@{@ViewBag.pageName}" name="pageName"/>
         <input type="hidden" id="pageTypeId" value="@{@ViewBag.pageType}" name="pageType"/>
-        @Html.AntiForgeryToken()
+        <input type="hidden" id="sendingPageTypeId" value="@{@ViewBag.sendingPageType}" name="sendingPageType"/>
+        <input type="hidden" id="sendingPage" value="@{@ViewBag.sendingPage}" name="sendingPage"/>
+        
         <div class="govuk-cookie-banner" id="divCookieBannerId" data-nosnippet="" role="region" aria-label="@{@cookieBannerViewModel.CookieBannerHeading}">
 
             @if (ViewBag.analyticsCookieSet == SiteConstants.ANALYTICSCOOKIEACCEPTED  
