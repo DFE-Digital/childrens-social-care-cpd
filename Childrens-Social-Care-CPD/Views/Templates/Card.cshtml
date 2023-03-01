@@ -1,13 +1,17 @@
-﻿@model PageViewModel
+﻿@using Childrens_Social_Care_CPD.Constants
+@model PageViewModel
 
 @foreach (var cardGroup in Model.Cards.Select((e, i) => new { Card = e, Grouping = (i / 2) }).GroupBy(e => e.Grouping))
     {
         <div class="govuk-grid-row dfe-section-card__container">
             @foreach (var card in cardGroup.Select(x => x.Card))
             {
-           <div class="govuk-grid-column-one-half dfe-section-card__container">
+            var cardHeaderTag = string.IsNullOrEmpty(card.CardHeadingLevel) ? SiteConstants.HEADING3 : card.CardHeadingLevel;
+            var cardHeaderEndTag = $"</{cardHeaderTag}>";
+            var cardCssClass = string.IsNullOrEmpty(card.CardHeadingCSS) ? SiteConstants.GOVUKHEADINGM : card.CardHeadingCSS;
+            <div class="govuk-grid-column-one-half dfe-section-card__container">
                 <div class="dfe-section-card">
-                    <h3 class="govuk-heading-m">
+                   @Html.Raw($"<{@cardHeaderTag} class=\"{@cardCssClass}\">")
                         @{
                             var pageName = card.RedirectPageName?.PageName;
                             var pageType = card.PageType?.PageType;
@@ -21,7 +25,7 @@
                         };
                         }
                             @Html.ActionLink(card.CardHeader,"LandingPage","CPD",routeValues , new { @class= "govuk-link"})
-                        </h3>
+                        @Html.Raw(@cardHeaderEndTag)
                         <p class="govuk-body">@card.CardContents</p>
                     </div>
                 </div>
