@@ -1,3 +1,6 @@
 ﻿//@use "sass:map";
+$govuk-global-styles: true;
+$govuk-new-link-styles: true;
+
 @import "../../node_modules/govuk-frontend/govuk/all";
 @import "overrides/dfe-overrides";
