@@ -3,22 +3,22 @@
 
 @if (Model != null)
 {
-    <section class="app-section-beta app-section-beta__blue govuk-!-margin-top-6">
-        <div class="govuk-width-container">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-two-thirds-from-desktop">
-                    <h1 class="govuk-heading-xl body-header-font">@Model.PageHeading</h1>
-                    <p class="govuk-body govuk-!-font-size-24 body-header-font">@Model.PageSubHeading</p>
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+        <section class="app-section-beta app-section-beta__blue govuk-!-margin-top-6 edf-hero-banner">
+            <div class="govuk-width-container">
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds-from-desktop">
+                        <h1 class="govuk-heading-xl body-header-font">@Model.PageHeading</h1>
+                        <p class="govuk-body govuk-!-font-size-24 body-header-font">@Model.PageSubHeading</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <div class="govuk-width-container">
-        <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+        </section>
 
+        <div class="govuk-width-container">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-two-thirds">
-                    @{await Html.RenderPartialAsync("../PartialViews/RichTextRenderer",Model.RichTexts);}
+                    @{await Html.RenderPartialAsync("../PartialViews/RichTextRenderer", Model.RichTexts);}
                 </div>
             </div>
 
@@ -29,7 +29,7 @@
             @foreach (var link in Model.Links.Where(link => link.LinkSection == LinkSection.AllCards.ToString()))
             {
                 var routeValues = new RouteValueDictionary
-                {
+    {
                     { "pageName", link.RedirectPageName.PageName},
                     { "pageType", link.PageType.PageType },
                     { "sendingPage", Model.PageName.PageName },
@@ -39,7 +39,6 @@
                     @Html.ActionLink(link.LinkText, "LandingPage", "CPD", routeValues, new { @class = "govuk-link" })
                 </p>
             }
-        </main>
-
-    </div>
+        </div>
+    </main>
 }
