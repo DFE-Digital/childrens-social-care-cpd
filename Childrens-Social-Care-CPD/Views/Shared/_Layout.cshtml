@@ -6,13 +6,9 @@
 <head>
      <title>@ViewData["Title"]</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <!--[if !IE 8]><!-->
-    <link rel="stylesheet" href="/stylesheets/govuk-frontend-4.4.1.min.css">
-    <!--<![endif]-->
-    <!--[if IE 8]>
-      <link rel="stylesheet" href="/stylesheets/govuk-frontend-ie8-4.4.1.min.css">
-    <![endif]-->
-     <link rel="stylesheet" href="/stylesheets/custom.css">
+
+    <link rel="stylesheet" href="/css/application.css">
+
   @if(Context.Request.Cookies.ContainsKey(SiteConstants.ANALYTICSCOOKIENAME) && Context.Request.Cookies[SiteConstants.ANALYTICSCOOKIENAME].Equals("accept"))
   {
     await Html.RenderPartialAsync("../PartialViews/GoogleAnalyticsPartial");
