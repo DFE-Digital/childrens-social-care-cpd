@@ -52,7 +52,7 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: 's185d03-chidrens-social-care-cpd-app-service'
-          # slot-name: 'Test'
+          slot-name: 'staging'
           images: 'ghcr.io/dfe-digital/childrens-social-care-cpd${{ inputs.tag }}'
         if: ${{ inputs.workspace == 'Load-Test' }}
 
@@ -68,7 +68,7 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: 's185p01-chidrens-social-care-cpd-app-service'
-          # slot-name: 'Prod'
+          slot-name: 'staging'
           images: 'ghcr.io/dfe-digital/childrens-social-care-cpd${{ inputs.tag }}'
         if: ${{ inputs.workspace == 'Prod' }}
 
