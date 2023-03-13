@@ -27,6 +27,7 @@ resource "azurerm_linux_web_app" "linux-web-app" {
     CPD_AZURE_ENVIRONMENT                = lower(terraform.workspace)
     CPD_CONTENTFUL_ENVIRONMENT           = var.cpd_contentful_env[terraform.workspace]
     CPD_INSTRUMENTATION_CONNECTIONSTRING = data.azurerm_application_insights.appinsights.connection_string
+    CPD_CLARITY                          = var.cpd_clarity
     DOCKER_ENABLE_CI                     = "true"
   }
 
