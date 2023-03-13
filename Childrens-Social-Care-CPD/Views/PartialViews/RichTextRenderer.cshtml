@@ -67,7 +67,7 @@
                             {
                                 var linkElement = ((Contentful.Core.Models.Hyperlink)content);
                                 var linkText = ((Contentful.Core.Models.Text)(linkElement).Content[0]).Value;
-                                contentBuilder.Append(string.Format(("<a href={0}>{1}</a>"), linkElement.Data.Uri, linkText));
+                                contentBuilder.Append(string.Format(("<a class=\"govuk-link\" href={0}>{1}</a>"), linkElement.Data.Uri, linkText));
                             }
                         }
 
