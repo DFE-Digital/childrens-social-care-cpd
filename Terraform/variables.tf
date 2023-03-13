@@ -636,6 +636,12 @@ variable "cpd_delivery_key" {
   description = "Contentful Delivery Key"
 }
 
+variable "cpd_clarity" {
+  type        = string
+  sensitive   = true
+  description = "MS Clarity Secret"
+}
+
 variable "cpd_contentful_env" {
   type = map(string)
   default = {
