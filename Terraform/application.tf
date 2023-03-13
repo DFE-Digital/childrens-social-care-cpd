@@ -93,8 +93,6 @@ resource "azurerm_linux_web_app_slot" "staging" {
     }
   }
 
-
-
   tags = data.azurerm_resource_group.rg.tags
 }
 

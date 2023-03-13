@@ -36,7 +36,6 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: 's185d01-chidrens-social-care-cpd-app-service'
-          # slot-name: 'Dev'
           images: 'ghcr.io/dfe-digital/childrens-social-care-cpd${{ inputs.tag }}'
         if: ${{ inputs.workspace == 'Dev' }}
 
@@ -44,7 +43,6 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: 's185d02-chidrens-social-care-cpd-app-service'
-          # slot-name: 'Test'
           images: 'ghcr.io/dfe-digital/childrens-social-care-cpd${{ inputs.tag }}'
         if: ${{ inputs.workspace == 'Test' }}
 
@@ -56,11 +54,14 @@ jobs:
           images: 'ghcr.io/dfe-digital/childrens-social-care-cpd${{ inputs.tag }}'
         if: ${{ inputs.workspace == 'Load-Test' }}
 
+      - name: Swap slots for Load-Test
+        run: az webapp deployment slot swap -g s185d03-childrens-social-care-cpd-rg -n s185d03-chidrens-social-care-cpd-app-service --slot staging --target-slot production
+        if: ${{ inputs.workspace == 'Load-Test' }}
+
       - name: Deploy Pre-Prod to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
           app-name: 's185t01-chidrens-social-care-cpd-app-service'
-          # slot-name: 'Pre-Prod'
           images: 'ghcr.io/dfe-digital/childrens-social-care-cpd${{ inputs.tag }}'
         if: ${{ inputs.workspace == 'Pre-Prod' }}
 
@@ -70,6 +71,10 @@ jobs:
           app-name: 's185p01-chidrens-social-care-cpd-app-service'
           slot-name: 'staging'
           images: 'ghcr.io/dfe-digital/childrens-social-care-cpd${{ inputs.tag }}'
+        if: ${{ inputs.workspace == 'Prod' }}
+
+      - name: Swap slots for Prod
+        run: az webapp deployment slot swap -g s185p01-childrens-social-care-cpd-rg -n s185p01-chidrens-social-care-cpd-app-service --slot staging --target-slot production
         if: ${{ inputs.workspace == 'Prod' }}
 
       - name: Sign out of Azure
