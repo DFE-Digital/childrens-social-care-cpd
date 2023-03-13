@@ -75,6 +75,13 @@ resource "azurerm_linux_web_app_slot" "staging" {
       docker_image_tag = "master"
       # docker_image_tag = lower(terraform.workspace)
     }
+
+    ip_restriction {
+      name       = "Deny All"
+      action     = "Deny"
+      priority   = "1"
+      ip_address = "0.0.0.0/0"
+    }
   }
 
   logs {
@@ -85,6 +92,8 @@ resource "azurerm_linux_web_app_slot" "staging" {
       }
     }
   }
+
+
 
   tags = data.azurerm_resource_group.rg.tags
 }
