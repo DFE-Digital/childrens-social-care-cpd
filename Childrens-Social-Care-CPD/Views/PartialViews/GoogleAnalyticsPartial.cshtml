@@ -1,7 +1,10 @@
 ﻿@using Childrens_Social_Care_CPD.Constants
+@using Childrens_Social_Care_CPD.Enums
 @{
     var googleAnalyticsKey = Environment.GetEnvironmentVariable(SiteConstants.CPDGOOGLEANALYTICSTAG) ?? String.Empty;
     var googleAnalyticsUrl = string.Format("https://www.googletagmanager.com/gtag/js?id={0}", googleAnalyticsKey);
+    var clarityProjectId = Environment.GetEnvironmentVariable(SiteConstants.CLARITYPROJECTID) ?? String.Empty;
+     var contentfulEnvironment = Environment.GetEnvironmentVariable(SiteConstants.ENVIRONMENT) ?? String.Empty;
 
     if (!String.IsNullOrEmpty(googleAnalyticsKey)) {
         <script async src='@googleAnalyticsUrl'></script>
@@ -10,6 +13,16 @@
             function gtag() { dataLayer.push(arguments); }
             gtag('js', new Date());
             gtag('config', '@googleAnalyticsKey');
-        </script>    
+        </script>
+        if (@contentfulEnvironment == AppEnvironment.dev.ToString() || @contentfulEnvironment == AppEnvironment.prod.ToString())
+        {
+            <script type="text/javascript">
+                (function(c,l,a,r,i,t,y){
+                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+            })(window, document, "clarity", "script", '@clarityProjectId');
+            </script>
+        }
     }
 }
