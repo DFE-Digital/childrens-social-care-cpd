@@ -14,7 +14,7 @@
             gtag('js', new Date());
             gtag('config', '@googleAnalyticsKey');
         </script>
-        if (@contentfulEnvironment == AppEnvironment.dev.ToString() || @contentfulEnvironment == AppEnvironment.prod.ToString())
+        if (@contentfulEnvironment == AppEnvironment.test.ToString() || @contentfulEnvironment == AppEnvironment.prod.ToString())
         {
             <script type="text/javascript">
                 (function(c,l,a,r,i,t,y){
