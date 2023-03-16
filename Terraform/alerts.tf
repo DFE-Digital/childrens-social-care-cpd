@@ -77,6 +77,8 @@ resource "azurerm_monitor_metric_alert" "appgw-managed-rules" {
   target_resource_type     = "Microsoft.Network/applicationGateways"
   target_resource_location = data.azurerm_resource_group.rg.location
 
+  count = terraform.workspace == "Prod" || terraform.workspace == "Load-Test" ? 1 : 0
+
   criteria {
     metric_namespace = "Microsoft.Network/applicationGateways"
     metric_name      = "AzwafSecRule"
