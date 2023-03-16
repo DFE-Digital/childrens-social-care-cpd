@@ -5,7 +5,7 @@
 
 @{
     var pageName = ViewBag.pageName;
-    var returnUrl = string.Format("<a href={0}>{1}</a>", @ViewBag.Referer, "Go back to the page you were looking at");
+    var returnUrl = string.Format("<a class=\"govuk-link\" href={0}>{1}</a>", @ViewBag.Referer, " Go back to the page you were looking at");
     NotificationBanner banner = new NotificationBanner()
             {
                 Header = "Success",
@@ -13,7 +13,7 @@
                 NotificationMessage = $"You’ve set your cookie preferences.{returnUrl}"
 
             };
-};
+}
 <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
