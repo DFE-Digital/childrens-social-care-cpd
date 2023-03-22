@@ -1,4 +1,5 @@
-﻿using Childrens_Social_Care_CPD.Enums;
+﻿using Childrens_Social_Care_CPD.Constants;
+using Childrens_Social_Care_CPD.Enums;
 using Microsoft.Extensions.Primitives;
 
 namespace Childrens_Social_Care_CPD
@@ -20,7 +21,7 @@ namespace Childrens_Social_Care_CPD
       
         public async Task InvokeAsync(HttpContext context)
         {
-            const string hostHeaderKeyName = "Host";
+            const string hostHeaderKeyName = SiteConstants.HOSTHEADERKEYNAME;
             //string StringValues;
             context.Request.Headers.TryGetValue(hostHeaderKeyName, out StringValues headerValue);
             if (!validHeaders.Contains<string>(headerValue))
