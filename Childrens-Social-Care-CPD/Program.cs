@@ -1,5 +1,7 @@
 using Azure.Identity;
+using Childrens_Social_Care_CPD;
 using Childrens_Social_Care_CPD.Constants;
+using Childrens_Social_Care_CPD.Enums;
 using Contentful.AspNetCore;
 using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 using Microsoft.ApplicationInsights.Extensibility;
@@ -13,10 +15,10 @@ builder.WebHost.UseSetting(WebHostDefaults.DetailedErrorsKey, "true");
 builder.WebHost.CaptureStartupErrors(true);
 
 bool enableContentfulIntegration = configuration.GetValue<bool>("EnableContentfulIntegration");
+var contentfulEnvironment = Environment.GetEnvironmentVariable(SiteConstants.ENVIRONMENT) ?? String.Empty;
 
 if (enableContentfulIntegration)
 {
-    var contentfulEnvironment = Environment.GetEnvironmentVariable(SiteConstants.ENVIRONMENT) ?? String.Empty;
     var appEnvironment = Environment.GetEnvironmentVariable(SiteConstants.AZUREENVIRONMENT) ?? String.Empty;
     var deliveryApiKey = Environment.GetEnvironmentVariable(SiteConstants.DELIVERYAPIKEY) ?? String.Empty;
     var spaceId = Environment.GetEnvironmentVariable(SiteConstants.CONTENTFULSPACEID) ?? String.Empty;
@@ -33,6 +35,7 @@ if (enableContentfulIntegration)
         configuration["ContentfulOptions:PreviewApiKey"] = previewApiKey;
     }
 
+  
     builder.Services.AddContentful(configuration);
 }
 
@@ -59,6 +62,10 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+if (contentfulEnvironment != AppEnvironment.dev.ToString())
+{
+    app.UseMiddleware<CheckRequestHeaderMiddleware>();
+}
 
 app.MapControllerRoute(
     name: "default",
