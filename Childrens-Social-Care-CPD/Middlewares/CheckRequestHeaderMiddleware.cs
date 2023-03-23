@@ -22,7 +22,6 @@ namespace Childrens_Social_Care_CPD
         public async Task InvokeAsync(HttpContext context)
         {
             const string hostHeaderKeyName = SiteConstants.HOSTHEADERKEYNAME;
-            //string StringValues;
             context.Request.Headers.TryGetValue(hostHeaderKeyName, out StringValues headerValue);
             if (!validHeaders.Contains<string>(headerValue))
             {
@@ -30,7 +29,6 @@ namespace Childrens_Social_Care_CPD
                 context.Response.StatusCode = (int)System.Net.HttpStatusCode.BadRequest;
                 await context.Response.WriteAsync("Bad request");
             }
-            await _next(context);
         }
     }
 }
