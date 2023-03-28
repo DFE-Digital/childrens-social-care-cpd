@@ -1,11 +1,15 @@
 ﻿@using Azure.Core
 @using Childrens_Social_Care_CPD.Enums
 @using Contentful.AspNetCore.TagHelpers
+@using Microsoft.AspNetCore.WebUtilities
+@using System.Text
 @addTagHelper *, Contentful.AspNetCore
 
 @{
     var pageName = ViewBag.pageName;
-    var returnUrl = string.Format("<a class=\"govuk-link\" href={0}>{1}</a>", @ViewBag.Referer, " Go back to the page you were looking at");
+    ASCIIEncoding ascii = new ASCIIEncoding();
+    var redirectURL = @ViewBag.Referer == null ? @ViewBag.Referer :ascii.GetString( WebEncoders.Base64UrlDecode(@ViewBag.Referer));
+    var returnUrl = string.Format("<a class=\"govuk-link\" href={0}>{1}</a>", redirectURL, " Go back to the page you were looking at");
     NotificationBanner banner = new NotificationBanner()
             {
                 Header = "Success",
