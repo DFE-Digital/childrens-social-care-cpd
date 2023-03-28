@@ -88,7 +88,6 @@ namespace Childrens_Social_Care_CPD.Controllers
         [ActionName("LandingPage")]
         public IActionResult SetCookies(string analyticsCookieConsent, string pageName, string pageType, string referer, string sendingPageType, string sendingPage)
         {
-             referer = (referer == null?referer: WebEncoders.Base64UrlEncode(System.Text.ASCIIEncoding.ASCII.GetBytes(referer)));
             return RedirectToAction("GetCookies", new { analyticsCookieConsent, pageName, pageType, referer, sendingPageType, sendingPage });
         }
 
