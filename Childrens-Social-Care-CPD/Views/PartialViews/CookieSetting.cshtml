@@ -1,13 +1,15 @@
 ﻿@using Childrens_Social_Care_CPD.Constants
 @using Childrens_Social_Care_CPD.Enums
 @using Contentful.AspNetCore.TagHelpers
+@using Microsoft.AspNetCore.WebUtilities
 @addTagHelper *, Contentful.AspNetCore
 
 @using (@Html.BeginForm("LandingPage", "CPD", null, FormMethod.Post, false, null))
 {
+    var refererValue = (@ViewBag.referer == null?@ViewBag.referer: WebEncoders.Base64UrlEncode(System.Text.ASCIIEncoding.ASCII.GetBytes(@ViewBag.referer)));
     <input type="hidden" id="pageNameId" value="@{@ViewBag.pageName}" name="pageName" />
     <input type="hidden" id="pageTypeId" value="@{@ViewBag.pageType}" name="pageType" />
-    <input type="hidden" id="referer" value="@{@ViewBag.referer}" name="referer" />
+    <input type="hidden" id="referer" value="@{@refererValue}" name="referer" />
     <input type="hidden" id="sendingPageTypeId" value="@{@ViewBag.sendingPageType}" name="sendingPageType"/>
     <input type="hidden" id="sendingPage" value="@{@ViewBag.sendingPage}" name="sendingPage"/>
 
