@@ -7,6 +7,9 @@ using System.Diagnostics;
 using Childrens_Social_Care_CPD.Enums;
 using Childrens_Social_Care_CPD.Constants;
 using Microsoft.AspNetCore.Diagnostics;
+using System.Security.Policy;
+using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace Childrens_Social_Care_CPD.Controllers
 {
@@ -85,6 +88,7 @@ namespace Childrens_Social_Care_CPD.Controllers
         [ActionName("LandingPage")]
         public IActionResult SetCookies(string analyticsCookieConsent, string pageName, string pageType, string referer, string sendingPageType, string sendingPage)
         {
+             referer = (referer == null?referer: WebEncoders.Base64UrlEncode(System.Text.ASCIIEncoding.ASCII.GetBytes(referer)));
             return RedirectToAction("GetCookies", new { analyticsCookieConsent, pageName, pageType, referer, sendingPageType, sendingPage });
         }
 
