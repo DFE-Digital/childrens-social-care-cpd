@@ -10,18 +10,21 @@ using Microsoft.AspNetCore.Diagnostics;
 using System.Security.Policy;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.WebUtilities;
+using Childrens_Social_Care_CPD.Interfaces;
+using Childrens_Social_Care_CPD.ActionFilters;
 
 namespace Childrens_Social_Care_CPD.Controllers
 {
+    [ServiceFilter(typeof(CPDActionFilter))]
     public class CPDController : BaseController
     {
         private readonly ILogger<CPDController> _logger;
-        private readonly IContentfulClient _client;
+        private readonly IContentfulDataService _contentfulDataService;
 
-        public CPDController(ILogger<CPDController> logger, IContentfulClient client) :base(client)
+        public CPDController(ILogger<CPDController> logger, IContentfulDataService contentfulDataService) 
         {
             _logger = logger;
-            _client = client;
+            _contentfulDataService = contentfulDataService;
         }
 
         /// <summary>
@@ -35,103 +38,8 @@ namespace Childrens_Social_Care_CPD.Controllers
         [HttpGet]
         public async Task<IActionResult> LandingPage(string pageName, string pageType, string sendingPage, string sendingPageType)
         {
-            var pageViewModel = await GetViewModel(pageName, pageType);
-            SetDisplayOrder(pageViewModel);
+            var pageViewModel = await _contentfulDataService.GetViewData<PageViewModel>(pageName, pageType);
             return View(pageViewModel);
         }
-
-        /// <summary>
-        /// Method to get Application information
-        /// </summary>
-        /// <returns>
-        /// Application information
-        /// </returns>
-        [HttpGet]
-        public JsonResult AppInfo()
-        {
-            var applicationInfo = new ApplicationInfo()
-            {
-                Environment = Environment.GetEnvironmentVariable(SiteConstants.ENVIRONMENT) ?? String.Empty,
-                ContentfulEnvironment = Environment.GetEnvironmentVariable(SiteConstants.AZUREENVIRONMENT) ?? String.Empty,
-                GitShortHash = Environment.GetEnvironmentVariable(SiteConstants.VCSREF) ?? String.Empty
-            };
-
-            return Json(applicationInfo);
-        }
-
-        /// <summary>
-        /// Method to set Google analytics cookie consent from user
-        /// </summary>
-        /// <param name="analyticsCookieConsent">
-        /// Cookie consent - Accept or Reject
-        /// </param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<IActionResult> GetCookies(string analyticsCookieConsent, string pageName, string pageType, string referer, string sendingPageType, string sendingPage)
-        {
-            CookieHelper.SetAnalyticsCookie(analyticsCookieConsent, HttpContext);
-            ViewBag.analyticsCookieSet = analyticsCookieConsent;
-            ViewBag.Referer = referer;
-            var pageViewModel = await GetViewModel(pageName, pageType);
-            SetDisplayOrder(pageViewModel);
-            return View("LandingPage", pageViewModel);
-        }
-
-        /// <summary>
-        /// Method to accept post and redirect to get method
-        /// </summary>
-        /// <param name="analyticsCookieConsent">
-        /// Cookie consent - Accept or Reject
-        /// </param>
-        /// <returns></returns>
-        [HttpPost]
-        [ActionName("LandingPage")]
-        public IActionResult SetCookies(string analyticsCookieConsent, string pageName, string pageType, string referer, string sendingPageType, string sendingPage)
-        {
-            return RedirectToAction("GetCookies", new { analyticsCookieConsent, pageName, pageType, referer, sendingPageType, sendingPage });
-        }
-
-        /// <summary>
-        /// Method to get contentful content using API call
-        /// </summary>
-        /// <param name="pageName">Contentful page name</param>
-        /// <param name="pageType">Contentful page type</param>
-        /// <returns></returns>
-        private async Task<ContentfulCollection<PageViewModel>> GetViewModel(string pageName, string pageType)
-        {
-            int contentLevel = 10;
-            ContentPageType contentPageType;
-
-            if (string.IsNullOrEmpty(pageName) && string.IsNullOrEmpty(pageType))
-            {
-                pageName = PageNames.HomePage.ToString();
-                contentPageType = new ContentPageType { PageType = PageTypes.Master.ToString() };
-            }
-            else
-            {
-                contentPageType = new ContentPageType { PageType = pageType };
-            }
-
-            var queryBuilder = QueryBuilder<PageViewModel>.New.ContentTypeIs(Constants.SiteConstants.PAGE)
-                .FieldEquals("fields.pageName.fields.pageName", pageName)
-                .FieldEquals("fields.pageName.sys.contentType.sys.id", Constants.SiteConstants.PAGENAMES)
-                .Include(contentLevel);
-
-            var result = await _client.GetEntries<PageViewModel>(queryBuilder);
-            result.All(c => { c.PageType = contentPageType; return true; });
-            
-            return result;
-        }
-
-        private void SetDisplayOrder(ContentfulCollection<PageViewModel> pageViewModel)
-        {
-            foreach (PageViewModel viewModel in pageViewModel)
-            {
-                viewModel.Cards = viewModel.Cards.OrderBy(x => x.SortOrder).ToList();
-                viewModel.Labels = viewModel.Labels.OrderBy(x => x.SortOrder).ToList();
-                viewModel.RichTexts = viewModel.RichTexts.OrderBy(x => x.SortOrder).ToList();
-            }
-        }
-
     }
 }

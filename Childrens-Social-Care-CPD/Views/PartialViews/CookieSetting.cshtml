@@ -4,7 +4,7 @@
 @using Microsoft.AspNetCore.WebUtilities
 @addTagHelper *, Contentful.AspNetCore
 
-@using (@Html.BeginForm("LandingPage", "CPD", null, FormMethod.Post, false, null))
+@using (@Html.BeginForm("SetCookies", "Cookie", null, FormMethod.Post, false, null))
 {
     var refererValue = (@ViewBag.referer == null?@ViewBag.referer: WebEncoders.Base64UrlEncode(System.Text.ASCIIEncoding.ASCII.GetBytes(@ViewBag.referer)));
     <input type="hidden" id="pageNameId" value="@{@ViewBag.pageName}" name="pageName" />

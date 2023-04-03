@@ -25,36 +25,34 @@ using ViewResult = Microsoft.AspNetCore.Mvc.ViewResult;
 namespace Childrens_Social_Care_CPD_Tests
 {
 
-    public class CPDControllerTests
+    public class CookieControllerTests
     {
         private Mock<IContentfulDataService> _contentfulDataService;
-        private Mock<ILogger<CPDController>> _logger;
+        private Mock<ILogger<CookieController>> _logger;
         private ContentfulCollection<PageViewModel> _pages;
         private PageFooter _footer;
         private PageHeader _header;
         private ContentfulCollection<CookieBanner> _banner;
-        private CPDController _target;
+        private CookieController _target;
 
         [SetUp]
         public void Setup()
         {
             SetupModels();
-
-
             _contentfulDataService = new Mock<IContentfulDataService>(MockBehavior.Strict);
             _contentfulDataService.Setup(c => c.GetViewData<PageViewModel>(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(_pages);
             _contentfulDataService.Setup(c => c.GetFooterData()).ReturnsAsync(_footer);
             _contentfulDataService.Setup(c => c.GetHeaderData()).ReturnsAsync(_header);
-            _logger = new Mock<ILogger<CPDController>>();
-            _target = new CPDController(_logger.Object, _contentfulDataService.Object);
+            _logger = new Mock<ILogger<CookieController>>();
+            _target = new CookieController(_logger.Object, _contentfulDataService.Object);
         }
 
         [Test]
-        public void LandingPageReturnsModelOfTypePageViewModelTest()
+        public void SetCookiesRedirectToGetCookiesTest()
         {
-            var actual = _target.LandingPage(null, null, null, null);
-            ViewResult viewResult = (ViewResult)actual.Result;
-            Assert.IsInstanceOf<ContentfulCollection<PageViewModel>>(viewResult.Model);
+            var actual = _target.SetCookies(null, null, null, null, null, null);
+            RedirectToActionResult viewResult = (RedirectToActionResult)actual;
+            Assert.AreEqual("GetCookies", viewResult.ActionName);
         }
 
         private void SetupModels()

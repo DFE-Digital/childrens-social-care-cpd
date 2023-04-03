@@ -11,16 +11,11 @@ using System.Net;
 
 namespace Childrens_Social_Care_CPD.Controllers
 {
-    public class ErrorController : BaseController
+    public class ErrorController : Controller
     {
-        private readonly ILogger<ErrorController> _logger;
-        private readonly IContentfulClient _client;
 
-
-        public ErrorController(ILogger<ErrorController> logger, IContentfulClient client) : base(client)
+        public ErrorController() 
         {
-            _logger = logger;
-            _client = client;
         }
 
         /// <summary>
