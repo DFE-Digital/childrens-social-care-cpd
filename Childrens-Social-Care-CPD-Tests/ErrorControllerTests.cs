@@ -19,15 +19,12 @@ namespace Childrens_Social_Care_CPD_Tests
 
     public class ErrorControllerTests
     {
-
-        private Mock<ILogger<ErrorController>> _logger;
         private ErrorController _target;
 
         [SetUp]
         public void Setup()
         {
-            _logger = new Mock<ILogger<ErrorController>>();
-            _target = new ErrorController(_logger.Object, null);
+            _target = new ErrorController();
         }
 
         [Test]
