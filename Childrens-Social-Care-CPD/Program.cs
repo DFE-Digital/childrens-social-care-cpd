@@ -20,11 +20,12 @@ builder.Services.AddTransient<CPDActionFilter>();
 builder.Services.AddContentful(ContentfulConfiguration.GetContentfulConfiguration(configuration));
 builder.Services.AddTransient<IContentfulDataService, ContentfulDataService>();
 
-//var options = new ApplicationInsightsServiceOptions {
-//    ConnectionString = Environment.GetEnvironmentVariable(SiteConstants.CPD_INSTRUMENTATION_CONNECTIONSTRING)??String.Empty
-//};
+var options = new ApplicationInsightsServiceOptions
+{
+    ConnectionString = Environment.GetEnvironmentVariable(SiteConstants.CPD_INSTRUMENTATION_CONNECTIONSTRING) ?? String.Empty
+};
 
-//builder.Services.AddApplicationInsightsTelemetry(options: options);
+builder.Services.AddApplicationInsightsTelemetry(options: options);
 
 var app = builder.Build();
 
