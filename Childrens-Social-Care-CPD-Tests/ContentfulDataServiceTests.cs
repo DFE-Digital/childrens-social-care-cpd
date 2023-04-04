@@ -52,6 +52,30 @@ namespace Childrens_Social_Care_CPD_Tests
             Assert.AreEqual(PageTypes.Master.ToString(), actual.FirstOrDefault().PageType.PageType.ToString());
         }
 
+        [Test]
+        public void GetHeaderDataReturnsDataWithPageHeaderModelTest()
+        {
+            var actual = _target.GetHeaderData().Result;
+            Assert.IsInstanceOf<PageHeader>(actual);
+            Assert.AreEqual("TestPageHeader", actual.Header);
+        }
+
+        [Test]
+        public void GetFooterDataReturnsDataWithPageFooterModelTest()
+        {
+            var actual = _target.GetFooterData().Result;
+            Assert.IsInstanceOf<PageFooter>(actual);
+            Assert.AreEqual(1, actual.FooterLinks.Count);
+        }
+
+        [Test]
+        public void GetCookieDataReturnsDataWithCookieBannerModelTest()
+        {
+            var actual = _target.GetCookieBannerData().Result;
+            Assert.IsInstanceOf<CookieBanner>(actual);
+            Assert.AreEqual("AcceptAnalytics", actual.AcceptCookieButtonText);
+        }
+
         private void SetupModels()
         {
             _pages = new ContentfulCollection<PageViewModel>
