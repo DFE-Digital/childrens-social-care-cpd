@@ -11,7 +11,6 @@ using NUnit.Framework;
 
 namespace Childrens_Social_Care_CPD_Tests
 {
-
     public class CPDControllerTests
     {
         private Mock<IContentfulDataService> _contentfulDataService;
