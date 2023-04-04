@@ -1,53 +1,55 @@
 using System.Collections.Generic;
-using Childrens_Social_Care_CPD.Controllers;
+using System.Linq;
 using Childrens_Social_Care_CPD.Enums;
 using Childrens_Social_Care_CPD.Interfaces;
 using Childrens_Social_Care_CPD.Models;
+using Childrens_Social_Care_CPD.Services;
+using Contentful.Core;
 using Contentful.Core.Models;
 using Contentful.Core.Search;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
-using ActionDescriptor = Microsoft.AspNetCore.Mvc.Abstractions.ActionDescriptor;
-using ActionExecutedContext = Microsoft.AspNetCore.Mvc.Filters.ActionExecutedContext;
-using ActionExecutingContext = Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext;
-using ModelStateDictionary = Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary;
-using RouteData = Microsoft.AspNetCore.Routing.RouteData;
-using ViewResult = Microsoft.AspNetCore.Mvc.ViewResult;
-
 
 namespace Childrens_Social_Care_CPD_Tests
 {
 
-    public class CookieControllerTests
+    public class ContentfulDataServiceTests
     {
-        private Mock<IContentfulDataService> _contentfulDataService;
-        private Mock<ILogger<CookieController>> _logger;
+        private Mock<IContentfulClient> _contentfulClient;
         private ContentfulCollection<PageViewModel> _pages;
-        private PageFooter _footer;
-        private PageHeader _header;
+        private ContentfulCollection<PageFooter> _footer;
+        private ContentfulCollection<PageHeader> _header;
         private ContentfulCollection<CookieBanner> _banner;
-        private CookieController _target;
+        private IContentfulDataService _target;
 
         [SetUp]
         public void Setup()
         {
             SetupModels();
-            _contentfulDataService = new Mock<IContentfulDataService>(MockBehavior.Strict);
-            _contentfulDataService.Setup(c => c.GetViewData<PageViewModel>(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(_pages);
-            _contentfulDataService.Setup(c => c.GetFooterData()).ReturnsAsync(_footer);
-            _contentfulDataService.Setup(c => c.GetHeaderData()).ReturnsAsync(_header);
-            _logger = new Mock<ILogger<CookieController>>();
-            _target = new CookieController(_logger.Object, _contentfulDataService.Object);
+
+
+            _contentfulClient = new Mock<IContentfulClient>(MockBehavior.Strict);
+            _contentfulClient.Setup(c => c.GetEntries<PageViewModel>(It.IsAny<QueryBuilder<PageViewModel>>(), default)).ReturnsAsync(_pages);
+            _contentfulClient.Setup(c => c.GetEntries<PageHeader>(It.IsAny<QueryBuilder<PageHeader>>(), default)).ReturnsAsync(_header);
+            _contentfulClient.Setup(c => c.GetEntries<PageFooter>(It.IsAny<QueryBuilder<PageFooter>>(), default)).ReturnsAsync(_footer);
+            _contentfulClient.Setup(c => c.GetEntries<CookieBanner>(It.IsAny<QueryBuilder<CookieBanner>>(), default)).ReturnsAsync(_banner);
+
+            _target = new ContentfulDataService(_contentfulClient.Object);
         }
 
         [Test]
-        public void SetCookiesRedirectToGetCookiesTest()
+        public void GetViewDataReturnsDataWithPageViewModelTest()
         {
-            var actual = _target.SetCookies(null, null, null, null, null, null);
-            RedirectToActionResult viewResult = (RedirectToActionResult)actual;
-            Assert.AreEqual("GetCookies", viewResult.ActionName);
+            var actual = _target.GetViewData<PageViewModel>("TestPage", "Master").Result;
+            Assert.IsInstanceOf<ContentfulCollection<PageViewModel>>(actual);
+            Assert.AreEqual("Test Description", actual.FirstOrDefault().Cards.FirstOrDefault().CardDescription);
+        }
+        [Test]
+        public void GetViewDataReturnsDataForMasterPageWhenNoPageNameOrPageTypeProvidedTest()
+        {
+            var actual = _target.GetViewData<PageViewModel>(null, null).Result;
+            Assert.IsInstanceOf<ContentfulCollection<PageViewModel>>(actual);
+            Assert.AreEqual(PageTypes.Master.ToString(), actual.FirstOrDefault().PageType.PageType.ToString());
         }
 
         private void SetupModels()
@@ -109,16 +111,26 @@ namespace Childrens_Social_Care_CPD_Tests
                 }
             };
 
-            _header = new PageHeader
+            _header = new ContentfulCollection<PageHeader>()
             {
-                Header = "TestPageHeader",
-                PrototypeHeader = "TestHeader",
-                PrototypeText = new Document(),
-                PrototypeTextHtml = "TestHtml",
+                Items = new List<PageHeader>()
+                {
+                    new PageHeader()
+                    {
+                        Header = "TestPageHeader",
+                        PrototypeHeader = "TestHeader",
+                        PrototypeText =  new Document(),
+                        PrototypeTextHtml = "TestHtml",
+                    }
+                }
             };
 
-            _footer = new PageFooter()
+            _footer = new ContentfulCollection<PageFooter>
             {
+                Items = new List<PageFooter>
+                {
+                    new PageFooter
+                    {
                         FooterLinks = new()
                         {
                             new Link
@@ -135,6 +147,8 @@ namespace Childrens_Social_Care_CPD_Tests
                         LicenceDescription = new Document(),
                         CopyrightLink = new Link(),
                         LicenceDescriptionText = "TestDescription"
+                    }
+                },
             };
 
             _banner = new ContentfulCollection<CookieBanner>()

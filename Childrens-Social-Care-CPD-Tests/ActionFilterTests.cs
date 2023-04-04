@@ -2,18 +2,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Childrens_Social_Care_CPD.ActionFilters;
 using Childrens_Social_Care_CPD.Controllers;
-using Childrens_Social_Care_CPD.Enums;
 using Childrens_Social_Care_CPD.Interfaces;
 using Childrens_Social_Care_CPD.Models;
-using Contentful.Core;
 using Contentful.Core.Models;
-using Contentful.Core.Search;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.Logging;
 using Moq;
-using Newtonsoft.Json;
 using NUnit.Framework;
 using ActionDescriptor = Microsoft.AspNetCore.Mvc.Abstractions.ActionDescriptor;
 using ActionExecutedContext = Microsoft.AspNetCore.Mvc.Filters.ActionExecutedContext;
@@ -21,7 +16,6 @@ using ActionExecutingContext = Microsoft.AspNetCore.Mvc.Filters.ActionExecutingC
 using ModelStateDictionary = Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary;
 using RouteData = Microsoft.AspNetCore.Routing.RouteData;
 using ViewResult = Microsoft.AspNetCore.Mvc.ViewResult;
-
 
 namespace Childrens_Social_Care_CPD_Tests
 {
