@@ -1,15 +1,10 @@
-using Azure.Identity;
 using Childrens_Social_Care_CPD;
 using Childrens_Social_Care_CPD.ActionFilters;
 using Childrens_Social_Care_CPD.Constants;
 using Childrens_Social_Care_CPD.Interfaces;
 using Childrens_Social_Care_CPD.Services;
 using Contentful.AspNetCore;
-using Contentful.Core;
-using Contentful.Core.Configuration;
 using Microsoft.ApplicationInsights.AspNetCore.Extensions;
-using Microsoft.ApplicationInsights.Extensibility;
-using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 

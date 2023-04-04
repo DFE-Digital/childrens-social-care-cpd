@@ -16,7 +16,7 @@ using Childrens_Social_Care_CPD.ActionFilters;
 namespace Childrens_Social_Care_CPD.Controllers
 {
     [ServiceFilter(typeof(CPDActionFilter))]
-    public class CPDController : BaseController
+    public class CPDController: Controller
     {
         private readonly ILogger<CPDController> _logger;
         private readonly IContentfulDataService _contentfulDataService;
