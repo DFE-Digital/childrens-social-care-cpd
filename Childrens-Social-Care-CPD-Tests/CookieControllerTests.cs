@@ -47,7 +47,7 @@ namespace Childrens_Social_Care_CPD_Tests
         {
             var actual = _target.SetCookies(null, null, null, null, null, null);
             RedirectToActionResult viewResult = (RedirectToActionResult)actual;
-            Assert.AreEqual("GetCookies", viewResult.ActionName);
+            Assert.AreEqual("LandingPage", viewResult.ActionName);
         }
 
         private void SetupModels()
