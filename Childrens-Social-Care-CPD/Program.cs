@@ -1,43 +1,23 @@
-using Azure.Identity;
+using Childrens_Social_Care_CPD;
+using Childrens_Social_Care_CPD.ActionFilters;
 using Childrens_Social_Care_CPD.Constants;
+using Childrens_Social_Care_CPD.Interfaces;
+using Childrens_Social_Care_CPD.Services;
 using Contentful.AspNetCore;
 using Microsoft.ApplicationInsights.AspNetCore.Extensions;
-using Microsoft.ApplicationInsights.Extensibility;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 ConfigurationManager configuration = builder.Configuration;
-builder.WebHost.UseSetting(WebHostDefaults.DetailedErrorsKey, "true");
-builder.WebHost.CaptureStartupErrors(true);
+builder.Services.AddTransient<CPDActionFilter>();
+builder.Services.AddContentful(ContentfulConfiguration.GetContentfulConfiguration(configuration));
+builder.Services.AddTransient<IContentfulDataService, ContentfulDataService>();
 
-bool enableContentfulIntegration = configuration.GetValue<bool>("EnableContentfulIntegration");
-
-if (enableContentfulIntegration)
+var options = new ApplicationInsightsServiceOptions
 {
-    var contentfulEnvironment = Environment.GetEnvironmentVariable(SiteConstants.ENVIRONMENT) ?? String.Empty;
-    var appEnvironment = Environment.GetEnvironmentVariable(SiteConstants.AZUREENVIRONMENT) ?? String.Empty;
-    var deliveryApiKey = Environment.GetEnvironmentVariable(SiteConstants.DELIVERYAPIKEY) ?? String.Empty;
-    var spaceId = Environment.GetEnvironmentVariable(SiteConstants.CONTENTFULSPACEID) ?? String.Empty;
-
-    configuration["ContentfulOptions:Environment"] = contentfulEnvironment;
-    configuration["ContentfulOptions:SpaceId"] = spaceId;
-    configuration["ContentfulOptions:DeliveryApiKey"] = deliveryApiKey;
-
-    if ((contentfulEnvironment.ToLower() != appEnvironment.ToLower()) && !String.IsNullOrEmpty(appEnvironment))
-    {
-        var previewApiKey = Environment.GetEnvironmentVariable(SiteConstants.PREVIEWAPIKEY) ?? String.Empty;
-        configuration["ContentfulOptions:host"] = SiteConstants.CONTENTFULPREVIEWHOST;
-        configuration["ContentfulOptions:UsePreviewApi"] = "true";
-        configuration["ContentfulOptions:PreviewApiKey"] = previewApiKey;
-    }
-
-    builder.Services.AddContentful(configuration);
-}
-
-var options = new ApplicationInsightsServiceOptions {
-    ConnectionString = Environment.GetEnvironmentVariable(SiteConstants.CPD_INSTRUMENTATION_CONNECTIONSTRING)??String.Empty
+    ConnectionString = Environment.GetEnvironmentVariable(SiteConstants.CPD_INSTRUMENTATION_CONNECTIONSTRING) ?? String.Empty
 };
 
 builder.Services.AddApplicationInsightsTelemetry(options: options);

@@ -1,26 +1,17 @@
 ﻿using Childrens_Social_Care_CPD.Models;
-using Contentful.Core;
-using Contentful.Core.Models;
-using Contentful.Core.Search;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using Childrens_Social_Care_CPD.Enums;
-using Childrens_Social_Care_CPD.Constants;
 using Microsoft.AspNetCore.Diagnostics;
 using System.Net;
+using Childrens_Social_Care_CPD.ActionFilters;
 
 namespace Childrens_Social_Care_CPD.Controllers
 {
-    public class ErrorController : BaseController
+    [ServiceFilter(typeof(CPDActionFilter))]
+    public class ErrorController : Controller
     {
-        private readonly ILogger<ErrorController> _logger;
-        private readonly IContentfulClient _client;
-
-
-        public ErrorController(ILogger<ErrorController> logger, IContentfulClient client) : base(client)
+        public ErrorController() 
         {
-            _logger = logger;
-            _client = client;
         }
 
         /// <summary>
