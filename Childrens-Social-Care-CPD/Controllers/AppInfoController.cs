@@ -17,6 +17,7 @@ namespace Childrens_Social_Care_CPD.Controllers
         /// Application information
         /// </returns>
         [HttpGet]
+        [Route("CPD/AppInfo")]
         public JsonResult AppInfo()
         {
             var applicationInfo = new ApplicationInfo()
