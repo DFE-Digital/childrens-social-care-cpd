@@ -8,6 +8,7 @@ using Contentful.Core.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using ActionDescriptor = Microsoft.AspNetCore.Mvc.Abstractions.ActionDescriptor;
@@ -28,6 +29,7 @@ namespace Childrens_Social_Care_CPD_Tests
         private ContentfulCollection<CookieBanner> _banner;
         private CPDActionFilter _target;
         private CPDController _controller;
+        private Mock<ILogger<CPDActionFilter>> _logger;
 
         [SetUp]
         public void Setup()
@@ -36,7 +38,8 @@ namespace Childrens_Social_Care_CPD_Tests
             _contentfulDataService = new Mock<IContentfulDataService>(MockBehavior.Loose);
             _contentfulDataService.Setup(c => c.GetFooterData()).ReturnsAsync(_footer);
             _contentfulDataService.Setup(c => c.GetHeaderData()).ReturnsAsync(_header);
-            _target = new CPDActionFilter(_contentfulDataService.Object);
+            _logger = new Mock<ILogger<CPDActionFilter>>();
+            _target = new CPDActionFilter(_logger.Object, _contentfulDataService.Object);
             _controller =  new CPDController(null,null);
         }
 
