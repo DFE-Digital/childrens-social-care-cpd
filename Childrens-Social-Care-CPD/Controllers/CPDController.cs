@@ -1,15 +1,5 @@
 ﻿using Childrens_Social_Care_CPD.Models;
-using Contentful.Core;
-using Contentful.Core.Models;
-using Contentful.Core.Search;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using Childrens_Social_Care_CPD.Enums;
-using Childrens_Social_Care_CPD.Constants;
-using Microsoft.AspNetCore.Diagnostics;
-using System.Security.Policy;
-using Microsoft.AspNetCore.Http.Extensions;
-using Microsoft.AspNetCore.WebUtilities;
 using Childrens_Social_Care_CPD.Interfaces;
 using Childrens_Social_Care_CPD.ActionFilters;
 
