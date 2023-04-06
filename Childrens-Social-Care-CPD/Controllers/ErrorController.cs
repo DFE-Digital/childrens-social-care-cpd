@@ -7,11 +7,12 @@ using Childrens_Social_Care_CPD.ActionFilters;
 
 namespace Childrens_Social_Care_CPD.Controllers
 {
-    [ServiceFilter(typeof(CPDActionFilter))]
     public class ErrorController : Controller
     {
-        public ErrorController() 
+        private readonly ILogger<ErrorController> _logger;
+        public ErrorController(ILogger<ErrorController> logger) 
         {
+            _logger = logger;
         }
 
         /// <summary>
@@ -22,6 +23,7 @@ namespace Childrens_Social_Care_CPD.Controllers
         public IActionResult Error()
         {
             var exceptionHandlerPathFeature = HttpContext?.Features.Get<IExceptionHandlerPathFeature>();
+            _logger.LogError(exceptionHandlerPathFeature?.Error.Message);
             return View(
                 new ErrorViewModel
                 {

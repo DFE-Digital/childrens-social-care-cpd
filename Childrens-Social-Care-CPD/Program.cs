@@ -5,43 +5,67 @@ using Childrens_Social_Care_CPD.Interfaces;
 using Childrens_Social_Care_CPD.Services;
 using Contentful.AspNetCore;
 using Microsoft.ApplicationInsights.AspNetCore.Extensions;
+using Microsoft.Extensions.Logging.AzureAppServices;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Host.ConfigureLogging(logging => logging.AddAzureWebAppDiagnostics())
+.ConfigureServices(serviceCollection => serviceCollection
+    .Configure<AzureFileLoggerOptions>(options =>
+    {
+        options.FileName = "azure-diagnostics-";
+        options.FileSizeLimit = 50 * 1024;
+        options.RetainedFileCountLimit = 5;
+    }).Configure<AzureBlobLoggerOptions>(options =>
+    {
+        options.BlobName = "log.txt";
+    })
+);
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
-ConfigurationManager configuration = builder.Configuration;
-builder.Services.AddTransient<CPDActionFilter>();
-builder.Services.AddContentful(ContentfulConfiguration.GetContentfulConfiguration(configuration));
-builder.Services.AddTransient<IContentfulDataService, ContentfulDataService>();
-
-var options = new ApplicationInsightsServiceOptions
+try
 {
-    ConnectionString = Environment.GetEnvironmentVariable(SiteConstants.CPD_INSTRUMENTATION_CONNECTIONSTRING) ?? String.Empty
-};
+    // Add services to the container.
+    builder.Services.AddControllersWithViews();
+    ConfigurationManager configuration = builder.Configuration;
+    builder.Services.AddTransient<CPDActionFilter>();
+    builder.Services.AddContentful(ContentfulConfiguration.GetContentfulConfiguration(configuration));
+    builder.Services.AddTransient<IContentfulDataService, ContentfulDataService>();
 
-builder.Services.AddApplicationInsightsTelemetry(options: options);
+    var options = new ApplicationInsightsServiceOptions
+    {
+        ConnectionString = Environment.GetEnvironmentVariable(SiteConstants.CPD_INSTRUMENTATION_CONNECTIONSTRING) ?? String.Empty
+    };
 
-var app = builder.Build();
+    builder.Services.AddApplicationInsightsTelemetry(options: options);
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    var app = builder.Build();
+
+    // Configure the HTTP request pipeline.
+    if (app.Environment.IsDevelopment())
+    {
+        // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+        app.UseHsts();
+    }
+    app.UseExceptionHandler("/Error/Error");
+    app.UseStatusCodePagesWithRedirects("/Error/Error/{0}");
+
+    app.UseHttpsRedirection();
+    app.UseStaticFiles();
+
+    app.UseRouting();
+
+    app.UseAuthorization();
+    app.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=CPD}/{action=LandingPage}");
+
+    app.Run();
 }
-app.UseExceptionHandler("/Error/Error");
-app.UseStatusCodePagesWithRedirects("/Error/Error/{0}");
+catch (Exception ex)
+{
+    using var loggerFactory = LoggerFactory.Create(loggingBuilder => loggingBuilder
+    .SetMinimumLevel(LogLevel.Trace)
+    .AddAzureWebAppDiagnostics());
+    ILogger logger = loggerFactory.CreateLogger<Program>();
+    logger.LogInformation($"Error in Application startup - {ex.ToString()}");
+}
 
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-
-app.UseRouting();
-
-app.UseAuthorization();
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=CPD}/{action=LandingPage}");
-
-app.Run();

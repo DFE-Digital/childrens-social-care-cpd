@@ -38,6 +38,9 @@ namespace Childrens_Social_Care_CPD.Controllers
         [HttpGet]
         public async Task<IActionResult> LandingPage(string pageName, string pageType, string sendingPage, string sendingPageType)
         {
+            _logger.LogError("Test Error");
+            _logger.LogInformation("Test information");
+            _logger.LogTrace("Test trace");
             var pageViewModel = await _contentfulDataService.GetViewData<PageViewModel>(pageName, pageType);
             return View(pageViewModel);
         }
