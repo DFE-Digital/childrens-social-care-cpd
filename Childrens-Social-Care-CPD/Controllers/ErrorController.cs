@@ -22,7 +22,7 @@ namespace Childrens_Social_Care_CPD.Controllers
         public IActionResult Error()
         {
             var exceptionHandlerPathFeature = HttpContext?.Features.Get<IExceptionHandlerPathFeature>();
-            _logger.LogError($"CPDException {exceptionHandlerPathFeature?.Error.Message}");
+            _logger.LogError($"CPDException {exceptionHandlerPathFeature?.Error.Message} {exceptionHandlerPathFeature?.Error.StackTrace}");
             return View(
                 new ErrorViewModel
                 {
