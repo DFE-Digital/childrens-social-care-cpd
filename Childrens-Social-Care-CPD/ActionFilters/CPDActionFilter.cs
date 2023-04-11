@@ -28,6 +28,16 @@ namespace Childrens_Social_Care_CPD.ActionFilters
         {
             try
             {
+                var contentfulEnvironment = Environment.GetEnvironmentVariable(SiteConstants.ENVIRONMENT) ?? String.Empty;
+                var appEnvironment = Environment.GetEnvironmentVariable(SiteConstants.AZUREENVIRONMENT) ?? String.Empty;
+                var deliveryApiKey = Environment.GetEnvironmentVariable(SiteConstants.DELIVERYAPIKEY) ?? String.Empty;
+                var spaceId = Environment.GetEnvironmentVariable(SiteConstants.CONTENTFULSPACEID) ?? String.Empty;
+
+                if (string.IsNullOrEmpty(contentfulEnvironment) || string.IsNullOrEmpty(appEnvironment) || string.IsNullOrEmpty(deliveryApiKey) ||
+                                  string.IsNullOrEmpty(spaceId))
+                {
+                    _logger.LogInformation($"CPDInformation - Environment variable(s) missing the value. Contentful integration might not work as expected. Please check terraform.");
+                }
 
                 Controller controller = filterContext.Controller as Controller;
                 controller.ViewBag.pageName = filterContext.ActionArguments.ContainsKey(SiteConstants.PAGENAME) ? filterContext.ActionArguments[SiteConstants.PAGENAME] ?? string.Empty : string.Empty;

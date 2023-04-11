@@ -20,9 +20,6 @@ builder.Host.ConfigureLogging(logging => logging.AddAzureWebAppDiagnostics())
         options.BlobName = "log.txt";
     })
 );
-
-try
-{
     // Add services to the container.
     builder.Services.AddControllersWithViews();
     ConfigurationManager configuration = builder.Configuration;
@@ -59,13 +56,3 @@ try
         pattern: "{controller=CPD}/{action=LandingPage}");
 
     app.Run();
-}
-catch (Exception ex)
-{
-    using var loggerFactory = LoggerFactory.Create(loggingBuilder => loggingBuilder
-    .SetMinimumLevel(LogLevel.Trace)
-    .AddAzureWebAppDiagnostics());
-    ILogger logger = loggerFactory.CreateLogger<Program>();
-    logger.LogInformation($"Error in Application startup - {ex.ToString()}");
-}
-
