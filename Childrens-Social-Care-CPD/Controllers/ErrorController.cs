@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Diagnostics;
 using System.Net;
+using Childrens_Social_Care_CPD.Constants;
 
 namespace Childrens_Social_Care_CPD.Controllers
 {
@@ -22,7 +23,7 @@ namespace Childrens_Social_Care_CPD.Controllers
         public IActionResult Error()
         {
             var exceptionHandlerPathFeature = HttpContext?.Features.Get<IExceptionHandlerPathFeature>();
-            _logger.LogError($"CPDException {exceptionHandlerPathFeature?.Error.Message} {exceptionHandlerPathFeature?.Error.StackTrace}");
+            _logger.LogError($"CPDException {exceptionHandlerPathFeature?.Error.Message}");
             return View(
                 new ErrorViewModel
                 {
