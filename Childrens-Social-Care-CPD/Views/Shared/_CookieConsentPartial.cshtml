@@ -14,7 +14,7 @@
 
 @if (acceptsAnalytics == null && cookieBannerViewModel != null)
 {
-    @using (@Html.BeginForm("LandingPage", "CPD",null, FormMethod.Post,false, null))
+    @using (@Html.BeginForm("SetCookies", "Cookie",null, FormMethod.Post,false, null))
     {
         <input type="hidden" id="pageNameId" value="@{@ViewBag.pageName}" name="pageName"/>
         <input type="hidden" id="pageTypeId" value="@{@ViewBag.pageType}" name="pageType"/>

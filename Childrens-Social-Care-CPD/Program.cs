@@ -1,67 +1,58 @@
-using Azure.Identity;
+using Childrens_Social_Care_CPD;
+using Childrens_Social_Care_CPD.ActionFilters;
 using Childrens_Social_Care_CPD.Constants;
+using Childrens_Social_Care_CPD.Interfaces;
+using Childrens_Social_Care_CPD.Services;
 using Contentful.AspNetCore;
 using Microsoft.ApplicationInsights.AspNetCore.Extensions;
-using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.Extensions.Logging.AzureAppServices;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-builder.Services.AddControllersWithViews();
-ConfigurationManager configuration = builder.Configuration;
-builder.WebHost.UseSetting(WebHostDefaults.DetailedErrorsKey, "true");
-builder.WebHost.CaptureStartupErrors(true);
-
-bool enableContentfulIntegration = configuration.GetValue<bool>("EnableContentfulIntegration");
-
-if (enableContentfulIntegration)
-{
-    var contentfulEnvironment = Environment.GetEnvironmentVariable(SiteConstants.ENVIRONMENT) ?? String.Empty;
-    var appEnvironment = Environment.GetEnvironmentVariable(SiteConstants.AZUREENVIRONMENT) ?? String.Empty;
-    var deliveryApiKey = Environment.GetEnvironmentVariable(SiteConstants.DELIVERYAPIKEY) ?? String.Empty;
-    var spaceId = Environment.GetEnvironmentVariable(SiteConstants.CONTENTFULSPACEID) ?? String.Empty;
-
-    configuration["ContentfulOptions:Environment"] = contentfulEnvironment;
-    configuration["ContentfulOptions:SpaceId"] = spaceId;
-    configuration["ContentfulOptions:DeliveryApiKey"] = deliveryApiKey;
-
-    if ((contentfulEnvironment.ToLower() != appEnvironment.ToLower()) && !String.IsNullOrEmpty(appEnvironment))
+builder.Host.ConfigureLogging(logging => logging.AddAzureWebAppDiagnostics())
+.ConfigureServices(serviceCollection => serviceCollection
+    .Configure<AzureFileLoggerOptions>(options =>
     {
-        var previewApiKey = Environment.GetEnvironmentVariable(SiteConstants.PREVIEWAPIKEY) ?? String.Empty;
-        configuration["ContentfulOptions:host"] = SiteConstants.CONTENTFULPREVIEWHOST;
-        configuration["ContentfulOptions:UsePreviewApi"] = "true";
-        configuration["ContentfulOptions:PreviewApiKey"] = previewApiKey;
+        options.FileName = "azure-diagnostics-";
+        options.FileSizeLimit = 50 * 1024;
+        options.RetainedFileCountLimit = 5;
+    }).Configure<AzureBlobLoggerOptions>(options =>
+    {
+        options.BlobName = "log.txt";
+    })
+);
+    // Add services to the container.
+    builder.Services.AddControllersWithViews();
+    ConfigurationManager configuration = builder.Configuration;
+    builder.Services.AddTransient<CPDActionFilter>();
+    builder.Services.AddContentful(ContentfulConfiguration.GetContentfulConfiguration(configuration));
+    builder.Services.AddTransient<IContentfulDataService, ContentfulDataService>();
+
+    var options = new ApplicationInsightsServiceOptions
+    {
+        ConnectionString = Environment.GetEnvironmentVariable(SiteConstants.CPD_INSTRUMENTATION_CONNECTIONSTRING) ?? String.Empty
+    };
+
+    builder.Services.AddApplicationInsightsTelemetry(options: options);
+
+    var app = builder.Build();
+
+    // Configure the HTTP request pipeline.
+    if (app.Environment.IsDevelopment())
+    {
+        // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+        app.UseHsts();
     }
+    app.UseExceptionHandler("/Error/Error");
+    app.UseStatusCodePagesWithRedirects("/Error/Error/{0}");
 
-    builder.Services.AddContentful(configuration);
-}
+    app.UseHttpsRedirection();
+    app.UseStaticFiles();
 
-var options = new ApplicationInsightsServiceOptions {
-    ConnectionString = Environment.GetEnvironmentVariable(SiteConstants.CPD_INSTRUMENTATION_CONNECTIONSTRING)??String.Empty
-};
+    app.UseRouting();
 
-builder.Services.AddApplicationInsightsTelemetry(options: options);
+    app.UseAuthorization();
+    app.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=CPD}/{action=LandingPage}");
 
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
-app.UseExceptionHandler("/Error/Error");
-app.UseStatusCodePagesWithRedirects("/Error/Error/{0}");
-
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-
-app.UseRouting();
-
-app.UseAuthorization();
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=CPD}/{action=LandingPage}");
-
-app.Run();
+    app.Run();

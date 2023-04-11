@@ -1,25 +1,26 @@
 using System.Collections.Generic;
-using Childrens_Social_Care_CPD.Controllers;
+using System.Linq;
+using Childrens_Social_Care_CPD.Enums;
 using Childrens_Social_Care_CPD.Interfaces;
 using Childrens_Social_Care_CPD.Models;
+using Childrens_Social_Care_CPD.Services;
+using Contentful.Core;
 using Contentful.Core.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using Contentful.Core.Search;
 using Moq;
 using NUnit.Framework;
 
-
 namespace Childrens_Social_Care_CPD_Tests
 {
-    public class CPDControllerTests
+
+    public class ContentfulDataServiceTests
     {
-        private Mock<IContentfulDataService> _contentfulDataService;
-        private Mock<ILogger<CPDController>> _logger;
+        private Mock<IContentfulClient> _contentfulClient;
         private ContentfulCollection<PageViewModel> _pages;
-        private PageFooter _footer;
-        private PageHeader _header;
+        private ContentfulCollection<PageFooter> _footer;
+        private ContentfulCollection<PageHeader> _header;
         private ContentfulCollection<CookieBanner> _banner;
-        private CPDController _target;
+        private IContentfulDataService _target;
 
         [SetUp]
         public void Setup()
@@ -27,20 +28,52 @@ namespace Childrens_Social_Care_CPD_Tests
             SetupModels();
 
 
-            _contentfulDataService = new Mock<IContentfulDataService>(MockBehavior.Strict);
-            _contentfulDataService.Setup(c => c.GetViewData<PageViewModel>(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(_pages);
-            _contentfulDataService.Setup(c => c.GetFooterData()).ReturnsAsync(_footer);
-            _contentfulDataService.Setup(c => c.GetHeaderData()).ReturnsAsync(_header);
-            _logger = new Mock<ILogger<CPDController>>();
-            _target = new CPDController(_logger.Object, _contentfulDataService.Object);
+            _contentfulClient = new Mock<IContentfulClient>(MockBehavior.Strict);
+            _contentfulClient.Setup(c => c.GetEntries<PageViewModel>(It.IsAny<QueryBuilder<PageViewModel>>(), default)).ReturnsAsync(_pages);
+            _contentfulClient.Setup(c => c.GetEntries<PageHeader>(It.IsAny<QueryBuilder<PageHeader>>(), default)).ReturnsAsync(_header);
+            _contentfulClient.Setup(c => c.GetEntries<PageFooter>(It.IsAny<QueryBuilder<PageFooter>>(), default)).ReturnsAsync(_footer);
+            _contentfulClient.Setup(c => c.GetEntries<CookieBanner>(It.IsAny<QueryBuilder<CookieBanner>>(), default)).ReturnsAsync(_banner);
+
+            _target = new ContentfulDataService(_contentfulClient.Object);
         }
 
         [Test]
-        public void LandingPageReturnsModelOfTypePageViewModelTest()
+        public void GetViewDataReturnsDataWithPageViewModelTest()
         {
-            var actual = _target.LandingPage(null, null, null, null);
-            ViewResult viewResult = (ViewResult)actual.Result;
-            Assert.IsInstanceOf<ContentfulCollection<PageViewModel>>(viewResult.Model);
+            var actual = _target.GetViewData<PageViewModel>("TestPage", "Master").Result;
+            Assert.IsInstanceOf<ContentfulCollection<PageViewModel>>(actual);
+            Assert.AreEqual("Test Description", actual.FirstOrDefault().Cards.FirstOrDefault().CardDescription);
+        }
+        [Test]
+        public void GetViewDataReturnsDataForMasterPageWhenNoPageNameOrPageTypeProvidedTest()
+        {
+            var actual = _target.GetViewData<PageViewModel>(null, null).Result;
+            Assert.IsInstanceOf<ContentfulCollection<PageViewModel>>(actual);
+            Assert.AreEqual(PageTypes.Master.ToString(), actual.FirstOrDefault().PageType.PageType.ToString());
+        }
+
+        [Test]
+        public void GetHeaderDataReturnsDataWithPageHeaderModelTest()
+        {
+            var actual = _target.GetHeaderData().Result;
+            Assert.IsInstanceOf<PageHeader>(actual);
+            Assert.AreEqual("TestPageHeader", actual.Header);
+        }
+
+        [Test]
+        public void GetFooterDataReturnsDataWithPageFooterModelTest()
+        {
+            var actual = _target.GetFooterData().Result;
+            Assert.IsInstanceOf<PageFooter>(actual);
+            Assert.AreEqual(1, actual.FooterLinks.Count);
+        }
+
+        [Test]
+        public void GetCookieDataReturnsDataWithCookieBannerModelTest()
+        {
+            var actual = _target.GetCookieBannerData().Result;
+            Assert.IsInstanceOf<CookieBanner>(actual);
+            Assert.AreEqual("AcceptAnalytics", actual.AcceptCookieButtonText);
         }
 
         private void SetupModels()
@@ -102,16 +135,26 @@ namespace Childrens_Social_Care_CPD_Tests
                 }
             };
 
-            _header = new PageHeader
+            _header = new ContentfulCollection<PageHeader>()
             {
-                Header = "TestPageHeader",
-                PrototypeHeader = "TestHeader",
-                PrototypeText = new Document(),
-                PrototypeTextHtml = "TestHtml",
+                Items = new List<PageHeader>()
+                {
+                    new PageHeader()
+                    {
+                        Header = "TestPageHeader",
+                        PrototypeHeader = "TestHeader",
+                        PrototypeText =  new Document(),
+                        PrototypeTextHtml = "TestHtml",
+                    }
+                }
             };
 
-            _footer = new PageFooter()
+            _footer = new ContentfulCollection<PageFooter>
             {
+                Items = new List<PageFooter>
+                {
+                    new PageFooter
+                    {
                         FooterLinks = new()
                         {
                             new Link
@@ -128,6 +171,8 @@ namespace Childrens_Social_Care_CPD_Tests
                         LicenceDescription = new Document(),
                         CopyrightLink = new Link(),
                         LicenceDescriptionText = "TestDescription"
+                    }
+                },
             };
 
             _banner = new ContentfulCollection<CookieBanner>()
