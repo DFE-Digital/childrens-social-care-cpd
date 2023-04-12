@@ -9,7 +9,9 @@
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>.</DockerfileContext>
   </PropertyGroup>
-
+	<ItemGroup>
+		<InternalsVisibleTo Include="Childrens-Social-Care-CPD-Tests" />
+	</ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Extensions.AspNetCore.Configuration.Secrets" Version="1.2.2" />
     <PackageReference Include="Azure.Identity" Version="1.7.0" />
