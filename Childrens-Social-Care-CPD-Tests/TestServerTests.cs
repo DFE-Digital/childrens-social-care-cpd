@@ -15,12 +15,21 @@ namespace Childrens_Social_Care_CPD_Tests
     public class TestServerTests
     {
         [Test]
-        public async Task Given_there_is_a_test_server_LandingPage_Get_Request_Returns_Success_Test()
+        public async Task WebPage_Get_Request_Returns_Success_Test()
         {
             var webApplicationFactory = new CPDTestServerApplication();
             HttpClient client = webApplicationFactory.CreateClient();
             var actual = await client.GetAsync("/CPD/LandingPage");
             Assert.True(actual.IsSuccessStatusCode);
+        }
+
+        [Test]
+        public async Task WebPage_Get_Request_Returns_ErrorPage_With_Status_Code_When_PageNotFound_Test()
+        {
+            var webApplicationFactory = new CPDTestServerApplication();
+            HttpClient client = webApplicationFactory.CreateClient();
+            var actual = await client.GetAsync("/CPD/InvalidURL");
+            Assert.AreEqual("/Error/Error/404", actual.RequestMessage.RequestUri.AbsolutePath);
         }
     }
 
