@@ -23,4 +23,8 @@
     <ProjectReference Include="..\Childrens-Social-Care-CPD\Childrens-Social-Care-CPD.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
 </Project>
