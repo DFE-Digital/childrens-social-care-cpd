@@ -16,7 +16,7 @@ env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
-  IMAGE_NAME: contentful-space-export
+  IMAGE_NAME: DFE-Digital/contentful-space-export
 
 jobs:
   build:
