@@ -1,0 +1,36 @@
+name: Backup Contentful
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *' # This will run every day at midnight UTC
+
+jobs:
+  backup:
+    name: 'Backup Contentful'
+    runs-on: ubuntu-latest
+    env:
+      ENVID: prod
+      SPACE: ${{ secrets.TF_VAR_CPD_SPACE_ID }}
+      MANAGEMENT_TOKEN: ${{ secrets.CONTENTFUL_MANAGEMENT_TOKEN }}
+
+    steps:
+    - name: Run backup container
+      run: docker run --rm -e token=$MANAGEMENT_TOKEN -e space=$SPACE -e envid=$ENVID -v $PWD:/opt/backup ghcr.io/dfe-digital/contentful-space-export:master
+
+    - name: Checkout destination repository
+      uses: actions/checkout@v2
+      with:
+        repository: DFE-Digital/childrens-social-care-cpd-contentful-backup
+        token: ${{ secrets.BACKUP_REPO_PAT }}
+        path: backup
+
+    - name: Copy output and commit
+      run: |
+        cp `find *.json` backup/prod-contentful-backup-output.json
+        cd backup
+        git config user.name "Albal Robot"
+        git config user.email "allan.west@digital.education.gov.uk"
+        git add prod-contentful-backup-output.json
+        git commit -m "Upload new backup"
+        git push
