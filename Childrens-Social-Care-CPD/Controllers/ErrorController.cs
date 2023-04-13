@@ -1,26 +1,18 @@
 ﻿using Childrens_Social_Care_CPD.Models;
-using Contentful.Core;
-using Contentful.Core.Models;
-using Contentful.Core.Search;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using Childrens_Social_Care_CPD.Enums;
-using Childrens_Social_Care_CPD.Constants;
 using Microsoft.AspNetCore.Diagnostics;
 using System.Net;
+using Childrens_Social_Care_CPD.Constants;
 
 namespace Childrens_Social_Care_CPD.Controllers
 {
-    public class ErrorController : BaseController
+    public class ErrorController : Controller
     {
         private readonly ILogger<ErrorController> _logger;
-        private readonly IContentfulClient _client;
-
-
-        public ErrorController(ILogger<ErrorController> logger, IContentfulClient client) : base(client)
+        public ErrorController(ILogger<ErrorController> logger) 
         {
             _logger = logger;
-            _client = client;
         }
 
         /// <summary>
@@ -31,6 +23,7 @@ namespace Childrens_Social_Care_CPD.Controllers
         public IActionResult Error()
         {
             var exceptionHandlerPathFeature = HttpContext?.Features.Get<IExceptionHandlerPathFeature>();
+            _logger.LogError($"CPDException {exceptionHandlerPathFeature?.Error.Message}");
             return View(
                 new ErrorViewModel
                 {
