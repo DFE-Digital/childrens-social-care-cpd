@@ -22,4 +22,9 @@
     <ProjectReference Include="..\Childrens-Social-Care-CPD\Childrens-Social-Care-CPD.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Cypress\e2e\" />
+    <Folder Include="Cypress\support\" />
+  </ItemGroup>
+
 </Project>
