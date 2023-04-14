@@ -1,13 +1,6 @@
 using System.Collections.Generic;
-using Childrens_Social_Care_CPD.Controllers;
-using Childrens_Social_Care_CPD.Interfaces;
 using Childrens_Social_Care_CPD.Models;
 using Contentful.Core.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Moq;
-using NUnit.Framework;
-
 
 namespace Childrens_Social_Care_CPD_Tests
 {
