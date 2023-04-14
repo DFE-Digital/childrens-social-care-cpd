@@ -21,7 +21,6 @@ namespace Childrens_Social_Care_CPD_Tests
 {
     public class TestServerTests
     {
-        private bool throwException;
 
         [Test]
         public async Task Get_Request_Returns_Success_Test()
