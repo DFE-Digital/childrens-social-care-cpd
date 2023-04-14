@@ -95,7 +95,6 @@ namespace Childrens_Social_Care_CPD_Tests
      internal class CPDTestServerApplication : WebApplicationFactory<Program>
     {
         private Mock<IContentfulDataService> _contentfulDataService;
-        private ContentfulCollection<PageViewModel> _pages;
         public CPDTestServerApplication(bool testExceptionScenario)
         {
             _contentfulDataService = new Mock<IContentfulDataService>();
