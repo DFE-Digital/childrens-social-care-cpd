@@ -98,7 +98,6 @@ namespace Childrens_Social_Care_CPD_Tests
         private ContentfulCollection<PageViewModel> _pages;
         public CPDTestServerApplication(bool testExceptionScenario)
         {
-            SetupModels();
             _contentfulDataService = new Mock<IContentfulDataService>();
             if(testExceptionScenario)
             {
@@ -106,7 +105,7 @@ namespace Childrens_Social_Care_CPD_Tests
             }
             else
             {
-                _contentfulDataService.Setup(c => c.GetViewData<PageViewModel>(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(_pages);
+                _contentfulDataService.Setup(c => c.GetViewData<PageViewModel>(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(MockData.Pages);
             }
         }
        
@@ -117,66 +116,6 @@ namespace Childrens_Social_Care_CPD_Tests
                 services.AddTransient<IContentfulDataService>((_) => _contentfulDataService.Object);
             });
             return base.CreateHost(builder);
-        }
-
-        private void SetupModels()
-        {
-            _pages = new ContentfulCollection<PageViewModel>
-            {
-                Items = new List<PageViewModel>
-                {
-                    new PageViewModel
-                    {
-                        PageName = new ContentPageName { PageName = "TestPage" },
-                        PageTitle = "Test Title",
-                        PageHeading = "TestHeading",
-                        PageSubHeading = "TestSubHeading",
-                        PageType = new ContentPageType { PageType = "Master" },
-                        Cards = new List<Card>
-                        {
-                            new Card
-                            {
-                                CardHeader = "TestCardHeading",
-                                CardContents = "Test contents",
-                                CardDescription = "Test Description",
-                                SortOrder = 0,
-                                PageType = null,
-                                RedirectPageName = null
-                            }
-                        },
-                        Links = new List<Link>
-                        {
-                            new Link
-                            {
-                                LinkText = "TestLink",
-                                LinkURL = "#",
-                                SortOrder = 0
-                            }
-                        },
-                        Labels = new List<Label>
-                        {
-                            new Label
-                            {
-                                labelHeading = "TestLabelHeading",
-                                LabelText = "TestLabelText",
-                                LabelType = null,
-                                LabelTextLink = "#",
-                                SortOrder = 0
-                            }
-                        },
-                        RichTexts = new List<RichText>
-                        {
-                            new RichText
-                            {
-                                Heading = "TestHeading",
-                                SubHeading = "TestSubHeading",
-                                RichTextContents = new Document(),
-                                SortOrder = 0
-                            }
-                        }
-                    }
-                }
-            };
         }
     }
 }
