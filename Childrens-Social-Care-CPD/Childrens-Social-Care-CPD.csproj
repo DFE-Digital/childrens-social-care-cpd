@@ -23,5 +23,8 @@
     <PackageReference Include="Microsoft.Extensions.Logging.AzureAppServices" Version="7.0.4" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
 
 </Project>
