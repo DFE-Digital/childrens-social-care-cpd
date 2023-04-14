@@ -29,8 +29,13 @@ jobs:
       run: |
         cp `find *.json` backup/prod-contentful-backup-output.json
         cd backup
-        git config user.name "Albal Robot"
-        git config user.email "allan.west@digital.education.gov.uk"
-        git add prod-contentful-backup-output.json
-        git commit -m "Upload new backup"
-        git push
+        if git diff --exit-code --quiet; then
+          echo "No changes detected, skipping push"
+        else
+          git config user.name "Albal Robot"
+          git config user.email "allan.west@digital.education.gov.uk"
+          git add prod-contentful-backup-output.json
+          git commit -m "Upload new backup"
+          git push
+        fi
+
