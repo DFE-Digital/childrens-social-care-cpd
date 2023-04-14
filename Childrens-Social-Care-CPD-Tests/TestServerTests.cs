@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -12,6 +13,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Rest;
 using Moq;
 using NUnit.Framework;
 
@@ -19,6 +21,8 @@ namespace Childrens_Social_Care_CPD_Tests
 {
     public class TestServerTests
     {
+        private bool throwException;
+
         [Test]
         public async Task Get_Request_Returns_Success_Test()
         {
@@ -26,6 +30,16 @@ namespace Childrens_Social_Care_CPD_Tests
             HttpClient client = GetClient();
             var actual = await client.GetAsync(requestUri);
             Assert.True(actual.IsSuccessStatusCode);
+        }
+
+        [Test]
+        public async Task Get_Request_Returns_ErrorPage_When_Internal_Server_Error_Test()
+        {
+            var requestUri = "/CPD/LandingPage";
+            HttpClient client = GetClient(testExceptionScenario:true);
+            var actual = await client.GetAsync(requestUri);
+
+            Assert.AreEqual(StatusCodes.Status500InternalServerError, (int)actual.StatusCode) ;
         }
 
         [Test]
@@ -67,14 +81,13 @@ namespace Childrens_Social_Care_CPD_Tests
                 new KeyValuePair<string, string>("analyticsCookieConsent", "reject")
             });
             var actual = await client.PostAsync(requestUri, stringContent);
-
             Assert.True(actual.IsSuccessStatusCode);
             Assert.IsTrue(actual.Headers.GetValues("Set-Cookie").FirstOrDefault().Contains("cookie_consent=reject"));
         }
 
-        private HttpClient GetClient()
+        private HttpClient GetClient(bool testExceptionScenario = false)
         {
-            var webApplicationFactory = new CPDTestServerApplication();
+            var webApplicationFactory = new CPDTestServerApplication(testExceptionScenario);
             HttpClient client = webApplicationFactory.CreateClient();
             return client;
         }
@@ -84,11 +97,18 @@ namespace Childrens_Social_Care_CPD_Tests
     {
         private Mock<IContentfulDataService> _contentfulDataService;
         private ContentfulCollection<PageViewModel> _pages;
-        public CPDTestServerApplication()
+        public CPDTestServerApplication(bool testExceptionScenario)
         {
             SetupModels();
             _contentfulDataService = new Mock<IContentfulDataService>();
-            _contentfulDataService.Setup(c => c.GetViewData<PageViewModel>(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(_pages);
+            if(testExceptionScenario)
+            {
+                _contentfulDataService.Setup(c => c.GetViewData<PageViewModel>(It.IsAny<string>(), It.IsAny<string>())).Throws(new Exception());
+            }
+            else
+            {
+                _contentfulDataService.Setup(c => c.GetViewData<PageViewModel>(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(_pages);
+            }
         }
        
         protected override IHost CreateHost(IHostBuilder builder)
