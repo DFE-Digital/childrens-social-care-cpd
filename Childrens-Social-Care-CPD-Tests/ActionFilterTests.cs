@@ -24,9 +24,6 @@ namespace Childrens_Social_Care_CPD_Tests
     public class ActionFilterTests
     {
         private Mock<IContentfulDataService> _contentfulDataService;
-        private PageFooter _footer;
-        private PageHeader _header;
-        private ContentfulCollection<CookieBanner> _banner;
         private CPDActionFilter _target;
         private CPDController _controller;
         private Mock<ILogger<CPDActionFilter>> _logger;
@@ -34,10 +31,9 @@ namespace Childrens_Social_Care_CPD_Tests
         [SetUp]
         public void Setup()
         {
-            SetupModels();
             _contentfulDataService = new Mock<IContentfulDataService>(MockBehavior.Loose);
-            _contentfulDataService.Setup(c => c.GetFooterData()).ReturnsAsync(_footer);
-            _contentfulDataService.Setup(c => c.GetHeaderData()).ReturnsAsync(_header);
+            _contentfulDataService.Setup(c => c.GetFooterData()).ReturnsAsync(MockData.Footer);
+            _contentfulDataService.Setup(c => c.GetHeaderData()).ReturnsAsync(MockData.Header);
             _logger = new Mock<ILogger<CPDActionFilter>>();
             _target = new CPDActionFilter(_logger.Object, _contentfulDataService.Object);
             _controller =  new CPDController(null,null);
@@ -81,53 +77,6 @@ namespace Childrens_Social_Care_CPD_Tests
                 new Dictionary<string, object>(),
                 _controller);
             return context;
-        }
-
-        private void SetupModels()
-        {
-            _header = new PageHeader
-            {
-                Header = "TestPageHeader",
-                PrototypeHeader = "TestHeader",
-                PrototypeText = new Document(),
-                PrototypeTextHtml = "TestHtml",
-            };
-
-            _footer = new PageFooter()
-            {
-                        FooterLinks = new()
-                        {
-                            new Link
-                            {
-                                LinkText = "TestLink",
-                                LinkURL = "TestUrl",
-                                LinkSection = null,
-                                PageType = null,
-                                RedirectPageName = null,
-                                SideNaveGroupText = null,
-                                SortOrder = 1
-                            }
-                        },
-                        LicenceDescription = new Document(),
-                        CopyrightLink = new Link(),
-                        LicenceDescriptionText = "TestDescription"
-            };
-
-            _banner = new ContentfulCollection<CookieBanner>()
-            {
-                Items = new List<CookieBanner>()
-                {
-                   new CookieBanner ()
-                   {
-                    AcceptCookieButtonText = "AcceptAnalytics",
-                    AcceptedCookieMessage = new Document(),
-                    CookieBannerHeading = "TestCookie",
-                    ViewCookiesLink = new Link(),
-                    RejectedCookieMessage = new Document(),
-                    HideCookieMessageButtonText = "HideMessage"
-                   }
-                }
-            };
         }
     }
 }
