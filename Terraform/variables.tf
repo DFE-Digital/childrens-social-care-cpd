@@ -653,3 +653,27 @@ variable "cpd_contentful_env" {
   }
   description = "Contentful Environment Name"
 }
+
+variable "fw_diag_name" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-firewall-diagnostics"
+    Test      = "s185d02-firewall-diagnostics"
+    Load-Test = "s185d03-firewall-diagnostics"
+    Pre-Prod  = "s185t01-firewall-diagnostics"
+    Prod      = "s185p01-firewall-diagnostics"
+  }
+  description = "Firewall Diagnostic Name"
+}
+
+variable "fwpol_name" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-firewall-policy"
+    Test      = "s185d02-firewall-policy"
+    Load-Test = "s185d03-firewall-policy"
+    Pre-Prod  = "s185t01-firewall-policy"
+    Prod      = "s185p01-firewall-policy"
+  }
+  description = "Firewall Policy Name"
+}
