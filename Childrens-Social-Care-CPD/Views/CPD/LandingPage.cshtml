@@ -2,7 +2,7 @@
 @using Childrens_Social_Care_CPD.Enums;
 @model ContentfulCollection<PageViewModel>;
 
-@{var pageViewModel = Model.FirstOrDefault();}
+@{var pageViewModel = Model?.FirstOrDefault();}
 @{
     ViewData["Title"] = pageViewModel?.PageTitle;
 }
