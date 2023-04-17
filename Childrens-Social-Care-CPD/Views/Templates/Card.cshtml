@@ -11,7 +11,7 @@
             var cardCssClass = string.IsNullOrEmpty(card.CardHeadingCSS) ? SiteConstants.GOVUKHEADINGM : card.CardHeadingCSS;
             <div class="govuk-grid-column-one-half dfe-section-card__container">
                 <div class="dfe-section-card">
-                   @Html.Raw($"<{@cardHeaderTag} class=\"{@cardCssClass}\">")
+                    @Html.Raw($"<{@cardHeaderTag} class=\"{@cardCssClass}\">")
                         @{
                             var pageName = card.RedirectPageName?.PageName;
                             var pageType = card.PageType?.PageType;
@@ -24,7 +24,7 @@
                           { "sendingPageType", Model.PageType.PageType }
                         };
                         }
-                            @Html.ActionLink(card.CardHeader,"LandingPage","CPD",routeValues , new { @class= "govuk-link"})
+                    @Html.ActionLink(card.CardHeader,"LandingPage","CPD",routeValues , new { @class= "govuk-link", @datatestid= @card.RedirectPageName?.PageName })
                         @Html.Raw(@cardHeaderEndTag)
                         <p class="govuk-body">@card.CardContents</p>
                     </div>

@@ -62,7 +62,7 @@ async function setupNodeEvents(on, config) {
 module.exports = defineConfig({
     chromeWebSecurity: false,
     e2e: {
-        baseUrl: 'https://localhost:7112/',
+        baseUrl: 'https://localhost:44337/',
         specPattern: "**/*.feature",
         setupNodeEvents,
     },
