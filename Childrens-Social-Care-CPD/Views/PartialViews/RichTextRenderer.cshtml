@@ -48,7 +48,7 @@
             <h2 class="govuk-heading-l">@richText.Heading</h2>
         }
 
-        @foreach (IContent node in richText.RichTextContents.Content)
+        @foreach (IContent node in richText.RichTextContents.Content ?? Enumerable.Empty<IContent>())
         {
             switch (node)
             {
