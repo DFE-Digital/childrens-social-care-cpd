@@ -18,7 +18,7 @@
                     @foreach (var link in grouping)
                     {
                         <li>
-                            <a class="govuk-link" href="@{@link.LinkURL}">
+                            <a class="govuk-link" datatestid="@{@link.LinkText}" href="@{@link.LinkURL}">
                                 @link.LinkText
                             </a>
                         </li>
