@@ -28,9 +28,9 @@
                     { "sendingPageType", Model.PageType.PageType }
                 };
                 <p class="govuk-body">
-                    @Html.ActionLink(link.LinkText, "LandingPage", "CPD", routeValues, new { @class = "govuk-link" })
+                    @Html.ActionLink(link.LinkText, "LandingPage", "CPD", routeValues, new { @class = "govuk-link", @datatestid= @link.RedirectPageName?.PageName })
                 </p>
             }
         </main>
     </div>
-}
+}s
