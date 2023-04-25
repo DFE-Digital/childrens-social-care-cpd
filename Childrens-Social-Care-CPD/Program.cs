@@ -33,7 +33,6 @@ builder.Host.ConfigureLogging(logging => logging.AddAzureWebAppDiagnostics())
     };
 
     builder.Services.AddApplicationInsightsTelemetry(options: options);
-
     var app = builder.Build();
 
     // Configure the HTTP request pipeline.
@@ -49,7 +48,6 @@ builder.Host.ConfigureLogging(logging => logging.AddAzureWebAppDiagnostics())
     app.UseStaticFiles();
 
     app.UseRouting();
-
     app.UseAuthorization();
     app.MapControllerRoute(
         name: "default",
