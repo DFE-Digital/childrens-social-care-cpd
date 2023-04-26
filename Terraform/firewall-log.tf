@@ -9,24 +9,21 @@ resource "azurerm_monitor_diagnostic_setting" "firewall-diagnostics" {
   enabled_log {
     category = "ApplicationGatewayAccessLog"
     retention_policy {
-      enabled = true
-      days    = 7
+      enabled = false
     }
   }
 
   enabled_log {
     category = "ApplicationGatewayPerformanceLog"
     retention_policy {
-      enabled = true
-      days    = 7
+      enabled = false
     }
   }
 
   enabled_log {
     category = "ApplicationGatewayFirewallLog"
     retention_policy {
-      enabled = true
-      days    = 7
+      enabled = false
     }
   }
 
@@ -34,8 +31,7 @@ resource "azurerm_monitor_diagnostic_setting" "firewall-diagnostics" {
     category = "AllMetrics"
     enabled  = true
     retention_policy {
-      enabled = true
-      days    = 7
+      enabled = false
     }
   }
 }
