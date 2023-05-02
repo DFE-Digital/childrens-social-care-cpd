@@ -9,7 +9,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.41.0 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.52.0 |
 
 ## Modules
 
@@ -25,7 +25,6 @@ No modules.
 | [azurerm_monitor_action_group.main](https://registry.terraform.io/providers/hashicorp/azurerm/3.52.0/docs/resources/monitor_action_group) | resource |
 | [azurerm_monitor_activity_log_alert.appgw-health](https://registry.terraform.io/providers/hashicorp/azurerm/3.52.0/docs/resources/monitor_activity_log_alert) | resource |
 | [azurerm_monitor_autoscale_setting.autoscale](https://registry.terraform.io/providers/hashicorp/azurerm/3.52.0/docs/resources/monitor_autoscale_setting) | resource |
-| [azurerm_monitor_diagnostic_setting.firewall-diagnostics](https://registry.terraform.io/providers/hashicorp/azurerm/3.52.0/docs/resources/monitor_diagnostic_setting) | resource |
 | [azurerm_monitor_metric_alert.appgw-backend-connect-time](https://registry.terraform.io/providers/hashicorp/azurerm/3.52.0/docs/resources/monitor_metric_alert) | resource |
 | [azurerm_monitor_metric_alert.appgw-managed-rules](https://registry.terraform.io/providers/hashicorp/azurerm/3.52.0/docs/resources/monitor_metric_alert) | resource |
 | [azurerm_monitor_metric_alert.container-avg-resp-time](https://registry.terraform.io/providers/hashicorp/azurerm/3.52.0/docs/resources/monitor_metric_alert) | resource |
