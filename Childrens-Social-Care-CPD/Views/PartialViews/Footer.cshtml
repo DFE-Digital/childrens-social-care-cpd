@@ -27,7 +27,7 @@
                                    url = String.Format(SiteConstants.CPDURLFORMAT, link.RedirectPageName.PageName, link.PageType.PageType, @pageName, PageTypes.Master.ToString());
                                 }
                                 <li class="govuk-footer__inline-list-item">
-                            <a class="govuk-footer__link" href="@{@url}">
+                                    <a class="govuk-footer__link" datatestid="@link.LinkText" href="@{@url}">
                                 @link.LinkText
                             </a>
                         </li>
