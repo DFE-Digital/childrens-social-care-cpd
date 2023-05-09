@@ -1,7 +1,7 @@
 ﻿Feature:  Experienced Pracitioners Page Tests
  Scenario: experienced practitioners heading is 'Programmes for experienced practitioners'
    Given a user has clicked on 'Experienced practitioners'
-    Then the heading should say 'Programmes for experienced practitioners'
+   Then the heading should say 'Programmes for experienced practitioners'
 
  Scenario: Pathway 1: practice supervisors from experienced practioners link opens Successfully
     Given a user has clicked on 'Experienced practitioners'

@@ -31,7 +31,7 @@
     Then the page has a external link to 'https://thefrontline.org.uk/pathways-programme/'
 
 Scenario: Social work post in pathway 2 has a  link  to 'https://www.gov.uk/government/publications/knowledge-and-skills-statements-for-child-and-family-social-work'
-     Given a user has clicked on 'Experienced practitioners'
+    Given a user has clicked on 'Experienced practitioners'
     When user clicks on 'Pathway 2: middle managers'
     Then the page has a external link to 'https://www.gov.uk/government/publications/knowledge-and-skills-statements-for-child-and-family-social-work'
 
@@ -60,7 +60,6 @@ Scenario: Social work post in pathway 2 has a  link  to 'https://www.gov.uk/gove
     When user clicks on 'Pathway 2: middle managers'
     Then the page has a external link to 'https://thefrontline.org.uk/pathways-programme/apply-now/pathway-2/'
 
-
  Scenario: Social work link in senior managers link to 'https://www.gov.uk/government/publications/knowledge-and-skills-statements-for-child-and-family-social-work'
     Given a user has clicked on 'Senior managers'
     When user clicks on 'Pathway 3: heads of service'
@@ -72,28 +71,27 @@ Scenario: Social work post in pathway 2 has a  link  to 'https://www.gov.uk/gove
     Then the page has a external link to 'https://thefrontline.org.uk/fellowship/'
 
  Scenario: Senior Manger pathway 4 social link to 'https://www.gov.uk/government/publications/knowledge-and-skills-statements-for-child-and-family-social-work'
-  Given a user has clicked on 'Senior managers'
+    Given a user has clicked on 'Senior managers'
     When user clicks on ' Pathway 4: practice leaders'
     Then the page has a external link to 'https://www.gov.uk/government/publications/knowledge-and-skills-statements-for-child-and-family-social-work'
 
  Scenario: Senior Manger pathway 4 frontline link to 'https://thefrontline.org.uk/pathways-programme/'
-  Given a user has clicked on 'Senior managers'
+    Given a user has clicked on 'Senior managers'
     When user clicks on ' Pathway 4: practice leaders'
     Then the page has a external link to 'https://thefrontline.org.uk/pathways-programme/'
 
  Scenario: Senior Manger pathway 4 fellow leaders link to 'https://thefrontline.org.uk/fellowship/'
-  Given a user has clicked on 'Senior managers'
+    Given a user has clicked on 'Senior managers'
     When user clicks on ' Pathway 4: practice leaders'
     Then the page has a external link to 'https://thefrontline.org.uk/fellowship/'
 
  Scenario: Upon: aspirant directors programme  link to 'https://uponleaders.co.uk/aspirant-directors-programme/'
-  Given a user has clicked on 'Leaders'
+    Given a user has clicked on 'Leaders'
     When user clicks on 'Upon: aspirant directors programme'
     Then the page has a external link to 'https://uponleaders.co.uk/aspirant-directors-programme/'
 
-
  Scenario: Upon: aspirant directors programme social link to 'https://www.gov.uk/government/publications/knowledge-and-skills-statements-for-child-and-family-social-work'
-  Given a user has clicked on 'Leaders'
+    Given a user has clicked on 'Leaders'
     When user clicks on 'Upon: aspirant directors programme'
     Then the page has a external link to 'https://www.gov.uk/government/publications/knowledge-and-skills-statements-for-child-and-family-social-work'
 
