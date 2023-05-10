@@ -1,4 +1,4 @@
 FROM node
 RUN npm install -g contentful-cli && mkdir -p /opt/backup
 WORKDIR /opt/backup
-ENTRYPOINT ["sh", "-c", "contentful space import --management-token $token --space-id=$space --environment-id=$envid /opt/backup/prod-contentful-backup-output.json"]
+ENTRYPOINT ["sh", "-c", "contentful space import --management-token $token --space-id=$space --environment-id=$envid --content-file /opt/backup/prod-contentful-backup-output.json"]
