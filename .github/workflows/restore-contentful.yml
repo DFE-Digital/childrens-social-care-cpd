@@ -1,0 +1,25 @@
+name: Restore Contentful
+
+on:
+  workflow_dispatch:
+
+jobs:
+  restore:
+    name: 'Restore Contentful'
+    runs-on: ubuntu-latest
+    env:
+      ENVID: dev
+      SPACE: ${{ secrets.TF_VAR_CPD_SPACE_ID }}
+      MANAGEMENT_TOKEN: ${{ secrets.CONTENTFUL_MANAGEMENT_TOKEN }}
+
+    steps:
+    - name: Checkout destination repository
+      uses: actions/checkout@v2
+      with:
+        repository: DFE-Digital/childrens-social-care-cpd-contentful-backup
+        token: ${{ secrets.BACKUP_REPO_PAT }}
+        path: /opt/restore
+
+    - name: Run backup container with restore entrypoint
+      run: docker run --rm -e token=$MANAGEMENT_TOKEN -e space=$SPACE -e envid=$ENVID -v $PWD:/opt/restore --entrypoint "contentful space import --management-token $token --space-id=$space --environment-id=$envid --content-file /opt/backup/prod-contentful-backup-output.json" ghcr.io/dfe-digital/contentful-space-export:master 
+ 
