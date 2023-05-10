@@ -20,6 +20,5 @@ jobs:
         token: ${{ secrets.BACKUP_REPO_PAT }}
         path: restore
 
-    - name: Run backup container with restore entrypoint
-      run: docker run --rm -e token=$MANAGEMENT_TOKEN -e space=$SPACE -e envid=$ENVID -v $PWD/restore:/opt/restore --entrypoint "contentful space import --management-token $token --space-id=$space --environment-id=$envid --content-file /opt/backup/prod-contentful-backup-output.json" ghcr.io/dfe-digital/contentful-space-export:master 
- 
+    - name: Restore Content
+      run: docker run --rm -v $PWD/restore:/opt/restore ghcr.io/dfe-digital/contentful-space-export:master /bin/sh -c "contentful space import --management-token $CONTENTFUL_MANAGEMENT_TOKEN --space-id $SPACE --environment-id $ENV_ID --content-file /opt/backup/prod-contentful-backup-output.json"
