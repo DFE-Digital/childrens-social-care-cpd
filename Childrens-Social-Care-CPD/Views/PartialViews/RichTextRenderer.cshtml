@@ -11,7 +11,7 @@
     {
         var linkElement = ((Contentful.Core.Models.Hyperlink)content);
         var linkText = ((Contentful.Core.Models.Text)(linkElement).Content[0]).Value;
-        var linkHtmlString = string.Format(("<a class=\"{0}\" href={1}>{2}</a>"),"govuk-link", linkElement.Data.Uri, linkText);
+        var linkHtmlString = string.Format(("<a class=\"{0}\" datatestid={1} href={1}>{2}</a>"), "govuk-link", linkElement.Data.Uri, linkText);
         return linkHtmlString;
     }
     public static string GetHeadingTagString(IContent content, string tag, string className)

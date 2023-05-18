@@ -40,7 +40,7 @@
                         </div>
                     </div>
                     <div class="govuk-button-group">
-                        <a href="javascript:void(0);" onclick="hideCookieMessage();" role="button" draggable="false" class="govuk-button" data-module="govuk-button">
+                        <a href="javascript:void(0);" onclick="hideCookieMessage();" datattestid="btn-hideCookie" role="button" draggable="false" class="govuk-button" data-module="govuk-button">
                             @cookieBannerViewModel.HideCookieMessageButtonText
                         </a>
                     </div>
@@ -61,10 +61,10 @@
                         </div>
                     </div>
                     <div class="govuk-button-group">
-                        <button value="accept" type="submit" name="analyticsCookieConsent" id="btnAccept" class="govuk-button" data-module="govuk-button">
+                        <button value="accept" type="submit" name="analyticsCookieConsent" id="btnAccept" class="govuk-button" datatestid="btn-accept" data-module="govuk-button">
                             @cookieBannerViewModel.AcceptCookieButtonText
                         </button>
-                        <button value="reject" type="submit" name="analyticsCookieConsent" id="btnReject" class="govuk-button" data-module="govuk-button">
+                        <button value="reject" type="submit" name="analyticsCookieConsent" id="btnReject" class="govuk-button" datatestid="btn-reject" data-module="govuk-button">
                             @cookieBannerViewModel.RejectCookieButtonText
                         </button>
                         @{
@@ -73,7 +73,7 @@
                             var viewCookiesUrl = $"{@cookieBannerViewModel.ViewCookiesLink.LinkURL}&sendingPage={sendingPage}&sendingPageType={sendingPageType}";
                         }
 
-                        <a class="govuk-link" href="@{@viewCookiesUrl}">@cookieBannerViewModel.ViewCookiesLink.LinkText</a>
+                        <a class="govuk-link" datatestid="btn-viewCookies" href="@{@viewCookiesUrl}">@cookieBannerViewModel.ViewCookiesLink.LinkText</a>
                     </div>
                 </div>
             }
