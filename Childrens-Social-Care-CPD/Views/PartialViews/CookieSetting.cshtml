@@ -45,11 +45,11 @@
                 <div class="govuk-radios__item">
                     @if (@accepted == true)
                     {
-                        <input class="govuk-radios__input" id="analytics-cookies" name="analyticsCookieConsent" type="radio" value="accept" checked="checked">
+                        <input class="govuk-radios__input" id="analytics-cookies" name="analyticsCookieConsent" type="radio" value="accept" datatestid= "btn-accepted" checked="checked">
                     }
                     else
                     {
-                        <input class="govuk-radios__input" id="analytics-cookies" name="analyticsCookieConsent" type="radio" value="accept">
+                        <input class="govuk-radios__input" id="analytics-cookies" name="analyticsCookieConsent" type="radio" datatestid="btn-accept" value="accept">
                     }
 
                     <label class="govuk-label govuk-radios__label" for="analytics-cookies">
@@ -59,11 +59,11 @@
                 <div class="govuk-radios__item">
                     @if (@accepted == false)
                     {
-                        <input class="govuk-radios__input" id="analytics-cookies-2" name="analyticsCookieConsent" type="radio" value="reject" checked="checked">
+                        <input class="govuk-radios__input" id="analytics-cookies-2" name="analyticsCookieConsent" type="radio" value="reject" datatestid= "btn-rejected" checked="checked">
                     }
                     else
                     {
-                        <input class="govuk-radios__input" id="analytics-cookies-2" name="analyticsCookieConsent" type="radio" value="reject">
+                        <input class="govuk-radios__input" id="analytics-cookies-2" name="analyticsCookieConsent" type="radio" datatestid="btn-reject" value="reject">
                     }
                     <label class="govuk-label govuk-radios__label" for="analytics-cookies-2">
                         No
@@ -72,7 +72,7 @@
             </div>
         </fieldset>
     </div>
-    <button class="govuk-button" type="submit" data-module="govuk-button">
+    <button class="govuk-button" type="submit" datatestid="btn-save" data-module="govuk-button">
         Save cookie settings
     </button>
 }
