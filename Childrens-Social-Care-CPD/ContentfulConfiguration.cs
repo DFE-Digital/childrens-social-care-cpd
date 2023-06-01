@@ -17,7 +17,7 @@ namespace Childrens_Social_Care_CPD
             configuration["ContentfulOptions:SpaceId"] = spaceId;
             configuration["ContentfulOptions:DeliveryApiKey"] = deliveryApiKey;
 
-            if ((contentfulEnvironment.ToLower() != appEnvironment.ToLower()) && !String.IsNullOrEmpty(appEnvironment))
+            if ((contentfulEnvironment.ToLower() != appEnvironment.ToLower()) && !String.IsNullOrEmpty(appEnvironment) && appEnvironment!= "load-test")
             {
                 var previewApiKey = Environment.GetEnvironmentVariable(SiteConstants.PREVIEWAPIKEY) ?? String.Empty;
                 configuration["ContentfulOptions:host"] = SiteConstants.CONTENTFULPREVIEWHOST;
