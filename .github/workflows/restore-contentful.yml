@@ -7,8 +7,9 @@ jobs:
   restore:
     name: 'Restore Contentful'
     runs-on: ubuntu-latest
+    environment: Prod
     env:
-      ENVID: dev
+      ENVID: prod
       SPACE: ${{ secrets.TF_VAR_CPD_SPACE_ID }}
       MANAGEMENT_TOKEN: ${{ secrets.CONTENTFUL_MANAGEMENT_TOKEN }}
 
