@@ -75,7 +75,7 @@ jobs:
         run: sleep 900s
         
       - name: Run Load Test
-        run: locust -f ./LoadTest/locustfile.py --headless -u 10 -r 1 --run-time 60s -H https://20.107.65.156/       
+        run: locust -f ./LoadTest/locustfile.py --headless -u 50 -r 1 --run-time 60s -H https://20.107.65.156/       
 
       - name: Terraform Destroy 3
         if: always()
