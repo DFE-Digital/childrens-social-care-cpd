@@ -32,6 +32,9 @@
             case PageTypes.SubNavAlternate:
             {await Html.RenderPartialAsync("../Templates/SubNavAlternate", pageViewModel);}
                 break;
+            case PageTypes.RolesListing:
+                { await Html.RenderPartialAsync("../Templates/RolesListing", pageViewModel); }
+                break;
         }
     }
 }
