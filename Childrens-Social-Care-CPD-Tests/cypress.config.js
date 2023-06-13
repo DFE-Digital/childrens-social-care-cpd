@@ -62,7 +62,7 @@ async function setupNodeEvents(on, config) {
 module.exports = defineConfig({
     chromeWebSecurity: false,
     e2e: {
-        baseUrl: 'https://www.develop-child-family-social-work-career.education.gov.uk/',
+        baseUrl: 'http://children-social-care-cpd',
         specPattern: "**/*.feature",
         setupNodeEvents,
     },
