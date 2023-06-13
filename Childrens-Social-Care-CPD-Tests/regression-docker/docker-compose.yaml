@@ -16,7 +16,7 @@ services:
         - ASPNETCORE_URLS=http://+:81
         - ASPNETCORE_ENVIRONMENT=dev
       ports:
-         - "81:8080"
+         - 8080:81
       networks:
          - cpd-network
    e2e:
