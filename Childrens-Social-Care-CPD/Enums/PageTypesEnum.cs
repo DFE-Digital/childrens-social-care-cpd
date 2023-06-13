@@ -7,6 +7,7 @@
         Programmes,
         PathwayDetails,
         ViewAllCards,
-        SubNavAlternate
+        SubNavAlternate,
+        RolesListing
     }
 }
