@@ -10,7 +10,7 @@ namespace Childrens_Social_Care_CPD_Tests
         private static readonly PageFooter _footer;
         private static readonly PageHeader _header;
         private static readonly ContentfulCollection<CookieBanner> _banner;
-        
+
         static MockData()
         {
             _pages = new ContentfulCollection<PageViewModel>
@@ -65,6 +65,21 @@ namespace Childrens_Social_Care_CPD_Tests
                                 RichTextContents = new Document(),
                                 SortOrder = 0
                             }
+                        },
+                        CareerStages = new List<CareerStage> { new CareerStage()
+                        {
+                            CareerStageName = "Test Career Stage",
+                            Roles = new List<Role>
+                            {
+                                new Role
+                                {
+                                    RoleDescription = "Test Role",
+                                    RoleDisplayName="Test Role",
+                                    SalaryRange = "1000",
+                                    SortOrder = 1
+                                }
+                            }
+                        }
                         }
                     }
                 }
@@ -80,7 +95,7 @@ namespace Childrens_Social_Care_CPD_Tests
 
             _footer = new PageFooter()
             {
-                        FooterLinks = new()
+                FooterLinks = new()
                         {
                             new Link
                             {
@@ -93,9 +108,9 @@ namespace Childrens_Social_Care_CPD_Tests
                                 SortOrder = 1
                             }
                         },
-                        LicenceDescription = new Document(),
-                        CopyrightLink = new Link(),
-                        LicenceDescriptionText = "TestDescription"
+                LicenceDescription = new Document(),
+                CopyrightLink = new Link(),
+                LicenceDescriptionText = "TestDescription"
             };
 
             _banner = new ContentfulCollection<CookieBanner>()
