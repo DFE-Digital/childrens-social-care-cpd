@@ -3,7 +3,7 @@
 services:
    children-social-care-cpd:
       build:
-         context: ./children-social-care-cpd
+         context: ../../Childrens-Social-Care-CPD
 
       environment:
         - CPD_AZURE_ENVIRONMENT=dev
@@ -13,10 +13,10 @@ services:
         - CPD_GOOGLEANALYTICSTAG=G-5HLRT2H3SW
         - CPD_PREVIEW_KEY=LlKKLs9L_XP02P4VFaAHRagsZeZwE5288Gcc_SNoZHM
         - CPD_SPACE_ID=ltt4ovp0xx0f
-        - ASPNETCORE_URLS=http://+:80
-        - ASPNETCORE_ENVIRONMENT=regression
+        - ASPNETCORE_URLS=http://+:81
+        - ASPNETCORE_ENVIRONMENT=dev
       ports:
-         - 5001:80
+         - "81:8080"
       networks:
          - cpd-network
    e2e:
@@ -24,5 +24,11 @@ services:
         context: ../
       command: "yarn mocha-report"
       working_dir: /app
+      networks: 
+        - cpd-network
+      
+networks:
+   cpd-network:
+      name: cpd-network
       
    
