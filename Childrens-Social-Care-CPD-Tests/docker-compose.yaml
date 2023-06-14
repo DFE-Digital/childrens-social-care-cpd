@@ -1,23 +1,20 @@
-﻿version: '3.4'
-
+﻿---
+version: "3.4"
 services:
-   children-social-care-cpd:
-      build:
-         dockerfile: childrens-social-care-cpd 
-
-      environment:
-        - CPD_AZURE_ENVIRONMENT=dev
-        - CPD_CLARITY=${{secrets.TF_VAR_CPD_CLARITY}}
-        - CPD_CONTENTFUL_ENVIRONMENT=dev
-        - CPD_DELIVERY_KEY=${{secrets.TF_VAR_CPD_DELIVERY_KEY}}
-        - CPD_GOOGLEANALYTICSTAG=${{secrets.TF_VAR_CPD_GOOGLEANALYTICSTAG}}
-        - CPD_PREVIEW_KEY=${{secrets.TF_VAR_CPD_PREVIEW_KEY}}
-        - CPD_SPACE_ID= ${{secrets.TF_VAR_CPD_SPACE_ID}}
-        - ASPNETCORE_URLS=http://+:80
-        - ASPNETCORE_ENVIRONMENT=dev
-
-   children-social-care-cpd-regression-suite:
-      build:
-        context: ./
-      command: "yarn mocha-report"
-      working_dir: /app
+  children-social-care-cpd:
+    build:
+      dockerfile: childrens-social-care-cpd
+    environment:
+      - CPD_AZURE_ENVIRONMENT=dev - CPD_CLARITY=${TF_VAR_cpd_clarity} -
+        CPD_CONTENTFUL_ENVIRONMENT=dev -
+        CPD_DELIVERY_KEY=${TF_VAR_cpd_delivery_key} -
+        CPD_GOOGLEANALYTICSTAG=${TF_VAR_cpd_googleanalyticstag} -
+        CPD_PREVIEW_KEY=${TF_VAR_cpd_preview_key} - 
+        CPD_SPACE_ID=${TF_VAR_cpd_space_id} - 
+        ASPNETCORE_URLS=http://+:80 -
+        ASPNETCORE_ENVIRONMENT=dev
+  children-social-care-cpd-regression-suite:
+    build:
+      context: ./
+    command: yarn mocha-report
+    working_dir: /app
