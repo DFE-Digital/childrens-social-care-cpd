@@ -17,3 +17,11 @@ jobs:
       run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
     - name: Build the Docker image
       run: cd Childrens-Social-Care-CPD; docker build . --file Dockerfile --tag childrens-social-care-cpd:${{ env.sha_short }}
+
+ 
+    - uses: actions/checkout@v2
+      name: Run cypress end to end
+      with: 
+          working-directory: ./Childrens-Social-Care-CPD-Tests
+          run: docker-compose up children-social-care-cpd
+      

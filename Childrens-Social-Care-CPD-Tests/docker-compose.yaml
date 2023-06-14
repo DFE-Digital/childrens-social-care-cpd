@@ -3,16 +3,16 @@
 services:
    children-social-care-cpd:
       build:
-         context: ../Childrens-Social-Care-CPD
+         dockerfile: childrens-social-care-cpd 
 
       environment:
         - CPD_AZURE_ENVIRONMENT=dev
-        - CPD_CLARITY=${CPD_CLARITY}
+        - CPD_CLARITY=${{secrets.TF_VAR_CPD_CLARITY}}
         - CPD_CONTENTFUL_ENVIRONMENT=dev
-        - CPD_DELIVERY_KEY=${CPD_DELIVERY_KEY}
-        - CPD_GOOGLEANALYTICSTAG=${CPD_GOOGLEANALYTICSTAG}
-        - CPD_PREVIEW_KEY=${CPD_PREVIEW_KEY}
-        - CPD_SPACE_ID=${CPD_SPACE_ID}
+        - CPD_DELIVERY_KEY=${{secrets.TF_VAR_CPD_DELIVERY_KEY}}
+        - CPD_GOOGLEANALYTICSTAG=${{secrets.TF_VAR_CPD_GOOGLEANALYTICSTAG}}
+        - CPD_PREVIEW_KEY=${{secrets.TF_VAR_CPD_PREVIEW_KEY}}
+        - CPD_SPACE_ID= ${{secrets.TF_VAR_CPD_SPACE_ID}}
         - ASPNETCORE_URLS=http://+:80
         - ASPNETCORE_ENVIRONMENT=dev
 
