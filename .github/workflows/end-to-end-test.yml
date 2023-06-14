@@ -25,7 +25,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v4
         with:
-          working-directory: ./UI
+          working-directory: ./Childrens-Social-Care-CPD-Tests
           config: baseUrl=https://${{ inputs.environment }}.develop-child-family-social-work-career.education.gov.uk/
 
       - name: Store screenshots on test failure
@@ -33,10 +33,10 @@ jobs:
         if: failure()
         with:
           name: cypress-screenshots
-          path: UI/cypress/screenshots
+          path: Childrens-Social-Care-CPD-Tests/cypress/screenshots
       - name: Store videos
         uses: actions/upload-artifact@v3
         if: always()
         with:
           name: cypress-videos
-          path: UI/cypress/videos
+          path: Childrens-Social-Care-CPD-Tests/cypress/videos
