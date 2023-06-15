@@ -9,22 +9,25 @@ jobs:
   build:
     name: Docker Image CI
     runs-on: ubuntu-latest
+    env:
+      CPD_GOOGLEANALYTICSTAG: ${{secrets.TF_VAR_CPD_GOOGLEANALYTICSTAG}}
+      CPD_SPACE_ID: ${{secrets.TF_VAR_CPD_SPACE_ID}}
+      CPD_PREVIEW_KEY: ${{secrets.TF_VAR_CPD_PREVIEW_KEY}}
+      CPD_DELIVERY_KEY: ${{secrets.TF_VAR_CPD_DELIVERY_KEY}}
+      CPD_CLARITY: ${{secrets.TF_VAR_CPD_CLARITY}}
     steps:
       - uses: actions/checkout@v3
+
       - name: Get short hash
         id: vars
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
       - name: Build the Docker image
         run: cd Childrens-Social-Care-CPD; docker build . --file Dockerfile --tag childrens-social-care-cpd:${{ env.sha_short }}
-      - uses: actions/checkout@v2
-        name: Run cypress end to end
-        env:
-          TF_VAR_cpd_keyvaultendpoint: ${{secrets.TF_VAR_CPD_KEYVAULTENDPOINT}}
-          TF_VAR_cpd_googleanalyticstag: ${{secrets.TF_VAR_CPD_GOOGLEANALYTICSTAG}}
-          TF_VAR_cpd_space_id: ${{secrets.TF_VAR_CPD_SPACE_ID}}
-          TF_VAR_cpd_preview_key: ${{secrets.TF_VAR_CPD_PREVIEW_KEY}}
-          TF_VAR_cpd_delivery_key: ${{secrets.TF_VAR_CPD_DELIVERY_KEY}}
-          TF_VAR_cpd_clarity: ${{secrets.TF_VAR_CPD_CLARITY}}
-        with:
-          working-directory: ./Childrens-Social-Care-CPD-Tests
-          run: docker-compose up
+
+      - name: Run cypress end to end
+        run: cd Childrens-Social-Care-CPD-Tests; docker-compose up --exit-code-from children-social-care-cpd-regression-suite
+      
+      - name: Run Tidy up
+        if: always()
+        run: cd Childrens-Social-Care-CPD-Tests; docker-compose down --volumes

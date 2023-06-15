@@ -6,12 +6,12 @@ services:
       dockerfile: childrens-social-care-cpd
     environment:
       - CPD_AZURE_ENVIRONMENT=dev 
-      - CPD_CLARITY=${TF_VAR_cpd_clarity} 
+      - CPD_CLARITY=${CPD_CLARITY} 
       - CPD_CONTENTFUL_ENVIRONMENT=dev 
-      - CPD_DELIVERY_KEY=${TF_VAR_cpd_delivery_key}
-      - CPD_GOOGLEANALYTICSTAG=${TF_VAR_cpd_googleanalyticstag} 
-      - CPD_PREVIEW_KEY=${TF_VAR_cpd_preview_key} 
-      - CPD_SPACE_ID=${TF_VAR_cpd_space_id} 
+      - CPD_DELIVERY_KEY=${CPD_DELIVERY_KEY}
+      - CPD_GOOGLEANALYTICSTAG=${CPD_GOOGLEANALYTICSTAG} 
+      - CPD_PREVIEW_KEY=${CPD_PREVIEW_KEY} 
+      - CPD_SPACE_ID=${CPD_SPACE_ID} 
       - ASPNETCORE_URLS=http://+:80 
       - ASPNETCORE_ENVIRONMENT=dev
   children-social-care-cpd-regression-suite:
