@@ -20,5 +20,7 @@ namespace Childrens_Social_Care_CPD.Models
         public List<Label> Labels { get; set; } = new();
 
         public List<RichText> RichTexts { get; set; } = new();
+
+        public List<CareerStage> CareerStages { get; set; }
     }
 }
