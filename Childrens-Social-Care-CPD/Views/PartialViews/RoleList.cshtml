@@ -1,0 +1,32 @@
+﻿@using Childrens_Social_Care_CPD.Constants
+@using Childrens_Social_Care_CPD.Enums
+@model List<CareerStage>;
+@addTagHelper *, Contentful.AspNetCore
+
+@if (Model.Any())
+{
+    var careerStages = Model.OrderBy(o => o.SortOrder);
+    @foreach (var careerStage in careerStages)
+    {
+        <hr class="govuk-section-break govuk-section-break--visible">  <div class="govuk-!-margin-top-6"></div>
+        <h2 class="govuk-heading-l">@careerStage.CareerStageName</h2>
+        var roles = careerStage.Roles?.OrderBy(r=>r.SortOrder);
+        @foreach (var role in roles)
+        {
+            <div class="govuk-heading-s govuk-!-margin-bottom-1">
+                <h3 class="govuk-heading-m"><a href="example-role.html" class="govuk-link">@role.RoleDisplayName</a></h3>
+            </div>
+            <p class="govuk-body-s">@role.RoleDescription</p>
+            <div class="govuk-grid-row govuk-!-padding-bottom-3">
+                <div class="govuk-grid-column-one-half">
+                    <ul class="govuk-list">
+                        <li>
+                            <span class="govuk-!-font-size-16 govuk-!-font-weight-bold">@role.SalaryRangeLabel @role.SalaryRange</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        }
+    }
+}
+
