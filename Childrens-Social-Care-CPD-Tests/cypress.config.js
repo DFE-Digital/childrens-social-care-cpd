@@ -62,7 +62,7 @@ async function setupNodeEvents(on, config) {
 module.exports = defineConfig({
     chromeWebSecurity: false,
     e2e: {
-        baseUrl: 'https://localhost:44337/',
+        baseUrl: 'http://children-social-care-cpd',
         specPattern: "**/*.feature",
         setupNodeEvents,
     },
