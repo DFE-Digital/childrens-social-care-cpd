@@ -3,8 +3,10 @@
 @model List<CareerStage>;
 @addTagHelper *, Contentful.AspNetCore
 
+@{var pageName = string.IsNullOrEmpty(@ViewBag.pageName) ? "HomePage" : @ViewBag.pageName;}
 @if (Model.Any())
 {
+    
     var careerStages = Model.OrderBy(o => o.SortOrder);
     @foreach (var careerStage in careerStages)
     {
@@ -13,8 +15,17 @@
         var roles = careerStage.Roles?.OrderBy(r=>r.SortOrder);
         @foreach (var role in roles)
         {
+            var routeValues = new RouteValueDictionary
+                        {
+                          { "pageName", @role.RoleDetailsPageName?.PageName },
+                          { "pageType", PageTypes.RoleDetails.ToString()  },
+                          { "sendingPage", @pageName },
+                          { "sendingPageType", "Master" }
+                        };
             <div class="govuk-heading-s govuk-!-margin-bottom-1">
-                <h3 class="govuk-heading-m"><a href="example-role.html" class="govuk-link">@role.RoleDisplayName</a></h3>
+                <h3 class="govuk-heading-m">
+                    @Html.ActionLink(@role.RoleDisplayName,"LandingPage","CPD",routeValues , new { @class= "govuk-link" })
+                    </h3>
             </div>
             <p class="govuk-body-s">@role.RoleDescription</p>
             <div class="govuk-grid-row govuk-!-padding-bottom-3">
