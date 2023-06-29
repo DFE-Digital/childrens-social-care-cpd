@@ -11,9 +11,9 @@
  Scenario: Upon: aspirant directors programme from leaders link opens Successfully
     Given a user has clicked on 'Leaders'
     When user clicks on 'Upon: aspirant directors programme'
-    Then the heading should say 'Upon: aspirant directors programme'
+    Then the heading should say 'upon: aspirant directors programme'
 
  Scenario: Upon: new directors programme from leaders link opens Successfully
     Given a user has clicked on 'Leaders'
     When user clicks on 'Upon: new directors programme'
-    Then the heading should say 'Upon: new directors programme'
+    Then the heading should say 'upon: new directors programme'
