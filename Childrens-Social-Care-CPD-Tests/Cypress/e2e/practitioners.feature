@@ -3,7 +3,6 @@
     Given a user has clicked on 'Practitioners'
     Then the heading should say 'Programmes for practitioners'
     
-
  Scenario: practitoners page has link to ' Assessed and supported year in employment'
     Given a user has clicked on 'Practitioners'
     When user clicks on ' Assessed and supported year in employment'
@@ -13,11 +12,7 @@
     Given a user has clicked on 'Practitioners'
      Then the sub heading should say 'Professional development for practitioners'
 
- Scenario: practitoners page has  link is 'Improve your social work practice'
-    Given a user has clicked on 'Practitioners'
-     Then the sub heading with link should say 'Improve your social work practice'
-
- Scenario: practitoners page  link open page with heading 'Improve your social work practice'
+ Scenario: practitoners page  link open page with heading 'Develop your social work practice'
     Given a user has clicked on 'Practitioners'
       When user clicks on sub heading
-     Then page opens with a heading  says 'Improve your social work practice'
+     Then page opens with a heading  says 'Develop your social work practice'

@@ -1,0 +1,42 @@
+name: End to End Testing
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target environment for the End to End tests'
+        required: true
+        default: dev
+        type: choice
+        options:
+          - dev
+          - test
+          - pre-prod
+
+jobs:
+  end-to-end-testing:
+    runs-on: ubuntu-latest
+    concurrency: e2e-${{ inputs.environment }}
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v4
+        with:
+          working-directory: ./Childrens-Social-Care-CPD-Tests
+          config: baseUrl=https://${{ inputs.environment }}.develop-child-family-social-work-career.education.gov.uk/
+
+      - name: Store screenshots on test failure
+        uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: Childrens-Social-Care-CPD-Tests/cypress/screenshots
+      - name: Store videos
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: cypress-videos
+          path: Childrens-Social-Care-CPD-Tests/cypress/videos

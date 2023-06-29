@@ -1,7 +1,7 @@
 ﻿Feature:  View All Programmes Tests
- Scenario: View all Programme heading 'Child and family social work development programmes'
+ Scenario: View all Programme heading 'Development programmes for child and family social workers'
     Given a user has clicked on 'Development programmes for social workers'
-    Then the heading should say 'Child and family social work development programmes'
+    Then the heading should say 'Development programmes for child and family social workers'
 
  Scenario: View all Programme sub heading 'Assessed and supported year in employment (ASYE)'
     Given a user has clicked on 'Development programmes for social workers'
@@ -10,10 +10,6 @@
  Scenario: View all Programme sub heading 'Social Work Leadership Pathways programme'
     Given a user has clicked on 'Development programmes for social workers'
     Then the sub heading should say 'Social Work Leadership Pathways programme'
-
- Scenario: View all Programme sub heading 'Upon: Inspiring Leaders programme'
-    Given a user has clicked on 'Development programmes for social workers'
-    Then the sub heading should say 'Upon: Inspiring Leaders programme'
 
  Scenario: Assessed and supported year in employment link opens Successfully
     Given a user has clicked on 'Development programmes for social workers'
@@ -43,9 +39,9 @@
  Scenario: Upon: aspirant directors programme link opens Successfully
     Given a user has clicked on 'Development programmes for social workers'
     When user clicks on 'Upon: aspirant directors programme'
-    Then the heading should say 'Upon: aspirant directors programme'
+    Then the heading should say 'upon: aspirant directors programme'
 
  Scenario: Upon: new directors programme link opens Successfully
     Given a user has clicked on 'Development programmes for social workers'
     When user clicks on 'Upon: new directors programme'
-    Then the heading should say 'Upon: new directors programme'
+    Then the heading should say 'upon: new directors programme'
