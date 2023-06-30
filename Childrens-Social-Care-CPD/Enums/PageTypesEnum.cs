@@ -8,6 +8,7 @@
         PathwayDetails,
         ViewAllCards,
         SubNavAlternate,
-        RolesListing
+        RolesListing,
+        RoleDetails
     }
 }
