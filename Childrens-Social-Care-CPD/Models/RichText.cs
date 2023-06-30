@@ -16,6 +16,7 @@ namespace Childrens_Social_Care_CPD.Models
         public bool InsetText { get; set; }
 
         public int SortOrder { get; set; }
+        public bool IsAccordion { get; set; }
    
     }
 }

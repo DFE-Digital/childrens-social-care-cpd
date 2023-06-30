@@ -35,6 +35,9 @@
             case PageTypes.RolesListing:
                 { await Html.RenderPartialAsync("../Templates/RolesListing", pageViewModel); }
                 break;
+            case PageTypes.RoleDetails:
+                { await Html.RenderPartialAsync("../Templates/RoleDetails", pageViewModel); }
+                break;   
         }
     }
 }
