@@ -43,8 +43,6 @@ builder.Host.ConfigureLogging(logging => logging.AddAzureWebAppDiagnostics())
     }
     app.UseExceptionHandler("/Error/Error");
     app.UseStatusCodePagesWithRedirects("/Error/Error/{0}");
-
-    app.UseHttpsRedirection();
     app.UseStaticFiles();
 
     app.UseRouting();
