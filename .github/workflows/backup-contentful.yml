@@ -32,8 +32,8 @@ jobs:
         if git diff --exit-code --quiet; then
           echo "No changes detected, skipping push"
         else
-          git config user.name "Albal Robot"
-          git config user.email "allan.west@education.gov.uk"
+          git config user.name "DfE Robot"
+          git config user.email  ${{ secrets.CONTENTFUL_BACKUP_EMAIL }}
           git add prod-contentful-backup-output.json
           git commit -m "Upload new backup"
           git push
