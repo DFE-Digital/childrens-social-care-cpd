@@ -7,7 +7,6 @@ namespace Childrens_Social_Care_CPD_Tests
     public static class MockData
     {
         private static readonly ContentfulCollection<PageViewModel> _pages;
-        private static readonly PageFooter _footer;
         private static readonly PageHeader _header;
         private static readonly ContentfulCollection<CookieBanner> _banner;
 
@@ -93,26 +92,6 @@ namespace Childrens_Social_Care_CPD_Tests
                 PrototypeTextHtml = "TestHtml",
             };
 
-            _footer = new PageFooter()
-            {
-                FooterLinks = new()
-                        {
-                            new Link
-                            {
-                                LinkText = "TestLink",
-                                LinkURL = "TestUrl",
-                                LinkSection = null,
-                                PageType = null,
-                                RedirectPageName = null,
-                                SideNaveGroupText = null,
-                                SortOrder = 1
-                            }
-                        },
-                LicenceDescription = new Document(),
-                CopyrightLink = new Link(),
-                LicenceDescriptionText = "TestDescription"
-            };
-
             _banner = new ContentfulCollection<CookieBanner>()
             {
                 Items = new List<CookieBanner>()
@@ -143,14 +122,6 @@ namespace Childrens_Social_Care_CPD_Tests
             get
             {
                 return _header;
-            }
-        }
-
-        public static PageFooter Footer
-        {
-            get
-            {
-                return _footer;
             }
         }
 
