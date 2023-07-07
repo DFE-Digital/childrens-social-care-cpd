@@ -51,30 +51,6 @@ namespace Childrens_Social_Care_CPD.Services
         }
 
         /// <summary>
-        /// Method to get Footer using Contentful API call
-        /// </summary>
-        /// <returns></returns>
-        public async Task<PageFooter> GetFooterData()
-        {
-            var footerQueryBuilder = QueryBuilder<PageFooter>.New.ContentTypeIs(SiteConstants.PAGEFOOTER)
-                                    .Include(SiteConstants.CONTENTLEVEL);
-            var footerResult = await _client.GetEntries<PageFooter>(footerQueryBuilder);
-            var footer = footerResult.FirstOrDefault();
-            PageFooter pageFooter = new PageFooter();
-
-            if (footer != null)
-            {
-                var htmlRenderer = new HtmlRenderer();
-
-                pageFooter.FooterLinks = footer.FooterLinks.OrderBy(x => x.SortOrder).ToList();
-                pageFooter.CopyrightLink = footer.CopyrightLink;
-                pageFooter.LicenceDescriptionText = htmlRenderer.ToHtml(footer.LicenceDescription).Result;
-            }
-
-            return pageFooter;
-        }
-
-        /// <summary>
         /// Method to get Header using Contentful API call
         /// </summary>
         /// <returns></returns>
