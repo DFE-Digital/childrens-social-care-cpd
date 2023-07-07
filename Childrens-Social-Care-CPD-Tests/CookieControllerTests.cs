@@ -25,7 +25,6 @@ namespace Childrens_Social_Care_CPD_Tests
         private Mock<IContentfulDataService> _contentfulDataService;
         private Mock<ILogger<CookieController>> _logger;
         private ContentfulCollection<PageViewModel> _pages;
-        private PageFooter _footer;
         private PageHeader _header;
         private ContentfulCollection<CookieBanner> _banner;
         private CookieController _target;
@@ -36,7 +35,6 @@ namespace Childrens_Social_Care_CPD_Tests
             SetupModels();
             _contentfulDataService = new Mock<IContentfulDataService>(MockBehavior.Strict);
             _contentfulDataService.Setup(c => c.GetViewData<PageViewModel>(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(_pages);
-            _contentfulDataService.Setup(c => c.GetFooterData()).ReturnsAsync(_footer);
             _contentfulDataService.Setup(c => c.GetHeaderData()).ReturnsAsync(_header);
             _logger = new Mock<ILogger<CookieController>>();
             _target = new CookieController(_logger.Object, _contentfulDataService.Object);
@@ -115,26 +113,6 @@ namespace Childrens_Social_Care_CPD_Tests
                 PrototypeHeader = "TestHeader",
                 PrototypeText = new Document(),
                 PrototypeTextHtml = "TestHtml",
-            };
-
-            _footer = new PageFooter()
-            {
-                        FooterLinks = new()
-                        {
-                            new Link
-                            {
-                                LinkText = "TestLink",
-                                LinkURL = "TestUrl",
-                                LinkSection = null,
-                                PageType = null,
-                                RedirectPageName = null,
-                                SideNaveGroupText = null,
-                                SortOrder = 1
-                            }
-                        },
-                        LicenceDescription = new Document(),
-                        CopyrightLink = new Link(),
-                        LicenceDescriptionText = "TestDescription"
             };
 
             _banner = new ContentfulCollection<CookieBanner>()

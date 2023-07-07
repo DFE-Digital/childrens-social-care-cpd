@@ -32,7 +32,6 @@ namespace Childrens_Social_Care_CPD_Tests
         public void Setup()
         {
             _contentfulDataService = new Mock<IContentfulDataService>(MockBehavior.Loose);
-            _contentfulDataService.Setup(c => c.GetFooterData()).ReturnsAsync(MockData.Footer);
             _contentfulDataService.Setup(c => c.GetHeaderData()).ReturnsAsync(MockData.Header);
             _logger = new Mock<ILogger<CPDActionFilter>>();
             _target = new CPDActionFilter(_logger.Object, _contentfulDataService.Object);
@@ -48,19 +47,6 @@ namespace Childrens_Social_Care_CPD_Tests
             Assert.IsNotNull(actual);
             Assert.AreEqual("TestPageHeader", actual.Header);
         }
-
-        [Test]
-        public void ActionFilterSetsPageFooterTest()
-        {
-            var context = SetActionExecutingContext();
-            _target.OnActionExecuting(context);
-            var actual = _controller.ViewData["PageFooter"] as PageFooter;
-            Assert.IsNotNull(actual);
-            Assert.AreEqual(1, actual.FooterLinks.Count);
-            Assert.AreEqual("TestLink", actual.FooterLinks.First().LinkText);
-        }
-
-
 
         private ActionExecutingContext SetActionExecutingContext()
         {
