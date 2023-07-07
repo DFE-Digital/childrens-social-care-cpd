@@ -22,7 +22,6 @@ namespace Childrens_Social_Care_CPD_Tests
         {
             _contentfulDataService = new Mock<IContentfulDataService>(MockBehavior.Strict);
             _contentfulDataService.Setup(c => c.GetViewData<PageViewModel>(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(MockData.Pages);
-            _contentfulDataService.Setup(c => c.GetFooterData()).ReturnsAsync(MockData.Footer);
             _contentfulDataService.Setup(c => c.GetHeaderData()).ReturnsAsync(MockData.Header);
             _logger = new Mock<ILogger<CPDController>>();
             _target = new CPDController(_logger.Object, _contentfulDataService.Object);

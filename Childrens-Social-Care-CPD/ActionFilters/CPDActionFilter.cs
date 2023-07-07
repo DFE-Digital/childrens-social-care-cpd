@@ -49,10 +49,6 @@ namespace Childrens_Social_Care_CPD.ActionFilters
 
                 controller.ViewBag.PageHeader = pageHeader;
 
-                PageFooter pageFooter = _contentfulDataService.GetFooterData().Result;
-
-                controller.ViewBag.PageFooter = pageFooter;
-
                 var acceptsAnalytics = filterContext.HttpContext.Request.Cookies[SiteConstants.ANALYTICSCOOKIENAME]?.Equals("accept");
 
                 if (acceptsAnalytics == null)

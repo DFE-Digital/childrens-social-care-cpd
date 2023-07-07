@@ -17,7 +17,6 @@ namespace Childrens_Social_Care_CPD_Tests
     {
         private Mock<IContentfulClient> _contentfulClient;
         private ContentfulCollection<PageViewModel> _pages;
-        private ContentfulCollection<PageFooter> _footer;
         private ContentfulCollection<PageHeader> _header;
         private ContentfulCollection<CookieBanner> _banner;
         private IContentfulDataService _target;
@@ -31,7 +30,6 @@ namespace Childrens_Social_Care_CPD_Tests
             _contentfulClient = new Mock<IContentfulClient>(MockBehavior.Strict);
             _contentfulClient.Setup(c => c.GetEntries<PageViewModel>(It.IsAny<QueryBuilder<PageViewModel>>(), default)).ReturnsAsync(_pages);
             _contentfulClient.Setup(c => c.GetEntries<PageHeader>(It.IsAny<QueryBuilder<PageHeader>>(), default)).ReturnsAsync(_header);
-            _contentfulClient.Setup(c => c.GetEntries<PageFooter>(It.IsAny<QueryBuilder<PageFooter>>(), default)).ReturnsAsync(_footer);
             _contentfulClient.Setup(c => c.GetEntries<CookieBanner>(It.IsAny<QueryBuilder<CookieBanner>>(), default)).ReturnsAsync(_banner);
 
             _target = new ContentfulDataService(_contentfulClient.Object);
@@ -58,14 +56,6 @@ namespace Childrens_Social_Care_CPD_Tests
             var actual = _target.GetHeaderData().Result;
             Assert.IsInstanceOf<PageHeader>(actual);
             Assert.AreEqual("TestPageHeader", actual.Header);
-        }
-
-        [Test]
-        public void GetFooterDataReturnsDataWithPageFooterModelTest()
-        {
-            var actual = _target.GetFooterData().Result;
-            Assert.IsInstanceOf<PageFooter>(actual);
-            Assert.AreEqual(1, actual.FooterLinks.Count);
         }
 
         [Test]
@@ -147,32 +137,6 @@ namespace Childrens_Social_Care_CPD_Tests
                         PrototypeTextHtml = "TestHtml",
                     }
                 }
-            };
-
-            _footer = new ContentfulCollection<PageFooter>
-            {
-                Items = new List<PageFooter>
-                {
-                    new PageFooter
-                    {
-                        FooterLinks = new()
-                        {
-                            new Link
-                            {
-                                LinkText = "TestLink",
-                                LinkURL = "TestUrl",
-                                LinkSection = null,
-                                PageType = null,
-                                RedirectPageName = null,
-                                SideNaveGroupText = null,
-                                SortOrder = 1
-                            }
-                        },
-                        LicenceDescription = new Document(),
-                        CopyrightLink = new Link(),
-                        LicenceDescriptionText = "TestDescription"
-                    }
-                },
             };
 
             _banner = new ContentfulCollection<CookieBanner>()
