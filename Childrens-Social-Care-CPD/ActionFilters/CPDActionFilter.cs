@@ -45,10 +45,6 @@ namespace Childrens_Social_Care_CPD.ActionFilters
                 controller.ViewBag.sendingPage = filterContext.ActionArguments.ContainsKey(SiteConstants.SENDINGPAGE) ? filterContext.ActionArguments[SiteConstants.SENDINGPAGE] ?? string.Empty : string.Empty;
                 controller.ViewBag.sendingPageType = filterContext.ActionArguments.ContainsKey(SiteConstants.SENDINGPAGETYPE) ? filterContext.ActionArguments[SiteConstants.SENDINGPAGETYPE] ?? string.Empty : string.Empty;
 
-                PageHeader pageHeader = _contentfulDataService.GetHeaderData().Result;
-
-                controller.ViewBag.PageHeader = pageHeader;
-
                 var acceptsAnalytics = filterContext.HttpContext.Request.Cookies[SiteConstants.ANALYTICSCOOKIENAME]?.Equals("accept");
 
                 if (acceptsAnalytics == null)
