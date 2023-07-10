@@ -17,7 +17,6 @@ namespace Childrens_Social_Care_CPD_Tests
     {
         private Mock<IContentfulClient> _contentfulClient;
         private ContentfulCollection<PageViewModel> _pages;
-        private ContentfulCollection<PageHeader> _header;
         private ContentfulCollection<CookieBanner> _banner;
         private IContentfulDataService _target;
 
@@ -29,7 +28,6 @@ namespace Childrens_Social_Care_CPD_Tests
 
             _contentfulClient = new Mock<IContentfulClient>(MockBehavior.Strict);
             _contentfulClient.Setup(c => c.GetEntries<PageViewModel>(It.IsAny<QueryBuilder<PageViewModel>>(), default)).ReturnsAsync(_pages);
-            _contentfulClient.Setup(c => c.GetEntries<PageHeader>(It.IsAny<QueryBuilder<PageHeader>>(), default)).ReturnsAsync(_header);
             _contentfulClient.Setup(c => c.GetEntries<CookieBanner>(It.IsAny<QueryBuilder<CookieBanner>>(), default)).ReturnsAsync(_banner);
 
             _target = new ContentfulDataService(_contentfulClient.Object);
@@ -48,14 +46,6 @@ namespace Childrens_Social_Care_CPD_Tests
             var actual = _target.GetViewData<PageViewModel>(null, null).Result;
             Assert.IsInstanceOf<ContentfulCollection<PageViewModel>>(actual);
             Assert.AreEqual(PageTypes.Master.ToString(), actual.FirstOrDefault().PageType.PageType.ToString());
-        }
-
-        [Test]
-        public void GetHeaderDataReturnsDataWithPageHeaderModelTest()
-        {
-            var actual = _target.GetHeaderData().Result;
-            Assert.IsInstanceOf<PageHeader>(actual);
-            Assert.AreEqual("TestPageHeader", actual.Header);
         }
 
         [Test]
@@ -121,20 +111,6 @@ namespace Childrens_Social_Care_CPD_Tests
                                 SortOrder = 0
                             }
                         }
-                    }
-                }
-            };
-
-            _header = new ContentfulCollection<PageHeader>()
-            {
-                Items = new List<PageHeader>()
-                {
-                    new PageHeader()
-                    {
-                        Header = "TestPageHeader",
-                        PrototypeHeader = "TestHeader",
-                        PrototypeText =  new Document(),
-                        PrototypeTextHtml = "TestHtml",
                     }
                 }
             };
