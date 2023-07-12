@@ -29,13 +29,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-          args: >
-            -Dsonar.projectKey=DFE-Digital_childrens-social-care-cpd
-            -Dsonar.organization=dfe-digital
-            -Dsonar.tests=Childrens-Social-Care-CPD-Tests/
-            -Dsonar.sources=Childrens-Social-Care-CPD/
-            -Dsonar.language=cs
       - name: Run Tidy up
         if: always()
         run: cd Childrens-Social-Care-CPD-Tests; docker-compose down --volumes
