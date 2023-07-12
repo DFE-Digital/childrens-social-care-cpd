@@ -31,10 +31,10 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
-            -Dsonar.projectKey=DFE-Digital_childrens-social-care-cpd 
-            -Dsonar.organization=dfe-digital 
-            -Dsonar.tests=Childrens-Social-Care-CPD-Tests 
-            -Dsonar.sources=Childrens-Social-Care-CPD 
+            -Dsonar.projectKey=DFE-Digital_childrens-social-care-cpd
+            -Dsonar.organization=dfe-digital
+            -Dsonar.tests=Childrens-Social-Care-CPD-Tests
+            -Dsonar.sources=Childrens-Social-Care-CPD
             -Dsonar.language=cs
       - name: Run Tidy up
         if: always()
