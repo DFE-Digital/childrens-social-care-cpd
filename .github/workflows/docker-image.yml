@@ -36,7 +36,6 @@ jobs:
 
       - name: Build and run unit tests
         run: |
-          cd src
           dotnet restore "Childrens-Social-Care-CPD.sln"
           dotnet build --no-restore
           
