@@ -27,50 +27,66 @@ jobs:
       # - name: Run Tidy up
       #   if: always()
       #   run: cd Childrens-Social-Care-CPD-Tests; docker-compose down --volumes
-  sonarcloud:
-    name: SonarCloud
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          # Shallow clones should be disabled for a better relevancy of analysis
-          fetch-depth: 0
 
-      # Speed-up analysis by caching the scanner workspace
-      - name: Cache SonarCloud workspace
-        uses: actions/cache@v1
-        with:
-          path: ~\.sonar\cache
-          key: ${{ runner.os }}-sonar-cache
-          restore-keys: ${{ runner.os }}-sonar-cache
+      - name: Install Sonar global tool
+        run: dotnet tool install --global dotnet-sonarscanner
 
-      # Speed-up analysis by caching the scanner installation
-      - name: Cache SonarCloud scanner
-        id: cache-sonar-scanner
-        uses: actions/cache@v1
-        with:
-          path: .\.sonar\scanner
-          key: ${{ runner.os }}-sonar-scanner
-          restore-keys: ${{ runner.os }}-sonar-scanner
+      - name: Begin Sonar scan
+        run: dotnet sonarscanner begin /d:sonar.dotnet.excludeTestProjects=true /k:"DFE-Digital_childrens-social-care-cpd" /o:"dfe-digital" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
 
-      - name: Install SonarCloud scanner
-        if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
-        shell: powershell
-        # The --version argument is optional. If it is omitted the latest version will be installed.
+      - name: Build and run unit tests
         run: |
-          New-Item -Path .\.sonar\scanner -ItemType Directory
-          dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner --version 4.8.0
+          cd src
+          dotnet restore "Childrens-Social-Care-CPD.sln"
+          dotnet build --no-restore
+          
+          dotnet test --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+      - name: End Sonar scan
+        run: dotnet sonarscanner end /d:sonar.login=${{ secrets.SONAR_TOKEN }}
+  # sonarcloud:
+  #   name: SonarCloud
+  #   runs-on: windows-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #       with:
+  #         # Shallow clones should be disabled for a better relevancy of analysis
+  #         fetch-depth: 0
 
-      - name: Build
-        shell: powershell
-        env:
-          # Needed to get some information about the pull request, if any
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # The secret referenced in the command-line by SONAR_TOKEN should be generated
-          # from https://sonarcloud.io/account/security/
-          # The organization and project arguments (see /o and /k) are displayed
-          # on the project dashboard in SonarCloud.
-        run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /d:sonar.dotnet.excludeTestProjects=true /k:"DFE-Digital_childrens-social-care-cpd" /o:"dfe-digital" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          dotnet build Childrens-Social-Care-CPD.sln
-          .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"  
+  #     # Speed-up analysis by caching the scanner workspace
+  #     - name: Cache SonarCloud workspace
+  #       uses: actions/cache@v1
+  #       with:
+  #         path: ~\.sonar\cache
+  #         key: ${{ runner.os }}-sonar-cache
+  #         restore-keys: ${{ runner.os }}-sonar-cache
+
+  #     # Speed-up analysis by caching the scanner installation
+  #     - name: Cache SonarCloud scanner
+  #       id: cache-sonar-scanner
+  #       uses: actions/cache@v1
+  #       with:
+  #         path: .\.sonar\scanner
+  #         key: ${{ runner.os }}-sonar-scanner
+  #         restore-keys: ${{ runner.os }}-sonar-scanner
+
+  #     - name: Install SonarCloud scanner
+  #       if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
+  #       shell: powershell
+  #       # The --version argument is optional. If it is omitted the latest version will be installed.
+  #       run: |
+  #         New-Item -Path .\.sonar\scanner -ItemType Directory
+  #         dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner --version 5.13.0
+
+  #     - name: Build
+  #       shell: powershell
+  #       env:
+  #         # Needed to get some information about the pull request, if any
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #         # The secret referenced in the command-line by SONAR_TOKEN should be generated
+  #         # from https://sonarcloud.io/account/security/
+  #         # The organization and project arguments (see /o and /k) are displayed
+  #         # on the project dashboard in SonarCloud.
+  #       run: |
+  #         .\.sonar\scanner\dotnet-sonarscanner begin /d:sonar.dotnet.excludeTestProjects=true /k:"DFE-Digital_childrens-social-care-cpd" /o:"dfe-digital" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+  #         dotnet build Childrens-Social-Care-CPD.sln
+  #         .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
