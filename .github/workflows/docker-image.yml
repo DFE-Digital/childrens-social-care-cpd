@@ -29,6 +29,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -X
       - name: Run Tidy up
         if: always()
         run: cd Childrens-Social-Care-CPD-Tests; docker-compose down --volumes
