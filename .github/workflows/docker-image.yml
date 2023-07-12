@@ -6,7 +6,7 @@ on:
       - master
       - main
 jobs:
-  build:
+  build-test-scan:
     name: Docker Image CI
     runs-on: ubuntu-latest
     env:
@@ -27,3 +27,24 @@ jobs:
       - name: Run Tidy up
         if: always()
         run: cd Childrens-Social-Care-CPD-Tests; docker-compose down --volumes
+
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v1
+        with:
+          path: ~\sonar\cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      
+      - name: Install SonarCloud scanners
+        run: dotnet tool install --global dotnet-sonarscanner
+
+      - name: Restore dependencies
+        run: dotnet restore "Childrens-Social-Care-CPD.sln"
+
+      - name: Build, Test and Analyze
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          dotnet-sonarscanner begin /d:sonar.verbose=true /k:"DFE-Digital_childrens-social-care-cpd" /o:"dfe-digital" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+          dotnet build "Childrens-Social-Care-CPD.sln" --no-restore
+          dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
