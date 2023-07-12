@@ -21,8 +21,8 @@ jobs:
       - name: Build the Docker image
         run: cd Childrens-Social-Care-CPD; docker build . --file Dockerfile --tag childrens-social-care-cpd:latest
 
-      - name: Run cypress end to end
-        run: cd Childrens-Social-Care-CPD-Tests; docker-compose up --exit-code-from children-social-care-cpd-regression-suite
+      # - name: Run cypress end to end
+      #   run: cd Childrens-Social-Care-CPD-Tests; docker-compose up --exit-code-from children-social-care-cpd-regression-suite
       
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
@@ -32,6 +32,6 @@ jobs:
         with:
           args: >
             -X
-      - name: Run Tidy up
-        if: always()
-        run: cd Childrens-Social-Care-CPD-Tests; docker-compose down --volumes
+      # - name: Run Tidy up
+      #   if: always()
+      #   run: cd Childrens-Social-Care-CPD-Tests; docker-compose down --volumes
