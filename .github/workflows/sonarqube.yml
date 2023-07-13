@@ -7,7 +7,7 @@
           - main
     jobs:
       code-analysis:
-        name: code-analysis
+        name: Static code analysis
         runs-on: ubuntu-latest
         steps:
           - uses: actions/checkout@v3
