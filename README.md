@@ -50,6 +50,8 @@ followed by
 
 `dotnet test`
 
+Cypress testing is also included.
+
 ### Further documentation
 
 More information on contentful and working as a headless CMS can be found [here](https://www.contentful.com/)
