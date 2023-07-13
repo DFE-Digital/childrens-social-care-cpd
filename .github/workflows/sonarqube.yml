@@ -1,0 +1,47 @@
+---
+    name: Docker Image CI
+    on:
+      pull_request:
+        branches:
+          - master
+          - main
+    jobs:
+      code-analysis:
+        name: code-analysis
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v3
+    
+          - name: Cache SonarCloud packages
+            uses: actions/cache@v1
+            with:
+              path: ~\sonar\cache
+              key: ${{ runner.os }}-sonar
+              restore-keys: ${{ runner.os }}-sonar
+          
+          - name: Install SonarCloud scanners
+            run: dotnet tool install --global dotnet-sonarscanner
+    
+          - name: Restore dependencies
+            run: dotnet restore "Childrens-Social-Care-CPD.sln"
+    
+          - name: Build, Test and Analyze
+            env:
+              SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+            run: |
+              dotnet-sonarscanner begin \
+                /d:sonar.verbose=true \
+                /k:"DFE-Digital_childrens-social-care-cpd" \
+                /o:"dfe-digital" \
+                /d:sonar.login="${{ secrets.SONAR_TOKEN }}" \
+                /d:sonar.host.url="https://sonarcloud.io" \
+                /d:sonar.cs.opencover.reportsPaths="Childrens-Social-Care-CPD-Tests/coverage.opencover.xml" \
+                /d:sonar.coverage.exclusions="\
+                    Childrens-Social-Care-CPD-Tests/**/*,\
+                    Childrens-Social-Care-CPD/Startup.cs,\
+                    Childrens-Social-Care-CPD/Program.cs" \
+                /d:sonar.verbose=true \
+                /d:sonar.log.level="DEBUG"
+              dotnet build "Childrens-Social-Care-CPD.sln" --no-restore
+              dotnet test --no-build --logger:trx -e:CollectCoverage=true -e:CoverletOutputFormat=opencover
+              dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"

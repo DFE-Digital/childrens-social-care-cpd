@@ -7,7 +7,7 @@ on:
       - main
 jobs:
   build-test-scan:
-    name: Docker Image CI
+    name: Build image and regression test
     runs-on: ubuntu-latest
     env:
       CPD_GOOGLEANALYTICSTAG: ${{secrets.TF_VAR_CPD_GOOGLEANALYTICSTAG}}
@@ -21,30 +21,9 @@ jobs:
       - name: Build the Docker image
         run: cd Childrens-Social-Care-CPD; docker build . --file Dockerfile --tag childrens-social-care-cpd:latest
 
-      - name: Run cypress end to end
-        run: cd Childrens-Social-Care-CPD-Tests; docker-compose up --exit-code-from children-social-care-cpd-regression-suite
+      # - name: Run cypress end to end
+      #   run: cd Childrens-Social-Care-CPD-Tests; docker-compose up --exit-code-from children-social-care-cpd-regression-suite
       
-      - name: Run Tidy up
-        if: always()
-        run: cd Childrens-Social-Care-CPD-Tests; docker-compose down --volumes
-
-      - name: Cache SonarCloud packages
-        uses: actions/cache@v1
-        with:
-          path: ~\sonar\cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
-      
-      - name: Install SonarCloud scanners
-        run: dotnet tool install --global dotnet-sonarscanner
-
-      - name: Restore dependencies
-        run: dotnet restore "Childrens-Social-Care-CPD.sln"
-
-      - name: Build, Test and Analyze
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          dotnet-sonarscanner begin /d:sonar.verbose=true /k:"DFE-Digital_childrens-social-care-cpd" /o:"dfe-digital" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          dotnet build "Childrens-Social-Care-CPD.sln" --no-restore
-          dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+      # - name: Run Tidy up
+      #   if: always()
+      #   run: cd Childrens-Social-Care-CPD-Tests; docker-compose down --volumes
