@@ -51,28 +51,6 @@ namespace Childrens_Social_Care_CPD.Services
         }
 
         /// <summary>
-        /// Method to get Header using Contentful API call
-        /// </summary>
-        /// <returns></returns>
-        public async Task<PageHeader> GetHeaderData()
-        {
-            var queryBuilder = QueryBuilder<PageHeader>.New.ContentTypeIs(SiteConstants.PAGEHEADER);
-            var result = await _client.GetEntries<PageHeader>(queryBuilder);
-            var header = result.FirstOrDefault();
-            var htmlRenderer = new HtmlRenderer();
-            var html = htmlRenderer.ToHtml(header?.PrototypeText).Result;
-
-            PageHeader pageHeader = new PageHeader
-            {
-                Header = header == null ? string.Empty : header.Header,
-                PrototypeTextHtml = html,
-                PrototypeHeader = header == null ? string.Empty : header.PrototypeHeader,
-                HeaderLinkTitle = header.HeaderLinkTitle
-            };
-            return pageHeader;
-        }
-
-        /// <summary>
         /// To get contents for Cookie banner
         /// </summary>
         /// <returns></returns>

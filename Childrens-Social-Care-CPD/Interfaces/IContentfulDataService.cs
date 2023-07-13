@@ -25,12 +25,6 @@ namespace Childrens_Social_Care_CPD.Interfaces
         Task<ContentfulCollection<PageViewModel>> GetViewData<T>(string pageName, string pageType);
 
         /// <summary>
-        /// Method to get Header using Contentful API call
-        /// </summary>
-        /// <returns></returns>
-        Task<PageHeader> GetHeaderData();
-
-        /// <summary>
         /// To get contents for Cookie banner
         /// </summary>
         /// <returns></returns>
