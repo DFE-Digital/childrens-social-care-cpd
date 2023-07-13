@@ -7,7 +7,6 @@ namespace Childrens_Social_Care_CPD_Tests
     public static class MockData
     {
         private static readonly ContentfulCollection<PageViewModel> _pages;
-        private static readonly PageHeader _header;
         private static readonly ContentfulCollection<CookieBanner> _banner;
 
         static MockData()
@@ -84,14 +83,6 @@ namespace Childrens_Social_Care_CPD_Tests
                 }
             };
 
-            _header = new PageHeader
-            {
-                Header = "TestPageHeader",
-                PrototypeHeader = "TestHeader",
-                PrototypeText = new Document(),
-                PrototypeTextHtml = "TestHtml",
-            };
-
             _banner = new ContentfulCollection<CookieBanner>()
             {
                 Items = new List<CookieBanner>()
@@ -114,14 +105,6 @@ namespace Childrens_Social_Care_CPD_Tests
             get
             {
                 return _pages;
-            }
-        }
-
-        public static PageHeader Header
-        {
-            get
-            {
-                return _header;
             }
         }
 

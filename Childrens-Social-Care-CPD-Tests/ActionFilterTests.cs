@@ -32,20 +32,9 @@ namespace Childrens_Social_Care_CPD_Tests
         public void Setup()
         {
             _contentfulDataService = new Mock<IContentfulDataService>(MockBehavior.Loose);
-            _contentfulDataService.Setup(c => c.GetHeaderData()).ReturnsAsync(MockData.Header);
             _logger = new Mock<ILogger<CPDActionFilter>>();
             _target = new CPDActionFilter(_logger.Object, _contentfulDataService.Object);
             _controller =  new CPDController(null,null);
-        }
-
-        [Test]
-        public void ActionFilterSetsPageHeaderTest()
-        {
-            var context = SetActionExecutingContext();
-            _target.OnActionExecuting(context);
-            var actual = _controller.ViewData["PageHeader"] as PageHeader;
-            Assert.IsNotNull(actual);
-            Assert.AreEqual("TestPageHeader", actual.Header);
         }
 
         private ActionExecutingContext SetActionExecutingContext()
