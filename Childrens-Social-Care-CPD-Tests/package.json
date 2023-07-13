@@ -29,7 +29,7 @@
     "mocha-junit-reporter": "^2.2.0"
   },
   "devDependencies": {
-    "@badeball/cypress-cucumber-preprocessor": "^11.4.0",
+    "@badeball/cypress-cucumber-preprocessor": "^18.0.1",
     "@cypress/webpack-preprocessor": "^5.12.0",
     "axe-core": "^4.4.2",
     "copy-webpack-plugin": "^11.0.0",
