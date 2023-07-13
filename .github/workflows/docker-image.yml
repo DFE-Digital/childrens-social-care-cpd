@@ -1,5 +1,5 @@
 ---
-name: Docker Image CI
+name: Build image and regression test
 on:
   pull_request:
     branches:
