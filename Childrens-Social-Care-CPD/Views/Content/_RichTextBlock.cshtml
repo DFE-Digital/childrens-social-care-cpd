@@ -1,0 +1,48 @@
+﻿@using Childrens_Social_Care_CPD.Constants
+@using Childrens_Social_Care_CPD.Enums
+@using Childrens_Social_Care_CPD.Contentful.Models;
+@using Contentful.Core.Models;
+@using System.Text;
+@addTagHelper *, Contentful.AspNetCore
+
+@model RichTextBlock;
+
+@functions 
+{
+    void RenderTitle()
+    {
+        if (Model.DisplayTitle)
+        {
+            var level = Model.TitleLevel > 0
+                ? Model.TitleLevel
+                : 2;
+
+            var tagBuilder = new TagBuilder($"h{level}");
+            var cssModifier = level switch
+            {
+                1 => "xl",
+                2 => "l",
+                3 => "m",
+                _ => "s"
+            };
+            tagBuilder.AddCssClass($"govuk-heading-{cssModifier}");
+            tagBuilder.InnerHtml.Append(Model.Title);
+
+            @tagBuilder;
+        }
+    }
+}
+
+@if (ViewBag.UseContentContainers)
+{
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            @{ RenderTitle(); }
+            <partial name="./_RichText" model="Model.Document" />
+        </div>
+    </div>
+}
+else
+{
+    <partial name="./_RichText" model="Model.Document" />
+}

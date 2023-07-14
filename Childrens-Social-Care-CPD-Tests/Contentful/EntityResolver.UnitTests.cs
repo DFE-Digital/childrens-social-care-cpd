@@ -1,5 +1,5 @@
 ﻿using Childrens_Social_Care_CPD.Contentful.Models;
-using Childrens_Social_Care_CPD.Experimental;
+using Childrens_Social_Care_CPD.Contentful;
 using FluentAssertions;
 using NUnit.Framework;
 using System;

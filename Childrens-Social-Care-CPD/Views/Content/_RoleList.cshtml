@@ -1,0 +1,34 @@
+﻿@using Childrens_Social_Care_CPD.Contentful.Models;
+@using Childrens_Social_Care_CPD.Contentful;
+
+@model RoleList
+
+@{
+    <h2>@Model.Title</h2>
+    foreach (var contentItem in Model.Roles)
+    {
+        var detailedRole = contentItem.Items.FirstOrDefault(x => typeof(DetailedRole) == x.GetType()) as DetailedRole;
+
+        <div>
+            <div class="govuk-heading-s govuk-!-margin-bottom-1">
+                <h3 class="govuk-heading-m">
+                    @Html.ContentLink(detailedRole.Title, contentItem.Id)
+                </h3>
+            </div>
+
+            @if (detailedRole != null)
+            {
+                <p class="govuk-body-s">@detailedRole.Summary.</p>
+                <div class="govuk-grid-row govuk-!-padding-bottom-3">
+                    <div class="govuk-grid-column-one-half">
+                        <ul class="govuk-list">
+                            <li>
+                                <span class="govuk-!-font-size-16 govuk-!-font-weight-bold">Salary range: @detailedRole.SalaryRange</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+}
