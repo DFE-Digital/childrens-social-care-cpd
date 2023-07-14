@@ -1,0 +1,13 @@
+﻿@using Childrens_Social_Care_CPD.Contentful.Models;
+@using Childrens_Social_Care_CPD.Contentful;
+
+@model LinkCard
+
+@{
+    <div class="dfe-section-card">
+        <h2 class="govuk-heading-m">
+            @Html.ContentLink(Model.TitleLink.Name, Model.TitleLink.Uri)
+        </h2>
+        <p class="govuk-body">@Model.Text</p>
+    </div>
+}

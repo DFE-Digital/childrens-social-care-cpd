@@ -17,7 +17,7 @@ using RouteData = Microsoft.AspNetCore.Routing.RouteData;
 using ViewResult = Microsoft.AspNetCore.Mvc.ViewResult;
 
 
-namespace Childrens_Social_Care_CPD_Tests
+namespace Childrens_Social_Care_CPD_Tests.Controllers
 {
 
     public class CookieControllerTests

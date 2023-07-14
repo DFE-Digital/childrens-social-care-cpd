@@ -1,0 +1,14 @@
+﻿@using Childrens_Social_Care_CPD.Contentful;
+@using Childrens_Social_Care_CPD.Contentful.Models;
+
+@model LinkListCard
+
+<div class="section-card__noborder">
+    <h3 class="govuk-heading-m">@Model.Title</h3>
+    <ul class="govuk-list">
+        @foreach (var contentLink in Model.Links)
+        {
+            <li><p class="govuk-heading-s">@Html.ContentLink(contentLink.Name, contentLink.Uri)</p></li>
+        }
+    </ul>
+</div>

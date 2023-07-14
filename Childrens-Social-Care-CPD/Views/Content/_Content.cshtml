@@ -1,0 +1,32 @@
+﻿@using Childrens_Social_Care_CPD.Controllers;
+@using Childrens_Social_Care_CPD.Contentful;
+@using Childrens_Social_Care_CPD.Contentful.Models;
+
+@model Content
+
+@{
+    ViewBag.ContentStack.Push(Model.Id);
+
+    if (Model.Items != null)
+    {
+        var lastItem = Model.Items.Last();
+
+        foreach (var item in Model.Items)
+        {
+            var preventOverflow = item as Content;
+            if (preventOverflow != null)
+            {
+                var stack = (Stack<string>)ViewBag.ContentStack;
+                if (stack.Contains(preventOverflow.Id))
+                {
+                    <partial name="./OverflowWarning" />
+                    continue;
+                }
+            }
+
+            await Html.RenderContentfulPartialAsync(item);
+        }
+    }
+
+    ViewBag.ContentStack.Pop();
+}

@@ -1,7 +1,7 @@
 ﻿using Childrens_Social_Care_CPD.Contentful.Models;
 using Contentful.Core.Configuration;
 
-namespace Childrens_Social_Care_CPD.Experimental;
+namespace Childrens_Social_Care_CPD.Contentful;
 
 /// <summary>
 /// Resolves ContentTypeId strings to their POCO representations.

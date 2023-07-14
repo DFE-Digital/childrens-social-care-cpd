@@ -14,19 +14,19 @@ public static class PartialsFactory
     {
         switch (item)
         {
-            case (ColumnLayout): return "./ColumnLayout";
-            case (Content): return "./Content";
-            case (ContentLink): return "./ContentLink";
-            case (ContentSeparator): return "./ContentSeparator";
-            case (DetailedRole): return "./DetailedRole";
+            case (ColumnLayout): return "./_ColumnLayout";
+            case (Content): return "./_Content";
+            case (ContentLink): return "./_ContentLink";
+            case (ContentSeparator): return "./_ContentSeparator";
+            case (DetailedRole): return "./_DetailedRole";
             case (HeroBanner): return string.Empty; // skip - handled in pre-render section
-            case (LinkCard): return "./LinkCard";
-            case (LinkListCard): return "./LinkListCard";
-            case (RichTextBlock): return "./RichTextBlock";
-            case (RoleList): return "./RoleList";
-            case (SideMenu): return "./SideMenu";
-            case (TextBlock): return "./TextBlock";
-            default : return "./UnknownContentWarning";
-        }
+            case (LinkCard): return "./_LinkCard";
+            case (LinkListCard): return "./_LinkListCard";
+            case (RichTextBlock): return "./_RichTextBlock";
+            case (RoleList): return "./_RoleList";
+            case (SideMenu): return "./_SideMenu";
+            case (TextBlock): return "./_TextBlock";
+            default: return "./_UnknownContentWarning";
+       }
     }
 }
