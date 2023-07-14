@@ -9,7 +9,8 @@ using Contentful.Core.Search;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Moq;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using NSubstitute;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -19,29 +20,30 @@ namespace Childrens_Social_Care_CPD_Tests.Controllers
     public class ContentControllerTests
     {
         private ContentController _contentController;
-        private Mock<IRequestCookieCollection> _cookies;
-        private Mock<HttpContext> _httpContext;
-        private Mock<HttpRequest> _httpRequest;
-        private Mock<IContentfulDataService> _contentfulDataService;
-        private Mock<ICpdContentfulClient> _contentfulClient;
+        private IRequestCookieCollection _cookies;
+        private HttpContext _httpContext;
+        private HttpRequest _httpRequest;
+        private IContentfulDataService _contentfulDataService;
+        private ICpdContentfulClient _contentfulClient;
 
         [SetUp]
         public void SetUp()
         {
-            _cookies = new Mock<IRequestCookieCollection>();
-            _httpContext = new Mock<HttpContext>();
-            _httpRequest = new Mock<HttpRequest>();
-            var controllerContext = new Mock<ControllerContext>();
+            _cookies = Substitute.For<IRequestCookieCollection>();
+            _httpContext = Substitute.For<HttpContext>();
+            _httpRequest = Substitute.For<HttpRequest>();
+            var controllerContext = Substitute.For<ControllerContext>();
 
-            _httpRequest.Setup(x => x.Cookies).Returns(_cookies.Object);
-            _httpContext.Setup(x => x.Request).Returns(_httpRequest.Object);
-            controllerContext.Object.HttpContext = _httpContext.Object;
+            _httpRequest.Cookies.Returns(_cookies);
+            _httpContext.Request.Returns(_httpRequest);
+            controllerContext.HttpContext = _httpContext;
 
-            _contentfulClient = new Mock<ICpdContentfulClient>();
-            _contentfulDataService = new Mock<IContentfulDataService>();
+            _contentfulClient = Substitute.For<ICpdContentfulClient>();
+            _contentfulDataService = Substitute.For<IContentfulDataService>();
 
-            _contentController = new ContentController(_contentfulClient.Object, _contentfulDataService.Object);
-            _contentController.ControllerContext = controllerContext.Object;
+            _contentController = new ContentController(_contentfulClient, _contentfulDataService);
+            _contentController.ControllerContext = controllerContext;
+            _contentController.TempData = Substitute.For<ITempDataDictionary>();
         }
 
         [Test]
@@ -49,14 +51,13 @@ namespace Childrens_Social_Care_CPD_Tests.Controllers
         {
             // arrange
             var cookieBanner = new CookieBanner();
-            _cookies.Setup(x => x.ContainsKey(SiteConstants.ANALYTICSCOOKIENAME)).Returns(false);
-            _contentfulDataService.Setup(x => x.GetCookieBannerData()).Returns(Task.FromResult(cookieBanner));
+            _cookies.ContainsKey(SiteConstants.ANALYTICSCOOKIENAME).Returns(false);
+            _contentfulDataService.GetCookieBannerData().Returns(Task.FromResult(cookieBanner));
 
             // act
             await _contentController.Index("home");
 
             // assert
-            _contentController.ViewData.ContainsKey("CookieBanner").Should().BeTrue();
             _contentController.ViewData["CookieBanner"].Should().Be(cookieBanner);
         }
 
@@ -65,14 +66,14 @@ namespace Childrens_Social_Care_CPD_Tests.Controllers
         {
             // arrange
             var cookieBanner = new CookieBanner();
-            _cookies.Setup(x => x.ContainsKey(SiteConstants.ANALYTICSCOOKIENAME)).Returns(true);
-            _contentfulDataService.Setup(x => x.GetCookieBannerData()).Returns(Task.FromResult(cookieBanner));
+            _cookies.ContainsKey(SiteConstants.ANALYTICSCOOKIENAME).Returns(true);
+            _contentfulDataService.GetCookieBannerData().Returns(Task.FromResult(cookieBanner));
 
             // act
             await _contentController.Index("home");
 
             // assert
-            _contentController.ViewData.ContainsKey("CookieBanner").Should().BeFalse();
+            _contentController.ViewData["CookieBanner"].Should().BeNull();
         }
 
         [Test]
@@ -80,8 +81,8 @@ namespace Childrens_Social_Care_CPD_Tests.Controllers
         {
             // arrange
             var noContent = new ContentfulCollection<Content>() { Items = new List<Content>() };
-            _cookies.Setup(x => x.ContainsKey(SiteConstants.ANALYTICSCOOKIENAME)).Returns(true);
-            _contentfulClient.Setup(x => x.GetEntries(It.IsAny<QueryBuilder<Content>>(), default)).ReturnsAsync(noContent);
+            _cookies.ContainsKey(SiteConstants.ANALYTICSCOOKIENAME).Returns(true);
+            _contentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), default).Returns(noContent);
 
             // act
             var actual = await _contentController.Index("home");
@@ -95,8 +96,8 @@ namespace Childrens_Social_Care_CPD_Tests.Controllers
         {
             // arrange
             var contentCollection = new ContentfulCollection<Content>() { Items = new List<Content>() { new Content() } };
-            _cookies.Setup(x => x.ContainsKey(SiteConstants.ANALYTICSCOOKIENAME)).Returns(true);
-            _contentfulClient.Setup(x => x.GetEntries(It.IsAny<QueryBuilder<Content>>(), default)).ReturnsAsync(contentCollection);
+            _cookies.ContainsKey(SiteConstants.ANALYTICSCOOKIENAME).Returns(true);
+            _contentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), default).Returns(contentCollection);
 
             // act
             var actual = await _contentController.Index("home");
@@ -111,8 +112,8 @@ namespace Childrens_Social_Care_CPD_Tests.Controllers
             // arrange
             var pageName = "home";
             var contentCollection = new ContentfulCollection<Content>() { Items = new List<Content>() { new Content() } };
-            _cookies.Setup(x => x.ContainsKey(SiteConstants.ANALYTICSCOOKIENAME)).Returns(true);
-            _contentfulClient.Setup(x => x.GetEntries(It.IsAny<QueryBuilder<Content>>(), default)).ReturnsAsync(contentCollection);
+            _cookies.ContainsKey(SiteConstants.ANALYTICSCOOKIENAME).Returns(true);
+            _contentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), default).Returns(contentCollection);
 
             // act
             var actual = await _contentController.Index(pageName);
@@ -128,8 +129,8 @@ namespace Childrens_Social_Care_CPD_Tests.Controllers
             var pageName = "home";
             var pageTitle = "A title";
             var contentCollection = new ContentfulCollection<Content>() { Items = new List<Content>() { new Content() { Title = pageTitle } } };
-            _cookies.Setup(x => x.ContainsKey(SiteConstants.ANALYTICSCOOKIENAME)).Returns(true);
-            _contentfulClient.Setup(x => x.GetEntries(It.IsAny<QueryBuilder<Content>>(), default)).ReturnsAsync(contentCollection);
+            _cookies.ContainsKey(SiteConstants.ANALYTICSCOOKIENAME).Returns(true);
+            _contentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), default).Returns(contentCollection);
 
             // act
             var actual = await _contentController.Index(pageName);
@@ -144,8 +145,8 @@ namespace Childrens_Social_Care_CPD_Tests.Controllers
             // arrange
             var pageName = "home";
             var contentCollection = new ContentfulCollection<Content>() { Items = new List<Content>() { new Content() } };
-            _cookies.Setup(x => x.ContainsKey(SiteConstants.ANALYTICSCOOKIENAME)).Returns(true);
-            _contentfulClient.Setup(x => x.GetEntries(It.IsAny<QueryBuilder<Content>>(), default)).ReturnsAsync(contentCollection);
+            _cookies.ContainsKey(SiteConstants.ANALYTICSCOOKIENAME).Returns(true);
+            _contentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), default).Returns(contentCollection);
 
             // act
             var actual = await _contentController.Index(pageName);

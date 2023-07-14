@@ -6,18 +6,16 @@
 
 @{
     ViewBag.ContentStack.Push(Model.Id);
+    var contentHistoryStack = (Stack<string>)ViewBag.ContentStack;
 
     if (Model.Items != null)
     {
-        var lastItem = Model.Items.Last();
-
         foreach (var item in Model.Items)
         {
             var preventOverflow = item as Content;
             if (preventOverflow != null)
             {
-                var stack = (Stack<string>)ViewBag.ContentStack;
-                if (stack.Contains(preventOverflow.Id))
+                if (contentHistoryStack.Contains(preventOverflow.Id))
                 {
                     <partial name="./OverflowWarning" />
                     continue;
