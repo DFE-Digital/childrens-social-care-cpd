@@ -20,10 +20,10 @@
             var tagBuilder = new TagBuilder($"h{level}");
             var cssModifier = level switch
             {
-                1 => "xl",
-                2 => "l",
-                3 => "m",
-                _ => "s"
+                1 => "l",
+                2 => "m",
+                3 => "s",
+                _ => "m"
             };
             tagBuilder.AddCssClass($"govuk-heading-{cssModifier}");
             tagBuilder.InnerHtml.Append(Model.Title);
