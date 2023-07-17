@@ -38,10 +38,10 @@ namespace Childrens_Social_Care_CPD.Services
                 .Include(contentLevel);
 
             var result = await _client.GetEntries<PageViewModel>(queryBuilder);
-            result.All(c => { c.PageType = contentPageType; return true; });
-           
+            
             foreach (PageViewModel viewModel in result)
             {
+                viewModel.PageType = contentPageType;
                 viewModel.Cards = viewModel.Cards.OrderBy(x => x.SortOrder).ToList();
                 viewModel.Labels = viewModel.Labels.OrderBy(x => x.SortOrder).ToList();
                 viewModel.RichTexts = viewModel.RichTexts.OrderBy(x => x.SortOrder).ToList();

@@ -1,13 +1,13 @@
 ---
-name: Docker Image CI
+name: Build image and regression test
 on:
   pull_request:
     branches:
       - master
       - main
 jobs:
-  build:
-    name: Docker Image CI
+  build-test-scan:
+    name: Build image and regression test
     runs-on: ubuntu-latest
     env:
       CPD_GOOGLEANALYTICSTAG: ${{secrets.TF_VAR_CPD_GOOGLEANALYTICSTAG}}
