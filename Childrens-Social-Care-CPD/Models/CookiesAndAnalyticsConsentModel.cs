@@ -7,5 +7,6 @@ namespace Childrens_Social_Care_CPD.Models
         public Content Content { get; set; }
         public AnalyticsConsentState ConsentState { get; set; }
         public string RedirectTo { get; set; }
+        public string SourceUrl { get; set; }
     }
 }

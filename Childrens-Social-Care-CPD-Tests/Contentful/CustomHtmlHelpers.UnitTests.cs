@@ -23,12 +23,31 @@ public class CustomHtmlHelpersTests
     }
 
     [Test]
-    public void ContentLink_Builds_Internal_Link_Correctly()
+    public void ContentLink_Builds_Internal_Content_Link_Correctly()
     {
         // arrange
         var uri = "test_path";
         var text = "Link text";
         var expectedUri = $"<a class=\"HtmlEncode[[govuk-link]]\" href=\"HtmlEncode[[/content/{uri}]]\">HtmlEncode[[{text}]]</a>";
+        var stringWriter = new StringWriter();
+        var helper = Substitute.For<IHtmlHelper>();
+
+        // act
+        var result = helper.ContentLink(text, uri);
+        result.WriteTo(stringWriter, new HtmlTestEncoder());
+        var actual = stringWriter.ToString();
+
+        // assert
+        actual.Should().Be(expectedUri);
+    }
+
+    [Test]
+    public void ContentLink_Builds_Internal_Link_Correctly()
+    {
+        // arrange
+        var uri = "/test_path";
+        var text = "Link text";
+        var expectedUri = $"<a class=\"HtmlEncode[[govuk-link]]\" href=\"HtmlEncode[[{uri}]]\">HtmlEncode[[{text}]]</a>";
         var stringWriter = new StringWriter();
         var helper = Substitute.For<IHtmlHelper>();
 

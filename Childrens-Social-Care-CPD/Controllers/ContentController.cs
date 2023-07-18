@@ -71,6 +71,7 @@ namespace Childrens_Social_Care_CPD.Controllers
             ViewData["PageName"] = pageName;
             ViewData["ContentStack"] = new Stack<string>();
             ViewData["UseContentContainers"] = true;
+            ViewData["ShowHideAnalyticsMessage"] = prefsset;
             
             return View(pageContent);
         }
