@@ -5,6 +5,7 @@
 @model Content
 
 @{
+    // We use the content stack to track circular dependencies and prevent overflows
     ViewBag.ContentStack.Push(Model.Id);
     var contentHistoryStack = (Stack<string>)ViewBag.ContentStack;
 

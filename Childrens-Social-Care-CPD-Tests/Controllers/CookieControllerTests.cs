@@ -1,21 +1,13 @@
 using System.Collections.Generic;
+using Childrens_Social_Care_CPD.Contentful;
 using Childrens_Social_Care_CPD.Controllers;
-using Childrens_Social_Care_CPD.Enums;
 using Childrens_Social_Care_CPD.Interfaces;
 using Childrens_Social_Care_CPD.Models;
 using Contentful.Core.Models;
-using Contentful.Core.Search;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
-using ActionDescriptor = Microsoft.AspNetCore.Mvc.Abstractions.ActionDescriptor;
-using ActionExecutedContext = Microsoft.AspNetCore.Mvc.Filters.ActionExecutedContext;
-using ActionExecutingContext = Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext;
-using ModelStateDictionary = Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary;
-using RouteData = Microsoft.AspNetCore.Routing.RouteData;
-using ViewResult = Microsoft.AspNetCore.Mvc.ViewResult;
-
 
 namespace Childrens_Social_Care_CPD_Tests.Controllers
 {
@@ -24,6 +16,7 @@ namespace Childrens_Social_Care_CPD_Tests.Controllers
     {
         private Mock<IContentfulDataService> _contentfulDataService;
         private Mock<ILogger<CookieController>> _logger;
+        private Mock<ICpdContentfulClient> _cpdClient;
         private ContentfulCollection<PageViewModel> _pages;
         private ContentfulCollection<CookieBanner> _banner;
         private CookieController _target;
@@ -35,7 +28,8 @@ namespace Childrens_Social_Care_CPD_Tests.Controllers
             _contentfulDataService = new Mock<IContentfulDataService>(MockBehavior.Strict);
             _contentfulDataService.Setup(c => c.GetViewData<PageViewModel>(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(_pages);
             _logger = new Mock<ILogger<CookieController>>();
-            _target = new CookieController(_logger.Object, _contentfulDataService.Object);
+            _cpdClient = new Mock<ICpdContentfulClient>();
+            _target = new CookieController(_logger.Object, _contentfulDataService.Object, _cpdClient.Object);
         }
 
         [Test]

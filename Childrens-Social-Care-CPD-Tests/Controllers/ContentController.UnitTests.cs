@@ -51,7 +51,7 @@ namespace Childrens_Social_Care_CPD_Tests.Controllers
         {
             // arrange
             var cookieBanner = new CookieBanner();
-            _cookies.ContainsKey(SiteConstants.ANALYTICSCOOKIENAME).Returns(false);
+            _cookies[SiteConstants.ANALYTICSCOOKIENAME].Returns(string.Empty);
             _contentfulDataService.GetCookieBannerData().Returns(Task.FromResult(cookieBanner));
 
             // act
@@ -62,11 +62,13 @@ namespace Childrens_Social_Care_CPD_Tests.Controllers
         }
 
         [Test]
-        public async Task Cookie_Content_Is_Not_Fetched_When_Analytics_Cookie_Exists()
+        [TestCase(SiteConstants.ANALYTICSCOOKIEACCEPTED)]
+        [TestCase(SiteConstants.ANALYTICSCOOKIEREJECTED)]
+        public async Task Cookie_Content_Is_Not_Fetched_When_Analytics_Cookie_Exists(string cookieValue)
         {
             // arrange
             var cookieBanner = new CookieBanner();
-            _cookies.ContainsKey(SiteConstants.ANALYTICSCOOKIENAME).Returns(true);
+            _cookies[SiteConstants.ANALYTICSCOOKIENAME].Returns(cookieValue);
             _contentfulDataService.GetCookieBannerData().Returns(Task.FromResult(cookieBanner));
 
             // act
@@ -81,7 +83,7 @@ namespace Childrens_Social_Care_CPD_Tests.Controllers
         {
             // arrange
             var noContent = new ContentfulCollection<Content>() { Items = new List<Content>() };
-            _cookies.ContainsKey(SiteConstants.ANALYTICSCOOKIENAME).Returns(true);
+            _cookies[SiteConstants.ANALYTICSCOOKIENAME].Returns(SiteConstants.ANALYTICSCOOKIEACCEPTED);
             _contentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), default).Returns(noContent);
 
             // act
@@ -96,7 +98,7 @@ namespace Childrens_Social_Care_CPD_Tests.Controllers
         {
             // arrange
             var contentCollection = new ContentfulCollection<Content>() { Items = new List<Content>() { new Content() } };
-            _cookies.ContainsKey(SiteConstants.ANALYTICSCOOKIENAME).Returns(true);
+            _cookies[SiteConstants.ANALYTICSCOOKIENAME].Returns(SiteConstants.ANALYTICSCOOKIEACCEPTED);
             _contentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), default).Returns(contentCollection);
 
             // act
@@ -112,7 +114,7 @@ namespace Childrens_Social_Care_CPD_Tests.Controllers
             // arrange
             var pageName = "home";
             var contentCollection = new ContentfulCollection<Content>() { Items = new List<Content>() { new Content() } };
-            _cookies.ContainsKey(SiteConstants.ANALYTICSCOOKIENAME).Returns(true);
+            _cookies[SiteConstants.ANALYTICSCOOKIENAME].Returns(SiteConstants.ANALYTICSCOOKIEACCEPTED);
             _contentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), default).Returns(contentCollection);
 
             // act
@@ -129,7 +131,7 @@ namespace Childrens_Social_Care_CPD_Tests.Controllers
             var pageName = "home";
             var pageTitle = "A title";
             var contentCollection = new ContentfulCollection<Content>() { Items = new List<Content>() { new Content() { Title = pageTitle } } };
-            _cookies.ContainsKey(SiteConstants.ANALYTICSCOOKIENAME).Returns(true);
+            _cookies[SiteConstants.ANALYTICSCOOKIENAME].Returns(SiteConstants.ANALYTICSCOOKIEACCEPTED);
             _contentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), default).Returns(contentCollection);
 
             // act
@@ -145,7 +147,7 @@ namespace Childrens_Social_Care_CPD_Tests.Controllers
             // arrange
             var pageName = "home";
             var contentCollection = new ContentfulCollection<Content>() { Items = new List<Content>() { new Content() } };
-            _cookies.ContainsKey(SiteConstants.ANALYTICSCOOKIENAME).Returns(true);
+            _cookies[SiteConstants.ANALYTICSCOOKIENAME].Returns(SiteConstants.ANALYTICSCOOKIEACCEPTED);
             _contentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), default).Returns(contentCollection);
 
             // act
