@@ -1,0 +1,51 @@
+﻿@using Childrens_Social_Care_CPD.Constants
+@using Contentful.AspNetCore.TagHelpers
+@using Microsoft.AspNetCore.WebUtilities
+@addTagHelper *, Contentful.AspNetCore
+
+@model CookiesAndAnalyticsConsentModel;
+
+@using (@Html.BeginForm("SetPreferences", "Cookie", null, FormMethod.Post, false, null))
+{
+    <input type="hidden" id="redirectTo" name="redirectTo" value="@Model.RedirectTo"  />
+    <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                Do you want to accept analytics cookies?
+            </legend>
+            <div class="govuk-radios" data-module="govuk-radios">
+                <div class="govuk-radios__item">
+                    @if (Model.ConsentState == AnalyticsConsentState.Accepted)
+                    {
+                        <input class="govuk-radios__input" id="analytics-cookies" name="consentValue" type="radio" value="@SiteConstants.ANALYTICSCOOKIEACCEPTED" datatestid="btn-accepted" checked="checked">
+                    }
+                    else
+                    {
+                        <input class="govuk-radios__input" id="analytics-cookies" name="consentValue" type="radio" datatestid="btn-accept" value="@SiteConstants.ANALYTICSCOOKIEACCEPTED">
+                    }
+
+                    <label class="govuk-label govuk-radios__label" for="analytics-cookies">
+                        Yes
+                    </label>
+                </div>
+                <div class="govuk-radios__item">
+                    @if (Model.ConsentState == AnalyticsConsentState.Rejected)
+                    {
+                        <input class="govuk-radios__input" id="analytics-cookies-2" name="consentValue" type="radio" value="@SiteConstants.ANALYTICSCOOKIEREJECTED" datatestid="btn-rejected" checked="checked">
+                    }
+                    else
+                    {
+                        <input class="govuk-radios__input" id="analytics-cookies-2" name="consentValue" type="radio" datatestid="btn-reject" value="@SiteConstants.ANALYTICSCOOKIEREJECTED">
+                    }
+                    <label class="govuk-label govuk-radios__label" for="analytics-cookies-2">
+                        No
+                    </label>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+
+    <button class="govuk-button" type="submit" datatestid="btn-save" data-module="govuk-button">
+        Save cookie settings
+    </button>
+}

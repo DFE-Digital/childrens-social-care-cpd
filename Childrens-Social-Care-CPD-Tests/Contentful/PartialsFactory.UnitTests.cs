@@ -11,18 +11,18 @@ public partial class PartialsFactoryTests
 {
     public static object[] Successful_Resolves =
     {
-        new object[] { new ColumnLayout(), "./_ColumnLayout" },
-        new object[] { new Content(), "./_Content" },
-        new object[] { new ContentLink(), "./_ContentLink" },
-        new object[] { new ContentSeparator(), "./_ContentSeparator" },
-        new object[] { new DetailedRole(), "./_DetailedRole" },
+        new object[] { new ColumnLayout(), "_ColumnLayout" },
+        new object[] { new Content(), "_Content" },
+        new object[] { new ContentLink(), "_ContentLink" },
+        new object[] { new ContentSeparator(), "_ContentSeparator" },
+        new object[] { new DetailedRole(), "_DetailedRole" },
         new object[] { new HeroBanner(), string.Empty },
-        new object[] { new LinkCard(), "./_LinkCard" },
-        new object[] { new LinkListCard(), "./_LinkListCard" },
-        new object[] { new RichTextBlock(), "./_RichTextBlock" },
-        new object[] { new RoleList(), "./_RoleList" },
-        new object[] { new SideMenu(), "./_SideMenu" },
-        new object[] { new TextBlock(), "./_TextBlock" },
+        new object[] { new LinkCard(), "_LinkCard" },
+        new object[] { new LinkListCard(), "_LinkListCard" },
+        new object[] { new RichTextBlock(), "_RichTextBlock" },
+        new object[] { new RoleList(), "_RoleList" },
+        new object[] { new SideMenu(), "_SideMenu" },
+        new object[] { new TextBlock(), "_TextBlock" },
     };
 
     [TestCaseSource(nameof(Successful_Resolves))]
@@ -42,7 +42,7 @@ public partial class PartialsFactoryTests
     [TestCaseSource(nameof(Unsuccessful_Resolves))]
     public void Does_Not_Resolve_Unknown_Content(IContent item)
     {
-        var expectedPartialName = "./_UnknownContentWarning";
+        var expectedPartialName = "_UnknownContentWarning";
 
         var actual = PartialsFactory.GetPartialFor(item);
 

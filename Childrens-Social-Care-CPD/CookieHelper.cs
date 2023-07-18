@@ -4,7 +4,7 @@ namespace Childrens_Social_Care_CPD
 {
     public static class CookieHelper
     {
-        public static void SetAnalyticsCookie(string analyticsCookieConsent, HttpContext httpContext)
+        public static void SetResponseAnalyticsCookieState(this HttpContext httpContext, AnalyticsConsentState state)
         {
             var options = new CookieOptions
             {
@@ -15,8 +15,29 @@ namespace Childrens_Social_Care_CPD
                 Secure = true
             };
 
-            httpContext.Response.Cookies.Append(SiteConstants.ANALYTICSCOOKIENAME, analyticsCookieConsent,
-                options);
+            switch (state)
+            {
+                case AnalyticsConsentState.Accepted:
+                    httpContext.Response.Cookies.Append(SiteConstants.ANALYTICSCOOKIENAME, SiteConstants.ANALYTICSCOOKIEACCEPTED, options);
+                    break;
+                case AnalyticsConsentState.Rejected:
+                    httpContext.Response.Cookies.Append(SiteConstants.ANALYTICSCOOKIENAME, SiteConstants.ANALYTICSCOOKIEREJECTED, options);
+                    break;
+                case AnalyticsConsentState.NotSet:
+                    httpContext.Response.Cookies.Delete(SiteConstants.ANALYTICSCOOKIENAME);
+                    break;
+            }
+        }
+
+        public static AnalyticsConsentState GetRequestAnalyticsCookieState(this HttpContext httpContext)
+        {
+            var cookie = httpContext.Request.Cookies[SiteConstants.ANALYTICSCOOKIENAME];
+            return cookie switch
+            {
+                SiteConstants.ANALYTICSCOOKIEACCEPTED => AnalyticsConsentState.Accepted,
+                SiteConstants.ANALYTICSCOOKIEREJECTED => AnalyticsConsentState.Rejected,
+                _ => AnalyticsConsentState.NotSet,
+            };
         }
     }
 }

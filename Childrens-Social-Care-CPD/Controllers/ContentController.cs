@@ -10,21 +10,22 @@ namespace Childrens_Social_Care_CPD.Controllers
 {
     public class ContentController : Controller
     {
-        private readonly IContentfulClient _client;
+        private readonly ICpdContentfulClient _cpdClient;
         private readonly IContentfulDataService _dataService;
         private static int ContentFetchDepth = 10;
         private static string ContentTypeId = "content";
         private static string DefaultHomePageName = "home";
+        private static string CookiesPageName = "cookies";
 
-        public ContentController(ICpdContentfulClient client, IContentfulDataService dataService)
+        public ContentController(ICpdContentfulClient cpdClient, IContentfulDataService dataService)
         {
-            _client = client;
+            _cpdClient = cpdClient;
             _dataService = dataService;
         }
 
         private async Task FetchCookieContentIfRequiredAsync()
         {
-            if (!Request.Cookies.ContainsKey(SiteConstants.ANALYTICSCOOKIENAME))
+            if (HttpContext.GetRequestAnalyticsCookieState() == AnalyticsConsentState.NotSet)
             {
                 var cookieBannerData = await _dataService.GetCookieBannerData();
                 ViewData["CookieBanner"] = cookieBannerData;
@@ -38,7 +39,7 @@ namespace Childrens_Social_Care_CPD.Controllers
                 .FieldEquals("fields.id", contentId ?? DefaultHomePageName)
                 .Include(ContentFetchDepth);
 
-            var result = await _client.GetEntries(queryBuilder);
+            var result = await _cpdClient.GetEntries(queryBuilder);
 
             return result?.FirstOrDefault();
         }
@@ -57,11 +58,10 @@ namespace Childrens_Social_Care_CPD.Controllers
             Etc.
         */
         [Route("content/{*pagename:regex(^[[0-9a-z]](\\/?[[0-9a-z\\-]])*\\/?$)}")] 
-        public async Task<IActionResult> Index(string pageName)
+        public async Task<IActionResult> Index(string pageName, bool prefsset = false)
         {
             await FetchCookieContentIfRequiredAsync();
             var pageContent = await FetchPageContentAsync(pageName);
-
             if (pageContent == null)
             {
                 return NotFound();
@@ -69,7 +69,6 @@ namespace Childrens_Social_Care_CPD.Controllers
             
             ViewData["Title"] = pageContent.Title;
             ViewData["PageName"] = pageName;
-            // Used to track circular dependencies in Content items and prevent overflow.
             ViewData["ContentStack"] = new Stack<string>();
             ViewData["UseContentContainers"] = true;
             

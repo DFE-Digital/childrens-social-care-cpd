@@ -79,7 +79,7 @@ public class CustomHtmlHelpersTests
         // arrange
         var helper = Substitute.For<IHtmlHelper>();
         var textBlock = new TextBlock();
-        var partialName = "./_TextBlock";
+        var partialName = "_TextBlock";
 
         // act
         await helper.RenderContentfulPartialAsync(textBlock);

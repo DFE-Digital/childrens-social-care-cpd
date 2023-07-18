@@ -2,6 +2,7 @@
 {
     public static class SiteConstants
     {
+        public const string SETPREFSFLAG = "prefsset";
         public const string PAGEHEADER = "pageHeader";
         public const string SECTION = "section";
         public const string PAGE = "page";
