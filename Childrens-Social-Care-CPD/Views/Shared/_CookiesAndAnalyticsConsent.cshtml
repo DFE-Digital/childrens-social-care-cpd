@@ -1,4 +1,5 @@
 ﻿
+@using Childrens_Social_Care_CPD.Contentful;
 @using Contentful.Core.Models
 @using Microsoft.AspNetCore.Http.Features
 @using System.Text
@@ -37,4 +38,29 @@
             </div>
         </div>
     }
+}
+else if (ViewBag.ShowHideAnalyticsMessage)
+{
+    var request = Url.ActionContext.HttpContext.Request;
+    var href = Html.UrlEncoder.Encode($"{request.Scheme}://{request.Host}{request.PathBase}{request.Path}{request.QueryString}");
+    var redirectUrl = "/cookies?sourcePage=" + href;
+
+    <div class="govuk-cookie-banner" id="divCookieBannerId" data-nosnippet="" role="region" aria-label="@headingText">
+        <div class="govuk-cookie-banner__message govuk-width-container" id="divCookieMessageActioned">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds">
+                    <div class="govuk-cookie-banner__content">
+                        <p>You’ve rejected essential and analytics cookies. You can
+                            @Html.ContentLink("change your cookie settings", redirectUrl)
+                             at any time.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="govuk-button-group">
+                <a href="javascript:void(0);" onclick="(() => $('#divCookieBannerId').hide())()" datattestid="btn-hideCookie" role="button" draggable="false" class="govuk-button" data-module="govuk-button">
+                    Hide cookie message
+                </a>
+            </div>
+        </div>
+    </div>
 }

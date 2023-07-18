@@ -11,10 +11,14 @@ public static class CustomHtmlHelpers
         if (helper == null) return null;
 
         var tagBuilder = new TagBuilder("a");
-        var href = uri.StartsWith("http")
-            ? uri
-            : string.Format("/content/{0}", uri);
-
+        
+        var href = uri switch
+        {
+            string s when s.StartsWith("http") => s,
+            string s when s.StartsWith("/") => s,
+            _ => string.Format("/content/{0}", uri)
+        };
+        
         tagBuilder.Attributes.Add("href", href);
         tagBuilder.AddCssClass("govuk-link");
         tagBuilder.InnerHtml.Append(text);

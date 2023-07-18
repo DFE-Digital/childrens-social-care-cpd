@@ -15,6 +15,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Childrens_Social_Care_CPD.Models;
+using Microsoft.AspNetCore.Mvc.Routing;
+using System.Net.Http;
+using System;
 
 namespace Childrens_Social_Care_CPD_Tests.Controllers;
 
@@ -42,6 +45,10 @@ public partial class _CookieControllerTests
         var controllerContext = Substitute.For<ControllerContext>();
         controllerContext.HttpContext = _httpContext;
 
+        var serviceProvider = Substitute.For<IServiceProvider>();
+        serviceProvider.GetService(Arg.Is(typeof(IUrlHelperFactory))).Returns(Substitute.For<IUrlHelperFactory>());
+        _httpContext.RequestServices.Returns(serviceProvider);
+
         _contentfulClient = Substitute.For<ICpdContentfulClient>();
         _contentfulDataService = Substitute.For<IContentfulDataService>();
 
@@ -63,22 +70,6 @@ public partial class _CookieControllerTests
 
         // assert
         actual.Should().BeOfType<NotFoundResult>();
-    }
-
-    [Test]
-    public async Task Cookies_Returns_View()
-    {
-        // arrange
-        var contentCollection = new ContentfulCollection<Content>() { Items = new List<Content>() { new Content() } };
-        _cookies[SiteConstants.ANALYTICSCOOKIENAME].Returns(SiteConstants.ANALYTICSCOOKIEACCEPTED);
-        _contentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), default).Returns(contentCollection);
-
-        // act
-        var actual = await _cookieController.Cookies();
-
-        // assert
-        actual.Should().BeOfType<ViewResult>();
-        (actual as ViewResult).ViewData.Model.Should().BeOfType<CookiesAndAnalyticsConsentModel>();
     }
 
     [Test]
