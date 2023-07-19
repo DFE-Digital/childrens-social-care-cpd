@@ -31,7 +31,7 @@ namespace Childrens_Social_Care_CPD.Controllers
 
         #region Utility functions
 
-        private string AppendPreferenceSetFlag(Uri uri)
+        private static string AppendPreferenceSetFlag(Uri uri)
         {
             var query = HttpUtility.ParseQueryString(uri.Query);
             query[SiteConstants.PreferenceSet] = "true";
