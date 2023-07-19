@@ -21,7 +21,7 @@
         var heroBanner = Model.Items?.FirstOrDefault(x => x.GetType() == typeof(HeroBanner));
         if (heroBanner != null)
         {
-            <partial name="./_HeroBanner" model="heroBanner" />
+            <partial name="_HeroBanner" model="heroBanner" />
         }
     }
 }
@@ -29,8 +29,8 @@
 @section SideMenu {
     @if (Model.SideMenu != null)
     {
-        <partial name="./SideMenu" model="Model.SideMenu"/>
+        <partial name="_SideMenu" model="Model.SideMenu"/>
     }
 }
 
-<partial name="./_Content" model="Model" />
+<partial name="_Content" model="Model" />
