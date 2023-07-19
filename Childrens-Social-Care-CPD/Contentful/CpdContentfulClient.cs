@@ -7,7 +7,6 @@ using Newtonsoft.Json;
 
 namespace Childrens_Social_Care_CPD.Contentful;
 
-// TODO: add metrics to the remote calls
 public class CpdContentfulClient : ICpdContentfulClient
 {
     private readonly IContentfulClient _client;

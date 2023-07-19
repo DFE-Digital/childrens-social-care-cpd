@@ -15,7 +15,7 @@ public static class CustomHtmlHelpers
         var href = uri switch
         {
             string s when s.StartsWith("http") => s,
-            string s when s.StartsWith("/") => s,
+            string s when s.StartsWith('/') => s,
             _ => string.Format("/content/{0}", uri)
         };
         
