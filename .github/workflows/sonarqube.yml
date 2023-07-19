@@ -41,6 +41,7 @@
                 /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml \
                 /d:sonar.coverage.exclusions="\
                     Childrens-Social-Care-CPD-Tests/**/*,\
+                    Childrens-Social-Care-CPD/Contentful/Models/**/*,\
                     Childrens-Social-Care-CPD/Startup.cs,\
                     Childrens-Social-Care-CPD/Program.cs" \
                 /d:sonar.log.level="DEBUG"
