@@ -78,7 +78,7 @@ public class CookieControllerServerTests
         var response = await _httpClient.PostAsync(SetPrefencesUrl, formContent);
 
         // assert
-        response.StatusCode.Should().Be(System.Net.HttpStatusCode.Redirect);
+        response.StatusCode.Should().Be(HttpStatusCode.Redirect);
         var cookie = response.Headers.First(x => x.Key == "Set-Cookie");
         cookie.Value.First().Should().StartWith($"cookie_consent={consentValue};");
     }
@@ -97,7 +97,7 @@ public class CookieControllerServerTests
         var response = await _httpClient.PostAsync(SetPrefencesUrl, formContent);
 
         // assert
-        response.StatusCode.Should().Be(System.Net.HttpStatusCode.Redirect);
+        response.StatusCode.Should().Be(HttpStatusCode.Redirect);
         var cookie = response.Headers.FirstOrDefault(x => x.Key == "Set-Cookie");
         cookie.Value.First().Should().StartWith($"cookie_consent=;");
     }
@@ -118,7 +118,7 @@ public class CookieControllerServerTests
 
         // assert
         response.StatusCode.Should().Be(HttpStatusCode.Redirect);
-        response.Headers.Location.PathAndQuery.Should().EndWith(expected);
+        response.Headers.Location.OriginalString.Should().EndWith(expected);
     }
 
     [Test]

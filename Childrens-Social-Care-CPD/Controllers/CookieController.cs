@@ -91,18 +91,24 @@ namespace Childrens_Social_Care_CPD.Controllers
 
             if (Uri.TryCreate(url, UriKind.Relative, out Uri relativeUri) && Url.IsLocalUrl(url))
             {
-                return new LocalRedirectResult(AppendPreferenceSetFlag(relativeUri));
+                return consentState == AnalyticsConsentState.NotSet
+                    ? new LocalRedirectResult(relativeUri.ToString())
+                    : new LocalRedirectResult(AppendPreferenceSetFlag(relativeUri));
             }
 
             if (Uri.TryCreate(url, UriKind.Absolute, out Uri absoluteUri))
             {
                 if (absoluteUri.Authority == (new Uri(Request.GetDisplayUrl())).Authority)
                 {
-                    return new RedirectResult(AppendPreferenceSetFlag(absoluteUri));
+                    return consentState == AnalyticsConsentState.NotSet
+                        ? new RedirectResult(absoluteUri.ToString())
+                        : new RedirectResult(AppendPreferenceSetFlag(absoluteUri));
                 }
             }
 
-            return new LocalRedirectResult(Url.Action("Index", "Content"));
+            return consentState == AnalyticsConsentState.NotSet
+                    ? new LocalRedirectResult(Url.Action("Index", "Content"))
+                    : new LocalRedirectResult(Url.Action("Index", "Content", new { preferenceSet = "true" }));
         }
 
         [HttpGet]
