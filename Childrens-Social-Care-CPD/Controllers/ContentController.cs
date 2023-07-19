@@ -1,4 +1,5 @@
-﻿using Childrens_Social_Care_CPD.Contentful;
+﻿using Childrens_Social_Care_CPD.Constants;
+using Childrens_Social_Care_CPD.Contentful;
 using Childrens_Social_Care_CPD.Contentful.Models;
 using Childrens_Social_Care_CPD.Interfaces;
 using Contentful.Core.Search;
@@ -56,7 +57,7 @@ namespace Childrens_Social_Care_CPD.Controllers
             Etc.
         */
         [Route("content/{*pagename:regex(^[[0-9a-z]](\\/?[[0-9a-z\\-]])*\\/?$)}")] 
-        public async Task<IActionResult> Index(string pageName, bool prefsset = false)
+        public async Task<IActionResult> Index(string pageName, bool preferenceSet = false)
         {
             await FetchCookieContentIfRequiredAsync();
             var pageContent = await FetchPageContentAsync(pageName);
@@ -65,11 +66,11 @@ namespace Childrens_Social_Care_CPD.Controllers
                 return NotFound();
             }
             
-            ViewData["Title"] = pageContent.Title;
-            ViewData["PageName"] = pageName;
-            ViewData["ContentStack"] = new Stack<string>();
-            ViewData["UseContentContainers"] = true;
-            ViewData["ShowHideAnalyticsMessage"] = prefsset;
+            ViewData[SiteConstants.PageTitle] = pageContent.Title;
+            ViewData[SiteConstants.PageName] = pageName;
+            ViewData[SiteConstants.ContentStack] = new Stack<string>();
+            ViewData[SiteConstants.UseContainers] = true;
+            ViewData[SiteConstants.PreferenceSet] = preferenceSet;
             
             return View(pageContent);
         }

@@ -103,8 +103,8 @@ public class CookieControllerServerTests
     }
 
     [Test]
-    [TestCase(SiteConstants.ANALYTICSCOOKIEACCEPTED, "/content?prefsset=true")]
-    [TestCase(SiteConstants.ANALYTICSCOOKIEREJECTED, "/content?prefsset=true")]
+    [TestCase(SiteConstants.ANALYTICSCOOKIEACCEPTED, "/content?preferenceSet=true")]
+    [TestCase(SiteConstants.ANALYTICSCOOKIEREJECTED, "/content?preferenceSet=true")]
     [TestCase(null, "/content")]
     public async Task SetPreferences_Redirects_To_Correct_Url_When_No_Referer_Or_Redirect(string consentValue, string expected)
     {
@@ -122,11 +122,11 @@ public class CookieControllerServerTests
     }
 
     [Test]
-    [TestCase(SiteConstants.ANALYTICSCOOKIEACCEPTED, "/content/test", null, "/content/test?prefsset=true")]
-    [TestCase(SiteConstants.ANALYTICSCOOKIEREJECTED, "/content/test", null, "/content/test?prefsset=true")]
+    [TestCase(SiteConstants.ANALYTICSCOOKIEACCEPTED, "/content/test", null, "/content/test?preferenceSet=true")]
+    [TestCase(SiteConstants.ANALYTICSCOOKIEREJECTED, "/content/test", null, "/content/test?preferenceSet=true")]
     [TestCase(null, "/content/test", null, "/content/test")]
-    [TestCase(SiteConstants.ANALYTICSCOOKIEACCEPTED, null, "/content/test", "/content/test?prefsset=true")]
-    [TestCase(SiteConstants.ANALYTICSCOOKIEREJECTED, null, "/content/test", "/content/test?prefsset=true")]
+    [TestCase(SiteConstants.ANALYTICSCOOKIEACCEPTED, null, "/content/test", "/content/test?preferenceSet=true")]
+    [TestCase(SiteConstants.ANALYTICSCOOKIEREJECTED, null, "/content/test", "/content/test?preferenceSet=true")]
     [TestCase(null, null, "/content/test", "/content/test")]
     public async Task SetPreferences_Redirects_To_Correct_Url_When_Host_Matches(string consentValue, string referer, string redirectTo, string expected)
     {

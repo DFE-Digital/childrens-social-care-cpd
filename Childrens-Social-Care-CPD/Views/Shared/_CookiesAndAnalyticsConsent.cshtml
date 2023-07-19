@@ -39,7 +39,7 @@
         </div>
     }
 }
-else if (ViewBag.ShowHideAnalyticsMessage)
+else if (ViewBag.PreferenceSet)
 {
     var request = Url.ActionContext.HttpContext.Request;
     var href = Html.UrlEncoder.Encode($"{request.Scheme}://{request.Host}{request.PathBase}{request.Path}{request.QueryString}");
