@@ -38,11 +38,11 @@
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             @{ RenderTitle(); }
-            <partial name="./_RichText" model="Model.Document" />
+            <partial name="_RichText" model="Model.Document" />
         </div>
     </div>
 }
 else
 {
-    <partial name="./_RichText" model="Model.Document" />
+    <partial name="_RichText" model="Model.Document" />
 }

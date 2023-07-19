@@ -1,14 +1,9 @@
 ﻿using Childrens_Social_Care_CPD.Constants;
-using Childrens_Social_Care_CPD.Contentful;
 using Childrens_Social_Care_CPD.Contentful.Models;
-using Childrens_Social_Care_CPD.Interfaces;
 using Contentful.Core.Models;
 using Contentful.Core.Search;
 using FluentAssertions;
-using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using NSubstitute;
 using NUnit.Framework;
 using System;
@@ -19,31 +14,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Childrens_Social_Care_CPD_Tests.Controllers;
-
-internal class CpdTestServerApplication : WebApplicationFactory<Program>
-{
-    private IContentfulDataService _contentfulDataService;
-    private ICpdContentfulClient _cpdContentfulClient;
-
-    public CpdTestServerApplication()
-    {
-        _contentfulDataService = Substitute.For<IContentfulDataService>();
-        _cpdContentfulClient = Substitute.For<ICpdContentfulClient>();
-
-        var contentCollection = new ContentfulCollection<Content>() { Items = new List<Content>() { new Content() } };
-        _cpdContentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), default).Returns(contentCollection);
-    }
-
-    protected override IHost CreateHost(IHostBuilder builder)
-    {
-        builder.ConfigureServices(services =>
-        {
-            services.AddTransient((_) => _contentfulDataService);
-            services.AddTransient((_) => _cpdContentfulClient);
-        });
-        return base.CreateHost(builder);
-    }
-}
 
 public class CookieControllerServerTests
 {
@@ -56,6 +26,9 @@ public class CookieControllerServerTests
     public void SetUp()
     {
         _application = new CpdTestServerApplication();
+        var contentCollection = new ContentfulCollection<Content>() { Items = new List<Content>() { new Content() } };
+        _application.CpdContentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), default).Returns(contentCollection);
+
         _httpClient = _application.CreateClient(new WebApplicationFactoryClientOptions
         {
             AllowAutoRedirect = false
@@ -167,6 +140,7 @@ public class CookieControllerServerTests
         // act
         var response = await _httpClient.GetAsync(CookiesUrl);
 
+        var content = await response.Content.ReadAsStringAsync();
         // assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
     }
