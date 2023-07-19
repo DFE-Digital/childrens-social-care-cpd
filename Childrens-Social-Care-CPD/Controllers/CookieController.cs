@@ -7,6 +7,7 @@ using Contentful.Core.Search;
 using Childrens_Social_Care_CPD.Contentful;
 using Childrens_Social_Care_CPD.Constants;
 using System.Web;
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace Childrens_Social_Care_CPD.Controllers
 {
@@ -28,6 +29,38 @@ namespace Childrens_Social_Care_CPD.Controllers
             _cpdClient = cpdClient;
         }
 
+        #region Utility functions
+
+        private string AppendPreferenceSetFlag(Uri uri)
+        {
+            var query = HttpUtility.ParseQueryString(uri.Query);
+            query[SiteConstants.PreferenceSet] = "true";
+
+            var uriBuilder = new UriBuilder(uri.ToString());
+            uriBuilder.Query = query.ToString();
+            return uriBuilder.ToString();
+        }
+
+        private string SanitiseSourcePageUrl(string url)
+        {
+            if (Uri.TryCreate(url, UriKind.Absolute, out Uri relativeUri) && Url.IsLocalUrl(url))
+            {
+                return relativeUri.ToString();
+            }
+
+            if (Uri.TryCreate(url, UriKind.Absolute, out Uri absoluteUri))
+            {
+                if (absoluteUri.Authority == (new Uri(Request.GetDisplayUrl())).Authority)
+                {
+                    return absoluteUri.ToString();
+                }
+            }
+
+            return Url.Action("Index", "Content");
+        }
+
+        #endregion
+
         [HttpGet]
         public async Task<IActionResult> LandingPage(string analyticsCookieConsent, string pageName, string pageType, string referer, string sendingPageType, string sendingPage)
         {
@@ -47,32 +80,6 @@ namespace Childrens_Social_Care_CPD.Controllers
             return RedirectToAction("LandingPage", new { analyticsCookieConsent, pageName, pageType, referer, sendingPageType, sendingPage });
         }
 
-        private string GetRedirectUrl(string referer, string redirectTo, string fallbackUrl, string host, AnalyticsConsentState consentState)
-        {
-            var url = redirectTo ?? referer;
-
-            if (string.IsNullOrEmpty(url))
-                url = fallbackUrl;
-            
-            var uri = new Uri(url);
-
-            if (uri.Host != Request.Host.Host)
-                url = fallbackUrl;
-
-            if (consentState == AnalyticsConsentState.NotSet)
-            {
-                return url;
-            }
-
-            var query = HttpUtility.ParseQueryString(uri.Query);
-            query[SiteConstants.PreferenceSet] = "true";
-
-            var uriBuilder = new UriBuilder(url);
-            uriBuilder.Query = query.ToString();
-
-            return uriBuilder.ToString();
-        }
-
         [HttpPost]
         public IActionResult SetPreferences(string consentValue, string redirectTo = null)
         {
@@ -80,14 +87,22 @@ namespace Childrens_Social_Care_CPD.Controllers
 
             HttpContext.SetResponseAnalyticsCookieState(consentState);
 
-            var uri = GetRedirectUrl(
-                Request.Headers.Referer,
-                redirectTo,
-                Url.Action("Index", "Content", null, Request.Scheme, Request.Host.Value),
-                Request.Host.Value,
-                consentState);
+            var url = redirectTo ?? Request.Headers.Referer;
 
-            return new RedirectResult(uri);
+            if (Uri.TryCreate(url, UriKind.Relative, out Uri relativeUri) && Url.IsLocalUrl(url))
+            {
+                return new LocalRedirectResult(AppendPreferenceSetFlag(relativeUri));
+            }
+
+            if (Uri.TryCreate(url, UriKind.Absolute, out Uri absoluteUri))
+            {
+                if (absoluteUri.Authority == (new Uri(Request.GetDisplayUrl())).Authority)
+                {
+                    return new RedirectResult(AppendPreferenceSetFlag(absoluteUri));
+                }
+            }
+
+            return new LocalRedirectResult(Url.Action("Index", "Content"));
         }
 
         [HttpGet]
@@ -120,7 +135,7 @@ namespace Childrens_Social_Care_CPD.Controllers
             {
                 Content = pageContent,
                 ConsentState = consentState,
-                SourceUrl = sourcePage ?? Url.Action("Index", "Content"),
+                SourceUrl = SanitiseSourcePageUrl(sourcePage),
                 PreferencesSet = preferenceSet
             };
 
