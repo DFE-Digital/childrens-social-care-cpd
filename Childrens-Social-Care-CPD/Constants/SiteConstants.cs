@@ -2,7 +2,11 @@
 {
     public static class SiteConstants
     {
-        public const string SETPREFSFLAG = "prefsset";
+        public const string PageTitle = "Title";
+        public const string PageName = "PageName";
+        public const string ContentStack = "ContentStack";
+        public const string UseContainers = "UseContentContainers";
+        public const string PreferenceSet = "preferenceSet";
         public const string PAGEHEADER = "pageHeader";
         public const string SECTION = "section";
         public const string PAGE = "page";

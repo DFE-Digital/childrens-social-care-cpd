@@ -65,7 +65,7 @@ namespace Childrens_Social_Care_CPD.Controllers
             }
 
             var query = HttpUtility.ParseQueryString(uri.Query);
-            query[SiteConstants.SETPREFSFLAG] = "true";
+            query[SiteConstants.PreferenceSet] = "true";
 
             var uriBuilder = new UriBuilder(url);
             uriBuilder.Query = query.ToString();
@@ -92,7 +92,7 @@ namespace Childrens_Social_Care_CPD.Controllers
 
         [HttpGet]
         [Route("cookies")]
-        public async Task<IActionResult> Cookies(string sourcePage = null, bool prefsset = false)
+        public async Task<IActionResult> Cookies(string sourcePage = null, bool preferenceSet = false)
         {
             var queryBuilder = QueryBuilder<Content>.New
                 .ContentTypeIs(ContentTypeId)
@@ -106,21 +106,21 @@ namespace Childrens_Social_Care_CPD.Controllers
             {
                 return NotFound();
             }
-
+            
             var consentState = HttpContext.GetRequestAnalyticsCookieState();
 
-            ViewData["Title"] = pageContent.Title;
-            ViewData["PageName"] = PageName;
-            ViewData["ContentStack"] = new Stack<string>();
-            ViewData["UseContentContainers"] = true;
-            ViewData["ShowHideAnalyticsMessage"] = prefsset;
+            ViewData[SiteConstants.PageTitle] = pageContent.Title;
+            ViewData[SiteConstants.PageName] = PageName;
+            ViewData[SiteConstants.ContentStack] = new Stack<string>();
+            ViewData[SiteConstants.UseContainers] = true;
+            ViewData[SiteConstants.PreferenceSet] = preferenceSet;
 
             var model = new CookiesAndAnalyticsConsentModel
             {
                 Content = pageContent,
                 ConsentState = consentState,
-                RedirectTo = Request.Headers.Referer,
                 SourceUrl = sourcePage ?? Url.Action("Index", "Content"),
+                PreferencesSet = preferenceSet
             };
 
             return View(model);
