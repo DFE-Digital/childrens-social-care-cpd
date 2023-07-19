@@ -8,6 +8,11 @@
 @{
     var consentState = Context.GetRequestAnalyticsCookieState();
     var headingText = "Cookies on Develop your career in child and family social work";
+    var hide = ViewBag.HideConsent ?? false;
+    var preferenceSet = ViewBag.PreferenceSet ?? false;
+
+    if (hide)
+        return;
 }
 
 @if (consentState == AnalyticsConsentState.NotSet)
@@ -39,7 +44,7 @@
         </div>
     }
 }
-else if (ViewBag.PreferenceSet)
+else if (preferenceSet)
 {
     var request = Url.ActionContext.HttpContext.Request;
     var href = Html.UrlEncoder.Encode($"{request.Scheme}://{request.Host}{request.PathBase}{request.Path}{request.QueryString}");

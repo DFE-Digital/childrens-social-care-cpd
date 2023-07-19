@@ -6,7 +6,8 @@
         public const string PageName = "PageName";
         public const string ContentStack = "ContentStack";
         public const string UseContainers = "UseContentContainers";
-        public const string PreferenceSet = "preferenceSet";
+        public const string PreferenceSet = "preferenceSet"; // The case is important here
+        public const string HideConsent = "HideConsent";
         public const string PAGEHEADER = "pageHeader";
         public const string SECTION = "section";
         public const string PAGE = "page";
