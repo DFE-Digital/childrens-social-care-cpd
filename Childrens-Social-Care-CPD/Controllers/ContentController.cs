@@ -1,8 +1,6 @@
-﻿using Childrens_Social_Care_CPD.Constants;
-using Childrens_Social_Care_CPD.Contentful;
+﻿using Childrens_Social_Care_CPD.Contentful;
 using Childrens_Social_Care_CPD.Contentful.Models;
 using Childrens_Social_Care_CPD.Interfaces;
-using Contentful.Core;
 using Contentful.Core.Search;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,7 +13,6 @@ namespace Childrens_Social_Care_CPD.Controllers
         private static int ContentFetchDepth = 10;
         private static string ContentTypeId = "content";
         private static string DefaultHomePageName = "home";
-        private static string CookiesPageName = "cookies";
 
         public ContentController(ICpdContentfulClient cpdClient, IContentfulDataService dataService)
         {
@@ -44,6 +41,7 @@ namespace Childrens_Social_Care_CPD.Controllers
             return result?.FirstOrDefault();
         }
 
+        [HttpGet]
         [Route("content/")]
         /*
             Filter permissable page name format. Basically only accept:

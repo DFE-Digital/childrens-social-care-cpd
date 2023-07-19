@@ -32,12 +32,7 @@ namespace Childrens_Social_Care_CPD
         public static AnalyticsConsentState GetRequestAnalyticsCookieState(this HttpContext httpContext)
         {
             var cookie = httpContext.Request.Cookies[SiteConstants.ANALYTICSCOOKIENAME];
-            return cookie switch
-            {
-                SiteConstants.ANALYTICSCOOKIEACCEPTED => AnalyticsConsentState.Accepted,
-                SiteConstants.ANALYTICSCOOKIEREJECTED => AnalyticsConsentState.Rejected,
-                _ => AnalyticsConsentState.NotSet,
-            };
+            return AnalyticsConsentStateHelper.Parse(cookie);
         }
     }
 }

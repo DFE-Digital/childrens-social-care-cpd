@@ -31,12 +31,7 @@ namespace Childrens_Social_Care_CPD.Controllers
         [HttpGet]
         public async Task<IActionResult> LandingPage(string analyticsCookieConsent, string pageName, string pageType, string referer, string sendingPageType, string sendingPage)
         {
-            var consentState = analyticsCookieConsent switch
-            {
-                SiteConstants.ANALYTICSCOOKIEACCEPTED => AnalyticsConsentState.Accepted,
-                SiteConstants.ANALYTICSCOOKIEREJECTED => AnalyticsConsentState.Rejected,
-                _ => AnalyticsConsentState.NotSet
-            };
+            var consentState = AnalyticsConsentStateHelper.Parse(analyticsCookieConsent);
 
             HttpContext.SetResponseAnalyticsCookieState(consentState);
             ViewBag.analyticsCookieSet = analyticsCookieConsent;
@@ -81,12 +76,7 @@ namespace Childrens_Social_Care_CPD.Controllers
         [HttpPost]
         public IActionResult SetPreferences(string consentValue, string redirectTo = null)
         {
-            var consentState = consentValue switch
-            {
-                SiteConstants.ANALYTICSCOOKIEACCEPTED => AnalyticsConsentState.Accepted,
-                SiteConstants.ANALYTICSCOOKIEREJECTED => AnalyticsConsentState.Rejected,
-                _ => AnalyticsConsentState.NotSet
-            };
+            var consentState = AnalyticsConsentStateHelper.Parse(consentValue);
 
             HttpContext.SetResponseAnalyticsCookieState(consentState);
 
