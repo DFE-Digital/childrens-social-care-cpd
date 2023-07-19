@@ -1,54 +1,16 @@
-﻿@using Childrens_Social_Care_CPD.Constants
-@addTagHelper *, Contentful.AspNetCore
-
-@{
+﻿@{
+    Layout = "_SiteLayout";
     ViewBag.UseContentContainers = false;
     IgnoreSection("Hero");
 }
 
-<!DOCTYPE html>
-<html lang="en" class="govuk-template">
-<head>
-    <title>@ViewData["Title"]</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <link rel="stylesheet" href="/css/application.css">
-    <link rel="stylesheet" href="/css/experimental.css">
-
-    @if (Context.Request.Cookies.ContainsKey(SiteConstants.ANALYTICSCOOKIENAME) && Context.Request.Cookies[SiteConstants.ANALYTICSCOOKIENAME].Equals("accept"))
-    {
-        <partial name="../PartialViews/GoogleAnalyticsPartial" />
-    }
-
-    <link rel="shortcut icon" sizes="16x16 32x32 48x48" href="~/assets/images/favicon.ico" type="image/x-icon">
-</head>
-<body class="govuk-template__body">
-    <partial name="../Shared/_CookieConsentPartial" />
-    <a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
-    <partial name="../PartialViews/Header" />
-    
-    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
-        <div class="govuk-width-container">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-one-quarter">
-                    @await RenderSectionAsync("SideMenu", required: true)
-                </div>
-                <div class="govuk-grid-column-three-quarters">
-                    @RenderBody()
-                </div>
-            </div>
+<div class="govuk-width-container">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-quarter">
+            @await RenderSectionAsync("SideMenu", required: true)
         </div>
-    </main>
-    
-    <partial name="../PartialViews/Footer" />
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script>
-        document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
-    </script>
-    <!-- component HTML -->
-    <script src="/javascript/govuk-frontend-4.4.1.min.js"></script>
-    <script>
-        window.GOVUKFrontend.initAll()
-    </script>
-    @await RenderSectionAsync("Scripts", required: false)
-</body>
-</html>
+        <div class="govuk-grid-column-three-quarters">
+            @RenderBody()
+        </div>
+    </div>
+</div>

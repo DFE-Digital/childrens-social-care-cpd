@@ -6,8 +6,8 @@
 
 @{
     // We use the content stack to track circular dependencies and prevent overflows
-    ViewBag.ContentStack.Push(Model.Id);
     var contentHistoryStack = (Stack<string>)ViewBag.ContentStack;
+    contentHistoryStack.Push(Model.Id);
 
     if (Model.Items != null)
     {
@@ -27,5 +27,5 @@
         }
     }
 
-    ViewBag.ContentStack.Pop();
+    contentHistoryStack.Pop();
 }

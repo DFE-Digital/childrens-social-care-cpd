@@ -114,6 +114,7 @@ namespace Childrens_Social_Care_CPD.Controllers
             ViewData[SiteConstants.ContentStack] = new Stack<string>();
             ViewData[SiteConstants.UseContainers] = true;
             ViewData[SiteConstants.PreferenceSet] = preferenceSet;
+            ViewData[SiteConstants.HideConsent] = true; // We're on the cookie consent page so we don't need the banner dialogs
 
             var model = new CookiesAndAnalyticsConsentModel
             {
