@@ -48,12 +48,10 @@ namespace Childrens_Social_Care_CPD.Controllers
                 return relativeUri.ToString();
             }
 
-            if (Uri.TryCreate(url, UriKind.Absolute, out Uri absoluteUri))
+            if (Uri.TryCreate(url, UriKind.Absolute, out Uri absoluteUri) &&
+                absoluteUri.Authority == new Uri(Request.GetDisplayUrl()).Authority)
             {
-                if (absoluteUri.Authority == (new Uri(Request.GetDisplayUrl())).Authority)
-                {
-                    return absoluteUri.ToString();
-                }
+                return absoluteUri.ToString();
             }
 
             return Url.Action("Index", "Content");
@@ -96,14 +94,12 @@ namespace Childrens_Social_Care_CPD.Controllers
                     : new LocalRedirectResult(AppendPreferenceSetFlag(relativeUri));
             }
 
-            if (Uri.TryCreate(url, UriKind.Absolute, out Uri absoluteUri))
+            if (Uri.TryCreate(url, UriKind.Absolute, out Uri absoluteUri) &&
+                absoluteUri.Authority == new Uri(Request.GetDisplayUrl()).Authority)
             {
-                if (absoluteUri.Authority == (new Uri(Request.GetDisplayUrl())).Authority)
-                {
-                    return consentState == AnalyticsConsentState.NotSet
-                        ? new RedirectResult(absoluteUri.ToString())
-                        : new RedirectResult(AppendPreferenceSetFlag(absoluteUri));
-                }
+                return consentState == AnalyticsConsentState.NotSet
+                    ? new RedirectResult(absoluteUri.ToString())
+                    : new RedirectResult(AppendPreferenceSetFlag(absoluteUri));
             }
 
             return consentState == AnalyticsConsentState.NotSet
