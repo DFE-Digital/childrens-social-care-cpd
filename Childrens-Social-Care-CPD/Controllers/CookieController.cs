@@ -56,9 +56,9 @@ namespace Childrens_Social_Care_CPD.Controllers
             return new Uri(new Uri($"{hostUri.Scheme}{Uri.SchemeDelimiter}{hostUri.Authority}"), uri);
         }
 
-        private Uri BuildRedirectUri(Uri uri, AnalyticsConsentState consentState)
+        private static Uri BuildRedirectUri(Uri uri, AnalyticsConsentState consentState)
         {
-            if (consentState == AnalyticsConsentState.NotSet) return uri;//.ToString();
+            if (consentState == AnalyticsConsentState.NotSet) return uri;
 
             var query = HttpUtility.ParseQueryString(uri.Query);
             query[SiteConstants.PreferenceSet] = "true";
