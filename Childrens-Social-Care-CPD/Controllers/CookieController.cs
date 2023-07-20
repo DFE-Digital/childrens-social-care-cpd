@@ -8,6 +8,7 @@ using Childrens_Social_Care_CPD.Contentful;
 using Childrens_Social_Care_CPD.Constants;
 using System.Web;
 using Microsoft.AspNetCore.Http.Extensions;
+using System.Collections.Specialized;
 
 namespace Childrens_Social_Care_CPD.Controllers
 {
@@ -31,16 +32,6 @@ namespace Childrens_Social_Care_CPD.Controllers
 
         #region Utility functions
 
-        private static string AppendPreferenceSetFlag(Uri uri)
-        {
-            var query = HttpUtility.ParseQueryString(uri.Query);
-            query[SiteConstants.PreferenceSet] = "true";
-
-            var uriBuilder = new UriBuilder(uri.ToString());
-            uriBuilder.Query = query.ToString();
-            return uriBuilder.ToString();
-        }
-
         private string SanitiseSourcePageUrl(string url)
         {
             if (Uri.TryCreate(url, UriKind.Absolute, out Uri relativeUri) && Url.IsLocalUrl(url))
@@ -55,6 +46,27 @@ namespace Childrens_Social_Care_CPD.Controllers
             }
 
             return Url.Action("Index", "Content");
+        }
+
+        private Uri MakeAbsoluteUri(Uri uri)
+        {
+            if (uri.IsAbsoluteUri) return uri;
+
+            var hostUri = new Uri(Request.GetDisplayUrl());
+            return new Uri(new Uri($"{hostUri.Scheme}{Uri.SchemeDelimiter}{hostUri.Authority}"), uri);
+        }
+
+        private Uri BuildRedirectUri(Uri uri, AnalyticsConsentState consentState)
+        {
+            if (consentState == AnalyticsConsentState.NotSet) return uri;//.ToString();
+
+            var query = HttpUtility.ParseQueryString(uri.Query);
+            query[SiteConstants.PreferenceSet] = "true";
+
+            var uriBuilder = new UriBuilder(uri);
+            uriBuilder.Query = query.ToString();
+
+            return new Uri(uriBuilder.ToString());
         }
 
         #endregion
@@ -82,24 +94,20 @@ namespace Childrens_Social_Care_CPD.Controllers
         public IActionResult SetPreferences(string consentValue, string redirectTo = null)
         {
             var consentState = AnalyticsConsentStateHelper.Parse(consentValue);
-
             HttpContext.SetResponseAnalyticsCookieState(consentState);
 
             var url = redirectTo ?? Request.Headers.Referer;
 
             if (Uri.TryCreate(url, UriKind.Relative, out Uri relativeUri) && Url.IsLocalUrl(url))
             {
-                return consentState == AnalyticsConsentState.NotSet
-                    ? new LocalRedirectResult(relativeUri.ToString())
-                    : new LocalRedirectResult(AppendPreferenceSetFlag(relativeUri));
+                relativeUri = BuildRedirectUri(MakeAbsoluteUri(relativeUri), consentState);
+                return new LocalRedirectResult(relativeUri.PathAndQuery);
             }
 
             if (Uri.TryCreate(url, UriKind.Absolute, out Uri absoluteUri) &&
                 absoluteUri.Authority == new Uri(Request.GetDisplayUrl()).Authority)
             {
-                return consentState == AnalyticsConsentState.NotSet
-                    ? new RedirectResult(absoluteUri.ToString())
-                    : new RedirectResult(AppendPreferenceSetFlag(absoluteUri));
+                return new RedirectResult(BuildRedirectUri(absoluteUri, consentState).ToString());
             }
 
             return consentState == AnalyticsConsentState.NotSet

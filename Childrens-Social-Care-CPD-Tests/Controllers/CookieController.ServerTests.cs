@@ -75,7 +75,6 @@ public class CookieControllerServerTests
         cookie.Value.First().Should().StartWith($"cookie_consent=;");
     }
 
-    [Test]
     [TestCase(SiteConstants.ANALYTICSCOOKIEACCEPTED, "/content?preferenceSet=true")]
     [TestCase(SiteConstants.ANALYTICSCOOKIEREJECTED, "/content?preferenceSet=true")]
     [TestCase(null, "/content")]
@@ -94,40 +93,98 @@ public class CookieControllerServerTests
         response.Headers.Location.OriginalString.Should().EndWith(expected);
     }
 
-    [Test]
-    [TestCase(SiteConstants.ANALYTICSCOOKIEACCEPTED, "/content/test", null, "/content/test?preferenceSet=true")]
-    [TestCase(SiteConstants.ANALYTICSCOOKIEREJECTED, "/content/test", null, "/content/test?preferenceSet=true")]
-    [TestCase(null, "/content/test", null, "/content/test")]
-    [TestCase(SiteConstants.ANALYTICSCOOKIEACCEPTED, null, "/content/test", "/content/test?preferenceSet=true")]
-    [TestCase(SiteConstants.ANALYTICSCOOKIEREJECTED, null, "/content/test", "/content/test?preferenceSet=true")]
-    [TestCase(null, null, "/content/test", "/content/test")]
-    public async Task SetPreferences_Redirects_To_Correct_Url_When_Host_Matches(string consentValue, string referer, string redirectTo, string expected)
+    [TestCase(SiteConstants.ANALYTICSCOOKIEACCEPTED, "/content/item?preferenceSet=true")]
+    [TestCase(SiteConstants.ANALYTICSCOOKIEREJECTED, "/content/item?preferenceSet=true")]
+    [TestCase(null, "/content/item")]
+    public async Task SetPreferences_Redirect_Falls_Back_To_Referrer(string consentValue, string expected)
     {
         // arrange
-        var content = new List<KeyValuePair<string, string>> {
+        var referer = "/content/item";
+        var uri = new Uri(_httpClient.BaseAddress, referer);
+        _httpClient.DefaultRequestHeaders.Referrer = uri;
+
+        var formContent = new FormUrlEncodedContent(new[] {
             new KeyValuePair<string, string>("consentValue", consentValue),
-        };
-
-        if (!string.IsNullOrEmpty(redirectTo))
-        {
-            var uri = new Uri(_httpClient.BaseAddress, redirectTo);
-            content.Add(new KeyValuePair<string, string>("redirectTo", uri.ToString()));
-        }
-
-        var formContent = new FormUrlEncodedContent(content);
-
-        if (!string.IsNullOrEmpty(referer))
-        {
-            var uri = new Uri(_httpClient.BaseAddress, referer);
-            _httpClient.DefaultRequestHeaders.Referrer = uri;
-        }
+        });
 
         // act
         var response = await _httpClient.PostAsync(SetPrefencesUrl, formContent);
 
         // assert
         response.StatusCode.Should().Be(HttpStatusCode.Redirect);
-        response.Headers.Location.PathAndQuery.Should().EndWith(expected);
+        response.Headers.Location.PathAndQuery.Should().Be(expected);
+    }
+
+    [TestCase(SiteConstants.ANALYTICSCOOKIEACCEPTED, "/content/item?preferenceSet=true")]
+    [TestCase(SiteConstants.ANALYTICSCOOKIEREJECTED, "/content/item?preferenceSet=true")]
+    [TestCase(null, "/content/item")]
+    public async Task SetPreferences_Redirects_Local_Relative_Url(string consentValue, string expected)
+    {
+        // arrange
+        var redirectTo = "/content/item";
+        var content = new List<KeyValuePair<string, string>>()
+        {
+            new KeyValuePair<string, string>("consentValue", consentValue),
+            new KeyValuePair<string, string>("redirectTo", redirectTo)
+        };
+
+        var formContent = new FormUrlEncodedContent(content);
+
+        // act
+        var response = await _httpClient.PostAsync(SetPrefencesUrl, formContent);
+
+        // assert
+        response.StatusCode.Should().Be(HttpStatusCode.Redirect);
+        response.Headers.Location.OriginalString.Should().Be(expected);
+    }
+
+    [TestCase(SiteConstants.ANALYTICSCOOKIEACCEPTED, "/content/item?preferenceSet=true")]
+    [TestCase(SiteConstants.ANALYTICSCOOKIEREJECTED, "/content/item?preferenceSet=true")]
+    [TestCase(null, "/content/item")]
+    public async Task SetPreferences_Redirects_Local_Absolute_Url(string consentValue, string expected)
+    {
+        // arrange
+        var redirectTo = "/content/item";
+        var uri = new Uri(_httpClient.BaseAddress, redirectTo);
+        var expectedUri = new Uri(_httpClient.BaseAddress, expected);
+        var content = new List<KeyValuePair<string, string>>()
+        {
+            new KeyValuePair<string, string>("consentValue", consentValue),
+            new KeyValuePair<string, string>("redirectTo", uri.ToString())
+        };
+
+        var formContent = new FormUrlEncodedContent(content);
+
+        // act
+        var response = await _httpClient.PostAsync(SetPrefencesUrl, formContent);
+
+        // assert
+        response.StatusCode.Should().Be(HttpStatusCode.Redirect);
+        response.Headers.Location.OriginalString.Should().Be(expectedUri.ToString());
+    }
+
+    [TestCase(SiteConstants.ANALYTICSCOOKIEACCEPTED, "/content?preferenceSet=true")]
+    [TestCase(SiteConstants.ANALYTICSCOOKIEREJECTED, "/content?preferenceSet=true")]
+    [TestCase(null, "/content")]
+    public async Task SetPreferences_Redirects_Non_Local_Absolute_Url_To_Local(string consentValue, string expected)
+    {
+        // arrange
+        var redirectTo = "http://www.google.com";
+        var uri = new Uri(redirectTo);
+        var content = new List<KeyValuePair<string, string>>()
+        {
+            new KeyValuePair<string, string>("consentValue", consentValue),
+            new KeyValuePair<string, string>("redirectTo", uri.ToString())
+        };
+
+        var formContent = new FormUrlEncodedContent(content);
+
+        // act
+        var response = await _httpClient.PostAsync(SetPrefencesUrl, formContent);
+
+        // assert
+        response.StatusCode.Should().Be(HttpStatusCode.Redirect);
+        response.Headers.Location.OriginalString.Should().Be(expected);
     }
 
     #endregion
