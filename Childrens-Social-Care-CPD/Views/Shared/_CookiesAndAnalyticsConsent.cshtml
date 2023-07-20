@@ -1,0 +1,71 @@
+﻿
+@using Childrens_Social_Care_CPD.Contentful;
+@using Contentful.Core.Models
+@using Microsoft.AspNetCore.Http.Features
+@using System.Text
+@using Childrens_Social_Care_CPD.Constants;
+
+@{
+    var consentState = Context.GetRequestAnalyticsCookieState();
+    var headingText = "Cookies on Develop your career in child and family social work";
+    var hide = ViewBag.HideConsent ?? false;
+    var preferenceSet = ViewBag.PreferenceSet ?? false;
+
+    if (hide)
+        return;
+}
+
+@if (consentState == AnalyticsConsentState.NotSet)
+{
+    @using (@Html.BeginForm("SetPreferences", "Cookie", null, FormMethod.Post, false, null))
+    {
+        <div class="govuk-cookie-banner" id="divCookieBannerId" data-nosnippet="" role="region" aria-label="@headingText">
+            <div class="govuk-cookie-banner__message govuk-width-container">
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds">
+                        <h2 class="govuk-cookie-banner__heading govuk-heading-m">@headingText</h2>
+                        <div class="govuk-cookie-banner__content">
+                            <p>We use some essential cookies to make this service work.</p>
+
+                            <p>We’d also like to use analytics cookies so we can understand how you use the service and make improvements.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="govuk-button-group">
+                    <button value="accept" type="submit" name="consentValue" id="btnAccept" class="govuk-button" datatestid="btn-accept" data-module="govuk-button">
+                        Accept analytics cookies
+                    </button>
+                    <button value="reject" type="submit" name="consentValue" id="btnReject" class="govuk-button" datatestid="btn-reject" data-module="govuk-button">
+                        Reject analytics cookies
+                    </button>
+                    <a class="govuk-link" datatestid="btn-viewCookies" href="/cookies">View cookies</a>
+                </div>
+            </div>
+        </div>
+    }
+}
+else if (preferenceSet)
+{
+    var request = Url.ActionContext.HttpContext.Request;
+    var href = Html.UrlEncoder.Encode($"{request.Scheme}://{request.Host}{request.PathBase}{request.Path}{request.QueryString}");
+    var redirectUrl = "/cookies?sourcePage=" + href;
+
+    <div class="govuk-cookie-banner" id="divCookieBannerId" data-nosnippet="" role="region" aria-label="@headingText">
+        <div class="govuk-cookie-banner__message govuk-width-container" id="divCookieMessageActioned">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds">
+                    <div class="govuk-cookie-banner__content">
+                        <p>You’ve rejected essential and analytics cookies. You can
+                            @Html.ContentLink("change your cookie settings", redirectUrl)
+                             at any time.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="govuk-button-group">
+                <a href="javascript:void(0);" onclick="(() => $('#divCookieBannerId').hide())()" datattestid="btn-hideCookie" role="button" draggable="false" class="govuk-button" data-module="govuk-button">
+                    Hide cookie message
+                </a>
+            </div>
+        </div>
+    </div>
+}

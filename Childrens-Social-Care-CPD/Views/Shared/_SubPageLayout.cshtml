@@ -1,0 +1,16 @@
+﻿@{
+    Layout = "_SiteLayout";
+    ViewBag.UseContentContainers = false;
+    IgnoreSection("Hero");
+}
+
+<div class="govuk-width-container">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-quarter">
+            @await RenderSectionAsync("SideMenu", required: true)
+        </div>
+        <div class="govuk-grid-column-three-quarters">
+            @RenderBody()
+        </div>
+    </div>
+</div>

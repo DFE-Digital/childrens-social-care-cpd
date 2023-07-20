@@ -1,0 +1,83 @@
+﻿@using Childrens_Social_Care_CPD.Constants;
+@using Childrens_Social_Care_CPD.Contentful.Models;
+@using Childrens_Social_Care_CPD.Contentful;
+
+@{
+    Layout = "_DefaultPageLayout";
+}
+
+@model CookiesAndAnalyticsConsentModel
+
+@{
+    var prefsHaveBeenSet = Url.ActionContext.HttpContext.GetRequestAnalyticsCookieState() != AnalyticsConsentState.NotSet;
+}
+
+@if (Model.PreferencesSet)
+{
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+                <div class="govuk-notification-banner__header">
+                    <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+                        Success
+                    </h2>
+                </div>
+                <div class="govuk-notification-banner__content">
+                    <p class="govuk-notification-banner__heading">
+                        You’ve set your cookie preferences. @Html.ContentLink("Go back to the page you were looking at.", Model.SourceUrl)
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<partial name="_Content" model="Model.Content" />
+
+@{
+    var redirectTo = Url.Action("Cookies", "Cookie", new { sourcePage = Model.SourceUrl }, Url.ActionContext.HttpContext.Request.Scheme);
+}
+
+@using (@Html.BeginForm("SetPreferences", "Cookie", new { redirectTo = redirectTo }, FormMethod.Post, false, null))
+{
+    <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                Do you want to accept analytics cookies?
+            </legend>
+            <div class="govuk-radios" data-module="govuk-radios">
+                <div class="govuk-radios__item">
+                    @if (Model.ConsentState == AnalyticsConsentState.Accepted)
+                    {
+                        <input class="govuk-radios__input" id="analytics-cookies" name="consentValue" type="radio" value="@SiteConstants.ANALYTICSCOOKIEACCEPTED" datatestid="btn-accepted" checked="checked">
+                    }
+                    else
+                    {
+                        <input class="govuk-radios__input" id="analytics-cookies" name="consentValue" type="radio" datatestid="btn-accept" value="@SiteConstants.ANALYTICSCOOKIEACCEPTED">
+                    }
+
+                    <label class="govuk-label govuk-radios__label" for="analytics-cookies">
+                        Yes
+                    </label>
+                </div>
+                <div class="govuk-radios__item">
+                    @if (Model.ConsentState == AnalyticsConsentState.Rejected)
+                    {
+                        <input class="govuk-radios__input" id="analytics-cookies-2" name="consentValue" type="radio" value="@SiteConstants.ANALYTICSCOOKIEREJECTED" datatestid="btn-rejected" checked="checked">
+                    }
+                    else
+                    {
+                        <input class="govuk-radios__input" id="analytics-cookies-2" name="consentValue" type="radio" datatestid="btn-reject" value="@SiteConstants.ANALYTICSCOOKIEREJECTED">
+                    }
+                    <label class="govuk-label govuk-radios__label" for="analytics-cookies-2">
+                        No
+                    </label>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+
+    <button class="govuk-button" type="submit" datatestid="btn-save" data-module="govuk-button">
+        Save cookie settings
+    </button>
+}
