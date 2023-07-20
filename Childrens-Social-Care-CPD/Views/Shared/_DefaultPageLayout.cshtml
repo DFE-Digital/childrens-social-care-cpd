@@ -1,0 +1,10 @@
+﻿@{
+    Layout = "_SiteLayout";
+    ViewBag.UseContentContainers = true;
+    IgnoreSection("SideMenu");
+}
+
+@await RenderSectionAsync("Hero", required: false)
+<div class="govuk-width-container">
+    @RenderBody()
+</div>

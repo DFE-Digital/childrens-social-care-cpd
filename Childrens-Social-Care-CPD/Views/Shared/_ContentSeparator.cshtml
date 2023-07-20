@@ -1,0 +1,18 @@
+﻿@using Childrens_Social_Care_CPD.Contentful.Models;
+
+@model ContentSeparator
+
+@{
+    switch (Model.Type)
+    {
+        case "Large" : 
+            <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">;
+            break;
+        case "Medium":
+            <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+            ; break;
+        case "Small":
+            <hr class="govuk-section-break govuk-section-break--s govuk-section-break--visible">
+            ; break;
+    }
+}

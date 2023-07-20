@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
 
 
-namespace Childrens_Social_Care_CPD_Tests
+namespace Childrens_Social_Care_CPD_Tests.Controllers
 {
 
     public class AppInfoControllerTests

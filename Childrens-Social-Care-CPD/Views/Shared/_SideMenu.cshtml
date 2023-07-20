@@ -1,0 +1,18 @@
+﻿@using Childrens_Social_Care_CPD.Contentful.Models;
+
+@model SideMenu
+
+<nav class="dfe-vertical-nav">
+    <ul class="dfe-vertical-nav__section">
+        @foreach (var menuItem in Model.Items)
+        {
+            var css = ViewBag.PageName == menuItem.Uri
+                ? "dfe-vertical-nav__section-item  dfe-vertical-nav__section-item--current"
+                : "dfe-vertical-nav__section-item";
+
+            <li class="@css">
+                <a class="dfe-vertical-nav__link" href="@menuItem.Uri">@menuItem.Name</a>
+            </li>
+        }
+    </ul>
+</nav>

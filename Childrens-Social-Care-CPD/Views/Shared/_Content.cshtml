@@ -1,0 +1,31 @@
+﻿@using Childrens_Social_Care_CPD.Controllers;
+@using Childrens_Social_Care_CPD.Contentful;
+@using Childrens_Social_Care_CPD.Contentful.Models;
+
+@model Content
+
+@{
+    // We use the content stack to track circular dependencies and prevent overflows
+    var contentHistoryStack = (Stack<string>)ViewBag.ContentStack;
+    contentHistoryStack.Push(Model.Id);
+
+    if (Model.Items != null)
+    {
+        foreach (var item in Model.Items)
+        {
+            var preventOverflow = item as Content;
+            if (preventOverflow != null)
+            {
+                if (contentHistoryStack.Contains(preventOverflow.Id))
+                {
+                    <partial name="_OverflowWarning" />
+                    continue;
+                }
+            }
+
+            await Html.RenderContentfulPartialAsync(item);
+        }
+    }
+
+    contentHistoryStack.Pop();
+}

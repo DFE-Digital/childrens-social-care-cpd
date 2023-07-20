@@ -1,9 +1,11 @@
 using Childrens_Social_Care_CPD;
 using Childrens_Social_Care_CPD.ActionFilters;
 using Childrens_Social_Care_CPD.Constants;
+using Childrens_Social_Care_CPD.Contentful;
 using Childrens_Social_Care_CPD.Interfaces;
 using Childrens_Social_Care_CPD.Services;
 using Contentful.AspNetCore;
+using Contentful.Core.Configuration;
 using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 using Microsoft.Extensions.Logging.AzureAppServices;
 
@@ -26,6 +28,8 @@ builder.Host.ConfigureLogging(logging => logging.AddAzureWebAppDiagnostics())
     builder.Services.AddTransient<CPDActionFilter>();
     builder.Services.AddContentful(ContentfulConfiguration.GetContentfulConfiguration(configuration));
     builder.Services.AddTransient<IContentfulDataService, ContentfulDataService>();
+    builder.Services.AddTransient<IContentTypeResolver, EntityResolver>();
+    builder.Services.AddTransient<ICpdContentfulClient, CpdContentfulClient>();
 
     var options = new ApplicationInsightsServiceOptions
     {

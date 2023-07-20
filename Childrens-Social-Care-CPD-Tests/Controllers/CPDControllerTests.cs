@@ -9,7 +9,7 @@ using Moq;
 using NUnit.Framework;
 
 
-namespace Childrens_Social_Care_CPD_Tests
+namespace Childrens_Social_Care_CPD_Tests.Controllers
 {
     public class CPDControllerTests
     {

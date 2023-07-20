@@ -5,7 +5,7 @@
       <DataCollector friendlyName="XPlat code coverage">
         <Configuration>
           <Format>cobertura</Format>                              
-          <Exclude>[*]AspNetCoreGeneratedDocument.*,[*]Childrens_Social_Care_CPD.Models.*</Exclude> <!-- [Assembly-Filter]Type-Filter -->
+          <Exclude>[*]AspNetCoreGeneratedDocument.*,[*]Childrens_Social_Care_CPD.Models.*,[*]Childrens_Social_Care_CPD.Contentful.Models.*</Exclude> <!-- [Assembly-Filter]Type-Filter -->
           <ExcludeByFile>**/Program.cs</ExcludeByFile>
           <SingleHit>false</SingleHit>
           <UseSourceLink>False</UseSourceLink>

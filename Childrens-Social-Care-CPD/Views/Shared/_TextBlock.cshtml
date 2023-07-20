@@ -1,0 +1,58 @@
+﻿@using Childrens_Social_Care_CPD.Contentful.Models;
+
+@model TextBlock
+
+
+@functions {
+
+    void RenderTitle()
+    {
+        if (Model.DisplayTitle) {
+
+            var level = Model.TitleLevel > 0
+                ? Model.TitleLevel
+                : 2;
+
+            var tagBuilder = new TagBuilder($"h{level}");
+            var cssModifier = level switch
+            {
+                1 => "l",
+                2 => "m",
+                3 => "s",
+                _ => "m"
+            };
+            tagBuilder.AddCssClass($"govuk-heading-{cssModifier}");
+            tagBuilder.InnerHtml.Append(Model.Title);
+                
+            @tagBuilder;
+        }
+    }
+
+    void RenderText(string text)
+    {
+        foreach (var paragraph in text.Split("\n"))
+        {
+            if (!string.IsNullOrEmpty(paragraph))
+            {
+                <p class="govuk-body-m">@paragraph</p>
+            }
+        }
+    }
+}
+
+@if (ViewBag.UseContentContainers ?? true)
+{
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            @{
+                RenderTitle();
+                RenderText(Model.Text);
+            }
+        </div>
+    </div>
+} 
+else
+{
+    RenderTitle();
+    RenderText(Model.Text);
+}
