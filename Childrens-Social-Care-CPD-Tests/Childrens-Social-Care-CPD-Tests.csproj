@@ -29,6 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Playwright\" />
     <Folder Include="Properties\" />
   </ItemGroup>
 
