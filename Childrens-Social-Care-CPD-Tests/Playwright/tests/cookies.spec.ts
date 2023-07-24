@@ -4,7 +4,7 @@ const CookieName = 'cookie_consent'
 const AcceptValue = 'accept'
 const RejectValue = 'reject'
 
-test.describe('Cookies', () => {
+test.describe('Cookies @cookie', () => {
 
     test.describe('Banner', () => {
 
@@ -18,6 +18,11 @@ test.describe('Cookies', () => {
                 await expect(await page.locator('#divCookieBannerId')).toBeVisible()
             })
         
+            /*
+            Given I click the Accept button on the cookies banner
+            When I click the Hide button on the cookie banner
+            Then the cookie banner is hidden
+            */
             test('Accepting cookies allows you to hide the banner', async ({ page }) => {
                 await page.getByRole('button', { name: 'Accept analytics cookies' }).click()
                 await page.getByRole('button', { name: 'Hide cookie message' }).click()
@@ -121,6 +126,26 @@ test.describe('Cookies', () => {
 
             expect(await page.getByLabel('Yes').isChecked()).toBeFalsy()
             expect(await page.getByLabel('No').isChecked()).toBeTruthy()
+        })
+
+        test.describe('Cookie value', () => {
+    
+            test('Selecting \'Yes\' then clicking \'Save cookie settings\' sets the cookie to the accept value', async ({ page }) => {
+                await page.getByLabel('Yes').check()
+                await page.getByRole('button', { name: 'Save cookie settings' }).click()
+    
+                const cookies = await page.context().cookies()
+                await expect(cookies.find(c => c.name == CookieName)?.value).toBe(AcceptValue)
+            })
+
+            test('Selecting \'No\' then clicking \'Save cookie settings\' sets the cookie to the reject value', async ({ page }) => {
+                await page.getByLabel('No').check()
+                await page.getByRole('button', { name: 'Save cookie settings' }).click()
+    
+                const cookies = await page.context().cookies()
+                await expect(cookies.find(c => c.name == CookieName)?.value).toBe(RejectValue)
+            })
+    
         })
     })
 

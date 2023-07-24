@@ -8,7 +8,6 @@ test.describe('Page Footer', () => {
 
     const links = [
         ['Privacy policy', '/content/privacy'],
-        //['Cookies', '/cookies'],
         ['Accessibility', '/content/accessibility'],
         ['Terms and conditions', '/content/termsconditions'],
         ['Feedback', 'https://dferesearch.fra1.qualtrics.com/jfe/form/SV_bmcLDedq5wipeTA'],

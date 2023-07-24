@@ -8,19 +8,4 @@ test.describe('Error conditions', () => {
         await expect(await page.getByRole('heading', { name: 'Page not found' })).toBeVisible()
     })
 
-
-    //   test('Accepting cookies allows you to hide the banner', async ({ page }) => {
-    //     await page.getByRole('button', { name: 'Accept analytics cookies' }).click()
-    //     await page.getByRole('button', { name: 'Hide cookie message' }).click()
-
-    //     await expect(await page.locator('#divCookieBannerId')).not.toBeVisible()
-    //   })
-
-    //   test('Rejecting cookies allows you to hide the banner', async ({ page }) => {
-    //     await page.getByRole('button', { name: 'Reject analytics cookies' }).click()
-    //     await page.getByRole('button', { name: 'Hide cookie message' }).click()
-
-    //     await expect(await page.locator('#divCookieBannerId')).not.toBeVisible()
-    //   })
-
 })
