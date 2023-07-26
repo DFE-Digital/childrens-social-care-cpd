@@ -25,8 +25,8 @@ function migrationFunction(migration, context) {
         .disabled(false)
         .omitted(false)
         .items({ "type": "Link", "validations": [{ "linkContentType": ["contentLink"] }], "linkType": "Entry" })
-    linkListCard.changeFieldControl("title", "builtin", "entryLinksEditor", { "helpText": "One or more Content Links to display in the card", "bulkEditing": false, "showLinkEntityAction": true, "showCreateEntityAction": true })
-    linkListCard.changeFieldControl("links", "builtin", "singleLine", { "helpText": "The title text of the card" })
+    linkListCard.changeFieldControl("title", "builtin", "singleLine", { "helpText": "The title text of the card" })
+    linkListCard.changeFieldControl("links", "builtin", "entryLinksEditor", { "helpText": "One or more Content Links to display in the card", "bulkEditing": false, "showLinkEntityAction": true, "showCreateEntityAction": true })
 
     const heroBanner = migration.createContentType("heroBanner");
     heroBanner
@@ -53,8 +53,8 @@ function migrationFunction(migration, context) {
         .validations([{ "size": { "max": 500 } }])
         .disabled(false)
         .omitted(false)
-    heroBanner.changeFieldControl("title", "builtin", "multipleLine", { "helpText": "Displays as the text under the title" })
-    heroBanner.changeFieldControl("text", "builtin", "singleLine", { "helpText": "Displays as the large title in the banner" })
+    heroBanner.changeFieldControl("title", "builtin", "singleLine", { "helpText": "Displays as the large title in the banner" })
+    heroBanner.changeFieldControl("text", "builtin", "multipleLine", { "helpText": "Displays as the text under the title" })
 
     const contentLink = migration.createContentType("contentLink");
     contentLink
@@ -81,7 +81,7 @@ function migrationFunction(migration, context) {
         .validations([])
         .disabled(false)
         .omitted(false)
-    contentLink.changeFieldControl("name", "builtin", "singleLine")
+    contentLink.changeFieldControl("name", "builtin", "singleLine", { "helpText": "The display text of the link" })
     contentLink.changeFieldControl("uri", "builtin", "singleLine", { "helpText": "Can either be a Content item's name e.g. 'roles/supervisor', or a link to a website e.g. 'http://www.google.com'" })
 
     const contentSeparator = migration.createContentType("contentSeparator");
@@ -148,10 +148,10 @@ function migrationFunction(migration, context) {
         .validations([{ "enabledMarks": ["bold", "italic", "underline", "code"], "message": "Only bold, italic, underline, and code marks are allowed" }, { "enabledNodeTypes": ["heading-1", "heading-2", "heading-3", "heading-4", "heading-5", "heading-6", "ordered-list", "unordered-list", "hr", "blockquote", "embedded-entry-block", "embedded-asset-block", "table", "hyperlink", "entry-hyperlink", "asset-hyperlink", "embedded-entry-inline"], "message": "Only heading 1, heading 2, heading 3, heading 4, heading 5, heading 6, ordered list, unordered list, horizontal rule, quote, block entry, asset, table, link to Url, link to entry, link to asset, and inline entry nodes are allowed" }, { "nodes": {} }])
         .disabled(false)
         .omitted(false)
-    richTextBlock.changeFieldControl("title", "builtin", "boolean", { "helpText": "Indicates whether the content should be displayed with the Title as a heading", "trueLabel": "Yes", "falseLabel": "No" })
-    richTextBlock.changeFieldControl("displayTitle", "builtin", "richTextEditor")
-    richTextBlock.changeFieldControl("titleLevel", "builtin", "singleLine")
-    richTextBlock.changeFieldControl("document", "builtin", "radio", { "helpText": "The importance of the title, 1 is the most important" })
+    richTextBlock.changeFieldControl("title", "builtin", "singleLine")
+    richTextBlock.changeFieldControl("displayTitle", "builtin", "boolean", { "helpText": "Indicates whether the content should be displayed with the Title as a heading", "trueLabel": "Yes", "falseLabel": "No" })
+    richTextBlock.changeFieldControl("titleLevel", "builtin", "radio", { "helpText": "The importance of the title, 1 is the most important" })
+    richTextBlock.changeFieldControl("document", "builtin", "richTextEditor")
 
     const textBlock = migration.createContentType("textBlock");
     textBlock
@@ -200,10 +200,10 @@ function migrationFunction(migration, context) {
         .validations([])
         .disabled(false)
         .omitted(false)
-    textBlock.changeFieldControl("title", "builtin", "boolean", { "helpText": "Indicates whether the content should be displayed with the Title as a heading", "trueLabel": "Yes", "falseLabel": "No" })
-    textBlock.changeFieldControl("displayTitle", "builtin", "multipleLine")
-    textBlock.changeFieldControl("titleLevel", "builtin", "singleLine")
-    textBlock.changeFieldControl("text", "builtin", "radio", { "helpText": "The importance of the title, 1 is the most important" })
+    textBlock.changeFieldControl("title", "builtin", "singleLine")
+    textBlock.changeFieldControl("displayTitle", "builtin", "boolean", { "helpText": "Indicates whether the content should be displayed with the Title as a heading", "trueLabel": "Yes", "falseLabel": "No" })
+    textBlock.changeFieldControl("titleLevel", "builtin", "radio", { "helpText": "The importance of the title, 1 is the most important" })
+    textBlock.changeFieldControl("text", "builtin", "multipleLine")
 
     const sideMenu = migration.createContentType("sideMenu");
     sideMenu
@@ -231,8 +231,8 @@ function migrationFunction(migration, context) {
         .disabled(false)
         .omitted(false)
         .items({ "type": "Link", "validations": [{ "linkContentType": ["contentLink"] }], "linkType": "Entry" })
-    sideMenu.changeFieldControl("name", "builtin", "entryLinksEditor", { "helpText": "Each Content Link added will appear as a menu item", "bulkEditing": false, "showLinkEntityAction": true, "showCreateEntityAction": true })
-    sideMenu.changeFieldControl("items", "builtin", "singleLine", { "helpText": "The name of the submenu" })
+    sideMenu.changeFieldControl("name", "builtin", "singleLine", { "helpText": "The name of the submenu" })
+    sideMenu.changeFieldControl("items", "builtin", "entryLinksEditor", { "helpText": "Each Content Link added will appear as a menu item", "bulkEditing": false, "showLinkEntityAction": true, "showCreateEntityAction": true })
 
     const roleList = migration.createContentType("roleList");
     roleList
@@ -260,8 +260,8 @@ function migrationFunction(migration, context) {
         .disabled(false)
         .omitted(false)
         .items({ "type": "Link", "validations": [{ "linkContentType": ["content"] }], "linkType": "Entry" })
-    roleList.changeFieldControl("title", "builtin", "entryLinksEditor", { "helpText": "You should select a content item that is the root page for the role. The page should have a single Detailed Role as its content.", "bulkEditing": false, "showLinkEntityAction": true, "showCreateEntityAction": true })
-    roleList.changeFieldControl("roles", "builtin", "singleLine")
+    roleList.changeFieldControl("title", "builtin", "singleLine")
+    roleList.changeFieldControl("roles", "builtin", "entryLinksEditor", { "helpText": "You should select a content item that is the root page for the role. The page should have a single Detailed Role as its content.", "bulkEditing": false, "showLinkEntityAction": true, "showCreateEntityAction": true })
 
     const detailedRole = migration.createContentType("detailedRole");
     detailedRole
@@ -358,14 +358,14 @@ function migrationFunction(migration, context) {
         .validations([{ "enabledMarks": ["bold", "italic", "underline", "code", "superscript", "subscript"], "message": "Only bold, italic, underline, code, superscript, and subscript marks are allowed" }, { "enabledNodeTypes": ["heading-3", "heading-4", "heading-5", "heading-6", "ordered-list", "unordered-list", "hr", "blockquote", "embedded-entry-block", "embedded-asset-block", "table", "hyperlink", "entry-hyperlink", "asset-hyperlink", "embedded-entry-inline"], "message": "Only heading 3, heading 4, heading 5, heading 6, ordered list, unordered list, horizontal rule, quote, block entry, asset, table, link to Url, link to entry, link to asset, and inline entry nodes are allowed" }, { "nodes": {} }])
         .disabled(false)
         .omitted(false)
-    detailedRole.changeFieldControl("title", "builtin", "richTextEditor")
-    detailedRole.changeFieldControl("salaryRange", "builtin", "richTextEditor")
-    detailedRole.changeFieldControl("summary", "builtin", "richTextEditor")
+    detailedRole.changeFieldControl("title", "builtin", "singleLine", { "helpText": "The job title" })
+    detailedRole.changeFieldControl("salaryRange", "builtin", "singleLine")
+    detailedRole.changeFieldControl("summary", "builtin", "multipleLine")
     detailedRole.changeFieldControl("otherNames", "builtin", "singleLine")
-    detailedRole.changeFieldControl("whatYoullDo", "builtin", "singleLine")
+    detailedRole.changeFieldControl("whatYoullDo", "builtin", "richTextEditor")
     detailedRole.changeFieldControl("skillsAndKnowledge", "builtin", "richTextEditor")
-    detailedRole.changeFieldControl("howToBecomeOne", "builtin", "multipleLine")
-    detailedRole.changeFieldControl("careerPathsAndProgression", "builtin", "singleLine", { "helpText": "The job title" })
+    detailedRole.changeFieldControl("howToBecomeOne", "builtin", "richTextEditor")
+    detailedRole.changeFieldControl("careerPathsAndProgression", "builtin", "richTextEditor")
     detailedRole.changeFieldControl("currentOpportunities", "builtin", "richTextEditor")
 
     const content = migration.createContentType("content");
@@ -416,9 +416,9 @@ function migrationFunction(migration, context) {
         .omitted(false)
         .items({ "type": "Link", "validations": [{ "linkContentType": ["columnLayout", "content", "contentLink", "contentSeparator", "detailedRole", "heroBanner", "linkListCard", "richTextBlock", "textBlock", "section", "roleList"] }], "linkType": "Entry" })
     content.changeFieldControl("id", "builtin", "singleLine")
-    content.changeFieldControl("title", "builtin", "entryLinksEditor", { "helpText": "The content of this item", "bulkEditing": false, "showLinkEntityAction": true, "showCreateEntityAction": true })
+    content.changeFieldControl("title", "builtin", "singleLine", { "helpText": "The title of the content contained within this item, it will become the page title in the website" })
     content.changeFieldControl("sideMenu", "builtin", "entryCardEditor", { "helpText": "Note side menus are only shown when this content item is the root item being viewed", "showLinkEntityAction": true, "showCreateEntityAction": true })
-    content.changeFieldControl("items", "builtin", "singleLine", { "helpText": "The title of the content contained within this item, it will become the page title in the website" })
+    content.changeFieldControl("items", "builtin", "entryLinksEditor", { "helpText": "The content of this item", "bulkEditing": false, "showLinkEntityAction": true, "showCreateEntityAction": true })
 
     const columnLayout = migration.createContentType("columnLayout");
     columnLayout
@@ -456,9 +456,9 @@ function migrationFunction(migration, context) {
         .disabled(false)
         .omitted(false)
         .items({ "type": "Link", "validations": [], "linkType": "Entry" })
-    columnLayout.changeFieldControl("name", "builtin", "dropdown", { "helpText": "The number of columns the layout should have" })
-    columnLayout.changeFieldControl("columnCount", "builtin", "entryLinksEditor", { "helpText": "The items that should appear in the layout", "bulkEditing": false, "showLinkEntityAction": true, "showCreateEntityAction": true })
-    columnLayout.changeFieldControl("items", "builtin", "singleLine", { "helpText": "The name of the column layout" })
+    columnLayout.changeFieldControl("name", "builtin", "singleLine", { "helpText": "The name of the column layout" })
+    columnLayout.changeFieldControl("columnCount", "builtin", "dropdown", { "helpText": "The number of columns the layout should have" })
+    columnLayout.changeFieldControl("items", "builtin", "entryLinksEditor", { "helpText": "The items that should appear in the layout", "bulkEditing": false, "showLinkEntityAction": true, "showCreateEntityAction": true })
 
     const linkCard = migration.createContentType("linkCard");
     linkCard
@@ -497,7 +497,7 @@ function migrationFunction(migration, context) {
         .disabled(false)
         .omitted(false)
     linkCard.changeFieldControl("name", "builtin", "singleLine", { "helpText": "The name of this card" })
-    linkCard.changeFieldControl("titleLink", "builtin", "multipleLine")
-    linkCard.changeFieldControl("text", "builtin", "entryLinkEditor", { "helpText": "Select a content link for this card", "showLinkEntityAction": true, "showCreateEntityAction": true })
+    linkCard.changeFieldControl("titleLink", "builtin", "entryLinkEditor", { "helpText": "Select a content link for this card", "showLinkEntityAction": true, "showCreateEntityAction": true })
+    linkCard.changeFieldControl("text", "builtin", "multipleLine")
 }
 module.exports = migrationFunction;
