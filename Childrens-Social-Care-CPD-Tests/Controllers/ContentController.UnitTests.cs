@@ -26,6 +26,31 @@ public class ContentControllerTests
     private IContentfulDataService _contentfulDataService;
     private ICpdContentfulClient _contentfulClient;
 
+    private void SetCookieConsent(bool? accepted)
+    {
+        if (accepted.HasValue)
+        {
+            var value = accepted.Value;
+            _cookies[SiteConstants.ANALYTICSCOOKIENAME].Returns(value ? SiteConstants.ANALYTICSCOOKIEACCEPTED : SiteConstants.ANALYTICSCOOKIEREJECTED);
+        } else
+        {
+            _cookies[SiteConstants.ANALYTICSCOOKIENAME].Returns(string.Empty);
+        }
+    }
+
+    private void SetContent(Content content)
+    {
+        var contentCollection = new ContentfulCollection<Content>();
+
+        contentCollection.Items = content == null
+            ? new List<Content>()
+            : contentCollection.Items = new List<Content> { content };
+
+        _contentfulClient
+            .GetEntries(Arg.Any<QueryBuilder<Content>>(), default)
+            .Returns(contentCollection);
+    }
+
     [SetUp]
     public void SetUp()
     {
@@ -51,7 +76,7 @@ public class ContentControllerTests
     {
         // arrange
         var cookieBanner = new CookieBanner();
-        _cookies[SiteConstants.ANALYTICSCOOKIENAME].Returns(string.Empty);
+        SetCookieConsent(null);
         _contentfulDataService.GetCookieBannerData().Returns(Task.FromResult(cookieBanner));
 
         // act
@@ -62,13 +87,13 @@ public class ContentControllerTests
     }
 
     [Test]
-    [TestCase(SiteConstants.ANALYTICSCOOKIEACCEPTED)]
-    [TestCase(SiteConstants.ANALYTICSCOOKIEREJECTED)]
-    public async Task Cookie_Content_Is_Not_Fetched_When_Analytics_Cookie_Exists(string cookieValue)
+    [TestCase(true)]
+    [TestCase(false)]
+    public async Task Cookie_Content_Is_Not_Fetched_When_Analytics_Cookie_Exists(bool consentGiven)
     {
         // arrange
         var cookieBanner = new CookieBanner();
-        _cookies[SiteConstants.ANALYTICSCOOKIENAME].Returns(cookieValue);
+        SetCookieConsent(consentGiven);
         _contentfulDataService.GetCookieBannerData().Returns(Task.FromResult(cookieBanner));
 
         // act
@@ -82,9 +107,7 @@ public class ContentControllerTests
     public async Task Index_Returns_404_When_No_Content_Found()
     {
         // arrange
-        var noContent = new ContentfulCollection<Content>() { Items = new List<Content>() };
-        _cookies[SiteConstants.ANALYTICSCOOKIENAME].Returns(SiteConstants.ANALYTICSCOOKIEACCEPTED);
-        _contentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), default).Returns(noContent);
+        SetContent(null);
 
         // act
         var actual = await _contentController.Index("home");
@@ -97,9 +120,7 @@ public class ContentControllerTests
     public async Task Index_Returns_View()
     {
         // arrange
-        var contentCollection = new ContentfulCollection<Content>() { Items = new List<Content>() { new Content() } };
-        _cookies[SiteConstants.ANALYTICSCOOKIENAME].Returns(SiteConstants.ANALYTICSCOOKIEACCEPTED);
-        _contentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), default).Returns(contentCollection);
+        SetContent(new Content());
 
         // act
         var actual = await _contentController.Index("home");
@@ -112,19 +133,16 @@ public class ContentControllerTests
     public async Task Index_Sets_The_ViewState_ContextModel()
     {
         // arrange
-        var pageName = "home";
         var rootContent = new Content()
         {
             Id = "a/value",
             Category = "A Category",
             Title = "A Title",
         };
-        var contentCollection = new ContentfulCollection<Content>() { Items = new List<Content>() { rootContent } };
-        _cookies[SiteConstants.ANALYTICSCOOKIENAME].Returns(SiteConstants.ANALYTICSCOOKIEACCEPTED);
-        _contentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), default).Returns(contentCollection);
+        SetContent(rootContent);
 
         // act
-        await _contentController.Index(pageName);
+        await _contentController.Index("home");
         var actual = _contentController.ViewData["ContextModel"] as ContextModel;
 
         // assert
@@ -139,13 +157,10 @@ public class ContentControllerTests
     public async Task Index_Sets_The_ContextModel_Preferences_Set_Value_Correctly(bool preferenceSet)
     {
         // arrange
-        var pageName = "home";
-        var contentCollection = new ContentfulCollection<Content>() { Items = new List<Content>() { new Content() } };
-        _cookies[SiteConstants.ANALYTICSCOOKIENAME].Returns(SiteConstants.ANALYTICSCOOKIEACCEPTED);
-        _contentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), default).Returns(contentCollection);
+        SetContent(new Content());
 
         // act
-        await _contentController.Index(pageName, preferenceSet);
+        await _contentController.Index("home", preferenceSet);
         var actual = _contentController.ViewData["ContextModel"] as ContextModel;
 
         // assert
@@ -163,18 +178,15 @@ public class ContentControllerTests
     public async Task Index_Sets_The_ContextModel_UseContainers_From_SideMenu_Value_Correctly(SideMenu sideMenu)
     {
         // arrange
-        var pageName = "home";
         var rootContent = new Content()
         {
             SideMenu = sideMenu
         };
         var expected = sideMenu == null;
-        var contentCollection = new ContentfulCollection<Content>() { Items = new List<Content>() { rootContent } };
-        _cookies[SiteConstants.ANALYTICSCOOKIENAME].Returns(SiteConstants.ANALYTICSCOOKIEACCEPTED);
-        _contentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), default).Returns(contentCollection);
+        SetContent(rootContent);
 
         // act
-        await _contentController.Index(pageName);
+        await _contentController.Index("home");
         var actual = _contentController.ViewData["ContextModel"] as ContextModel;
 
         // assert
