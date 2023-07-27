@@ -394,6 +394,16 @@ function migrationFunction(migration, context) {
         .disabled(false)
         .omitted(false)
 
+    const contentCategory = content.createField("category");
+    contentCategory
+        .name("Category")
+        .type("Symbol")
+        .localized(false)
+        .required(true)
+        .validations([{ "in": ["Home", "Career information", "Development programmes", "Explore roles"] }])
+        .disabled(false)
+        .omitted(false)
+
     const contentSideMenu = content.createField("sideMenu");
     contentSideMenu
         .name("SideMenu")
@@ -417,6 +427,7 @@ function migrationFunction(migration, context) {
         .items({ "type": "Link", "validations": [{ "linkContentType": ["columnLayout", "content", "contentLink", "contentSeparator", "detailedRole", "heroBanner", "linkListCard", "richTextBlock", "textBlock", "section", "roleList"] }], "linkType": "Entry" })
     content.changeFieldControl("id", "builtin", "singleLine")
     content.changeFieldControl("title", "builtin", "singleLine", { "helpText": "The title of the content contained within this item, it will become the page title in the website" })
+    content.changeFieldControl("category", "builtin", "radio")
     content.changeFieldControl("sideMenu", "builtin", "entryCardEditor", { "helpText": "Note side menus are only shown when this content item is the root item being viewed", "showLinkEntityAction": true, "showCreateEntityAction": true })
     content.changeFieldControl("items", "builtin", "entryLinksEditor", { "helpText": "The content of this item", "bulkEditing": false, "showLinkEntityAction": true, "showCreateEntityAction": true })
 
