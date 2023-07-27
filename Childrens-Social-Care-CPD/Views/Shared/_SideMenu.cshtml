@@ -6,7 +6,7 @@
     <ul class="dfe-vertical-nav__section">
         @foreach (var menuItem in Model.Items)
         {
-            var css = ViewBag.PageName == menuItem.Uri
+            var css = ViewBag.ContextModel.PageName == menuItem.Uri
                 ? "dfe-vertical-nav__section-item  dfe-vertical-nav__section-item--current"
                 : "dfe-vertical-nav__section-item";
 
