@@ -30,6 +30,19 @@ public partial class _CookieControllerTests
     private ICpdContentfulClient _contentfulClient;
     private ILogger<CookieController> _logger;
 
+    private void SetContent(Content content)
+    {
+        var contentCollection = new ContentfulCollection<Content>();
+
+        contentCollection.Items = content == null
+            ? new List<Content>()
+            : contentCollection.Items = new List<Content> { content };
+
+        _contentfulClient
+            .GetEntries(Arg.Any<QueryBuilder<Content>>(), default)
+            .Returns(contentCollection);
+    }
+
     [SetUp]
     public void SetUp()
     {
@@ -60,9 +73,7 @@ public partial class _CookieControllerTests
     public async Task Cookies_Returns_404_When_No_Content_Found()
     {
         // arrange
-        var noContent = new ContentfulCollection<Content>() { Items = new List<Content>() };
-        _cookies[SiteConstants.ANALYTICSCOOKIENAME].Returns(SiteConstants.ANALYTICSCOOKIEACCEPTED);
-        _contentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), default).Returns(noContent);
+        SetContent(null);
 
         // act
         var actual = await _cookieController.Cookies();
@@ -81,9 +92,7 @@ public partial class _CookieControllerTests
             Category = "A Category",
             Title = "A Title",
         };
-        var contentCollection = new ContentfulCollection<Content>() { Items = new List<Content>() { rootContent } };
-        _cookies[SiteConstants.ANALYTICSCOOKIENAME].Returns(SiteConstants.ANALYTICSCOOKIEACCEPTED);
-        _contentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), default).Returns(contentCollection);
+        SetContent(rootContent);
 
         // act
         await _cookieController.Cookies();
@@ -101,9 +110,7 @@ public partial class _CookieControllerTests
     public async Task Cookies_Sets_The_ContextModel_Preferences_Set_Value_Correctly(bool preferenceSet)
     {
         // arrange
-        var contentCollection = new ContentfulCollection<Content>() { Items = new List<Content>() { new Content() } };
-        _cookies[SiteConstants.ANALYTICSCOOKIENAME].Returns(SiteConstants.ANALYTICSCOOKIEACCEPTED);
-        _contentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), default).Returns(contentCollection);
+        SetContent(new Content());
 
         // act
         await _cookieController.Cookies(preferenceSet: preferenceSet);
@@ -128,9 +135,7 @@ public partial class _CookieControllerTests
         {
             SideMenu = sideMenu
         };
-        var contentCollection = new ContentfulCollection<Content>() { Items = new List<Content>() { rootContent } };
-        _cookies[SiteConstants.ANALYTICSCOOKIENAME].Returns(SiteConstants.ANALYTICSCOOKIEACCEPTED);
-        _contentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), default).Returns(contentCollection);
+        SetContent(rootContent);
 
         // act
         await _cookieController.Cookies();
@@ -145,9 +150,7 @@ public partial class _CookieControllerTests
     public async Task Cookies_Action_Should_Not_Show_Consent_Panel()
     {
         // arrange
-        var contentCollection = new ContentfulCollection<Content>() { Items = new List<Content>() { new Content() } };
-        _cookies[SiteConstants.ANALYTICSCOOKIENAME].Returns(SiteConstants.ANALYTICSCOOKIEACCEPTED);
-        _contentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), default).Returns(contentCollection);
+        SetContent(new Content());
 
         // act
         await _cookieController.Cookies();
