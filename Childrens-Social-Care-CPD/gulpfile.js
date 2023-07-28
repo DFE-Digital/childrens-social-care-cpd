@@ -4,9 +4,7 @@
 var tsScriptsSrc = './scripts/**';
 
 var gulp = require("gulp"),
-    sass = require('gulp-sass')(require('sass')),
     sourcemaps = require('gulp-sourcemaps'),
-    csso = require('gulp-csso'),
     terser = require('gulp-terser'),
     ts = require("gulp-typescript"),
     //typescript = require('typescript'),
@@ -14,18 +12,6 @@ var gulp = require("gulp"),
     //concat = require('gulp-concat'),
     del = require('del');
 
-gulp.task('sass-to-min-css', async function () {
-    return gulp.src('./styles/scss/application.scss')
-        .pipe(sourcemaps.init())
-        .pipe(sass().on('error', sass.logError))
-        .pipe(csso())
-        .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('./wwwroot/css'));
-});
-
-gulp.task('sass-to-min-css:watch', function () {
-    gulp.watch('./styles/**', gulp.series('sass-to-min-css'));
-});
 
 // https://www.meziantou.net/compiling-typescript-using-gulp-in-visual-studio.htm
 
