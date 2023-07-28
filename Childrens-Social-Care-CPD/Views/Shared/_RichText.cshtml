@@ -2,6 +2,7 @@
 @using Childrens_Social_Care_CPD.Contentful.Models;
 @using Contentful.Core.Models;
 @using System.Text
+@using Microsoft.AspNetCore.Html;
 
 @model Document
 
@@ -14,29 +15,25 @@
         return linkHtmlString;
     }
 
-    public static string GetHeadingTagString(IContent content, string tag, string className)
+    public static IHtmlContent GetHeadingTagString(IContent content, string tag, string className)
     {
-        string headerHTMLTag = string.Empty;
-        @foreach (var headerContent in ((IHeading)content).Content)
+        var tagBuilder = new TagBuilder(tag);
+        foreach (var headerContent in ((IHeading)content).Content)
         {
             if (headerContent.GetType() == typeof(Text) && !string.IsNullOrEmpty((((Contentful.Core.Models.Text)headerContent).Value)))
             {
-                var headingText = (((Contentful.Core.Models.Text)headerContent).Value);
-
-                headerHTMLTag = $"<{@tag} class=\"{className}\">{@headingText}</{@tag}>";
+                tagBuilder.InnerHtml.Append(((Text)headerContent).Value);
             }
+
             if (headerContent.GetType() == typeof(Hyperlink))
             {
-                var hyperlinkTagString = @ParseHyperlinkHelper(headerContent);
-                headerHTMLTag = $"<{@tag} class=\"{className}\">{@hyperlinkTagString}</{@tag}>";
+                tagBuilder.InnerHtml.AppendHtml(@ParseHyperlinkHelper(headerContent));
             }
-
         }
-
-        return headerHTMLTag;
+        return tagBuilder;
     }
 
-    public void RenderParagraph(Paragraph paragraph)
+    public async Task RenderParagraph(Paragraph paragraph)
     {
         if (paragraph.Content.Any(c => c.GetType() == typeof(Hyperlink)))
         {
@@ -60,10 +57,25 @@
         {
             @foreach (var content in paragraph.Content)
             {
-                if (content.GetType() == typeof(Text))
+                switch (content)
                 {
-                    var innerText = (((Contentful.Core.Models.Text)content).Value);
-                    <p class="govuk-body-m">@Html.Raw(@innerText)</p>
+                    case Text text : { 
+                        if (!string.IsNullOrEmpty(text.Value))
+                        {
+                             <p class="govuk-body-m">@text.Value</p>
+                        }
+                        break; 
+                    }
+                    case EntryStructure entryStructure: {
+                        switch (entryStructure.Data.Target)
+                        {
+                            case RoleList roleList : {
+                                await Html.RenderPartialAsync("_InlineRoleList", roleList);
+                                break;
+                            }
+                        }
+                        break; 
+                    }
                 }
             }
         }
@@ -159,14 +171,14 @@
         switch (node)
         {
             case HorizontalRuler hr: RenderHr(hr); break;
-            case Paragraph paragraph: RenderParagraph(paragraph); break;
+            case Paragraph paragraph: await RenderParagraph(paragraph); break;
             case List list: RenderList(list); break;
-            case Heading1: @Html.Raw(GetHeadingTagString(node, SiteConstants.HEADING1, SiteConstants.GOVUKHEADINGXL)); break;
-            case Heading2: @Html.Raw(GetHeadingTagString(node, SiteConstants.HEADING2, SiteConstants.GOVUKHEADINGL)); break;
-            case Heading3: @Html.Raw(GetHeadingTagString(node, SiteConstants.HEADING3, SiteConstants.GOVUKHEADINGM)); break;
-            case Heading4: @Html.Raw(GetHeadingTagString(node, SiteConstants.HEADING4, SiteConstants.GOVUKHEADINGM)); break;
-            case Heading5: @Html.Raw(GetHeadingTagString(node, SiteConstants.HEADING5, SiteConstants.GOVUKHEADINGM)); break;
-            case Heading6: @Html.Raw(GetHeadingTagString(node, SiteConstants.HEADING6, SiteConstants.GOVUKHEADINGM)); break;
+            case Heading1: @GetHeadingTagString(node, SiteConstants.HEADING1, SiteConstants.GOVUKHEADINGXL); break;
+            case Heading2: @GetHeadingTagString(node, SiteConstants.HEADING2, SiteConstants.GOVUKHEADINGL); break;
+            case Heading3: @GetHeadingTagString(node, SiteConstants.HEADING3, SiteConstants.GOVUKHEADINGM); break;
+            case Heading4: @GetHeadingTagString(node, SiteConstants.HEADING4, SiteConstants.GOVUKHEADINGM); break;
+            case Heading5: @GetHeadingTagString(node, SiteConstants.HEADING5, SiteConstants.GOVUKHEADINGM); break;
+            case Heading6: @GetHeadingTagString(node, SiteConstants.HEADING6, SiteConstants.GOVUKHEADINGM); break;
             case Table table: RenderTable(table); break;
         }
     }
