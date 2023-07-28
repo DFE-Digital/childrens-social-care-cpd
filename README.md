@@ -52,6 +52,10 @@ followed by
 
 Cypress testing is also included.
 
+### Compiling the Sass
+The Sass is compiled using the [Web Compiler 2022+ extension](https://github.com/failwyn/WebCompiler) from Jason Moore which can be installed into Visual Studio 2022 from the Extensions menu. The `compilerconfig.json` is already configured to copy the output to the correct location.
+
+
 ### Further documentation
 
 More information on contentful and working as a headless CMS can be found [here](https://www.contentful.com/)
