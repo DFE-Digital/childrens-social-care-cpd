@@ -4,8 +4,6 @@
 @model LinkCard
 
 <div class="dfe-section-card">
-    <h2 class="govuk-heading-m">
-        @Html.ContentLink(Model.TitleLink.Name, Model.TitleLink.Uri)
-    </h2>
+    <h3>@Html.ContentLink(Model.TitleLink.Name, Model.TitleLink.Uri)</h3>
     <p class="govuk-body">@Model.Text</p>
 </div>
