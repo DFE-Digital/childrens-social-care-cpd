@@ -5,8 +5,7 @@
 <head>
     <title>@ViewBag.ContextModel.Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <link rel="stylesheet" href="/css/application.css">
-
+    <link href="~/css/application.min.css" rel="stylesheet" />
     @if (Context.GetRequestAnalyticsCookieState() == AnalyticsConsentState.Accepted)
     {
         <partial name="../PartialViews/GoogleAnalyticsPartial" />
