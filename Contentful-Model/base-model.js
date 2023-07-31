@@ -1,4 +1,154 @@
 function migrationFunction(migration, context) {
+
+    const detailedPathway = migration.createContentType("detailedPathway");
+    detailedPathway
+        .displayField("title")
+        .name("Detailed Pathway")
+        .description("Detailed information around career pathways")
+
+    const detailedPathwayTitle = detailedPathway.createField("title");
+    detailedPathwayTitle
+        .name("Title")
+        .type("Symbol")
+        .localized(false)
+        .required(true)
+        .validations([{ "unique": true }])
+        .disabled(false)
+        .omitted(false)
+
+    const detailedPathwayPathway = detailedPathway.createField("pathway");
+    detailedPathwayPathway
+        .name("Pathway")
+        .type("Symbol")
+        .localized(false)
+        .required(true)
+        .validations([])
+        .disabled(false)
+        .omitted(false)
+
+    const detailedPathwayAudience = detailedPathway.createField("audience");
+    detailedPathwayAudience
+        .name("Audience")
+        .type("Symbol")
+        .localized(false)
+        .required(true)
+        .validations([])
+        .disabled(false)
+        .omitted(false)
+
+    const detailedPathwayDuration = detailedPathway.createField("duration");
+    detailedPathwayDuration
+        .name("Duration")
+        .type("Symbol")
+        .localized(false)
+        .required(true)
+        .validations([])
+        .disabled(false)
+        .omitted(false)
+
+    const detailedPathwayTimeCommitment = detailedPathway.createField("timeCommitment");
+    detailedPathwayTimeCommitment
+        .name("TimeCommitment")
+        .type("Symbol")
+        .localized(false)
+        .required(true)
+        .validations([])
+        .disabled(false)
+        .omitted(false)
+
+    const detailedPathwayCost = detailedPathway.createField("cost");
+    detailedPathwayCost
+        .name("Cost")
+        .type("Symbol")
+        .localized(false)
+        .required(true)
+        .validations([])
+        .disabled(false)
+        .omitted(false)
+
+    const detailedPathwayDeliveredBy = detailedPathway.createField("deliveredBy");
+    detailedPathwayDeliveredBy
+        .name("Delivered by")
+        .type("RichText")
+        .localized(false)
+        .required(true)
+        .validations([{ "enabledMarks": ["code"], "message": "Only code marks are allowed" }, { "enabledNodeTypes": ["hyperlink", "entry-hyperlink"], "message": "Only link to Url and link to entry nodes are allowed" }, { "nodes": {} }])
+        .disabled(false)
+        .omitted(false)
+
+    const detailedPathwayWhoItsFor = detailedPathway.createField("whoItsFor");
+    detailedPathwayWhoItsFor
+        .name("Who it's for")
+        .type("RichText")
+        .localized(false)
+        .required(false)
+        .validations([{ "enabledMarks": ["bold", "italic", "underline", "code", "superscript", "subscript"], "message": "Only bold, italic, underline, code, superscript, and subscript marks are allowed" }, { "enabledNodeTypes": ["ordered-list", "unordered-list", "hr", "blockquote", "table", "hyperlink", "entry-hyperlink", "asset-hyperlink", "embedded-asset-block", "heading-3", "heading-4", "heading-5", "heading-6"], "message": "Only ordered list, unordered list, horizontal rule, quote, table, link to Url, link to entry, link to asset, asset, heading 3, heading 4, heading 5, and heading 6 nodes are allowed" }, { "nodes": {} }])
+        .disabled(false)
+        .omitted(false)
+
+    const detailedPathwayWhatYoullLearn = detailedPathway.createField("whatYoullLearn");
+    detailedPathwayWhatYoullLearn
+        .name("What you'll learn")
+        .type("RichText")
+        .localized(false)
+        .required(false)
+        .validations([{ "enabledMarks": ["bold", "italic", "underline", "code", "superscript", "subscript"], "message": "Only bold, italic, underline, code, superscript, and subscript marks are allowed" }, { "enabledNodeTypes": ["ordered-list", "unordered-list", "hr", "blockquote", "embedded-asset-block", "table", "hyperlink", "entry-hyperlink", "asset-hyperlink", "heading-3", "heading-4", "heading-5", "heading-6"], "message": "Only ordered list, unordered list, horizontal rule, quote, asset, table, link to Url, link to entry, link to asset, heading 3, heading 4, heading 5, and heading 6 nodes are allowed" }, { "nodes": {} }])
+        .disabled(false)
+        .omitted(false)
+
+    const detailedPathwayWhatYoullGet = detailedPathway.createField("whatYoullGet");
+    detailedPathwayWhatYoullGet
+        .name("What you'll get")
+        .type("RichText")
+        .localized(false)
+        .required(false)
+        .validations([{ "enabledMarks": ["bold", "italic", "underline", "code", "superscript", "subscript"], "message": "Only bold, italic, underline, code, superscript, and subscript marks are allowed" }, { "enabledNodeTypes": ["ordered-list", "unordered-list", "hr", "blockquote", "embedded-asset-block", "table", "hyperlink", "entry-hyperlink", "asset-hyperlink", "heading-3", "heading-4", "heading-5", "heading-6"], "message": "Only ordered list, unordered list, horizontal rule, quote, asset, table, link to Url, link to entry, link to asset, heading 3, heading 4, heading 5, and heading 6 nodes are allowed" }, { "nodes": {} }])
+        .disabled(false)
+        .omitted(false)
+
+    const detailedPathwayHowItsDelivered = detailedPathway.createField("howItsDelivered");
+    detailedPathwayHowItsDelivered
+        .name("How it's delivered")
+        .type("RichText")
+        .localized(false)
+        .required(false)
+        .validations([{ "enabledMarks": ["bold", "italic", "underline", "code", "superscript", "subscript"], "message": "Only bold, italic, underline, code, superscript, and subscript marks are allowed" }, { "enabledNodeTypes": ["ordered-list", "unordered-list", "hr", "blockquote", "embedded-asset-block", "table", "hyperlink", "entry-hyperlink", "asset-hyperlink", "heading-3", "heading-4", "heading-5", "heading-6"], "message": "Only ordered list, unordered list, horizontal rule, quote, asset, table, link to Url, link to entry, link to asset, heading 3, heading 4, heading 5, and heading 6 nodes are allowed" }, { "nodes": {} }])
+        .disabled(false)
+        .omitted(false)
+
+    const detailedPathwayFunding = detailedPathway.createField("funding");
+    detailedPathwayFunding
+        .name("Funding")
+        .type("RichText")
+        .localized(false)
+        .required(false)
+        .validations([{ "enabledMarks": ["bold", "italic", "underline", "code", "superscript", "subscript"], "message": "Only bold, italic, underline, code, superscript, and subscript marks are allowed" }, { "enabledNodeTypes": ["ordered-list", "unordered-list", "hr", "blockquote", "embedded-asset-block", "table", "hyperlink", "entry-hyperlink", "asset-hyperlink", "heading-3", "heading-4", "heading-5", "heading-6"], "message": "Only ordered list, unordered list, horizontal rule, quote, asset, table, link to Url, link to entry, link to asset, heading 3, heading 4, heading 5, and heading 6 nodes are allowed" }, { "nodes": {} }])
+        .disabled(false)
+        .omitted(false)
+
+    const detailedPathwayNextSteps = detailedPathway.createField("nextSteps");
+    detailedPathwayNextSteps
+        .name("Next steps")
+        .type("RichText")
+        .localized(false)
+        .required(false)
+        .validations([{ "enabledMarks": ["bold", "italic", "underline", "code", "superscript", "subscript"], "message": "Only bold, italic, underline, code, superscript, and subscript marks are allowed" }, { "enabledNodeTypes": ["ordered-list", "unordered-list", "hr", "blockquote", "embedded-asset-block", "table", "hyperlink", "entry-hyperlink", "asset-hyperlink", "heading-3", "heading-4", "heading-5", "heading-6"], "message": "Only ordered list, unordered list, horizontal rule, quote, asset, table, link to Url, link to entry, link to asset, heading 3, heading 4, heading 5, and heading 6 nodes are allowed" }, { "nodes": {} }])
+        .disabled(false)
+        .omitted(false)
+    detailedPathway.changeFieldControl("title", "builtin", "singleLine")
+    detailedPathway.changeFieldControl("pathway", "builtin", "singleLine")
+    detailedPathway.changeFieldControl("audience", "builtin", "singleLine")
+    detailedPathway.changeFieldControl("duration", "builtin", "singleLine")
+    detailedPathway.changeFieldControl("timeCommitment", "builtin", "singleLine")
+    detailedPathway.changeFieldControl("cost", "builtin", "singleLine")
+    detailedPathway.changeFieldControl("deliveredBy", "builtin", "richTextEditor")
+    detailedPathway.changeFieldControl("whoItsFor", "builtin", "richTextEditor")
+    detailedPathway.changeFieldControl("whatYoullLearn", "builtin", "richTextEditor")
+    detailedPathway.changeFieldControl("whatYoullGet", "builtin", "richTextEditor")
+    detailedPathway.changeFieldControl("howItsDelivered", "builtin", "richTextEditor")
+    detailedPathway.changeFieldControl("funding", "builtin", "richTextEditor")
+    detailedPathway.changeFieldControl("nextSteps", "builtin", "richTextEditor")
+
     const linkListCard = migration.createContentType("linkListCard");
     linkListCard
         .displayField("title")
@@ -96,7 +246,7 @@ function migrationFunction(migration, context) {
         .type("Symbol")
         .localized(false)
         .required(true)
-        .validations([{ "in": ["Large", "Medium", "Small"] }, { "unique": true }])
+        .validations([{ "in": ["Extra Large", "Large", "Medium", "Small"] }, { "unique": true }])
         .disabled(false)
         .omitted(false)
     contentSeparator.changeFieldControl("type", "builtin", "radio")
@@ -498,6 +648,17 @@ function migrationFunction(migration, context) {
         .omitted(false)
         .linkType("Entry")
 
+    const linkCardTitleLevel = linkCard.createField("titleLevel");
+        linkCardTitleLevel
+            .name("Title Level")
+            .type("Integer")
+            .localized(false)
+            .required(false)
+            .validations([{ "in": [2, 3, 4] }])
+            .defaultValue({ "en-US": 2 })
+            .disabled(false)
+            .omitted(false)
+
     const linkCardText = linkCard.createField("text");
     linkCardText
         .name("Text")
@@ -509,6 +670,7 @@ function migrationFunction(migration, context) {
         .omitted(false)
     linkCard.changeFieldControl("name", "builtin", "singleLine", { "helpText": "The name of this card" })
     linkCard.changeFieldControl("titleLink", "builtin", "entryLinkEditor", { "helpText": "Select a content link for this card", "showLinkEntityAction": true, "showCreateEntityAction": true })
+    linkCard.changeFieldControl("titleLevel", "builtin", "radio")
     linkCard.changeFieldControl("text", "builtin", "multipleLine")
 }
 module.exports = migrationFunction;
