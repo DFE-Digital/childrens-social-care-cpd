@@ -6,5 +6,6 @@ public class LinkCard : IContent
 {
     public string Name { get; set; }
     public ContentLink TitleLink { get; set; }
+    public int TitleLevel { get; set; }
     public string Text { get; set; }
 }
