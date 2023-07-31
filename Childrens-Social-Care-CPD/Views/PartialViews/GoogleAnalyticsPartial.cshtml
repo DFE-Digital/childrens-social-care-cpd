@@ -5,7 +5,8 @@
     var googleAnalyticsUrl = string.Format("https://www.googletagmanager.com/gtag/js?id={0}", googleAnalyticsKey);
     var clarityProjectId = Environment.GetEnvironmentVariable(SiteConstants.CLARITYPROJECTID) ?? String.Empty;
     var contentfulEnvironment = Environment.GetEnvironmentVariable(SiteConstants.ENVIRONMENT) ?? String.Empty;
-    var pageName = string.IsNullOrEmpty(@ViewBag.pageName) ? "HomePage" : @ViewBag.pageName;
+    var pageName = (ViewBag.pageName ?? ViewBag.ContextModel?.Id) ?? "Homepage";
+    pageName = string.IsNullOrEmpty(pageName) ? "HomePage" : pageName;
 
     if (!String.IsNullOrEmpty(googleAnalyticsKey)) {
         <script async src='@googleAnalyticsUrl'></script>

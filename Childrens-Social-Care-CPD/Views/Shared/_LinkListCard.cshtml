@@ -4,11 +4,15 @@
 @model LinkListCard
 
 <div class="dfe-section-card">
-    <h3 class="govuk-heading-m">@Model.Title</h3>
+    <h2>@Model.Title</h2>
     <ul class="govuk-list">
         @foreach (var contentLink in Model.Links)
         {
-            <li><p class="govuk-heading-s">@Html.ContentLink(contentLink.Name, contentLink.Uri)</p></li>
+            <li>
+                <h3>
+                    @Html.ContentLink(contentLink.Name, contentLink.Uri)
+                </h3>
+            </li>
         }
     </ul>
 </div>
