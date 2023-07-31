@@ -1,5 +1,4 @@
-﻿using Childrens_Social_Care_CPD.Models;
-using Contentful.Core.Models;
+﻿using Contentful.Core.Models;
 
 namespace Childrens_Social_Care_CPD.Contentful.Models;
 
