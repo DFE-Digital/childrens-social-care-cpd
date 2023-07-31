@@ -1,5 +1,5 @@
 ﻿/* STANDARD COLOURS */
-body, p, h1, h2, h3, h4, h5, h6, a, span, div, table, th, td, blockquote, li, tr {
+body, p, h1, h2, h3, h4, h5, h6, a, span, div, table, th, td, blockquote, li, dt, dd, tr {
     font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
 }
 
@@ -126,5 +126,12 @@ body, p, h1, h2, h3, h4, h5, h6, a, span, div, table, th, td, blockquote, li, tr
     .edf-hero-banner {
         margin-top: 0px !important;
         margin-bottom: 20px;
+    }
+}
+
+/* Fix missing font size as it hasn't been published in the dfe npm package yet */
+@media (min-width:61.875em) and (min-width:40.0625em) {
+    .dfe-header__link--service .dfe-header__service-name {
+        font-size: 22px;
     }
 }
