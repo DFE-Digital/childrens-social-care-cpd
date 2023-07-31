@@ -4,6 +4,12 @@
 @model RoleList
 
 @{
+
+    if (Model.Roles.Count == 0)
+    {
+        <span>No Roles Available</span>  
+    }
+
     foreach (var contentItem in Model.Roles)
     {
         var detailedRole = contentItem.Items.FirstOrDefault(x => typeof(DetailedRole) == x.GetType()) as DetailedRole;

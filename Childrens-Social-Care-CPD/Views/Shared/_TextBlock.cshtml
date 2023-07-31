@@ -23,7 +23,7 @@
         <div class="govuk-grid-column-two-thirds">
             @if (Model.DisplayTitle)
             {
-                <govuk-heading level="@Model.TitleLevel">Model.Title</govuk-heading>
+                <govuk-heading level="@Model.TitleLevel">@Model.Title</govuk-heading>
             }
             @{
                 RenderText(Model.Text);
@@ -35,7 +35,7 @@ else
 {
     @if (Model.DisplayTitle)
     {
-        <govuk-heading level="@Model.TitleLevel">Model.Title</govuk-heading>
+        <govuk-heading level="@Model.TitleLevel">@Model.Title</govuk-heading>
     }
     RenderText(Model.Text);
 }
