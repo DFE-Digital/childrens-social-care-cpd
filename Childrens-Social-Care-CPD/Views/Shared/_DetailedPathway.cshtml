@@ -1,0 +1,125 @@
+﻿@using Childrens_Social_Care_CPD.Contentful;
+@using Childrens_Social_Care_CPD.Contentful.Models;
+@using Contentful.Core.Models;
+
+@model DetailedPathway
+
+@functions {
+
+    public async Task RenderAccordianSection(string title, Document model)
+    {
+        <div class="govuk-accordion__section">
+            <div class="govuk-accordion__section-header">
+                <h2 class="govuk-accordion__section-heading">
+                    <span class="govuk-accordion__section-button" id="accordion-with-summary-sections-heading-2">
+                        @title
+                    </span>
+                </h2>
+            </div>
+            <div id="accordion-with-summary-sections-content-2" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-2">
+                @{
+                    await Html.RenderPartialAsync("_RichText", model);
+                }
+            </div>
+        </div>
+    }
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l">@Model.Pathway</span>
+        <h1>@Model.Title</h1>
+    </div>
+</div>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    For
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    @Model.Audience
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Duration
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    @Model.Duration
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Time commitment
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    @Model.TimeCommitment
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Cost
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    <p class="govuk-body">@Model.Cost</p>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Delivered by
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    @{
+                        await Html.RenderPartialAsync("_RichText", Model.DeliveredBy);
+                    }
+                </dd>
+            </div>
+        </dl>
+
+        <h2>Who it’s for</h2>
+        <p class="govuk-body-m">
+            @{
+                await Html.RenderPartialAsync("_RichText", Model.WhoItsFor); 
+            }
+        </p>
+
+        <h2>What you’ll learn</h2>
+        <p class="govuk-body-m">
+            @{
+                await Html.RenderPartialAsync("_RichText", Model.WhatYoullLearn);
+            }
+        </p>
+
+        <h2>What you’ll get</h2>
+        <p class="govuk-body-m">
+            @{
+                await Html.RenderPartialAsync("_RichText", Model.WhatYoullGet);
+            }
+        </p>
+
+        <h2>How it’s delivered</h2>
+        <p class="govuk-body-m">
+            @{
+                await Html.RenderPartialAsync("_RichText", Model.HowItsDelivered);
+            }
+        </p>
+
+        <h2>Funding</h2>
+        <p class="govuk-body-m">
+            @{
+                await Html.RenderPartialAsync("_RichText", Model.Funding);
+            }
+        </p>
+
+        <h2>Next steps</h2>
+        <p class="govuk-body-m">
+            @{
+                await Html.RenderPartialAsync("_RichText", Model.NextSteps);
+            }
+        </p>
+       
+    </div>
+</div>
