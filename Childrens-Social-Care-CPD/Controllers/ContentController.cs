@@ -2,6 +2,7 @@
 using Childrens_Social_Care_CPD.Contentful;
 using Childrens_Social_Care_CPD.Contentful.Models;
 using Childrens_Social_Care_CPD.Interfaces;
+using Childrens_Social_Care_CPD.Models;
 using Contentful.Core.Search;
 using Microsoft.AspNetCore.Mvc;
 
@@ -65,13 +66,10 @@ namespace Childrens_Social_Care_CPD.Controllers
             {
                 return NotFound();
             }
-            
-            ViewData[SiteConstants.PageTitle] = pageContent.Title;
-            ViewData[SiteConstants.PageName] = pageName;
-            ViewData[SiteConstants.ContentStack] = new Stack<string>();
-            ViewData[SiteConstants.UseContainers] = true;
-            ViewData[SiteConstants.PreferenceSet] = preferenceSet;
-            
+
+            var contextModel = new ContextModel(pageContent.Id, pageContent.Title, pageName, pageContent.Category, pageContent.SideMenu == null, preferenceSet);
+            ViewData["ContextModel"] = contextModel;
+
             return View(pageContent);
         }
     }

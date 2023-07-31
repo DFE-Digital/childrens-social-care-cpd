@@ -8,8 +8,8 @@
 @{
     var consentState = Context.GetRequestAnalyticsCookieState();
     var headingText = "Cookies on Develop your career in child and family social work";
-    var hide = ViewBag.HideConsent ?? false;
-    var preferenceSet = ViewBag.PreferenceSet ?? false;
+    var hide = ViewBag.ContextModel.HideConsent ?? false;
+    var preferenceSet = ViewBag.ContextModel.PreferenceSet ?? false;
 
     if (hide)
         return;

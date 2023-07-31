@@ -16,7 +16,6 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Childrens_Social_Care_CPD.Models;
 using Microsoft.AspNetCore.Mvc.Routing;
-using System.Net.Http;
 using System;
 
 namespace Childrens_Social_Care_CPD_Tests.Controllers;
@@ -30,6 +29,19 @@ public partial class _CookieControllerTests
     private IContentfulDataService _contentfulDataService;
     private ICpdContentfulClient _contentfulClient;
     private ILogger<CookieController> _logger;
+
+    private void SetContent(Content content)
+    {
+        var contentCollection = new ContentfulCollection<Content>();
+
+        contentCollection.Items = content == null
+            ? new List<Content>()
+            : contentCollection.Items = new List<Content> { content };
+
+        _contentfulClient
+            .GetEntries(Arg.Any<QueryBuilder<Content>>(), default)
+            .Returns(contentCollection);
+    }
 
     [SetUp]
     public void SetUp()
@@ -61,9 +73,7 @@ public partial class _CookieControllerTests
     public async Task Cookies_Returns_404_When_No_Content_Found()
     {
         // arrange
-        var noContent = new ContentfulCollection<Content>() { Items = new List<Content>() };
-        _cookies[SiteConstants.ANALYTICSCOOKIENAME].Returns(SiteConstants.ANALYTICSCOOKIEACCEPTED);
-        _contentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), default).Returns(noContent);
+        SetContent(null);
 
         // act
         var actual = await _cookieController.Cookies();
@@ -73,48 +83,81 @@ public partial class _CookieControllerTests
     }
 
     [Test]
-    public async Task Cookies_Sets_The_ViewState_PageName()
+    public async Task Cookies_Sets_The_ViewState_ContextModel()
     {
         // arrange
-        var contentCollection = new ContentfulCollection<Content>() { Items = new List<Content>() { new Content() } };
-        _cookies[SiteConstants.ANALYTICSCOOKIENAME].Returns(SiteConstants.ANALYTICSCOOKIEACCEPTED);
-        _contentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), default).Returns(contentCollection);
+        var rootContent = new Content()
+        {
+            Id = "a/value",
+            Category = "A Category",
+            Title = "A Title",
+        };
+        SetContent(rootContent);
 
         // act
-        var actual = await _cookieController.Cookies();
+        await _cookieController.Cookies();
+        var actual = _cookieController.ViewData["ContextModel"] as ContextModel;
 
         // assert
-        _cookieController.ViewData["PageName"].Should().Be("cookies");
+        actual.Should().NotBeNull();
+        actual.Id.Should().Be(rootContent.Id);
+        actual.Title.Should().Be(rootContent.Title);
+        actual.Category.Should().Be(rootContent.Category);
+    }
+
+    [TestCase(true)]
+    [TestCase(false)]
+    public async Task Cookies_Sets_The_ContextModel_Preferences_Set_Value_Correctly(bool preferenceSet)
+    {
+        // arrange
+        SetContent(new Content());
+
+        // act
+        await _cookieController.Cookies(preferenceSet: preferenceSet);
+        var actual = _cookieController.ViewData["ContextModel"] as ContextModel;
+
+        // assert
+        actual.Should().NotBeNull();
+        actual.PreferenceSet.Should().Be(preferenceSet);
+    }
+
+    public static object[] SideMenuContent =
+        {
+            new object[] { new SideMenu() },
+            new object[] { null },
+        };
+
+    [TestCaseSource(nameof(SideMenuContent))]
+    public async Task Cookies_Sets_The_ContextModel_UseContainers_Ignoring_The_SideMenu_Value(SideMenu sideMenu)
+    {
+        // arrange
+        var rootContent = new Content()
+        {
+            SideMenu = sideMenu
+        };
+        SetContent(rootContent);
+
+        // act
+        await _cookieController.Cookies();
+        var actual = _cookieController.ViewData["ContextModel"] as ContextModel;
+
+        // assert
+        actual.Should().NotBeNull();
+        actual.UseContainers.Should().Be(true);
     }
 
     [Test]
-    public async Task Cookies_Sets_The_ViewState_Title()
+    public async Task Cookies_Action_Should_Not_Show_Consent_Panel()
     {
         // arrange
-        var pageTitle = "A title";
-        var contentCollection = new ContentfulCollection<Content>() { Items = new List<Content>() { new Content() { Title = pageTitle } } };
-        _cookies[SiteConstants.ANALYTICSCOOKIENAME].Returns(SiteConstants.ANALYTICSCOOKIEACCEPTED);
-        _contentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), default).Returns(contentCollection);
+        SetContent(new Content());
 
         // act
-        var actual = await _cookieController.Cookies();
+        await _cookieController.Cookies();
+        var actual = _cookieController.ViewData["ContextModel"] as ContextModel;
 
         // assert
-        _cookieController.ViewData["Title"].Should().Be(pageTitle);
-    }
-
-    [Test]
-    public async Task Cookies_Sets_The_ViewState_ContentStack()
-    {
-        // arrange
-        var contentCollection = new ContentfulCollection<Content>() { Items = new List<Content>() { new Content() } };
-        _cookies[SiteConstants.ANALYTICSCOOKIENAME].Returns(SiteConstants.ANALYTICSCOOKIEACCEPTED);
-        _contentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), default).Returns(contentCollection);
-
-        // act
-        var actual = await _cookieController.Cookies();
-
-        // assert
-        _cookieController.ViewData["ContentStack"].Should().BeOfType<Stack<string>>();
+        actual.Should().NotBeNull();
+        actual.HideConsent.Should().Be(true);
     }
 }

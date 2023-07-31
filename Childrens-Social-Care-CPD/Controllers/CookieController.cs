@@ -61,7 +61,7 @@ namespace Childrens_Social_Care_CPD.Controllers
             if (consentState == AnalyticsConsentState.NotSet) return uri;
 
             var query = HttpUtility.ParseQueryString(uri.Query);
-            query[SiteConstants.PreferenceSet] = "true";
+            query["preferenceSet"] = "true";
 
             var uriBuilder = new UriBuilder(uri);
             uriBuilder.Query = query.ToString();
@@ -134,19 +134,14 @@ namespace Childrens_Social_Care_CPD.Controllers
             
             var consentState = HttpContext.GetRequestAnalyticsCookieState();
 
-            ViewData[SiteConstants.PageTitle] = pageContent.Title;
-            ViewData[SiteConstants.PageName] = PageName;
-            ViewData[SiteConstants.ContentStack] = new Stack<string>();
-            ViewData[SiteConstants.UseContainers] = true;
-            ViewData[SiteConstants.PreferenceSet] = preferenceSet;
-            ViewData[SiteConstants.HideConsent] = true; // We're on the cookie consent page so we don't need the banner dialogs
+            var contextModel = new ContextModel(pageContent.Id, pageContent.Title, PageName, pageContent.Category, true, preferenceSet, true);
+            ViewData["ContextModel"] = contextModel;
 
             var model = new CookiesAndAnalyticsConsentModel
             {
                 Content = pageContent,
                 ConsentState = consentState,
                 SourceUrl = SanitiseSourcePageUrl(sourcePage),
-                PreferencesSet = preferenceSet
             };
 
             return View(model);

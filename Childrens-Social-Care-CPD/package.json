@@ -26,7 +26,8 @@
   },
   "dependencies": {
     "@ministryofjustice/frontend": "^1.6.4",
-    "govuk-frontend": "^4.5.0",
+    "dfe-frontend-alpha": "^0.1.8",
+    "govuk-frontend": "^4.7.0",
     "jquery": "^3.6.3",
     "rollup": "^1.32.1"
   }

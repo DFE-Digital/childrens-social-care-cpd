@@ -3,4 +3,5 @@ $govuk-global-styles: true;
 $govuk-new-link-styles: true;
 
 @import "../../node_modules/govuk-frontend/govuk/all";
+@import '../../node_modules/dfe-frontend-alpha/packages/dfefrontend';
 @import "overrides/dfe-overrides";

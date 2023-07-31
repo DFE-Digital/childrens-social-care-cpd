@@ -5,15 +5,9 @@
 @model Content;
 
 @{
-    if (Model.SideMenu != null)
-    {
-        Layout = "_SubPageLayout";
-        ViewBag.UseContentContainers = false;
-    }
-    else
-    {
-        Layout = "_DefaultPageLayout";
-    }
+    Layout = Model.SideMenu == null
+        ? "_DefaultPageLayout"
+        : "_SubPageLayout";
 }
 
 @section Hero {
