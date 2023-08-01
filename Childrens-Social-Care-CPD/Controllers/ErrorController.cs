@@ -1,9 +1,5 @@
-﻿using Childrens_Social_Care_CPD.Models;
-using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Diagnostics;
-using System.Net;
-using Childrens_Social_Care_CPD.Constants;
 
 namespace Childrens_Social_Care_CPD.Controllers
 {
@@ -24,18 +20,9 @@ namespace Childrens_Social_Care_CPD.Controllers
         {
             var exceptionHandlerPathFeature = HttpContext?.Features.Get<IExceptionHandlerPathFeature>();
             _logger.LogError($"CPDException {exceptionHandlerPathFeature?.Error.Message}");
-            return View(
-                new ErrorViewModel
-                {
-                    RequestId = Activity.Current?.Id ?? HttpContext?.TraceIdentifier,
-                    ErrorMessage = exceptionHandlerPathFeature?.Error.Message,
-                    Source = exceptionHandlerPathFeature?.Error.Source,
-                    ErrorPath = exceptionHandlerPathFeature?.Path,
-                    StackTrace = exceptionHandlerPathFeature?.Error.StackTrace,
-                    InnerException = Convert.ToString(exceptionHandlerPathFeature?.Error.InnerException),
-                    ErrorCode = HttpStatusCode.InternalServerError
-                }
-            );
+            
+            ViewData["pageName"] = $"error/500";
+            return StatusCode(500);
         }
 
         /// <summary>
@@ -44,12 +31,17 @@ namespace Childrens_Social_Care_CPD.Controllers
         /// </summary>
         /// <param name="code"></param>
         /// <returns></returns>
-        [Route("Error/Error/{code:int}")]
-        public IActionResult Error(int code) => View(
-                new ErrorViewModel
-                {
-                    ErrorCode = (HttpStatusCode)code
-                }
-            );
+        [Route("error/{code:int}")]
+        public IActionResult Error(int code)
+        {
+            ViewData["pageName"] = $"error/{code}";
+
+            switch (code)
+            {
+                case 404:
+                case 500: return View(code.ToString());
+                default : return View("500");
+            }
+        }
     }
 }
