@@ -15,8 +15,7 @@ public class GovUkHeadingTagHelper : TagHelper
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
-        if (Level < 1) Level = 1;
-        if (Level > 4) Level = 4;
+        Level = Math.Clamp(Level, 1, 4);
 
         output.TagName = $"h{Level}";
 
