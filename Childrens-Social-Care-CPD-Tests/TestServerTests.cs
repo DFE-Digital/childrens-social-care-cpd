@@ -3,17 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Reflection.PortableExecutable;
 using System.Threading.Tasks;
-using Azure;
 using Childrens_Social_Care_CPD.Interfaces;
 using Childrens_Social_Care_CPD.Models;
-using Contentful.Core.Models;
+using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Rest;
 using Moq;
 using NUnit.Framework;
 
@@ -47,8 +44,9 @@ namespace Childrens_Social_Care_CPD_Tests
             var requestUri = "/CPD/InvalidURL";
             HttpClient client = GetClient();
             var actual = await client.GetAsync(requestUri);
-            
-            Assert.AreEqual("/Error/Error/404", actual.RequestMessage.RequestUri.AbsolutePath);
+
+            actual.RequestMessage.RequestUri.AbsolutePath.Should().Be(requestUri);
+            actual.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
 
         [Test]

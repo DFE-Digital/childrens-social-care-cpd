@@ -1,5 +1,7 @@
 using Childrens_Social_Care_CPD.Controllers;
 using Childrens_Social_Care_CPD.Models;
+using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
@@ -22,21 +24,12 @@ namespace Childrens_Social_Care_CPD_Tests.Controllers
         }
 
         [Test]
-        public void ErrorPageReturnsModelOfTypeErrorViewModelTest()
+        public void ErrorPageReturnsStatusCodeResult()
         {
-            var actual = _target.Error();
-            ViewResult viewResult = (ViewResult)actual;
-            Assert.IsInstanceOf<ErrorViewModel>(viewResult.Model);
-        }
+            var actual = _target.Error() as StatusCodeResult;
 
-        [Test]
-        public void ErrorPageReturnsReturnsCorrectStatusCodeTest()
-        {
-            var actual = _target.Error((int)System.Net.HttpStatusCode.NotFound);
-            ViewResult viewResult = (ViewResult)actual;
-            var model = viewResult.ViewData.Model as ErrorViewModel;
-            Assert.IsNotNull(model);
-            Assert.AreEqual(System.Net.HttpStatusCode.NotFound, model.ErrorCode);
+            actual.Should().NotBeNull();
+            actual.StatusCode.Should().Be(500);
         }
     }
 }
