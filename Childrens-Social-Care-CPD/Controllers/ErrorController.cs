@@ -12,34 +12,30 @@ namespace Childrens_Social_Care_CPD.Controllers
         }
 
         /// <summary>
-        /// Application global exception handler
+        /// Unhandled exceptions in the pipeline are sent to this action.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A StatusCodeResult of 500, not designed to be seen by the user.</returns>
         [HttpGet]
         public IActionResult Error()
         {
             var exceptionHandlerPathFeature = HttpContext?.Features.Get<IExceptionHandlerPathFeature>();
-            _logger.LogError($"CPDException {exceptionHandlerPathFeature?.Error.Message}");
+            _logger.LogError(exceptionHandlerPathFeature?.Error, "Unhandled exception occurred");
             
-            ViewData["pageName"] = $"error/500";
             return StatusCode(500);
         }
 
         /// <summary>
-        /// To hanndle error with specific error code for e.g. 404
-        /// This method is invoked with the middleware
+        /// Error status codes returned by the pipeline are sent to this action in the same pipeline execution.
         /// </summary>
-        /// <param name="code"></param>
-        /// <returns></returns>
+        /// <param name="code">The Http error code associated with the error.</param>
+        /// <returns>The View for the specified error.</returns>
         [Route("error/{code:int}")]
         public IActionResult Error(int code)
         {
             ViewData["pageName"] = $"error/{code}";
-
             switch (code)
             {
-                case 404:
-                case 500: return View(code.ToString());
+                case 404: return View("404");
                 default : return View("500");
             }
         }
