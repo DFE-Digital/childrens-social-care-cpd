@@ -1,5 +1,4 @@
-﻿using Childrens_Social_Care_CPD.Constants;
-using Childrens_Social_Care_CPD.Contentful;
+﻿using Childrens_Social_Care_CPD.Contentful;
 using Childrens_Social_Care_CPD.Contentful.Models;
 using Childrens_Social_Care_CPD.Interfaces;
 using Childrens_Social_Care_CPD.Models;
