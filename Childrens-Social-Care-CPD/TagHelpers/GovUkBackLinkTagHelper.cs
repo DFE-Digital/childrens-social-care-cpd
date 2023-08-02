@@ -1,39 +1,29 @@
-﻿using Microsoft.AspNetCore.Mvc.TagHelpers;
+﻿using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Mvc.TagHelpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using System.Text.Encodings.Web;
 
 namespace Childrens_Social_Care_CPD.TagHelpers;
 
 [HtmlTargetElement("govuk-back-link")]
+[OutputElementHint(TagName)]
 public class GovUkBackLinkTagHelper : TagHelper
 {
-    [HtmlAttributeName("href")]
-    public string Href { get; set; }
-
-    [HtmlAttributeName("onclick")]
-    public string OnClick { get; set; }
+    internal const string TagName = "a";
 
     [HtmlAttributeName("inverse")]
     public bool Inverse { get; set; } = false;
 
-    public override Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
+    public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
-        output.TagName = $"a";
+        IHtmlContent content = output.TagMode == TagMode.StartTagAndEndTag
+            ? await output.GetChildContentAsync()
+            : new HtmlString("Back");
+        
         output.AddClass(Inverse ? "govuk-back-link-inverse" : "govuk-back-link", HtmlEncoder.Default);
+
+        output.TagName = TagName;
         output.TagMode = TagMode.StartTagAndEndTag;
-        output.Attributes.SetAttribute("href", Href);
-
-        if (!string.IsNullOrEmpty(OnClick))
-        {
-            output.Attributes.SetAttribute("onClick", OnClick);
-        }
-
-        var content = output.GetChildContentAsync().Result.GetContent();
-        if (string.IsNullOrEmpty(content))
-        {
-            output.Content.SetContent("Back");
-        }
-
-        return base.ProcessAsync(context, output);
+        output.Content.SetHtmlContent(content);
     }
 }
