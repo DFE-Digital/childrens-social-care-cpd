@@ -22,37 +22,37 @@ builder.Host.ConfigureLogging(logging => logging.AddAzureWebAppDiagnostics())
         options.BlobName = "log.txt";
     })
 );
-    // Add services to the container.
-    builder.Services.AddControllersWithViews();
-    ConfigurationManager configuration = builder.Configuration;
-    builder.Services.AddTransient<CPDActionFilter>();
-    builder.Services.AddContentful(ContentfulConfiguration.GetContentfulConfiguration(configuration));
-    builder.Services.AddTransient<IContentfulDataService, ContentfulDataService>();
-    builder.Services.AddTransient<IContentTypeResolver, EntityResolver>();
-    builder.Services.AddTransient<ICpdContentfulClient, CpdContentfulClient>();
 
-    var options = new ApplicationInsightsServiceOptions
-    {
-        ConnectionString = Environment.GetEnvironmentVariable(SiteConstants.CPD_INSTRUMENTATION_CONNECTIONSTRING) ?? String.Empty
-    };
+// Add services to the container.
+builder.Services.AddControllersWithViews();
+builder.Services.AddTransient<CPDActionFilter>();
+builder.Services.AddContentful(ContentfulConfiguration.GetContentfulConfiguration(builder.Configuration));
+builder.Services.AddTransient<IContentfulDataService, ContentfulDataService>();
+builder.Services.AddTransient<IContentTypeResolver, EntityResolver>();
+builder.Services.AddTransient<ICpdContentfulClient, CpdContentfulClient>();
 
-    builder.Services.AddApplicationInsightsTelemetry(options: options);
-    var app = builder.Build();
+var options = new ApplicationInsightsServiceOptions
+{
+    ConnectionString = Environment.GetEnvironmentVariable(SiteConstants.CPD_INSTRUMENTATION_CONNECTIONSTRING) ?? String.Empty
+};
 
-    // Configure the HTTP request pipeline.
-    if (app.Environment.IsDevelopment())
-    {
-        // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-        app.UseHsts();
-    }
-    app.UseExceptionHandler("/Error/Error");
-    app.UseStatusCodePagesWithRedirects("/Error/Error/{0}");
-    app.UseStaticFiles();
+builder.Services.AddApplicationInsightsTelemetry(options: options);
+var app = builder.Build();
 
-    app.UseRouting();
-    app.UseAuthorization();
-    app.MapControllerRoute(
-        name: "default",
-        pattern: "{controller=CPD}/{action=LandingPage}");
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
+}
 
-    app.Run();
+app.UseExceptionHandler("/error/error");
+app.UseStatusCodePagesWithReExecute("/error/{0}");
+app.UseStaticFiles();
+app.UseRouting();
+app.UseAuthorization();
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=CPD}/{action=LandingPage}");
+
+app.Run();
