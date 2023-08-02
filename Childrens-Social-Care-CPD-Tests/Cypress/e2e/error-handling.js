@@ -5,11 +5,11 @@ Given("a user has arrived on the home page", () => {
 });
 
 When("a service page has not been found", () => {
-    cy.visit("/Error/Error/404", { failOnStatusCode: false });
+    cy.visit("/error/404", { failOnStatusCode: false });
 });
 
 When("a the service is down", () => {
-    cy.visit("/Error/Error/500", { failOnStatusCode: false });
+    cy.visit("/error/500", { failOnStatusCode: false });
 });
 
 Then("the {string} error page is displayed", (title) => {
