@@ -46,18 +46,9 @@ if (app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
-{
-    app.UseDeveloperExceptionPage();
-}
-else
-{
-    app.UseExceptionHandler("/error/error");
-}
-
+app.UseExceptionHandler("/error/error");
 app.UseStatusCodePagesWithReExecute("/error/{0}");
 app.UseStaticFiles();
-
 app.UseRouting();
 app.UseAuthorization();
 app.MapControllerRoute(
