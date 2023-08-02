@@ -10017,3 +10017,169 @@ body, p, h1, h2, h3, h4, h5, h6, a, span, div, table, th, td, blockquote, li, dt
     margin-bottom: 20px;
   }
 }
+/*
+    This component is currently not part of the dfe-frontend-alpha npm package.
+
+    Colours come from dfe-frontend-alpha/packages/core/setting/_colours.scss which is imported in application.scss
+*/
+.dfe-vertical-nav {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  font-size: 16px;
+  font-size: 0.875rem;
+  line-height: 1.14286;
+}
+.dfe-vertical-nav .dfe-vertical-nav--section-header {
+  color: #505a5f;
+  font-size: 19px;
+  line-height: 1.25;
+  font-weight: 600;
+  color: #505a5f;
+  margin-bottom: 15px;
+  padding-top: 0px;
+}
+
+@media (min-width: 40.0625em) {
+  .dfe-vertical-nav {
+    padding-left: 15px;
+  }
+}
+@media print {
+  .dfe-vertical-nav {
+    font-size: 14pt;
+    line-height: 1.2;
+  }
+}
+@media (min-width: 40.0625em) {
+  .dfe-vertical-nav {
+    margin-left: -15px;
+  }
+}
+.dfe-vertical-nav__section {
+  margin: 0 0 20px;
+  padding: 0;
+  list-style-type: none;
+}
+
+.dfe-vertical-nav__link {
+  display: block;
+  padding: 7px 30px 8px 10px;
+  text-decoration: none;
+  margin-bottom: 5px;
+  color: #003a69;
+}
+
+.dfe-vertical-nav__section-item {
+  border-left: 4px solid #b1b4b6;
+  font-size: 16px;
+  font-size: 1rem;
+  line-height: 1.25;
+}
+
+.dfe-vertical-nav__section-item:hover {
+  border-left: 4px solid #347ca9;
+}
+
+.dfe-vertical-nav__link:focus {
+  background: inherit;
+}
+
+.dfe-vertical-nav__section-item--current {
+  border-left: 4px solid #003a69;
+  font-weight: 700;
+  background: #f3f2f1;
+}
+
+.dfe-vertical-nav__link:active,
+.dfe-vertical-nav__link:hover {
+  color: #1d70b8;
+  border-left-color: #347ca9;
+  text-decoration: none;
+  box-shadow: none;
+  outline: 0;
+}
+
+.dfe-vertical-nav__link:focus {
+  background: #fd0;
+  color: #0b0c0c;
+  text-decoration: none;
+  box-shadow: none;
+  outline: 0;
+}
+
+.dfe-vertical-nav__section-item--current .dfe-vertical-nav__link {
+  border-left-color: #003a69;
+  font-weight: 700;
+  color: #003a69;
+}
+
+.dfe-vertical-nav__section-item--current .dfe-vertical-nav__link:hover {
+  text-decoration: none;
+}
+
+.dfe-vertical-nav__section--nested {
+  margin-bottom: 5px;
+}
+
+.dfe-vertical-nav__section--nested .dfe-vertical-nav__link {
+  padding-left: 20px;
+  font-weight: 400;
+  margin-bottom: 0;
+  margin-top: -5px;
+}
+
+.dfe-vertical-nav__section--nested .dfe-vertical-nav__section-item::before {
+  content: "-";
+  margin-left: -20px;
+  color: #505a5f;
+}
+
+.dfe-vertical-nav--count {
+  float: right;
+  background: #b1b4b6;
+  padding: 9px 5px 9px 5px;
+  border-radius: 0;
+  color: #0b0c0c;
+  font-weight: 700;
+  min-width: 25px;
+  text-align: center;
+  font-size: 12px;
+}
+
+@media print {
+  .dfe-vertical-nav__theme {
+    font-family: sans-serif;
+  }
+}
+@media (min-width: 40.0625em) {
+  .dfe-vertical-nav__theme {
+    font-size: 19px;
+    font-size: 1.1875rem;
+    line-height: 1.31579;
+  }
+  .dfe-vertical-nav--count {
+    padding: 12px 8px 12px 8px;
+  }
+}
+.dfe-vertical-nav__section .dfe-vertical-nav__section-item--current--child-active .dfe-vertical-nav__link {
+  font-weight: 400;
+}
+.dfe-vertical-nav__section .dfe-vertical-nav__section {
+  margin-bottom: 0px;
+}
+.dfe-vertical-nav__section .dfe-vertical-nav__section .dfe-vertical-nav__section-item {
+  border-left: none;
+}
+.dfe-vertical-nav__section .dfe-vertical-nav__section .dfe-vertical-nav__section-item :before {
+  content: "-";
+  margin-left: 0px;
+  margin-right: 5px;
+}
+.dfe-vertical-nav__section .dfe-vertical-nav__section.dfe-vertical-nav__section-item--current {
+  border-left: none;
+  background: #347ca9;
+}
+.dfe-vertical-nav__section .dfe-vertical-nav__section.dfe-vertical-nav__section-item--current .dfe-vertical-nav__link {
+  font-weight: 700;
+}
