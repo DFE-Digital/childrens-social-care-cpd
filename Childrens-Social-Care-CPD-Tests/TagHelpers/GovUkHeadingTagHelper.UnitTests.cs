@@ -18,12 +18,12 @@ public class GovUkHeadingTagHelperTests
     [SetUp]
     public void SetUp()
     {
-        Func<bool, HtmlEncoder, Task<TagHelperContent>> func = (result, encoder) =>
+        static Task<TagHelperContent> func(bool result, HtmlEncoder encoder)
         {
             var tagHelperContent = new DefaultTagHelperContent();
             tagHelperContent.SetHtmlContent(string.Empty);
             return Task.FromResult<TagHelperContent>(tagHelperContent);
-        };
+        }
 
         _tagHelperContext = new TagHelperContext(new TagHelperAttributeList(), new Dictionary<object, object>(), "id");
         _tagHelperOutput = new TagHelperOutput("govuk-heading", new TagHelperAttributeList(), func);
@@ -36,8 +36,10 @@ public class GovUkHeadingTagHelperTests
     public void GovUkHeading_Generates_Basic_Heading(int level, string expected)
     {
         // arrange
-        var tagHelper = new GovUkHeadingTagHelper();
-        tagHelper.Level = level;
+        var tagHelper = new GovUkHeadingTagHelper
+        {
+            Level = level
+        };
 
         // act
         tagHelper.Process(_tagHelperContext, _tagHelperOutput);
@@ -64,8 +66,10 @@ public class GovUkHeadingTagHelperTests
     public void GovUkHeading_Clamps_Heading_Level(int level, string expected)
     {
         // arrange
-        var tagHelper = new GovUkHeadingTagHelper();
-        tagHelper.Level = level;
+        var tagHelper = new GovUkHeadingTagHelper
+        {
+            Level = level
+        };
 
         // act
         tagHelper.Process(_tagHelperContext, _tagHelperOutput);
@@ -81,9 +85,11 @@ public class GovUkHeadingTagHelperTests
     public void GovUkHeading_Applies_Override_Css(int cssLevel, string expected)
     {
         // arrange
-        var tagHelper = new GovUkHeadingTagHelper();
-        tagHelper.Level = 1;
-        tagHelper.DisplaySize = cssLevel;
+        var tagHelper = new GovUkHeadingTagHelper
+        {
+            Level = 1,
+            DisplaySize = cssLevel
+        };
 
         // act
         tagHelper.Process(_tagHelperContext, _tagHelperOutput);
