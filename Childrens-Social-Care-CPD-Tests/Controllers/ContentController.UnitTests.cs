@@ -23,20 +23,7 @@ public class ContentControllerTests
     private IRequestCookieCollection _cookies;
     private HttpContext _httpContext;
     private HttpRequest _httpRequest;
-    private IContentfulDataService _contentfulDataService;
     private ICpdContentfulClient _contentfulClient;
-
-    private void SetCookieConsent(bool? accepted)
-    {
-        if (accepted.HasValue)
-        {
-            var value = accepted.Value;
-            _cookies[SiteConstants.ANALYTICSCOOKIENAME].Returns(value ? SiteConstants.ANALYTICSCOOKIEACCEPTED : SiteConstants.ANALYTICSCOOKIEREJECTED);
-        } else
-        {
-            _cookies[SiteConstants.ANALYTICSCOOKIENAME].Returns(string.Empty);
-        }
-    }
 
     private void SetContent(Content content)
     {
@@ -64,43 +51,10 @@ public class ContentControllerTests
         controllerContext.HttpContext = _httpContext;
 
         _contentfulClient = Substitute.For<ICpdContentfulClient>();
-        _contentfulDataService = Substitute.For<IContentfulDataService>();
 
-        _contentController = new ContentController(_contentfulClient, _contentfulDataService);
+        _contentController = new ContentController(_contentfulClient);
         _contentController.ControllerContext = controllerContext;
         _contentController.TempData = Substitute.For<ITempDataDictionary>();
-    }
-
-    [Test]
-    public async Task Cookie_Content_Is_Fetched_When_No_Analytics_Cookie_Exists()
-    {
-        // arrange
-        var cookieBanner = new CookieBanner();
-        SetCookieConsent(null);
-        _contentfulDataService.GetCookieBannerData().Returns(Task.FromResult(cookieBanner));
-
-        // act
-        await _contentController.Index("home");
-
-        // assert
-        _contentController.ViewData["CookieBanner"].Should().Be(cookieBanner);
-    }
-
-    [Test]
-    [TestCase(true)]
-    [TestCase(false)]
-    public async Task Cookie_Content_Is_Not_Fetched_When_Analytics_Cookie_Exists(bool consentGiven)
-    {
-        // arrange
-        var cookieBanner = new CookieBanner();
-        SetCookieConsent(consentGiven);
-        _contentfulDataService.GetCookieBannerData().Returns(Task.FromResult(cookieBanner));
-
-        // act
-        await _contentController.Index("home");
-
-        // assert
-        _contentController.ViewData["CookieBanner"].Should().BeNull();
     }
 
     [Test]
