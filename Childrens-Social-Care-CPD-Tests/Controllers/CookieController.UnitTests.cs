@@ -1,12 +1,10 @@
 ﻿using Childrens_Social_Care_CPD.Contentful;
 using Childrens_Social_Care_CPD.Controllers;
-using Childrens_Social_Care_CPD.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using NUnit.Framework;
-using Childrens_Social_Care_CPD.Constants;
 using Childrens_Social_Care_CPD.Contentful.Models;
 using Contentful.Core.Models;
 using Contentful.Core.Search;
@@ -26,7 +24,6 @@ public partial class _CookieControllerTests
     private IRequestCookieCollection _cookies;
     private HttpContext _httpContext;
     private HttpRequest _httpRequest;
-    private IContentfulDataService _contentfulDataService;
     private ICpdContentfulClient _contentfulClient;
     private ILogger<CookieController> _logger;
 
@@ -62,9 +59,8 @@ public partial class _CookieControllerTests
         _httpContext.RequestServices.Returns(serviceProvider);
 
         _contentfulClient = Substitute.For<ICpdContentfulClient>();
-        _contentfulDataService = Substitute.For<IContentfulDataService>();
 
-        _cookieController = new CookieController(_logger, _contentfulDataService, _contentfulClient);
+        _cookieController = new CookieController(_logger, _contentfulClient);
         _cookieController.ControllerContext = controllerContext;
         _cookieController.TempData = Substitute.For<ITempDataDictionary>();
     }

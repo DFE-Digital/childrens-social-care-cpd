@@ -28,7 +28,7 @@ public class CustomHtmlHelpersTests
         // arrange
         var uri = "test_path";
         var text = "Link text";
-        var expectedUri = $"<a class=\"HtmlEncode[[govuk-link]]\" href=\"HtmlEncode[[/content/{uri}]]\">HtmlEncode[[{text}]]</a>";
+        var expectedUri = $"<a class=\"HtmlEncode[[govuk-link]]\" href=\"HtmlEncode[[/{uri}]]\">HtmlEncode[[{text}]]</a>";
         var stringWriter = new StringWriter();
         var helper = Substitute.For<IHtmlHelper>();
 

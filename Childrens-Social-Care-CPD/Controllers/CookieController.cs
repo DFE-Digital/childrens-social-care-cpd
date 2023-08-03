@@ -1,32 +1,25 @@
 ﻿using Childrens_Social_Care_CPD.Models;
 using Microsoft.AspNetCore.Mvc;
-using Childrens_Social_Care_CPD.Interfaces;
-using Childrens_Social_Care_CPD.ActionFilters;
 using Childrens_Social_Care_CPD.Contentful.Models;
 using Contentful.Core.Search;
 using Childrens_Social_Care_CPD.Contentful;
-using Childrens_Social_Care_CPD.Constants;
 using System.Web;
 using Microsoft.AspNetCore.Http.Extensions;
-using System.Collections.Specialized;
 
 namespace Childrens_Social_Care_CPD.Controllers
 {
-    [ServiceFilter(typeof(CPDActionFilter))]
     public class CookieController : Controller
     {
         private readonly ILogger<CookieController> _logger;
-        private readonly IContentfulDataService _contentfulDataService;
         private readonly ICpdContentfulClient _cpdClient;
 
         private static int ContentFetchDepth = 10;
         private static string ContentTypeId = "content";
         private static string PageName = "cookies";
 
-        public CookieController(ILogger<CookieController> logger, IContentfulDataService contentfulDataService, ICpdContentfulClient cpdClient)
+        public CookieController(ILogger<CookieController> logger, ICpdContentfulClient cpdClient)
         {
             _logger = logger;
-            _contentfulDataService = contentfulDataService;
             _cpdClient = cpdClient;
         }
 
@@ -70,25 +63,6 @@ namespace Childrens_Social_Care_CPD.Controllers
         }
 
         #endregion
-
-        [HttpGet]
-        public async Task<IActionResult> LandingPage(string analyticsCookieConsent, string pageName, string pageType, string referer, string sendingPageType, string sendingPage)
-        {
-            var consentState = AnalyticsConsentStateHelper.Parse(analyticsCookieConsent);
-
-            HttpContext.SetResponseAnalyticsCookieState(consentState);
-            ViewBag.analyticsCookieSet = analyticsCookieConsent;
-            ViewBag.Referer = referer;
-            var pageViewModel = await _contentfulDataService.GetViewData<PageViewModel>(pageName, pageType);
-
-            return View("~/Views/CPD/LandingPage.cshtml", pageViewModel);
-        }
-
-        [HttpPost]
-        public IActionResult SetCookies(string analyticsCookieConsent, string pageName, string pageType, string referer, string sendingPageType, string sendingPage)
-        {
-            return RedirectToAction("LandingPage", new { analyticsCookieConsent, pageName, pageType, referer, sendingPageType, sendingPage });
-        }
 
         [HttpPost]
         public IActionResult SetPreferences(string consentValue, string redirectTo = null)

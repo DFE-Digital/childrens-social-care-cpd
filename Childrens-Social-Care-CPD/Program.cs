@@ -1,9 +1,6 @@
 using Childrens_Social_Care_CPD;
-using Childrens_Social_Care_CPD.ActionFilters;
 using Childrens_Social_Care_CPD.Constants;
 using Childrens_Social_Care_CPD.Contentful;
-using Childrens_Social_Care_CPD.Interfaces;
-using Childrens_Social_Care_CPD.Services;
 using Contentful.AspNetCore;
 using Contentful.Core.Configuration;
 using Microsoft.ApplicationInsights.AspNetCore.Extensions;
@@ -25,9 +22,7 @@ builder.Host.ConfigureLogging(logging => logging.AddAzureWebAppDiagnostics())
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddTransient<CPDActionFilter>();
 builder.Services.AddContentful(ContentfulConfiguration.GetContentfulConfiguration(builder.Configuration));
-builder.Services.AddTransient<IContentfulDataService, ContentfulDataService>();
 builder.Services.AddTransient<IContentTypeResolver, EntityResolver>();
 builder.Services.AddTransient<ICpdContentfulClient, CpdContentfulClient>();
 
@@ -44,15 +39,16 @@ if (app.Environment.IsDevelopment())
 {
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
+    app.UseDeveloperExceptionPage();
 }
 
-app.UseExceptionHandler("/error/error");
+//app.UseExceptionHandler("/error/error");
 app.UseStatusCodePagesWithReExecute("/error/{0}");
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=CPD}/{action=LandingPage}");
+    pattern: "{controller=Content}/{action=Index}");
 
 app.Run();

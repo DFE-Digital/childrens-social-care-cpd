@@ -50,7 +50,7 @@ public class ErrorControllerServerTests
     {
         // arrange
         _application.CpdContentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), default).Throws(new Exception("Test exception"));
-        var url = "/content/something";
+        var url = "/something";
 
         // act
         var response = await _httpClient.GetAsync(url);

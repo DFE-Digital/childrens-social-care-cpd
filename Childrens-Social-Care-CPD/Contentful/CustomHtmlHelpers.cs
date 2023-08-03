@@ -16,7 +16,7 @@ public static class CustomHtmlHelpers
         {
             string s when s.StartsWith("http") => s,
             string s when s.StartsWith('/') => s,
-            _ => string.Format("/content/{0}", uri)
+            _ => string.Format("/{0}", uri)
         };
         
         tagBuilder.Attributes.Add("href", href);
