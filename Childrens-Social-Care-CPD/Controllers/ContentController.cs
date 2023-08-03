@@ -66,9 +66,16 @@ namespace Childrens_Social_Care_CPD.Controllers
                 return NotFound();
             }
 
-            var contextModel = new ContextModel(pageContent.Id, pageContent.Title, pageName, pageContent.Category, pageContent.SideMenu == null, preferenceSet);
-            ViewData["ContextModel"] = contextModel;
+            var contextModel = new ContextModel(
+                Id: pageContent.Id, 
+                Title: pageContent.Title, 
+                PageName: pageName, 
+                Category: pageContent.Category,
+                UseContainers: pageContent.SideMenu == null, 
+                PreferenceSet: preferenceSet, 
+                BackLink: pageContent.BackLink);
 
+            ViewData["ContextModel"] = contextModel;
             return View(pageContent);
         }
     }

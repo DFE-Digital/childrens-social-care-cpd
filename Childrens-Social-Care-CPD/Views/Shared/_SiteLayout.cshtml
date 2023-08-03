@@ -14,9 +14,11 @@
     <link rel="shortcut icon" sizes="16x16 32x32 48x48" href="~/assets/images/favicon.ico" type="image/x-icon">
 </head>
 <body class="govuk-template__body">
+    <noscript><style> .jsonly { display: none } </style></noscript>
     <partial name="_CookiesAndAnalyticsConsent" />
     <a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
     <partial name="_Header" />
+    <partial name="_BackLink" model="@ViewBag.ContextModel?.BackLink" />
 
     <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
         @RenderBody()
