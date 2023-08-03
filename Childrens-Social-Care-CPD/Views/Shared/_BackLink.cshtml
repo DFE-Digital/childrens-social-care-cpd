@@ -1,0 +1,20 @@
+﻿@using Childrens_Social_Care_CPD.Contentful;
+@using Childrens_Social_Care_CPD.Contentful.Models;
+
+@model ContentLink
+
+@if (Model == null) return;
+
+<div class="govuk-width-container jsonly">
+    @{
+        if (Model.Uri.ToLower().StartsWith("javascript:") && Model.Uri.Length > 11)
+        {
+            var js = Model.Uri.Substring(Model.Uri.IndexOf(':') + 1);
+            <govuk-back-link href="#" onclick="@js">@Model.Name</govuk-back-link>
+        }
+        else
+        {
+            <govuk-back-link href="@Model.Uri">@Model.Name</govuk-back-link>
+        }
+    }
+</div>
