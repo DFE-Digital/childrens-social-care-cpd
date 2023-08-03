@@ -24,6 +24,7 @@ builder.Host.ConfigureLogging(logging => logging.AddAzureWebAppDiagnostics())
 );
 
 // Add services to the container.
+builder.Services.AddResponseCompression();
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<CPDActionFilter>();
 builder.Services.AddContentful(ContentfulConfiguration.GetContentfulConfiguration(builder.Configuration));
@@ -46,6 +47,7 @@ if (app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseResponseCompression();
 app.UseExceptionHandler("/error/error");
 app.UseStatusCodePagesWithReExecute("/error/{0}");
 app.UseStaticFiles();
