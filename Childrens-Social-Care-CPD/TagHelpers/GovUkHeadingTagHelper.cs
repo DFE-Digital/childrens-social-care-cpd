@@ -25,6 +25,6 @@ public class GovUkHeadingTagHelper : TagHelper
             case 2: output.AddClass("govuk-heading-l", HtmlEncoder.Default); break;
             case 3: output.AddClass("govuk-heading-m", HtmlEncoder.Default); break;
             case 4: output.AddClass("govuk-heading-s", HtmlEncoder.Default); break;
-        };
+        }
     }
 }
