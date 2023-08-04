@@ -8,9 +8,9 @@
           <Exclude>[*]AspNetCoreGeneratedDocument.*,[*]Childrens_Social_Care_CPD.Models.*,[*]Childrens_Social_Care_CPD.Contentful.Models.*</Exclude> <!-- [Assembly-Filter]Type-Filter -->
           <ExcludeByFile>**/Program.cs</ExcludeByFile>
           <SingleHit>false</SingleHit>
-          <UseSourceLink>False</UseSourceLink>
+          <UseSourceLink>false</UseSourceLink>
           <IncludeTestAssembly>false</IncludeTestAssembly>
-          <ExcludeAssembliesWithoutSources>MissingAll,MissingAny,None</ExcludeAssembliesWithoutSources>
+          <ExcludeAssembliesWithoutSources>MissingAll</ExcludeAssembliesWithoutSources>
         </Configuration>
       </DataCollector>
     </DataCollectors>
