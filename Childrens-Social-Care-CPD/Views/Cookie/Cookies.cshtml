@@ -12,7 +12,7 @@
     var prefsHaveBeenSet = Url.ActionContext.HttpContext.GetRequestAnalyticsCookieState() != AnalyticsConsentState.NotSet;
 }
 
-@if (Model.PreferencesSet)
+@if (ViewBag.ContextModel.PreferenceSet)
 {
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">

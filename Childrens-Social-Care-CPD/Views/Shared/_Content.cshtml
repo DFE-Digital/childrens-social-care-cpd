@@ -5,27 +5,24 @@
 @model Content
 
 @{
+    ContextModel model = (ContextModel)ViewBag.ContextModel;
     // We use the content stack to track circular dependencies and prevent overflows
-    var contentHistoryStack = (Stack<string>)ViewBag.ContentStack;
-    contentHistoryStack.Push(Model.Id);
+    model.ContentStack.Push(Model.Id);
 
     if (Model.Items != null)
     {
         foreach (var item in Model.Items)
         {
             var preventOverflow = item as Content;
-            if (preventOverflow != null)
+            if (preventOverflow != null && model.ContentStack.Contains(preventOverflow.Id))
             {
-                if (contentHistoryStack.Contains(preventOverflow.Id))
-                {
-                    <partial name="_OverflowWarning" />
-                    continue;
-                }
+                <partial name="_OverflowWarning" />
+                continue;
             }
 
             await Html.RenderContentfulPartialAsync(item);
         }
     }
 
-    contentHistoryStack.Pop();
+    model.ContentStack.Pop();
 }

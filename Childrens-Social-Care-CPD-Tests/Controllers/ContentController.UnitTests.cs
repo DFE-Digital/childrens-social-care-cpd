@@ -15,146 +15,136 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Childrens_Social_Care_CPD_Tests.Controllers
+namespace Childrens_Social_Care_CPD_Tests.Controllers;
+
+public class ContentControllerTests
 {
-    public class ContentControllerTests
+    private ContentController _contentController;
+    private IRequestCookieCollection _cookies;
+    private HttpContext _httpContext;
+    private HttpRequest _httpRequest;
+    private ICpdContentfulClient _contentfulClient;
+
+    private void SetContent(Content content)
     {
-        private ContentController _contentController;
-        private IRequestCookieCollection _cookies;
-        private HttpContext _httpContext;
-        private HttpRequest _httpRequest;
-        private IContentfulDataService _contentfulDataService;
-        private ICpdContentfulClient _contentfulClient;
+        var contentCollection = new ContentfulCollection<Content>();
 
-        [SetUp]
-        public void SetUp()
+        contentCollection.Items = content == null
+            ? new List<Content>()
+            : contentCollection.Items = new List<Content> { content };
+
+        _contentfulClient
+            .GetEntries(Arg.Any<QueryBuilder<Content>>(), default)
+            .Returns(contentCollection);
+    }
+
+    [SetUp]
+    public void SetUp()
+    {
+        _cookies = Substitute.For<IRequestCookieCollection>();
+        _httpContext = Substitute.For<HttpContext>();
+        _httpRequest = Substitute.For<HttpRequest>();
+        var controllerContext = Substitute.For<ControllerContext>();
+
+        _httpRequest.Cookies.Returns(_cookies);
+        _httpContext.Request.Returns(_httpRequest);
+        controllerContext.HttpContext = _httpContext;
+
+        _contentfulClient = Substitute.For<ICpdContentfulClient>();
+
+        _contentController = new ContentController(_contentfulClient);
+        _contentController.ControllerContext = controllerContext;
+        _contentController.TempData = Substitute.For<ITempDataDictionary>();
+    }
+
+    [Test]
+    public async Task Index_Returns_404_When_No_Content_Found()
+    {
+        // arrange
+        SetContent(null);
+
+        // act
+        var actual = await _contentController.Index("home");
+
+        // assert
+        actual.Should().BeOfType<NotFoundResult>();
+    }
+
+    [Test]
+    public async Task Index_Returns_View()
+    {
+        // arrange
+        SetContent(new Content());
+
+        // act
+        var actual = await _contentController.Index("home");
+
+        // assert
+        actual.Should().BeOfType<ViewResult>();
+    }
+
+    [Test]
+    public async Task Index_Sets_The_ViewState_ContextModel()
+    {
+        // arrange
+        var rootContent = new Content()
         {
-            _cookies = Substitute.For<IRequestCookieCollection>();
-            _httpContext = Substitute.For<HttpContext>();
-            _httpRequest = Substitute.For<HttpRequest>();
-            var controllerContext = Substitute.For<ControllerContext>();
+            Id = "a/value",
+            Category = "A Category",
+            Title = "A Title",
+        };
+        SetContent(rootContent);
 
-            _httpRequest.Cookies.Returns(_cookies);
-            _httpContext.Request.Returns(_httpRequest);
-            controllerContext.HttpContext = _httpContext;
+        // act
+        await _contentController.Index("home");
+        var actual = _contentController.ViewData["ContextModel"] as ContextModel;
 
-            _contentfulClient = Substitute.For<ICpdContentfulClient>();
-            _contentfulDataService = Substitute.For<IContentfulDataService>();
+        // assert
+        actual.Should().NotBeNull();
+        actual.Id.Should().Be(rootContent.Id);
+        actual.Title.Should().Be(rootContent.Title);
+        actual.Category.Should().Be(rootContent.Category);
+    }
 
-            _contentController = new ContentController(_contentfulClient, _contentfulDataService);
-            _contentController.ControllerContext = controllerContext;
-            _contentController.TempData = Substitute.For<ITempDataDictionary>();
-        }
+    [TestCase(true)]
+    [TestCase(false)]
+    public async Task Index_Sets_The_ContextModel_Preferences_Set_Value_Correctly(bool preferenceSet)
+    {
+        // arrange
+        SetContent(new Content());
 
-        [Test]
-        public async Task Cookie_Content_Is_Fetched_When_No_Analytics_Cookie_Exists()
+        // act
+        await _contentController.Index("home", preferenceSet);
+        var actual = _contentController.ViewData["ContextModel"] as ContextModel;
+
+        // assert
+        actual.Should().NotBeNull();
+        actual.PreferenceSet.Should().Be(preferenceSet);
+    }
+
+    public static object[] SideMenuContent =
+    {
+        new object[] { new SideMenu() },
+        new object[] { null },
+    };
+
+    [TestCaseSource(nameof(SideMenuContent))]
+    public async Task Index_Sets_The_ContextModel_UseContainers_From_SideMenu_Value_Correctly(SideMenu sideMenu)
+    {
+        // arrange
+        var rootContent = new Content()
         {
-            // arrange
-            var cookieBanner = new CookieBanner();
-            _cookies[SiteConstants.ANALYTICSCOOKIENAME].Returns(string.Empty);
-            _contentfulDataService.GetCookieBannerData().Returns(Task.FromResult(cookieBanner));
+            SideMenu = sideMenu
+        };
+        var expected = sideMenu == null;
+        SetContent(rootContent);
 
-            // act
-            await _contentController.Index("home");
+        // act
+        await _contentController.Index("home");
+        var actual = _contentController.ViewData["ContextModel"] as ContextModel;
 
-            // assert
-            _contentController.ViewData["CookieBanner"].Should().Be(cookieBanner);
-        }
-
-        [Test]
-        [TestCase(SiteConstants.ANALYTICSCOOKIEACCEPTED)]
-        [TestCase(SiteConstants.ANALYTICSCOOKIEREJECTED)]
-        public async Task Cookie_Content_Is_Not_Fetched_When_Analytics_Cookie_Exists(string cookieValue)
-        {
-            // arrange
-            var cookieBanner = new CookieBanner();
-            _cookies[SiteConstants.ANALYTICSCOOKIENAME].Returns(cookieValue);
-            _contentfulDataService.GetCookieBannerData().Returns(Task.FromResult(cookieBanner));
-
-            // act
-            await _contentController.Index("home");
-
-            // assert
-            _contentController.ViewData["CookieBanner"].Should().BeNull();
-        }
-
-        [Test]
-        public async Task Index_Returns_404_When_No_Content_Found()
-        {
-            // arrange
-            var noContent = new ContentfulCollection<Content>() { Items = new List<Content>() };
-            _cookies[SiteConstants.ANALYTICSCOOKIENAME].Returns(SiteConstants.ANALYTICSCOOKIEACCEPTED);
-            _contentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), default).Returns(noContent);
-
-            // act
-            var actual = await _contentController.Index("home");
-
-            // assert
-            actual.Should().BeOfType<NotFoundResult>();
-        }
-
-        [Test]
-        public async Task Index_Returns_View()
-        {
-            // arrange
-            var contentCollection = new ContentfulCollection<Content>() { Items = new List<Content>() { new Content() } };
-            _cookies[SiteConstants.ANALYTICSCOOKIENAME].Returns(SiteConstants.ANALYTICSCOOKIEACCEPTED);
-            _contentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), default).Returns(contentCollection);
-
-            // act
-            var actual = await _contentController.Index("home");
-
-            // assert
-            actual.Should().BeOfType<ViewResult>();
-        }
-
-        [Test]
-        public async Task Index_Sets_The_ViewState_PageName()
-        {
-            // arrange
-            var pageName = "home";
-            var contentCollection = new ContentfulCollection<Content>() { Items = new List<Content>() { new Content() } };
-            _cookies[SiteConstants.ANALYTICSCOOKIENAME].Returns(SiteConstants.ANALYTICSCOOKIEACCEPTED);
-            _contentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), default).Returns(contentCollection);
-
-            // act
-            var actual = await _contentController.Index(pageName);
-
-            // assert
-            _contentController.ViewData["PageName"].Should().Be(pageName);
-        }
-
-        [Test]
-        public async Task Index_Sets_The_ViewState_Title()
-        {
-            // arrange
-            var pageName = "home";
-            var pageTitle = "A title";
-            var contentCollection = new ContentfulCollection<Content>() { Items = new List<Content>() { new Content() { Title = pageTitle } } };
-            _cookies[SiteConstants.ANALYTICSCOOKIENAME].Returns(SiteConstants.ANALYTICSCOOKIEACCEPTED);
-            _contentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), default).Returns(contentCollection);
-
-            // act
-            var actual = await _contentController.Index(pageName);
-
-            // assert
-            _contentController.ViewData["Title"].Should().Be(pageTitle);
-        }
-
-        [Test]
-        public async Task Index_Sets_The_ViewState_ContentStack()
-        {
-            // arrange
-            var pageName = "home";
-            var contentCollection = new ContentfulCollection<Content>() { Items = new List<Content>() { new Content() } };
-            _cookies[SiteConstants.ANALYTICSCOOKIENAME].Returns(SiteConstants.ANALYTICSCOOKIEACCEPTED);
-            _contentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), default).Returns(contentCollection);
-
-            // act
-            var actual = await _contentController.Index(pageName);
-
-            // assert
-            _contentController.ViewData["ContentStack"].Should().BeOfType<Stack<string>>();
-        }
+        // assert
+        actual.Should().NotBeNull();
+        actual.UseContainers.Should().Be(expected);
     }
 }
