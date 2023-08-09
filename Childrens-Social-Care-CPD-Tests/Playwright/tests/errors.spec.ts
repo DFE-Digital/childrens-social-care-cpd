@@ -8,4 +8,10 @@ test.describe('Error conditions', () => {
         await expect(await page.getByRole('heading', { name: 'Page not found' })).toBeVisible()
     })
 
+    test('When a non existant page is visited, the page is not redirected to an error URL', async ({ page }) => {
+        await page.goto('does-not-exist')
+
+        await expect(page).toHaveURL(/\/does-not-exist/)
+    })
+
 })
