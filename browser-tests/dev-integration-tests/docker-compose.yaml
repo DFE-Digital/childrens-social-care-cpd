@@ -1,0 +1,26 @@
+﻿---
+version: "3.4"
+services:
+  children-social-care-cpd:
+    image: childrens-social-care-cpd:latest
+    environment:
+      - CPD_AZURE_ENVIRONMENT=dev-integration
+      - CPD_CLARITY=${CPD_CLARITY}
+      - CPD_CONTENTFUL_ENVIRONMENT=dev-integration
+      - CPD_DELIVERY_KEY=${CPD_DELIVERY_KEY}
+      - CPD_GOOGLEANALYTICSTAG=${CPD_GOOGLEANALYTICSTAG}
+      - CPD_PREVIEW_KEY=${CPD_PREVIEW_KEY}
+      - CPD_SPACE_ID=${CPD_SPACE_ID}
+      - ASPNETCORE_URLS=http://+
+      - ASPNETCORE_ENVIRONMENT=dev-integration
+      - CPD_SECURE_COOKIES=false
+    volumes:
+      - .\test-results:/app/test-results/
+  dev-integration-tests:
+    build:
+      context: ./
+    environment:
+      - PLAYWRIGHT_BASE_URL=http://children-social-care-cpd
+      - CI=1
+    command: npx playwright test --reporter=github
+    working_dir: /app
