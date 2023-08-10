@@ -22,5 +22,5 @@ services:
     environment:
       - PLAYWRIGHT_BASE_URL=http://children-social-care-cpd
       - CI=1
-    command: npx playwright test --reporter=github
+    command: npx playwright test
     working_dir: /app
