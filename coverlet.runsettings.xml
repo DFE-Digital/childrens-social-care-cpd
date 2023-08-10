@@ -5,8 +5,8 @@
       <DataCollector friendlyName="XPlat code coverage">
         <Configuration>
           <Format>cobertura</Format>                              
-          <Exclude>[*]AspNetCoreGeneratedDocument.*,[*]Childrens_Social_Care_CPD.Models.*,[*]Childrens_Social_Care_CPD.Contentful.Models.*</Exclude> <!-- [Assembly-Filter]Type-Filter -->
-          <ExcludeByFile>**/Program.cs</ExcludeByFile>
+          <Exclude>[*]AspNetCoreGeneratedDocument.*,[*]Childrens-Social-Care-CPD-Tests.*,[*]Childrens_Social_Care_CPD.Models.*,[*]Childrens_Social_Care_CPD.Contentful.Models.*</Exclude> <!-- [Assembly-Filter]Type-Filter -->
+          <ExcludeByFile>Childrens-Social-Care-CPD/styles/scss/overrides/_dfe-vertical-nav.scss,Childrens-Social-Care-CPD/Program.cs,Childrens-Social-Care-CPD/Startup.cs,Childrens-Social-Care-CPD/styles/**/*,Childrens-Social-Care-CPD/wwwroot/css/**/*,Childrens-Social-Care-CPD/wwwroot/stylesheets/**/*"</ExcludeByFile>
           <SingleHit>false</SingleHit>
           <UseSourceLink>false</UseSourceLink>
           <IncludeTestAssembly>false</IncludeTestAssembly>

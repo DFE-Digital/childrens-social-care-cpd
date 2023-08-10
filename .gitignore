@@ -408,3 +408,5 @@ terraform.rc
 
 # Built Visual Studio Code Extensions
 *.vsix
+
+.sonarqube/
