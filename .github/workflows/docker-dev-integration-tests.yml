@@ -18,12 +18,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Build the Docker image
+      - name: Build the Docker App Image
         run: cd Childrens-Social-Care-CPD; docker build . --file Dockerfile --tag childrens-social-care-cpd:latest
 
-      - name: Run cypress end to end
-        run: cd browser-tests; cd dev-integration-test; docker-compose up --exit-code-from dev-integration-tests
+      - name: Run the dev integration tests
+        run: cd browser-tests/dev-integration-tests; docker-compose up --exit-code-from dev-integration-tests
       
       - name: Run Tidy up
         if: always()
-        run: cd browser-tests; cd dev-integration-test; docker-compose down --volumes
+        run: cd browser-tests/dev-integration-tests; docker-compose down --volumes
