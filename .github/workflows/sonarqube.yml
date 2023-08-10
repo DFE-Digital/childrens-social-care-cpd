@@ -55,9 +55,9 @@
               dotnet-sonarscanner begin \
                 /k:"DFE-Digital_childrens-social-care-cpd" \
                 /o:"dfe-digital" \
-                /d:sonar.cs.vscoveragexml.reportsPaths=coverage.cobertura.xml \
+                /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml \
                 /d:sonar.token="${{ secrets.SONAR_TOKEN }}" \
                 /d:sonar.host.url="https://sonarcloud.io"
               dotnet build --no-incremental
-              dotnet-coverage collect -f xml -o coverage.cobertura.xml "dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:ExcludeByFile=\"**/*/*.css\""
+              dotnet-coverage collect -f xml -o coverage.xml "dotnet test"
               dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
