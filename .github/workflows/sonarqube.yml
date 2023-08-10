@@ -59,5 +59,6 @@
                 /d:sonar.token="${{ secrets.SONAR_TOKEN }}" \
                 /d:sonar.host.url="https://sonarcloud.io"
               dotnet build --no-incremental
-              dotnet-coverage collect --settings sonar.runsettings.xml -f xml -o coverage.xml "dotnet test"
+              dotnet-coverage collect -f xml -o coverage.xml "dotnet test /p:CollectCoverage=true /p:ExcludeByFile="**/*/*.css"
+              "
               dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
