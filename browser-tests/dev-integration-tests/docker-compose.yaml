@@ -14,13 +14,13 @@ services:
       - ASPNETCORE_URLS=http://+
       - ASPNETCORE_ENVIRONMENT=dev-integration
       - CPD_SECURE_COOKIES=false
-    volumes:
-      - .\test-results:/app/test-results/
   dev-integration-tests:
     build:
       context: ./
     environment:
       - PLAYWRIGHT_BASE_URL=http://children-social-care-cpd
       - CI=1
+    volumes:
+      - .\playwright-report:/app/playwright-report/
     command: npx playwright test
     working_dir: /app

@@ -23,7 +23,14 @@ jobs:
 
       - name: Run the dev integration tests
         run: cd browser-tests/dev-integration-tests; docker-compose up --exit-code-from dev-integration-tests
-      
+
       - name: Run Tidy up
         if: always()
         run: cd browser-tests/dev-integration-tests; docker-compose down --volumes
+
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
