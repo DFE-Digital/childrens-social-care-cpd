@@ -3,7 +3,7 @@
     <CodeCoverage>
         <Sources>
             <Exclude>
-                <Source>**/*.css</Source>
+                <Source>Childrens-Social-Care-CPD/**/*.css</Source>
                 <Source>**/*/*.css</Source>
                 <Source>**/*.scss</Source>
                 <Source>**/*/*.scss</Source>
