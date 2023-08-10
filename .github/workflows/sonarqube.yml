@@ -1,4 +1,3 @@
----
     name: Static code analysis
     on:
       pull_request:
@@ -12,6 +11,12 @@
         steps:
           - uses: actions/checkout@v3
     
+          - name: Set up JDK 17
+            uses: actions/setup-java@v3
+            with:
+              java-version: 17
+              distribution: 'zulu' # Alternative distribution options are available.
+        
           - name: Cache SonarCloud packages
             uses: actions/cache@v1
             with:
@@ -19,32 +24,42 @@
               key: ${{ runner.os }}-sonar
               restore-keys: ${{ runner.os }}-sonar
           
+          - name: Cache SonarCloud scanner
+            id: cache-sonar-scanner
+            uses: actions/cache@v3
+            with:
+              path: ~\sonar\cache
+              key: ${{ runner.os }}-sonar
+              restore-keys: ${{ runner.os }}-sonar
+          
+          - name: Cache SonarCloud coverage
+            id: cache-sonar-coverage
+            uses: actions/cache@v3
+            with:
+              path: ~\sonar\cache
+              key: ${{ runner.os }}-coverage
+              restore-keys: ${{ runner.os }}-coverage
+
           - name: Install SonarCloud scanners
+            if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
             run: dotnet tool install --global dotnet-sonarscanner
     
           - name: Install SonarCloud coverage
+            if: steps.cache-sonar-coverage.outputs.cache-hit != 'true'
             run: dotnet tool install --global dotnet-coverage
 
-          - name: Restore dependencies
-            run: dotnet restore
-    
           - name: Build, Test and Analyze
             env:
               SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
             run: |
               dotnet-sonarscanner begin \
-                /d:sonar.verbose=true \
                 /k:"DFE-Digital_childrens-social-care-cpd" \
                 /o:"dfe-digital" \
-                /d:sonar.login="${{ secrets.SONAR_TOKEN }}" \
-                /d:sonar.host.url="https://sonarcloud.io" \
                 /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml \
-                /d:sonar.coverage.exclusions="\
-                    Childrens-Social-Care-CPD-Tests/**/*,\
-                    Childrens-Social-Care-CPD/Contentful/Models/**/*,\
-                    Childrens-Social-Care-CPD/Startup.cs,\
-                    Childrens-Social-Care-CPD/Program.cs" \
-                /d:sonar.log.level="DEBUG"
-              dotnet build --no-restore
-              dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
-              dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+                /d:sonar.exclusions="**/*.css,**/*.scss,**/Models/*" \
+                /d:sonar.test.exclusions="Childrens-Social-Care-CPD-Tests/**/*" \
+                /d:sonar.token="${{ secrets.SONAR_TOKEN }}" \
+                /d:sonar.host.url="https://sonarcloud.io"
+              dotnet build --no-incremental
+              dotnet-coverage collect -f xml -o coverage.xml "dotnet test"
+              dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
