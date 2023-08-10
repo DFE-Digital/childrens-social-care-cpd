@@ -6,13 +6,18 @@ namespace Childrens_Social_Care_CPD
     {
         public static void SetResponseAnalyticsCookieState(this HttpContext httpContext, AnalyticsConsentState state)
         {
+            var secureCookies = true;
+
+            if (Environment.GetEnvironmentVariable(SiteConstants.SECURECOOKIES)?.ToLower() == "false")
+                secureCookies = false;
+
             var options = new CookieOptions
             {
                 Expires = DateTime.Now.AddDays(365),
                 HttpOnly = true,
                 SameSite = SameSiteMode.Strict,
                 IsEssential = true,
-                Secure = true
+                Secure = secureCookies
             };
 
             switch (state)
