@@ -28,6 +28,7 @@ jobs:
         name: Test artifacts
         if: always()
         with:
+          name: test-results
           retention-days: 7
           path: |
             ${{ github.workspace }}/browser-tests/dev-integration-tests/test-results
@@ -36,6 +37,7 @@ jobs:
         name: Playwright report
         if: always()
         with:
+          name: playwright-report
           retention-days: 7
           path: |
             ${{ github.workspace }}/browser-tests/dev-integration-tests/playwright-report
