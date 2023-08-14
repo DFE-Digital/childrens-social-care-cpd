@@ -29,12 +29,13 @@ jobs:
         with:
           retention-days: 30
           path: |
-            browser-tests/dev-integration-tests/playwright-report/
-            browser-tests/dev-integration-tests/test-results/
-            test-results/
-            playwright-report/
-            output/test-results/
-            output/playwright-report/
+            browser-tests/dev-integration-tests/playwright-report
+            browser-tests/dev-integration-tests/test-results
+            test-results
+            playwright-report
+            ../browser-tests/dev-integration-tests/playwright-report
+            ../browser-tests/dev-integration-tests/test-results
+            
       
       - name: Run Tidy up
         if: always()
