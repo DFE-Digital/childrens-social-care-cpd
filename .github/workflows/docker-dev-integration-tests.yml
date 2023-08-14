@@ -25,12 +25,20 @@ jobs:
         run: cd browser-tests/dev-integration-tests; docker-compose up --exit-code-from dev-integration-tests
 
       - uses: actions/upload-artifact@v3
+        name: Test artifacts
         if: always()
         with:
           retention-days: 7
           path: |
-            ${{ github.workspace }}/childrens-social-care-cpd/browser-tests/dev-integration-tests/test-results
-            ${{ github.workspace }}/childrens-social-care-cpd/browser-tests/dev-integration-tests/playwright-report
+            ${{ github.workspace }}/browser-tests/dev-integration-tests/test-results
+
+      - uses: actions/upload-artifact@v3
+        name: Playwright report
+        if: always()
+        with:
+          retention-days: 7
+          path: |
+            ${{ github.workspace }}/browser-tests/dev-integration-tests/playwright-report
       
       - name: Run Tidy up
         if: always()
