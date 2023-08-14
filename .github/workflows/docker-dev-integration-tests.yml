@@ -27,8 +27,10 @@ jobs:
       - uses: actions/upload-artifact@v3
         if: always()
         with:
-          retention-days: 30
+          retention-days: 7
           path: |
+            $GITHUB_WORKSPACE/childrens-social-care-cpd/browser-tests/dev-integration-tests/test-results
+            $GITHUB_WORKSPACE/childrens-social-care-cpd/browser-tests/dev-integration-tests/playwright-report
             /home/runner/childrens-social-care-cpd/browser-tests/dev-integration-tests
             /home/runner/childrens-social-care-cpd/browser-tests/dev-integration-tests/playwright-report
             /home/runner/childrens-social-care-cpd/browser-tests/dev-integration-tests/test-results
