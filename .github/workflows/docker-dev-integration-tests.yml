@@ -29,12 +29,8 @@ jobs:
         with:
           retention-days: 7
           path: |
-            /home/runner/work/childrens-social-care-cpd/childrens-social-care-cpd/test-results
-            /home/runner/work/childrens-social-care-cpd/playwright-report
-            /home/runner/work/childrens-social-care-cpd/childrens-social-care-cpd/browser-tests/dev-integration-tests/test-results
-            /home/runner/work/childrens-social-care-cpd/browser-tests/dev-integration-tests/playwright-report
-            /home/runner/work/childrens-social-care-cpd/test-results
-            /home/runner/work/childrens-social-care-cpd/playwright-report
+            ${{ github.workspace }}/childrens-social-care-cpd/browser-tests/dev-integration-tests/test-results
+            ${{ github.workspace }}/childrens-social-care-cpd/browser-tests/dev-integration-tests/playwright-report
       
       - name: Run Tidy up
         if: always()
