@@ -29,10 +29,6 @@ jobs:
         with:
           retention-days: 30
           path: |
-            browser-tests/dev-integration-tests/playwright-report
-            browser-tests/dev-integration-tests/test-results
-            test-results
-            playwright-report
             /home/runner/childrens-social-care-cpd/browser-tests/dev-integration-tests/playwright-report
             /home/runner/childrens-social-care-cpd/browser-tests/dev-integration-tests/test-results
             
