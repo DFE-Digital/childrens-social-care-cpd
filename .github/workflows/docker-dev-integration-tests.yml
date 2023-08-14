@@ -27,17 +27,15 @@ jobs:
       - uses: actions/upload-artifact@v3
         if: always()
         with:
-          name: playwright-report
-          path: browser-tests/dev-integration-tests/playwright-report/
           retention-days: 30
+          path: |
+            browser-tests/dev-integration-tests/playwright-report/
+            browser-tests/dev-integration-tests/test-results/
+            test-results/
+            playwright-report/
+            output/test-results/
+            output/playwright-report/
       
-      - uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: test-results
-          path: browser-tests/dev-integration-tests/test-results/
-          retention-days: 30
-
       - name: Run Tidy up
         if: always()
         run: cd browser-tests/dev-integration-tests; docker-compose down --volumes      
