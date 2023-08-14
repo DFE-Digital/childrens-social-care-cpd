@@ -24,9 +24,6 @@ jobs:
       - name: Run the dev integration tests
         run: cd browser-tests/dev-integration-tests; docker-compose up --exit-code-from dev-integration-tests
 
-      - name: where are we
-        run: pwd; ls -al
-
       - uses: actions/upload-artifact@v3
         if: always()
         with:
