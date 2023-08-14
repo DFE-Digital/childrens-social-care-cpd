@@ -33,8 +33,8 @@ jobs:
             browser-tests/dev-integration-tests/test-results
             test-results
             playwright-report
-            ../browser-tests/dev-integration-tests/playwright-report
-            ../browser-tests/dev-integration-tests/test-results
+            /home/runner/childrens-social-care-cpd/browser-tests/dev-integration-tests/playwright-report
+            /home/runner/childrens-social-care-cpd/browser-tests/dev-integration-tests/test-results
             
       
       - name: Run Tidy up
