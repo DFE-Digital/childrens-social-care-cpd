@@ -25,7 +25,6 @@ public partial class _CookieControllerTests
     private HttpContext _httpContext;
     private HttpRequest _httpRequest;
     private ICpdContentfulClient _contentfulClient;
-    private ILogger<CookieController> _logger;
 
     private void SetContent(Content content)
     {
@@ -43,7 +42,6 @@ public partial class _CookieControllerTests
     [SetUp]
     public void SetUp()
     {
-        _logger = Substitute.For<ILogger<CookieController>>();
         _cookies = Substitute.For<IRequestCookieCollection>();
         _httpContext = Substitute.For<HttpContext>();
         _httpRequest = Substitute.For<HttpRequest>();
@@ -60,7 +58,7 @@ public partial class _CookieControllerTests
 
         _contentfulClient = Substitute.For<ICpdContentfulClient>();
 
-        _cookieController = new CookieController(_logger, _contentfulClient);
+        _cookieController = new CookieController(_contentfulClient);
         _cookieController.ControllerContext = controllerContext;
         _cookieController.TempData = Substitute.For<ITempDataDictionary>();
     }

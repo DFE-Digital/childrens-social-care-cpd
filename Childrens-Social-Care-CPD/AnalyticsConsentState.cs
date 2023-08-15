@@ -1,24 +1,21 @@
-﻿using Childrens_Social_Care_CPD.Constants;
+﻿namespace Childrens_Social_Care_CPD;
 
-namespace Childrens_Social_Care_CPD
+public enum AnalyticsConsentState
 {
-    public enum AnalyticsConsentState
-    {
-        NotSet,
-        Accepted,
-        Rejected,
-    }
+    NotSet,
+    Accepted,
+    Rejected,
+}
 
-    public static class AnalyticsConsentStateHelper
+public static class AnalyticsConsentStateHelper
+{
+    public static AnalyticsConsentState Parse(string value)
     {
-        public static AnalyticsConsentState Parse(string value)
+        return value switch
         {
-            return value switch
-            {
-                SiteConstants.ANALYTICSCOOKIEACCEPTED => AnalyticsConsentState.Accepted,
-                SiteConstants.ANALYTICSCOOKIEREJECTED => AnalyticsConsentState.Rejected,
-                _ => AnalyticsConsentState.NotSet
-            };
-        }
+            SiteConstants.ANALYTICSCOOKIEACCEPTED => AnalyticsConsentState.Accepted,
+            SiteConstants.ANALYTICSCOOKIEREJECTED => AnalyticsConsentState.Rejected,
+            _ => AnalyticsConsentState.NotSet
+        };
     }
 }
