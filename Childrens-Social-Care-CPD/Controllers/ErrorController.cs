@@ -15,6 +15,7 @@ namespace Childrens_Social_Care_CPD.Controllers
         /// Unhandled exceptions in the pipeline are sent to this action.
         /// </summary>
         /// <returns>A StatusCodeResult of 500, not designed to be seen by the user.</returns>
+        [Route("error/error")]
         [HttpGet]
         public IActionResult Error()
         {
