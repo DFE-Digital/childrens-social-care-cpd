@@ -1,9 +1,4 @@
-﻿@using System.Text.RegularExpressions;
-@using Childrens_Social_Care_CPD.Constants
-@using Childrens_Social_Care_CPD.Enums
-@addTagHelper *, Contentful.AspNetCore
-
-@{
+﻿@{
     var request = Url.ActionContext.HttpContext.Request;
     var href = Html.UrlEncoder.Encode($"{request.Scheme}://{request.Host}{request.PathBase}{request.Path}{request.QueryString}");
 }

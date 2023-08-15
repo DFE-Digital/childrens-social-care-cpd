@@ -1,6 +1,4 @@
-﻿@using Childrens_Social_Care_CPD.Constants
-@using Childrens_Social_Care_CPD.Enums
-@{
+﻿@{
     var googleAnalyticsKey = Environment.GetEnvironmentVariable(SiteConstants.CPDGOOGLEANALYTICSTAG) ?? String.Empty;
     var googleAnalyticsUrl = string.Format("https://www.googletagmanager.com/gtag/js?id={0}", googleAnalyticsKey);
     var clarityProjectId = Environment.GetEnvironmentVariable(SiteConstants.CLARITYPROJECTID) ?? String.Empty;

@@ -10,16 +10,14 @@ namespace Childrens_Social_Care_CPD.Controllers
 {
     public class CookieController : Controller
     {
-        private readonly ILogger<CookieController> _logger;
         private readonly ICpdContentfulClient _cpdClient;
 
         private static int ContentFetchDepth = 10;
         private static string ContentTypeId = "content";
         private static string PageName = "cookies";
 
-        public CookieController(ILogger<CookieController> logger, ICpdContentfulClient cpdClient)
+        public CookieController(ICpdContentfulClient cpdClient)
         {
-            _logger = logger;
             _cpdClient = cpdClient;
         }
 

@@ -1,6 +1,4 @@
-﻿@using Childrens_Social_Care_CPD.Constants
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" class="govuk-template">
 <head>
     <title>@ViewBag.ContextModel.Title</title>
@@ -8,7 +6,7 @@
     <link href="~/css/application.min.css" rel="stylesheet" />
     @if (Context.GetRequestAnalyticsCookieState() == AnalyticsConsentState.Accepted)
     {
-        <partial name="../PartialViews/GoogleAnalyticsPartial" />
+        <partial name="../PartialViews/_GoogleAnalyticsPartial" />
     }
 
     <link rel="shortcut icon" sizes="16x16 32x32 48x48" href="~/assets/images/favicon.ico" type="image/x-icon">
