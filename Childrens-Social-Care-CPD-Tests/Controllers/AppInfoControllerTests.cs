@@ -3,27 +3,24 @@ using Childrens_Social_Care_CPD.Models;
 using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
 
+namespace Childrens_Social_Care_CPD_Tests.Controllers;
 
-namespace Childrens_Social_Care_CPD_Tests.Controllers
+public class AppInfoControllerTests
 {
+    private AppInfoController _target;
 
-    public class AppInfoControllerTests
+    [SetUp]
+    public void Setup()
     {
-        private AppInfoController _target;
+        _target = new AppInfoController();
+    }
 
-        [SetUp]
-        public void Setup()
-        {
-            _target = new AppInfoController();
-        }
-
-        [Test]
-        public void AppInfoReturnsApplicationInfoTest()
-        {
-            var actual = _target.AppInfo();
-            var c = actual.Value;
-            Assert.IsInstanceOf<JsonResult>(actual);
-            Assert.IsNotNull(((ApplicationInfo)actual.Value).Environment);
-        }
+    [Test]
+    public void AppInfoReturnsApplicationInfoTest()
+    {
+        var actual = _target.AppInfo();
+        var c = actual.Value;
+        Assert.IsInstanceOf<JsonResult>(actual);
+        Assert.IsNotNull(((ApplicationInfo)actual.Value).Environment);
     }
 }

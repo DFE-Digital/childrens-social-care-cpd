@@ -25,7 +25,7 @@ public class ErrorControllerServerTests
         _application = new CpdTestServerApplication();
         _httpClient = _application.CreateClient(new WebApplicationFactoryClientOptions
         {
-            AllowAutoRedirect = true
+            AllowAutoRedirect = false
         });
     }
 

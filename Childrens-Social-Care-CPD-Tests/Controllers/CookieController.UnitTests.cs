@@ -11,14 +11,13 @@ using Contentful.Core.Search;
 using FluentAssertions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 using Childrens_Social_Care_CPD.Models;
 using Microsoft.AspNetCore.Mvc.Routing;
 using System;
 
 namespace Childrens_Social_Care_CPD_Tests.Controllers;
 
-public partial class _CookieControllerTests
+public partial class CookieControllerTests
 {
     private CookieController _cookieController;
     private IRequestCookieCollection _cookies;
