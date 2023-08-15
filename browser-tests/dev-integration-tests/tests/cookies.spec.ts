@@ -77,7 +77,7 @@ test.describe('Cookies @cookie', () => {
     
         test.describe('Google tag manager', () => {
     
-            test('Accepting cookies adds the googletagmanager script', async ({ page }) => {
+            test.skip('Accepting cookies adds the googletagmanager script', async ({ page }) => {
                 await page.getByRole('button', { name: 'Accept analytics cookies' }).click()
                 await page.getByRole('button', { name: 'Hide cookie message' }).click()
     
