@@ -24,18 +24,6 @@ public class ContentControllerTests
     private HttpRequest _httpRequest;
     private ICpdContentfulClient _contentfulClient;
 
-    private void SetCookieConsent(bool? accepted)
-    {
-        if (accepted.HasValue)
-        {
-            var value = accepted.Value;
-            _cookies[SiteConstants.ANALYTICSCOOKIENAME].Returns(value ? SiteConstants.ANALYTICSCOOKIEACCEPTED : SiteConstants.ANALYTICSCOOKIEREJECTED);
-        } else
-        {
-            _cookies[SiteConstants.ANALYTICSCOOKIENAME].Returns(string.Empty);
-        }
-    }
-
     private void SetContent(Content content)
     {
         var contentCollection = new ContentfulCollection<Content>();

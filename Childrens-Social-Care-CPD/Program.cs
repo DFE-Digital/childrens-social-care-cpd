@@ -21,6 +21,7 @@ builder.Host.ConfigureLogging(logging => logging.AddAzureWebAppDiagnostics())
 );
 
 // Add services to the container.
+builder.Services.AddResponseCompression();
 builder.Services.AddControllersWithViews();
 builder.Services.AddContentful(ContentfulConfiguration.GetContentfulConfiguration(builder.Configuration));
 builder.Services.AddTransient<IContentTypeResolver, EntityResolver>();
@@ -42,7 +43,8 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 }
 
-//app.UseExceptionHandler("/error/error");
+app.UseResponseCompression();
+app.UseExceptionHandler("/error/error");
 app.UseStatusCodePagesWithReExecute("/error/{0}");
 app.UseStaticFiles();
 app.UseRouting();
