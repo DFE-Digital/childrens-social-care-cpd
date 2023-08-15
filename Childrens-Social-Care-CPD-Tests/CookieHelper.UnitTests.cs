@@ -37,24 +37,24 @@ public class CookieHelperTests
         httpContext.Response.Cookies.Received().Delete(SiteConstants.ANALYTICSCOOKIENAME);
     }
 
-    //[Test]
-    //public void SetResponseAnalyticsCookieState_Sets_Secure_Cookie_Options()
-    //{
-    //    // arrange
-    //    var httpContext = Substitute.For<HttpContext>();
-    //    CookieOptions cookieOptions = null;
-    //    httpContext.Response.Cookies.Append(SiteConstants.ANALYTICSCOOKIENAME, SiteConstants.ANALYTICSCOOKIEACCEPTED, Arg.Do<CookieOptions>(x => cookieOptions = x));
+    [Test]
+    public void SetResponseAnalyticsCookieState_Sets_Secure_Cookie_Options()
+    {
+        // arrange
+        var httpContext = Substitute.For<HttpContext>();
+        CookieOptions cookieOptions = null;
+        httpContext.Response.Cookies.Append(SiteConstants.ANALYTICSCOOKIENAME, SiteConstants.ANALYTICSCOOKIEACCEPTED, Arg.Do<CookieOptions>(x => cookieOptions = x));
 
-    //    // act
-    //    httpContext.SetResponseAnalyticsCookieState(AnalyticsConsentState.Accepted);
+        // act
+        httpContext.SetResponseAnalyticsCookieState(AnalyticsConsentState.Accepted);
 
-    //    // assert
-    //    cookieOptions.Should().NotBeNull();
-    //    cookieOptions.HttpOnly.Should().BeTrue();
-    //    cookieOptions.SameSite.Should().Be(SameSiteMode.Strict);
-    //    cookieOptions.IsEssential.Should().BeTrue();
-    //    cookieOptions.Secure.Should().BeTrue();
-    //}
+        // assert
+        cookieOptions.Should().NotBeNull();
+        cookieOptions.HttpOnly.Should().BeTrue();
+        cookieOptions.SameSite.Should().Be(SameSiteMode.Strict);
+        cookieOptions.IsEssential.Should().BeTrue();
+        cookieOptions.Secure.Should().BeTrue();
+    }
 
     [Test]
     [TestCase(SiteConstants.ANALYTICSCOOKIEACCEPTED, AnalyticsConsentState.Accepted)]

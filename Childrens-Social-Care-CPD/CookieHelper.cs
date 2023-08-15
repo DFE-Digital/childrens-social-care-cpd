@@ -6,35 +6,18 @@ namespace Childrens_Social_Care_CPD
     {
         public static void SetResponseAnalyticsCookieState(this HttpContext httpContext, AnalyticsConsentState state)
         {
+            var secureCookie = Environment.GetEnvironmentVariable(SiteConstants.SECURECOOKIES)?.ToLower() == "false"
+                ? false
+                : true;
+
             CookieOptions cookieOptions = new CookieOptions
             {
                 Expires = DateTime.Now.AddDays(365),
                 HttpOnly = true,
                 SameSite = SameSiteMode.Strict,
                 IsEssential = true,
+                Secure = secureCookie,
             };
-
-            //if (Environment.GetEnvironmentVariable(SiteConstants.SECURECOOKIES)?.ToLower() == "false")
-            //{
-            //    cookieOptions = new CookieOptions
-            //    {
-            //        Expires = DateTime.Now.AddDays(365),
-            //        HttpOnly = true,
-            //        SameSite = SameSiteMode.Strict,
-            //        IsEssential = true,
-            //    };
-            //}
-            //else
-            //{
-            //    cookieOptions = new CookieOptions
-            //    {
-            //        Expires = DateTime.Now.AddDays(365),
-            //        HttpOnly = true,
-            //        SameSite = SameSiteMode.Strict,
-            //        IsEssential = true,
-            //        Secure = true
-            //    };
-            //}
 
             switch (state)
             {
