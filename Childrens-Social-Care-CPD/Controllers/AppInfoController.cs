@@ -5,16 +5,6 @@ namespace Childrens_Social_Care_CPD.Controllers
 {
     public class AppInfoController : Controller
     {
-        public AppInfoController()
-        {
-        }
-
-        /// <summary>
-        /// Method to get Application information
-        /// </summary>
-        /// <returns>
-        /// Application information
-        /// </returns>
         [HttpGet]
         [Route("CPD/AppInfo")]
         public JsonResult AppInfo()
