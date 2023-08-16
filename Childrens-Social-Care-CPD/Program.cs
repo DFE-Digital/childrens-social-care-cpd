@@ -4,6 +4,7 @@ using Contentful.AspNetCore;
 using Contentful.Core.Configuration;
 using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 using Microsoft.Extensions.Logging.AzureAppServices;
+using System.Diagnostics.CodeAnalysis;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.ConfigureLogging(logging => logging.AddAzureWebAppDiagnostics())
@@ -20,15 +21,18 @@ builder.Host.ConfigureLogging(logging => logging.AddAzureWebAppDiagnostics())
 );
 
 // Add services to the container.
+var applicationConfiguration = new ApplicationConfiguration();
+
 builder.Services.AddResponseCompression();
 builder.Services.AddControllersWithViews();
-builder.Services.AddContentful(ContentfulConfiguration.GetContentfulConfiguration(builder.Configuration));
+builder.Services.AddContentful(ContentfulConfiguration.GetContentfulConfiguration(builder.Configuration, applicationConfiguration));
 builder.Services.AddTransient<IContentTypeResolver, EntityResolver>();
 builder.Services.AddTransient<ICpdContentfulClient, CpdContentfulClient>();
+builder.Services.AddSingleton<IApplicationConfiguration>(applicationConfiguration);
 
 var options = new ApplicationInsightsServiceOptions
 {
-    ConnectionString = Environment.GetEnvironmentVariable(SiteConstants.CPD_INSTRUMENTATION_CONNECTIONSTRING) ?? String.Empty
+    ConnectionString = applicationConfiguration.AppInsightsConnectionString
 };
 
 builder.Services.AddApplicationInsightsTelemetry(options: options);
@@ -45,3 +49,6 @@ app.MapControllerRoute(
     pattern: "{controller=Content}/{action=Index}");
 
 app.Run();
+
+[ExcludeFromCodeCoverage]
+public partial class Program { }
