@@ -10,12 +10,16 @@ public static class CookieHelper
     {
         var options = new CookieOptions
         {
-            Expires = DateTime.Now.AddDays(365),
-            HttpOnly = true,
-            SameSite = SameSiteMode.Strict,
-            IsEssential = true,
-            Secure = true
-        };
+            var secureCookie = Environment.GetEnvironmentVariable(SiteConstants.DISABLESECURECOOKIES) != "true";
+            var options = new CookieOptions
+            {
+                Expires = DateTime.Now.AddDays(365),
+                HttpOnly = true,
+                SameSite = SameSiteMode.Strict,
+                IsEssential = true,
+                Secure = secureCookie
+            };
+        }
 
         switch (state)
         {
