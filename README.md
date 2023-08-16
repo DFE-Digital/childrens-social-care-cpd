@@ -53,8 +53,7 @@ followed by
 Cypress testing is also included.
 
 ### Compiling the Sass
-The Sass is compiled using the [Web Compiler 2022+ extension](https://github.com/failwyn/WebCompiler) from Jason Moore which can be installed into Visual Studio 2022 from the Extensions menu. The `compilerconfig.json` is already configured to copy the output to the correct location.
-
+The Sass is compiled using the ```compile-sass.ps1``` script in the main project. The commands can also be used in *nix environments.
 
 ### Further documentation
 
