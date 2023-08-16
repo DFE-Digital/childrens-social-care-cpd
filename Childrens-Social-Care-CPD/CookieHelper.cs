@@ -2,6 +2,10 @@
 
 public static class CookieHelper
 {
+    public const string ANALYTICSCOOKIENAME = "cookie_consent";
+    public const string ANALYTICSCOOKIEACCEPTED = "accept";
+    public const string ANALYTICSCOOKIEREJECTED = "reject";
+
     public static void SetResponseAnalyticsCookieState(this HttpContext httpContext, AnalyticsConsentState state)
     {
         var options = new CookieOptions
@@ -16,20 +20,20 @@ public static class CookieHelper
         switch (state)
         {
             case AnalyticsConsentState.Accepted:
-                httpContext.Response.Cookies.Append(SiteConstants.ANALYTICSCOOKIENAME, SiteConstants.ANALYTICSCOOKIEACCEPTED, options);
+                httpContext.Response.Cookies.Append(ANALYTICSCOOKIENAME, ANALYTICSCOOKIEACCEPTED, options);
                 break;
             case AnalyticsConsentState.Rejected:
-                httpContext.Response.Cookies.Append(SiteConstants.ANALYTICSCOOKIENAME, SiteConstants.ANALYTICSCOOKIEREJECTED, options);
+                httpContext.Response.Cookies.Append(ANALYTICSCOOKIENAME, ANALYTICSCOOKIEREJECTED, options);
                 break;
             case AnalyticsConsentState.NotSet:
-                httpContext.Response.Cookies.Delete(SiteConstants.ANALYTICSCOOKIENAME);
+                httpContext.Response.Cookies.Delete(ANALYTICSCOOKIENAME);
                 break;
         }
     }
 
     public static AnalyticsConsentState GetRequestAnalyticsCookieState(this HttpContext httpContext)
     {
-        var cookie = httpContext.Request.Cookies[SiteConstants.ANALYTICSCOOKIENAME];
+        var cookie = httpContext.Request.Cookies[ANALYTICSCOOKIENAME];
         return AnalyticsConsentStateHelper.Parse(cookie);
     }
 }

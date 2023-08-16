@@ -9,8 +9,8 @@ namespace Childrens_Social_Care_CPD_Tests;
 public class CookieHelperTests
 {
     [Test]
-    [TestCase(AnalyticsConsentState.Accepted, SiteConstants.ANALYTICSCOOKIEACCEPTED)]
-    [TestCase(AnalyticsConsentState.Rejected, SiteConstants.ANALYTICSCOOKIEREJECTED)]
+    [TestCase(AnalyticsConsentState.Accepted, CookieHelper.ANALYTICSCOOKIEACCEPTED)]
+    [TestCase(AnalyticsConsentState.Rejected, CookieHelper.ANALYTICSCOOKIEREJECTED)]
     public void SetResponseAnalyticsCookieState_Sets_Correct_Value(AnalyticsConsentState state, string expectedValue)
     {
         // arrange
@@ -20,7 +20,7 @@ public class CookieHelperTests
         httpContext.SetResponseAnalyticsCookieState(state);
 
         // assert
-        httpContext.Response.Cookies.Received().Append(SiteConstants.ANALYTICSCOOKIENAME, expectedValue, Arg.Any<CookieOptions>());
+        httpContext.Response.Cookies.Received().Append(CookieHelper.ANALYTICSCOOKIENAME, expectedValue, Arg.Any<CookieOptions>());
     }
 
     [Test]
@@ -33,7 +33,7 @@ public class CookieHelperTests
         httpContext.SetResponseAnalyticsCookieState(AnalyticsConsentState.NotSet);
 
         // assert
-        httpContext.Response.Cookies.Received().Delete(SiteConstants.ANALYTICSCOOKIENAME);
+        httpContext.Response.Cookies.Received().Delete(CookieHelper.ANALYTICSCOOKIENAME);
     }
 
     [Test]
@@ -42,7 +42,7 @@ public class CookieHelperTests
         // arrange
         var httpContext = Substitute.For<HttpContext>();
         CookieOptions cookieOptions = null;
-        httpContext.Response.Cookies.Append(SiteConstants.ANALYTICSCOOKIENAME, SiteConstants.ANALYTICSCOOKIEACCEPTED, Arg.Do<CookieOptions>(x => cookieOptions = x));
+        httpContext.Response.Cookies.Append(CookieHelper.ANALYTICSCOOKIENAME, CookieHelper.ANALYTICSCOOKIEACCEPTED, Arg.Do<CookieOptions>(x => cookieOptions = x));
 
         // act
         httpContext.SetResponseAnalyticsCookieState(AnalyticsConsentState.Accepted);
@@ -56,8 +56,8 @@ public class CookieHelperTests
     }
 
     [Test]
-    [TestCase(SiteConstants.ANALYTICSCOOKIEACCEPTED, AnalyticsConsentState.Accepted)]
-    [TestCase(SiteConstants.ANALYTICSCOOKIEREJECTED, AnalyticsConsentState.Rejected)]
+    [TestCase(CookieHelper.ANALYTICSCOOKIEACCEPTED, AnalyticsConsentState.Accepted)]
+    [TestCase(CookieHelper.ANALYTICSCOOKIEREJECTED, AnalyticsConsentState.Rejected)]
     [TestCase("", AnalyticsConsentState.NotSet)]
     [TestCase(null, AnalyticsConsentState.NotSet)]
     [TestCase("Invalid value", AnalyticsConsentState.NotSet)]
@@ -65,7 +65,7 @@ public class CookieHelperTests
     {
         // arrange
         var httpContext = Substitute.For<HttpContext>();
-        httpContext.Request.Cookies[SiteConstants.ANALYTICSCOOKIENAME].Returns(cookieValue);
+        httpContext.Request.Cookies[CookieHelper.ANALYTICSCOOKIENAME].Returns(cookieValue);
 
         // act
         var result = httpContext.GetRequestAnalyticsCookieState();
