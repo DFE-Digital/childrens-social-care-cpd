@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NSubstitute;
+
 namespace Childrens_Social_Care_CPD_Tests;
 
 internal class CpdTestServerApplication : WebApplicationFactory<Program>
