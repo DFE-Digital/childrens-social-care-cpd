@@ -5,14 +5,11 @@ using Childrens_Social_Care_CPD.ActionFilters;
 using Childrens_Social_Care_CPD.Contentful.Models;
 using Contentful.Core.Search;
 using Childrens_Social_Care_CPD.Contentful;
-using Childrens_Social_Care_CPD.Constants;
 using System.Web;
 using Microsoft.AspNetCore.Http.Extensions;
-using System.Collections.Specialized;
 
 namespace Childrens_Social_Care_CPD.Controllers
 {
-    [ServiceFilter(typeof(CPDActionFilter))]
     public class CookieController : Controller
     {
         private readonly ILogger<CookieController> _logger;
@@ -71,6 +68,7 @@ namespace Childrens_Social_Care_CPD.Controllers
 
         #endregion
 
+        [ServiceFilter(typeof(CPDActionFilter))]
         [HttpGet]
         public async Task<IActionResult> LandingPage(string analyticsCookieConsent, string pageName, string pageType, string referer, string sendingPageType, string sendingPage)
         {
@@ -84,6 +82,7 @@ namespace Childrens_Social_Care_CPD.Controllers
             return View("~/Views/CPD/LandingPage.cshtml", pageViewModel);
         }
 
+        [ServiceFilter(typeof(CPDActionFilter))]
         [HttpPost]
         public IActionResult SetCookies(string analyticsCookieConsent, string pageName, string pageType, string referer, string sendingPageType, string sendingPage)
         {
