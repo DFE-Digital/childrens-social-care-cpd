@@ -1,15 +1,15 @@
 import { test, expect } from '@playwright/test'
 
 test.beforeEach(async ({ page }) => {
-    await page.goto('content')
+    await page.goto('/')
 })
 
 test.describe('Page Footer', () => {
 
     const links = [
-        ['Privacy policy', '/content/privacy'],
-        ['Accessibility', '/content/accessibility'],
-        ['Terms and conditions', '/content/termsconditions'],
+        ['Privacy policy', '/privacy'],
+        ['Accessibility', '/accessibility'],
+        ['Terms and conditions', '/termsconditions'],
         ['Feedback', 'https://dferesearch.fra1.qualtrics.com/jfe/form/SV_bmcLDedq5wipeTA'],
         ['Crown copyright', 'https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/'],
         ['Open Government Licence v3.0', 'https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/'],
