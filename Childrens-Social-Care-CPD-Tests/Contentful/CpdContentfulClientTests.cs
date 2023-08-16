@@ -57,6 +57,19 @@ public class CpdContentfulClientTest
     }
 
     [Test]
+    public void ContentTypeResolver_Is_Passed_Through()
+    {
+        // arrange
+        var contentTypeResolver = Substitute.For<IContentTypeResolver>();
+
+        // act
+        _cpdClient.ContentTypeResolver = contentTypeResolver;
+
+        // assert
+        _contentfulClient.ContentTypeResolver.Should().Be(contentTypeResolver);
+    }
+
+    [Test]
     public void SerializerSettings_Is_Passed_Through()
     {
         // arrange
