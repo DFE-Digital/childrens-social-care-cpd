@@ -37,5 +37,6 @@
         public const string GOVUKHEADINGM = "govuk-heading-m";
         public const string GOVUKHEADINGS = "govuk-heading-s";
         public const string LOADTESTAPPENVIRONMENT = "load-test";
+        public const string DISABLESECURECOOKIES = "CPD_DISABLE_SECURE_COOKIES";
     }
 }
