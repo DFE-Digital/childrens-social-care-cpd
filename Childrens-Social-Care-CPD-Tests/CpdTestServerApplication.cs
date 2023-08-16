@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 
 namespace Childrens_Social_Care_CPD_Tests;
@@ -9,6 +10,7 @@ namespace Childrens_Social_Care_CPD_Tests;
 internal class CpdTestServerApplication : WebApplicationFactory<Program>
 {
     private ICpdContentfulClient _cpdContentfulClient;
+    private ILoggerFactory _loggerFactory;
 
     public CpdTestServerApplication()
     {
@@ -17,12 +19,15 @@ internal class CpdTestServerApplication : WebApplicationFactory<Program>
 
     protected override IHost CreateHost(IHostBuilder builder)
     {
+        _loggerFactory = Substitute.For<ILoggerFactory>();
         builder.ConfigureServices(services =>
         {
             services.AddTransient((_) => _cpdContentfulClient);
+            services.AddSingleton(_loggerFactory);
         });
         return base.CreateHost(builder);
     }
 
     public ICpdContentfulClient CpdContentfulClient => _cpdContentfulClient;
+    public ILoggerFactory LoggerFactory => _loggerFactory;
 }
