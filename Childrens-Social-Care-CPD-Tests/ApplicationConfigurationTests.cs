@@ -21,6 +21,7 @@ public class ApplicationConfigurationTests
         Environment.SetEnvironmentVariable("CPD_SPACE_ID", null);
         Environment.SetEnvironmentVariable("VCS-REF", null);
         Environment.SetEnvironmentVariable("CPD_GOOGLEANALYTICSTAG", null);
+        Environment.SetEnvironmentVariable("CPD_DISABLE_SECURE_COOKIES", null);
     }
 
     [SetUp]
@@ -176,6 +177,20 @@ public class ApplicationConfigurationTests
         actual.Should().Be(Value);
     }
 
+    [Test]
+    public void Returns_DisableSecureCookies_Value()
+    {
+        // arrange
+        Environment.SetEnvironmentVariable("CPD_DISABLE_SECURE_COOKIES", "false");
+        var sut = new ApplicationConfiguration();
+
+        // act
+        var actual = sut.DisableSecureCookies;
+
+        // assert
+        actual.Should().Be(false);
+    }
+
 
     [Test]
     public void Returns_AzureEnvironment_Default_Value()
@@ -292,5 +307,18 @@ public class ApplicationConfigurationTests
 
         // assert
         actual.Should().Be(string.Empty);
+    }
+
+    [Test]
+    public void Returns_DisableSecureCookies_Default_Value()
+    {
+        // arrange
+        var sut = new ApplicationConfiguration();
+
+        // act
+        var actual = sut.DisableSecureCookies;
+
+        // assert
+        actual.Should().Be(false);
     }
 }

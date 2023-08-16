@@ -29,6 +29,7 @@ builder.Services.AddContentful(ContentfulConfiguration.GetContentfulConfiguratio
 builder.Services.AddTransient<IContentTypeResolver, EntityResolver>();
 builder.Services.AddTransient<ICpdContentfulClient, CpdContentfulClient>();
 builder.Services.AddSingleton<IApplicationConfiguration>(applicationConfiguration);
+builder.Services.AddSingleton<ICookieHelper, CookieHelper>();
 
 var options = new ApplicationInsightsServiceOptions
 {

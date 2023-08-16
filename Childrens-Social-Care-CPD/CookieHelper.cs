@@ -1,25 +1,28 @@
 ﻿namespace Childrens_Social_Care_CPD;
 
-public static class CookieHelper
+public class CookieHelper: ICookieHelper
 {
     public const string ANALYTICSCOOKIENAME = "cookie_consent";
     public const string ANALYTICSCOOKIEACCEPTED = "accept";
     public const string ANALYTICSCOOKIEREJECTED = "reject";
+    
+    private readonly IApplicationConfiguration _applicationConfiguration;
 
-    public static void SetResponseAnalyticsCookieState(this HttpContext httpContext, AnalyticsConsentState state)
+    public CookieHelper(IApplicationConfiguration applicationConfiguration)
+    {
+        _applicationConfiguration = applicationConfiguration;
+    }
+
+    public void SetResponseAnalyticsCookieState(HttpContext httpContext, AnalyticsConsentState state)
     {
         var options = new CookieOptions
         {
-            var secureCookie = Environment.GetEnvironmentVariable(SiteConstants.DISABLESECURECOOKIES) != "true";
-            var options = new CookieOptions
-            {
-                Expires = DateTime.Now.AddDays(365),
-                HttpOnly = true,
-                SameSite = SameSiteMode.Strict,
-                IsEssential = true,
-                Secure = secureCookie
-            };
-        }
+            Expires = DateTime.Now.AddDays(365),
+            HttpOnly = true,
+            SameSite = SameSiteMode.Strict,
+            IsEssential = true,
+            Secure = !_applicationConfiguration.DisableSecureCookies
+        };
 
         switch (state)
         {
@@ -35,7 +38,7 @@ public static class CookieHelper
         }
     }
 
-    public static AnalyticsConsentState GetRequestAnalyticsCookieState(this HttpContext httpContext)
+    public AnalyticsConsentState GetRequestAnalyticsCookieState(HttpContext httpContext)
     {
         var cookie = httpContext.Request.Cookies[ANALYTICSCOOKIENAME];
         return AnalyticsConsentStateHelper.Parse(cookie);

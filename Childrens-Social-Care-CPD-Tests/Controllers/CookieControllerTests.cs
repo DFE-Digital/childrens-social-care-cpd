@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Childrens_Social_Care_CPD.Models;
 using Microsoft.AspNetCore.Mvc.Routing;
 using System;
+using Childrens_Social_Care_CPD;
 
 namespace Childrens_Social_Care_CPD_Tests.Controllers;
 
@@ -57,7 +58,7 @@ public partial class CookieControllerTests
 
         _contentfulClient = Substitute.For<ICpdContentfulClient>();
 
-        _cookieController = new CookieController(_contentfulClient);
+        _cookieController = new CookieController(_contentfulClient, new CookieHelper(new ApplicationConfiguration()));
         _cookieController.ControllerContext = controllerContext;
         _cookieController.TempData = Substitute.For<ITempDataDictionary>();
     }

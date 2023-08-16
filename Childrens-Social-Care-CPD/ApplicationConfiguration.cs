@@ -11,6 +11,7 @@ public class ApplicationConfiguration : IApplicationConfiguration
     public string ContentfulPreviewHost => "preview.contentful.com";
     public string ContentfulPreviewId => ValueOrStringEmpty("CPD_PREVIEW_KEY");
     public string ContentfulSpaceId => ValueOrStringEmpty("CPD_SPACE_ID");
+    public bool DisableSecureCookies => ValueOrStringEmpty("CPD_DISABLE_SECURE_COOKIES") == "true";
     public string GitHash => ValueOrStringEmpty("VCS-REF");
     public string GoogleTagManagerKey => ValueOrStringEmpty("CPD_GOOGLEANALYTICSTAG");
 }

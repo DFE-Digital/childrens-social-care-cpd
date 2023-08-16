@@ -10,6 +10,7 @@ public interface IApplicationConfiguration
     string ContentfulPreviewHost { get; }
     string ContentfulPreviewId { get; }
     string ContentfulSpaceId { get; }
+    bool DisableSecureCookies { get; }
     string GitHash { get; }
     string GoogleTagManagerKey { get; }
 }

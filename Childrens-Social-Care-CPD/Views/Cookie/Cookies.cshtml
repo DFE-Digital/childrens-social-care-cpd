@@ -4,9 +4,10 @@
 }
 
 @model CookiesAndAnalyticsConsentModel
+@inject ICookieHelper _cookieHelper;
 
 @{
-    var prefsHaveBeenSet = Url.ActionContext.HttpContext.GetRequestAnalyticsCookieState() != AnalyticsConsentState.NotSet;
+    var prefsHaveBeenSet = _cookieHelper.GetRequestAnalyticsCookieState(Context) != AnalyticsConsentState.NotSet;
 }
 
 @if (ViewBag.ContextModel.PreferenceSet)
