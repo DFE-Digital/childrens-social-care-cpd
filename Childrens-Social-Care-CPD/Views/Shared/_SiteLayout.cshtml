@@ -1,10 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@inject ICookieHelper _cookieHelper;
+
+<!DOCTYPE html>
 <html lang="en" class="govuk-template">
 <head>
     <title>@ViewBag.ContextModel.Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <link href="~/css/application.min.css" rel="stylesheet" />
-    @if (Context.GetRequestAnalyticsCookieState() == AnalyticsConsentState.Accepted)
+    @if (_cookieHelper.GetRequestAnalyticsCookieState(Context) == AnalyticsConsentState.Accepted)
     {
         <partial name="_GoogleAnalyticsPartial" />
     }
