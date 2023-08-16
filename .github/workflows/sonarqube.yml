@@ -55,6 +55,7 @@
               dotnet-sonarscanner begin \
                 /k:"DFE-Digital_childrens-social-care-cpd" \
                 /o:"dfe-digital" \
+                /d:sonar.qualitygate.wait=true \
                 /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml \
                 /d:sonar.exclusions="**/*.css,**/*.scss,**/Models/*" \
                 /d:sonar.test.exclusions="Childrens-Social-Care-CPD-Tests/**/*" \
