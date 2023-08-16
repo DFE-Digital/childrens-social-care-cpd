@@ -9,13 +9,6 @@
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>.</DockerfileContext>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Content Remove="compilerconfig.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="compilerconfig.json" />
-  </ItemGroup>
 	<ItemGroup>
 		<InternalsVisibleTo Include="Childrens-Social-Care-CPD-Tests" />
 	</ItemGroup>
@@ -33,9 +26,6 @@
   <ItemGroup>
     <Folder Include="Properties\" />
     <Folder Include="wwwroot\css\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="compilerconfig.json" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="Views\Shared\_Footer.cshtml">
