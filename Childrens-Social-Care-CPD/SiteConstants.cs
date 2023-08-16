@@ -2,9 +2,6 @@
 
 public static class SiteConstants
 {
-    public const string ANALYTICSCOOKIENAME = "cookie_consent";
-    public const string ANALYTICSCOOKIEACCEPTED = "accept";
-    public const string ANALYTICSCOOKIEREJECTED = "reject";
     public const string HEADING1 = "h1";
     public const string HEADING2 = "h2";
     public const string HEADING3 = "h3";

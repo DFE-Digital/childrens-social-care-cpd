@@ -46,11 +46,11 @@
                 <div class="govuk-radios__item">
                     @if (Model.ConsentState == AnalyticsConsentState.Accepted)
                     {
-                        <input class="govuk-radios__input" id="analytics-cookies" name="consentValue" type="radio" value="@SiteConstants.ANALYTICSCOOKIEACCEPTED" datatestid="btn-accepted" checked="checked">
+                        <input class="govuk-radios__input" id="analytics-cookies" name="consentValue" type="radio" value="@CookieHelper.ANALYTICSCOOKIEACCEPTED" datatestid="btn-accepted" checked="checked">
                     }
                     else
                     {
-                        <input class="govuk-radios__input" id="analytics-cookies" name="consentValue" type="radio" datatestid="btn-accept" value="@SiteConstants.ANALYTICSCOOKIEACCEPTED">
+                        <input class="govuk-radios__input" id="analytics-cookies" name="consentValue" type="radio" datatestid="btn-accept" value="@CookieHelper.ANALYTICSCOOKIEACCEPTED">
                     }
 
                     <label class="govuk-label govuk-radios__label" for="analytics-cookies">
@@ -60,11 +60,11 @@
                 <div class="govuk-radios__item">
                     @if (Model.ConsentState == AnalyticsConsentState.Rejected)
                     {
-                        <input class="govuk-radios__input" id="analytics-cookies-2" name="consentValue" type="radio" value="@SiteConstants.ANALYTICSCOOKIEREJECTED" datatestid="btn-rejected" checked="checked">
+                        <input class="govuk-radios__input" id="analytics-cookies-2" name="consentValue" type="radio" value="@CookieHelper.ANALYTICSCOOKIEREJECTED" datatestid="btn-rejected" checked="checked">
                     }
                     else
                     {
-                        <input class="govuk-radios__input" id="analytics-cookies-2" name="consentValue" type="radio" datatestid="btn-reject" value="@SiteConstants.ANALYTICSCOOKIEREJECTED">
+                        <input class="govuk-radios__input" id="analytics-cookies-2" name="consentValue" type="radio" datatestid="btn-reject" value="@CookieHelper.ANALYTICSCOOKIEREJECTED">
                     }
                     <label class="govuk-label govuk-radios__label" for="analytics-cookies-2">
                         No

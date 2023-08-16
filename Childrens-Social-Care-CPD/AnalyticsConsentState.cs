@@ -13,8 +13,8 @@ public static class AnalyticsConsentStateHelper
     {
         return value switch
         {
-            SiteConstants.ANALYTICSCOOKIEACCEPTED => AnalyticsConsentState.Accepted,
-            SiteConstants.ANALYTICSCOOKIEREJECTED => AnalyticsConsentState.Rejected,
+            CookieHelper.ANALYTICSCOOKIEACCEPTED => AnalyticsConsentState.Accepted,
+            CookieHelper.ANALYTICSCOOKIEREJECTED => AnalyticsConsentState.Rejected,
             _ => AnalyticsConsentState.NotSet
         };
     }
