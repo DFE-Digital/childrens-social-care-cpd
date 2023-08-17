@@ -1,4 +1,4 @@
-﻿@using Childrens_Social_Care_CPD.Constants
+﻿@inject ICookieHelper _cookieHelper;
 
 <!DOCTYPE html>
 <html lang="en" class="govuk-template">
@@ -6,9 +6,9 @@
     <title>@ViewBag.ContextModel.Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <link href="~/css/application.min.css" rel="stylesheet" />
-    @if (Context.GetRequestAnalyticsCookieState() == AnalyticsConsentState.Accepted)
+    @if (_cookieHelper.GetRequestAnalyticsCookieState(Context) == AnalyticsConsentState.Accepted)
     {
-        <partial name="../PartialViews/GoogleAnalyticsPartial" />
+        <partial name="_GoogleAnalyticsPartial" />
     }
 
     <link rel="shortcut icon" sizes="16x16 32x32 48x48" href="~/assets/images/favicon.ico" type="image/x-icon">

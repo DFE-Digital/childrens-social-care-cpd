@@ -1,9 +1,4 @@
-﻿@using System.Text.RegularExpressions;
-@using Childrens_Social_Care_CPD.Constants
-@using Childrens_Social_Care_CPD.Enums
-@addTagHelper *, Contentful.AspNetCore
-
-@{
+﻿@{
     var request = Url.ActionContext.HttpContext.Request;
     var href = Html.UrlEncoder.Encode($"{request.Scheme}://{request.Host}{request.PathBase}{request.Path}{request.QueryString}");
 }
@@ -15,7 +10,7 @@
                 <h2 class="govuk-visually-hidden">Footer links</h2>
                 <ul class="govuk-footer__inline-list">
                     <li class="govuk-footer__inline-list-item">
-                    <a class="govuk-footer__link" datatestid="Privacy policy" href="/content/privacy">
+                    <a class="govuk-footer__link" datatestid="Privacy policy" href="/privacy">
                             Privacy policy
                         </a>
                     </li>
@@ -26,12 +21,12 @@
                         </a>
                     </li>
                     <li class="govuk-footer__inline-list-item">
-                    <a class="govuk-footer__link" datatestid="Accessibility" href="/content/accessibility">
+                    <a class="govuk-footer__link" datatestid="Accessibility" href="/accessibility">
                             Accessibility
                         </a>
                     </li>
                     <li class="govuk-footer__inline-list-item">
-                    <a class="govuk-footer__link" datatestid="Terms and conditions" href="/content/termsconditions">
+                    <a class="govuk-footer__link" datatestid="Terms and conditions" href="/termsconditions">
                             Terms and conditions
                         </a>
                     </li>

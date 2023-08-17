@@ -1,20 +1,12 @@
-﻿using Childrens_Social_Care_CPD.Constants;
-using Childrens_Social_Care_CPD.Contentful;
-using Childrens_Social_Care_CPD.Contentful.Models;
-using Childrens_Social_Care_CPD.Interfaces;
+﻿using Childrens_Social_Care_CPD.Contentful.Models;
 using Childrens_Social_Care_CPD_Tests.Contentful;
 using Contentful.Core.Models;
 using Contentful.Core.Search;
 using FluentAssertions;
-using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using NSubstitute;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -25,7 +17,7 @@ public class ContentControllerServerTests
 {
     private CpdTestServerApplication _application;
     private HttpClient _httpClient;
-    private static string ContentUrl = "/content";
+    private static string ContentUrl = "/";
 
     [SetUp]
     public void SetUp()

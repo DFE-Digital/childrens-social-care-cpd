@@ -1,12 +1,9 @@
-﻿
-@using Childrens_Social_Care_CPD.Contentful;
-@using Contentful.Core.Models
-@using Microsoft.AspNetCore.Http.Features
-@using System.Text
-@using Childrens_Social_Care_CPD.Constants;
+﻿@using Childrens_Social_Care_CPD.Contentful;
+
+@inject ICookieHelper _cookieHelper;
 
 @{
-    var consentState = Context.GetRequestAnalyticsCookieState();
+    var consentState = _cookieHelper.GetRequestAnalyticsCookieState(Context);
     var headingText = "Cookies on Develop your career in child and family social work";
     var hide = ViewBag.ContextModel.HideConsent ?? false;
     var preferenceSet = ViewBag.ContextModel.PreferenceSet ?? false;

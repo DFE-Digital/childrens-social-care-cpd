@@ -1,6 +1,5 @@
 ﻿using Childrens_Social_Care_CPD.Contentful;
 using Childrens_Social_Care_CPD.Contentful.Models;
-using Childrens_Social_Care_CPD.Interfaces;
 using Childrens_Social_Care_CPD.Models;
 using Contentful.Core.Search;
 using Microsoft.AspNetCore.Mvc;
@@ -32,7 +31,7 @@ namespace Childrens_Social_Care_CPD.Controllers
         }
 
         [HttpGet]
-        [Route("content/")]
+        [Route("/")]
         /*
             Filter permissable page name format. Basically only accept:
                 foo
@@ -45,7 +44,7 @@ namespace Childrens_Social_Care_CPD.Controllers
                 <=
             Etc.
         */
-        [Route("content/{*pagename:regex(^[[0-9a-z]](\\/?[[0-9a-z\\-]])*\\/?$)}")] 
+        [Route("/{*pagename:regex(^[[0-9a-z]](\\/?[[0-9a-z\\-]])*\\/?$)}")] 
         public async Task<IActionResult> Index(string pageName, bool preferenceSet = false)
         {
             var pageContent = await FetchPageContentAsync(pageName);

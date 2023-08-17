@@ -1,4 +1,4 @@
-﻿using Childrens_Social_Care_CPD.Constants;
+﻿using Childrens_Social_Care_CPD;
 using Childrens_Social_Care_CPD.Contentful.Models;
 using Contentful.Core.Models;
 using Contentful.Core.Search;
@@ -38,8 +38,8 @@ public class CookieControllerServerTests
     #region SetPreferences
 
     [Test]
-    [TestCase(SiteConstants.ANALYTICSCOOKIEACCEPTED)]
-    [TestCase(SiteConstants.ANALYTICSCOOKIEREJECTED)]
+    [TestCase(CookieHelper.ANALYTICSCOOKIEACCEPTED)]
+    [TestCase(CookieHelper.ANALYTICSCOOKIEREJECTED)]
     public async Task SetPreferences_Sets_Cookie(string consentValue)
     {
         // arrange
@@ -75,9 +75,9 @@ public class CookieControllerServerTests
         cookie.Value.First().Should().StartWith($"cookie_consent=;");
     }
 
-    [TestCase(SiteConstants.ANALYTICSCOOKIEACCEPTED, "/content?preferenceSet=true")]
-    [TestCase(SiteConstants.ANALYTICSCOOKIEREJECTED, "/content?preferenceSet=true")]
-    [TestCase(null, "/content")]
+    [TestCase(CookieHelper.ANALYTICSCOOKIEACCEPTED, "?preferenceSet=true")]
+    [TestCase(CookieHelper.ANALYTICSCOOKIEREJECTED, "?preferenceSet=true")]
+    [TestCase(null, "/")]
     public async Task SetPreferences_Redirects_To_Correct_Url_When_No_Referer_Or_Redirect(string consentValue, string expected)
     {
         // arrange
@@ -93,13 +93,13 @@ public class CookieControllerServerTests
         response.Headers.Location.OriginalString.Should().EndWith(expected);
     }
 
-    [TestCase(SiteConstants.ANALYTICSCOOKIEACCEPTED, "/content/item?preferenceSet=true")]
-    [TestCase(SiteConstants.ANALYTICSCOOKIEREJECTED, "/content/item?preferenceSet=true")]
-    [TestCase(null, "/content/item")]
+    [TestCase(CookieHelper.ANALYTICSCOOKIEACCEPTED, "/item?preferenceSet=true")]
+    [TestCase(CookieHelper.ANALYTICSCOOKIEREJECTED, "/item?preferenceSet=true")]
+    [TestCase(null, "/item")]
     public async Task SetPreferences_Redirect_Falls_Back_To_Referrer(string consentValue, string expected)
     {
         // arrange
-        var referer = "/content/item";
+        var referer = "/item";
         var uri = new Uri(_httpClient.BaseAddress, referer);
         _httpClient.DefaultRequestHeaders.Referrer = uri;
 
@@ -115,13 +115,13 @@ public class CookieControllerServerTests
         response.Headers.Location.PathAndQuery.Should().Be(expected);
     }
 
-    [TestCase(SiteConstants.ANALYTICSCOOKIEACCEPTED, "/content/item?preferenceSet=true")]
-    [TestCase(SiteConstants.ANALYTICSCOOKIEREJECTED, "/content/item?preferenceSet=true")]
-    [TestCase(null, "/content/item")]
+    [TestCase(CookieHelper.ANALYTICSCOOKIEACCEPTED, "/item?preferenceSet=true")]
+    [TestCase(CookieHelper.ANALYTICSCOOKIEREJECTED, "/item?preferenceSet=true")]
+    [TestCase(null, "/item")]
     public async Task SetPreferences_Redirects_Local_Relative_Url(string consentValue, string expected)
     {
         // arrange
-        var redirectTo = "/content/item";
+        var redirectTo = "/item";
         var content = new List<KeyValuePair<string, string>>()
         {
             new KeyValuePair<string, string>("consentValue", consentValue),
@@ -138,13 +138,13 @@ public class CookieControllerServerTests
         response.Headers.Location.OriginalString.Should().Be(expected);
     }
 
-    [TestCase(SiteConstants.ANALYTICSCOOKIEACCEPTED, "/content/item?preferenceSet=true")]
-    [TestCase(SiteConstants.ANALYTICSCOOKIEREJECTED, "/content/item?preferenceSet=true")]
-    [TestCase(null, "/content/item")]
+    [TestCase(CookieHelper.ANALYTICSCOOKIEACCEPTED, "/item?preferenceSet=true")]
+    [TestCase(CookieHelper.ANALYTICSCOOKIEREJECTED, "/item?preferenceSet=true")]
+    [TestCase(null, "/item")]
     public async Task SetPreferences_Redirects_Local_Absolute_Url(string consentValue, string expected)
     {
         // arrange
-        var redirectTo = "/content/item";
+        var redirectTo = "/item";
         var uri = new Uri(_httpClient.BaseAddress, redirectTo);
         var expectedUri = new Uri(_httpClient.BaseAddress, expected);
         var content = new List<KeyValuePair<string, string>>()
@@ -163,9 +163,9 @@ public class CookieControllerServerTests
         response.Headers.Location.OriginalString.Should().Be(expectedUri.ToString());
     }
 
-    [TestCase(SiteConstants.ANALYTICSCOOKIEACCEPTED, "/content?preferenceSet=true")]
-    [TestCase(SiteConstants.ANALYTICSCOOKIEREJECTED, "/content?preferenceSet=true")]
-    [TestCase(null, "/content")]
+    [TestCase(CookieHelper.ANALYTICSCOOKIEACCEPTED, "/?preferenceSet=true")]
+    [TestCase(CookieHelper.ANALYTICSCOOKIEREJECTED, "/?preferenceSet=true")]
+    [TestCase(null, "/")]
     public async Task SetPreferences_Redirects_Non_Local_Absolute_Url_To_Local(string consentValue, string expected)
     {
         // arrange

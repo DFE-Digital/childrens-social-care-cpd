@@ -9,7 +9,7 @@ test.describe('Cookies @cookie', () => {
     test.describe('Banner', () => {
 
         test.beforeEach(async ({ page }) => {
-            await page.goto('content')
+            await page.goto('/')
         })
 
         test.describe('Interactions', () => {
@@ -111,7 +111,7 @@ test.describe('Cookies @cookie', () => {
         })
 
         test('When cookies have been accepted, the \'Yes\' radio button is selected', async ({ page }) => {
-            await page.goto('/content')
+            await page.goto('/')
             await page.getByRole('button', { name: 'Accept analytics cookies' }).click()
             await page.goto('/cookies')
 
@@ -120,7 +120,7 @@ test.describe('Cookies @cookie', () => {
         })
 
         test('When cookies have been rejected, the \'No\' radio button is selected', async ({ page }) => {
-            await page.goto('/content')
+            await page.goto('/')
             await page.getByRole('button', { name: 'Reject analytics cookies' }).click()
             await page.goto('/cookies')
 
