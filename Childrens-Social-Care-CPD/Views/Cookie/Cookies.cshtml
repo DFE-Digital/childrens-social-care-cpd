@@ -1,15 +1,13 @@
-﻿@using Childrens_Social_Care_CPD.Constants;
-@using Childrens_Social_Care_CPD.Contentful.Models;
-@using Childrens_Social_Care_CPD.Contentful;
-
+﻿@using Childrens_Social_Care_CPD.Contentful;
 @{
     Layout = "_DefaultPageLayout";
 }
 
 @model CookiesAndAnalyticsConsentModel
+@inject ICookieHelper _cookieHelper;
 
 @{
-    var prefsHaveBeenSet = Url.ActionContext.HttpContext.GetRequestAnalyticsCookieState() != AnalyticsConsentState.NotSet;
+    var prefsHaveBeenSet = _cookieHelper.GetRequestAnalyticsCookieState(Context) != AnalyticsConsentState.NotSet;
 }
 
 @if (ViewBag.ContextModel.PreferenceSet)
@@ -49,11 +47,11 @@
                 <div class="govuk-radios__item">
                     @if (Model.ConsentState == AnalyticsConsentState.Accepted)
                     {
-                        <input class="govuk-radios__input" id="analytics-cookies" name="consentValue" type="radio" value="@SiteConstants.ANALYTICSCOOKIEACCEPTED" datatestid="btn-accepted" checked="checked">
+                        <input class="govuk-radios__input" id="analytics-cookies" name="consentValue" type="radio" value="@CookieHelper.ANALYTICSCOOKIEACCEPTED" datatestid="btn-accepted" checked="checked">
                     }
                     else
                     {
-                        <input class="govuk-radios__input" id="analytics-cookies" name="consentValue" type="radio" datatestid="btn-accept" value="@SiteConstants.ANALYTICSCOOKIEACCEPTED">
+                        <input class="govuk-radios__input" id="analytics-cookies" name="consentValue" type="radio" datatestid="btn-accept" value="@CookieHelper.ANALYTICSCOOKIEACCEPTED">
                     }
 
                     <label class="govuk-label govuk-radios__label" for="analytics-cookies">
@@ -63,11 +61,11 @@
                 <div class="govuk-radios__item">
                     @if (Model.ConsentState == AnalyticsConsentState.Rejected)
                     {
-                        <input class="govuk-radios__input" id="analytics-cookies-2" name="consentValue" type="radio" value="@SiteConstants.ANALYTICSCOOKIEREJECTED" datatestid="btn-rejected" checked="checked">
+                        <input class="govuk-radios__input" id="analytics-cookies-2" name="consentValue" type="radio" value="@CookieHelper.ANALYTICSCOOKIEREJECTED" datatestid="btn-rejected" checked="checked">
                     }
                     else
                     {
-                        <input class="govuk-radios__input" id="analytics-cookies-2" name="consentValue" type="radio" datatestid="btn-reject" value="@SiteConstants.ANALYTICSCOOKIEREJECTED">
+                        <input class="govuk-radios__input" id="analytics-cookies-2" name="consentValue" type="radio" datatestid="btn-reject" value="@CookieHelper.ANALYTICSCOOKIEREJECTED">
                     }
                     <label class="govuk-label govuk-radios__label" for="analytics-cookies-2">
                         No

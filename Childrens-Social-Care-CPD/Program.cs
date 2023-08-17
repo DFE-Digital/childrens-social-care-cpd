@@ -1,13 +1,10 @@
 using Childrens_Social_Care_CPD;
-using Childrens_Social_Care_CPD.ActionFilters;
-using Childrens_Social_Care_CPD.Constants;
 using Childrens_Social_Care_CPD.Contentful;
-using Childrens_Social_Care_CPD.Interfaces;
-using Childrens_Social_Care_CPD.Services;
 using Contentful.AspNetCore;
 using Contentful.Core.Configuration;
 using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 using Microsoft.Extensions.Logging.AzureAppServices;
+using System.Diagnostics.CodeAnalysis;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.ConfigureLogging(logging => logging.AddAzureWebAppDiagnostics())
@@ -24,28 +21,23 @@ builder.Host.ConfigureLogging(logging => logging.AddAzureWebAppDiagnostics())
 );
 
 // Add services to the container.
+var applicationConfiguration = new ApplicationConfiguration();
+
 builder.Services.AddResponseCompression();
 builder.Services.AddControllersWithViews();
-builder.Services.AddTransient<CPDActionFilter>();
-builder.Services.AddContentful(ContentfulConfiguration.GetContentfulConfiguration(builder.Configuration));
-builder.Services.AddTransient<IContentfulDataService, ContentfulDataService>();
+builder.Services.AddContentful(ContentfulConfiguration.GetContentfulConfiguration(builder.Configuration, applicationConfiguration));
 builder.Services.AddTransient<IContentTypeResolver, EntityResolver>();
 builder.Services.AddTransient<ICpdContentfulClient, CpdContentfulClient>();
+builder.Services.AddSingleton<IApplicationConfiguration>(applicationConfiguration);
+builder.Services.AddSingleton<ICookieHelper, CookieHelper>();
 
 var options = new ApplicationInsightsServiceOptions
 {
-    ConnectionString = Environment.GetEnvironmentVariable(SiteConstants.CPD_INSTRUMENTATION_CONNECTIONSTRING) ?? String.Empty
+    ConnectionString = applicationConfiguration.AppInsightsConnectionString
 };
 
 builder.Services.AddApplicationInsightsTelemetry(options: options);
 var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
 
 app.UseResponseCompression();
 app.UseExceptionHandler("/error/error");
@@ -55,6 +47,12 @@ app.UseRouting();
 app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=CPD}/{action=LandingPage}");
+    pattern: "{controller=Content}/{action=Index}");
 
 app.Run();
+
+[ExcludeFromCodeCoverage]
+public partial class Program
+{
+    protected Program() { }
+}

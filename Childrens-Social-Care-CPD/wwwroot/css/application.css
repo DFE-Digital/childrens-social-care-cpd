@@ -1,4 +1,4 @@
-﻿@charset "UTF-8";
+@charset "UTF-8";
 :root {
   --govuk-frontend-version: "4.7.0";
 }
@@ -10183,3 +10183,5 @@ body, p, h1, h2, h3, h4, h5, h6, a, span, div, table, th, td, blockquote, li, dt
 .dfe-vertical-nav__section .dfe-vertical-nav__section.dfe-vertical-nav__section-item--current .dfe-vertical-nav__link {
   font-weight: 700;
 }
+
+/*# sourceMappingURL=application.css.map */
