@@ -8,8 +8,8 @@
 @functions {
     public static string ParseHyperlinkHelper(IContent content)
     {
-        var linkElement = ((Contentful.Core.Models.Hyperlink)content);
-        var linkText = ((Contentful.Core.Models.Text)(linkElement).Content[0]).Value;
+        var linkElement = ((Hyperlink)content);
+        var linkText = ((Text)(linkElement).Content[0]).Value;
         var linkHtmlString = string.Format(("<a class=\"{0}\" datatestid={1} href={1}>{2}</a>"), "govuk-link", linkElement.Data.Uri, linkText);
         return linkHtmlString;
     }
@@ -19,7 +19,7 @@
         var tagBuilder = new TagBuilder(tag);
         foreach (var headerContent in ((IHeading)content).Content)
         {
-            if (headerContent.GetType() == typeof(Text) && !string.IsNullOrEmpty((((Contentful.Core.Models.Text)headerContent).Value)))
+            if (headerContent.GetType() == typeof(Text) && !string.IsNullOrEmpty((((Text)headerContent).Value)))
             {
                 tagBuilder.InnerHtml.Append(((Text)headerContent).Value);
             }
@@ -32,52 +32,66 @@
         return tagBuilder;
     }
 
-    public async Task RenderParagraph(Paragraph paragraph)
+    public async Task RenderParagraph(Paragraph contentfulParagraph)
     {
-        if (paragraph.Content.Any(c => c.GetType() == typeof(Hyperlink)))
+        var paragraph = new TagBuilder("p");
+        paragraph.AddCssClass("govuk-body-m");
+        @paragraph.RenderStartTag();
+
+        foreach (var content in contentfulParagraph.Content)
         {
-            StringBuilder contentBuilder = new StringBuilder();
-            @foreach (var content in paragraph.Content)
+            switch (content)
             {
-                if (content.GetType() == typeof(Text))
-                {
-                    contentBuilder.Append((((Contentful.Core.Models.Text)content).Value));
-                }
-                if (content.GetType() == typeof(Hyperlink))
-                {
-                    var linkElement = ((Contentful.Core.Models.Hyperlink)content);
-                    var linkText = ((Contentful.Core.Models.Text)(linkElement).Content[0]).Value;
-                    contentBuilder.Append(string.Format(("<a class=\"govuk-link\" href={0}>{1}</a>"), linkElement.Data.Uri, linkText));
-                }
-            }
-            @Html.Raw($"<p class={"govuk-body-m"}>{contentBuilder.ToString()}</p>")
-        }
-        else
-        {
-            @foreach (var content in paragraph.Content)
-            {
-                switch (content)
-                {
-                    case Text text : { 
+                case Text text:
+                    {
                         if (!string.IsNullOrEmpty(text.Value))
                         {
-                             <p class="govuk-body-m">@text.Value</p>
+                            @RenderParagraphText(text)
                         }
-                        break; 
+                        break;
                     }
-                    case EntryStructure entryStructure: {
+                case EntryStructure entryStructure:
+                    {
                         switch (entryStructure.Data.Target)
                         {
-                            case RoleList roleList : {
-                                await Html.RenderPartialAsync("_InlineRoleList", roleList);
-                                break;
-                            }
+                            case RoleList roleList:
+                                {
+
+                                    await Html.RenderPartialAsync("_InlineRoleList", roleList);
+                                    break;
+                                }
                         }
-                        break; 
+                        break;
                     }
-                }
+                case (Hyperlink hyperlink):
+                    {
+                        var linkText = (hyperlink.Content.FirstOrDefault() as Text)?.Value;
+                        var anchor = new TagBuilder("a");
+                        anchor.AddCssClass("govuk-link");
+                        anchor.Attributes.Add("href", hyperlink.Data.Uri);
+                        anchor.InnerHtml.SetContent(linkText);
+                        @anchor;
+                        break;
+                    }
             }
         }
+
+        @paragraph.RenderEndTag();
+    }
+
+    public IHtmlContent RenderParagraphText(Text text)
+    {
+        var htmlContentBuilder = new HtmlContentBuilder();
+
+        var parts = text.Value?.Split("\n");
+        for (var index = 0; index < parts.Length - 1; index++)
+        {
+            htmlContentBuilder.Append(parts[index]);
+            htmlContentBuilder.AppendHtml("<br>");
+        }
+        htmlContentBuilder.Append(parts.Last());
+
+        return htmlContentBuilder;
     }
 
     public void RenderList(List list)
@@ -88,7 +102,7 @@
 
                 @foreach (var link in list.Content)
                 {
-                    var innerElement = (Contentful.Core.Models.Paragraph)(((Contentful.Core.Models.ListItem)link).Content[0]);
+                    var innerElement = (Paragraph)(((ListItem)link).Content[0]);
                     StringBuilder contentBuilder = new StringBuilder();
 
                     if (@innerElement.Content.Any(c => c.GetType() == typeof(Hyperlink)))
@@ -97,19 +111,19 @@
                         {
                             if (content.GetType() == typeof(Text))
                             {
-                                contentBuilder.Append((((Contentful.Core.Models.Text)content).Value));
+                                contentBuilder.Append((((Text)content).Value));
                             }
                             if (content.GetType() == typeof(Hyperlink))
                             {
-                                var linkElement = ((Contentful.Core.Models.Hyperlink)content);
-                                var linkText = ((Contentful.Core.Models.Text)(linkElement).Content[0]).Value;
+                                var linkElement = ((Hyperlink)content);
+                                var linkText = ((Text)(linkElement).Content[0]).Value;
                                 contentBuilder.Append(string.Format(("<a href={0}>{1}</a>"), linkElement.Data.Uri, linkText));
                             }
                         }
                     }
                     else
                     {
-                        contentBuilder.Append((((Contentful.Core.Models.Text)innerElement.Content[0]).Value));
+                        contentBuilder.Append((((Text)innerElement.Content[0]).Value));
                     }
                     <li>@Html.Raw(contentBuilder.ToString())</li>
                 }
@@ -125,13 +139,13 @@
             <table class="govuk-table">
                 @foreach (TableRow row in table.Content)
                 {
-                    if (@row.Content.Any(x => x.GetType() == typeof(Contentful.Core.Models.TableHeader)))
+                    if (@row.Content.Any(x => x.GetType() == typeof(TableHeader)))
                     {
                         <thead class="govuk-table__head">
                             <tr class="govuk-table__row">
                                 @foreach (TableHeader header in @row.Content)
                                 {
-                                    <th scope="col" class="govuk-table__header">@(((Contentful.Core.Models.Text)((Contentful.Core.Models.Paragraph)header.Content[0]).Content[0]).Value)</th>
+                                    <th scope="col" class="govuk-table__header">@(((Text)((Paragraph)header.Content[0]).Content[0]).Value)</th>
                                 }
                             </tr>
                         </thead>
@@ -140,12 +154,12 @@
                 <tbody class="govuk-table__body">
                     @foreach (TableRow row in table.Content)
                     {
-                        if (@row.Content.Any(x => x.GetType() == typeof(Contentful.Core.Models.TableCell)))
+                        if (@row.Content.Any(x => x.GetType() == typeof(TableCell)))
                         {
                             <tr class="govuk-table__row">
                                 @foreach (TableCell tableCell in @row.Content)
                                 {
-                                    <td class="govuk-table__cell">@(((Contentful.Core.Models.Text)((Contentful.Core.Models.Paragraph)tableCell.Content[0]).Content[0]).Value)</td>
+                                    <td class="govuk-table__cell">@(((Text)((Paragraph)tableCell.Content[0]).Content[0]).Value)</td>
                                 }
                             </tr>
                         }
