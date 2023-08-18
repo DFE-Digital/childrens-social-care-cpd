@@ -135,11 +135,6 @@
             </table>
         }
     }
-
-    void RenderHr(HorizontalRuler hr)
-    {
-        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
-    }
 }
 
 @{
@@ -149,7 +144,7 @@
     {
         switch (node)
         {
-            case HorizontalRuler hr: RenderHr(hr); break;
+            case HorizontalRuler hr: @hr.ToHtml(); break;
             case Paragraph paragraph: await RenderParagraph(paragraph); break;
             case List list: RenderList(list); break;
             case Heading1 heading: @heading.ToHtml(); break;

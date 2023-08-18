@@ -801,4 +801,24 @@ public class ContentfulModelExtensionsTests
     #endregion
 
     #endregion
+
+    #region HorizontalRuler
+
+    [Test]
+    public void HorizontalRuler_Renders()
+    {
+        // arrange
+        var stringWriter = new StringWriter();
+        var horizontalRuler = new HorizontalRuler();
+
+        // act
+        var htmlContent = horizontalRuler.ToHtml();
+        htmlContent.WriteTo(stringWriter, new HtmlTestEncoder());
+        var actual = stringWriter.ToString();
+
+        // assert
+        actual.Should().Be("<hr class=\"HtmlEncode[[govuk-section-break govuk-section-break--m govuk-section-break--visible]]\" />");
+    }
+
+    #endregion
 }
