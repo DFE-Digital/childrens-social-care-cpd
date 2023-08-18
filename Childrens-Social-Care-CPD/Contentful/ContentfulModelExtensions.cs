@@ -1,4 +1,5 @@
-﻿using Contentful.Core.Models;
+﻿using Childrens_Social_Care_CPD.Contentful.Models;
+using Contentful.Core.Models;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -110,4 +111,140 @@ public static class ContentfulModelExtensions
         hr.AddCssClass("govuk-section-break govuk-section-break--m govuk-section-break--visible");
         return hr;
     }
+
+    public static IHtmlContent ToHtml(this Paragraph contentfulParagraph)
+    {
+        var p = new TagBuilder("p");
+        p.AddCssClass("govuk-body-m");
+
+        foreach (var content in contentfulParagraph.Content)
+        {
+            switch (content)
+            {
+                case Text text: p.InnerHtml.AppendHtml(text.ToHtml()); break;
+                case EntryStructure entryStructure:
+                    {
+                        switch (entryStructure.Data.Target)
+                        {
+                            case RoleList roleList: p.InnerHtml.AppendHtml(roleList.ToHtml()); break;
+                        }
+                        break;
+                    }
+                case (Hyperlink hyperlink): p.InnerHtml.AppendHtml(hyperlink.ToHtml()); break;
+            }
+        }
+
+        return p;
+    }
+
+    public static IHtmlContent ToHtml(this Quote quote)
+    {
+        var div = new TagBuilder("div");
+        div.AddCssClass("govuk-inset-text");
+
+        foreach (var content in quote.Content)
+        {
+            var paragraph = content as Paragraph;
+            if (paragraph != null)
+            {
+                div.InnerHtml.AppendHtml(paragraph.ToHtml());
+            }
+        }
+
+        return div;
+    }
+
+    public static IHtmlContent ToHtml(this TableCell tableCell)
+    {
+        var td = new TagBuilder("td");
+        td.AddCssClass("govuk-table__cell");
+
+        foreach (var content in tableCell.Content)
+        {
+            switch (content)
+            {
+                case Paragraph paragraph: td.InnerHtml.AppendHtml(paragraph.ToHtml()); break;
+            }
+        }
+
+        return td;
+    }
+
+    public static IHtmlContent ToHtml(this TableHeader tableHeader)
+    {
+        var th = new TagBuilder("th");
+        th.AddCssClass("govuk-table__header");
+        th.Attributes.Add("scope", "col");
+        
+        foreach (var content in tableHeader.Content)
+        {
+            switch (content)
+            {
+                case Paragraph paragraph:
+                    {
+                        foreach (var pContent in paragraph.Content)
+                        {
+                            switch (pContent)
+                            {
+                                case Text text: th.InnerHtml.AppendHtml(text.ToHtml()); break;
+                                case Hyperlink hyperlink: th.InnerHtml.AppendHtml(hyperlink.ToHtml()); break;
+                            }
+                        }
+                        break;
+                    }
+            }
+        }
+
+        return th;
+    }
+
+    public static IHtmlContent ToHtml(this Table contentfulTable)
+    {
+        var table = new TagBuilder("table");
+        table.AddCssClass("govuk-table");
+
+        foreach (TableRow row in contentfulTable.Content)
+        {
+            if (row.Content.Any(x => x.GetType() == typeof(TableHeader)))
+            {
+                var thead = new TagBuilder("thead");
+                thead.AddCssClass("govuk-table__head");
+
+                var tr = new TagBuilder("tr");
+                tr.AddCssClass("govuk-table__row");
+
+                foreach (TableHeader header in @row.Content)
+                {
+                    tr.InnerHtml.AppendHtml(header.ToHtml());
+                }
+
+                thead.InnerHtml.AppendHtml(tr);
+                table.InnerHtml.AppendHtml(thead);
+                break;
+            }
+        }
+
+        var tbody = new TagBuilder("tbody");
+        tbody.AddCssClass("govuk-table__body");
+        
+        foreach (TableRow row in contentfulTable.Content)
+        {
+            if (row.Content.Any(x => x.GetType() == typeof(TableCell)))
+            {
+                var tr = new TagBuilder("tr");
+                tr.AddCssClass("govuk-table__row");
+
+                foreach (TableCell tableCell in @row.Content)
+                {
+                    tr.InnerHtml.AppendHtml(tableCell.ToHtml());
+                }
+
+                tbody.InnerHtml.AppendHtml(tr);
+            }
+        }
+
+        table.InnerHtml.AppendHtml(tbody);
+        return table;
+    }
+
 }
