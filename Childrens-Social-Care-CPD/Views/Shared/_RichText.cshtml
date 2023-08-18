@@ -1,4 +1,5 @@
 ﻿@using Childrens_Social_Care_CPD.Contentful.Models;
+@using Childrens_Social_Care_CPD.Contentful;
 @using Contentful.Core.Models;
 @using Microsoft.AspNetCore.Html;
 @using System.Text;
@@ -6,50 +7,20 @@
 @model Document
 
 @functions {
-    public static string ParseHyperlinkHelper(IContent content)
-    {
-        var linkElement = ((Hyperlink)content);
-        var linkText = ((Text)(linkElement).Content[0]).Value;
-        var linkHtmlString = string.Format(("<a class=\"{0}\" datatestid={1} href={1}>{2}</a>"), "govuk-link", linkElement.Data.Uri, linkText);
-        return linkHtmlString;
-    }
-
-    public static IHtmlContent GetHeadingTagString(IContent content, string tag, string className)
-    {
-        var tagBuilder = new TagBuilder(tag);
-        foreach (var headerContent in ((IHeading)content).Content)
-        {
-            if (headerContent.GetType() == typeof(Text) && !string.IsNullOrEmpty((((Text)headerContent).Value)))
-            {
-                tagBuilder.InnerHtml.Append(((Text)headerContent).Value);
-            }
-
-            if (headerContent.GetType() == typeof(Hyperlink))
-            {
-                tagBuilder.InnerHtml.AppendHtml(@ParseHyperlinkHelper(headerContent));
-            }
-        }
-        return tagBuilder;
-    }
 
     public async Task RenderParagraph(Paragraph contentfulParagraph)
     {
         var paragraph = new TagBuilder("p");
         paragraph.AddCssClass("govuk-body-m");
-        @paragraph.RenderStartTag();
+        @paragraph.RenderStartTag()
 
         foreach (var content in contentfulParagraph.Content)
         {
             switch (content)
             {
                 case Text text:
-                    {
-                        if (!string.IsNullOrEmpty(text.Value))
-                        {
-                            @RenderParagraphText(text)
-                        }
+                        @text.ToHtml()
                         break;
-                    }
                 case EntryStructure entryStructure:
                     {
                         switch (entryStructure.Data.Target)
@@ -64,34 +35,30 @@
                         break;
                     }
                 case (Hyperlink hyperlink):
-                    {
-                        var linkText = (hyperlink.Content.FirstOrDefault() as Text)?.Value;
-                        var anchor = new TagBuilder("a");
-                        anchor.AddCssClass("govuk-link");
-                        anchor.Attributes.Add("href", hyperlink.Data.Uri);
-                        anchor.InnerHtml.SetContent(linkText);
-                        @anchor;
-                        break;
-                    }
+                    @hyperlink.ToHtml()
+                    break;
             }
         }
 
-        @paragraph.RenderEndTag();
+        @paragraph.RenderEndTag()
     }
 
-    public IHtmlContent RenderParagraphText(Text text)
+    public async Task RenderQuote(Quote quote)
     {
-        var htmlContentBuilder = new HtmlContentBuilder();
+        var div = new TagBuilder("div");
+        div.AddCssClass("govuk-inset-text");
+        @div.RenderStartTag()
 
-        var parts = text.Value?.Split("\n");
-        for (var index = 0; index < parts.Length - 1; index++)
+        foreach (var content in quote.Content)
         {
-            htmlContentBuilder.Append(parts[index]);
-            htmlContentBuilder.AppendHtml("<br>");
+            var paragraph = content as Paragraph;
+            if (paragraph != null)
+            {
+                await RenderParagraph(paragraph);
+            }
         }
-        htmlContentBuilder.Append(parts.Last());
 
-        return htmlContentBuilder;
+        @div.RenderEndTag()
     }
 
     public void RenderList(List list)
@@ -176,7 +143,6 @@
 }
 
 @{
-
     if (Model == null) return;
 
     foreach (IContent node in Model.Content ?? Enumerable.Empty<IContent>())
@@ -186,13 +152,14 @@
             case HorizontalRuler hr: RenderHr(hr); break;
             case Paragraph paragraph: await RenderParagraph(paragraph); break;
             case List list: RenderList(list); break;
-            case Heading1: @GetHeadingTagString(node, SiteConstants.HEADING1, SiteConstants.GOVUKHEADINGXL); break;
-            case Heading2: @GetHeadingTagString(node, SiteConstants.HEADING2, SiteConstants.GOVUKHEADINGL); break;
-            case Heading3: @GetHeadingTagString(node, SiteConstants.HEADING3, SiteConstants.GOVUKHEADINGM); break;
-            case Heading4: @GetHeadingTagString(node, SiteConstants.HEADING4, SiteConstants.GOVUKHEADINGM); break;
-            case Heading5: @GetHeadingTagString(node, SiteConstants.HEADING5, SiteConstants.GOVUKHEADINGM); break;
-            case Heading6: @GetHeadingTagString(node, SiteConstants.HEADING6, SiteConstants.GOVUKHEADINGM); break;
+            case Heading1 heading: @heading.ToHtml(); break;
+            case Heading2 heading: @heading.ToHtml(); break;
+            case Heading3 heading: @heading.ToHtml(); break;
+            case Heading4 heading: @heading.ToHtml(); break;
+            case Heading5 heading: @heading.ToHtml(); break;
+            case Heading6 heading: @heading.ToHtml(); break;
             case Table table: RenderTable(table); break;
+            case Quote quote: await RenderQuote(quote); break;
         }
     }
 }
