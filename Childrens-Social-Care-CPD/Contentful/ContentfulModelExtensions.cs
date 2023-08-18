@@ -100,4 +100,14 @@ public static class ContentfulModelExtensions
     {
         return HeadingToHtml("h6", heading);
     }
+
+    public static IHtmlContent ToHtml(this HorizontalRuler horizontalRuler)
+    {
+        var hr = new TagBuilder("hr")
+        {
+            TagRenderMode = TagRenderMode.SelfClosing
+        };
+        hr.AddCssClass("govuk-section-break govuk-section-break--m govuk-section-break--visible");
+        return hr;
+    }
 }
