@@ -4,11 +4,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Childrens_Social_Care_CPD.Contentful.Renderers;
 
-internal class RoleListRenderer : IRenderer<RoleList>
+internal class InlineRoleListRenderer : IRenderer<RoleList>
 {
     private readonly IRenderer<ContentLink> _contentLinkRenderer;
 
-    public RoleListRenderer(IRenderer<ContentLink> contentLinkRenderer)
+    public InlineRoleListRenderer(IRenderer<ContentLink> contentLinkRenderer)
     {
         _contentLinkRenderer = contentLinkRenderer;
     }
@@ -36,7 +36,7 @@ internal class RoleListRenderer : IRenderer<RoleList>
 
     private IHtmlContent NoRoles()
     {
-        var span = new TagBuilder("space");
+        var span = new TagBuilder("span");
         span.InnerHtml.Append("No Roles Available");
         return span;
     }
