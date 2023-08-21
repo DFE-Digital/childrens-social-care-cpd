@@ -1,7 +1,9 @@
 ﻿@using Childrens_Social_Care_CPD.Contentful;
 @using Childrens_Social_Care_CPD.Contentful.Models;
+@using Childrens_Social_Care_CPD.Contentful.Renderers;
 
 @model LinkListCard
+@inject IRenderer<ContentLink> _contentLinkRenderer
 
 <div class="dfe-section-card">
     <h2>@Model.Title</h2>
@@ -10,7 +12,7 @@
         {
             <li>
                 <h3>
-                    @Html.ContentLink(contentLink.Name, contentLink.Uri)
+                    @_contentLinkRenderer.Render(contentLink)
                 </h3>
             </li>
         }
