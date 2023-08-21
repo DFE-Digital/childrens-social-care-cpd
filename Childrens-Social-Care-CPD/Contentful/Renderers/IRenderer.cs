@@ -2,7 +2,7 @@
 
 namespace Childrens_Social_Care_CPD.Contentful.Renderers;
 
-public interface IRenderer<T>
+public interface IRenderer<in T>
 {
     IHtmlContent Render(T item);
 }
