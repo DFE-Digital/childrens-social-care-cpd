@@ -20,47 +20,42 @@ internal class TableRenderer : IRenderer<Table>
         var table = new TagBuilder("table");
         table.AddCssClass("govuk-table");
 
-        foreach (TableRow row in item.Content)
+        var headerRow = item.Content.FirstOrDefault(row => (row as TableRow)?.Content.Any(tableRow => tableRow.GetType() == typeof(TableHeader)) ?? false) as TableRow;
+        if (headerRow != null)
         {
-            if (row.Content.Any(x => x.GetType() == typeof(TableHeader)))
+            var thead = new TagBuilder("thead");
+            thead.AddCssClass("govuk-table__head");
+
+            var tr = new TagBuilder("tr");
+            tr.AddCssClass("govuk-table__row");
+
+            foreach (TableHeader tableHeader in headerRow.Content)
             {
-                var thead = new TagBuilder("thead");
-                thead.AddCssClass("govuk-table__head");
-
-                var tr = new TagBuilder("tr");
-                tr.AddCssClass("govuk-table__row");
-
-                foreach (TableHeader tableHeader in row.Content)
-                {
-                    tr.InnerHtml.AppendHtml(_tableHeaderRenderer.Render(tableHeader));
-                }
-
-                thead.InnerHtml.AppendHtml(tr);
-                table.InnerHtml.AppendHtml(thead);
-                break;
+                tr.InnerHtml.AppendHtml(_tableHeaderRenderer.Render(tableHeader));
             }
+
+            thead.InnerHtml.AppendHtml(tr);
+            table.InnerHtml.AppendHtml(thead);
         }
 
-        var tbody = new TagBuilder("tbody");
-        tbody.AddCssClass("govuk-table__body");
-
-        foreach (TableRow row in item.Content)
+        var bodyRows = item.Content.Where(row => (row as TableRow)?.Content.Any(tableRow => tableRow.GetType() == typeof(TableCell)) ?? false);
+        foreach (TableRow row in bodyRows)
         {
-            if (row.Content.Any(x => x.GetType() == typeof(TableCell)))
+            var tbody = new TagBuilder("tbody");
+            tbody.AddCssClass("govuk-table__body");
+
+            var tr = new TagBuilder("tr");
+            tr.AddCssClass("govuk-table__row");
+
+            foreach (TableCell tableCell in row.Content)
             {
-                var tr = new TagBuilder("tr");
-                tr.AddCssClass("govuk-table__row");
-
-                foreach (TableCell tableCell in row.Content)
-                {
-                    tr.InnerHtml.AppendHtml(_tableCellRenderer.Render(tableCell));
-                }
-
-                tbody.InnerHtml.AppendHtml(tr);
+                tr.InnerHtml.AppendHtml(_tableCellRenderer.Render(tableCell));
             }
+
+            tbody.InnerHtml.AppendHtml(tr);
+            table.InnerHtml.AppendHtml(tbody);
         }
 
-        table.InnerHtml.AppendHtml(tbody);
         return table;
     }
 }
