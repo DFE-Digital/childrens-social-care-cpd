@@ -24,7 +24,7 @@ internal class InlineRoleListRenderer : IRenderer<RoleList>
 
         foreach (var contentItem in item.Roles)
         {
-            var detailedRole = contentItem.Items.FirstOrDefault(x => typeof(DetailedRole) == x.GetType()) as DetailedRole;
+            var detailedRole = contentItem.Items.Find(x => typeof(DetailedRole) == x.GetType()) as DetailedRole;
             if (detailedRole == null) continue;
 
             htmlContentBuilder.AppendHtml(RoleTitle(contentItem.Id, detailedRole));
@@ -34,7 +34,7 @@ internal class InlineRoleListRenderer : IRenderer<RoleList>
         return htmlContentBuilder;
     }
 
-    private IHtmlContent NoRoles()
+    private static IHtmlContent NoRoles()
     {
         var span = new TagBuilder("span");
         span.InnerHtml.Append("No Roles Available");
@@ -59,7 +59,7 @@ internal class InlineRoleListRenderer : IRenderer<RoleList>
         return div;
     }
 
-    private IHtmlContent RoleSummary(DetailedRole detailedRole)
+    private static IHtmlContent RoleSummary(DetailedRole detailedRole)
     {
         var htmlContentBuilder = new HtmlContentBuilder();
         var p = new TagBuilder("p");
