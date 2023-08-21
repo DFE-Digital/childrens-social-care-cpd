@@ -1,11 +1,13 @@
 ﻿@using Childrens_Social_Care_CPD.Contentful.Models;
 @using Childrens_Social_Care_CPD.Contentful;
+@using Childrens_Social_Care_CPD.Contentful.Renderers;
 
 @model RoleList
+@inject IRenderer<RoleList> _roleListRenderer
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <h2>@Model.Title</h2>
-        @Model.ToHtml()
+        @_roleListRenderer.Render(Model)
     </div>
 </div>
