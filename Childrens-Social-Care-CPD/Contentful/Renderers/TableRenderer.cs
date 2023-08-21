@@ -20,7 +20,8 @@ internal class TableRenderer : IRenderer<Table>
         var table = new TagBuilder("table");
         table.AddCssClass("govuk-table");
 
-        var headerRow = item.Content.FirstOrDefault(row => (row as TableRow)?.Content.Any(tableRow => tableRow.GetType() == typeof(TableHeader)) ?? false) as TableRow;
+        var tableRows = item.Content.OfType<TableRow>();
+        var headerRow = tableRows.FirstOrDefault(row => row.Content.Exists(c => c.GetType() == typeof(TableHeader)));
         if (headerRow != null)
         {
             var thead = new TagBuilder("thead");
@@ -29,7 +30,7 @@ internal class TableRenderer : IRenderer<Table>
             var tr = new TagBuilder("tr");
             tr.AddCssClass("govuk-table__row");
 
-            foreach (TableHeader tableHeader in headerRow.Content)
+            foreach (TableHeader tableHeader in headerRow.Content.OfType<TableHeader>())
             {
                 tr.InnerHtml.AppendHtml(_tableHeaderRenderer.Render(tableHeader));
             }
@@ -38,7 +39,7 @@ internal class TableRenderer : IRenderer<Table>
             table.InnerHtml.AppendHtml(thead);
         }
 
-        var bodyRows = item.Content.Where(row => (row as TableRow)?.Content.Any(tableRow => tableRow.GetType() == typeof(TableCell)) ?? false);
+        var bodyRows = tableRows.Where(row => row.Content.Exists(tableRow => tableRow.GetType() == typeof(TableCell)));
         foreach (TableRow row in bodyRows)
         {
             var tbody = new TagBuilder("tbody");
@@ -47,7 +48,7 @@ internal class TableRenderer : IRenderer<Table>
             var tr = new TagBuilder("tr");
             tr.AddCssClass("govuk-table__row");
 
-            foreach (TableCell tableCell in row.Content)
+            foreach (TableCell tableCell in row.Content.OfType<TableCell>())
             {
                 tr.InnerHtml.AppendHtml(_tableCellRenderer.Render(tableCell));
             }
