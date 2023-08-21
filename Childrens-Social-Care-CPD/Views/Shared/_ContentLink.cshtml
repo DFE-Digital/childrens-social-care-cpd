@@ -1,6 +1,8 @@
 ﻿@using Childrens_Social_Care_CPD.Contentful;
 @using Childrens_Social_Care_CPD.Contentful.Models;
+@using Childrens_Social_Care_CPD.Contentful.Renderers;
 
 @model ContentLink
+@inject IRenderer<ContentLink> _contentLinkRenderer
 
-<p>@Html.ContentLink(Model.Name, Model.Uri)</p>
+<p>@_contentLinkRenderer.Render(Model)</p>
