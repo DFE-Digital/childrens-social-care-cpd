@@ -139,7 +139,7 @@ public class InlineRoleListRendererTests
         };
 
         _contentLinkRenderer.Render(Arg.Any<ContentLink>()).Returns(new HtmlString("AAA"));
-        var expected = $".*?{Regex.Escape($"<p class=\"HtmlEncode[[govuk-body-s]]\">HtmlEncode[[{detailedRole.Summary}]]HtmlEncode[[.]]</p>")}.*";
+        var expected = $".*?{Regex.Escape($"<p class=\"HtmlEncode[[govuk-body]]\">HtmlEncode[[{detailedRole.Summary}]]</p>")}.*";
 
         // act
         var htmlContent = _sut.Render(roleList);
