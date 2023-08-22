@@ -79,47 +79,41 @@
             </div>
         </dl>
 
-        <h2>Who it’s for</h2>
-        <p class="govuk-body-m">
-            @{
-                await Html.RenderPartialAsync("_RichText", Model.WhoItsFor); 
-            }
-        </p>
+        @if (Model.WhoItsFor != null)
+        {
+            <h2>Who it’s for</h2>
+            await Html.RenderPartialAsync("_RichText", Model.WhoItsFor);
+        }
 
-        <h2>What you’ll learn</h2>
-        <p class="govuk-body-m">
-            @{
-                await Html.RenderPartialAsync("_RichText", Model.WhatYoullLearn);
-            }
-        </p>
+        @if (Model.WhatYoullLearn != null)
+        {
+            <h2>What you’ll learn</h2>
+            await Html.RenderPartialAsync("_RichText", Model.WhatYoullLearn);
+        }
 
-        <h2>What you’ll get</h2>
-        <p class="govuk-body-m">
-            @{
-                await Html.RenderPartialAsync("_RichText", Model.WhatYoullGet);
-            }
-        </p>
+        @if (Model.WhatYoullGet != null)
+        {
+            <h2>What you’ll get</h2>
+            await Html.RenderPartialAsync("_RichText", Model.WhatYoullGet);
+        }
 
-        <h2>How it’s delivered</h2>
-        <p class="govuk-body-m">
-            @{
-                await Html.RenderPartialAsync("_RichText", Model.HowItsDelivered);
-            }
-        </p>
+        @if (Model.HowItsDelivered != null)
+        {
+            <h2>How it’s delivered</h2>
+            await Html.RenderPartialAsync("_RichText", Model.HowItsDelivered);
+        }
+        
+        @if (Model.Funding != null)
+        {
+            <h2>Funding</h2>
+            await Html.RenderPartialAsync("_RichText", Model.Funding);
+        }
+        
+        @if (Model.NextSteps != null)
+        {
+            <h2>Next steps</h2>
+            await Html.RenderPartialAsync("_RichText", Model.NextSteps);
+        }
 
-        <h2>Funding</h2>
-        <p class="govuk-body-m">
-            @{
-                await Html.RenderPartialAsync("_RichText", Model.Funding);
-            }
-        </p>
-
-        <h2>Next steps</h2>
-        <p class="govuk-body-m">
-            @{
-                await Html.RenderPartialAsync("_RichText", Model.NextSteps);
-            }
-        </p>
-       
     </div>
 </div>
