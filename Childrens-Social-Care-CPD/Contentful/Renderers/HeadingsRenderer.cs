@@ -6,23 +6,25 @@ namespace Childrens_Social_Care_CPD.Contentful.Renderers;
 
 internal class HeadingRendererBase
 {
-    public HeadingRendererBase(IRenderer<Text> textRenderer)
-    {
-        TextRenderer = textRenderer;
-    }
+    private readonly IRenderer<Text> _textRenderer;
+    private readonly IRenderer<Hyperlink> _hyperlinkRenderer;
 
-    protected IRenderer<Text> TextRenderer { get; }
+    public HeadingRendererBase(IRenderer<Text> textRenderer, IRenderer<Hyperlink> hyperlinkRenderer)
+    {
+        _textRenderer = textRenderer;
+        _hyperlinkRenderer = hyperlinkRenderer;
+    }
 
     protected IHtmlContent HeadingToHtml(string tag, IHeading heading)
     {
         var h = new TagBuilder(tag);
-
         foreach (var content in heading.Content)
         {
-            var text = content as Text;
-            if (text != null)
+            switch (content)
             {
-                h.InnerHtml.AppendHtml(TextRenderer.Render(text));
+                case Text text: h.InnerHtml.AppendHtml(_textRenderer.Render(text)); break;
+                case Hyperlink hyperlink: h.InnerHtml.AppendHtml(_hyperlinkRenderer.Render(hyperlink)); break;
+
             }
         }
 
@@ -32,7 +34,7 @@ internal class HeadingRendererBase
 
 internal class Heading1Renderer : HeadingRendererBase, IRenderer<Heading1>
 {
-    public Heading1Renderer(IRenderer<Text> textRenderer) : base(textRenderer)
+    public Heading1Renderer(IRenderer<Text> textRenderer, IRenderer<Hyperlink> hyperlinkRenderer) : base(textRenderer, hyperlinkRenderer)
     { }
 
     public IHtmlContent Render(Heading1 item)
@@ -43,7 +45,7 @@ internal class Heading1Renderer : HeadingRendererBase, IRenderer<Heading1>
 
 internal class Heading2Renderer : HeadingRendererBase, IRenderer<Heading2>
 {
-    public Heading2Renderer(IRenderer<Text> textRenderer) : base(textRenderer)
+    public Heading2Renderer(IRenderer<Text> textRenderer, IRenderer<Hyperlink> hyperlinkRenderer) : base(textRenderer, hyperlinkRenderer)
     { }
 
     public IHtmlContent Render(Heading2 item)
@@ -54,7 +56,7 @@ internal class Heading2Renderer : HeadingRendererBase, IRenderer<Heading2>
 
 internal class Heading3Renderer : HeadingRendererBase, IRenderer<Heading3>
 {
-    public Heading3Renderer(IRenderer<Text> textRenderer) : base(textRenderer)
+    public Heading3Renderer(IRenderer<Text> textRenderer, IRenderer<Hyperlink> hyperlinkRenderer) : base(textRenderer, hyperlinkRenderer)
     { }
 
     public IHtmlContent Render(Heading3 item)
@@ -65,7 +67,7 @@ internal class Heading3Renderer : HeadingRendererBase, IRenderer<Heading3>
 
 internal class Heading4Renderer : HeadingRendererBase, IRenderer<Heading4>
 {
-    public Heading4Renderer(IRenderer<Text> textRenderer) : base(textRenderer)
+    public Heading4Renderer(IRenderer<Text> textRenderer, IRenderer<Hyperlink> hyperlinkRenderer) : base(textRenderer, hyperlinkRenderer)
     { }
 
     public IHtmlContent Render(Heading4 item)
@@ -76,7 +78,7 @@ internal class Heading4Renderer : HeadingRendererBase, IRenderer<Heading4>
 
 internal class Heading5Renderer : HeadingRendererBase, IRenderer<Heading5>
 {
-    public Heading5Renderer(IRenderer<Text> textRenderer) : base(textRenderer)
+    public Heading5Renderer(IRenderer<Text> textRenderer, IRenderer<Hyperlink> hyperlinkRenderer) : base(textRenderer, hyperlinkRenderer)
     { }
 
     public IHtmlContent Render(Heading5 item)
@@ -87,7 +89,7 @@ internal class Heading5Renderer : HeadingRendererBase, IRenderer<Heading5>
 
 internal class Heading6Renderer : HeadingRendererBase, IRenderer<Heading6>
 {
-    public Heading6Renderer(IRenderer<Text> textRenderer) : base(textRenderer)
+    public Heading6Renderer(IRenderer<Text> textRenderer, IRenderer<Hyperlink> hyperlinkRenderer) : base(textRenderer, hyperlinkRenderer)
     { }
 
     public IHtmlContent Render(Heading6 item)
