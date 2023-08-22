@@ -65,7 +65,6 @@ internal class InlineRoleListRenderer : IRenderer<RoleList>
         var p = new TagBuilder("p");
         p.AddCssClass("govuk-body");
         p.InnerHtml.Append(detailedRole.Summary);
-        p.InnerHtml.Append(".");
 
         var rowDiv = new TagBuilder("div");
         rowDiv.AddCssClass("govuk-grid-row govuk-!-padding-bottom-3");
