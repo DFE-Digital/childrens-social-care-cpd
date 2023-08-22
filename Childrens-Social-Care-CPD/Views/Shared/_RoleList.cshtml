@@ -1,13 +1,13 @@
 ﻿@using Childrens_Social_Care_CPD.Contentful.Models;
 @using Childrens_Social_Care_CPD.Contentful;
+@using Childrens_Social_Care_CPD.Contentful.Renderers;
 
 @model RoleList
+@inject IRenderer<RoleList> _inlineRoleListRenderer
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <h2>@Model.Title</h2>
-        @{
-            await Html.RenderPartialAsync("_InlineRoleList", Model);
-        }
+        @_inlineRoleListRenderer.Render(Model)
     </div>
 </div>

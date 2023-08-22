@@ -1,198 +1,50 @@
 ﻿@using Childrens_Social_Care_CPD.Contentful.Models;
+@using Childrens_Social_Care_CPD.Contentful;
+@using Childrens_Social_Care_CPD.Contentful.Renderers;
 @using Contentful.Core.Models;
 @using Microsoft.AspNetCore.Html;
 @using System.Text;
 
 @model Document
-
-@functions {
-    public static string ParseHyperlinkHelper(IContent content)
-    {
-        var linkElement = ((Hyperlink)content);
-        var linkText = ((Text)(linkElement).Content[0]).Value;
-        var linkHtmlString = string.Format(("<a class=\"{0}\" datatestid={1} href={1}>{2}</a>"), "govuk-link", linkElement.Data.Uri, linkText);
-        return linkHtmlString;
-    }
-
-    public static IHtmlContent GetHeadingTagString(IContent content, string tag, string className)
-    {
-        var tagBuilder = new TagBuilder(tag);
-        foreach (var headerContent in ((IHeading)content).Content)
-        {
-            if (headerContent.GetType() == typeof(Text) && !string.IsNullOrEmpty((((Text)headerContent).Value)))
-            {
-                tagBuilder.InnerHtml.Append(((Text)headerContent).Value);
-            }
-
-            if (headerContent.GetType() == typeof(Hyperlink))
-            {
-                tagBuilder.InnerHtml.AppendHtml(@ParseHyperlinkHelper(headerContent));
-            }
-        }
-        return tagBuilder;
-    }
-
-    public async Task RenderParagraph(Paragraph contentfulParagraph)
-    {
-        var paragraph = new TagBuilder("p");
-        paragraph.AddCssClass("govuk-body-m");
-        @paragraph.RenderStartTag();
-
-        foreach (var content in contentfulParagraph.Content)
-        {
-            switch (content)
-            {
-                case Text text:
-                    {
-                        if (!string.IsNullOrEmpty(text.Value))
-                        {
-                            @RenderParagraphText(text)
-                        }
-                        break;
-                    }
-                case EntryStructure entryStructure:
-                    {
-                        switch (entryStructure.Data.Target)
-                        {
-                            case RoleList roleList:
-                                {
-
-                                    await Html.RenderPartialAsync("_InlineRoleList", roleList);
-                                    break;
-                                }
-                        }
-                        break;
-                    }
-                case (Hyperlink hyperlink):
-                    {
-                        var linkText = (hyperlink.Content.FirstOrDefault() as Text)?.Value;
-                        var anchor = new TagBuilder("a");
-                        anchor.AddCssClass("govuk-link");
-                        anchor.Attributes.Add("href", hyperlink.Data.Uri);
-                        anchor.InnerHtml.SetContent(linkText);
-                        @anchor;
-                        break;
-                    }
-            }
-        }
-
-        @paragraph.RenderEndTag();
-    }
-
-    public IHtmlContent RenderParagraphText(Text text)
-    {
-        var htmlContentBuilder = new HtmlContentBuilder();
-
-        var parts = text.Value?.Split("\n");
-        for (var index = 0; index < parts.Length - 1; index++)
-        {
-            htmlContentBuilder.Append(parts[index]);
-            htmlContentBuilder.AppendHtml("<br>");
-        }
-        htmlContentBuilder.Append(parts.Last());
-
-        return htmlContentBuilder;
-    }
-
-    public void RenderList(List list)
-    {
-        @if (list.Content.Count > 0)
-        {
-            <ul class="govuk-list govuk-list--bullet">
-
-                @foreach (var link in list.Content)
-                {
-                    var innerElement = (Paragraph)(((ListItem)link).Content[0]);
-                    StringBuilder contentBuilder = new StringBuilder();
-
-                    if (@innerElement.Content.Any(c => c.GetType() == typeof(Hyperlink)))
-                    {
-                        @foreach (var content in @innerElement.Content)
-                        {
-                            if (content.GetType() == typeof(Text))
-                            {
-                                contentBuilder.Append((((Text)content).Value));
-                            }
-                            if (content.GetType() == typeof(Hyperlink))
-                            {
-                                var linkElement = ((Hyperlink)content);
-                                var linkText = ((Text)(linkElement).Content[0]).Value;
-                                contentBuilder.Append(string.Format(("<a href={0}>{1}</a>"), linkElement.Data.Uri, linkText));
-                            }
-                        }
-                    }
-                    else
-                    {
-                        contentBuilder.Append((((Text)innerElement.Content[0]).Value));
-                    }
-                    <li>@Html.Raw(contentBuilder.ToString())</li>
-                }
-
-            </ul>
-        }
-    }
-
-    public void RenderTable(Table table)
-    {
-        @if (table.Content.Any())
-        {
-            <table class="govuk-table">
-                @foreach (TableRow row in table.Content)
-                {
-                    if (@row.Content.Any(x => x.GetType() == typeof(TableHeader)))
-                    {
-                        <thead class="govuk-table__head">
-                            <tr class="govuk-table__row">
-                                @foreach (TableHeader header in @row.Content)
-                                {
-                                    <th scope="col" class="govuk-table__header">@(((Text)((Paragraph)header.Content[0]).Content[0]).Value)</th>
-                                }
-                            </tr>
-                        </thead>
-                    }
-                }
-                <tbody class="govuk-table__body">
-                    @foreach (TableRow row in table.Content)
-                    {
-                        if (@row.Content.Any(x => x.GetType() == typeof(TableCell)))
-                        {
-                            <tr class="govuk-table__row">
-                                @foreach (TableCell tableCell in @row.Content)
-                                {
-                                    <td class="govuk-table__cell">@(((Text)((Paragraph)tableCell.Content[0]).Content[0]).Value)</td>
-                                }
-                            </tr>
-                        }
-                    }
-                </tbody>
-            </table>
-        }
-    }
-
-    void RenderHr(HorizontalRuler hr)
-    {
-        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
-    }
-}
+@inject IRenderer<Heading1> _heading1Renderer
+@inject IRenderer<Heading2> _heading2Renderer
+@inject IRenderer<Heading3> _heading3Renderer
+@inject IRenderer<Heading4> _heading4Renderer
+@inject IRenderer<Heading5> _heading5Renderer
+@inject IRenderer<Heading6> _heading6Renderer
+@inject IRenderer<Paragraph> _paragraphRenderer
+@inject IRenderer<Quote> _quoteRenderer
+@inject IRenderer<HorizontalRuler> _horizontalRulerRenderer
+@inject IRenderer<Table> _tableRenderer
+@inject IRenderer<List> _listRenderer
+@inject IRenderer<RoleList> _roleListRenderer
 
 @{
-
     if (Model == null) return;
 
     foreach (IContent node in Model.Content ?? Enumerable.Empty<IContent>())
     {
         switch (node)
         {
-            case HorizontalRuler hr: RenderHr(hr); break;
-            case Paragraph paragraph: await RenderParagraph(paragraph); break;
-            case List list: RenderList(list); break;
-            case Heading1: @GetHeadingTagString(node, SiteConstants.HEADING1, SiteConstants.GOVUKHEADINGXL); break;
-            case Heading2: @GetHeadingTagString(node, SiteConstants.HEADING2, SiteConstants.GOVUKHEADINGL); break;
-            case Heading3: @GetHeadingTagString(node, SiteConstants.HEADING3, SiteConstants.GOVUKHEADINGM); break;
-            case Heading4: @GetHeadingTagString(node, SiteConstants.HEADING4, SiteConstants.GOVUKHEADINGM); break;
-            case Heading5: @GetHeadingTagString(node, SiteConstants.HEADING5, SiteConstants.GOVUKHEADINGM); break;
-            case Heading6: @GetHeadingTagString(node, SiteConstants.HEADING6, SiteConstants.GOVUKHEADINGM); break;
-            case Table table: RenderTable(table); break;
+            case HorizontalRuler hr: @_horizontalRulerRenderer.Render(hr); break;
+            case Paragraph paragraph: @_paragraphRenderer.Render(paragraph); break;
+            case List list: @_listRenderer.Render(list); break;
+            case Heading1 heading1: @_heading1Renderer.Render(heading1); break;
+            case Heading2 heading2: @_heading2Renderer.Render(heading2); break;
+            case Heading3 heading3: @_heading3Renderer.Render(heading3); break;
+            case Heading4 heading4: @_heading4Renderer.Render(heading4); break;
+            case Heading5 heading5: @_heading5Renderer.Render(heading5); break;
+            case Heading6 heading6: @_heading6Renderer.Render(heading6); break;
+            case Table table: @_tableRenderer.Render(table); break;
+            case Quote quote: @_quoteRenderer.Render(quote)
+                ; break;
+            case EntryStructure entryStructure: {
+                    switch (entryStructure.Data.Target)
+                    {
+                        case RoleList roleList: @_roleListRenderer.Render(roleList); break;
+                    }
+                    break;
+            }
         }
     }
 }

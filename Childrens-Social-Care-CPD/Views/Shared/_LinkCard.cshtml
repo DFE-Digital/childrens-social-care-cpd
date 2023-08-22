@@ -1,11 +1,13 @@
 ﻿@using Childrens_Social_Care_CPD.Contentful.Models;
 @using Childrens_Social_Care_CPD.Contentful;
+@using Childrens_Social_Care_CPD.Contentful.Renderers;
 
 @model LinkCard
+@inject IRenderer<ContentLink> _contentLinkRenderer
 
 <div class="dfe-section-card">
     <govuk-heading level="Model.TitleLevel">
-        @Html.ContentLink(Model.TitleLink.Name, Model.TitleLink.Uri)
+        @_contentLinkRenderer.Render(Model.TitleLink)
     </govuk-heading>
     <p class="govuk-body">@Model.Text</p>
 </div>
