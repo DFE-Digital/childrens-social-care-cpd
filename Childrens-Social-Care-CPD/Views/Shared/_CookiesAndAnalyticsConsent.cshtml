@@ -1,6 +1,9 @@
 ﻿@using Childrens_Social_Care_CPD.Contentful;
+@using Childrens_Social_Care_CPD.Contentful.Models;
+@using Childrens_Social_Care_CPD.Contentful.Renderers;
 
-@inject ICookieHelper _cookieHelper;
+@inject ICookieHelper _cookieHelper
+@inject IRenderer<ContentLink> _contentLinkRenderer
 
 @{
     var consentState = _cookieHelper.GetRequestAnalyticsCookieState(Context);
@@ -53,7 +56,7 @@ else if (preferenceSet)
                 <div class="govuk-grid-column-two-thirds">
                     <div class="govuk-cookie-banner__content">
                         <p>You’ve rejected essential and analytics cookies. You can
-                            @Html.ContentLink("change your cookie settings", redirectUrl)
+                            @_contentLinkRenderer.Render(new ContentLink() { Name = "change your cookie settings", Uri = redirectUrl }))
                              at any time.</p>
                     </div>
                 </div>
