@@ -17,6 +17,7 @@
 @inject IRenderer<HorizontalRuler> _horizontalRulerRenderer
 @inject IRenderer<Table> _tableRenderer
 @inject IRenderer<List> _listRenderer
+@inject IRenderer<RoleList> _roleListRenderer
 
 @{
     if (Model == null) return;
@@ -35,7 +36,15 @@
             case Heading5 heading5: @_heading5Renderer.Render(heading5); break;
             case Heading6 heading6: @_heading6Renderer.Render(heading6); break;
             case Table table: @_tableRenderer.Render(table); break;
-            case Quote quote: @_quoteRenderer.Render(quote); break;
+            case Quote quote: @_quoteRenderer.Render(quote)
+                ; break;
+            case EntryStructure entryStructure: {
+                    switch (entryStructure.Data.Target)
+                    {
+                        case RoleList roleList: @_roleListRenderer.Render(roleList); break;
+                    }
+                    break;
+            }
         }
     }
 }
