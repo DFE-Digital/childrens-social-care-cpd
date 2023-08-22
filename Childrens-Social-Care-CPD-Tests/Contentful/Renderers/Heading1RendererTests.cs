@@ -13,13 +13,15 @@ namespace Childrens_Social_Care_CPD_Tests.Contentful.Renderers;
 public class Heading1RendererTests
 {
     private IRenderer<Text> _textRenderer;
+    private IRenderer<Hyperlink> _hyperlinkRenderer;
     private Heading1Renderer _sut;
 
     [SetUp]
     public void Setup()
     {
         _textRenderer = Substitute.For<IRenderer<Text>>();
-        _sut = new Heading1Renderer(_textRenderer);
+        _hyperlinkRenderer = Substitute.For<IRenderer<Hyperlink>>();
+        _sut = new Heading1Renderer(_textRenderer, _hyperlinkRenderer);
     }
 
     [Test]
@@ -49,39 +51,24 @@ public class Heading1RendererTests
     }
 
     [Test]
-    public void Heading1_Renders_Ignoring_Non_Text()
+    public void Heading1_Renders_Hyperlink()
     {
         // arrange
         var stringWriter = new StringWriter();
-        var foo = new Text()
+        var foo = new Hyperlink()
         {
-            Value = "Foo",
-            Marks = new List<Mark>()
-        };
-        var bar = new Paragraph()
-        {
-            Content = new List<IContent>
+            Data = new HyperlinkData
             {
-                new Text()
-                {
-                    Value = "Bold",
-                    Marks = new List<Mark>
-                    {
-                        new Mark() { Type = "bold" }
-                    }
-                }
+                Title = "foo",
+                Uri = "bar"
             }
         };
         var heading1 = new Heading1()
         {
-            Content = new List<IContent>
-            {
-                foo,
-                bar
-            }
+            Content = new List<IContent> { foo }
         };
 
-        _textRenderer.Render(foo).Returns(new HtmlString("AAA"));
+        _hyperlinkRenderer.Render(foo).Returns(new HtmlString("AAA"));
 
         // act
         var htmlContent = _sut.Render(heading1);
