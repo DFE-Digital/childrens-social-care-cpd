@@ -25,7 +25,7 @@
                 </div>
                 <div class="govuk-notification-banner__content">
                     <p class="govuk-notification-banner__heading">
-                        You’ve set your cookie preferences. @_contentLinkRenderer.Render(new ContentLink() { Name = "Go back to the page you were looking at.", Uri = Model.SourceUrl} ))
+                        You’ve set your cookie preferences. @_contentLinkRenderer.Render(new ContentLink() { Name = "Go back to the page you were looking at.", Uri = Model.SourcePage} )
                     </p>
                 </div>
             </div>
@@ -35,11 +35,7 @@
 
 <partial name="_Content" model="Model.Content" />
 
-@{
-    var redirectTo = Url.Action("Cookies", "Cookie", new { sourcePage = Model.SourceUrl }, Url.ActionContext.HttpContext.Request.Scheme);
-}
-
-@using (@Html.BeginForm("SetPreferences", "Cookie", new { redirectTo = redirectTo }, FormMethod.Post, false, null))
+@using (@Html.BeginForm("SetPreferences", "Cookie", new { sourcePage = Model.SourcePage, fromCookies = true }, FormMethod.Post, false, null))
 {
     <div class="govuk-form-group">
         <fieldset class="govuk-fieldset">
