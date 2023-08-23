@@ -7,6 +7,7 @@ public class DetailedRole : IContent
     public string Title { get; set; }
     public string SalaryRange { get; set; }
     public string Summary { get; set; }
+    public string RoleListSummary { get; set; }
     public string OtherNames { get; set; }
     public Document WhatYoullDo { get; set; }
     public Document SkillsAndKnowledge { get; set; }
