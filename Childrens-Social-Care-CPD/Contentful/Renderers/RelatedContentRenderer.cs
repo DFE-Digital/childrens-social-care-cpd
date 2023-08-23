@@ -6,7 +6,7 @@ namespace Childrens_Social_Care_CPD.Contentful.Renderers;
 
 public class RelatedContentRenderer : IRenderer<RelatedContent>
 {
-    private IRenderer<ContentLink> _contentLinkRenderer;
+    private readonly IRenderer<ContentLink> _contentLinkRenderer;
 
     public RelatedContentRenderer(IRenderer<ContentLink> contentLinkRenderer)
     {
