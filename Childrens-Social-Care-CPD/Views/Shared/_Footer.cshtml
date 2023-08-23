@@ -1,6 +1,9 @@
 ﻿@{
     var request = Url.ActionContext.HttpContext.Request;
-    var href = Html.UrlEncoder.Encode($"{request.Scheme}://{request.Host}{request.PathBase}{request.Path}{request.QueryString}");
+    var path = request.Path.Value?.TrimStart('/') ?? request.Path.Value;
+    var cookiesUrl = string.IsNullOrEmpty(path)
+        ? "/cookies"
+        : $"/cookies?sourcePage={Html.UrlEncoder.Encode(path)}";
 }
 
 <footer class="govuk-footer " role="contentinfo">
@@ -16,22 +19,22 @@
                     </li>
 
                     <li class="govuk-footer__inline-list-item">
-                    <a class="govuk-footer__link" datatestid="Cookies" href="/cookies?sourcePage=@href">
+                        <a class="govuk-footer__link" datatestid="Cookies" href="@cookiesUrl">
                             Cookies
                         </a>
                     </li>
                     <li class="govuk-footer__inline-list-item">
-                    <a class="govuk-footer__link" datatestid="Accessibility" href="/accessibility">
+                        <a class="govuk-footer__link" datatestid="Accessibility" href="/accessibility">
                             Accessibility
                         </a>
                     </li>
                     <li class="govuk-footer__inline-list-item">
-                    <a class="govuk-footer__link" datatestid="Terms and conditions" href="/termsconditions">
+                        <a class="govuk-footer__link" datatestid="Terms and conditions" href="/termsconditions">
                             Terms and conditions
                         </a>
                     </li>
                     <li class="govuk-footer__inline-list-item">
-                    <a class="govuk-footer__link" datatestid="Feedback" href="https://dferesearch.fra1.qualtrics.com/jfe/form/SV_bmcLDedq5wipeTA">
+                        <a class="govuk-footer__link" datatestid="Feedback" href="https://dferesearch.fra1.qualtrics.com/jfe/form/SV_bmcLDedq5wipeTA">
                             Feedback
                         </a>
                     </li>
