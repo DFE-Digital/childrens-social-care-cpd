@@ -72,4 +72,6 @@ public class CookieControllerServerTests
         var cookie = response.Headers.FirstOrDefault(x => x.Key == "Set-Cookie");
         cookie.Value.First().Should().StartWith($"cookie_consent=;");
     }
+
+    #endregion
 }
