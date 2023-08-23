@@ -6,7 +6,9 @@
 @inject IRenderer<ContentLink> _contentLinkRenderer
 
 <div class="dfe-section-card">
-    <h2>@Model.Title</h2>
+    <govuk-heading level="2" display-size="3">
+        @Model.Title
+    </govuk-heading>
     <ul class="govuk-list">
         @foreach (var contentLink in Model.Links)
         {
