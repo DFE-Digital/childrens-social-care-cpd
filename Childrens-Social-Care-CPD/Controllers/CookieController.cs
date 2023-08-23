@@ -54,7 +54,7 @@ public class CookieController : Controller
             return NotFound();
         }
 
-        if (!Regex.IsMatch(sourcePage, "^[0-9a-z](\\/?[0-9a-z\\-])*\\/?$"))
+        if (!Regex.IsMatch(sourcePage, "^[0-9a-z](\\/?[0-9a-z\\-])*\\/?$", RegexOptions.None, TimeSpan.FromMilliseconds(100)))
         {
             sourcePage = "home";
         }
