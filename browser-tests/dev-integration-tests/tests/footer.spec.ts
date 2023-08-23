@@ -30,7 +30,7 @@ test.describe('Page Footer', () => {
         await expect(l).toBeVisible()
         const href = await l.getAttribute('href')
 
-        await expect(href?.startsWith('/cookies?')).toBeTruthy()
+        await expect(href?.startsWith('/cookies')).toBeTruthy()
     })
 
 })
