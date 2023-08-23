@@ -154,4 +154,47 @@ public partial class CookieControllerTests
         actual.Should().NotBeNull();
         actual.HideConsent.Should().Be(true);
     }
+
+    [TestCase(CookieHelper.ANALYTICSCOOKIEACCEPTED, "explore-roles/practitioners")]
+    [TestCase(CookieHelper.ANALYTICSCOOKIEREJECTED, "explore-roles/practitioners")]
+    [TestCase(CookieHelper.ANALYTICSCOOKIEACCEPTED, "practitioners")]
+    [TestCase(CookieHelper.ANALYTICSCOOKIEREJECTED, "practitioners")]
+    [TestCase(CookieHelper.ANALYTICSCOOKIEACCEPTED, "")]
+    [TestCase(CookieHelper.ANALYTICSCOOKIEREJECTED, "")]
+    [TestCase(CookieHelper.ANALYTICSCOOKIEACCEPTED, null)]
+    [TestCase(CookieHelper.ANALYTICSCOOKIEREJECTED, null)]
+    public void SetPreferences_Redirects_Back_To_Cookie_Page(string cookieConsentValue, string sourcePage)
+    {
+        // arrange
+        var fromCookiePage = true;
+
+        // act
+        var actual = _cookieController.SetPreferences(cookieConsentValue, sourcePage, fromCookiePage) as RedirectToActionResult;
+
+        // assert
+        actual.Should().NotBeNull();
+        actual.ControllerName.Should().Be("Cookie");
+        actual.ActionName.Should().Be("Cookies");
+    }
+
+    [TestCase(CookieHelper.ANALYTICSCOOKIEACCEPTED, "explore-roles/practitioners", "~/explore-roles/practitioners?preferenceSet=True")]
+    [TestCase(CookieHelper.ANALYTICSCOOKIEREJECTED, "explore-roles/practitioners", "~/explore-roles/practitioners?preferenceSet=True")]
+    [TestCase(CookieHelper.ANALYTICSCOOKIEACCEPTED, "practitioners", "~/practitioners?preferenceSet=True")]
+    [TestCase(CookieHelper.ANALYTICSCOOKIEREJECTED, "practitioners", "~/practitioners?preferenceSet=True")]
+    [TestCase(CookieHelper.ANALYTICSCOOKIEACCEPTED, "", "~/?preferenceSet=True")]
+    [TestCase(CookieHelper.ANALYTICSCOOKIEREJECTED, "", "~/?preferenceSet=True")]
+    [TestCase(CookieHelper.ANALYTICSCOOKIEACCEPTED, null, "~/?preferenceSet=True")]
+    [TestCase(CookieHelper.ANALYTICSCOOKIEREJECTED, null, "~/?preferenceSet=True")]
+    public void SetPreferences_Redirects_To_SourcePage(string cookieConsentValue, string sourcePage, string expectedUrl)
+    {
+        // arrange
+        var fromCookiePage = false;
+
+        // act
+        var actual = _cookieController.SetPreferences(cookieConsentValue, sourcePage, fromCookiePage) as LocalRedirectResult;
+
+        // assert
+        actual.Should().NotBeNull();
+        actual.Url.Should().Be(expectedUrl);
+    }
 }
