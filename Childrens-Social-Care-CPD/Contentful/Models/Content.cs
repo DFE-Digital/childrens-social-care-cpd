@@ -10,4 +10,5 @@ public class Content : IContent
     public ContentLink BackLink { get; set; }
     public SideMenu SideMenu { get; set; }
     public List<IContent> Items { get; set; }
+    public RelatedContent RelatedContent { get; set; }
 }

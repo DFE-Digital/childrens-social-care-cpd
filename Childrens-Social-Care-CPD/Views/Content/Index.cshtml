@@ -1,6 +1,11 @@
 ﻿@using Childrens_Social_Care_CPD.Contentful.Models;
+@using Childrens_Social_Care_CPD.Contentful.Renderers;
+@using Contentful.Core.Models;
 
 @model Content;
+
+@inject IRenderer<ContentLink> _contentLinkRenderer
+@inject IRenderer<RelatedContent> _relatedContentRenderer
 
 @{
     Layout = Model.SideMenu == null
@@ -26,3 +31,5 @@
 }
 
 <partial name="_Content" model="Model" />
+
+@_relatedContentRenderer.Render(Model.RelatedContent)
