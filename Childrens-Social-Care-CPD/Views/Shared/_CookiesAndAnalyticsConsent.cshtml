@@ -53,16 +53,13 @@
 }
 else if (preferenceSet)
 {
-    var href = Html.UrlEncoder.Encode($"{request.Scheme}://{request.Host}{request.PathBase}{request.Path}{request.QueryString}");
-    var redirectUrl = "/cookies?sourcePage=" + href;
-
     <div class="govuk-cookie-banner" id="divCookieBannerId" data-nosnippet="" role="region" aria-label="@headingText">
         <div class="govuk-cookie-banner__message govuk-width-container" id="divCookieMessageActioned">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-two-thirds">
                     <div class="govuk-cookie-banner__content">
                         <p>You’ve rejected essential and analytics cookies. You can
-                            @_contentLinkRenderer.Render(new ContentLink() { Name = "change your cookie settings", Uri = redirectUrl }))
+                            @_contentLinkRenderer.Render(new ContentLink() { Name = "change your cookie settings", Uri = cookiesUrl }))
                              at any time.</p>
                     </div>
                 </div>
