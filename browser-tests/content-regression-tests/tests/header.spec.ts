@@ -16,9 +16,9 @@ test.describe('Header', () => {
     for (const link of links) {
 
         test(`Contains nav link ${link[0]} that goes to ${link[1]}`, async ({ page }) => {
-            var responsePromise = page.waitForResponse(`**${link[1]}`)
+            var promise = page.waitForResponse(`**${link[1]}`)
             await page.getByLabel('Menu').getByRole('link', { name: link[0], exact: true }).click()
-            var response = await responsePromise
+            var response = await promise
             
             expect(response.ok()).toBeTruthy()
         })
