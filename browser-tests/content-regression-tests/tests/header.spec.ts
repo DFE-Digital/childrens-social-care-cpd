@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 
-test.describe('Header @header', () => {
+test.describe('Header', () => {
 
     test.beforeEach(async ({ page }) => {
         await page.goto('/')
@@ -14,11 +14,15 @@ test.describe('Header @header', () => {
     ]
 
     for (const link of links) {
-        test(`Header contains nav link ${link[0]} that goes to ${link[1]}`, async ({ page }) => {
+
+        test(`Contains nav link ${link[0]} that goes to ${link[1]}`, async ({ page }) => {
+            var responsePromise = page.waitForResponse(`**${link[1]}`)
             await page.getByLabel('Menu').getByRole('link', { name: link[0], exact: true }).click()
+            var response = await responsePromise
             
-            await expect(page).toHaveURL(new RegExp(`${link[1]}`))
+            expect(response.ok()).toBeTruthy()
         })
+
     }
 
 })
