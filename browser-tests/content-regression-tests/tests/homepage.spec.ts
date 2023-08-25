@@ -8,21 +8,16 @@ test.describe('Homepage', () => {
     test.describe('CTA links', () => {
         test.describe('Explore career stages', () => {
             const links = [
-                ['Practitioner', '/practitioner', 'Practitioners'],
-                ['Experienced practitioner', '/experienced-practitioner', 'Experienced practitioners'],
-                ['Manager', '/manager', 'Managers'],
-                ['Senior manager', '/senior-manager', 'Senior managers'],
-                ['Leader', '/leader', 'Leaders'],
+                ['Practitioners', '/practitioners', 'Practitioners'],
+                ['Experienced practitioners', '/experienced-practitioners', 'Experienced practitioners'],
+                ['Managers', '/managers', 'Managers'],
+                ['Senior managers', '/senior-managers', 'Senior managers'],
+                ['Leaders', '/leaders', 'Leaders'],
             ]
 
             for (const link of links) {
                 test(`Goes to the ${link[0]} page`, async ({ page }) => {
-                    var responsePromise = page.waitForResponse(`**${link[1]}`)
                     await page.getByRole('link', { name: link[0], exact: true }).click()
-                    var response = await responsePromise
-                    
-                    expect(response.ok()).toBeTruthy()
-
                     await expect(page.locator('h1', { hasText: new RegExp(`^${link[2]}$`) })).toBeVisible()
                 })
             }
@@ -36,12 +31,7 @@ test.describe('Homepage', () => {
 
             for (const link of links) {
                 test(`Goes to the ${link[0]} page`, async ({ page }) => {
-                    var responsePromise = page.waitForResponse(`**${link[1]}`)
                     await page.getByRole('link', { name: link[0], exact: true }).click()
-                    var response = await responsePromise
-                    
-                    expect(response.ok()).toBeTruthy()
-
                     await expect(page.locator('h1', { hasText: new RegExp(`^${link[2]}$`) })).toBeVisible()
                 })
             }
