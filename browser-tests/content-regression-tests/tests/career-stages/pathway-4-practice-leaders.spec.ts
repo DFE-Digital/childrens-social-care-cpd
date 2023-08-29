@@ -21,10 +21,20 @@ test.describe('Pathway 4: practice leaders', () => {
         await expect(page.locator('#mmi-developmentProgrammes')).toHaveClass(/dfe-header__navigation-item--current/)
     })
 
-    test('User journey via menu @journey', async ({ page }) => {
+    test('User journey via Career menu @journey', async ({ page }) => {
         await page.goto('/')
         await page.getByLabel('Menu').getByRole('link', { name: 'Career information', exact: true }).click()
         await page.getByRole('link', { name: 'Leaders', exact: true }).click()
+        await page.getByRole('link', { name: 'Pathway 4: practice leaders', exact: true }).click()
+
+        await expect(page.locator('h1', { hasText: /^Pathway 4: practice leaders$/ })).toBeVisible()
+        await expect(page).toHaveURL(/.*\/pathway-4/)
+        await expect(page.locator('#mmi-developmentProgrammes')).toHaveClass(/dfe-header__navigation-item--current/)
+    })
+
+    test('User journey via Development menu @journey', async ({ page }) => {
+        await page.goto('/')
+        await page.getByLabel('Menu').getByRole('link', { name: 'Development programmes', exact: true }).click()
         await page.getByRole('link', { name: 'Pathway 4: practice leaders', exact: true }).click()
 
         await expect(page.locator('h1', { hasText: /^Pathway 4: practice leaders$/ })).toBeVisible()

@@ -10,7 +10,17 @@ test.describe('Assessed and supported year in employment (ASYE)', () => {
         await expect(page.locator('#mmi-developmentProgrammes')).toHaveClass(/dfe-header__navigation-item--current/)
     })
 
-    test('User journey via menu @journey', async ({ page }) => {
+    test('User journey via Career menu @journey', async ({ page }) => {
+        await page.goto('/')
+        await page.getByLabel('Menu').getByRole('link', { name: 'Career information', exact: true }).click()
+        await page.getByRole('link', { name: 'Practitioners', exact: true }).click()
+        await page.getByRole('link', { name: 'Assessed and supported year in employment (ASYE)', exact: true }).click()
+
+        await expect(page.locator('h1', { hasText: /^Assessed and supported year in employment \(ASYE\)$/ })).toBeVisible()
+        await expect(page.locator('#mmi-developmentProgrammes')).toHaveClass(/dfe-header__navigation-item--current/)
+    })
+
+    test('User journey via Development menu @journey', async ({ page }) => {
         await page.goto('/')
         await page.getByLabel('Menu').getByRole('link', { name: 'Development programmes', exact: true }).click()
         await page.getByRole('link', { name: 'Assessed and supported year in employment (ASYE)', exact: true }).click()
