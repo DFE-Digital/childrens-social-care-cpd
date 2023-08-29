@@ -11,10 +11,20 @@ test.describe('Pathway 1: practice supervisors', () => {
         await expect(page.locator('#mmi-developmentProgrammes')).toHaveClass(/dfe-header__navigation-item--current/)
     })
 
-    test('User journey via menu @journey', async ({ page }) => {
+    test('User journey via Career menu @journey', async ({ page }) => {
         await page.goto('/')
         await page.getByLabel('Menu').getByRole('link', { name: 'Career information', exact: true }).click()
         await page.getByRole('link', { name: 'Experienced practitioners', exact: true }).click()
+        await page.getByRole('link', { name: 'Pathway 1: practice supervisors', exact: true }).click()
+
+        await expect(page.locator('h1', { hasText: /^Pathway 1: practice supervisors$/ })).toBeVisible()
+        await expect(page).toHaveURL(/.*\/pathway-1/)
+        await expect(page.locator('#mmi-developmentProgrammes')).toHaveClass(/dfe-header__navigation-item--current/)
+    })
+
+    test('User journey via Development menu @journey', async ({ page }) => {
+        await page.goto('/')
+        await page.getByLabel('Menu').getByRole('link', { name: 'Development programmes', exact: true }).click()
         await page.getByRole('link', { name: 'Pathway 1: practice supervisors', exact: true }).click()
 
         await expect(page.locator('h1', { hasText: /^Pathway 1: practice supervisors$/ })).toBeVisible()

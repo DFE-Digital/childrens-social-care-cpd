@@ -21,10 +21,20 @@ test.describe('Pathway 3: heads of service', () => {
         await expect(page.locator('#mmi-developmentProgrammes')).toHaveClass(/dfe-header__navigation-item--current/)
     })
 
-    test('User journey via menu @journey', async ({ page }) => {
+    test('User journey via Career menu @journey', async ({ page }) => {
         await page.goto('/')
         await page.getByLabel('Menu').getByRole('link', { name: 'Career information', exact: true }).click()
         await page.getByRole('link', { name: 'Managers', exact: true }).click()
+        await page.getByRole('link', { name: 'Pathway 3: heads of service', exact: true }).click()
+
+        await expect(page.locator('h1', { hasText: /^Pathway 3: heads of service$/ })).toBeVisible()
+        await expect(page).toHaveURL(/.*\/pathway-3/)
+        await expect(page.locator('#mmi-developmentProgrammes')).toHaveClass(/dfe-header__navigation-item--current/)
+    })
+
+    test('User journey via Development menu @journey', async ({ page }) => {
+        await page.goto('/')
+        await page.getByLabel('Menu').getByRole('link', { name: 'Development programmes', exact: true }).click()
         await page.getByRole('link', { name: 'Pathway 3: heads of service', exact: true }).click()
 
         await expect(page.locator('h1', { hasText: /^Pathway 3: heads of service$/ })).toBeVisible()
