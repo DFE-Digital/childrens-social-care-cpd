@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 
-test.describe('Pathway3: heads of service', () => {
+test.describe('Pathway 3: heads of service', () => {
     test('User journey from homepage @journey', async ({ page }) => {
         await page.goto('/')
         await page.getByRole('link', { name: 'Managers', exact: true }).click()
