@@ -8,7 +8,7 @@ test.describe('Header', () => {
 
     const links = [
         ['Home', '/home'],
-        ['Career stages', '/career-stages'],
+        ['Career information', '/career-information'],
         ['Development programmes', '/development-programmes'],
         ['Explore roles', '/explore-roles'],
     ]

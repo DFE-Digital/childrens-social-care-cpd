@@ -1,24 +1,34 @@
 import { test, expect } from '@playwright/test'
 
-test.describe('Pathway3: heads of service', () => {
+test.describe('Pathway 4: practice leaders', () => {
     test('User journey from homepage @journey', async ({ page }) => {
         await page.goto('/')
-        await page.getByRole('link', { name: 'Managers', exact: true }).click()
-        await page.getByRole('link', { name: 'Pathway 3: heads of service', exact: true }).click()
+        await page.getByRole('link', { name: 'Senior managers', exact: true }).click()
+        await page.getByRole('link', { name: 'Pathway 4: practice leaders', exact: true }).click()
 
-        await expect(page.locator('h1', { hasText: /^Pathway 3: heads of service$/ })).toBeVisible()
-        await expect(page).toHaveURL(/.*\/pathway-3/)
+        await expect(page.locator('h1', { hasText: /^Pathway 4: practice leaders$/ })).toBeVisible()
+        await expect(page).toHaveURL(/.*\/pathway-4/)
+        await expect(page.locator('#mmi-developmentProgrammes')).toHaveClass(/dfe-header__navigation-item--current/)
+    })
+
+    test('User journey from homepage - 2 @journey', async ({ page }) => {
+        await page.goto('/')
+        await page.getByRole('link', { name: 'Leaders', exact: true }).click()
+        await page.getByRole('link', { name: 'Pathway 4: practice leaders', exact: true }).click()
+
+        await expect(page.locator('h1', { hasText: /^Pathway 4: practice leaders$/ })).toBeVisible()
+        await expect(page).toHaveURL(/.*\/pathway-4/)
         await expect(page.locator('#mmi-developmentProgrammes')).toHaveClass(/dfe-header__navigation-item--current/)
     })
 
     test('User journey via menu @journey', async ({ page }) => {
         await page.goto('/')
         await page.getByLabel('Menu').getByRole('link', { name: 'Career information', exact: true }).click()
-        await page.getByRole('link', { name: 'Managers', exact: true }).click()
-        await page.getByRole('link', { name: 'Pathway 3: heads of service', exact: true }).click()
+        await page.getByRole('link', { name: 'Leaders', exact: true }).click()
+        await page.getByRole('link', { name: 'Pathway 4: practice leaders', exact: true }).click()
 
-        await expect(page.locator('h1', { hasText: /^Pathway 3: heads of service$/ })).toBeVisible()
-        await expect(page).toHaveURL(/.*\/pathway-3/)
+        await expect(page.locator('h1', { hasText: /^Pathway 4: practice leaders$/ })).toBeVisible()
+        await expect(page).toHaveURL(/.*\/pathway-4/)
         await expect(page.locator('#mmi-developmentProgrammes')).toHaveClass(/dfe-header__navigation-item--current/)
     })
 
