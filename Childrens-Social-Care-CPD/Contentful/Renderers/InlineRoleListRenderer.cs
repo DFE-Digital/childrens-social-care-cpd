@@ -65,30 +65,31 @@ internal class InlineRoleListRenderer : IRenderer<RoleList>
         var p = new TagBuilder("p");
         p.AddCssClass("govuk-body");
         p.InnerHtml.Append(detailedRole.RoleListSummary);
-
-        var rowDiv = new TagBuilder("div");
-        rowDiv.AddCssClass("govuk-grid-row govuk-!-padding-bottom-3");
-
-        var columnDiv = new TagBuilder("div");
-        columnDiv.AddCssClass("govuk-grid-column-one-half");
-
-        var ul = new TagBuilder("ul");
-        ul.AddCssClass("govuk-list");
-
-        var li = new TagBuilder("li");
-
-        var span = new TagBuilder("span");
-        span.AddCssClass("govuk-!-font-size-16 govuk-!-font-weight-bold");
-        span.InnerHtml.Append("Salary range: ");
-        span.InnerHtml.Append(detailedRole.SalaryRange);
-
-        li.InnerHtml.AppendHtml(span);
-        ul.InnerHtml.AppendHtml(li);
-        columnDiv.InnerHtml.AppendHtml(ul);
-        rowDiv.InnerHtml.AppendHtml(columnDiv);
-
         htmlContentBuilder.AppendHtml(p);
-        htmlContentBuilder.AppendHtml(rowDiv);
+        if (!string.IsNullOrEmpty(detailedRole.SalaryRange))
+        {
+            var rowDiv = new TagBuilder("div");
+            rowDiv.AddCssClass("govuk-grid-row govuk-!-padding-bottom-3");
+
+            var columnDiv = new TagBuilder("div");
+            columnDiv.AddCssClass("govuk-grid-column-one-half");
+
+            var ul = new TagBuilder("ul");
+            ul.AddCssClass("govuk-list");
+
+            var li = new TagBuilder("li");
+
+            var span = new TagBuilder("span");
+            span.AddCssClass("govuk-!-font-size-16 govuk-!-font-weight-bold");
+            span.InnerHtml.Append("Salary range: ");
+            span.InnerHtml.Append(detailedRole.SalaryRange);
+
+            li.InnerHtml.AppendHtml(span);
+            ul.InnerHtml.AppendHtml(li);
+            columnDiv.InnerHtml.AppendHtml(ul);
+            rowDiv.InnerHtml.AppendHtml(columnDiv);
+            htmlContentBuilder.AppendHtml(rowDiv);
+        }
 
         return htmlContentBuilder;
     }

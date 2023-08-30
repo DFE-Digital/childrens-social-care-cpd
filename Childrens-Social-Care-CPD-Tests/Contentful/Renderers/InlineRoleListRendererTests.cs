@@ -199,4 +199,49 @@ public class InlineRoleListRendererTests
         // assert
         actual.Should().MatchRegex(expected);
     }
+
+    [Test]
+    public void RoleList_Does_Not_Renders_Salary_Range_For_Empty_value()
+    {
+        // arrange
+        var stringWriter = new StringWriter();
+        var detailedRole = new DetailedRole()
+        {
+            Title = "title",
+            Summary = "summary",
+            SalaryRange = ""
+        };
+        var roleList = new RoleList()
+        {
+            Title = "A Title",
+            Roles = new List<Content>
+            {
+                new Content
+                {
+                    Id = "id",
+                    Items = new List<IContent>()
+                    {
+                        detailedRole
+                    }
+                }
+            }
+        };
+
+        _contentLinkRenderer.Render(Arg.Any<ContentLink>()).Returns(new HtmlString("AAA"));
+
+        var sb = new StringBuilder();
+        sb.Append("<div class=\"HtmlEncode[[govuk-heading-s govuk-!-margin-bottom-1]]\">");
+        sb.Append("<h3>AAA</h3></div>");
+        sb.Append("<p class=\"HtmlEncode[[govuk-body]]\"></p>");
+        var expected = $".*?{Regex.Escape(sb.ToString())}.*";
+
+        // act
+        var htmlContent = _sut.Render(roleList);
+        htmlContent.WriteTo(stringWriter, new HtmlTestEncoder());
+        var actual = stringWriter.ToString();
+
+        // assert
+        actual.Should().MatchRegex(expected);
+        actual.Should().NotContain("Salary range:");
+    }
 }
