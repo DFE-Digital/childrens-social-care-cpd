@@ -6,10 +6,10 @@ test.beforeEach(async ({ page }) => {
 
 test.describe('Page Footer', () => {
     const links = [
-        ['Cookies', '/cookies'],
-        ['Privacy policy', '/privacy'],
-        ['Accessibility', '/accessibility'],
-        ['Terms and conditions', '/termsconditions'],
+        ['Cookies', '/cookies', 'Cookies'],
+        ['Privacy policy', '/privacy', 'Privacy policy'],
+        ['Accessibility', '/accessibility', 'Accessibility statement'],
+        ['Terms and conditions', '/termsconditions', 'Terms and conditions'],
     ]
 
     for (const link of links) {
@@ -19,6 +19,7 @@ test.describe('Page Footer', () => {
             var response = await promise
 
             expect(response.ok()).toBeTruthy()
+            await expect(page.locator('h1', { hasText: new RegExp(`^${link[2]}$`) })).toBeVisible()
         })
     }
 
