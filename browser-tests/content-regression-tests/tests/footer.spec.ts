@@ -5,7 +5,6 @@ test.beforeEach(async ({ page }) => {
 })
 
 test.describe('Page Footer', () => {
-
     const links = [
         ['Cookies', '/cookies'],
         ['Privacy policy', '/privacy'],
@@ -24,7 +23,6 @@ test.describe('Page Footer', () => {
     }
 
     test.describe('External links @external', () => {
-    
         const links = [
             ['Feedback', 'https://dferesearch.fra1.qualtrics.com/jfe/form/SV_bmcLDedq5wipeTA'],
             ['Open Government Licence v3.0', 'https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/'],
@@ -41,7 +39,4 @@ test.describe('Page Footer', () => {
             })
         }
     })
-
-
-
 })
