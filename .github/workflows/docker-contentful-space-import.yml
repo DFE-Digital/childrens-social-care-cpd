@@ -7,9 +7,9 @@ name: Docker Contentful Space Import
 
 on:
   push:
-    branches: [ "master", "main" ]
+    # branches: [ "master", "main" ]
     # Publish semver tags as releases.
-    tags: [ 'v*.*.*' ]
+    # tags: [ 'v*.*.*' ]
     paths: [ 'Contentful-Backup/**/*' ]
 
 env:
