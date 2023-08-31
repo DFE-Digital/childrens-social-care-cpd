@@ -6,8 +6,8 @@ name: Docker Publish
 # documentation.
 
 on:
-  release:
-    types: [published]
+  # release:
+  #   types: [published]
   push:
     tags: [ 'v*.*.*' ]
 
