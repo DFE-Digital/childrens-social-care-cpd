@@ -36,6 +36,9 @@ jobs:
       - name: Get short hash
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
+      - name: downcase IMAGE_NAME
+        run:  echo "IMAGE_NAME_LOWER=${IMAGE_NAME,,}" >> $GITHUB_ENV
+
       # Install the cosign tool except on PR
       # https://github.com/sigstore/cosign-installer
       - name: Install cosign
@@ -74,7 +77,7 @@ jobs:
         with:
           context: Childrens-Social-Care-CPD
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.sha_short }}
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LOWER }}:${{ env.sha_short }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: VCSREF=${{ env.sha_short }}
           cache-from: type=gha
