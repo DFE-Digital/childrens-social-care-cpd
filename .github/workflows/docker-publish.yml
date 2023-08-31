@@ -6,10 +6,8 @@ name: Docker Publish
 # documentation.
 
 on:
-  push:
-    branches: [ "master", "main" ]
-    # Publish semver tags as releases.
-    # tags: [ 'v*.*.*' ]
+  release:
+    types: [published]
 
 env:
   # Use docker.io for Docker Hub if empty
@@ -30,13 +28,18 @@ jobs:
       id-token: write
 
     steps:
-      - name: Checkout repository
+      # Checkout the release tag version
+      - name: Checkout repository ${{ github.event.release.tag_name }}
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.release.tag_name }}
 
+      # Get git commit hash
       - name: Get short hash
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
-      - name: downcase IMAGE_NAME
+      # Need to lower case the image name for the docker tags when publishing
+      - name: Downcase IMAGE_NAME variable
         run:  echo "IMAGE_NAME_LOWER=${IMAGE_NAME,,}" >> $GITHUB_ENV
 
       # Install the cosign tool except on PR
@@ -77,7 +80,7 @@ jobs:
         with:
           context: Childrens-Social-Care-CPD
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LOWER }}:${{ env.sha_short }}
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LOWER }}:${{ github.event.release.tag_name }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: VCSREF=${{ env.sha_short }}
           cache-from: type=gha
