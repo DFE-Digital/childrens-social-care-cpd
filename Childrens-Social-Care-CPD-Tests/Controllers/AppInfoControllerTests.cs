@@ -61,4 +61,18 @@ public class AppInfoControllerTests
         // assert
         actual.GitShortHash.Should().Be(value);
     }
+
+    [Test]
+    public void AppInfo_Includes_App_Version()
+    {
+        // arrange
+        var value = "foo";
+        _applicationConfiguration.AppVersion.Returns(value);
+
+        // act
+        var actual = _controller.AppInfo().Value as ApplicationInfo;
+
+        // assert
+        actual.Version.Should().Be(value);
+    }
 }
