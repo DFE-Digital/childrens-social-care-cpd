@@ -21,4 +21,6 @@ WORKDIR /app
 COPY --from=publish /app/publish .
 ARG VCSREF=0
 ENV VCS-REF=$VCSREF
+ARG VCSTAG=0.0.0
+ENV VCS-TAG=$VCSTAG
 ENTRYPOINT ["dotnet", "Childrens-Social-Care-CPD.dll"]
