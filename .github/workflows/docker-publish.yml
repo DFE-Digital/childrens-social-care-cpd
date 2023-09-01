@@ -14,6 +14,7 @@ env:
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
+  RELEASE_TAG: ${{ github.event.release.tag_name }}
 
 jobs:
   build:
@@ -29,10 +30,10 @@ jobs:
 
     steps:
       # Checkout the release tag version
-      - name: Checkout repository ${{ github.event.release.tag_name }}
+      - name: Checkout repository ${{ env.RELEASE_TAG }}
         uses: actions/checkout@v3
         with:
-          ref: ${{ github.event.release.tag_name }}
+          ref: ${{ env.RELEASE_TAG }}
 
       # Get git commit hash
       - name: Get short hash
@@ -80,9 +81,11 @@ jobs:
         with:
           context: Childrens-Social-Care-CPD
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LOWER }}:${{ github.event.release.tag_name }},${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LOWER }}:latest
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LOWER }}:${{ env.RELEASE_TAG }},${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LOWER }}:latest
           labels: ${{ steps.meta.outputs.labels }}
-          build-args: VCSREF=${{ env.sha_short }}
+          build-args: |
+            VCSREF=${{ env.sha_short }}
+            VCSTAG=${{ env.RELEASE_TAG }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
