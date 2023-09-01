@@ -1,0 +1,15 @@
+title Merge or commit to master
+
+actor Developer
+
+note over Repository, Actions, Container\nregistry: Github
+
+Developer->Repository: PR merge into master
+Repository->+Actions: On merge
+note over Actions: Semantic Release
+Actions->Channels: Notifies
+Actions-->-Repository:Add tags/release
+Repository->+Actions: Build & publish\ndocker image
+Actions->-Container\nregistry: Publish image
+Actions->+Actions: Auto deploy to dev
+Actions->Azure: Deploy
