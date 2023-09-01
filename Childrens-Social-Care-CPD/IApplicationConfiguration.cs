@@ -3,6 +3,7 @@
 public interface IApplicationConfiguration 
 { 
     string AppInsightsConnectionString { get; }
+    string AppVersion { get; }
     string AzureEnvironment { get; }
     string ClarityProjectId { get; }
     string ContentfulDeliveryApiKey { get; }
