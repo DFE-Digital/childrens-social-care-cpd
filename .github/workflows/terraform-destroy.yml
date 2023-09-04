@@ -34,6 +34,7 @@ jobs:
       TF_VAR_cpd_preview_key: ${{secrets.TF_VAR_CPD_PREVIEW_KEY}}
       TF_VAR_cpd_delivery_key: ${{secrets.TF_VAR_CPD_DELIVERY_KEY}}
       TF_VAR_cpd_clarity: ${{secrets.TF_VAR_CPD_CLARITY}}
+      TF_VAR_cpd_image_tag: ${{vars.TF_VAR_CPD_IMAGE_TAG}}
       TF_WORKSPACE: ${{inputs.workspace}}
 
     defaults:
