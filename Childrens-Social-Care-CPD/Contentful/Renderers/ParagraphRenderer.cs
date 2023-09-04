@@ -10,12 +10,15 @@ internal class ParagraphRenderer : IRenderer<Paragraph>
     private readonly IRenderer<Text> _textRenderer;
     private readonly IRenderer<RoleList> _roleListRenderer;
     private readonly IRenderer<Hyperlink> _hyperlinkRenderer;
+    private readonly IRenderer<ContentLink> _contentLinkRenderer;
+    
 
-    public ParagraphRenderer(IRenderer<Text> textRenderer, IRenderer<RoleList> roleListRenderer, IRenderer<Hyperlink> hyperlinkRenderer)
+    public ParagraphRenderer(IRenderer<Text> textRenderer, IRenderer<RoleList> roleListRenderer, IRenderer<Hyperlink> hyperlinkRenderer, IRenderer<ContentLink> contentLinkRenderer)
     {
         _textRenderer = textRenderer;
         _roleListRenderer = roleListRenderer;
         _hyperlinkRenderer = hyperlinkRenderer;
+        _contentLinkRenderer = contentLinkRenderer;
     }
 
     public IHtmlContent Render(Paragraph item)
@@ -32,6 +35,7 @@ internal class ParagraphRenderer : IRenderer<Paragraph>
                     {
                         switch (entryStructure.Data.Target)
                         {
+                            case ContentLink contentLink: p.InnerHtml.AppendHtml(_contentLinkRenderer.Render(contentLink)); break;
                             case RoleList roleList: p.InnerHtml.AppendHtml(_roleListRenderer.Render(roleList)); break;
                         }
                         break;
