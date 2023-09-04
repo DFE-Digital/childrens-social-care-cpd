@@ -12,6 +12,7 @@ public class ApplicationConfigurationTests
 
     private void ClearEnvironmentVariables()
     {
+        Environment.SetEnvironmentVariable("VCS-TAG", null);
         Environment.SetEnvironmentVariable("CPD_INSTRUMENTATION_CONNECTIONSTRING", null);
         Environment.SetEnvironmentVariable("CPD_AZURE_ENVIRONMENT", null);
         Environment.SetEnvironmentVariable("CPD_CLARITY", null);
@@ -191,6 +192,20 @@ public class ApplicationConfigurationTests
         actual.Should().Be(false);
     }
 
+    [Test]
+    public void Returns_AppVersionEnvironment_Value()
+    {
+        // arrange
+        Environment.SetEnvironmentVariable("VCS-TAG", Value);
+        var sut = new ApplicationConfiguration();
+
+        // act
+        var actual = sut.AppVersion;
+
+        // assert
+        actual.Should().Be(Value);
+    }
+
 
     [Test]
     public void Returns_AzureEnvironment_Default_Value()
@@ -320,5 +335,18 @@ public class ApplicationConfigurationTests
 
         // assert
         actual.Should().Be(false);
+    }
+
+    [Test]
+    public void Returns_AppVersionEnvironment_Default_Value()
+    {
+        // arrange
+        var sut = new ApplicationConfiguration();
+
+        // act
+        var actual = sut.AppVersion;
+
+        // assert
+        actual.Should().Be(string.Empty);
     }
 }
