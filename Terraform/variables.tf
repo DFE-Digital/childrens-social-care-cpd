@@ -630,6 +630,12 @@ variable "cpd_preview_key" {
   description = "Contentful Preview Key"
 }
 
+variable "cpd_image_tag" {
+  type        = string
+  sensitive   = true
+  description = "Docker image tag of application"
+}
+
 variable "cpd_delivery_key" {
   type        = string
   sensitive   = true
