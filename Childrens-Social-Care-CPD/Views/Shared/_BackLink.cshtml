@@ -4,7 +4,7 @@
 
 @if (Model == null) return;
 
-<div class="govuk-width-container jsonly">
+<div class="govuk-width-container back-link">
     @{
         if (Model.Uri.ToLower().StartsWith("javascript:") && Model.Uri.Length > 11)
         {
