@@ -80,6 +80,7 @@ No modules.
 | <a name="input_cpd_contentful_env"></a> [cpd\_contentful\_env](#input\_cpd\_contentful\_env) | Contentful Environment Name | `map(string)` | <pre>{<br>  "Dev": "dev",<br>  "Load-Test": "test",<br>  "Pre-Prod": "prod",<br>  "Prod": "prod",<br>  "Test": "test"<br>}</pre> | no |
 | <a name="input_cpd_delivery_key"></a> [cpd\_delivery\_key](#input\_cpd\_delivery\_key) | Contentful Delivery Key | `string` | n/a | yes |
 | <a name="input_cpd_googleanalyticstag"></a> [cpd\_googleanalyticstag](#input\_cpd\_googleanalyticstag) | Google Analytics Tag | `string` | n/a | yes |
+| <a name="input_cpd_image_tag"></a> [cpd\_image\_tag](#input\_cpd\_image\_tag) | Docker image tag of application | `string` | n/a | yes |
 | <a name="input_cpd_keyvaultendpoint"></a> [cpd\_keyvaultendpoint](#input\_cpd\_keyvaultendpoint) | URL Endpoint for Key Vault in Azure | `string` | n/a | yes |
 | <a name="input_cpd_preview_key"></a> [cpd\_preview\_key](#input\_cpd\_preview\_key) | Contentful Preview Key | `string` | n/a | yes |
 | <a name="input_cpd_space_id"></a> [cpd\_space\_id](#input\_cpd\_space\_id) | Contentful Space ID | `string` | n/a | yes |
