@@ -145,4 +145,19 @@ public class ContentControllerTests
         actual.Should().NotBeNull();
         actual.UseContainers.Should().Be(expected);
     }
+
+    [Test]
+    public async Task Index_Trims_Trailing_Slashes()
+    {
+        // arrange
+        SetContent(new Content());
+        var query = "";
+        await _contentfulClient.GetEntries(Arg.Do<QueryBuilder<Content>>(value => query = value.Build()));
+
+        // act
+        var actual = await _contentController.Index("home/");
+
+        // assert
+        query.Should().Contain("fields.id=home&");
+    }
 }

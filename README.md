@@ -55,9 +55,12 @@ Cypress testing is also included.
 ### Compiling the Sass
 The Sass is compiled using the ```compile-sass.ps1``` script in the main project. The commands can also be used in *nix environments.
 
-### Further documentation
+## Releases
+Information around the Github Release process can be found in the [release documentation](./docs/RELEASE.md).
 
-More information on contentful and working as a headless CMS can be found [here](https://www.contentful.com/)
+## Contentful
+
+More information on Contentful can be found [here](https://www.contentful.com/)
 
 ---
 Copyright (c) 2023 Crown Copyright (Department for Education)
