@@ -6,7 +6,7 @@ on:
       tag:
         description: 'Docker image tag to deploy (use @ or :)'
         required: true
-        default: ':master'
+        default: 'v1.0.0'
       workspace:
         description: 'Environment to deploy to on Azure'
         required: true
@@ -36,14 +36,14 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: 's185d01-chidrens-social-care-cpd-app-service'
-          images: 'ghcr.io/dfe-digital/childrens-social-care-cpd${{ inputs.tag }}'
+          images: 'ghcr.io/dfe-digital/childrens-social-care-cpd:${{ inputs.tag }}'
         if: ${{ inputs.workspace == 'Dev' }}
 
       - name: Deploy Test to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
           app-name: 's185d02-chidrens-social-care-cpd-app-service'
-          images: 'ghcr.io/dfe-digital/childrens-social-care-cpd${{ inputs.tag }}'
+          images: 'ghcr.io/dfe-digital/childrens-social-care-cpd:${{ inputs.tag }}'
         if: ${{ inputs.workspace == 'Test' }}
 
       - name: Deploy Load-Test to Azure Web App
@@ -51,7 +51,7 @@ jobs:
         with:
           app-name: 's185d03-chidrens-social-care-cpd-app-service'
           slot-name: 'staging'
-          images: 'ghcr.io/dfe-digital/childrens-social-care-cpd${{ inputs.tag }}'
+          images: 'ghcr.io/dfe-digital/childrens-social-care-cpd:${{ inputs.tag }}'
         if: ${{ inputs.workspace == 'Load-Test' }}
 
       - name: Swap slots for Load-Test
@@ -62,7 +62,7 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: 's185t01-chidrens-social-care-cpd-app-service'
-          images: 'ghcr.io/dfe-digital/childrens-social-care-cpd${{ inputs.tag }}'
+          images: 'ghcr.io/dfe-digital/childrens-social-care-cpd:${{ inputs.tag }}'
         if: ${{ inputs.workspace == 'Pre-Prod' }}
 
       - name: Deploy Prod to Azure Web App
@@ -70,12 +70,16 @@ jobs:
         with:
           app-name: 's185p01-chidrens-social-care-cpd-app-service'
           slot-name: 'staging'
-          images: 'ghcr.io/dfe-digital/childrens-social-care-cpd${{ inputs.tag }}'
+          images: 'ghcr.io/dfe-digital/childrens-social-care-cpd:${{ inputs.tag }}'
         if: ${{ inputs.workspace == 'Prod' }}
 
       - name: Swap slots for Prod
         run: az webapp deployment slot swap -g s185p01-childrens-social-care-cpd-rg -n s185p01-chidrens-social-care-cpd-app-service --slot staging --target-slot production
         if: ${{ inputs.workspace == 'Prod' }}
+
+      - name: Write application tag into environment variable
+        run: |
+          curl -L -i -X PATCH -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/repositories/547182049/environments/${{ inputs.workspace }}/variables/TF_VAR_CPD_IMAGE_TAG -d '{"name": "TF_VAR_CPD_IMAGE_TAG", "value": "${{ inputs.tag }}"}'
 
       - name: Sign out of Azure
         run: |

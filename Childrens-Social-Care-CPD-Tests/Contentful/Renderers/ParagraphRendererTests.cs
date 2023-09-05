@@ -5,7 +5,6 @@ using Microsoft.Extensions.WebEncoders.Testing;
 using NSubstitute;
 using NUnit.Framework;
 using System.IO;
-using System;
 using ParagraphRenderer = Childrens_Social_Care_CPD.Contentful.Renderers.ParagraphRenderer;
 using FluentAssertions;
 using System.Collections.Generic;
@@ -18,6 +17,7 @@ public class ParagraphRendererTests
     private IRenderer<Text> _textRenderer;
     private IRenderer<RoleList> _roleListRenderer;
     private IRenderer<Hyperlink> _hyperlinkRenderer;
+    private IRenderer<ContentLink> _contentLinkRenderer;
     
     private ParagraphRenderer _sut;
 
@@ -27,8 +27,9 @@ public class ParagraphRendererTests
         _textRenderer = Substitute.For<IRenderer<Text>>();
         _roleListRenderer = Substitute.For<IRenderer<RoleList>>();
         _hyperlinkRenderer = Substitute.For<IRenderer<Hyperlink>>();
+        _contentLinkRenderer = Substitute.For<IRenderer<ContentLink>>();
 
-        _sut = new ParagraphRenderer(_textRenderer, _roleListRenderer, _hyperlinkRenderer);
+        _sut = new ParagraphRenderer(_textRenderer, _roleListRenderer, _hyperlinkRenderer, _contentLinkRenderer);
     }
 
     [Test]
@@ -47,6 +48,7 @@ public class ParagraphRendererTests
         _textRenderer.Render(Arg.Any<Text>()).Returns(new HtmlString("AAA"));
         _roleListRenderer.Render(Arg.Any<RoleList>()).Returns(new HtmlString("BBB"));
         _hyperlinkRenderer.Render(Arg.Any<Hyperlink>()).Returns(new HtmlString("CCC"));
+        _contentLinkRenderer.Render(Arg.Any<ContentLink>()).Returns(new HtmlString("DDD"));
 
         // act
         var htmlContent = _sut.Render(paragraph);
@@ -79,6 +81,7 @@ public class ParagraphRendererTests
         _textRenderer.Render(Arg.Any<Text>()).Returns(new HtmlString("AAA"));
         _roleListRenderer.Render(Arg.Any<RoleList>()).Returns(new HtmlString("BBB"));
         _hyperlinkRenderer.Render(Arg.Any<Hyperlink>()).Returns(new HtmlString("CCC"));
+        _contentLinkRenderer.Render(Arg.Any<ContentLink>()).Returns(new HtmlString("DDD"));
 
         // act
         var htmlContent = _sut.Render(paragraph);
@@ -105,6 +108,7 @@ public class ParagraphRendererTests
         _textRenderer.Render(Arg.Any<Text>()).Returns(new HtmlString("AAA"));
         _roleListRenderer.Render(Arg.Any<RoleList>()).Returns(new HtmlString("BBB"));
         _hyperlinkRenderer.Render(Arg.Any<Hyperlink>()).Returns(new HtmlString("CCC"));
+        _contentLinkRenderer.Render(Arg.Any<ContentLink>()).Returns(new HtmlString("DDD"));
 
         // act
         var htmlContent = _sut.Render(paragraph);
@@ -113,5 +117,38 @@ public class ParagraphRendererTests
 
         // assert
         actual.Should().Be($"<p class=\"HtmlEncode[[govuk-body-m]]\">CCC</p>");
+    }
+
+    [Test]
+    public void Paragraph_Renders_With_ContentLink()
+    {
+        // arrange
+        var stringWriter = new StringWriter();
+        var paragraph = new Paragraph()
+        {
+            Content = new List<IContent>
+            {
+                new EntryStructure
+                {
+                    Data = new EntryStructureData
+                    {
+                        Target = new ContentLink()
+                    }
+                }
+            }
+        };
+
+        _textRenderer.Render(Arg.Any<Text>()).Returns(new HtmlString("AAA"));
+        _roleListRenderer.Render(Arg.Any<RoleList>()).Returns(new HtmlString("BBB"));
+        _hyperlinkRenderer.Render(Arg.Any<Hyperlink>()).Returns(new HtmlString("CCC"));
+        _contentLinkRenderer.Render(Arg.Any<ContentLink>()).Returns(new HtmlString("DDD"));
+
+        // act
+        var htmlContent = _sut.Render(paragraph);
+        htmlContent.WriteTo(stringWriter, new HtmlTestEncoder());
+        var actual = stringWriter.ToString();
+
+        // assert
+        actual.Should().Be($"<p class=\"HtmlEncode[[govuk-body-m]]\">DDD</p>");
     }
 }

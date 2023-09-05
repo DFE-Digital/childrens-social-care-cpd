@@ -6,17 +6,15 @@ name: Docker Publish
 # documentation.
 
 on:
-  push:
-    branches: [ "master", "main" ]
-    # Publish semver tags as releases.
-    tags: [ 'v*.*.*' ]
+  release:
+    types: [published]
 
 env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
-
+  RELEASE_TAG: ${{ github.event.release.tag_name }}
 
 jobs:
   build:
@@ -31,11 +29,19 @@ jobs:
       id-token: write
 
     steps:
-      - name: Checkout repository
+      # Checkout the release tag version
+      - name: Checkout repository ${{ env.RELEASE_TAG }}
         uses: actions/checkout@v3
+        with:
+          ref: ${{ env.RELEASE_TAG }}
 
+      # Get git commit hash
       - name: Get short hash
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
+      # Need to lower case the image name for the docker tags when publishing
+      - name: Downcase IMAGE_NAME variable
+        run:  echo "IMAGE_NAME_LOWER=${IMAGE_NAME,,}" >> $GITHUB_ENV
 
       # Install the cosign tool except on PR
       # https://github.com/sigstore/cosign-installer
@@ -44,7 +50,6 @@ jobs:
         uses: sigstore/cosign-installer@f3c664df7af409cb4873aa5068053ba9d61a57b6 #v2.6.0
         with:
           cosign-release: 'v1.11.0'
-
 
       # Workaround: https://github.com/docker/build-push-action/issues/461
       - name: Setup Docker buildx
@@ -76,12 +81,13 @@ jobs:
         with:
           context: Childrens-Social-Care-CPD
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LOWER }}:${{ env.RELEASE_TAG }},${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LOWER }}:latest
           labels: ${{ steps.meta.outputs.labels }}
-          build-args: VCSREF=${{ env.sha_short }}
+          build-args: |
+            VCSREF=${{ env.sha_short }}
+            VCSTAG=${{ env.RELEASE_TAG }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-
 
       # Sign the resulting Docker image digest except on PRs.
       # This will only write to the public Rekor transparency log when the Docker

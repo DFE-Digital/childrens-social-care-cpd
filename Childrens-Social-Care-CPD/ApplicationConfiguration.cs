@@ -4,6 +4,7 @@ public class ApplicationConfiguration : IApplicationConfiguration
 {
     private static string ValueOrStringEmpty(string key) => Environment.GetEnvironmentVariable(key) ?? string.Empty;
     public string AppInsightsConnectionString => ValueOrStringEmpty("CPD_INSTRUMENTATION_CONNECTIONSTRING");
+    public string AppVersion => ValueOrStringEmpty("VCS-TAG");
     public string AzureEnvironment => ValueOrStringEmpty("CPD_AZURE_ENVIRONMENT");
     public string ClarityProjectId => ValueOrStringEmpty("CPD_CLARITY");
     public string ContentfulDeliveryApiKey => ValueOrStringEmpty("CPD_DELIVERY_KEY");
