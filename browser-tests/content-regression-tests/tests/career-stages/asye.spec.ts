@@ -12,7 +12,7 @@ test.describe('Assessed and supported year in employment (ASYE)', () => {
 
     test('User journey via Career menu @journey', async ({ page }) => {
         await page.goto('/')
-        await page.getByLabel('Menu').getByRole('link', { name: 'Career information', exact: true }).click()
+        await page.getByLabel('Menu').getByRole('link', { name: 'Career stage', exact: true }).click()
         await page.getByRole('link', { name: 'Practitioners', exact: true }).click()
         await page.getByRole('link', { name: 'Assessed and supported year in employment (ASYE)', exact: true }).click()
 
