@@ -6,17 +6,17 @@
 
 @functions {
 
-    public async Task RenderAccordianSection(string title, Document model)
+    public async Task RenderAccordianSection(string title, Document model, int id)
     {
         <div class="govuk-accordion__section">
             <div class="govuk-accordion__section-header">
                 <h2 class="govuk-accordion__section-heading">
-                    <span class="govuk-accordion__section-button" id="accordion-with-summary-sections-heading-2">
+                    <span class="govuk-accordion__section-button" id="accordion-with-summary-sections-heading-@id">
                         @title
                     </span>
                 </h2>
             </div>
-            <div id="accordion-with-summary-sections-content-2" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-2">
+            <div id="accordion-with-summary-sections-content-@id" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-@id">
                 @{
                     await Html.RenderPartialAsync("_RichText", model);
                 }
@@ -71,27 +71,27 @@
 
             @if (Model.WhatYoullDo != null)
             {
-                await RenderAccordianSection("What you'll do", Model.WhatYoullDo);
+                await RenderAccordianSection("What you'll do", Model.WhatYoullDo, 1);
             }
 
             @if (Model.SkillsAndKnowledge != null)
             {
-                await RenderAccordianSection("Skills and knowledge", Model.SkillsAndKnowledge);
+                await RenderAccordianSection("Skills and knowledge", Model.SkillsAndKnowledge, 2);
             }
 
             @if (Model.HowToBecomeOne != null)
             {
-                await RenderAccordianSection("How to become one", Model.HowToBecomeOne);
+                await RenderAccordianSection("How to become one", Model.HowToBecomeOne, 3);
             }
 
             @if (Model.CareerPathsAndProgression != null)
             {
-                await RenderAccordianSection("Career paths and progression", Model.CareerPathsAndProgression);
+                await RenderAccordianSection("Career paths and progression", Model.CareerPathsAndProgression, 4);
             }
 
             @if (Model.CurrentOpportunities != null)
             {
-                await RenderAccordianSection("Current opportunities", Model.CurrentOpportunities);
+                await RenderAccordianSection("Current opportunities", Model.CurrentOpportunities, 5);
             }
         </div>
     </div>
