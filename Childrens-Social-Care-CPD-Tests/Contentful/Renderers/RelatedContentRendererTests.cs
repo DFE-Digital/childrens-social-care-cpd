@@ -97,7 +97,7 @@ public class RelatedContentRendererTests
 
         _contentLinkRenderer.Render(Arg.Any<ContentLink>()).Returns(new HtmlString("AAA"));
         sb.Append("<div class=\"HtmlEncode[[govuk-grid-row]]\">");
-        sb.Append("<div class=\"HtmlEncode[[govuk-grid-column-two-thirds]]\">");
+        sb.Append("<div class=\"HtmlEncode[[govuk-grid-column-three-quarters]]\">");
         sb.Append("<div class=\"HtmlEncode[[govuk-!-margin-top-28]]\">");
         sb.Append("<aside class=\"HtmlEncode[[app-related-items]]\" role=\"HtmlEncode[[complementary]]\">");
         var expected = $"^{Regex.Escape(sb.ToString())}.*</aside></div></div></div>";
