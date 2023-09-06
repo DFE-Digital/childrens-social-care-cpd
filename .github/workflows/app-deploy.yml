@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Docker image tag to deploy (use @ or :)'
+        description: 'Docker image tag to deploy'
         required: true
         default: 'v1.0.0'
       workspace:
