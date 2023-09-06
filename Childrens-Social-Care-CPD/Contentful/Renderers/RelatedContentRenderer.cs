@@ -21,7 +21,7 @@ public class RelatedContentRenderer : IRenderer<RelatedContent>
         rowDiv.AddCssClass("govuk-grid-row");
         
         var columnDiv = new TagBuilder("div");
-        columnDiv.AddCssClass("govuk-grid-column-two-thirds");
+        columnDiv.AddCssClass("govuk-grid-column-three-quarters");
 
         var marginDiv = new TagBuilder("div");
         marginDiv.AddCssClass("govuk-!-margin-top-28");
