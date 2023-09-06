@@ -23,7 +23,7 @@ test.describe('Pathway 3: heads of service', () => {
 
     test('User journey via Career menu @journey', async ({ page }) => {
         await page.goto('/')
-        await page.getByLabel('Menu').getByRole('link', { name: 'Career information', exact: true }).click()
+        await page.getByLabel('Menu').getByRole('link', { name: 'Career stage', exact: true }).click()
         await page.getByRole('link', { name: 'Managers', exact: true }).click()
         await page.getByRole('link', { name: 'Pathway 3: heads of service', exact: true }).click()
 
