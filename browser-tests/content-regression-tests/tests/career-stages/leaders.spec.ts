@@ -12,7 +12,7 @@ test.describe('Leaders', () => {
 
     test('User journey via menu @journey', async ({ page }) => {
         await page.goto('/')
-        await page.getByLabel('Menu').getByRole('link', { name: 'Career stage', exact: true }).click()
+        await page.getByLabel('Menu').getByRole('link', { name: 'Career stages', exact: true }).click()
         await page.getByRole('link', { name: 'Leaders', exact: true }).click()
 
         await expect(page.locator('h1', { hasText: /^Leaders$/ })).toBeVisible()
