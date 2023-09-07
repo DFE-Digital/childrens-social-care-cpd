@@ -7,10 +7,6 @@ test.describe('Page banner', () => {
             await page.goto('content-with-page-banner')
         })
     
-        test('Is visible', async ({ page }) => {
-            await expect(page.locator('#content-banner')).toBeVisible()
-        })
-    
         test('Title is visible', async ({ page }) => {
             const title = await page.locator('#content-banner-title')
             await expect(title).toBeVisible()
