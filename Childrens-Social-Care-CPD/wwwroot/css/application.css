@@ -10017,6 +10017,16 @@ body, p, h1, h2, h3, h4, h5, h6, a, span, div, table, th, td, blockquote, li, dt
     margin-bottom: 20px;
   }
 }
+/* CONTENT TITLE BANNER
+----------------------- */
+.app-section-content--blue {
+  background-color: #ebf2f6;
+}
+
+.app-section-content {
+  padding: 30px 0;
+}
+
 /*
     This component is currently not part of the dfe-frontend-alpha npm package.
 
