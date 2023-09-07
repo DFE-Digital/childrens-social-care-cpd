@@ -3,6 +3,10 @@
     IgnoreSection("Hero");
 }
 
+@section PageBanner {
+    @await RenderSectionAsync("PageBanner", required: false)
+}
+
 <div class="govuk-width-container">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-one-quarter">
