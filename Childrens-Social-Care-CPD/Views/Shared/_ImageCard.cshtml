@@ -2,8 +2,14 @@
 
 @model ImageCard
 
+@{
+    var bannerCss = Model.ImageSide == "Left"
+                ? "dfe-o-banner dfe-o-banner--mirrored govuk-!-margin-top-2"
+                : "dfe-o-banner govuk-!-margin-top-2";
+}
+
 <section class="govuk-section image-card govuk-!-margin-bottom-6">
-    <div class="dfe-o-banner dfe-o-banner--mirrored govuk-!-margin-top-2">
+    <div class="@bannerCss">
         <div class="dfe-o-banner__content-container dfe-light-blue-tint">
             <div class="dfe-o-banner__inner-content-container">
                 <partial name="_RichText" model="Model.Text" />
