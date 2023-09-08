@@ -3,6 +3,10 @@
     IgnoreSection("SideMenu");
 }
 
+@section PageBanner {
+    @await RenderSectionAsync("PageBanner", required: false)
+}
+
 @await RenderSectionAsync("Hero", required: false)
 <div class="govuk-width-container">
     @RenderBody()
