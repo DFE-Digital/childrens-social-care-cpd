@@ -6,6 +6,9 @@ public class Content : IContent
 {
     public string Id { get; set; }
     public string Title { get; set; }
+    public string ContentTitle { get; set; }
+    public string ContentSubtitle { get; set; }
+    public bool ShowContentHeader { get; set; }
     public string Category { get; set; }
     public ContentLink BackLink { get; set; }
     public SideMenu SideMenu { get; set; }
