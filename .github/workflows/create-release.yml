@@ -1,12 +1,8 @@
 name: Create release
 on:
   push:
-    branches: |
-      [
-        '+([0-9])?(.{+([0-9]),x}).x',
-        'main',
-        {name: 'beta', prerelease: true},
-      ]
+    branches:
+      - main
 
 permissions:
   contents: read # for checkout
