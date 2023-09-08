@@ -105,11 +105,6 @@ body, p, h1, h2, h3, h4, h5, h6, a, span, div, table, th, td, blockquote, li, dt
     text-underline-offset: 0.1em;
 }
 
-.edf-hero-banner {
-    margin-top: -10px !important;
-    margin-bottom: 40px;
-}
-
 @media (max-width: 40.0625em) {
     .govuk-header__product-name {
         max-width: 80%;
@@ -121,11 +116,6 @@ body, p, h1, h2, h3, h4, h5, h6, a, span, div, table, th, td, blockquote, li, dt
         min-width: 100%;
         line-height: 2.2rem !important;
         font-size: 1rem;
-    }
-
-    .edf-hero-banner {
-        margin-top: 0px !important;
-        margin-bottom: 20px;
     }
 }
 
