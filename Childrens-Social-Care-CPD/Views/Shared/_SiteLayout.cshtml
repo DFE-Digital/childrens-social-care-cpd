@@ -19,9 +19,8 @@
     <partial name="_Header" />
     <partial name="_BackLink" model="@ViewBag.ContextModel?.BackLink" />
 
-    @await RenderSectionAsync("PageBanner", required: false)
-
     <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+        @await RenderSectionAsync("PageBanner", required: false)
         @RenderBody()
     </main>
 
