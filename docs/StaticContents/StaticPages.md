@@ -40,9 +40,21 @@ Deployment:
 These static HTML error pages are deployed in Azure blob storage. App gateway use these pages to render it as per the rules set.
 Web pages can be uploaded or removed using Azure storage browser UI interface.
 
-Azure Subscription - s185-social workforce-development
-Resource group - s185d01-childrens-social-care-shared-rg
-Storage account - s185errorpage
+Follow these steps to deploy HTMl files
+
+1. Log in to Azure
+2. Go to the Storage Browser Azure service
+3. Go to the storage account - s185errorpage
+
+![Storage](./images/storage.png)
+
+4. Go to the blob container - s185errorpage
+
+![Container](./images/container.png)
+
+5. Files can be uploaded, deleted using the blob container explorer
+
+![ContainerExplorer](./images/containerExplorer.png)
 
 
 
