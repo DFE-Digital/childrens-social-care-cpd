@@ -5,3 +5,7 @@
 .js-enabled .back-link {
     display: block !important;
 }
+
+.image-card h2 {
+    @extend .govuk-heading-m
+}

@@ -1,0 +1,16 @@
+﻿@using Childrens_Social_Care_CPD.Contentful.Models;
+
+@model ImageCard
+
+<section class="govuk-section image-card govuk-!-margin-bottom-6">
+    <div class="dfe-o-banner dfe-o-banner--mirrored govuk-!-margin-top-2">
+        <div class="dfe-o-banner__content-container dfe-light-blue-tint">
+            <div class="dfe-o-banner__inner-content-container">
+                <partial name="_RichText" model="Model.Text" />
+            </div>
+        </div>
+        <div class="dfe-o-banner__image-container">
+            <img src="@Model.Image.File.Url" alt="@Model.Image.Description">
+        </div>
+    </div>
+</section>
