@@ -20,7 +20,7 @@ These pages are created using the following steps:
 6. Use this Base64 string for images used for icons or Image Urls used in the CSS classes.
 
 for e.g. 
-
+```CSS
  .govuk-footer__copyright-logo {
             display: inline-block;
             min-width: 125px;
@@ -31,7 +31,7 @@ for e.g.
             text-align: center;
             white-space: nowrap;
         }
-
+```
 
 7. Test this HTML file using the browser.
 
