@@ -44,17 +44,7 @@ Follow these steps to deploy HTMl files
 
 1. Log in to Azure
 2. Go to the Storage Browser Azure service
-3. Go to the storage account - s185errorpage
-
-![Storage](./images/storage.png)
-
-4. Go to the blob container - s185errorpage
-
-![Container](./images/container.png)
-
-5. Files can be uploaded, deleted using the blob container explorer
-
-![ContainerExplorer](./images/containerExplorer.png)
+3. For more information refer the section static error page storage in LLD
 
 
 
