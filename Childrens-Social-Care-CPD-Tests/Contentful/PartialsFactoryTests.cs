@@ -19,6 +19,7 @@ public partial class PartialsFactoryTests
         new object[] { new DetailedRole(), "_DetailedRole" },
         new object[] { new HeroBanner(), string.Empty },
         new object[] { new LinkCard(), "_LinkCard" },
+        new object[] { new ImageCard(), "_ImageCard" },
         new object[] { new LinkListCard(), "_LinkListCard" },
         new object[] { new RichTextBlock(), "_RichTextBlock" },
         new object[] { new RoleList(), "_RoleList" },
