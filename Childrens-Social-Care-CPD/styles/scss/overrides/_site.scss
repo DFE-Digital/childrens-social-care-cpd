@@ -5,3 +5,8 @@
 .js-enabled .back-link {
     display: block !important;
 }
+
+.section-card-home {
+    @extend .dfe-section-card;
+    border-bottom: 3px solid #003A69;
+}
