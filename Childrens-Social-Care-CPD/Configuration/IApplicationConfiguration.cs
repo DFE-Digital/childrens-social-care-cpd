@@ -12,6 +12,7 @@ public interface IApplicationConfiguration
     string ContentfulPreviewId { get; }
     string ContentfulSpaceId { get; }
     bool DisableSecureCookies { get; }
+    int FeaturePollingInterval { get; }
     string GitHash { get; }
     string GoogleTagManagerKey { get; }
 }
