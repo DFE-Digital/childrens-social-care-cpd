@@ -1,4 +1,4 @@
-﻿namespace Childrens_Social_Care_CPD;
+﻿namespace Childrens_Social_Care_CPD.Configuration;
 
 public class ApplicationConfiguration : IApplicationConfiguration
 {
