@@ -1,7 +1,7 @@
-﻿namespace Childrens_Social_Care_CPD;
+﻿namespace Childrens_Social_Care_CPD.Configuration;
 
-public interface IApplicationConfiguration 
-{ 
+public interface IApplicationConfiguration
+{
     string AppInsightsConnectionString { get; }
     string AppVersion { get; }
     string AzureEnvironment { get; }

@@ -1,4 +1,5 @@
 using Childrens_Social_Care_CPD;
+using Childrens_Social_Care_CPD.Configuration;
 using Childrens_Social_Care_CPD.Contentful;
 using Childrens_Social_Care_CPD.Contentful.Renderers;
 using Contentful.AspNetCore;
