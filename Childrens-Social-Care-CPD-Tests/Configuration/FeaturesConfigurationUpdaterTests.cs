@@ -3,7 +3,6 @@ using Childrens_Social_Care_CPD.Contentful;
 using Childrens_Social_Care_CPD.Contentful.Models;
 using Contentful.Core.Models;
 using Contentful.Core.Search;
-using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NUnit.Framework;

@@ -1,13 +1,7 @@
 ﻿using Childrens_Social_Care_CPD.Configuration;
-using Childrens_Social_Care_CPD.Contentful;
-using Childrens_Social_Care_CPD.Contentful.Models;
-using Contentful.Core.Models;
-using Contentful.Core.Search;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
-using NSubstitute.ExceptionExtensions;
 using NUnit.Framework;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 namespace Childrens_Social_Care_CPD_Tests.Configuration;
