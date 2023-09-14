@@ -2,5 +2,6 @@
 
 public interface IFeaturesConfiguration
 {
+    void AddOrUpdateFeature(string featureName, bool enabled);
     bool IsEnabled(string featureName);
 }

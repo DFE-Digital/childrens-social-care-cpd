@@ -10,25 +10,39 @@ public class FeatureConfigurationPoller : BackgroundService
     private readonly ILogger _logger;
     private readonly ICpdContentfulClient _client;
     private readonly IApplicationConfiguration _applicationConfiguration;
+    private readonly IFeaturesConfiguration _featuresConfiguration;
 
-    public FeatureConfigurationPoller(ILogger<FeatureConfigurationPoller> logger, ICpdContentfulClient client, IApplicationConfiguration applicationConfiguration)
+    public FeatureConfigurationPoller(ILogger<FeatureConfigurationPoller> logger, ICpdContentfulClient client, IApplicationConfiguration applicationConfiguration, IFeaturesConfiguration featuresConfiguration)
     {
+        ArgumentNullException.ThrowIfNull(logger, nameof(logger));
+        ArgumentNullException.ThrowIfNull(client, nameof(client));
+        ArgumentNullException.ThrowIfNull(applicationConfiguration, nameof(applicationConfiguration));
+        ArgumentNullException.ThrowIfNull(featuresConfiguration, nameof(featuresConfiguration));
+
         _logger = logger;
         _client = client;
         _applicationConfiguration = applicationConfiguration;
+        _featuresConfiguration = featuresConfiguration;
     }
 
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override async Task ExecuteAsync(CancellationToken cancellationToken)
     {
         _logger.LogInformation("Feature configuration poller started");
 
-        stoppingToken.Register(() => _logger.LogInformation("Feature configuration poller stopping"));
+        cancellationToken.Register(() => _logger.LogInformation("Feature configuration poller stopping"));
 
-        while (!stoppingToken.IsCancellationRequested)
+        var timer = new PeriodicTimer(TimeSpan.FromMilliseconds(_applicationConfiguration.FeaturePollingInterval));
+        try
         {
-            _logger.LogInformation("Feature configuration polling");
-            await QueryForFeatures(stoppingToken);
-            await Task.Delay(_applicationConfiguration.FeaturePollingInterval, stoppingToken);
+            while (await timer.WaitForNextTickAsync(cancellationToken))
+            {
+                _logger.LogInformation($"Feature configuration polling at {DateTime.UtcNow.ToShortTimeString()}");
+                await QueryForFeatures(cancellationToken);
+            }
+        }
+        finally
+        {
+            _logger.LogInformation("Feature configuration poller exiting");
         }
     }
 
@@ -44,15 +58,17 @@ public class FeatureConfigurationPoller : BackgroundService
             var response = await _client.GetEntries(queryBuilder, cancellationToken);
 
             var result = response?.FirstOrDefault();
-            if (result == null)
+            if (result == null || result.Features == null)
             {
                 _logger.LogInformation("Feature Poller: could not find feature configuration");
                 return;
             }
 
             _logger.LogInformation("Features Poller: retrieved configuration: {0}", result.ConvertObjectToJsonString());
-
-            FeaturesConfiguration.UpdateFeatureConfig(result);
+            foreach (var feature in result.Features)
+            {
+                _featuresConfiguration.AddOrUpdateFeature(feature.Name, feature.IsEnabled);
+            }
         }
         catch (Exception ex)
         {
