@@ -6,19 +6,19 @@ using System.Threading;
 using System.Threading.Tasks;
 namespace Childrens_Social_Care_CPD_Tests.Configuration;
 
-public class FeatureConfigurationPollerTests
+public class FeaturesConfigBackgroundServiceTests
 {
-    private ILogger<FeatureConfigurationPoller> _logger;
+    private ILogger<FeaturesConfigBackgroundService> _logger;
     private IApplicationConfiguration _applicationConfiguration;
-    private IFeatureConfigurationUpdater _featureConfigurationUpdater;
+    private IFeaturesConfigUpdater _featuresConfigUpdater;
 
     [SetUp]
     public void Setup()
     {
-        _logger = Substitute.For<ILogger<FeatureConfigurationPoller>>();
+        _logger = Substitute.For<ILogger<FeaturesConfigBackgroundService>>();
 
         _applicationConfiguration = Substitute.For<IApplicationConfiguration>();
-        _featureConfigurationUpdater = Substitute.For<IFeatureConfigurationUpdater>();
+        _featuresConfigUpdater = Substitute.For<IFeaturesConfigUpdater>();
     }
 
     [TestCase(500)]
@@ -27,22 +27,22 @@ public class FeatureConfigurationPollerTests
     {
         // arrange
         _applicationConfiguration.FeaturePollingInterval.Returns(interval);
-        var featureConfigurationPoller = new FeatureConfigurationPoller(
+        var featuresConfigBackgroundService = new FeaturesConfigBackgroundService(
             _logger,
             _applicationConfiguration,
-            _featureConfigurationUpdater
+            _featuresConfigUpdater
         );
 
         // act
         using (var cancellationTokenSource = new CancellationTokenSource())
         {
-            var task = featureConfigurationPoller.StartAsync(cancellationTokenSource.Token);
+            var task = featuresConfigBackgroundService.StartAsync(cancellationTokenSource.Token);
             await Task.Delay((int)(interval * 1.1));
             cancellationTokenSource.Cancel();
             task.Wait();
         }
 
         // assert
-        await _featureConfigurationUpdater.Received(1).UpdateFeaturesAsync(Arg.Any<CancellationToken>());
+        await _featuresConfigUpdater.Received(1).UpdateFeaturesAsync(Arg.Any<CancellationToken>());
     }
 }

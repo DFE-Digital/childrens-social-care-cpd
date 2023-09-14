@@ -2,7 +2,7 @@
 
 namespace Childrens_Social_Care_CPD.Configuration;
 
-public sealed class FeaturesConfiguration : IFeaturesConfiguration
+public sealed class FeaturesConfig : IFeaturesConfig
 {
     private static readonly ConcurrentDictionary<string, bool> _features = new ();
 

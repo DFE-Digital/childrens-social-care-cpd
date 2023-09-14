@@ -1,12 +1,12 @@
 ﻿namespace Childrens_Social_Care_CPD.Configuration;
 
-public class FeatureConfigurationPoller : BackgroundService
+public class FeaturesConfigBackgroundService : BackgroundService
 {
     private readonly ILogger _logger;
     private readonly IApplicationConfiguration _applicationConfiguration;
-    private readonly IFeatureConfigurationUpdater _featureConfigurationUpdater;
+    private readonly IFeaturesConfigUpdater _featureConfigurationUpdater;
 
-    public FeatureConfigurationPoller(ILogger<FeatureConfigurationPoller> logger, IApplicationConfiguration applicationConfiguration, IFeatureConfigurationUpdater featureConfigurationUpdater)
+    public FeaturesConfigBackgroundService(ILogger<FeaturesConfigBackgroundService> logger, IApplicationConfiguration applicationConfiguration, IFeaturesConfigUpdater featureConfigurationUpdater)
     {
         ArgumentNullException.ThrowIfNull(logger, nameof(logger));
         ArgumentNullException.ThrowIfNull(applicationConfiguration, nameof(applicationConfiguration));

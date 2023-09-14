@@ -5,13 +5,13 @@ using Contentful.Core.Search;
 
 namespace Childrens_Social_Care_CPD.Configuration;
 
-public class FeatureConfigurationUpdater : IFeatureConfigurationUpdater
+public class FeaturesConfigUpdater : IFeaturesConfigUpdater
 {
     private readonly ILogger _logger;
     private readonly ICpdContentfulClient _client;
-    private readonly IFeaturesConfiguration _featuresConfiguration;
+    private readonly IFeaturesConfig _featuresConfiguration;
 
-    public FeatureConfigurationUpdater(ILogger<FeatureConfigurationUpdater> logger, ICpdContentfulClient client, IFeaturesConfiguration featuresConfiguration)
+    public FeaturesConfigUpdater(ILogger<FeaturesConfigUpdater> logger, ICpdContentfulClient client, IFeaturesConfig featuresConfiguration)
     {
         ArgumentNullException.ThrowIfNull(logger, nameof(logger));
         ArgumentNullException.ThrowIfNull(client, nameof(client));
@@ -49,7 +49,7 @@ public class FeatureConfigurationUpdater : IFeatureConfigurationUpdater
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Exception querying for feature configuration. Does the FeatureConfiguration model exist in Contentful?");
+            _logger.LogError(ex, "Exception querying for feature configuration. Does the ApplicationFeatures model exist in Contentful?");
         }
     }
 
