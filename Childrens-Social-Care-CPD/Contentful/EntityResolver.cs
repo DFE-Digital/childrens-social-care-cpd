@@ -26,6 +26,8 @@ public class EntityResolver : IContentTypeResolver
             "roleList" => typeof(RoleList),
             "sideMenu" => typeof(SideMenu),
             "textBlock" => typeof(TextBlock),
+            "areaOfPractice" => typeof(AreaOfPractice),
+            "areaOfPracticeList" => typeof(AreaOfPracticeList),
             _ => null
         };
     }
