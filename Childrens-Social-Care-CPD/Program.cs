@@ -32,9 +32,9 @@ builder.Services.AddTransient<IContentTypeResolver, EntityResolver>();
 builder.Services.AddTransient<ICpdContentfulClient, CpdContentfulClient>();
 builder.Services.AddSingleton<IApplicationConfiguration>(applicationConfiguration);
 builder.Services.AddSingleton<ICookieHelper, CookieHelper>();
-builder.Services.AddTransient<IFeaturesConfiguration, FeaturesConfiguration>();
-builder.Services.AddTransient<IFeatureConfigurationUpdater, FeatureConfigurationUpdater>();
-builder.Services.AddHostedService<FeatureConfigurationPoller>();
+builder.Services.AddTransient<IFeaturesConfig, FeaturesConfig>();
+builder.Services.AddTransient<IFeaturesConfigUpdater, FeaturesConfigUpdater>();
+builder.Services.AddHostedService<FeaturesConfigBackgroundService>();
 
 System.Reflection.Assembly.GetExecutingAssembly()
     .GetTypes()

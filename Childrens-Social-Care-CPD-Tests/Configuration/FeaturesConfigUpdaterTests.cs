@@ -15,16 +15,16 @@ namespace Childrens_Social_Care_CPD_Tests.Configuration;
 
 public class FeaturesConfigurationUpdaterTest
 {
-    private ILogger<FeatureConfigurationUpdater> _logger;
+    private ILogger<FeaturesConfigUpdater> _logger;
     private ICpdContentfulClient _contentfulClient;
-    private IFeaturesConfiguration _featuresConfiguration;
+    private IFeaturesConfig _featuresConfig;
 
     [SetUp]
     public void Setup()
     {
-        _logger = Substitute.For<ILogger<FeatureConfigurationUpdater>>();
+        _logger = Substitute.For<ILogger<FeaturesConfigUpdater>>();
         _contentfulClient = Substitute.For<ICpdContentfulClient>();
-        _featuresConfiguration = Substitute.For<IFeaturesConfiguration>();
+        _featuresConfig = Substitute.For<IFeaturesConfig>();
     }
 
     [Test]
@@ -55,16 +55,16 @@ public class FeaturesConfigurationUpdaterTest
                 }
             );
 
-        var featureConfigurationUpdater = new FeatureConfigurationUpdater(_logger, _contentfulClient, _featuresConfiguration);
+        var featuresConfigUpdater = new FeaturesConfigUpdater(_logger, _contentfulClient, _featuresConfig);
 
         // act
         using (var cancellationTokenSource = new CancellationTokenSource())
         {
-            await featureConfigurationUpdater.UpdateFeaturesAsync(cancellationTokenSource.Token);
+            await featuresConfigUpdater.UpdateFeaturesAsync(cancellationTokenSource.Token);
         }
 
         // assert
-        _featuresConfiguration.Received().AddOrUpdateFeature(featureName, true);
+        _featuresConfig.Received().AddOrUpdateFeature(featureName, true);
     }
 
 
@@ -81,16 +81,16 @@ public class FeaturesConfigurationUpdaterTest
                 }
             );
 
-        var featureConfigurationUpdater = new FeatureConfigurationUpdater(_logger, _contentfulClient, _featuresConfiguration);
+        var featuresConfigUpdater = new FeaturesConfigUpdater(_logger, _contentfulClient, _featuresConfig);
 
         // act
         using (var cancellationTokenSource = new CancellationTokenSource())
         {
-            await featureConfigurationUpdater.UpdateFeaturesAsync(cancellationTokenSource.Token);
+            await featuresConfigUpdater.UpdateFeaturesAsync(cancellationTokenSource.Token);
         }
 
         // assert
-        _featuresConfiguration.DidNotReceive().AddOrUpdateFeature(Arg.Any<string>(), Arg.Any<bool>());
+        _featuresConfig.DidNotReceive().AddOrUpdateFeature(Arg.Any<string>(), Arg.Any<bool>());
     }
 
     [Test]
@@ -102,15 +102,15 @@ public class FeaturesConfigurationUpdaterTest
             .GetEntries(Arg.Any<QueryBuilder<ApplicationFeatures>>(), Arg.Any<CancellationToken>())
             .Throws(exception);
 
-        var featureConfigurationUpdater = new FeatureConfigurationUpdater(_logger, _contentfulClient, _featuresConfiguration);
+        var featuresConfigUpdater = new FeaturesConfigUpdater(_logger, _contentfulClient, _featuresConfig);
 
         // act
         using (var cancellationTokenSource = new CancellationTokenSource())
         {
-            await featureConfigurationUpdater.UpdateFeaturesAsync(cancellationTokenSource.Token);
+            await featuresConfigUpdater.UpdateFeaturesAsync(cancellationTokenSource.Token);
         }
 
         // assert
-        _logger.Received().LogError(exception, "Exception querying for feature configuration. Does the FeatureConfiguration model exist in Contentful?");
+        _logger.Received().LogError(exception, "Exception querying for feature configuration. Does the ApplicationFeatures model exist in Contentful?");
     }
 }
