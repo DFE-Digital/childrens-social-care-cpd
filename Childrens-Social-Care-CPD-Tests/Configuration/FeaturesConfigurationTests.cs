@@ -6,11 +6,6 @@ namespace Childrens_Social_Care_CPD_Tests.Configuration;
 
 public class FeaturesConfigurationTest
 {
-    [SetUp]
-    public void Setup()
-    {
-    }
-    
     [Test]
     public void UpdateFeatureConfig_Adds_New_Feature()
     {

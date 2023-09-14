@@ -33,6 +33,7 @@ builder.Services.AddTransient<ICpdContentfulClient, CpdContentfulClient>();
 builder.Services.AddSingleton<IApplicationConfiguration>(applicationConfiguration);
 builder.Services.AddSingleton<ICookieHelper, CookieHelper>();
 builder.Services.AddTransient<IFeaturesConfiguration, FeaturesConfiguration>();
+builder.Services.AddTransient<IFeatureConfigurationUpdater, FeatureConfigurationUpdater>();
 builder.Services.AddHostedService<FeatureConfigurationPoller>();
 
 System.Reflection.Assembly.GetExecutingAssembly()
