@@ -16,123 +16,38 @@ namespace Childrens_Social_Care_CPD_Tests.Configuration;
 public class FeatureConfigurationPollerTests
 {
     private ILogger<FeatureConfigurationPoller> _logger;
-    private ICpdContentfulClient _contentfulClient;
     private IApplicationConfiguration _applicationConfiguration;
-    private IFeaturesConfiguration _featuresConfiguration;
+    private IFeatureConfigurationUpdater _featureConfigurationUpdater;
 
     [SetUp]
     public void Setup()
     {
         _logger = Substitute.For<ILogger<FeatureConfigurationPoller>>();
-        _contentfulClient = Substitute.For<ICpdContentfulClient>();
         _applicationConfiguration = Substitute.For<IApplicationConfiguration>();
-        _featuresConfiguration = Substitute.For<IFeaturesConfiguration>();
+        _featureConfigurationUpdater = Substitute.For<IFeatureConfigurationUpdater>();
     }
 
     [Test]
-    public async Task Poll_Updates_Features()
+    public async Task Poller_Calls_Updater()
     {
         // arrange
-        var featureName = "foo";
-        var applicationFeatures = new ApplicationFeatures
+        _applicationConfiguration.FeaturePollingInterval.Returns(1);
+        var featureConfigurationPoller = new FeatureConfigurationPoller(
+            _logger,
+            _applicationConfiguration,
+            _featureConfigurationUpdater
+        );
+
+        // act
+        using (var cancellationTokenSource = new CancellationTokenSource())
         {
-            Features = new List<ApplicationFeature>
-            {
-                new ApplicationFeature
-                {
-                    Name = featureName,
-                    IsEnabled = true
-                }
-            }
-        };
-
-        _contentfulClient
-            .GetEntries(Arg.Any<QueryBuilder<ApplicationFeatures>>(), Arg.Any<CancellationToken>())
-            .Returns(
-                new ContentfulCollection<ApplicationFeatures>
-                {
-                    Items = new List<ApplicationFeatures> {
-                        applicationFeatures
-                    }
-                }
-            );
-        
-        _applicationConfiguration.FeaturePollingInterval.Returns(1);
-        var cancellationTokenSource = new CancellationTokenSource();
-        var poller = new FeatureConfigurationPoller(
-            _logger,
-            _contentfulClient,
-            _applicationConfiguration,
-            _featuresConfiguration
-        );
-
-        // act
-        var task = poller.StartAsync(cancellationTokenSource.Token);
-        await Task.Delay(25);
-        cancellationTokenSource.Cancel();
-        await task;
+            var task = featureConfigurationPoller.StartAsync(cancellationTokenSource.Token);
+            await Task.Delay(50);
+            cancellationTokenSource.Cancel();
+            task.Wait();
+        }
 
         // assert
-        _featuresConfiguration.Received().AddOrUpdateFeature(featureName, true);
-    }
-
-    [Test]
-    public async Task Poll_Ignores_Empty_Response()
-    {
-        // arrange
-        _contentfulClient
-            .GetEntries(Arg.Any<QueryBuilder<ApplicationFeatures>>(), Arg.Any<CancellationToken>())
-            .Returns(
-                new ContentfulCollection<ApplicationFeatures>
-                {
-                    Items = new List<ApplicationFeatures>()
-                }
-            );
-
-        _applicationConfiguration.FeaturePollingInterval.Returns(1);
-        var cancellationTokenSource = new CancellationTokenSource();
-        var poller = new FeatureConfigurationPoller(
-            _logger,
-            _contentfulClient,
-            _applicationConfiguration,
-            _featuresConfiguration
-        );
-
-        // act
-        var task = poller.StartAsync(cancellationTokenSource.Token);
-        await Task.Delay(25);
-        cancellationTokenSource.Cancel();
-        await task;
-
-        // assert
-        _featuresConfiguration.DidNotReceive().AddOrUpdateFeature(Arg.Any<string>(), Arg.Any<bool>());
-    }
-
-    [Test]
-    public async Task Poll_catches_exceptions()
-    {
-        // arrange
-        var exception = new TestException();
-        _contentfulClient
-            .GetEntries(Arg.Any<QueryBuilder<ApplicationFeatures>>(), Arg.Any<CancellationToken>())
-            .Throws(exception);
-
-        _applicationConfiguration.FeaturePollingInterval.Returns(1);
-        var cancellationTokenSource = new CancellationTokenSource();
-        var poller = new FeatureConfigurationPoller(
-            _logger,
-            _contentfulClient,
-            _applicationConfiguration,
-            _featuresConfiguration
-        );
-
-        // act
-        var task = poller.StartAsync(cancellationTokenSource.Token);
-        await Task.Delay(25);
-        cancellationTokenSource.Cancel();
-        await task;
-
-        // assert
-        _logger.Received().LogError(exception, "Features Poller: exception querying for feature configuration. Does the FeatureConfiguration model exist in Contentful?");
+        await _featureConfigurationUpdater.Received().UpdateFeaturesAsync(Arg.Any<CancellationToken>());
     }
 }
