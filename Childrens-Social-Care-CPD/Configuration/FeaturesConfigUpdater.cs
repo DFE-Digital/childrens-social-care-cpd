@@ -41,7 +41,7 @@ public class FeaturesConfigUpdater : IFeaturesConfigUpdater
                 return;
             }
 
-            _logger.LogInformation("Fetched configuration: {0}", result.ConvertObjectToJsonString());
+            _logger.LogInformation("Fetched configuration: {json}", result.ConvertObjectToJsonString());
             foreach (var feature in result.Features)
             {
                 _featuresConfiguration.AddOrUpdateFeature(feature.Name, feature.IsEnabled);

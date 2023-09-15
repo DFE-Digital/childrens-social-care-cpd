@@ -10,7 +10,7 @@ public class ApplicationConfigurationTests
 {
     private const string Value = "foo";
 
-    private void ClearEnvironmentVariables()
+    private static void ClearEnvironmentVariables()
     {
         Environment.SetEnvironmentVariable("VCS-TAG", null);
         Environment.SetEnvironmentVariable("CPD_INSTRUMENTATION_CONNECTIONSTRING", null);
