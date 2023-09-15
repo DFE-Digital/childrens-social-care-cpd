@@ -231,7 +231,7 @@ public class ApplicationConfigurationTests
         var actual = sut.FeaturePollingInterval;
 
         // assert
-        actual.Should().Be(60000);
+        actual.Should().Be(0);
     }
 
     [Test]
