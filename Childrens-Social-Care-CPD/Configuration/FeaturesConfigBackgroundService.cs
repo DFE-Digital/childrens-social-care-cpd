@@ -8,25 +8,27 @@ public class FeaturesConfigBackgroundService : BackgroundService
 
     public FeaturesConfigBackgroundService(ILogger<FeaturesConfigBackgroundService> logger, IApplicationConfiguration applicationConfiguration, IFeaturesConfigUpdater featureConfigurationUpdater)
     {
-        ArgumentNullException.ThrowIfNull(logger, nameof(logger));
-        ArgumentNullException.ThrowIfNull(applicationConfiguration, nameof(applicationConfiguration));
-        ArgumentNullException.ThrowIfNull(featureConfigurationUpdater, nameof(featureConfigurationUpdater));
+        ArgumentNullException.ThrowIfNull(logger);
+        ArgumentNullException.ThrowIfNull(applicationConfiguration);
+        ArgumentNullException.ThrowIfNull(featureConfigurationUpdater);
 
         _logger = logger;
         _applicationConfiguration = applicationConfiguration;
         _featureConfigurationUpdater = featureConfigurationUpdater;
     }
 
-    protected override async Task ExecuteAsync(CancellationToken cancellationToken)
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         _logger.LogInformation("Background polling task started");
-        cancellationToken.Register(() => _logger.LogInformation("Background polling task started"));
+        stoppingToken.Register(() => _logger.LogInformation("Background polling task started"));
+
+        if (_applicationConfiguration.FeaturePollingInterval == 0) return;
 
         var timer = new PeriodicTimer(TimeSpan.FromMilliseconds(_applicationConfiguration.FeaturePollingInterval));
-        while (await timer.WaitForNextTickAsync(cancellationToken))
+        while (await timer.WaitForNextTickAsync(stoppingToken))
         {
             _logger.LogInformation($"Polling at: {DateTime.UtcNow.ToShortTimeString()}");
-            await _featureConfigurationUpdater.UpdateFeaturesAsync(cancellationToken);
+            await _featureConfigurationUpdater.UpdateFeaturesAsync(stoppingToken);
         }   
     }
 }
