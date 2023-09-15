@@ -4,6 +4,7 @@ test.describe('Child Protection & Family Safeguarding', () => {
     test('User journey via Explore menu @journey', async ({ page }) => {
         await page.goto('/')
         await page.getByLabel('Menu').getByRole('link', { name: 'Explore roles', exact: true }).click()
+        await page.getByRole('link', { name: 'Explore areas of practice', exact: true }).click()
         await page.getByRole('link', { name: 'Child Protection & Family Safeguarding', exact: true }).click()
         
         await expect(page.locator('h1', { hasText: /^Child Protection & Family Safeguarding$/ })).toBeVisible()
@@ -25,11 +26,11 @@ test.describe('Child Protection & Family Safeguarding', () => {
             await page.goto('/explore-areas-of-practice/child-protection-and-safegaurding')
             await page.getByRole('button', { name: 'Show all sections' }).click()
 
-            await expect(page.getByLabel('What you\'ll do , Show this section')).toHaveAttribute('aria-expanded', 'true')
-            await expect(page.getByLabel('Skills and knowledge , Show this section')).toHaveAttribute('aria-expanded', 'true')
-            await expect(page.getByLabel('Who you\'ll work with , Show this section')).toHaveAttribute('aria-expanded', 'true')
-            await expect(page.getByLabel('How you\'ll work , Show this section')).toHaveAttribute('aria-expanded', 'true')
-            await expect(page.getByLabel('Current opportunities , Show this section')).toHaveAttribute('aria-expanded', 'true')
+            await expect(page.getByLabel('What you\'ll do , Hide this section')).toHaveAttribute('aria-expanded', 'true')
+            await expect(page.getByLabel('Skills and knowledge , Hide this section')).toHaveAttribute('aria-expanded', 'true')
+            await expect(page.getByLabel('Who you\'ll work with , Hide this section')).toHaveAttribute('aria-expanded', 'true')
+            await expect(page.getByLabel('How you\'ll work , Hide this section')).toHaveAttribute('aria-expanded', 'true')
+            await expect(page.getByLabel('Current opportunities , Hide this section')).toHaveAttribute('aria-expanded', 'true')
         })
 
         test('Clicking show all sections, then hide all sections collapses all sections' , async ({ page }) => {
@@ -48,8 +49,8 @@ test.describe('Child Protection & Family Safeguarding', () => {
             const links = [
                 ['What you\'ll do , Show this section', 'What you\'ll do , Hide this section'],
                 ['Skills and knowledge , Show this section', 'Skills and knowledge , Hide this section'],
-                ['How to become one , Show this section', 'How to become one , Hide this section'],
-                ['Career paths and progression , Show this section', 'Career paths and progression , Hide this section'],
+                ['Who you\'ll work with , Show this section', 'Who you\'ll work with , Hide this section'],
+                ['How you\'ll work , Show this section', 'How you\'ll work , Hide this section'],
                 ['Current opportunities , Show this section', 'Current opportunities , Hide this section'],
             ]
 
