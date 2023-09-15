@@ -13,6 +13,8 @@ public class EntityResolver : IContentTypeResolver
     {
         return contentTypeId switch
         {
+            "applicationFeature" => typeof(ApplicationFeature),
+            "applicationFeatures" => typeof(ApplicationFeatures),
             "columnLayout" => typeof(ColumnLayout),
             "content" => typeof(Content),
             "contentLink" => typeof(ContentLink),
