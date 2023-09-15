@@ -1,4 +1,5 @@
 using Childrens_Social_Care_CPD;
+using Childrens_Social_Care_CPD.Configuration;
 using Childrens_Social_Care_CPD.Contentful;
 using Childrens_Social_Care_CPD.Contentful.Renderers;
 using Contentful.AspNetCore;
@@ -31,6 +32,9 @@ builder.Services.AddTransient<IContentTypeResolver, EntityResolver>();
 builder.Services.AddTransient<ICpdContentfulClient, CpdContentfulClient>();
 builder.Services.AddSingleton<IApplicationConfiguration>(applicationConfiguration);
 builder.Services.AddSingleton<ICookieHelper, CookieHelper>();
+builder.Services.AddTransient<IFeaturesConfig, FeaturesConfig>();
+builder.Services.AddTransient<IFeaturesConfigUpdater, FeaturesConfigUpdater>();
+builder.Services.AddHostedService<FeaturesConfigBackgroundService>();
 
 System.Reflection.Assembly.GetExecutingAssembly()
     .GetTypes()

@@ -1,4 +1,5 @@
 ﻿using Childrens_Social_Care_CPD;
+using Childrens_Social_Care_CPD.Configuration;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using NSubstitute;
