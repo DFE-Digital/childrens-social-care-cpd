@@ -14,7 +14,7 @@ public class FeaturesConfigUpdater : IFeaturesConfigUpdater
     public FeaturesConfigUpdater(ILogger<FeaturesConfigUpdater> logger, ICpdContentfulClient client, IFeaturesConfig featuresConfiguration)
     {
         ArgumentNullException.ThrowIfNull(logger);
-        ArgumentNullException.ThrowIfNull(client, nameof(client));
+        ArgumentNullException.ThrowIfNull(client);
         ArgumentNullException.ThrowIfNull(featuresConfiguration);
 
         _logger = logger;
