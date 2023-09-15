@@ -27,7 +27,7 @@ public class FeaturesConfigBackgroundService : BackgroundService
         var timer = new PeriodicTimer(TimeSpan.FromMilliseconds(_applicationConfiguration.FeaturePollingInterval));
         while (await timer.WaitForNextTickAsync(stoppingToken))
         {
-            _logger.LogInformation($"Polling at: {DateTime.UtcNow.ToShortTimeString()}");
+            _logger.LogInformation("Polling at: {utcNow}", DateTime.UtcNow.ToShortTimeString());
             await _featureConfigurationUpdater.UpdateFeaturesAsync(stoppingToken);
         }   
     }
