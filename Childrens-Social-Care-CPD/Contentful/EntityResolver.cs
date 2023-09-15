@@ -13,6 +13,8 @@ public class EntityResolver : IContentTypeResolver
     {
         return contentTypeId switch
         {
+            "areaOfPractice" => typeof(AreaOfPractice),
+            "areaOfPracticeList" => typeof(AreaOfPracticeList),
             "applicationFeature" => typeof(ApplicationFeature),
             "applicationFeatures" => typeof(ApplicationFeatures),
             "columnLayout" => typeof(ColumnLayout),
@@ -28,8 +30,6 @@ public class EntityResolver : IContentTypeResolver
             "roleList" => typeof(RoleList),
             "sideMenu" => typeof(SideMenu),
             "textBlock" => typeof(TextBlock),
-            "areaOfPractice" => typeof(AreaOfPractice),
-            "areaOfPracticeList" => typeof(AreaOfPracticeList),
             _ => null
         };
     }
