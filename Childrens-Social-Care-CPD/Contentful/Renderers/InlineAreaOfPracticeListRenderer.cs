@@ -24,7 +24,7 @@ internal class InlineAreaOfPracticeListRenderer : IRenderer<AreaOfPracticeList>
 
         foreach (var contentItem in item.Areas)
         {
-            var areaOfpractice = contentItem.Items.Find(x => typeof(AreaOfPractice) == x.GetType()) as AreaOfPractice;
+            var areaOfpractice = contentItem.Items.OfType<AreaOfPractice>().FirstOrDefault();
             if (areaOfpractice == null) continue;
 
             htmlContentBuilder.AppendHtml(AreaOfPracticeTitle(contentItem.Id, areaOfpractice));

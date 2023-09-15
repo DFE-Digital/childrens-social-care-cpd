@@ -10,6 +10,8 @@ namespace Childrens_Social_Care_CPD_Tests.Contentful;
 public class EntityResolverTests
 {
     [Test]
+    [TestCase("areaOfPractice", typeof(AreaOfPractice))]
+    [TestCase("areaOfPracticeList", typeof(AreaOfPracticeList))]
     [TestCase("applicationFeature", typeof(ApplicationFeature))]
     [TestCase("applicationFeatures", typeof(ApplicationFeatures))]
     [TestCase("columnLayout", typeof(ColumnLayout))]
@@ -25,8 +27,6 @@ public class EntityResolverTests
     [TestCase("roleList", typeof(RoleList))]
     [TestCase("sideMenu", typeof(SideMenu))]
     [TestCase("textBlock", typeof(TextBlock))]
-    [TestCase("areaOfPractice", typeof(AreaOfPractice))]
-    [TestCase("areaOfPracticeList", typeof(AreaOfPracticeList))]
     public void Resolves_Correctly(string contentTypeId, Type expectedType)
     { 
         var resolver = new EntityResolver();
