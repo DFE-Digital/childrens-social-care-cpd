@@ -11,14 +11,16 @@ internal class ParagraphRenderer : IRenderer<Paragraph>
     private readonly IRenderer<RoleList> _roleListRenderer;
     private readonly IRenderer<Hyperlink> _hyperlinkRenderer;
     private readonly IRenderer<ContentLink> _contentLinkRenderer;
-    
+    private readonly IRenderer<AreaOfPracticeList> _areaOfPracticeList;
 
-    public ParagraphRenderer(IRenderer<Text> textRenderer, IRenderer<RoleList> roleListRenderer, IRenderer<Hyperlink> hyperlinkRenderer, IRenderer<ContentLink> contentLinkRenderer)
+
+    public ParagraphRenderer(IRenderer<Text> textRenderer, IRenderer<RoleList> roleListRenderer, IRenderer<Hyperlink> hyperlinkRenderer, IRenderer<ContentLink> contentLinkRenderer, IRenderer<AreaOfPracticeList> areaOfPracticeList)
     {
         _textRenderer = textRenderer;
         _roleListRenderer = roleListRenderer;
         _hyperlinkRenderer = hyperlinkRenderer;
         _contentLinkRenderer = contentLinkRenderer;
+        _areaOfPracticeList = areaOfPracticeList;
     }
 
     public IHtmlContent Render(Paragraph item)
@@ -37,6 +39,7 @@ internal class ParagraphRenderer : IRenderer<Paragraph>
                         {
                             case ContentLink contentLink: p.InnerHtml.AppendHtml(_contentLinkRenderer.Render(contentLink)); break;
                             case RoleList roleList: p.InnerHtml.AppendHtml(_roleListRenderer.Render(roleList)); break;
+                            case AreaOfPracticeList areaOfPracticeList: p.InnerHtml.AppendHtml(_areaOfPracticeList.Render(areaOfPracticeList)); break;
                         }
                         break;
                     }

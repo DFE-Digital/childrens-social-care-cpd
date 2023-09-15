@@ -1,0 +1,88 @@
+﻿@using Childrens_Social_Care_CPD.Contentful;
+@using Childrens_Social_Care_CPD.Contentful.Models;
+@using Contentful.Core.Models;
+
+@model AreaOfPractice
+
+@functions {
+
+    public async Task RenderAccordianSection(string title, Document model, int id)
+    {
+        <div class="govuk-accordion__section">
+            <div class="govuk-accordion__section-header">
+                <h2 class="govuk-accordion__section-heading">
+                    <span class="govuk-accordion__section-button" id="accordion-with-summary-sections-heading-@id">
+                        @title
+                    </span>
+                </h2>
+            </div>
+            <div id="accordion-with-summary-sections-content-@id" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-@id">
+                @{
+                    await Html.RenderPartialAsync("_RichText", model);
+                }
+            </div>
+        </div>
+    }
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+        <span class="govuk-caption-l">Areas of practice</span>
+        <h1 class="govuk-heading-xl">@Model.Title</h1>
+    </div>
+</div>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Summary
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    @Model.Summary
+                </dd>
+            </div>
+
+            @if (!string.IsNullOrEmpty(Model.OtherNames))
+            {
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Other names
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        @Model.OtherNames
+                    </dd>
+                </div>
+            }
+        </dl>
+
+        <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-with-summary-sections">
+
+            @if (Model.WhatYoullDo != null)
+            {
+                await RenderAccordianSection("What you'll do", Model.WhatYoullDo, 1);
+            }
+
+            @if (Model.SkillsAndKnowledge != null)
+            {
+                await RenderAccordianSection("Skills and knowledge", Model.SkillsAndKnowledge, 2);
+            }
+
+            @if (Model.WhoYouWillWorkWith != null)
+            {
+                await RenderAccordianSection("Who you'll work with", Model.WhoYouWillWorkWith, 3);
+            }
+
+            @if (Model.HowYouWillWork != null)
+            {
+                await RenderAccordianSection("How you'll work", Model.HowYouWillWork, 4);
+            }
+
+            @if (Model.CurrentOpportunities != null)
+            {
+                await RenderAccordianSection("Current opportunities", Model.CurrentOpportunities, 5);
+            }
+        </div>
+    </div>
+</div>
