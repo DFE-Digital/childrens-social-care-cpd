@@ -1,16 +1,16 @@
-﻿using Childrens_Social_Care_CPD;
+﻿using Childrens_Social_Care_CPD.Configuration;
 using FluentAssertions;
 using NUnit.Framework;
 using System;
 
-namespace Childrens_Social_Care_CPD_Tests;
+namespace Childrens_Social_Care_CPD_Tests.Configuration;
 
 [NonParallelizable]
 public class ApplicationConfigurationTests
 {
     private const string Value = "foo";
 
-    private void ClearEnvironmentVariables()
+    private static void ClearEnvironmentVariables()
     {
         Environment.SetEnvironmentVariable("VCS-TAG", null);
         Environment.SetEnvironmentVariable("CPD_INSTRUMENTATION_CONNECTIONSTRING", null);
@@ -23,6 +23,7 @@ public class ApplicationConfigurationTests
         Environment.SetEnvironmentVariable("VCS-REF", null);
         Environment.SetEnvironmentVariable("CPD_GOOGLEANALYTICSTAG", null);
         Environment.SetEnvironmentVariable("CPD_DISABLE_SECURE_COOKIES", null);
+        Environment.SetEnvironmentVariable("CPD_FEATURE_POLLING_INTERVAL", null);
     }
 
     [SetUp]
@@ -206,6 +207,32 @@ public class ApplicationConfigurationTests
         actual.Should().Be(Value);
     }
 
+    [Test]
+    public void Returns_FeaturePollInterval_Value()
+    {
+        // arrange
+        Environment.SetEnvironmentVariable("CPD_FEATURE_POLLING_INTERVAL", "10000");
+        var sut = new ApplicationConfiguration();
+
+        // act
+        var actual = sut.FeaturePollingInterval;
+
+        // assert
+        actual.Should().Be(10000);
+    }
+
+    [Test]
+    public void Returns_FeaturePollInterval_Default_Value()
+    {
+        // arrange
+        var sut = new ApplicationConfiguration();
+
+        // act
+        var actual = sut.FeaturePollingInterval;
+
+        // assert
+        actual.Should().Be(0);
+    }
 
     [Test]
     public void Returns_AzureEnvironment_Default_Value()

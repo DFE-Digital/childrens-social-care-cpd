@@ -10,6 +10,8 @@ namespace Childrens_Social_Care_CPD_Tests.Contentful;
 public class EntityResolverTests
 {
     [Test]
+    [TestCase("applicationFeature", typeof(ApplicationFeature))]
+    [TestCase("applicationFeatures", typeof(ApplicationFeatures))]
     [TestCase("columnLayout", typeof(ColumnLayout))]
     [TestCase("content", typeof(Content))]
     [TestCase("contentLink", typeof(ContentLink))]

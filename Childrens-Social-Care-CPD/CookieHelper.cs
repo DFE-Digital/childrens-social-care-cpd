@@ -1,4 +1,6 @@
-﻿namespace Childrens_Social_Care_CPD;
+﻿using Childrens_Social_Care_CPD.Configuration;
+
+namespace Childrens_Social_Care_CPD;
 
 public class CookieHelper: ICookieHelper
 {
