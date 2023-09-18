@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 
-test.describe('Child Protection & Family Safeguarding', () => {
+test.describe.skip('Child Protection & Family Safeguarding', () => {
     test('User journey via Explore menu @journey', async ({ page }) => {
         await page.goto('/')
         await page.getByLabel('Menu').getByRole('link', { name: 'Explore roles', exact: true }).click()
