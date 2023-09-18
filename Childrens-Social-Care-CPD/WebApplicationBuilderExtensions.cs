@@ -40,19 +40,16 @@ public static class WebApplicationBuilderExtensions
 
         var applicationConfiguration = new ApplicationConfiguration();
 
-        builder.Host
-            .ConfigureLogging(logging => logging.AddAzureWebAppDiagnostics())
-            .ConfigureServices(serviceCollection => serviceCollection
-                .Configure<AzureFileLoggerOptions>(options =>
-                {
-                    options.FileName = "azure-diagnostics-";
-                    options.FileSizeLimit = 50 * 1024;
-                    options.RetainedFileCountLimit = 5;
-                }).Configure<AzureBlobLoggerOptions>(options =>
-                {
-                    options.BlobName = "log.txt";
-                })
-            );
+        builder.Logging.AddAzureWebAppDiagnostics();
+        builder.Services.Configure<AzureFileLoggerOptions>(options =>
+        {
+            options.FileName = "azure-diagnostics-";
+            options.FileSizeLimit = 50 * 1024;
+            options.RetainedFileCountLimit = 5;
+        }).Configure<AzureBlobLoggerOptions>(options =>
+        {
+            options.BlobName = "log.txt";
+        });
 
         builder.Services.AddResponseCompression();
         builder.Services.AddControllersWithViews();
