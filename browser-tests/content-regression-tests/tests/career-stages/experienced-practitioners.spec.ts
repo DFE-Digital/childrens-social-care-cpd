@@ -26,7 +26,7 @@ test.describe('Experienced Practitioners', () => {
             ['Pathway 1: practice supervisors', '/pathway-1', 'Pathway 1: practice supervisors'],
             ['Pathway 2: middle managers', '/pathway-2', 'Pathway 2: middle managers'],
             ['View all programmes', '/development-programmes', 'Child and family social work development programmes'],
-            ['Explore all roles', '/explore-roles', 'Roles in child and family social work'],
+            ['Explore all roles', '/explore-roles', 'Explore roles in child and family social work'],
         ]
 
         for (const link of links) {

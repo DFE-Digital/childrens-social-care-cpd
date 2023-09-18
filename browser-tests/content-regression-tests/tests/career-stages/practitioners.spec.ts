@@ -25,7 +25,7 @@ test.describe('Practitioners', () => {
             ['Assessed and supported year in employment (ASYE)', '/asye', 'Assessed and supported year in employment \\(ASYE\\)'],
             ['View all programmes', '/development-programmes', 'Child and family social work development programmes'],
             ['Develop your social work practice', '/develop-social-work-practice', 'Develop your social work practice'],
-            ['Explore all roles', '/explore-roles', 'Roles in child and family social work'],
+            ['Explore all roles', '/explore-roles', 'Explore roles in child and family social work'],
         ]
 
         for (const link of links) {
