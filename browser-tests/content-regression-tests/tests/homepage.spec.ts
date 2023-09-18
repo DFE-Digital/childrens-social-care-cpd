@@ -26,7 +26,7 @@ test.describe('Homepage', () => {
         test.describe('Useful information', () => {
             const links = [
                 ['DfE funded programmes', '/development-programmes', 'Child and family social work development programmes'],
-                ['Explore roles', '/explore-roles', 'Explore Explore roles in child and family social work'],
+                ['Explore roles', '/explore-roles', 'Explore roles in child and family social work'],
             ]
 
             for (const link of links) {
