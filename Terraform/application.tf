@@ -17,9 +17,6 @@ resource "azurerm_linux_web_app" "linux-web-app" {
 
   app_settings = {
     CPD_GOOGLEANALYTICSTAG               = var.cpd_googleanalyticstag
-    CPD_KEYVAULTENDPOINT                 = var.cpd_keyvaultendpoint
-    CPD_CLIENTID                         = var.cpd_client_id
-    CPD_CLIENTSECRET                     = var.cpd_client_secret
     CPD_SPACE_ID                         = var.cpd_space_id
     CPD_PREVIEW_KEY                      = var.cpd_preview_key
     CPD_DELIVERY_KEY                     = var.cpd_delivery_key
@@ -28,13 +25,14 @@ resource "azurerm_linux_web_app" "linux-web-app" {
     CPD_CONTENTFUL_ENVIRONMENT           = var.cpd_contentful_env[terraform.workspace]
     CPD_INSTRUMENTATION_CONNECTIONSTRING = data.azurerm_application_insights.appinsights.connection_string
     CPD_CLARITY                          = var.cpd_clarity
+    CPD_FEATURE_POLLING_INTERVAL         = 300
     DOCKER_ENABLE_CI                     = "true"
   }
 
   site_config {
     application_stack {
       docker_image     = "ghcr.io/dfe-digital/childrens-social-care-cpd"
-      docker_image_tag = var.cpd_image_tag
+      docker_image_tag = nonsensitive(var.cpd_image_tag)
     }
   }
 
@@ -58,9 +56,6 @@ resource "azurerm_linux_web_app_slot" "staging" {
 
   app_settings = {
     CPD_GOOGLEANALYTICSTAG               = var.cpd_googleanalyticstag
-    CPD_KEYVAULTENDPOINT                 = var.cpd_keyvaultendpoint
-    CPD_CLIENTID                         = var.cpd_client_id
-    CPD_CLIENTSECRET                     = var.cpd_client_secret
     CPD_SPACE_ID                         = var.cpd_space_id
     CPD_PREVIEW_KEY                      = var.cpd_preview_key
     CPD_DELIVERY_KEY                     = var.cpd_delivery_key
