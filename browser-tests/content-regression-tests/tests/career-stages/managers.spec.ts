@@ -25,7 +25,7 @@ test.describe('Managers', () => {
             ['Pathway 2: middle managers', '/pathway-2', 'Pathway 2: middle managers'],
             ['Pathway 3: heads of service', '/pathway-3', 'Pathway 3: heads of service'],
             ['View all programmes', '/development-programmes', 'Child and family social work development programmes'],
-            ['Explore all roles', '/explore-roles', 'Roles in child and family social work'],
+            ['Explore all roles', '/explore-roles', 'Explore roles in child and family social work'],
         ]
 
         for (const link of links) {
