@@ -62,7 +62,6 @@ test.describe('External links @external', () => {
 
     test.describe('Practice supervisor', () => {
         const links = [
-            ['enhanced background checks', 'https://www.gov.uk/criminal-record-checks-apply-role'],
             ['Find a job service', 'https://findajob.dwp.gov.uk/'],
         ]
         
@@ -153,7 +152,6 @@ test.describe('External links @external', () => {
 
     test.describe('Principal social worker', () => {
         const links = [
-            ['enhanced background checks', 'https://www.gov.uk/criminal-record-checks-apply-role'],
             ['Find a job service', 'https://findajob.dwp.gov.uk/'],
         ]
         
@@ -172,7 +170,6 @@ test.describe('External links @external', () => {
 
     test.describe('Service manager', () => {
         const links = [
-            ['enhanced background checks', 'https://www.gov.uk/criminal-record-checks-apply-role'],
             ['Find a job service', 'https://findajob.dwp.gov.uk/'],
         ]
         
@@ -191,7 +188,6 @@ test.describe('External links @external', () => {
 
     test.describe('Head of service', () => {
         const links = [
-            ['enhanced background checks', 'https://www.gov.uk/criminal-record-checks-apply-role'],
             ['Find a job service', 'https://findajob.dwp.gov.uk/'],
         ]
         
@@ -210,7 +206,6 @@ test.describe('External links @external', () => {
 
     test.describe('Assistant director', () => {
         const links = [
-            ['enhanced background checks', 'https://www.gov.uk/criminal-record-checks-apply-role'],
             ['Find a job service', 'https://findajob.dwp.gov.uk/'],
         ]
         
@@ -229,7 +224,6 @@ test.describe('External links @external', () => {
 
     test.describe('Director of children\'s services', () => {
         const links = [
-            ['enhanced background checks', 'https://www.gov.uk/criminal-record-checks-apply-role'],
             ['Find a job service', 'https://findajob.dwp.gov.uk/'],
         ]
         
