@@ -33,6 +33,7 @@ The following environment variables are to be configured
 | CPD_PREVIEW_KEY | The preview content for the environment set |
 | CPD_AZURE_ENVIRONMENT | The environment for the system |
 | CPD_INSTRUMENTATION_CONNECTIONSTRING | Application insights connection string |
+| CPD_FEATURE_POLLING_INTERVAL | Polling interval for feature configuration udpates |
 
 In order to run the application locally, you can either open the solution, build and run in the IDE of your choice or there is a [docker-compose](~/docker-compose.yml) file that allows for local running of the app.
 
