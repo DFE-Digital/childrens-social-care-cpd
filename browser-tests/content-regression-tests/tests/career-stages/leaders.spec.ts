@@ -26,7 +26,7 @@ test.describe('Leaders', () => {
             ['Upon: new directors programme', '/new-directors-programme', 'Upon: new directors programme'],
             ['Pathway 4: practice leaders', '/pathway-4', 'Pathway 4: practice leaders'],
             ['View all programmes', '/development-programmes', 'Child and family social work development programmes'],
-            ['Explore all roles', '/explore-roles', 'Roles in child and family social work'],
+            ['Explore all roles', '/explore-roles', 'Explore roles in child and family social work'],
         ]
 
         for (const link of links) {

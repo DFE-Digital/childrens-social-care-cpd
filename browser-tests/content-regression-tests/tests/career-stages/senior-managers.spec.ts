@@ -25,7 +25,7 @@ test.describe('Senior managers', () => {
             ['Pathway 3: heads of service', '/pathway-3', 'Pathway 3: heads of service'],
             ['Pathway 4: practice leaders', '/pathway-4', 'Pathway 4: practice leaders'],
             ['View all programmes', '/development-programmes', 'Child and family social work development programmes'],
-            ['Explore all roles', '/explore-roles', 'Roles in child and family social work'],
+            ['Explore all roles', '/explore-roles', 'Explore roles in child and family social work'],
         ]
 
         for (const link of links) {
