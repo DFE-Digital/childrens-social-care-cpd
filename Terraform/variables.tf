@@ -594,24 +594,6 @@ variable "tenant_id" {
   description = "The Tenant ID of the subscription being used"
 }
 
-variable "cpd_client_id" {
-  type        = string
-  sensitive   = true
-  description = "Client ID used by the application to access Key Vault in Azure"
-}
-
-variable "cpd_client_secret" {
-  type        = string
-  sensitive   = true
-  description = "Secret used by the application to access Key Vault in Azure"
-}
-
-variable "cpd_keyvaultendpoint" {
-  type        = string
-  sensitive   = true
-  description = "URL Endpoint for Key Vault in Azure"
-}
-
 variable "cpd_googleanalyticstag" {
   type        = string
   sensitive   = true
