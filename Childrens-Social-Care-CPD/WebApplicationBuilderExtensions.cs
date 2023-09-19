@@ -3,6 +3,8 @@ using Childrens_Social_Care_CPD.Contentful;
 using Childrens_Social_Care_CPD.Contentful.Renderers;
 using Contentful.AspNetCore;
 using Contentful.Core.Configuration;
+using Microsoft.ApplicationInsights.AspNetCore.Extensions;
+using Microsoft.Extensions.Logging.ApplicationInsights;
 using Microsoft.Extensions.Logging.AzureAppServices;
 using System.Diagnostics.CodeAnalysis;
 
@@ -55,14 +57,22 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddControllersWithViews();
         builder.Services.AddContentful(ContentfulConfiguration.GetContentfulConfiguration(builder.Configuration, applicationConfiguration));
         builder.Services.AddHostedService<FeaturesConfigBackgroundService>();
-        builder.Logging.AddApplicationInsights(
-            configureTelemetryConfiguration: (config) => {
-                if (!string.IsNullOrEmpty(applicationConfiguration.AppInsightsConnectionString))
-                {
-                    config.ConnectionString = applicationConfiguration.AppInsightsConnectionString;
-                }
-            },
-            configureApplicationInsightsLoggerOptions: (options) => { }
-        );
+
+        var options = new ApplicationInsightsServiceOptions
+        {
+            ApplicationVersion = applicationConfiguration.AppVersion,
+            ConnectionString = applicationConfiguration.AppInsightsConnectionString,
+        };
+
+        builder.Services.AddApplicationInsightsTelemetry(options: options);
+        builder.Services.PostConfigure<LoggerFilterOptions>(options =>
+        {
+            var originalRule = options.Rules.FirstOrDefault(x => x.ProviderName == typeof(ApplicationInsightsLoggerProvider).FullName);
+            if (originalRule != null)
+            {
+                options.Rules.Remove(originalRule);
+                options.Rules.Insert(0, new LoggerFilterRule(typeof(ApplicationInsightsLoggerProvider).FullName, null, LogLevel.Information, null));
+            }
+        });
     }
 }
