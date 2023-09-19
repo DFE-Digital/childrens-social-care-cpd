@@ -13,7 +13,7 @@
 		<InternalsVisibleTo Include="Childrens-Social-Care-CPD-Tests" />
 	</ItemGroup>
   <ItemGroup>
-    <PackageReference Include="contentful.aspnetcore" Version="7.2.12" />
+    <PackageReference Include="contentful.aspnetcore" Version="7.3.0" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.AzureAppServices" Version="7.0.11" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
