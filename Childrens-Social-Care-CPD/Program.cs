@@ -10,7 +10,7 @@ var app = builder.Build();
 
 // Ensure the features are fetched before starting the app
 var updater = app.Services.GetService<IFeaturesConfigUpdater>();
-using (CancellationTokenSource cts = new CancellationTokenSource())
+using (var cts = new CancellationTokenSource())
 {
     await updater.UpdateFeaturesAsync(cts.Token);
 }
