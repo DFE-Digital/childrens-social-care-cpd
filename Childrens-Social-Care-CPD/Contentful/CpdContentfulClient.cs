@@ -146,6 +146,16 @@ public class CpdContentfulClient : ICpdContentfulClient
         return _client.GetSpace(cancellationToken);
     }
 
+    public Task<ContentTag> GetTag(string tagId, CancellationToken cancellationToken = default)
+    {
+        return _client.GetTag(tagId, cancellationToken);
+    }
+
+    public Task<IEnumerable<ContentTag>> GetTags(string queryString = "", CancellationToken cancellationToken = default)
+    {
+        return _client.GetTags(queryString, cancellationToken);
+    }
+
     public Task<SyncResult> SyncInitial(SyncType syncType = SyncType.All, string contentTypeId = "", CancellationToken cancellationToken = default, int? limit = null)
     {
         return _client.SyncInitial(syncType, contentTypeId, cancellationToken, limit);
