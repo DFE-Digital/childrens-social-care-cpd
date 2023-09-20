@@ -15,7 +15,7 @@
 
 @section Hero {
     @{
-        var heroBanner = Model.Items?.FirstOrDefault(x => x.GetType() == typeof(HeroBanner));
+        var heroBanner = Model.Items?.Find(x => x.GetType() == typeof(HeroBanner));
         if (heroBanner != null)
         {
             <partial name="_HeroBanner" model="heroBanner" />
