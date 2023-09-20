@@ -9,10 +9,6 @@
 @inject ICookieHelper _cookieHelper
 @inject IRenderer<ContentLink> _contentLinkRenderer
 
-@{
-    var prefsHaveBeenSet = _cookieHelper.GetRequestAnalyticsCookieState(Context) != AnalyticsConsentState.NotSet;
-}
-
 @if (ViewBag.ContextModel.PreferenceSet)
 {
     <div class="govuk-grid-row">
