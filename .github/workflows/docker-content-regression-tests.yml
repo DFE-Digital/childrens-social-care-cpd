@@ -1,0 +1,37 @@
+---
+name: Run regression tests
+on:
+  pull_request:
+    branches:
+      - master
+      - main
+jobs:
+  build-test-scan:
+    name: Build image and regression test
+    runs-on: ubuntu-latest
+    env:
+      CPD_GOOGLEANALYTICSTAG: ${{secrets.TF_VAR_CPD_GOOGLEANALYTICSTAG}}
+      CPD_SPACE_ID: ${{secrets.TF_VAR_CPD_SPACE_ID}}
+      CPD_PREVIEW_KEY: ${{secrets.TF_VAR_CPD_PREVIEW_KEY}}
+      CPD_DELIVERY_KEY: ${{secrets.TF_VAR_CPD_DELIVERY_KEY}}
+      CPD_CLARITY: ${{secrets.TF_VAR_CPD_CLARITY}}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build the Docker App Image
+        run: cd Childrens-Social-Care-CPD; docker build https://github.com/DFE-Digital/childrens-social-care-cpd.git#Feature/ContainerizeRegressionTests --tag childrens-social-care-cpd:ContainerizeRegressionTests
+      - name: Run the content regression tests
+        run: cd browser-tests/content-regression-tests; docker-compose up --exit-code-from content-regression-tests
+
+      - uses: actions/upload-artifact@v3
+        name: Playwright report
+        if: always()
+        with:
+          name: playwright-report
+          retention-days: 7
+          path: |
+            ${{ github.workspace }}/browser-tests/content-regression-tests/playwright-report
+      
+      - name: Run Tidy up
+        if: always()
+        run: cd browser-tests/content-regression-tests; docker-compose down --volumes      

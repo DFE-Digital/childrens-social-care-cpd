@@ -2,10 +2,7 @@
 version: "3.4"
 services:
   children-social-care-cpd:
-    build:
-      context: https://github.com/DFE-Digital/childrens-social-care-cpd.git#${CPD_BRANCH_OR_TAG_NAME}
-    ports:
-      - "8080:80"
+    image: childrens-social-care-cpd:ContainerizeRegressionTests
     environment:
       - CPD_AZURE_ENVIRONMENT=${CPD_AZURE_ENVIRONMENT}
       - CPD_CLARITY=${CPD_CLARITY}
@@ -22,7 +19,7 @@ services:
     build:
       context: ./
     environment:
-      - PLAYWRIGHT_BASE_URL=http://children-social-care-cpd:80
+      - PLAYWRIGHT_BASE_URL=http://children-social-care-cpd
       - CI=1
     volumes:
       - ./playwright-report:/app/playwright-report/
