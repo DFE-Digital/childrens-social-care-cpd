@@ -23,6 +23,7 @@ public static class PartialsFactory
             case (DetailedRole): return "_DetailedRole";
             case (DetailedPathway): return "_DetailedPathway";
             case (HeroBanner): return string.Empty; // skip - handled in specific layout section
+            case (ImageCard): return "_ImageCard";
             case (LinkCard): return "_LinkCard";
             case (LinkListCard): return "_LinkListCard";
             case (RichTextBlock): return "_RichTextBlock";

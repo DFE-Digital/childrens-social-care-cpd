@@ -294,7 +294,7 @@ a:focus, .govuk-link:focus {
   }
 }
 
-.govuk-heading-m {
+.govuk-heading-m, .image-card h2 {
   color: #0b0c0c;
   font-family: "GDS Transport", arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -308,30 +308,30 @@ a:focus, .govuk-link:focus {
   margin-bottom: 15px;
 }
 @media print {
-  .govuk-heading-m {
+  .govuk-heading-m, .image-card h2 {
     color: #000000;
   }
 }
 @media print {
-  .govuk-heading-m {
+  .govuk-heading-m, .image-card h2 {
     font-family: sans-serif;
   }
 }
 @media (min-width: 40.0625em) {
-  .govuk-heading-m {
+  .govuk-heading-m, .image-card h2 {
     font-size: 24px;
     font-size: 1.5rem;
     line-height: 1.25;
   }
 }
 @media print {
-  .govuk-heading-m {
+  .govuk-heading-m, .image-card h2 {
     font-size: 18pt;
     line-height: 1.15;
   }
 }
 @media (min-width: 40.0625em) {
-  .govuk-heading-m {
+  .govuk-heading-m, .image-card h2 {
     margin-bottom: 20px;
   }
 }
@@ -661,9 +661,11 @@ p + .govuk-heading-l, .govuk-body-m + .govuk-heading-l, .govuk-body + .govuk-hea
   }
 }
 
-p + .govuk-heading-m, .govuk-body-m + .govuk-heading-m, .govuk-body + .govuk-heading-m,
+p + .govuk-heading-m, .image-card p + h2, .govuk-body-m + .govuk-heading-m, .image-card .govuk-body-m + h2, .govuk-body + .govuk-heading-m, .image-card .govuk-body + h2,
 .govuk-body-s + .govuk-heading-m,
+.image-card .govuk-body-s + h2,
 .govuk-list + .govuk-heading-m,
+.image-card .govuk-list + h2,
 p + .govuk-heading-s,
 .govuk-body-m + .govuk-heading-s,
 .govuk-body + .govuk-heading-s,
@@ -672,9 +674,11 @@ p + .govuk-heading-s,
   padding-top: 5px;
 }
 @media (min-width: 40.0625em) {
-  p + .govuk-heading-m, .govuk-body-m + .govuk-heading-m, .govuk-body + .govuk-heading-m,
+  p + .govuk-heading-m, .image-card p + h2, .govuk-body-m + .govuk-heading-m, .image-card .govuk-body-m + h2, .govuk-body + .govuk-heading-m, .image-card .govuk-body + h2,
   .govuk-body-s + .govuk-heading-m,
+  .image-card .govuk-body-s + h2,
   .govuk-list + .govuk-heading-m,
+  .image-card .govuk-list + h2,
   p + .govuk-heading-s,
   .govuk-body-m + .govuk-heading-s,
   .govuk-body + .govuk-heading-s,
@@ -8159,7 +8163,7 @@ h2,
 }
 
 h3,
-.dfe-heading-m, .govuk-heading-m {
+.dfe-heading-m, .govuk-heading-m, .image-card h2 {
   font-size: 20px;
   font-size: 1.25;
   line-height: 1.33333;
@@ -8170,7 +8174,7 @@ h3,
 }
 @media (min-width: 40.0625em) {
   h3,
-  .dfe-heading-m, .govuk-heading-m {
+  .dfe-heading-m, .govuk-heading-m, .image-card h2 {
     font-size: 24px;
     font-size: 1.5;
     line-height: 1.33333;
@@ -8178,14 +8182,14 @@ h3,
 }
 @media print {
   h3,
-  .dfe-heading-m, .govuk-heading-m {
+  .dfe-heading-m, .govuk-heading-m, .image-card h2 {
     font-size: 18pt;
     line-height: 1.15;
   }
 }
 @media (min-width: 40.0625em) {
   h3,
-  .dfe-heading-m, .govuk-heading-m {
+  .dfe-heading-m, .govuk-heading-m, .image-card h2 {
     margin-bottom: 24px;
   }
 }
@@ -8610,11 +8614,13 @@ p + h3,
 .dfe-body-m + h3, address + h3,
 p + .dfe-heading-m,
 .dfe-body-m + .dfe-heading-m,
-address + .dfe-heading-m, p + .govuk-heading-m,
-.dfe-body-m + .govuk-heading-m, address + .govuk-heading-m,
+address + .dfe-heading-m, p + .govuk-heading-m, .image-card p + h2,
+.dfe-body-m + .govuk-heading-m,
+.image-card .dfe-body-m + h2, address + .govuk-heading-m, .image-card address + h2,
 .dfe-body-s + h3,
 .dfe-body-s + .dfe-heading-m,
 .dfe-body-s + .govuk-heading-m,
+.image-card .dfe-body-s + h2,
 .dfe-list + h3,
 ul + h3,
 ol + h3,
@@ -8622,8 +8628,11 @@ ol + h3,
 ul + .dfe-heading-m,
 ol + .dfe-heading-m,
 .dfe-list + .govuk-heading-m,
+.image-card .dfe-list + h2,
 ul + .govuk-heading-m,
+.image-card ul + h2,
 ol + .govuk-heading-m,
+.image-card ol + h2,
 p + h4,
 .dfe-body-m + h4,
 address + h4,
@@ -8652,11 +8661,13 @@ ol + .govuk-heading-s {
   .dfe-body-m + h3, address + h3,
   p + .dfe-heading-m,
   .dfe-body-m + .dfe-heading-m,
-  address + .dfe-heading-m, p + .govuk-heading-m,
-  .dfe-body-m + .govuk-heading-m, address + .govuk-heading-m,
+  address + .dfe-heading-m, p + .govuk-heading-m, .image-card p + h2,
+  .dfe-body-m + .govuk-heading-m,
+  .image-card .dfe-body-m + h2, address + .govuk-heading-m, .image-card address + h2,
   .dfe-body-s + h3,
   .dfe-body-s + .dfe-heading-m,
   .dfe-body-s + .govuk-heading-m,
+  .image-card .dfe-body-s + h2,
   .dfe-list + h3,
   ul + h3,
   ol + h3,
@@ -8664,8 +8675,11 @@ ol + .govuk-heading-s {
   ul + .dfe-heading-m,
   ol + .dfe-heading-m,
   .dfe-list + .govuk-heading-m,
+  .image-card .dfe-list + h2,
   ul + .govuk-heading-m,
+  .image-card ul + h2,
   ol + .govuk-heading-m,
+  .image-card ol + h2,
   p + h4,
   .dfe-body-m + h4,
   address + h4,
@@ -10008,8 +10022,86 @@ body, p, h1, h2, h3, h4, h5, h6, a, span, div, table, th, td, blockquote, li, dt
     font-size: 1rem;
   }
 }
-/* CONTENT TITLE BANNER
------------------------ */
+/* ==========================================================================
+DFE banner
+========================================================================== */
+/* Banner Container */
+.dfe-o-banner {
+  display: flex;
+  width: 100%;
+  min-height: 10rem;
+  margin: 0 auto;
+}
+
+/* Banner Content Container */
+.dfe-o-banner__content-container {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: #ebf2f6;
+}
+
+/* Banner Image Container */
+.dfe-o-banner__image-container {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Image Styles */
+.dfe-o-banner__image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Mirrored Banner */
+.dfe-o-banner--mirrored {
+  flex-direction: row-reverse;
+}
+
+/* Banner Text Clamping */
+.dfe-o-banner [class^=dfe-t-body],
+.dfe-o-banner [class^=dfe-t-heading] {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  -webkit-box-pack: end;
+}
+
+.dfe-o-banner [class^=dfe-t-body] {
+  -webkit-line-clamp: 5;
+}
+
+/* Media Query for Mobile */
+@media (max-width: 63.99em) {
+  .dfe-o-banner {
+    width: 100%;
+    flex-direction: column-reverse;
+  }
+  .dfe-o-banner__content-container, .dfe-o-banner__image-container {
+    width: 100%;
+  }
+  .dfe-o-banner .dfe-a-image {
+    overflow: hidden;
+  }
+  .dfe-o-banner .dfe-a-image img {
+    position: relative;
+  }
+}
+.dfe-o-banner__inner-content-container {
+  width: 80%;
+  padding: 3rem;
+}
+
+/* ==========================================================================
+CONTENT TITLE BANNER
+========================================================================== */
 .app-section-content--blue {
   background-color: #ebf2f6;
 }

@@ -10,3 +10,7 @@
     @extend .dfe-section-card;
     border-bottom: 3px solid #003A69;
 }
+
+.image-card h2 {
+    @extend .govuk-heading-m
+}
