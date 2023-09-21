@@ -11,6 +11,8 @@ public partial class PartialsFactoryTests
 {
     public static object[] Successful_Resolves =
     {
+        new object[] { new AreaOfPractice(), "_AreaOfPractice" },
+        new object[] { new AreaOfPracticeList(), "_AreaOfPracticeList" },
         new object[] { new ColumnLayout(), "_ColumnLayout" },
         new object[] { new Content(), "_Content" },
         new object[] { new ContentLink(), "_ContentLink" },

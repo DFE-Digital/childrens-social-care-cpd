@@ -13,6 +13,10 @@ public class EntityResolver : IContentTypeResolver
     {
         return contentTypeId switch
         {
+            "areaOfPractice" => typeof(AreaOfPractice),
+            "areaOfPracticeList" => typeof(AreaOfPracticeList),
+            "applicationFeature" => typeof(ApplicationFeature),
+            "applicationFeatures" => typeof(ApplicationFeatures),
             "columnLayout" => typeof(ColumnLayout),
             "content" => typeof(Content),
             "contentLink" => typeof(ContentLink),
