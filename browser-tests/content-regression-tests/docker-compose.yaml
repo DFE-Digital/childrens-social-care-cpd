@@ -1,0 +1,30 @@
+﻿---
+version: "3.4"
+services:
+  children-social-care-cpd:
+    build:
+      context: https://github.com/DFE-Digital/childrens-social-care-cpd.git#${CPD_BRANCH_OR_TAG_NAME}
+    ports:
+      - "8080:80"
+    environment:
+      - CPD_AZURE_ENVIRONMENT=${CPD_AZURE_ENVIRONMENT}
+      - CPD_CLARITY=${CPD_CLARITY}
+      - CPD_CONTENTFUL_ENVIRONMENT=${CPD_CONTENTFUL_ENVIRONMENT}
+      - CPD_DELIVERY_KEY=${CPD_DELIVERY_KEY}
+      - CPD_GOOGLEANALYTICSTAG=${CPD_GOOGLEANALYTICSTAG}
+      - CPD_PREVIEW_KEY=${CPD_PREVIEW_KEY}
+      - CPD_SPACE_ID=${CPD_SPACE_ID}
+      - ASPNETCORE_URLS=http://+
+      - ASPNETCORE_ENVIRONMENT=
+      - CPD_DISABLE_SECURE_COOKIES=true
+      - CPD_FEATURE_POLLING_INTERVAL=0
+  content-regression-tests:
+    build:
+      context: ./
+    environment:
+      - PLAYWRIGHT_BASE_URL=http://children-social-care-cpd:80
+      - CI=1
+    volumes:
+      - ./playwright-report:/app/playwright-report/
+    command: npx playwright test
+    working_dir: /app
