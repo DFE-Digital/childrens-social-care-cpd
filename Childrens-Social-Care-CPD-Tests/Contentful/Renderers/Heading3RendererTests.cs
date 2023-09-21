@@ -1,4 +1,5 @@
-﻿using Childrens_Social_Care_CPD.Contentful.Renderers;
+﻿using Childrens_Social_Care_CPD.Contentful.Models;
+using Childrens_Social_Care_CPD.Contentful.Renderers;
 using Contentful.Core.Models;
 using FluentAssertions;
 using Microsoft.AspNetCore.Html;
@@ -14,6 +15,7 @@ public class Heading3RendererTests
 {
     private IRenderer<Text> _textRenderer;
     private IRenderer<Hyperlink> _hyperlinkRenderer;
+    private IRenderer<ContentLink> _contentLinkRenderer;
     private Heading3Renderer _sut;
 
     [SetUp]
@@ -21,7 +23,8 @@ public class Heading3RendererTests
     {
         _textRenderer = Substitute.For<IRenderer<Text>>();
         _hyperlinkRenderer = Substitute.For<IRenderer<Hyperlink>>();
-        _sut = new Heading3Renderer(_textRenderer, _hyperlinkRenderer);
+        _contentLinkRenderer = Substitute.For<IRenderer<ContentLink>>();
+        _sut = new Heading3Renderer(_textRenderer, _hyperlinkRenderer, _contentLinkRenderer);
     }
 
     [Test]
@@ -69,6 +72,37 @@ public class Heading3RendererTests
         };
 
         _hyperlinkRenderer.Render(foo).Returns(new HtmlString("AAA"));
+
+        // act
+        var htmlContent = _sut.Render(heading3);
+        htmlContent.WriteTo(stringWriter, new HtmlTestEncoder());
+        var actual = stringWriter.ToString();
+
+        // assert
+        actual.Should().Be("<h3>AAA</h3>");
+    }
+
+    [Test]
+    public void Heading3_Renders_ContentLink()
+    {
+        // arrange
+        var stringWriter = new StringWriter();
+        var contentLink = new ContentLink();
+
+        var heading3 = new Heading3()
+        {
+            Content = new List<IContent> {
+                new EntryStructure
+                {
+                    Data = new EntryStructureData
+                    {
+                        Target = contentLink
+                    }
+                }
+            }
+        };
+
+        _contentLinkRenderer.Render(contentLink).Returns(new HtmlString("AAA"));
 
         // act
         var htmlContent = _sut.Render(heading3);
