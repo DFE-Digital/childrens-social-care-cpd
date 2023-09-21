@@ -119,8 +119,91 @@ body, p, h1, h2, h3, h4, h5, h6, a, span, div, table, th, td, blockquote, li, dt
     }
 }
 
-/* CONTENT TITLE BANNER
------------------------ */
+
+/* ==========================================================================
+DFE banner
+========================================================================== */
+/* Banner Container */
+.dfe-o-banner {
+    display: flex;
+    width: 100%;
+    min-height: 10rem;
+    margin: 0 auto;
+}
+
+/* Banner Content Container */
+.dfe-o-banner__content-container {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #ebf2f6;
+}
+
+/* Banner Image Container */
+.dfe-o-banner__image-container {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Image Styles */
+.dfe-o-banner__image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Mirrored Banner */
+.dfe-o-banner--mirrored {
+    flex-direction: row-reverse;
+}
+
+/* Banner Text Clamping */
+.dfe-o-banner [class^=dfe-t-body],
+.dfe-o-banner [class^=dfe-t-heading] {
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    -webkit-box-pack: end;
+}
+
+.dfe-o-banner [class^=dfe-t-body] {
+    -webkit-line-clamp: 5;
+}
+
+/* Media Query for Mobile */
+@media (max-width: 63.99em) {
+    .dfe-o-banner {
+        width: 100%;
+        flex-direction: column-reverse;
+    }
+
+    .dfe-o-banner__content-container, .dfe-o-banner__image-container {
+        width: 100%;
+    }
+
+    .dfe-o-banner .dfe-a-image {
+        overflow: hidden;
+    }
+
+    .dfe-o-banner .dfe-a-image img {
+        position: relative;
+    }
+}
+
+.dfe-o-banner__inner-content-container {
+    width: 80%;
+    padding: 3rem;
+}
+
+/* ==========================================================================
+CONTENT TITLE BANNER
+========================================================================== */
 .app-section-content--blue {
     background-color: #ebf2f6;
 }
