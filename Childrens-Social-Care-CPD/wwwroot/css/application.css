@@ -9916,7 +9916,7 @@ body, p, h1, h2, h3, h4, h5, h6, a, span, div, table, th, td, blockquote, li, dt
 
 /* DFE CARD COMPONENT - NEW
 --------------------------- */
-.dfe-section-card {
+.dfe-section-card, .section-card-home {
   padding: 16px;
   margin-bottom: 20px;
   flex: 1;
@@ -10287,6 +10287,10 @@ CONTENT TITLE BANNER
 
 .js-enabled .back-link {
   display: block !important;
+}
+
+.section-card-home {
+  border-bottom: 3px solid #003A69;
 }
 
 /*# sourceMappingURL=application.css.map */

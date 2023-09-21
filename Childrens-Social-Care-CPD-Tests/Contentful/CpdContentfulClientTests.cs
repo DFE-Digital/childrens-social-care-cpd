@@ -366,5 +366,25 @@ public class CpdContentfulClientTest
         _contentfulClient.Received().SyncNextResult(Arg.Any<string>(), default);
     }
 
+    [Test]
+    public void Calls_Base_GetTag()
+    {
+        // act
+        _cpdClient.GetTag(string.Empty, default);
+
+        // assert
+        _contentfulClient.Received().GetTag(Arg.Any<string>(), default);
+    }
+
+    [Test]
+    public void Calls_Base_GetTags()
+    {
+        // act
+        _cpdClient.GetTags(string.Empty, default);
+
+        // assert
+        _contentfulClient.Received().GetTags(Arg.Any<string>(), default);
+    }
+
     #endregion
 }

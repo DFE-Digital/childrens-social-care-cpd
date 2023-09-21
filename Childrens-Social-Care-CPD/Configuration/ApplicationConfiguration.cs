@@ -1,4 +1,4 @@
-﻿namespace Childrens_Social_Care_CPD;
+﻿namespace Childrens_Social_Care_CPD.Configuration;
 
 public class ApplicationConfiguration : IApplicationConfiguration
 {
@@ -13,6 +13,7 @@ public class ApplicationConfiguration : IApplicationConfiguration
     public string ContentfulPreviewId => ValueOrStringEmpty("CPD_PREVIEW_KEY");
     public string ContentfulSpaceId => ValueOrStringEmpty("CPD_SPACE_ID");
     public bool DisableSecureCookies => ValueOrStringEmpty("CPD_DISABLE_SECURE_COOKIES") == "true";
+    public int FeaturePollingInterval => int.Parse(Environment.GetEnvironmentVariable("CPD_FEATURE_POLLING_INTERVAL") ?? "0");
     public string GitHash => ValueOrStringEmpty("VCS-REF");
     public string GoogleTagManagerKey => ValueOrStringEmpty("CPD_GOOGLEANALYTICSTAG");
 }

@@ -14,6 +14,8 @@ public static class PartialsFactory
     {
         switch (item)
         {
+            case (AreaOfPractice): return "_AreaOfPractice";
+            case (AreaOfPracticeList): return "_AreaOfPracticeList";
             case (ColumnLayout): return "_ColumnLayout";
             case (Content): return "_Content";
             case (ContentLink): return "_ContentLink";
@@ -28,6 +30,7 @@ public static class PartialsFactory
             case (RoleList): return "_RoleList";
             case (SideMenu): return "_SideMenu";
             case (TextBlock): return "_TextBlock";
+
             default: return "_UnknownContentWarning";
        }
     }
