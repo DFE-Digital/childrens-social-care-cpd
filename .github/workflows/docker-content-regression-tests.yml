@@ -1,34 +1,40 @@
 ---
 name: Run regression tests
 on:
-  pull_request:
-    branches:
-      - master
-      - main
   workflow_dispatch:
     inputs:
       tag:
         description: 'Tag to test'
         required: false
         default: 'v1.0.0'
+      workspace:
+        description: 'Environment to run'
+        required: true
+        default: 'Dev'
+        type: choice
+        options:
+          - Dev
+          - Test
+          - Pre-Prod
 jobs:
   build-test-scan:
     name: Build image and regression test
     runs-on: ubuntu-latest
+    environment: ${{inputs.workspace}}
     env:
       CPD_GOOGLEANALYTICSTAG: ${{secrets.TF_VAR_CPD_GOOGLEANALYTICSTAG}}
       CPD_SPACE_ID: ${{secrets.TF_VAR_CPD_SPACE_ID}}
       CPD_PREVIEW_KEY: ${{secrets.TF_VAR_CPD_PREVIEW_KEY}}
       CPD_DELIVERY_KEY: ${{secrets.TF_VAR_CPD_DELIVERY_KEY}}
       CPD_CLARITY: ${{secrets.TF_VAR_CPD_CLARITY}}
-      CPD_AZURE_ENVIRONMENT: ${{secrets.CPD_AZURE_ENVIRONMENT}}
-      CPD_CONTENTFUL_ENVIRONMENT: ${{secrets.CPD_CONTENTFUL_ENVIRONMENT}}
+      CPD_AZURE_ENVIRONMENT: ${{inputs.workspace}}
+      CPD_CONTENTFUL_ENVIRONMENT: ${{inputs.workspace}}
       CPD_FEATURE_POLLING_INTERVAL: 0 
       CPD_INSTRUMENTATION_CONNECTIONSTRING: ""
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: 'v1.12.0'
+          ref: '${{ inputs.tag }}'
 
       - name: Build the Docker App Image
         run: cd Childrens-Social-Care-CPD; docker build . --file Dockerfile --tag childrens-social-care-cpd:ContainerizeRegressionTests
