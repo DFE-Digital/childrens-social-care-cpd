@@ -1,0 +1,55 @@
+---
+name: Run regression tests
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag to test'
+        required: false
+        default: 'v1.0.0'
+      workspace:
+        description: 'Environment to run'
+        required: true
+        default: 'Dev'
+        type: choice
+        options:
+          - Dev
+          - Test
+          - Pre-Prod
+jobs:
+  build-test-scan:
+    name: Build image and regression test
+    runs-on: ubuntu-latest
+    environment: ${{inputs.workspace}}
+    env:
+      CPD_GOOGLEANALYTICSTAG: ${{secrets.TF_VAR_CPD_GOOGLEANALYTICSTAG}}
+      CPD_SPACE_ID: ${{secrets.TF_VAR_CPD_SPACE_ID}}
+      CPD_PREVIEW_KEY: ${{secrets.TF_VAR_CPD_PREVIEW_KEY}}
+      CPD_DELIVERY_KEY: ${{secrets.TF_VAR_CPD_DELIVERY_KEY}}
+      CPD_CLARITY: ${{secrets.TF_VAR_CPD_CLARITY}}
+      CPD_AZURE_ENVIRONMENT: ${{inputs.workspace}}
+      CPD_CONTENTFUL_ENVIRONMENT: ${{inputs.workspace}}
+      CPD_FEATURE_POLLING_INTERVAL: 0 
+      CPD_INSTRUMENTATION_CONNECTIONSTRING: ""
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: '${{ inputs.tag }}'
+
+      - name: Build the Docker App Image
+        run: cd Childrens-Social-Care-CPD; docker build . --file Dockerfile --tag childrens-social-care-cpd:ContainerizeRegressionTests
+      - name: Run the content regression tests
+        run: cd browser-tests/content-regression-tests; docker-compose up --exit-code-from content-regression-tests
+
+      - uses: actions/upload-artifact@v3
+        name: Playwright report
+        if: always()
+        with:
+          name: playwright-report
+          retention-days: 7
+          path: |
+            ${{ github.workspace }}/browser-tests/content-regression-tests/playwright-report
+      
+      - name: Run Tidy up
+        if: always()
+        run: cd browser-tests/content-regression-tests; docker-compose down --volumes      
