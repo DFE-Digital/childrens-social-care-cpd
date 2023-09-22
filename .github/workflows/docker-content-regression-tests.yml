@@ -9,8 +9,8 @@ on:
         default: 'Dev'
         type: choice
         options:
-          - Dev
-          - Test
+          - dev
+          - test
           - Pre-Prod
 jobs:
   build-test-scan:
@@ -24,7 +24,7 @@ jobs:
       CPD_DELIVERY_KEY: ${{secrets.TF_VAR_CPD_DELIVERY_KEY}}
       CPD_CLARITY: ${{secrets.TF_VAR_CPD_CLARITY}}
       CPD_AZURE_ENVIRONMENT: ${{inputs.workspace}}
-      CPD_CONTENTFUL_ENVIRONMENT: ${{inputs.workspace}}
+      CPD_CONTENTFUL_ENVIRONMENT: ${{ inputs.workspace == 'Pre-Prod' && 'master' || inputs.workspace }}
       CPD_FEATURE_POLLING_INTERVAL: 0 
       CPD_INSTRUMENTATION_CONNECTIONSTRING: ""
     steps:
