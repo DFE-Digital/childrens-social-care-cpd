@@ -3,10 +3,6 @@ name: Run regression tests
 on:
   workflow_dispatch:
     inputs:
-      tag:
-        description: 'Tag to test'
-        required: false
-        default: 'v1.0.0'
       workspace:
         description: 'Environment to run'
         required: true
@@ -33,11 +29,10 @@ jobs:
       CPD_INSTRUMENTATION_CONNECTIONSTRING: ""
     steps:
       - uses: actions/checkout@v3
-        with:
-          ref: '${{ inputs.tag }}'
 
       - name: Build the Docker App Image
         run: cd Childrens-Social-Care-CPD; docker build . --file Dockerfile --tag childrens-social-care-cpd:ContainerizeRegressionTests
+        
       - name: Run the content regression tests
         run: cd browser-tests/content-regression-tests; docker-compose up --exit-code-from content-regression-tests
 
