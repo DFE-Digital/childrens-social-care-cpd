@@ -21,6 +21,8 @@ jobs:
       CPD_PREVIEW_KEY: ${{secrets.TF_VAR_CPD_PREVIEW_KEY}}
       CPD_DELIVERY_KEY: ${{secrets.TF_VAR_CPD_DELIVERY_KEY}}
       CPD_CLARITY: ${{secrets.TF_VAR_CPD_CLARITY}}
+      CPD_AZURE_ENVIRONMENT: ${{secrets.CPD_AZURE_ENVIRONMENT}}
+      CPD_CONTENTFUL_ENVIRONMENT: ${{secrets.CPD_CONTENTFUL_ENVIRONMENT}}
     steps:
       - uses: actions/checkout@v3
         with:
