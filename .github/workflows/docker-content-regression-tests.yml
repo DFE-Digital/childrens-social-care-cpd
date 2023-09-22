@@ -5,6 +5,12 @@ on:
     branches:
       - master
       - main
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag to test'
+        required: false
+        default: 'v1.0.0'
 jobs:
   build-test-scan:
     name: Build image and regression test
@@ -17,9 +23,11 @@ jobs:
       CPD_CLARITY: ${{secrets.TF_VAR_CPD_CLARITY}}
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: 'v1.12.0'
 
       - name: Build the Docker App Image
-        run: git checkout tags/v1.12.0 -b temp; cd Childrens-Social-Care-CPD; docker build . --file Dockerfile --tag childrens-social-care-cpd:ContainerizeRegressionTests
+        run: cd Childrens-Social-Care-CPD; docker build . --file Dockerfile --tag childrens-social-care-cpd:ContainerizeRegressionTests
       - name: Run the content regression tests
         run: cd browser-tests/content-regression-tests; docker-compose up --exit-code-from content-regression-tests
 
