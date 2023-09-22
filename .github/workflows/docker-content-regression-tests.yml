@@ -23,6 +23,8 @@ jobs:
       CPD_CLARITY: ${{secrets.TF_VAR_CPD_CLARITY}}
       CPD_AZURE_ENVIRONMENT: ${{secrets.CPD_AZURE_ENVIRONMENT}}
       CPD_CONTENTFUL_ENVIRONMENT: ${{secrets.CPD_CONTENTFUL_ENVIRONMENT}}
+      CPD_FEATURE_POLLING_INTERVAL: 0 
+      CPD_INSTRUMENTATION_CONNECTIONSTRING: ""
     steps:
       - uses: actions/checkout@v3
         with:
