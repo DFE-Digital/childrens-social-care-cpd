@@ -1,0 +1,23 @@
+﻿@{
+    Layout = "_SiteLayout";
+    IgnoreSection("Hero");
+}
+
+@section PageBanner {
+    @await RenderSectionAsync("PageBanner", required: false)
+}
+
+<div class="govuk-width-container dfe-width-container">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-third">
+            @await RenderSectionAsync("SearchCriteria", required: true)
+        </div>
+        <div class="govuk-grid-column-two-thirds">
+            @RenderBody()
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await RenderSectionAsync("Scripts", required: false)
+}
