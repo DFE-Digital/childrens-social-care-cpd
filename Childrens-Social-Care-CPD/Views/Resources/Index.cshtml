@@ -1,0 +1,166 @@
+﻿@using Childrens_Social_Care_CPD.Controllers
+@using Microsoft.AspNetCore.Html
+
+@model ResourcesListViewModel
+
+@{
+    Layout = "_SearchPageLayout";
+}
+
+@section Scripts {
+    <script src="/javascript/resources.js"></script>
+}
+
+@section PageBanner {
+    <section id="content-banner" class="app-section-content app-section-content--blue govuk-!-margin-bottom-8">
+        <div class="dfe-width-container">
+            <div class="govuk-grid-row govuk-!-padding-top-3 govuk-!-padding-bottom-0">
+                <div class="govuk-grid-column-two-thirds-from-desktop govuk-!-padding-top-3">
+                    <h1 id="content-banner-title" class="govuk-heading-xl">Resources and training</h1>
+                    <p id="content-banner-subtitle" class="govuk-body-l">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla interdum laoreet lacinia.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+@section SearchCriteria {
+    @{
+        var tagsDict = new Dictionary<int, TagInfo>(Model.TagInfos.Select((tagInfo, index) => KeyValuePair.Create(index, tagInfo)));
+    }
+    <form method="get" asp-route="Resources">
+        <div class="moj-filter">
+            <div class="moj-filter__header">
+                <div class="moj-filter__header-title">
+                    <h2 class="govuk-heading-m">Filter</h2>
+                </div>
+                <div class="moj-filter__header-action">
+                </div>
+            </div>
+
+            <div class="moj-filter__content">
+
+            @if (Model.SelectedTags != null && Model.SelectedTags.Length > 0)
+            {
+                <div class="moj-filter__selected">
+                    <div class="moj-filter__selected-heading">
+                        <div class="moj-filter__heading-title">
+                            <h2 class="govuk-heading-m">Selected filters</h2>
+                        </div>
+                        <div class="moj-filter__heading-action">
+                            <p><a class="govuk-link govuk-link--no-visited-state" href="/resources">Clear filters</a></p>
+                        </div>
+                    </div>
+
+                    @{
+                        var selected = tagsDict.Where(kvp => Model.SelectedTags.Contains(kvp.Key));
+                        var grouped = selected.GroupBy(x => x.Value.Category);
+
+                        foreach (var group in grouped)
+                        {
+                            <h3 class="govuk-heading-s govuk-!-margin-bottom-0">@group.Key</h3>
+                            <ul class="moj-filter-tags">
+                                @foreach (var kvp in group)
+                                {
+                                    // build link for all other selected
+                                    var tags = selected.Where(x => x.Value.TagName != kvp.Value.TagName).Select(x => $"tags={x.Key}");
+                                    var qsTags = $"&{string.Join("&", tags)}".Trim('&');
+                                    var url = $"/resources?{qsTags}";
+
+                                    <li><a class="moj-filter__tag" href="@url"><span class="govuk-visually-hidden">Remove this filter</span>@kvp.Value.DisplayName</a></li>
+                                }
+                            </ul>
+                        }
+                    }
+                </div>
+            }
+                
+                <div class="moj-filter__options">
+                    <button class="govuk-button" data-module="govuk-button" data-test-id="submit-button">
+                        Apply filters
+                    </button>
+
+                    @{
+                        var groups = tagsDict.GroupBy(kvp => kvp.Value.Category);
+                        foreach (var group in groups)
+                        {
+                            <div class="govuk-form-group">
+                                <fieldset class="govuk-fieldset">
+                                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                        @group.Key
+                                    </legend>
+                                    <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+
+                                    @foreach (var kvp in group)
+                                    {
+                                        var isChecked = Model.SelectedTags.Contains(kvp.Key);
+                                        <div class="govuk-checkboxes__item">
+                                            <input class="govuk-checkboxes__input" id="tags" name="tags" type="checkbox" value="@kvp.Key" checked="@isChecked">
+                                            <label class="govuk-label govuk-checkboxes__label" for="type">
+                                                @kvp.Value.DisplayName
+                                            </label>
+                                        </div>
+                                    }
+                                    </div>
+                                </fieldset>
+                            </div>
+                        }
+                    }
+
+                </div>
+            </div>
+        </div>
+    </form>
+}
+
+@{
+    var resultString = Model.TotalResults == 1 ? "result" : "results";
+    <h2 class="gem-c-heading govuk-heading-s govuk-!-margin-bottom-2">
+        @Model.TotalResults @resultString
+    </h2>
+    <hr />
+
+    if (Model.TotalPages == 0)
+    {
+        <div class="no-results govuk-!-font-size-19">
+            <p class="govuk-body govuk-!-font-weight-bold">There are no matching results.</p>
+            <p class="govuk-body">Improve your search results by:</p>
+            <ul class="govuk-list govuk-list--bullet">
+                <li>removing filters</li>
+                @* 
+                <li>double-checking your spelling</li>
+                <li>using fewer keywords</li>
+                <li>searching for something less specific</li>
+                *@
+            </ul>
+        </div>
+    }
+    else
+    {
+        foreach (var contentItem in Model.Content)
+        {
+            var createdAt = (DateTime)contentItem.Sys.CreatedAt;
+            <div>
+                <h2><a href="/content/@contentItem.Id">@contentItem.Title</a></h2>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla interdum laoreet lacinia. Phasellus fringilla ligula at leo rutrum eleifend.
+                    Nulla tempor, massa in congue lobortis, lectus turpis vulputate tellus, eget cursus massa orci eu purus. Aenean non dui libero.
+                </p>
+                <ul>
+                    <li>Created: <time datetime="@createdAt.ToString("yyyy-MM-dd")">@createdAt.ToString("dd MMMM yyyy")</time></li>
+                </ul>
+            </div>
+        }
+
+        var tags = Model.SelectedTags.Select(x => $"tags={x}");
+        var qsTags = string.Join("&", tags);
+        qsTags = string.IsNullOrEmpty(qsTags) ? string.Empty : $"&{qsTags}";
+
+        var hrefFormatString = $"/resources?page={{0}}{qsTags}";
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-three-quarters">
+                <govuk-pagination url-format-string="@hrefFormatString" page-count=@Model.TotalPages current-page=@Model.CurrentPage />
+            </div>
+        </div>
+    }
+}
