@@ -4,7 +4,7 @@ using Childrens_Social_Care_CPD.Models;
 using Contentful.Core.Models;
 using Contentful.Core.Search;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Reflection;
 
 namespace Childrens_Social_Care_CPD.Controllers;
 
@@ -57,16 +57,14 @@ public partial class ResourcesController : Controller
         }
     }
 
-    private async Task<Content> FetchResourcesContentAsync()
+    private Task<ContentfulCollection<Content>> FetchResourcesContentAsync()
     {
-        // TODO: we need to have the resources content model
         var queryBuilder = QueryBuilder<Content>.New
             .ContentTypeIs("content")
             .Include(10)
             .FieldEquals("fields.id", "resources");
 
-        var result = await _cpdClient.GetEntries(queryBuilder);
-        return result?.FirstOrDefault();
+        return _cpdClient.GetEntries(queryBuilder);
     }
 
     private Task<ContentfulCollection<Content>> FetchResourceSearchResultsAsync(int[] tags, int skip = 0, int limit = 5)
@@ -79,32 +77,55 @@ public partial class ResourcesController : Controller
             .OrderBy("-sys.createdAt")
             .Skip(skip)
             .Limit(limit);
-        
+
         return _cpdClient.GetEntries(queryBuilder);
+    }
+
+    private async Task<Tuple<Content, ContentfulCollection<Content>>> GetContentAsync(int[] tags, int skip = 0, int limit = 5)
+    {
+        var pageContentTask = FetchResourcesContentAsync();
+        var searchContentTask = FetchResourceSearchResultsAsync(tags, skip, limit);
+
+        await Task.WhenAll(pageContentTask, searchContentTask);
+        return Tuple.Create(pageContentTask.Result?.FirstOrDefault(), searchContentTask.Result);
+    }
+
+    private Tuple<int, int, int> CalculatePaging(ResourcesQuery query)
+    {
+        var pageSize = 8;
+        var page = Math.Max(query.Page, 1);
+        var skip = (page - 1) * pageSize;
+
+        return Tuple.Create(page, skip, pageSize);
+    }
+
+    private string GetPagingFormatString(int[] tags)
+    {
+        var tagStrings = tags.Select(x => $"tags={x}");
+        var qsTags = string.Join("&", tagStrings);
+        
+        return string.IsNullOrEmpty(qsTags)
+            ? $"/resources?page={{0}}"
+            : $"/resources?page={{0}}&{qsTags}";
     }
 
     [Route("resources", Name = "Resource")]
     [HttpGet]
     public async Task<IActionResult> Index([FromQuery] ResourcesQuery query, bool preferencesSet = false)
     {
-        // TODO: we should probably query for a resources object to enable content management of the banner
         query ??= new ResourcesQuery();
         query.Tags ??= Array.Empty<int>();
 
-        var pageSize = 8;
-        var page = query.Page;
-        page = Math.Max(page, 1);
-        var skip = (page - 1) * pageSize;
-        var pageContent = await FetchResourcesContentAsync();
+        (var page, var skip, var pageSize) = CalculatePaging(query);
+        (var pageContent, var contentCollection) = await GetContentAsync(query.Tags, skip, pageSize);
 
-        var contentCollection = await FetchResourceSearchResultsAsync(query.Tags, skip, pageSize);
         var totalPages = (int)Math.Ceiling((decimal)contentCollection.Total / pageSize);
         page = Math.Min(page, totalPages);
 
         var contextModel = new ContextModel(string.Empty, "Resources", "Resources", "Resources", true, preferencesSet);
         ViewData["ContextModel"] = contextModel;
 
-        var viewModel = new ResourcesListViewModel(pageContent, contentCollection, _tagInfos, query.Tags, page, totalPages, contentCollection.Total);
+        var viewModel = new ResourcesListViewModel(pageContent, contentCollection, _tagInfos, query.Tags, page, totalPages, contentCollection.Total, GetPagingFormatString(query.Tags));
         return View(viewModel);
     }
 }

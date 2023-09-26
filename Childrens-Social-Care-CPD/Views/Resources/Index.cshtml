@@ -12,19 +12,7 @@
 }
 
 @section PageBanner {
-    @if (Model.Content != null && Model.Content.ShowContentHeader)
-    {
-        <section id="content-banner" class="app-section-content app-section-content--blue govuk-!-margin-bottom-8">
-            <div class="dfe-width-container">
-                <div class="govuk-grid-row govuk-!-padding-top-3 govuk-!-padding-bottom-0">
-                    <div class="govuk-grid-column-two-thirds-from-desktop govuk-!-padding-top-3">
-                        <h1 id="content-banner-title" class="govuk-heading-xl">@Model.Content.ContentTitle</h1>
-                        <p id="content-banner-subtitle" class="govuk-body-l">@Model.Content.ContentSubtitle</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    }
+    <partial name="_PageBanner" model="Model.Content" />
 }
 
 @section SearchCriteria {
@@ -98,8 +86,8 @@
                                     {
                                         var isChecked = Model.SelectedTags.Contains(kvp.Key);
                                         <div class="govuk-checkboxes__item">
-                                            <input class="govuk-checkboxes__input" id="tags" name="tags" type="checkbox" value="@kvp.Key" checked="@isChecked">
-                                            <label class="govuk-label govuk-checkboxes__label" for="type">
+                                            <input class="govuk-checkboxes__input" id="tag-@kvp.Key" name="tags" type="checkbox" value="@kvp.Key" checked="@isChecked">
+                                                <label class="govuk-label govuk-checkboxes__label" for="tag-@kvp.Key">
                                                 @kvp.Value.DisplayName
                                             </label>
                                         </div>
@@ -109,7 +97,6 @@
                             </div>
                         }
                     }
-
                 </div>
             </div>
         </div>
@@ -142,27 +129,12 @@
     {
         foreach (var contentItem in Model.SearchResults)
         {
-            var createdAt = (DateTime)contentItem.Sys.CreatedAt;
-            <div>
-                <h2><a href="/content/@contentItem.Id">@contentItem.Title</a></h2>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla interdum laoreet lacinia. Phasellus fringilla ligula at leo rutrum eleifend.
-                    Nulla tempor, massa in congue lobortis, lectus turpis vulputate tellus, eget cursus massa orci eu purus. Aenean non dui libero.
-                </p>
-                <ul>
-                    <li>Created: <time datetime="@createdAt.ToString("yyyy-MM-dd")">@createdAt.ToString("dd MMMM yyyy")</time></li>
-                </ul>
-            </div>
+            <partial name="_SearchResult" model="contentItem" />
         }
 
-        var tags = Model.SelectedTags.Select(x => $"tags={x}");
-        var qsTags = string.Join("&", tags);
-        qsTags = string.IsNullOrEmpty(qsTags) ? string.Empty : $"&{qsTags}";
-
-        var hrefFormatString = $"/resources?page={{0}}{qsTags}";
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-three-quarters">
-                <govuk-pagination url-format-string="@hrefFormatString" page-count=@Model.TotalPages current-page=@Model.CurrentPage />
+                <govuk-pagination url-format-string="@Model.PagingFormatString" page-count=@Model.TotalPages current-page=@Model.CurrentPage />
             </div>
         </div>
     }

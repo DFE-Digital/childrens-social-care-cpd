@@ -1,0 +1,15 @@
+﻿@using Childrens_Social_Care_CPD.Contentful.Models;
+
+@model Content
+
+@{ var createdAt = (DateTime)Model.Sys.CreatedAt; }
+<div>
+    <h2><a href="/content/@Model.Id">@Model.Title</a></h2>
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla interdum laoreet lacinia. Phasellus fringilla ligula at leo rutrum eleifend.
+        Nulla tempor, massa in congue lobortis, lectus turpis vulputate tellus, eget cursus massa orci eu purus. Aenean non dui libero.
+    </p>
+    <ul>
+        <li>Created: <time datetime="@createdAt.ToString("yyyy-MM-dd")">@createdAt.ToString("dd MMMM yyyy")</time></li>
+    </ul>
+</div>
