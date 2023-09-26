@@ -12,16 +12,19 @@
 }
 
 @section PageBanner {
-    <section id="content-banner" class="app-section-content app-section-content--blue govuk-!-margin-bottom-8">
-        <div class="dfe-width-container">
-            <div class="govuk-grid-row govuk-!-padding-top-3 govuk-!-padding-bottom-0">
-                <div class="govuk-grid-column-two-thirds-from-desktop govuk-!-padding-top-3">
-                    <h1 id="content-banner-title" class="govuk-heading-xl">Resources and training</h1>
-                    <p id="content-banner-subtitle" class="govuk-body-l">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla interdum laoreet lacinia.</p>
+    @if (Model.Content != null && Model.Content.ShowContentHeader)
+    {
+        <section id="content-banner" class="app-section-content app-section-content--blue govuk-!-margin-bottom-8">
+            <div class="dfe-width-container">
+                <div class="govuk-grid-row govuk-!-padding-top-3 govuk-!-padding-bottom-0">
+                    <div class="govuk-grid-column-two-thirds-from-desktop govuk-!-padding-top-3">
+                        <h1 id="content-banner-title" class="govuk-heading-xl">@Model.Content.ContentTitle</h1>
+                        <p id="content-banner-subtitle" class="govuk-body-l">@Model.Content.ContentSubtitle</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    }
 }
 
 @section SearchCriteria {
@@ -137,7 +140,7 @@
     }
     else
     {
-        foreach (var contentItem in Model.Content)
+        foreach (var contentItem in Model.SearchResults)
         {
             var createdAt = (DateTime)contentItem.Sys.CreatedAt;
             <div>
