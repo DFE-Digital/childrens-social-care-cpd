@@ -22,14 +22,7 @@ No modules.
 | [azurerm_application_gateway.appgw](https://registry.terraform.io/providers/hashicorp/azurerm/3.52.0/docs/resources/application_gateway) | resource |
 | [azurerm_linux_web_app.linux-web-app](https://registry.terraform.io/providers/hashicorp/azurerm/3.52.0/docs/resources/linux_web_app) | resource |
 | [azurerm_linux_web_app_slot.staging](https://registry.terraform.io/providers/hashicorp/azurerm/3.52.0/docs/resources/linux_web_app_slot) | resource |
-| [azurerm_monitor_action_group.main](https://registry.terraform.io/providers/hashicorp/azurerm/3.52.0/docs/resources/monitor_action_group) | resource |
-| [azurerm_monitor_activity_log_alert.appgw-health](https://registry.terraform.io/providers/hashicorp/azurerm/3.52.0/docs/resources/monitor_activity_log_alert) | resource |
 | [azurerm_monitor_autoscale_setting.autoscale](https://registry.terraform.io/providers/hashicorp/azurerm/3.52.0/docs/resources/monitor_autoscale_setting) | resource |
-| [azurerm_monitor_metric_alert.appgw-backend-connect-time](https://registry.terraform.io/providers/hashicorp/azurerm/3.52.0/docs/resources/monitor_metric_alert) | resource |
-| [azurerm_monitor_metric_alert.appgw-managed-rules](https://registry.terraform.io/providers/hashicorp/azurerm/3.52.0/docs/resources/monitor_metric_alert) | resource |
-| [azurerm_monitor_metric_alert.container-avg-resp-time](https://registry.terraform.io/providers/hashicorp/azurerm/3.52.0/docs/resources/monitor_metric_alert) | resource |
-| [azurerm_monitor_metric_alert.container-cpu](https://registry.terraform.io/providers/hashicorp/azurerm/3.52.0/docs/resources/monitor_metric_alert) | resource |
-| [azurerm_monitor_metric_alert.failed-requests](https://registry.terraform.io/providers/hashicorp/azurerm/3.52.0/docs/resources/monitor_metric_alert) | resource |
 | [azurerm_network_interface.nic](https://registry.terraform.io/providers/hashicorp/azurerm/3.52.0/docs/resources/network_interface) | resource |
 | [azurerm_network_security_group.nsg](https://registry.terraform.io/providers/hashicorp/azurerm/3.52.0/docs/resources/network_security_group) | resource |
 | [azurerm_network_security_rule.dev-whitelist-rules](https://registry.terraform.io/providers/hashicorp/azurerm/3.52.0/docs/resources/network_security_rule) | resource |
@@ -46,7 +39,6 @@ No modules.
 | [azurerm_application_insights.appinsights](https://registry.terraform.io/providers/hashicorp/azurerm/3.52.0/docs/data-sources/application_insights) | data source |
 | [azurerm_key_vault.kv](https://registry.terraform.io/providers/hashicorp/azurerm/3.52.0/docs/data-sources/key_vault) | data source |
 | [azurerm_key_vault_secret.dev-ips](https://registry.terraform.io/providers/hashicorp/azurerm/3.52.0/docs/data-sources/key_vault_secret) | data source |
-| [azurerm_key_vault_secret.email](https://registry.terraform.io/providers/hashicorp/azurerm/3.52.0/docs/data-sources/key_vault_secret) | data source |
 | [azurerm_key_vault_secret.ips](https://registry.terraform.io/providers/hashicorp/azurerm/3.52.0/docs/data-sources/key_vault_secret) | data source |
 | [azurerm_log_analytics_workspace.log-analytics-ws](https://registry.terraform.io/providers/hashicorp/azurerm/3.52.0/docs/data-sources/log_analytics_workspace) | data source |
 | [azurerm_public_ip.pip1](https://registry.terraform.io/providers/hashicorp/azurerm/3.52.0/docs/data-sources/public_ip) | data source |
@@ -77,6 +69,7 @@ No modules.
 | <a name="input_cpd_clarity"></a> [cpd\_clarity](#input\_cpd\_clarity) | MS Clarity Secret | `string` | n/a | yes |
 | <a name="input_cpd_contentful_env"></a> [cpd\_contentful\_env](#input\_cpd\_contentful\_env) | Contentful Environment Name | `map(string)` | <pre>{<br>  "Dev": "dev",<br>  "Load-Test": "test",<br>  "Pre-Prod": "prod",<br>  "Prod": "prod",<br>  "Test": "test"<br>}</pre> | no |
 | <a name="input_cpd_delivery_key"></a> [cpd\_delivery\_key](#input\_cpd\_delivery\_key) | Contentful Delivery Key | `string` | n/a | yes |
+| <a name="input_cpd_feature_polling_interval"></a> [cpd\_feature\_polling\_interval](#input\_cpd\_feature\_polling\_interval) | Feature polling interval | `number` | n/a | yes |
 | <a name="input_cpd_googleanalyticstag"></a> [cpd\_googleanalyticstag](#input\_cpd\_googleanalyticstag) | Google Analytics Tag | `string` | n/a | yes |
 | <a name="input_cpd_image_tag"></a> [cpd\_image\_tag](#input\_cpd\_image\_tag) | Docker image tag of application | `string` | n/a | yes |
 | <a name="input_cpd_preview_key"></a> [cpd\_preview\_key](#input\_cpd\_preview\_key) | Contentful Preview Key | `string` | n/a | yes |
