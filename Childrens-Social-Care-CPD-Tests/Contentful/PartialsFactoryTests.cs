@@ -23,6 +23,7 @@ public partial class PartialsFactoryTests
         new object[] { new LinkCard(), "_LinkCard" },
         new object[] { new ImageCard(), "_ImageCard" },
         new object[] { new LinkListCard(), "_LinkListCard" },
+        new object[] { new Resource(), "_Resource" },
         new object[] { new RichTextBlock(), "_RichTextBlock" },
         new object[] { new RoleList(), "_RoleList" },
         new object[] { new SideMenu(), "_SideMenu" },
