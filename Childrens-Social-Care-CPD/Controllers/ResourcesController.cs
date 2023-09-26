@@ -4,6 +4,7 @@ using Childrens_Social_Care_CPD.Models;
 using Contentful.Core.Models;
 using Contentful.Core.Search;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Childrens_Social_Care_CPD.Controllers;
 
@@ -56,7 +57,19 @@ public partial class ResourcesController : Controller
         }
     }
 
-    private Task<ContentfulCollection<Content>> FetchPagesContentAsync(int[] tags, int skip = 0, int limit = 5)
+    private async Task<Content> FetchResourcesContentAsync()
+    {
+        // TODO: we need to have the resources content model
+        var queryBuilder = QueryBuilder<Content>.New
+            .ContentTypeIs("content")
+            .Include(10)
+            .FieldEquals("fields.id", "resources");
+
+        var result = await _cpdClient.GetEntries(queryBuilder);
+        return result?.FirstOrDefault();
+    }
+
+    private Task<ContentfulCollection<Content>> FetchResourceSearchResultsAsync(int[] tags, int skip = 0, int limit = 5)
     {
         // TODO: we need to have the resources content model
         var queryBuilder = QueryBuilder<Content>.New
@@ -82,15 +95,16 @@ public partial class ResourcesController : Controller
         var page = query.Page;
         page = Math.Max(page, 1);
         var skip = (page - 1) * pageSize;
+        var pageContent = await FetchResourcesContentAsync();
 
-        var contentCollection = await FetchPagesContentAsync(query.Tags, skip, pageSize);
+        var contentCollection = await FetchResourceSearchResultsAsync(query.Tags, skip, pageSize);
         var totalPages = (int)Math.Ceiling((decimal)contentCollection.Total / pageSize);
         page = Math.Min(page, totalPages);
 
         var contextModel = new ContextModel(string.Empty, "Resources", "Resources", "Resources", true, preferencesSet);
         ViewData["ContextModel"] = contextModel;
 
-        var viewModel = new ResourcesListViewModel(contentCollection, _tagInfos, query.Tags, page, totalPages, contentCollection.Total);
+        var viewModel = new ResourcesListViewModel(pageContent, contentCollection, _tagInfos, query.Tags, page, totalPages, contentCollection.Total);
         return View(viewModel);
     }
 }
