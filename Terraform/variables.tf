@@ -630,6 +630,12 @@ variable "cpd_clarity" {
   description = "MS Clarity Secret"
 }
 
+variable "cpd_feature_polling_interval" {
+  type        = number
+  sensitive   = true
+  description = "Feature polling interval"
+}
+
 variable "cpd_contentful_env" {
   type = map(string)
   default = {
