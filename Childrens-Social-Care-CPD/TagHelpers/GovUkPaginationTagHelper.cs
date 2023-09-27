@@ -63,8 +63,6 @@ public class GovUkPaginationTagHelper : TagHelper
                         ul.InnerHtml.AppendHtml(GenerateEllipses());
                         break;
                     }
-                default:
-                        continue;
             }
         }
 
