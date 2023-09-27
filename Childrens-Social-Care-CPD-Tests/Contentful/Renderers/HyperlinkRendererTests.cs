@@ -10,7 +10,7 @@ namespace Childrens_Social_Care_CPD_Tests.Contentful.Renderers;
 
 public class HyperlinkRendererTests
 {
-    private HyperlinkRenderer _sut = new HyperlinkRenderer();
+    private readonly HyperlinkRenderer _sut = new();
 
     [Test]
     public void HyperlinkToHtml_Returns_Anchor()

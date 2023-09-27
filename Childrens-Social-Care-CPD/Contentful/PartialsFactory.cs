@@ -12,27 +12,26 @@ public static class PartialsFactory
     /// <returns>The partial view used to render that object.</returns>
     public static string GetPartialFor(IContent item)
     {
-        switch (item)
+        return item switch
         {
-            case (AreaOfPractice): return "_AreaOfPractice";
-            case (AreaOfPracticeList): return "_AreaOfPracticeList";
-            case (ColumnLayout): return "_ColumnLayout";
-            case (Content): return "_Content";
-            case (ContentLink): return "_ContentLink";
-            case (ContentSeparator): return "_ContentSeparator";
-            case (DetailedRole): return "_DetailedRole";
-            case (DetailedPathway): return "_DetailedPathway";
-            case (HeroBanner): return string.Empty; // skip - handled in specific layout section
-            case (ImageCard): return "_ImageCard";
-            case (LinkCard): return "_LinkCard";
-            case (LinkListCard): return "_LinkListCard";
-            case (Resource): return "_Resource";
-            case (RichTextBlock): return "_RichTextBlock";
-            case (RoleList): return "_RoleList";
-            case (SideMenu): return "_SideMenu";
-            case (TextBlock): return "_TextBlock";
-
-            default: return "_UnknownContentWarning";
-       }
+            AreaOfPractice => "_AreaOfPractice",
+            AreaOfPracticeList => "_AreaOfPracticeList",
+            ColumnLayout => "_ColumnLayout",
+            Content => "_Content",
+            ContentLink => "_ContentLink",
+            ContentSeparator => "_ContentSeparator",
+            DetailedRole => "_DetailedRole",
+            DetailedPathway => "_DetailedPathway",
+            HeroBanner => string.Empty,// skip - handled in specific layout section
+            ImageCard => "_ImageCard",
+            LinkCard => "_LinkCard",
+            LinkListCard => "_LinkListCard",
+            Resource => "_Resource",
+            RichTextBlock => "_RichTextBlock",
+            RoleList => "_RoleList",
+            SideMenu => "_SideMenu",
+            TextBlock => "_TextBlock",
+            _ => "_UnknownContentWarning",
+        };
     }
 }

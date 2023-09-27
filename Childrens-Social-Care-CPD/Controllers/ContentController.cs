@@ -9,9 +9,9 @@ namespace Childrens_Social_Care_CPD.Controllers;
 public class ContentController : Controller
 {
     private readonly ICpdContentfulClient _cpdClient;
-    private static int ContentFetchDepth = 10;
-    private static string ContentTypeId = "content";
-    private static string DefaultHomePageName = "home";
+    private readonly static int ContentFetchDepth = 10;
+    private readonly static string ContentTypeId = "content";
+    private readonly static string DefaultHomePageName = "home";
 
     public ContentController(ICpdContentfulClient cpdClient)
     {
@@ -23,6 +23,7 @@ public class ContentController : Controller
         var queryBuilder = QueryBuilder<Content>.New
             .ContentTypeIs(ContentTypeId)
             .FieldEquals("fields.id", contentId ?? DefaultHomePageName)
+            //.FieldEquals("fields.items.id", "foo9")
             .Include(ContentFetchDepth);
 
         var result = await _cpdClient.GetEntries(queryBuilder);
