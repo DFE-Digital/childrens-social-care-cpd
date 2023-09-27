@@ -26,6 +26,7 @@ public static class PartialsFactory
             case (ImageCard): return "_ImageCard";
             case (LinkCard): return "_LinkCard";
             case (LinkListCard): return "_LinkListCard";
+            case (Resource): return "_Resource";
             case (RichTextBlock): return "_RichTextBlock";
             case (RoleList): return "_RoleList";
             case (SideMenu): return "_SideMenu";

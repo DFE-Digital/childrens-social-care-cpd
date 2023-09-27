@@ -25,7 +25,7 @@ resource "azurerm_linux_web_app" "linux-web-app" {
     CPD_CONTENTFUL_ENVIRONMENT           = var.cpd_contentful_env[terraform.workspace]
     CPD_INSTRUMENTATION_CONNECTIONSTRING = data.azurerm_application_insights.appinsights.connection_string
     CPD_CLARITY                          = var.cpd_clarity
-    CPD_FEATURE_POLLING_INTERVAL         = 300
+    CPD_FEATURE_POLLING_INTERVAL         = var.cpd_feature_polling_interval
     DOCKER_ENABLE_CI                     = "true"
   }
 
@@ -64,7 +64,7 @@ resource "azurerm_linux_web_app_slot" "staging" {
     CPD_CONTENTFUL_ENVIRONMENT           = var.cpd_contentful_env[terraform.workspace]
     CPD_INSTRUMENTATION_CONNECTIONSTRING = data.azurerm_application_insights.appinsights.connection_string
     CPD_CLARITY                          = var.cpd_clarity
-    CPD_FEATURE_POLLING_INTERVAL         = 300
+    CPD_FEATURE_POLLING_INTERVAL         = var.cpd_feature_polling_interval
     DOCKER_ENABLE_CI                     = "true"
   }
 
