@@ -4,7 +4,6 @@ using Childrens_Social_Care_CPD.Models;
 using Contentful.Core.Models;
 using Contentful.Core.Search;
 using Microsoft.AspNetCore.Mvc;
-using System.Reflection;
 
 namespace Childrens_Social_Care_CPD.Controllers;
 
@@ -20,8 +19,7 @@ public partial class ResourcesController : Controller
 {
     private readonly ILogger<ResourcesController> _logger;
     private readonly ICpdContentfulClient _cpdClient;
-
-    private static readonly List<TagInfo> _tagInfos = new () { 
+    private static readonly List<TagInfo> _tagInfos = new() {
         new TagInfo("Type", "Case studies", "caseStudies"),
         new TagInfo("Type", "CPD", "cpd"),
         new TagInfo("Type", "Direct tools", "directTools"),
@@ -30,7 +28,6 @@ public partial class ResourcesController : Controller
         new TagInfo("Career stage", "Experienced practitioner", "experiencedPractitioner"),
         new TagInfo("Career stage", "Manager", "manager"),
     };
-
     private static readonly IEnumerable<string> _allTags = _tagInfos.Select(x => x.TagName);
 
     public ResourcesController(ILogger<ResourcesController> logger, ICpdContentfulClient cpdClient)
@@ -67,11 +64,10 @@ public partial class ResourcesController : Controller
         return _cpdClient.GetEntries(queryBuilder);
     }
 
-    private Task<ContentfulCollection<Content>> FetchResourceSearchResultsAsync(int[] tags, int skip = 0, int limit = 5)
+    private Task<ContentfulCollection<Resource>> FetchResourceSearchResultsAsync(int[] tags, int skip = 0, int limit = 5)
     {
-        // TODO: we need to have the resources content model
-        var queryBuilder = QueryBuilder<Content>.New
-            .ContentTypeIs("content")
+        var queryBuilder = QueryBuilder<Resource>.New
+            .ContentTypeIs("resource")
             .Include(1)
             .FieldIncludes("metadata.tags.sys.id", GetQueryTags(tags))
             .OrderBy("-sys.createdAt")
@@ -81,7 +77,7 @@ public partial class ResourcesController : Controller
         return _cpdClient.GetEntries(queryBuilder);
     }
 
-    private async Task<Tuple<Content, ContentfulCollection<Content>>> GetContentAsync(int[] tags, int skip = 0, int limit = 5)
+    private async Task<Tuple<Content, ContentfulCollection<Resource>>> GetContentAsync(int[] tags, int skip = 0, int limit = 5)
     {
         var pageContentTask = FetchResourcesContentAsync();
         var searchContentTask = FetchResourceSearchResultsAsync(tags, skip, limit);
@@ -90,7 +86,7 @@ public partial class ResourcesController : Controller
         return Tuple.Create(pageContentTask.Result?.FirstOrDefault(), searchContentTask.Result);
     }
 
-    private Tuple<int, int, int> CalculatePaging(ResourcesQuery query)
+    private static Tuple<int, int, int> CalculatePaging(ResourcesQuery query)
     {
         var pageSize = 8;
         var page = Math.Max(query.Page, 1);
@@ -99,11 +95,11 @@ public partial class ResourcesController : Controller
         return Tuple.Create(page, skip, pageSize);
     }
 
-    private string GetPagingFormatString(int[] tags)
+    private static string GetPagingFormatString(int[] tags)
     {
         var tagStrings = tags.Select(x => $"tags={x}");
         var qsTags = string.Join("&", tagStrings);
-        
+
         return string.IsNullOrEmpty(qsTags)
             ? $"/resources?page={{0}}"
             : $"/resources?page={{0}}&{qsTags}";
@@ -111,7 +107,7 @@ public partial class ResourcesController : Controller
 
     [Route("resources", Name = "Resource")]
     [HttpGet]
-    public async Task<IActionResult> Index([FromQuery] ResourcesQuery query, bool preferencesSet = false)
+    public async Task<IActionResult> Search([FromQuery] ResourcesQuery query, bool preferencesSet = false)
     {
         query ??= new ResourcesQuery();
         query.Tags ??= Array.Empty<int>();
