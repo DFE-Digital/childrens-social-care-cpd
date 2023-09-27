@@ -20,6 +20,12 @@ public class GovUkPaginationTagHelper : TagHelper
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
+        if (PageCount == 0)
+        {
+            output.TagName = null;
+            return;
+        }
+
         output.TagName = "nav";
         output.TagMode = TagMode.StartTagAndEndTag;
         output.AddClass("govuk-pagination", HtmlEncoder.Default);

@@ -1,15 +1,13 @@
 ﻿@using Childrens_Social_Care_CPD.Contentful.Models;
 
-@model Content
+@model Resource
 
-@{ var createdAt = (DateTime)Model.Sys.CreatedAt; }
 <div>
-    <h2><a href="/content/@Model.Id">@Model.Title</a></h2>
-    <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla interdum laoreet lacinia. Phasellus fringilla ligula at leo rutrum eleifend.
-        Nulla tempor, massa in congue lobortis, lectus turpis vulputate tellus, eget cursus massa orci eu purus. Aenean non dui libero.
-    </p>
-    <ul>
-        <li>Created: <time datetime="@createdAt.ToString("yyyy-MM-dd")">@createdAt.ToString("dd MMMM yyyy")</time></li>
+    <h2><a href="@Model.Id">@Model.Title</a></h2>
+    <p>@Model.SearchSummary</p>
+    <ul class="govuk-list govuk-body-s" style="display:flex; gap:15px; flex-flow:row">
+        <li>From: @Model.From</li>
+        <li>Update: <time datetime="@Model.Sys.UpdatedAt?.ToString("yyyy-MM-dd")">@Model.Sys.UpdatedAt?.ToString("dd MMMM yyyy")</time></li>
+        <li>Resource type: @string.Join(", ", Model.Type.ToArray())</li>
     </ul>
 </div>

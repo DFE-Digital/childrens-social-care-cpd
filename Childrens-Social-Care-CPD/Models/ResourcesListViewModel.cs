@@ -6,7 +6,7 @@ namespace Childrens_Social_Care_CPD.Models;
 
 public record ResourcesListViewModel(
     Content Content,
-    ContentfulCollection<Content> SearchResults,
+    ContentfulCollection<Resource> SearchResults,
     IEnumerable<TagInfo> TagInfos,
     int[] SelectedTags,
     int CurrentPage = 0,

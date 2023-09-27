@@ -116,7 +116,7 @@
             <p class="govuk-body govuk-!-font-weight-bold">There are no matching results.</p>
             <p class="govuk-body">Improve your search results by:</p>
             <ul class="govuk-list govuk-list--bullet">
-                <li>removing filters</li>
+                <li>adding or removing filters</li>
                 @* 
                 <li>double-checking your spelling</li>
                 <li>using fewer keywords</li>
@@ -132,10 +132,13 @@
             <partial name="_SearchResult" model="contentItem" />
         }
 
-        <div class="govuk-grid-row">
-            <div class="govuk-grid-column-three-quarters">
-                <govuk-pagination url-format-string="@Model.PagingFormatString" page-count=@Model.TotalPages current-page=@Model.CurrentPage />
+        if (Model.TotalPages > 1)
+        {
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-three-quarters">
+                    <govuk-pagination url-format-string="@Model.PagingFormatString" page-count=@Model.TotalPages current-page=@Model.CurrentPage />
+                </div>
             </div>
-        </div>
+        }
     }
 }
