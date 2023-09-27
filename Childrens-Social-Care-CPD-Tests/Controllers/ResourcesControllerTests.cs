@@ -11,9 +11,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
+using NSubstitute.ExceptionExtensions;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace Childrens_Social_Care_CPD_Tests.Controllers;
@@ -159,5 +161,20 @@ public class ResourcesControllerTests
 
         // assert
         actual.CurrentPage.Should().Be(1);
+    }
+
+    [Test]
+    public async Task Search_Invalid_Tags_Throws()
+    {
+        // arrange
+        SetContent(null, null);
+        var query = new ResourcesQuery
+        {
+            Page = 2,
+            Tags = new int[] { -1 }
+        };
+
+        // act/assert
+        await _resourcesController.Invoking(x => x.Search(query)).Should().ThrowAsync<Exception>();
     }
 }
