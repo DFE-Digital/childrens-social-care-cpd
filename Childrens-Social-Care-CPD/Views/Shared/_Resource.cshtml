@@ -1,0 +1,49 @@
+﻿@using Childrens_Social_Care_CPD.Contentful;
+@using Childrens_Social_Care_CPD.Contentful.Models;
+@using Childrens_Social_Care_CPD.Contentful.Renderers;
+@using Contentful.Core.Models;
+
+@model Resource
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+        <span class="govuk-caption-l">@Model.PreHeading</span>
+        <h1 class="govuk-heading-xl">@Model.Heading</h1>
+    </div>
+</div>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+        @{
+            <ul class="govuk-list">
+                <li>
+                    <span class="govuk-!-font-size-16"><span class="govuk-!-font-size-16 govuk-!-font-weight-bold">From: </span>@Model.From</span>
+                </li>
+                <li>
+                    <span class="govuk-!-font-size-16"><span class="govuk-!-font-size-16 govuk-!-font-weight-bold">Resource Type: </span>: @Model.ResourceType</span>
+                </li>
+            </ul>
+
+            ContextModel model = (ContextModel)ViewBag.ContextModel;
+            // We use the content stack to track circular dependencies and prevent overflows
+            model.ContentStack.Push(Model.Id);
+
+            if (Model.ResourceItems != null)
+            {
+                foreach (var item in Model.ResourceItems)
+                {
+                    var preventOverflow = item as Content;
+                    if (preventOverflow != null && model.ContentStack.Contains(preventOverflow.Id))
+                    {
+                        <partial name="_OverflowWarning" />
+                        continue;
+                    }
+
+                    await Html.RenderContentfulPartialAsync(item);
+                }
+            }
+
+            model.ContentStack.Pop();
+        }
+    </div>
+</div>
