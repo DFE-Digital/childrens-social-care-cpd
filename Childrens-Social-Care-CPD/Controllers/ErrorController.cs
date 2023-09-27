@@ -34,10 +34,10 @@ public class ErrorController : Controller
     public IActionResult Error(int code)
     {
         ViewData["pageName"] = $"error/{code}";
-        switch (code)
+        return code switch
         {
-            case 404: return View("404");
-            default : return View("500");
-        }
+            404 => View("404"),
+            _ => View("500"),
+        };
     }
 }
