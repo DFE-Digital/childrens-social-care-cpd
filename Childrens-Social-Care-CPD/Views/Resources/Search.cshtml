@@ -51,14 +51,14 @@
                         {
                             <h3 class="govuk-heading-s govuk-!-margin-bottom-0">@group.Key</h3>
                             <ul class="moj-filter-tags">
-                                @foreach (var kvp in group)
+                                @foreach (var value in group.Select(x => x.Value))
                                 {
                                     // build link for all other selected
-                                    var tags = selected.Where(x => x.Value.TagName != kvp.Value.TagName).Select(x => $"tags={x.Key}");
+                                    var tags = selected.Where(x => x.Value.TagName != value.TagName).Select(x => $"tags={x.Key}");
                                     var qsTags = $"&{string.Join("&", tags)}".Trim('&');
                                     var url = $"/resources?{qsTags}";
 
-                                    <li><a class="moj-filter__tag" href="@url"><span class="govuk-visually-hidden">Remove this filter</span>@kvp.Value.DisplayName</a></li>
+                                    <li><a class="moj-filter__tag" href="@url"><span class="govuk-visually-hidden">Remove this filter</span>@value.DisplayName</a></li>
                                 }
                             </ul>
                         }
@@ -140,5 +140,7 @@
                 </div>
             </div>
         }
+
+        <govuk-pagination url-format-string="@Model.PagingFormatString" page-count=6 current-page=3 />
     }
 }

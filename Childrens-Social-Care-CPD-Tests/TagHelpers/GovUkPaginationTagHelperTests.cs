@@ -196,4 +196,25 @@ public class GovUkPaginationTagHelperTests
         // assert
         actual.Should().NotContain("HtmlEncode[[Next]]");
     }
+
+    [Test]
+    public void Ellipses_Are_Generated()
+    {
+        // arrange
+        var stringWriter = new StringWriter();
+        var tagHelper = new GovUkPaginationTagHelper
+        {
+            PageCount = 4,
+            CurrentPage = 1,
+            UrlFormatString = "{0}"
+        };
+
+        // act
+        tagHelper.Process(_tagHelperContext, _tagHelperOutput);
+        _tagHelperOutput.WriteTo(stringWriter, new HtmlTestEncoder());
+        var actual = stringWriter.ToString();
+
+        // assert
+        actual.Should().Contain("&ctdot;");
+    }
 }
