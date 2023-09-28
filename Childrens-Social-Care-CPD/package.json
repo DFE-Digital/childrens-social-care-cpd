@@ -13,7 +13,7 @@
     "sass": "^1.58.0"
   },
   "dependencies": {
-    "@ministryofjustice/frontend": "^1.6.4",
+    "@ministryofjustice/frontend": "^1.8.0",
     "dfe-frontend-alpha": "^0.1.8",
     "govuk-frontend": "^4.7.0",
     "jquery": "^3.7.0"
