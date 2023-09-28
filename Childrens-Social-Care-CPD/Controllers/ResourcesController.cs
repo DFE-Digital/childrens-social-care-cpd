@@ -42,16 +42,14 @@ public partial class ResourcesController : Controller
         {
             return _allTags;
         }
-
-        try
-        {
-            return tags.Select(x => _tagInfos[x].TagName);
-        }
-        catch
+        
+        if (tags.Any(x => (x < 0) || (x >= _tagInfos.Count)))
         {
             _logger.LogWarning("Passed tag values do not match known values: {Passed Values}", tags);
-            throw;
+            return Array.Empty<string>();
         }
+
+        return tags.Select(x => { return _tagInfos[x].TagName; });
     }
 
     private Task<ContentfulCollection<Content>> FetchResourcesContentAsync()
