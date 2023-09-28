@@ -10580,4 +10580,8 @@ CONTENT TITLE BANNER
   border-bottom: 3px solid #003A69;
 }
 
+.iframe-boarder-width {
+  border-width: 0px;
+}
+
 /*# sourceMappingURL=application.css.map */
