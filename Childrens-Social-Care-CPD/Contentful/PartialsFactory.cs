@@ -31,7 +31,7 @@ public static class PartialsFactory
             RoleList => "_RoleList",
             SideMenu => "_SideMenu",
             TextBlock => "_TextBlock",
-            Video => "_Video",
+            VideoResource => "_VideoResource",
             _ => "_UnknownContentWarning",
         };
     }
