@@ -6,7 +6,9 @@
     <ul class="dfe-vertical-nav__section">
         @foreach (var menuItem in Model.Items)
         {
-            var css = ViewBag.ContextModel.PageName == menuItem.Uri
+            string pageName = $"/{ViewBag.ContextModel.PageName}";
+            string uri = menuItem.Uri.StartsWith('/') ? menuItem.Uri : $"/{menuItem.Uri}";
+            var css = pageName.StartsWith(uri)
                 ? "dfe-vertical-nav__section-item  dfe-vertical-nav__section-item--current"
                 : "dfe-vertical-nav__section-item";
 
