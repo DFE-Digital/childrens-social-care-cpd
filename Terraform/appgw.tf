@@ -79,7 +79,7 @@ resource "azurerm_application_gateway" "appgw" {
     frontend_ip_configuration_name = var.frontend_ip_configuration_name[terraform.workspace]
     frontend_port_name             = var.frontend_ssl_port_name[terraform.workspace]
     protocol                       = "Https"
-    ssl_certificate_name           = "develop-child-family-social-work-career"
+    ssl_certificate_name           = "develop-child-family-social-work-career-23"
     host_names                     = data.azurerm_resource_group.rg.name == "s185p01-childrens-social-care-cpd-rg" ? ["www.develop-child-family-social-work-career.education.gov.uk", "develop-child-family-social-work-career.education.gov.uk", ] : null
   }
 
