@@ -53,12 +53,12 @@ public class GovUkPaginationTagHelper : TagHelper
         {
             switch (index)
             {
-                case int i when i == 1 || i == pageCount || (i >= currentPage - 1 && i <= currentPage + 1):
+                case var _ when index == 1 || index == pageCount || (index >= currentPage - 1 && index <= currentPage + 1):
                     {
-                        ul.InnerHtml.AppendHtml(GeneratePageNumber(index, string.Format(formatString, index), i == currentPage));
+                        ul.InnerHtml.AppendHtml(GeneratePageNumber(index, string.Format(formatString, index), index == currentPage));
                         break;
                     }
-                case int i when i == currentPage - 2 || i == currentPage + 2:
+                case var _ when index == currentPage - 2 || index == currentPage + 2:
                     {
                         ul.InnerHtml.AppendHtml(GenerateEllipses());
                         break;
