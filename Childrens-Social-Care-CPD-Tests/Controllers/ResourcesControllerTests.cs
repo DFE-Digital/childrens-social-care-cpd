@@ -164,17 +164,21 @@ public class ResourcesControllerTests
     }
 
     [Test]
-    public async Task Search_Invalid_Tags_Throws()
+    public async Task Search_Invalid_Tags_Logs_Warning()
     {
         // arrange
         SetContent(null, null);
+        var tags = new int[] { -1 };
         var query = new ResourcesQuery
         {
             Page = 2,
-            Tags = new int[] { -1 }
+            Tags = tags
         };
 
-        // act/assert
-        await _resourcesController.Invoking(x => x.Search(query)).Should().ThrowAsync<Exception>();
+        // act
+        await _resourcesController.Search(query);
+        
+        //assert
+        _logger.ReceivedWithAnyArgs(1).LogWarning(default, args: default);
     }
 }
