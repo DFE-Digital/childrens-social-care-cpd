@@ -32,6 +32,7 @@ public class EntityResolver : IContentTypeResolver
             "roleList" => typeof(RoleList),
             "sideMenu" => typeof(SideMenu),
             "textBlock" => typeof(TextBlock),
+            "videoResource" => typeof(VideoResource),
             _ => null
         };
     }
