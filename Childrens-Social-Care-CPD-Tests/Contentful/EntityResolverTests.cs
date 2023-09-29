@@ -29,6 +29,7 @@ public class EntityResolverTests
     [TestCase("roleList", typeof(RoleList))]
     [TestCase("sideMenu", typeof(SideMenu))]
     [TestCase("textBlock", typeof(TextBlock))]
+    [TestCase("videoResource", typeof(VideoResource))]
     public void Resolves_Correctly(string contentTypeId, Type expectedType)
     { 
         var resolver = new EntityResolver();
