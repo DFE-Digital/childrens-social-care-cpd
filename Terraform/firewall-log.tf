@@ -1,4 +1,4 @@
-resource "azurerm_monitor_diagnostic_setting" "firewall-diagnostics" {
+resource "azurerm_monitor_diagnostic_setting" "firewall-diagnostics2" {
   name                       = "${var.fw_diag_name[terraform.workspace]}2"
   target_resource_id         = azurerm_application_gateway.appgw.id
   log_analytics_workspace_id = data.azurerm_log_analytics_workspace.log-analytics-ws.id
