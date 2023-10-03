@@ -5,17 +5,22 @@ resource "azurerm_monitor_diagnostic_setting" "firewall-diagnostics" {
 
   count = terraform.workspace == "Prod" || terraform.workspace == "Load-Test" ? 1 : 0
 
-  log {
+  metric {
+    category = "AllMetrics"
+    enabled  = true
+  }
+
+  enabled_Log {
     category = "ApplicationGatewayAccessLog"
     enabled  = true
   }
 
-  log {
+  enabled_Log {
     category = "ApplicationGatewayFirewallLog"
     enabled  = true
   }
 
-  log {
+  enabled_Log {
     category = "ApplicationGatewayPerformanceLog"
     enabled  = true
   }
