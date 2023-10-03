@@ -37,7 +37,7 @@ public class CookieController : Controller
 
     [HttpGet]
     [Route("/cookies")]
-    public async Task<IActionResult> Cookies(string sourcePage = null, bool preferenceSet = false)
+    public async Task<IActionResult> Cookies(CancellationToken cancellationToken, string sourcePage = null, bool preferenceSet = false)
     {
         sourcePage = sourcePage ?? string.Empty;
 
@@ -46,7 +46,7 @@ public class CookieController : Controller
             .FieldEquals("fields.id", PageName)
             .Include(10);
 
-        var result = await _cpdClient.GetEntries(queryBuilder);
+        var result = await _cpdClient.GetEntries(queryBuilder, cancellationToken);
         var pageContent = result.FirstOrDefault();
         
         if (pageContent == null)

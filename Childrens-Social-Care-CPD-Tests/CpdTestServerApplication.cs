@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
+using System.Threading;
 
 namespace Childrens_Social_Care_CPD_Tests;
 
@@ -24,6 +25,7 @@ internal class CpdTestServerApplication : WebApplicationFactory<Program>
         {
             services.AddTransient((_) => _cpdContentfulClient);
             services.AddSingleton(_loggerFactory);
+            services.AddScoped(typeof(CancellationToken), s => new CancellationTokenSource().Token);
         });
         return base.CreateHost(builder);
     }
