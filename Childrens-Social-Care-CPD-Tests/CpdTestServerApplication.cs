@@ -10,7 +10,7 @@ namespace Childrens_Social_Care_CPD_Tests;
 
 internal class CpdTestServerApplication : WebApplicationFactory<Program>
 {
-    private ICpdContentfulClient _cpdContentfulClient;
+    private readonly ICpdContentfulClient _cpdContentfulClient;
     private ILoggerFactory _loggerFactory;
 
     public CpdTestServerApplication()

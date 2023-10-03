@@ -62,7 +62,7 @@ public partial class ResourcesController : Controller
         return _cpdClient.GetEntries(queryBuilder, cancellationToken);
     }
 
-    private Task<ContentfulCollection<Resource>> FetchResourceSearchResultsAsync(CancellationToken cancellationToken, int[] tags, int skip = 0, int limit = 5)
+    private Task<ContentfulCollection<Resource>> FetchResourceSearchResultsAsync(int[] tags, CancellationToken cancellationToken, int skip = 0, int limit = 5)
     {
         var queryBuilder = QueryBuilder<Resource>.New
             .ContentTypeIs("resource")
@@ -75,10 +75,10 @@ public partial class ResourcesController : Controller
         return _cpdClient.GetEntries(queryBuilder, cancellationToken);
     }
 
-    private async Task<Tuple<Content, ContentfulCollection<Resource>>> GetContentAsync(CancellationToken cancellationToken, int[] tags, int skip = 0, int limit = 5)
+    private async Task<Tuple<Content, ContentfulCollection<Resource>>> GetContentAsync(int[] tags, CancellationToken cancellationToken, int skip = 0, int limit = 5)
     {
         var pageContentTask = FetchResourcesContentAsync(cancellationToken);
-        var searchContentTask = FetchResourceSearchResultsAsync(cancellationToken, tags, skip, limit);
+        var searchContentTask = FetchResourceSearchResultsAsync(tags, cancellationToken, skip, limit);
 
         await Task.WhenAll(pageContentTask, searchContentTask);
         return Tuple.Create(pageContentTask.Result?.FirstOrDefault(), searchContentTask.Result);
@@ -105,13 +105,13 @@ public partial class ResourcesController : Controller
 
     [Route("resources", Name = "Resource")]
     [HttpGet]
-    public async Task<IActionResult> Search(CancellationToken cancellationToken, [FromQuery] ResourcesQuery query, bool preferencesSet = false)
+    public async Task<IActionResult> Search([FromQuery] ResourcesQuery query, CancellationToken cancellationToken, bool preferencesSet = false)
     {
         query ??= new ResourcesQuery();
         query.Tags ??= Array.Empty<int>();
 
         (var page, var skip, var pageSize) = CalculatePaging(query);
-        (var pageContent, var contentCollection) = await GetContentAsync(cancellationToken, query.Tags, skip, pageSize);
+        (var pageContent, var contentCollection) = await GetContentAsync(query.Tags, cancellationToken, skip, pageSize);
 
         var totalPages = (int)Math.Ceiling((decimal)contentCollection.Total / pageSize);
         page = Math.Min(page, totalPages);

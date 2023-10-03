@@ -18,7 +18,7 @@ public class ContentControllerServerTests
 {
     private CpdTestServerApplication _application;
     private HttpClient _httpClient;
-    private static string ContentUrl = "/";
+    private static readonly string _contentUrl = "/";
 
     [SetUp]
     public void SetUp()
@@ -40,7 +40,7 @@ public class ContentControllerServerTests
         _application.CpdContentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), Arg.Any<CancellationToken>()).Returns(contentCollection);
 
         // act
-        var response = await _httpClient.GetAsync(ContentUrl);
+        var response = await _httpClient.GetAsync(_contentUrl);
         var responseContent = await response.Content.ReadAsStringAsync();
         
         // assert
@@ -52,13 +52,15 @@ public class ContentControllerServerTests
     public async Task Content_Will_Contain_Warning_If_Data_Has_An_Unknown_Content_Type()
     {
         // arrange
-        var content = new Content();
-        content.Items = new List<IContent> { new TestingContentItem() };
+        var content = new Content
+        {
+            Items = new List<IContent> { new TestingContentItem() }
+        };
         var contentCollection = new ContentfulCollection<Content>() { Items = new List<Content>() { content } };
         _application.CpdContentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), Arg.Any<CancellationToken>()).Returns(contentCollection);
 
         // act
-        var response = await _httpClient.GetAsync(ContentUrl);
+        var response = await _httpClient.GetAsync(_contentUrl);
         var responseContent = await response.Content.ReadAsStringAsync();
 
         // assert
