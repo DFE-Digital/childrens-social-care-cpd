@@ -9,6 +9,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Childrens_Social_Care_CPD_Tests.Controllers;
@@ -36,7 +37,7 @@ public class ContentControllerServerTests
         var content = new Content();
         content.Items = new List<IContent> { content };
         var contentCollection = new ContentfulCollection<Content>() { Items = new List<Content>() { content } };
-        _application.CpdContentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), default).Returns(contentCollection);
+        _application.CpdContentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), Arg.Any<CancellationToken>()).Returns(contentCollection);
 
         // act
         var response = await _httpClient.GetAsync(ContentUrl);
@@ -54,7 +55,7 @@ public class ContentControllerServerTests
         var content = new Content();
         content.Items = new List<IContent> { new TestingContentItem() };
         var contentCollection = new ContentfulCollection<Content>() { Items = new List<Content>() { content } };
-        _application.CpdContentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), default).Returns(contentCollection);
+        _application.CpdContentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), Arg.Any<CancellationToken>()).Returns(contentCollection);
 
         // act
         var response = await _httpClient.GetAsync(ContentUrl);

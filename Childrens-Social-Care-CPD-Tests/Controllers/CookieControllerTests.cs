@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using System;
 using Childrens_Social_Care_CPD;
 using Childrens_Social_Care_CPD.Configuration;
+using System.Threading;
 
 namespace Childrens_Social_Care_CPD_Tests.Controllers;
 
@@ -26,6 +27,7 @@ public partial class CookieControllerTests
     private HttpContext _httpContext;
     private HttpRequest _httpRequest;
     private ICpdContentfulClient _contentfulClient;
+    private CancellationTokenSource _cancellationTokenSource;
 
     private void SetContent(Content content)
     {
@@ -36,8 +38,10 @@ public partial class CookieControllerTests
             : contentCollection.Items = new List<Content> { content };
 
         _contentfulClient
-            .GetEntries(Arg.Any<QueryBuilder<Content>>(), default)
+            .GetEntries(Arg.Any<QueryBuilder<Content>>(), Arg.Any<CancellationToken>())
             .Returns(contentCollection);
+
+        _cancellationTokenSource = new CancellationTokenSource();
     }
 
     [SetUp]
@@ -71,7 +75,7 @@ public partial class CookieControllerTests
         SetContent(null);
 
         // act
-        var actual = await _cookieController.Cookies();
+        var actual = await _cookieController.Cookies(_cancellationTokenSource.Token);
 
         // assert
         actual.Should().BeOfType<NotFoundResult>();
@@ -90,7 +94,7 @@ public partial class CookieControllerTests
         SetContent(rootContent);
 
         // act
-        await _cookieController.Cookies();
+        await _cookieController.Cookies(_cancellationTokenSource.Token);
         var actual = _cookieController.ViewData["ContextModel"] as ContextModel;
 
         // assert
@@ -108,7 +112,7 @@ public partial class CookieControllerTests
         SetContent(new Content());
 
         // act
-        await _cookieController.Cookies(preferenceSet: preferenceSet);
+        await _cookieController.Cookies(_cancellationTokenSource.Token, preferenceSet: preferenceSet);
         var actual = _cookieController.ViewData["ContextModel"] as ContextModel;
 
         // assert
@@ -133,7 +137,7 @@ public partial class CookieControllerTests
         SetContent(rootContent);
 
         // act
-        await _cookieController.Cookies();
+        await _cookieController.Cookies(_cancellationTokenSource.Token);
         var actual = _cookieController.ViewData["ContextModel"] as ContextModel;
 
         // assert
@@ -148,7 +152,7 @@ public partial class CookieControllerTests
         SetContent(new Content());
 
         // act
-        await _cookieController.Cookies();
+        await _cookieController.Cookies(_cancellationTokenSource.Token);
         var actual = _cookieController.ViewData["ContextModel"] as ContextModel;
 
         // assert

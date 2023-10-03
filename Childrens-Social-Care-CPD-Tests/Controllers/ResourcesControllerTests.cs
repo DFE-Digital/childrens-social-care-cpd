@@ -11,11 +11,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
-using NSubstitute.ExceptionExtensions;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Childrens_Social_Care_CPD_Tests.Controllers;
@@ -28,13 +27,14 @@ public class ResourcesControllerTests
     private HttpRequest _httpRequest;
     private ICpdContentfulClient _contentfulClient;
     private ILogger<ResourcesController> _logger;
+    private CancellationTokenSource _cancellationTokenSource;
 
     private void SetContent(Content content, ContentfulCollection<Resource> resourceCollection)
     {
         resourceCollection ??= new ();
 
         _contentfulClient
-            .GetEntries(Arg.Any<QueryBuilder<Resource>>(), default)
+            .GetEntries(Arg.Any<QueryBuilder<Resource>>(), Arg.Any<CancellationToken>())
             .Returns(resourceCollection);
 
         var contentCollection = new ContentfulCollection<Content>();
@@ -44,8 +44,10 @@ public class ResourcesControllerTests
             : contentCollection.Items = new List<Content> { content };
 
         _contentfulClient
-            .GetEntries(Arg.Any<QueryBuilder<Content>>(), default)
+            .GetEntries(Arg.Any<QueryBuilder<Content>>(), Arg.Any<CancellationToken>())
             .Returns(contentCollection);
+
+        _cancellationTokenSource = new CancellationTokenSource();
     }
 
     [SetUp]
@@ -77,7 +79,7 @@ public class ResourcesControllerTests
         SetContent(null, null);
 
         // act
-        var actual = await _resourcesController.Search(query: null) as ViewResult;
+        var actual = await _resourcesController.Search(_cancellationTokenSource.Token, query: null) as ViewResult;
 
         // assert
         actual.Should().BeOfType<ViewResult>();
@@ -97,7 +99,7 @@ public class ResourcesControllerTests
         };
 
         // act
-        var actual = (await _resourcesController.Search(query: null) as ViewResult)?.Model as ResourcesListViewModel;
+        var actual = (await _resourcesController.Search(_cancellationTokenSource.Token, query: null) as ViewResult)?.Model as ResourcesListViewModel;
 
         // assert
         actual.Content.Should().Be(content);
@@ -110,7 +112,7 @@ public class ResourcesControllerTests
         SetContent(null, null);
 
         // act
-        await _resourcesController.Search(null);
+        await _resourcesController.Search(_cancellationTokenSource.Token, null);
         var actual = _resourcesController.ViewData["ContextModel"] as ContextModel;
 
         // assert
@@ -132,7 +134,7 @@ public class ResourcesControllerTests
         };
 
         // act
-        var actual = (await _resourcesController.Search(query) as ViewResult)?.Model as ResourcesListViewModel;
+        var actual = (await _resourcesController.Search(_cancellationTokenSource.Token, query) as ViewResult)?.Model as ResourcesListViewModel;
 
         // assert
         actual.SelectedTags.Should().Equal(query.Tags);
@@ -157,7 +159,7 @@ public class ResourcesControllerTests
         };
 
         // act
-        var actual = (await _resourcesController.Search(query) as ViewResult)?.Model as ResourcesListViewModel;
+        var actual = (await _resourcesController.Search(_cancellationTokenSource.Token, query) as ViewResult)?.Model as ResourcesListViewModel;
 
         // assert
         actual.CurrentPage.Should().Be(1);
@@ -176,7 +178,7 @@ public class ResourcesControllerTests
         };
 
         // act
-        await _resourcesController.Search(query);
+        await _resourcesController.Search(_cancellationTokenSource.Token, query);
         
         //assert
         _logger.ReceivedWithAnyArgs(1).LogWarning(default, args: default);
