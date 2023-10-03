@@ -7,16 +7,13 @@ resource "azurerm_monitor_diagnostic_setting" "firewall-diagnostics" {
 
   enabled_log {
     category = "ApplicationGatewayAccessLog"
-    enabled  = true
   }
 
   enabled_log {
     category = "ApplicationGatewayFirewallLog"
-    enabled  = true
   }
 
   enabled_log {
     category = "ApplicationGatewayPerformanceLog"
-    enabled  = true
   }
 }
