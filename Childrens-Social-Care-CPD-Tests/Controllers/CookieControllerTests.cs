@@ -63,9 +63,11 @@ public partial class CookieControllerTests
 
         _contentfulClient = Substitute.For<ICpdContentfulClient>();
 
-        _cookieController = new CookieController(_contentfulClient, new CookieHelper(new ApplicationConfiguration()));
-        _cookieController.ControllerContext = controllerContext;
-        _cookieController.TempData = Substitute.For<ITempDataDictionary>();
+        _cookieController = new CookieController(_contentfulClient, new CookieHelper(new ApplicationConfiguration()))
+        {
+            ControllerContext = controllerContext,
+            TempData = Substitute.For<ITempDataDictionary>()
+        };
     }
 
     [Test]
@@ -120,13 +122,13 @@ public partial class CookieControllerTests
         actual.PreferenceSet.Should().Be(preferenceSet);
     }
 
-    public static object[] SideMenuContent =
+    private static readonly object[] _sideMenuContent =
         {
             new object[] { new SideMenu() },
             new object[] { null },
         };
 
-    [TestCaseSource(nameof(SideMenuContent))]
+    [TestCaseSource(nameof(_sideMenuContent))]
     public async Task Cookies_Sets_The_ContextModel_UseContainers_Ignoring_The_SideMenu_Value(SideMenu sideMenu)
     {
         // arrange

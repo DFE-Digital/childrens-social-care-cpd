@@ -54,9 +54,11 @@ public class ContentControllerTests
 
         _contentfulClient = Substitute.For<ICpdContentfulClient>();
 
-        _contentController = new ContentController(_contentfulClient);
-        _contentController.ControllerContext = controllerContext;
-        _contentController.TempData = Substitute.For<ITempDataDictionary>();
+        _contentController = new ContentController(_contentfulClient)
+        {
+            ControllerContext = controllerContext,
+            TempData = Substitute.For<ITempDataDictionary>()
+        };
     }
 
     [Test]
@@ -124,13 +126,13 @@ public class ContentControllerTests
         actual.PreferenceSet.Should().Be(preferenceSet);
     }
 
-    public static object[] SideMenuContent =
+    private static readonly object[] _sideMenuContent =
     {
         new object[] { new SideMenu() },
         new object[] { null },
     };
 
-    [TestCaseSource(nameof(SideMenuContent))]
+    [TestCaseSource(nameof(_sideMenuContent))]
     public async Task Index_Sets_The_ContextModel_UseContainers_From_SideMenu_Value_Correctly(SideMenu sideMenu)
     {
         // arrange

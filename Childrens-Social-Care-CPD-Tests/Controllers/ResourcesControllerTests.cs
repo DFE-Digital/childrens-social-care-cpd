@@ -79,7 +79,7 @@ public class ResourcesControllerTests
         SetContent(null, null);
 
         // act
-        var actual = await _resourcesController.Search(_cancellationTokenSource.Token, query: null) as ViewResult;
+        var actual = await _resourcesController.Search(query: null, _cancellationTokenSource.Token) as ViewResult;
 
         // assert
         actual.Should().BeOfType<ViewResult>();
@@ -92,14 +92,9 @@ public class ResourcesControllerTests
         // arrange
         var content = new Content();
         SetContent(content, null);
-        var query = new ResourcesQuery
-        {
-            Page = 1,
-            Tags = Array.Empty<int>()
-        };
 
         // act
-        var actual = (await _resourcesController.Search(_cancellationTokenSource.Token, query: null) as ViewResult)?.Model as ResourcesListViewModel;
+        var actual = (await _resourcesController.Search(query: null, _cancellationTokenSource.Token) as ViewResult)?.Model as ResourcesListViewModel;
 
         // assert
         actual.Content.Should().Be(content);
@@ -112,7 +107,7 @@ public class ResourcesControllerTests
         SetContent(null, null);
 
         // act
-        await _resourcesController.Search(_cancellationTokenSource.Token, null);
+        await _resourcesController.Search(null, _cancellationTokenSource.Token);
         var actual = _resourcesController.ViewData["ContextModel"] as ContextModel;
 
         // assert
@@ -134,7 +129,7 @@ public class ResourcesControllerTests
         };
 
         // act
-        var actual = (await _resourcesController.Search(_cancellationTokenSource.Token, query) as ViewResult)?.Model as ResourcesListViewModel;
+        var actual = (await _resourcesController.Search(query, _cancellationTokenSource.Token) as ViewResult)?.Model as ResourcesListViewModel;
 
         // assert
         actual.SelectedTags.Should().Equal(query.Tags);
@@ -159,7 +154,7 @@ public class ResourcesControllerTests
         };
 
         // act
-        var actual = (await _resourcesController.Search(_cancellationTokenSource.Token, query) as ViewResult)?.Model as ResourcesListViewModel;
+        var actual = (await _resourcesController.Search(query, _cancellationTokenSource.Token) as ViewResult)?.Model as ResourcesListViewModel;
 
         // assert
         actual.CurrentPage.Should().Be(1);
@@ -178,7 +173,7 @@ public class ResourcesControllerTests
         };
 
         // act
-        await _resourcesController.Search(_cancellationTokenSource.Token, query);
+        await _resourcesController.Search(query, _cancellationTokenSource.Token);
         
         //assert
         _logger.ReceivedWithAnyArgs(1).LogWarning(default, args: default);

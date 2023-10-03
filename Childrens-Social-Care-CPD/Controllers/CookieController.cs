@@ -11,7 +11,7 @@ public class CookieController : Controller
 {
     private readonly ICpdContentfulClient _cpdClient;
     private readonly ICookieHelper _cookieHelper;
-    private const string PageName = "cookies";
+    private const string _pageName = "cookies";
 
     public CookieController(ICpdContentfulClient cpdClient, ICookieHelper cookieHelper)
     {
@@ -39,11 +39,11 @@ public class CookieController : Controller
     [Route("/cookies")]
     public async Task<IActionResult> Cookies(CancellationToken cancellationToken, string sourcePage = null, bool preferenceSet = false)
     {
-        sourcePage = sourcePage ?? string.Empty;
+        sourcePage ??= string.Empty;
 
         var queryBuilder = QueryBuilder<Content>.New
             .ContentTypeIs("content")
-            .FieldEquals("fields.id", PageName)
+            .FieldEquals("fields.id", _pageName)
             .Include(10);
 
         var result = await _cpdClient.GetEntries(queryBuilder, cancellationToken);
@@ -60,7 +60,7 @@ public class CookieController : Controller
         }
 
         var consentState = _cookieHelper.GetRequestAnalyticsCookieState(HttpContext);
-        var contextModel = new ContextModel(pageContent.Id, pageContent.Title, PageName, pageContent.Category, true, preferenceSet, true);
+        var contextModel = new ContextModel(pageContent.Id, pageContent.Title, _pageName, pageContent.Category, true, preferenceSet, true);
         ViewData["ContextModel"] = contextModel;
 
         var model = new CookiesAndAnalyticsConsentModel
