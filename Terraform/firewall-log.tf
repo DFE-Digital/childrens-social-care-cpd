@@ -8,24 +8,15 @@ resource "azurerm_monitor_diagnostic_setting" "firewall-diagnostics" {
   log {
     category = "ApplicationGatewayAccessLog"
     enabled  = true
-    retention_policy {
-      enabled = false
-    }
   }
 
   log {
     category = "ApplicationGatewayFirewallLog"
     enabled  = true
-    retention_policy {
-      enabled = false
-    }
   }
 
   log {
     category = "ApplicationGatewayPerformanceLog"
     enabled  = true
-    retention_policy {
-      enabled = false
-    }
   }
 }
