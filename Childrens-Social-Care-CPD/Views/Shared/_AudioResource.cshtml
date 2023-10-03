@@ -1,0 +1,22 @@
+﻿@using Childrens_Social_Care_CPD.Contentful.Models;
+
+@model AudioResource
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+        <audio id="audioPlayer" preload="none">
+            <source src="@Model.Audio.File.Url" type="audio/mp3">
+        </audio>
+        @if (Model.Transcript.Content != null)
+        {
+            <details class="govuk-details govuk-!-margin-top-3" data-module="govuk-details">
+                <summary class="govuk-details__summary"> <span class="govuk-details__summary-text">View transcript  </span></summary>
+                <div class="govuk-details__text">
+                    @{
+                        await Html.RenderPartialAsync("_RichText", Model.Transcript);
+                    }
+                </div>
+            </details>
+        }
+    </div>
+</div>

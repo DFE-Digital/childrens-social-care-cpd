@@ -13,6 +13,7 @@ public partial class PartialsFactoryTests
     {
         new object[] { new AreaOfPractice(), "_AreaOfPractice" },
         new object[] { new AreaOfPracticeList(), "_AreaOfPracticeList" },
+         new object[] { new AudioResource(), "_AudioResource" },
         new object[] { new ColumnLayout(), "_ColumnLayout" },
         new object[] { new Content(), "_Content" },
         new object[] { new ContentLink(), "_ContentLink" },
