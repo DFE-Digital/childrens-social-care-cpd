@@ -4,7 +4,9 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
-        <iframe id="player" title="video" type="text/html" class="iframe-border-width" width="640" height="390" allowfullscreen src="@Model.Video.File.Url"></iframe>
+        <video id="videoPlayer" preload="none">
+            <source src="@Model.Video.File.Url">
+        </video>
         <details class="govuk-details govuk-!-margin-top-3" data-module="govuk-details">
             <summary class="govuk-details__summary"> <span class="govuk-details__summary-text">View transcript  </span></summary>
             <div class="govuk-details__text">
