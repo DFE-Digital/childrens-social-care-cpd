@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using NSubstitute;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Childrens_Social_Care_CPD_Tests.Controllers;
@@ -22,6 +23,7 @@ public class ContentControllerTests
     private HttpContext _httpContext;
     private HttpRequest _httpRequest;
     private ICpdContentfulClient _contentfulClient;
+    private CancellationTokenSource _cancellationTokenSource;
 
     private void SetContent(Content content)
     {
@@ -32,8 +34,10 @@ public class ContentControllerTests
             : contentCollection.Items = new List<Content> { content };
 
         _contentfulClient
-            .GetEntries(Arg.Any<QueryBuilder<Content>>(), default)
+            .GetEntries(Arg.Any<QueryBuilder<Content>>(), Arg.Any<CancellationToken>())
             .Returns(contentCollection);
+
+        _cancellationTokenSource = new CancellationTokenSource();
     }
 
     [SetUp]
@@ -50,9 +54,11 @@ public class ContentControllerTests
 
         _contentfulClient = Substitute.For<ICpdContentfulClient>();
 
-        _contentController = new ContentController(_contentfulClient);
-        _contentController.ControllerContext = controllerContext;
-        _contentController.TempData = Substitute.For<ITempDataDictionary>();
+        _contentController = new ContentController(_contentfulClient)
+        {
+            ControllerContext = controllerContext,
+            TempData = Substitute.For<ITempDataDictionary>()
+        };
     }
 
     [Test]
@@ -62,7 +68,7 @@ public class ContentControllerTests
         SetContent(null);
 
         // act
-        var actual = await _contentController.Index("home");
+        var actual = await _contentController.Index(_cancellationTokenSource.Token, "home");
 
         // assert
         actual.Should().BeOfType<NotFoundResult>();
@@ -75,7 +81,7 @@ public class ContentControllerTests
         SetContent(new Content());
 
         // act
-        var actual = await _contentController.Index("home");
+        var actual = await _contentController.Index(_cancellationTokenSource.Token, "home");
 
         // assert
         actual.Should().BeOfType<ViewResult>();
@@ -94,7 +100,7 @@ public class ContentControllerTests
         SetContent(rootContent);
 
         // act
-        await _contentController.Index("home");
+        await _contentController.Index(_cancellationTokenSource.Token, "home");
         var actual = _contentController.ViewData["ContextModel"] as ContextModel;
 
         // assert
@@ -112,7 +118,7 @@ public class ContentControllerTests
         SetContent(new Content());
 
         // act
-        await _contentController.Index("home", preferenceSet);
+        await _contentController.Index(_cancellationTokenSource.Token, "home", preferenceSet);
         var actual = _contentController.ViewData["ContextModel"] as ContextModel;
 
         // assert
@@ -120,13 +126,13 @@ public class ContentControllerTests
         actual.PreferenceSet.Should().Be(preferenceSet);
     }
 
-    public static object[] SideMenuContent =
+    private static readonly object[] _sideMenuContent =
     {
         new object[] { new SideMenu() },
         new object[] { null },
     };
 
-    [TestCaseSource(nameof(SideMenuContent))]
+    [TestCaseSource(nameof(_sideMenuContent))]
     public async Task Index_Sets_The_ContextModel_UseContainers_From_SideMenu_Value_Correctly(SideMenu sideMenu)
     {
         // arrange
@@ -138,7 +144,7 @@ public class ContentControllerTests
         SetContent(rootContent);
 
         // act
-        await _contentController.Index("home");
+        await _contentController.Index(_cancellationTokenSource.Token, "home");
         var actual = _contentController.ViewData["ContextModel"] as ContextModel;
 
         // assert
@@ -152,10 +158,10 @@ public class ContentControllerTests
         // arrange
         SetContent(new Content());
         var query = "";
-        await _contentfulClient.GetEntries(Arg.Do<QueryBuilder<Content>>(value => query = value.Build()));
+        await _contentfulClient.GetEntries(Arg.Do<QueryBuilder<Content>>(value => query = value.Build()), Arg.Any<CancellationToken>());
 
         // act
-        var actual = await _contentController.Index("home/");
+        var actual = await _contentController.Index(_cancellationTokenSource.Token, "home/");
 
         // assert
         query.Should().Contain("fields.id=home&");
