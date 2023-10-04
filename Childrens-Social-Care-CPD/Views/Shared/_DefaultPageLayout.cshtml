@@ -11,6 +11,11 @@
     @await RenderSectionAsync("Scripts", required: false)
 }
 
+@section Head {
+    @await RenderSectionAsync("Head", required: false)
+}
+
+
 @await RenderSectionAsync("Hero", required: false)
 <div class="dfe-width-container">
     @RenderBody()
