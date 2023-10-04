@@ -11,6 +11,10 @@
     @await RenderSectionAsync("Scripts", required: false)
 }
 
+@section Head {
+    @await RenderSectionAsync("Head", required: false)
+}
+
 <div class="govuk-width-container dfe-width-container">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-one-quarter">
