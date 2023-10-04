@@ -33,10 +33,26 @@
 @section SideMenu {
     @if (Model.SideMenu != null)
     {
-        <partial name="_SideMenu" model="Model.SideMenu"/>
+        <partial name="_SideMenu" model="Model.SideMenu" />
     }
 }
 
 <partial name="_Content" model="Model" />
 
 @_relatedContentRenderer.Render(Model.RelatedContent)
+
+@section Scripts {
+    @if (ViewData.TryGetValue("StateModel", out var stateModel) && ((StateModel)stateModel).IncludeMediaPlayer)
+    {
+        <script src=/javascript/mediaelement-and-player.min.js></script>
+        <script src=/javascript/mediaelement-configuration.js></script>
+    }
+}
+
+@section Head {
+    @if (ViewData.TryGetValue("StateModel", out var stateModel) && ((StateModel)stateModel).IncludeMediaPlayer)
+    {
+
+        <link href="/css/mediaelement-player.min.css" rel="stylesheet" />
+    }
+}

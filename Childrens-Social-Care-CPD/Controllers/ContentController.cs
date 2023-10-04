@@ -9,24 +9,20 @@ namespace Childrens_Social_Care_CPD.Controllers;
 public class ContentController : Controller
 {
     private readonly ICpdContentfulClient _cpdClient;
-    private readonly static int ContentFetchDepth = 10;
-    private readonly static string ContentTypeId = "content";
-    private readonly static string DefaultHomePageName = "home";
 
     public ContentController(ICpdContentfulClient cpdClient)
     {
         _cpdClient = cpdClient;
     }
 
-    private async Task<Content> FetchPageContentAsync(string contentId)
+    private async Task<Content> FetchPageContentAsync(string contentId, CancellationToken cancellationToken)
     {
         var queryBuilder = QueryBuilder<Content>.New
-            .ContentTypeIs(ContentTypeId)
-            .FieldEquals("fields.id", contentId ?? DefaultHomePageName)
-            //.FieldEquals("fields.items.id", "foo9")
-            .Include(ContentFetchDepth);
+            .ContentTypeIs("content")
+            .FieldEquals("fields.id", contentId)
+            .Include(10);
 
-        var result = await _cpdClient.GetEntries(queryBuilder);
+        var result = await _cpdClient.GetEntries(queryBuilder, cancellationToken);
 
         return result?.FirstOrDefault();
     }
@@ -46,25 +42,26 @@ public class ContentController : Controller
         Etc.
     */
     [Route("/{*pagename:regex(^[[0-9a-z]](\\/?[[0-9a-z\\-]])*\\/?$)}")] 
-    public async Task<IActionResult> Index(string pageName, bool preferenceSet = false)
+    public async Task<IActionResult> Index(CancellationToken cancellationToken, string pageName = "home", bool preferenceSet = false)
     {
         pageName = pageName?.TrimEnd('/');
-        var pageContent = await FetchPageContentAsync(pageName);
+        var pageContent = await FetchPageContentAsync(pageName, cancellationToken);
         if (pageContent == null)
         {
             return NotFound();
         }
 
         var contextModel = new ContextModel(
-            Id: pageContent.Id, 
-            Title: pageContent.Title, 
-            PageName: pageName, 
+            Id: pageContent.Id,
+            Title: pageContent.Title,
+            PageName: pageName,
             Category: pageContent.Category,
-            UseContainers: pageContent.SideMenu == null, 
-            PreferenceSet: preferenceSet, 
+            UseContainers: pageContent.SideMenu == null,
+            PreferenceSet: preferenceSet,
             BackLink: pageContent.BackLink);
 
         ViewData["ContextModel"] = contextModel;
+        ViewData["StateModel"] = new StateModel();
         return View(pageContent);
     }
 }
