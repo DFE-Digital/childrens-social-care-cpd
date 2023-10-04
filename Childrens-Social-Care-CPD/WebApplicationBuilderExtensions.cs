@@ -74,5 +74,7 @@ public static class WebApplicationBuilderExtensions
                 options.Rules.Insert(0, new LoggerFilterRule(typeof(ApplicationInsightsLoggerProvider).FullName, null, LogLevel.Information, null));
             }
         });
+        
+        builder.Services.AddHealthChecks().AddCheck<ConfigurationHealthCheck>("Configuration Health Check", tags: new[] {"configuration"});
     }
 }

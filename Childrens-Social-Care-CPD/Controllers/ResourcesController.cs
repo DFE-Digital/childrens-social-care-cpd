@@ -52,17 +52,17 @@ public partial class ResourcesController : Controller
         return tags.Select(x => { return _tagInfos[x].TagName; });
     }
 
-    private Task<ContentfulCollection<Content>> FetchResourcesContentAsync()
+    private Task<ContentfulCollection<Content>> FetchResourcesContentAsync(CancellationToken cancellationToken)
     {
         var queryBuilder = QueryBuilder<Content>.New
             .ContentTypeIs("content")
             .Include(10)
             .FieldEquals("fields.id", "resources");
 
-        return _cpdClient.GetEntries(queryBuilder);
+        return _cpdClient.GetEntries(queryBuilder, cancellationToken);
     }
 
-    private Task<ContentfulCollection<Resource>> FetchResourceSearchResultsAsync(int[] tags, int skip = 0, int limit = 5)
+    private Task<ContentfulCollection<Resource>> FetchResourceSearchResultsAsync(int[] tags, CancellationToken cancellationToken, int skip = 0, int limit = 5)
     {
         var queryBuilder = QueryBuilder<Resource>.New
             .ContentTypeIs("resource")
@@ -72,13 +72,13 @@ public partial class ResourcesController : Controller
             .Skip(skip)
             .Limit(limit);
 
-        return _cpdClient.GetEntries(queryBuilder);
+        return _cpdClient.GetEntries(queryBuilder, cancellationToken);
     }
 
-    private async Task<Tuple<Content, ContentfulCollection<Resource>>> GetContentAsync(int[] tags, int skip = 0, int limit = 5)
+    private async Task<Tuple<Content, ContentfulCollection<Resource>>> GetContentAsync(int[] tags, CancellationToken cancellationToken, int skip = 0, int limit = 5)
     {
-        var pageContentTask = FetchResourcesContentAsync();
-        var searchContentTask = FetchResourceSearchResultsAsync(tags, skip, limit);
+        var pageContentTask = FetchResourcesContentAsync(cancellationToken);
+        var searchContentTask = FetchResourceSearchResultsAsync(tags, cancellationToken, skip, limit);
 
         await Task.WhenAll(pageContentTask, searchContentTask);
         return Tuple.Create(pageContentTask.Result?.FirstOrDefault(), searchContentTask.Result);
@@ -105,13 +105,13 @@ public partial class ResourcesController : Controller
 
     [Route("resources", Name = "Resource")]
     [HttpGet]
-    public async Task<IActionResult> Search([FromQuery] ResourcesQuery query, bool preferencesSet = false)
+    public async Task<IActionResult> Search([FromQuery] ResourcesQuery query, CancellationToken cancellationToken, bool preferencesSet = false)
     {
         query ??= new ResourcesQuery();
         query.Tags ??= Array.Empty<int>();
 
         (var page, var skip, var pageSize) = CalculatePaging(query);
-        (var pageContent, var contentCollection) = await GetContentAsync(query.Tags, skip, pageSize);
+        (var pageContent, var contentCollection) = await GetContentAsync(query.Tags, cancellationToken, skip, pageSize);
 
         var totalPages = (int)Math.Ceiling((decimal)contentCollection.Total / pageSize);
         page = Math.Min(page, totalPages);

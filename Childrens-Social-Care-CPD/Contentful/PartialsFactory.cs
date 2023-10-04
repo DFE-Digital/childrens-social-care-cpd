@@ -16,6 +16,7 @@ public static class PartialsFactory
         {
             AreaOfPractice => "_AreaOfPractice",
             AreaOfPracticeList => "_AreaOfPracticeList",
+            AudioResource => "_AudioResource",
             ColumnLayout => "_ColumnLayout",
             Content => "_Content",
             ContentLink => "_ContentLink",
@@ -31,6 +32,7 @@ public static class PartialsFactory
             RoleList => "_RoleList",
             SideMenu => "_SideMenu",
             TextBlock => "_TextBlock",
+            VideoResource => "_VideoResource",
             _ => "_UnknownContentWarning",
         };
     }

@@ -21,7 +21,6 @@
   <ItemGroup>
     <Folder Include="Properties\" />
     <Folder Include="wwwroot\assets\images\moj\" />
-    <Folder Include="wwwroot\css\" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="Views\Shared\_Footer.cshtml">
