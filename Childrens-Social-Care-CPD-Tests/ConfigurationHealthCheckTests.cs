@@ -25,6 +25,19 @@ public class ConfigurationHealthCheckTests
     }
 
     [Test]
+    public async Task Passes_When_All_Values_Set_And_Cookies_Are_Secured()
+    {
+        // arrange
+        var sut = new ConfigurationHealthCheck(_logger, _applicationConfiguration);
+
+        // act
+        var result = await sut.CheckHealthAsync(null, default);
+
+        // assert
+        result.Status.Should().Be(HealthStatus.Healthy);
+    }
+
+    [Test]
     public async Task Fails_When_Disable_Cookies_Is_True()
     {
         // arrange
