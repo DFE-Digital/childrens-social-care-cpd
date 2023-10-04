@@ -24,6 +24,8 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Content}/{action=Index}");
+app.MapHealthChecks("application/status");
+
 
 app.Run();
 
