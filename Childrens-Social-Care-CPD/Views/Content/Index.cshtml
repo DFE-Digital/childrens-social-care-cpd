@@ -42,22 +42,17 @@
 @_relatedContentRenderer.Render(Model.RelatedContent)
 
 @section Scripts {
-    @if (ViewData.TryGetValue("StateModel", out var stateModel))
+    @if (ViewData.TryGetValue("StateModel", out var stateModel) && ((StateModel)stateModel).IncludeMediaPlayer)
     {
-        if (((StateModel)stateModel).IncludeMediaPlayer)
-        {
-            <script src=/javascript/mediaelement-and-player.min.js></script>
-            <script src=/javascript/mediaelement-configuration.js></script>
-        }
+        <script src=/javascript/mediaelement-and-player.min.js></script>
+        <script src=/javascript/mediaelement-configuration.js></script>
     }
 }
 
 @section Head {
-    @if (ViewData.TryGetValue("StateModel", out var stateModel))
+    @if (ViewData.TryGetValue("StateModel", out var stateModel) && ((StateModel)stateModel).IncludeMediaPlayer)
     {
-        if (((StateModel)stateModel).IncludeMediaPlayer)
-        {
-            <link href="/css/mediaelement-player.min.css" rel="stylesheet" />
-        }
+
+        <link href="/css/mediaelement-player.min.css" rel="stylesheet" />
     }
 }
