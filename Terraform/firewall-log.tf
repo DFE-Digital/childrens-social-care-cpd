@@ -5,37 +5,20 @@ resource "azurerm_monitor_diagnostic_setting" "firewall-diagnostics" {
 
   count = terraform.workspace == "Prod" || terraform.workspace == "Load-Test" ? 1 : 0
 
-
-  enabled_log {
-    category = "ApplicationGatewayAccessLog"
-    retention_policy {
-      enabled = false
-      days    = 1
-    }
+  metric {
+    category = "AllMetrics"
+    enabled  = true
   }
 
   enabled_log {
-    category = "ApplicationGatewayPerformanceLog"
-    retention_policy {
-      enabled = false
-      days    = 1
-    }
+    category = "ApplicationGatewayAccessLog"
   }
 
   enabled_log {
     category = "ApplicationGatewayFirewallLog"
-    retention_policy {
-      enabled = false
-      days    = 1
-    }
   }
 
-  metric {
-    category = "AllMetrics"
-    enabled  = true
-    retention_policy {
-      enabled = false
-      days    = 1
-    }
+  enabled_log {
+    category = "ApplicationGatewayPerformanceLog"
   }
 }
