@@ -14,6 +14,7 @@ public class EntityResolverTests
     [TestCase("areaOfPracticeList", typeof(AreaOfPracticeList))]
     [TestCase("applicationFeature", typeof(ApplicationFeature))]
     [TestCase("applicationFeatures", typeof(ApplicationFeatures))]
+    [TestCase("audioResource", typeof(AudioResource))]
     [TestCase("columnLayout", typeof(ColumnLayout))]
     [TestCase("content", typeof(Content))]
     [TestCase("contentLink", typeof(ContentLink))]
