@@ -17,6 +17,7 @@ public class EntityResolver : IContentTypeResolver
             "areaOfPracticeList" => typeof(AreaOfPracticeList),
             "applicationFeature" => typeof(ApplicationFeature),
             "applicationFeatures" => typeof(ApplicationFeatures),
+            "audioResource" => typeof(AudioResource),
             "columnLayout" => typeof(ColumnLayout),
             "content" => typeof(Content),
             "contentLink" => typeof(ContentLink),
