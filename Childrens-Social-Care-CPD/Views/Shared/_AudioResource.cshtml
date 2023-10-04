@@ -2,6 +2,10 @@
 
 @model AudioResource
 
+@{
+    ((StateModel)ViewData["StateModel"]).IncludeMediaPlayer = true;
+}
+
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
         <audio id="audioPlayer" preload="none">
@@ -20,3 +24,4 @@
         }
     </div>
 </div>
+

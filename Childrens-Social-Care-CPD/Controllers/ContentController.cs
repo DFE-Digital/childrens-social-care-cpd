@@ -52,15 +52,16 @@ public class ContentController : Controller
         }
 
         var contextModel = new ContextModel(
-            Id: pageContent.Id, 
-            Title: pageContent.Title, 
-            PageName: pageName, 
+            Id: pageContent.Id,
+            Title: pageContent.Title,
+            PageName: pageName,
             Category: pageContent.Category,
-            UseContainers: pageContent.SideMenu == null, 
-            PreferenceSet: preferenceSet, 
+            UseContainers: pageContent.SideMenu == null,
+            PreferenceSet: preferenceSet,
             BackLink: pageContent.BackLink);
 
         ViewData["ContextModel"] = contextModel;
+        ViewData["StateModel"] = new StateModel();
         return View(pageContent);
     }
 }

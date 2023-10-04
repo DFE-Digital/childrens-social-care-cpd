@@ -7,6 +7,10 @@
     @await RenderSectionAsync("PageBanner", required: false)
 }
 
+@section Scripts {
+    @await RenderSectionAsync("Scripts", required: false)
+}
+
 @await RenderSectionAsync("Hero", required: false)
 <div class="dfe-width-container">
     @RenderBody()

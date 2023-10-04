@@ -40,3 +40,14 @@
 <partial name="_Content" model="Model" />
 
 @_relatedContentRenderer.Render(Model.RelatedContent)
+
+@section Scripts {
+    @if (ViewData.TryGetValue("StateModel", out var stateModel))
+    {
+        if (((StateModel)stateModel).IncludeMediaPlayer)
+        {
+            <script src=/javascript/mediaelement-and-player.min.js></script>
+            <script src=/javascript/mediaelement-configuration.js></script>
+        }
+    }
+}
