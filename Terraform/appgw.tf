@@ -127,7 +127,7 @@ resource "azurerm_application_gateway" "appgw" {
   probe {
     name                                      = var.appgw_probe[terraform.workspace]
     pick_host_name_from_backend_http_settings = true
-    path                                      = "/"
+    path                                      = "/application/status"
     interval                                  = 30
     timeout                                   = 30
     unhealthy_threshold                       = 3
