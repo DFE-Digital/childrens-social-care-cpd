@@ -6,7 +6,6 @@ on:
   workflow_dispatch: 
     
 jobs:
-  
   load-test:
     runs-on: ubuntu-latest
     environment: Load-Test
@@ -68,7 +67,7 @@ jobs:
           creds: '{"clientId":"${{ secrets.TF_ARM_CLIENT_ID }}","clientSecret":"${{ secrets.TF_ARM_CLIENT_SECRET }}","subscriptionId":"${{ secrets.TF_ARM_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TF_ARM_TENANT_ID }}"}'
 
       - name: Get the IP
-        run: echo "theIP=$(curl https://ifconfig.tsew.com/)" >> $GITHUB_ENV
+        run: echo "theIP=$(curl https://ip-config.azurewebsites.net/)" >> $GITHUB_ENV
 
       - name: Echo the IP
         run: echo "IP is ${{ env.theIP }}"
