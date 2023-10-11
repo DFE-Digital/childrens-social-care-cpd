@@ -31,7 +31,8 @@ resource "azurerm_linux_web_app" "linux-web-app" {
 
   site_config {
     application_stack {
-      docker_image_name = "ghcr.io/dfe-digital/childrens-social-care-cpd:${nonsensitive(var.cpd_image_tag)}"
+      docker_registry_url = "https://ghcr.io"
+      docker_image_name   = "dfe-digital/childrens-social-care-cpd:${nonsensitive(var.cpd_image_tag)}"
     }
   }
 
@@ -69,7 +70,8 @@ resource "azurerm_linux_web_app_slot" "staging" {
 
   site_config {
     application_stack {
-      docker_image_name = "ghcr.io/dfe-digital/childrens-social-care-cpd:${nonsensitive(var.cpd_image_tag)}"
+      docker_registry_url = "https://ghcr.io"
+      docker_image_name   = "dfe-digital/childrens-social-care-cpd:${nonsensitive(var.cpd_image_tag)}"
     }
 
     ip_restriction {
