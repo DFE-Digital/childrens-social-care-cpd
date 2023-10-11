@@ -25,6 +25,7 @@ public class EntityResolverTests
     [TestCase("imageCard", typeof(ImageCard))]
     [TestCase("linkCard", typeof(LinkCard))]
     [TestCase("linkListCard", typeof(LinkListCard))]
+    [TestCase("pdfFileResource", typeof(PdfFileResource))]
     [TestCase("resource", typeof(Resource))]
     [TestCase("richTextBlock", typeof(RichTextBlock))]
     [TestCase("roleList", typeof(RoleList))]
