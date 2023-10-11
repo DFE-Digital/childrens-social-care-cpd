@@ -27,6 +27,7 @@ public static class PartialsFactory
             ImageCard => "_ImageCard",
             LinkCard => "_LinkCard",
             LinkListCard => "_LinkListCard",
+            PdfFileResource => "_PdfFileResource",
             Resource => "_Resource",
             RichTextBlock => "_RichTextBlock",
             RoleList => "_RoleList",
