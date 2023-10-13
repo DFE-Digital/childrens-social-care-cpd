@@ -1,0 +1,30 @@
+﻿@using Childrens_Social_Care_CPD.Contentful.Models;
+
+@model PdfFileResource
+
+<div class="govuk-!-margin-top-8">
+    <div class="govuk-grid-column-three-quarter">
+        <div class="govuk-grid-row">
+            <ul class="ons-document-list">
+                <li class="ons-document-list__item">
+                    <div class="ons-document-list__item-image ons-document-list__item-image--file" aria-hidden="true">
+                        <a class="ons-document-list__image-link ons-document-list__image-link--placeholder" style="background-image:url('@Model.FileThumbnail.File.Url')" href="@Model.File.File.Url" tabindex="-1">
+                        </a>
+                    </div>
+                    <div class="ons-document-list__item-content">
+                        <h2><a href="@Model.File.File.Url">@Model.Id</a></h2>
+                        <ul class="course-details govuk-list">
+                            <li>
+                                @{
+                                    var fileSize = Math.Round(Decimal.Divide(Model.File.File.Details.Size, 1024), 0).ToString();
+                                }
+                                <span class="govuk-!-font-size-16 govuk-!-font-weight-bold">PDF document download, @fileSize.ToString() KB, @Model.PageCount page(s)</span>
+                            </li>
+                            <div class="ons-document-list__item-description">@Model.FileDescription</div>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
