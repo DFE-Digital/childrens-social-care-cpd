@@ -2,6 +2,13 @@
 resource "azurerm_private_dns_zone" "dnsprivatezone" {
   name                = "privatelink.azurewebsites.net"
   resource_group_name = data.azurerm_resource_group.rg.name
+
+  tags = {
+    Environment = lookup(data.azurerm_resource_group.rg.tags, "Environment", "")
+    Portfolio   = lookup(data.azurerm_resource_group.rg.tags, "Portfolio", "")
+    Product     = lookup(data.azurerm_resource_group.rg.tags, "Product", "")
+    Service     = lookup(data.azurerm_resource_group.rg.tags, "Service", "")
+  }
 }
 
 # Definition of the dns zone link
@@ -10,6 +17,13 @@ resource "azurerm_private_dns_zone_virtual_network_link" "dnszonelink" {
   resource_group_name   = data.azurerm_resource_group.rg.name
   private_dns_zone_name = azurerm_private_dns_zone.dnsprivatezone.name
   virtual_network_id    = data.azurerm_virtual_network.vnet1.id
+
+  tags = {
+    Environment = lookup(data.azurerm_resource_group.rg.tags, "Environment", "")
+    Portfolio   = lookup(data.azurerm_resource_group.rg.tags, "Portfolio", "")
+    Product     = lookup(data.azurerm_resource_group.rg.tags, "Product", "")
+    Service     = lookup(data.azurerm_resource_group.rg.tags, "Service", "")
+  }
 }
 
 # Definition of the private end point for the web app

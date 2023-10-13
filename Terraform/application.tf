@@ -152,4 +152,6 @@ resource "azurerm_monitor_autoscale_setting" "autoscale" {
       }
     }
   }
+
+  tags = data.azurerm_resource_group.rg.tags
 }
