@@ -23,6 +23,7 @@ public class EntityResolverTests
     [TestCase("detailedRole", typeof(DetailedRole))]
     [TestCase("heroBanner", typeof(HeroBanner))]
     [TestCase("imageCard", typeof(ImageCard))]
+    [TestCase("imageResource", typeof(ImageResource))]
     [TestCase("linkCard", typeof(LinkCard))]
     [TestCase("linkListCard", typeof(LinkListCard))]
     [TestCase("pdfFileResource", typeof(PdfFileResource))]
