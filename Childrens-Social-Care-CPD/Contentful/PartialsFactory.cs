@@ -25,6 +25,7 @@ public static class PartialsFactory
             DetailedPathway => "_DetailedPathway",
             HeroBanner => string.Empty,// skip - handled in specific layout section
             ImageCard => "_ImageCard",
+            ImageResource => "_ImageResource",
             LinkCard => "_LinkCard",
             LinkListCard => "_LinkListCard",
             PdfFileResource => "_PdfFileResource",

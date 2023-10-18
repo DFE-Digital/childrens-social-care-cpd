@@ -26,6 +26,7 @@ public class EntityResolver : IContentTypeResolver
             "detailedRole" => typeof(DetailedRole),
             "heroBanner" => typeof(HeroBanner),
             "imageCard" => typeof(ImageCard),
+            "imageResource" => typeof(ImageResource),
             "linkCard" => typeof(LinkCard),
             "linkListCard" => typeof(LinkListCard),
             "pdfFileResource" => typeof(PdfFileResource),
