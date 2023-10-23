@@ -1,0 +1,62 @@
+﻿@using Childrens_Social_Care_CPD.Configuration;
+
+@model IReadOnlyCollection<ConfigurationItemInfo>
+
+@{
+    Layout = "";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <style>
+            .normal {
+                background-color: green;
+                color: white;
+            }
+            .missing {
+                background-color: red;
+                color: white;
+            }
+            .extraneous {
+                
+                background-color: orange;
+                color: black;
+            }
+        </style>
+    </head>
+    <body>
+        <table>
+        @{
+            foreach (var item in Model)
+            {
+                if (item.Hidden) continue;
+                if (!item.HasValue && item.Extraneous) continue;
+
+                var className = "normal";
+                if (item.Extraneous && item.HasValue)
+                    className = "extraneous";
+
+                if (!item.Extraneous && !item.HasValue)
+                    className = "missing";
+
+                <tr class="@className">
+                    <td>@item.Name</td>
+                    <td>
+                        @{
+                            if (item.Obfuscated)
+                            {
+                                <i>@item.Value</i>
+                            }
+                            else
+                            {
+                                @item.Value
+                            }
+                        }
+                    </td>
+                </tr>
+            }
+        }
+        </table>
+    </body>
+</html>
