@@ -73,4 +73,20 @@ public partial class ConfigurationInformationTests
         // assert
         actual.Should().BeNull();
     }
+
+    [Test]
+    public void Sensitive_Values_Are_Obfuscated()
+    {
+        // arrange
+        var value = "sensitive value";
+        _applicationConfiguration.AzureEnvironment.Returns(ApplicationEnvironment.Production);
+        _applicationConfiguration.AppInsightsConnectionString.Returns(value);
+
+        // act
+        var sut = new ConfigurationInformation(_applicationConfiguration);
+        var actual = sut.ConfigurationInfo.Single(x => x.Name == "AppInsightsConnectionString");
+
+        // assert
+        actual.Value.Should().NotBe(value);
+    }
 }
