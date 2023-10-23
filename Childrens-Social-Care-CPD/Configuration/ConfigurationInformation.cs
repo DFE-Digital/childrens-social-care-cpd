@@ -46,9 +46,9 @@ public class ConfigurationInformation
         ConfigurationInfo = new ReadOnlyCollection<ConfigurationItemInfo>(list);
     }
 
-    private string GetObfuscatedValue(bool hasValue) => hasValue ? "Set" : "Not set";
+    private static string GetObfuscatedValue(bool hasValue) => hasValue ? "Set" : "Not set";
 
-    private string GetDisplayValue(RequiredForEnvironmentAttribute rule, bool hasValue, object value)
+    private static string GetDisplayValue(RequiredForEnvironmentAttribute rule, bool hasValue, object value)
     {
         if (rule == null) return GetObfuscatedValue(hasValue);
 
