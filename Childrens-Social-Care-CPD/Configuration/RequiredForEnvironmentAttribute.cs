@@ -18,13 +18,12 @@ public class RequiredForEnvironmentAttribute: Attribute
 
 public static class ObjectExtensions
 {
-    public static ReadOnlyDictionary<PropertyInfo, RequiredForEnvironmentAttribute> RulesForEnvironment(this object source, string environment)
+    public static ReadOnlyDictionary<PropertyInfo, RequiredForEnvironmentAttribute> RulesForEnvironment<T>(this T source, string environment)
     {
         ArgumentNullException.ThrowIfNull(source);
 
         var dict = new Dictionary<PropertyInfo, RequiredForEnvironmentAttribute>();
-        PropertyInfo[] properties = source.GetType().GetProperties();
-
+        PropertyInfo[] properties = typeof(T).GetProperties();
         foreach (PropertyInfo property in properties)
         {
             var attributes = property.GetCustomAttributes<RequiredForEnvironmentAttribute>(true);
