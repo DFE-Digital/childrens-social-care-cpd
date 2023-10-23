@@ -6,7 +6,6 @@
     var googleAnalyticsKey = applicationConfiguration.GoogleTagManagerKey;
     var googleAnalyticsUrl = string.Format("https://www.googletagmanager.com/gtag/js?id={0}", googleAnalyticsKey);
     var clarityProjectId = applicationConfiguration.ClarityProjectId;
-    var contentfulEnvironment = applicationConfiguration.ContentfulEnvironment;
     var pageName = (ViewBag.pageName ?? ViewBag.ContextModel?.Id) ?? "Homepage";
     pageName = string.IsNullOrEmpty(pageName) ? "HomePage" : pageName;
 
@@ -18,7 +17,8 @@
             gtag('js', new Date());
             gtag('config', '@googleAnalyticsKey');
         </script>
-        if (@contentfulEnvironment == AppEnvironment.test.ToString() || @contentfulEnvironment == AppEnvironment.prod.ToString())
+
+        if (applicationConfiguration.AzureEnvironment == ApplicationEnvironment.Test || applicationConfiguration.AzureEnvironment == ApplicationEnvironment.Production)
         {
             <script type="text/javascript">
                 (function(c,l,a,r,i,t,y){
