@@ -97,8 +97,7 @@ public class ApplicationControllerTests
         var controllerContext = Substitute.For<ControllerContext>();
         controllerContext.HttpContext = httpContext;
 
-        var mockConfig = new TestConfigurationMock();
-        var controller = new ApplicationController(mockConfig)
+        var controller = new ApplicationController(Substitute.For<IApplicationConfiguration>())
         {
             ControllerContext = controllerContext,
             TempData = Substitute.For<ITempDataDictionary>()
@@ -124,8 +123,7 @@ public class ApplicationControllerTests
         var controllerContext = Substitute.For<ControllerContext>();
         controllerContext.HttpContext = httpContext;
 
-        var mockConfig = new TestConfigurationMock();
-        var controller = new ApplicationController(mockConfig)
+        var controller = new ApplicationController(Substitute.For<IApplicationConfiguration>())
         {
             ControllerContext = controllerContext,
             TempData = Substitute.For<ITempDataDictionary>()
