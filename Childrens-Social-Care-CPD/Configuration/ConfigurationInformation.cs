@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Data;
 using System.Reflection;
 
 namespace Childrens_Social_Care_CPD.Configuration;
@@ -27,11 +28,7 @@ public class ConfigurationInformation
             var rule = propertyPair.Value;
             var value = property.GetValue(applicationConfiguration);
             var hasValue = HasValue(property, value);
-            var displayValue = rule == null
-                ? (hasValue ? "Set" : "Not set")
-                : (rule.Obfuscate
-                    ? (hasValue ? "Set" : "Not set")
-                    : value?.ToString() ?? null);
+            var displayValue = GetDisplayValue(rule, hasValue, value);
 
             // Don't add extraneous values that haven't been set
             if (rule == null && !hasValue) continue;
@@ -49,9 +46,29 @@ public class ConfigurationInformation
         ConfigurationInfo = new ReadOnlyCollection<ConfigurationItemInfo>(list);
     }
 
+    private string GetObfuscatedValue(bool hasValue) => hasValue ? "Set" : "Not set";
+
+    private string GetDisplayValue(RequiredForEnvironmentAttribute rule, bool hasValue, object value)
+    {
+        if (rule == null) return GetObfuscatedValue(hasValue);
+
+        return rule.Obfuscate
+            ? GetObfuscatedValue(hasValue)
+            : value?.ToString();
+    }
+
     private static bool HasValue(PropertyInfo propertyInfo, object value)
     {
-        if (propertyInfo.PropertyType != typeof(string)) return true;
-        return !string.IsNullOrEmpty(value as string);
+        if (value == null)
+        {
+            return false;
+        }
+
+        if (propertyInfo.PropertyType == typeof(string))
+        {
+            return !string.IsNullOrEmpty(value as string);
+        }
+
+        return true;
     }
 }
