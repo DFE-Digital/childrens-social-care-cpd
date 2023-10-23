@@ -27,7 +27,7 @@ public static class ObjectExtensions
         foreach (PropertyInfo property in properties)
         {
             var attributes = property.GetCustomAttributes<RequiredForEnvironmentAttribute>(true);
-            if (attributes.Count() == 0) continue;
+            if (!attributes.Any()) continue;
 
             var rule = RuleForCurrentEnvironment(environment, attributes);
             dict.Add(property, rule);
