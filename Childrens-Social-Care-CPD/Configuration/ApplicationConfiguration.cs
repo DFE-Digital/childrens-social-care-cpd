@@ -9,6 +9,7 @@ public class ApplicationConfiguration : IApplicationConfiguration
     public string ClarityProjectId => ValueOrStringEmpty("CPD_CLARITY");
     public string ContentfulDeliveryApiKey => ValueOrStringEmpty("CPD_DELIVERY_KEY");
     public string ContentfulEnvironment => ValueOrStringEmpty("CPD_CONTENTFUL_ENVIRONMENT");
+    public string ContentfulGraphqlConnectionString => $"https://graphql.contentful.com/content/v1/spaces/{ContentfulSpaceId}/environments/{ContentfulEnvironment}";
     public string ContentfulPreviewHost => "preview.contentful.com";
     public string ContentfulPreviewId => ValueOrStringEmpty("CPD_PREVIEW_KEY");
     public string ContentfulSpaceId => ValueOrStringEmpty("CPD_SPACE_ID");

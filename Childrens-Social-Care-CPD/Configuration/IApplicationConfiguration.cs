@@ -8,6 +8,7 @@ public interface IApplicationConfiguration
     string ClarityProjectId { get; }
     string ContentfulDeliveryApiKey { get; }
     string ContentfulEnvironment { get; }
+    string ContentfulGraphqlConnectionString { get; }
     string ContentfulPreviewHost { get; }
     string ContentfulPreviewId { get; }
     string ContentfulSpaceId { get; }
