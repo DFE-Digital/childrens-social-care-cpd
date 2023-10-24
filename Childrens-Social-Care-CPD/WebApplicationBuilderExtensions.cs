@@ -3,10 +3,14 @@ using Childrens_Social_Care_CPD.Contentful;
 using Childrens_Social_Care_CPD.Contentful.Renderers;
 using Contentful.AspNetCore;
 using Contentful.Core.Configuration;
+using GraphQL.Client.Abstractions.Websocket;
+using GraphQL.Client.Http;
+using GraphQL.Client.Serializer.SystemTextJson;
 using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 using Microsoft.Extensions.Logging.ApplicationInsights;
 using Microsoft.Extensions.Logging.AzureAppServices;
 using System.Diagnostics.CodeAnalysis;
+using System.Net.Http.Headers;
 
 namespace Childrens_Social_Care_CPD;
 
@@ -23,6 +27,13 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddSingleton<ICookieHelper, CookieHelper>();
         builder.Services.AddTransient<IFeaturesConfig, FeaturesConfig>();
         builder.Services.AddTransient<IFeaturesConfigUpdater, FeaturesConfigUpdater>();
+
+        builder.Services.AddScoped<IGraphQLWebSocketClient>(services => {
+            var config = services.GetService<IApplicationConfiguration>();
+            var client = new GraphQLHttpClient(config.ContentfulGraphqlConnectionString, new SystemTextJsonSerializer());
+            client.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", config.ContentfulDeliveryApiKey);
+            return client;
+        });
 
         // Register all the IRender<T> implementations in the assembly
         System.Reflection.Assembly.GetExecutingAssembly()
