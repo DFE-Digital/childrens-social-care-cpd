@@ -152,4 +152,44 @@ public class ResourcesRepositoryTests
         dynamic variables = request.Variables;
         (variables.skip as object).Should().Be(5);
     }
+
+    [Test]
+    public async Task FindByTags_Preview_Flag_Is_False_By_Default()
+    {
+        // arrange
+        var response = Substitute.For<GraphQLResponse<ResponseType>>();
+        response.Data = new ResponseType();
+        GraphQLRequest request = null;
+        _gqlClient.SendQueryAsync<ResponseType>(Arg.Do<GraphQLRequest>(value => request = value), Arg.Any<CancellationToken>()).Returns(response);
+
+        var sut = new ResourcesRepository(_applicationConfiguration, _contentfulClient, _gqlClient);
+
+        // act
+        await sut.FindByTags(Array.Empty<string>(), 5, 1, _cancellationTokenSource.Token);
+
+        // assert
+        dynamic variables = request.Variables;
+        (variables.preview as object).Should().Be(false);
+    }
+
+    [Test]
+    public async Task FindByTags_Sets_Preview_Flag()
+    {
+        // arrange
+        _applicationConfiguration.ContentfulPreviewId.Returns("foo");
+
+        var response = Substitute.For<GraphQLResponse<ResponseType>>();
+        response.Data = new ResponseType();
+        GraphQLRequest request = null;
+        _gqlClient.SendQueryAsync<ResponseType>(Arg.Do<GraphQLRequest>(value => request = value), Arg.Any<CancellationToken>()).Returns(response);
+
+        var sut = new ResourcesRepository(_applicationConfiguration, _contentfulClient, _gqlClient);
+
+        // act
+        await sut.FindByTags(Array.Empty<string>(), 5, 1, _cancellationTokenSource.Token);
+
+        // assert
+        dynamic variables = request.Variables;
+        (variables.preview as object).Should().Be(true);
+    }
 }

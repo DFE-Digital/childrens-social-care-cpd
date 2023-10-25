@@ -33,7 +33,9 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddScoped<IGraphQLWebSocketClient>(services => {
             var config = services.GetService<IApplicationConfiguration>();
             var client = new GraphQLHttpClient(config.ContentfulGraphqlConnectionString, new SystemTextJsonSerializer());
-            client.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", config.ContentfulDeliveryApiKey);
+            var key = string.IsNullOrEmpty(config.ContentfulPreviewId) ? config.ContentfulDeliveryApiKey : config.ContentfulPreviewId;
+            
+            client.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", key);
             return client;
         });
 
