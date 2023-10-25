@@ -1,8 +1,6 @@
-﻿using Childrens_Social_Care_CPD.Contentful;
-using Childrens_Social_Care_CPD.Contentful.Models;
+﻿using Childrens_Social_Care_CPD.DataAccess;
+using Childrens_Social_Care_CPD.GraphQL.Queries;
 using Childrens_Social_Care_CPD.Models;
-using Contentful.Core.Models;
-using Contentful.Core.Search;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Childrens_Social_Care_CPD.Controllers;
@@ -17,8 +15,9 @@ public class ResourcesQuery
 
 public partial class ResourcesController : Controller
 {
+    private const int PAGE_SIZE = 8;
     private readonly ILogger<ResourcesController> _logger;
-    private readonly ICpdContentfulClient _cpdClient;
+    private readonly IResourcesRepository _resourcesRepository;
     private static readonly List<TagInfo> _tagInfos = new() {
         new TagInfo("Type", "Case studies", "caseStudies"),
         new TagInfo("Type", "CPD", "cpd"),
@@ -30,10 +29,10 @@ public partial class ResourcesController : Controller
     };
     private static readonly IEnumerable<string> _allTags = _tagInfos.Select(x => x.TagName);
 
-    public ResourcesController(ILogger<ResourcesController> logger, ICpdContentfulClient cpdClient)
+    public ResourcesController(ILogger<ResourcesController> logger, IResourcesRepository resourcesRepository)
     {
         _logger = logger;
-        _cpdClient = cpdClient;
+        _resourcesRepository = resourcesRepository;
     }
 
     private IEnumerable<string> GetQueryTags(int[] tags)
@@ -52,55 +51,24 @@ public partial class ResourcesController : Controller
         return tags.Select(x => { return _tagInfos[x].TagName; });
     }
 
-    private Task<ContentfulCollection<Content>> FetchResourcesContentAsync(CancellationToken cancellationToken)
+    private static Tuple<int, int, int> CalculatePageStats(SearchResourcesByTags.ResponseType searchResults, int page)
     {
-        var queryBuilder = QueryBuilder<Content>.New
-            .ContentTypeIs("content")
-            .Include(10)
-            .FieldEquals("fields.id", "resources");
+        var totalResults = searchResults?.ResourceCollection?.Total ?? 0;
+        var totalPages = (int)Math.Ceiling((decimal)totalResults / PAGE_SIZE);
 
-        return _cpdClient.GetEntries(queryBuilder, cancellationToken);
-    }
-
-    private Task<ContentfulCollection<Resource>> FetchResourceSearchResultsAsync(int[] tags, CancellationToken cancellationToken, int skip = 0, int limit = 5)
-    {
-        var queryBuilder = QueryBuilder<Resource>.New
-            .ContentTypeIs("resource")
-            .Include(1)
-            .FieldIncludes("metadata.tags.sys.id", GetQueryTags(tags))
-            .OrderBy("-sys.createdAt")
-            .Skip(skip)
-            .Limit(limit);
-
-        return _cpdClient.GetEntries(queryBuilder, cancellationToken);
-    }
-
-    private async Task<Tuple<Content, ContentfulCollection<Resource>>> GetContentAsync(int[] tags, CancellationToken cancellationToken, int skip = 0, int limit = 5)
-    {
-        var pageContentTask = FetchResourcesContentAsync(cancellationToken);
-        var searchContentTask = FetchResourceSearchResultsAsync(tags, cancellationToken, skip, limit);
-
-        await Task.WhenAll(pageContentTask, searchContentTask);
-        return Tuple.Create(pageContentTask.Result?.FirstOrDefault(), searchContentTask.Result);
-    }
-
-    private static Tuple<int, int, int> CalculatePaging(ResourcesQuery query)
-    {
-        var pageSize = 8;
-        var page = Math.Max(query.Page, 1);
-        var skip = (page - 1) * pageSize;
-
-        return Tuple.Create(page, skip, pageSize);
+        return Tuple.Create(totalResults, totalPages, Math.Min(page, totalPages));
     }
 
     private static string GetPagingFormatString(int[] tags)
     {
-        var tagStrings = tags.Select(x => $"tags={x}");
-        var qsTags = string.Join("&", tagStrings);
+        if (tags.Any())
+        {
+            var tagStrings = tags.Select(x => $"tags={x}");
+            var allTags = string.Join("&", tagStrings);
+            return $"/resources?page={{0}}&{allTags}";
+        }
 
-        return string.IsNullOrEmpty(qsTags)
-            ? $"/resources?page={{0}}"
-            : $"/resources?page={{0}}&{qsTags}";
+        return $"/resources?page={{0}}";
     }
 
     [Route("resources", Name = "Resource")]
@@ -110,16 +78,27 @@ public partial class ResourcesController : Controller
         query ??= new ResourcesQuery();
         query.Tags ??= Array.Empty<int>();
 
-        (var page, var skip, var pageSize) = CalculatePaging(query);
-        (var pageContent, var contentCollection) = await GetContentAsync(query.Tags, cancellationToken, skip, pageSize);
-
-        var totalPages = (int)Math.Ceiling((decimal)contentCollection.Total / pageSize);
-        page = Math.Min(page, totalPages);
+        var page = Math.Max(query.Page, 1);
+        var skip = (page - 1) * PAGE_SIZE;
+        var pageContentTask = _resourcesRepository.FetchRootPage(cancellationToken);
+        var searchResults = await _resourcesRepository.FindByTags(GetQueryTags(query.Tags), skip, PAGE_SIZE, cancellationToken);
+        var pageContent = await pageContentTask;
+        (var totalResults, var totalPages, var currentPage) = CalculatePageStats(searchResults, page);
 
         var contextModel = new ContextModel(string.Empty, "Resources", "Resources", "Resources", true, preferencesSet);
         ViewData["ContextModel"] = contextModel;
 
-        var viewModel = new ResourcesListViewModel(pageContent, contentCollection, _tagInfos, query.Tags, page, totalPages, contentCollection.Total, GetPagingFormatString(query.Tags));
+        var viewModel = new ResourcesListViewModel(
+            pageContent,
+            searchResults?.ResourceCollection,
+            _tagInfos,
+            query.Tags,
+            currentPage,
+            totalPages,
+            totalResults,
+            GetPagingFormatString(query.Tags)
+        );
+
         return View(viewModel);
     }
 }

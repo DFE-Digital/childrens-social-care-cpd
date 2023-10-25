@@ -1,6 +1,7 @@
 ﻿using Childrens_Social_Care_CPD.Configuration;
 using Childrens_Social_Care_CPD.Contentful;
 using Childrens_Social_Care_CPD.Contentful.Renderers;
+using Childrens_Social_Care_CPD.DataAccess;
 using Contentful.AspNetCore;
 using Contentful.Core.Configuration;
 using GraphQL.Client.Abstractions.Websocket;
@@ -22,11 +23,12 @@ public static class WebApplicationBuilderExtensions
         ArgumentNullException.ThrowIfNull(builder);
         
         builder.Services.AddSingleton<IApplicationConfiguration, ApplicationConfiguration>();
-        builder.Services.AddTransient<IContentTypeResolver, EntityResolver>();
+        builder.Services.AddSingleton<IContentTypeResolver, EntityResolver>();
         builder.Services.AddTransient<ICpdContentfulClient, CpdContentfulClient>();
         builder.Services.AddSingleton<ICookieHelper, CookieHelper>();
         builder.Services.AddTransient<IFeaturesConfig, FeaturesConfig>();
         builder.Services.AddTransient<IFeaturesConfigUpdater, FeaturesConfigUpdater>();
+        builder.Services.AddTransient<IResourcesRepository,  ResourcesRepository>();
 
         builder.Services.AddScoped<IGraphQLWebSocketClient>(services => {
             var config = services.GetService<IApplicationConfiguration>();
