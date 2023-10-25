@@ -1,4 +1,5 @@
 ﻿using Childrens_Social_Care_CPD.Configuration;
+using Contentful.Core.Models.Management;
 using FluentAssertions;
 using NUnit.Framework;
 using System;
@@ -93,6 +94,21 @@ public class ApplicationConfigurationTests
 
         // assert
         actual.Should().Be(Value);
+    }
+
+    [Test]
+    public void Returns_ContentfulGraphqlConnectionString_Value()
+    {
+        // arrange
+        Environment.SetEnvironmentVariable("CPD_SPACE_ID", Value);
+        Environment.SetEnvironmentVariable("CPD_CONTENTFUL_ENVIRONMENT", Value);
+        var sut = new ApplicationConfiguration();
+
+        // act
+        var actual = sut.ContentfulGraphqlConnectionString;
+
+        // assert
+        actual.Should().Be($"https://graphql.contentful.com/content/v1/spaces/{Value}/environments/{Value}");
     }
 
     [Test]

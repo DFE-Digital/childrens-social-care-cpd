@@ -1,10 +1,7 @@
-﻿using Castle.Core.Logging;
-using Childrens_Social_Care_CPD.Contentful;
-using Childrens_Social_Care_CPD.Contentful.Models;
+﻿using Childrens_Social_Care_CPD.Contentful.Models;
 using Childrens_Social_Care_CPD.Controllers;
+using Childrens_Social_Care_CPD.DataAccess;
 using Childrens_Social_Care_CPD.Models;
-using Contentful.Core.Models;
-using Contentful.Core.Search;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,47 +9,43 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading;
 using System.Threading.Tasks;
+using static Childrens_Social_Care_CPD.GraphQL.Queries.SearchResourcesByTags;
 
 namespace Childrens_Social_Care_CPD_Tests.Controllers;
 
 public class ResourcesControllerTests
 {
+    private IResourcesRepository _resourcesRepository;
+
     private ResourcesController _resourcesController;
     private IRequestCookieCollection _cookies;
     private HttpContext _httpContext;
     private HttpRequest _httpRequest;
-    private ICpdContentfulClient _contentfulClient;
     private ILogger<ResourcesController> _logger;
     private CancellationTokenSource _cancellationTokenSource;
 
-    private void SetContent(Content content, ContentfulCollection<Resource> resourceCollection)
+    private void SetPageContent(Content content)
     {
-        resourceCollection ??= new ();
+        _resourcesRepository.FetchRootPage(Arg.Any<CancellationToken>()).Returns(content);
+    }
 
-        _contentfulClient
-            .GetEntries(Arg.Any<QueryBuilder<Resource>>(), Arg.Any<CancellationToken>())
-            .Returns(resourceCollection);
-
-        var contentCollection = new ContentfulCollection<Content>();
-
-        contentCollection.Items = content == null
-            ? new List<Content>()
-            : contentCollection.Items = new List<Content> { content };
-
-        _contentfulClient
-            .GetEntries(Arg.Any<QueryBuilder<Content>>(), Arg.Any<CancellationToken>())
-            .Returns(contentCollection);
-
-        _cancellationTokenSource = new CancellationTokenSource();
+    public void SetSearchResults(ResponseType content)
+    {
+        _resourcesRepository
+            .FindByTags(Arg.Any<IEnumerable<string>>(), Arg.Any<int>(), Arg.Any<int>(), Arg.Any<CancellationToken>())
+            .Returns(content);
     }
 
     [SetUp]
     public void SetUp()
     {
+        _cancellationTokenSource = new CancellationTokenSource();
+        _resourcesRepository = Substitute.For<IResourcesRepository>();
+
         _logger = Substitute.For<ILogger<ResourcesController>>();
         _cookies = Substitute.For<IRequestCookieCollection>();
         _httpContext = Substitute.For<HttpContext>();
@@ -63,9 +56,7 @@ public class ResourcesControllerTests
         _httpContext.Request.Returns(_httpRequest);
         controllerContext.HttpContext = _httpContext;
 
-        _contentfulClient = Substitute.For<ICpdContentfulClient>();
-
-        _resourcesController = new ResourcesController(_logger, _contentfulClient)
+        _resourcesController = new ResourcesController(_logger, _resourcesRepository)
         {
             ControllerContext = controllerContext,
             TempData = Substitute.For<ITempDataDictionary>()
@@ -75,9 +66,6 @@ public class ResourcesControllerTests
     [Test]
     public async Task Search_With_Empty_Query_Returns_View()
     {
-        // arrange
-        SetContent(null, null);
-
         // act
         var actual = await _resourcesController.Search(query: null, _cancellationTokenSource.Token) as ViewResult;
 
@@ -91,7 +79,7 @@ public class ResourcesControllerTests
     {
         // arrange
         var content = new Content();
-        SetContent(content, null);
+        SetPageContent(content);
 
         // act
         var actual = (await _resourcesController.Search(query: null, _cancellationTokenSource.Token) as ViewResult)?.Model as ResourcesListViewModel;
@@ -103,9 +91,6 @@ public class ResourcesControllerTests
     [Test]
     public async Task Search_Sets_The_ViewState_ContextModel()
     {
-        // arrange
-        SetContent(null, null);
-
         // act
         await _resourcesController.Search(null, _cancellationTokenSource.Token);
         var actual = _resourcesController.ViewData["ContextModel"] as ContextModel;
@@ -121,7 +106,6 @@ public class ResourcesControllerTests
     public async Task Search_Selected_Tags_Are_Passed_Into_View()
     {
         // arrange
-        SetContent(null, null);
         var query = new ResourcesQuery
         {
             Page = 1,
@@ -139,14 +123,20 @@ public class ResourcesControllerTests
     public async Task Search_Page_Set_To_Be_In_Bounds()
     {
         // arrange
-        SetContent(null, new ContentfulCollection<Resource> {
-            Items = new List<Resource> {
-                new Resource(),
-                new Resource(),
-                new Resource(),
-            },
-            Total = 3
-        });
+        var results = new ResponseType()
+        {
+            ResourceCollection = new ResourceCollection()
+            {
+                Total = 3,
+                Items = new Collection<SearchResult>()
+                {
+                    new SearchResult(),
+                    new SearchResult(),
+                    new SearchResult(),
+                }
+            }
+        };
+        SetSearchResults(results);
         var query = new ResourcesQuery
         {
             Page = 2,
@@ -164,7 +154,6 @@ public class ResourcesControllerTests
     public async Task Search_Invalid_Tags_Logs_Warning()
     {
         // arrange
-        SetContent(null, null);
         var tags = new int[] { -1 };
         var query = new ResourcesQuery
         {
