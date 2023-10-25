@@ -4,9 +4,7 @@ namespace Childrens_Social_Care_CPD.Configuration;
 
 public interface IApplicationConfiguration
 {
-    [RequiredForEnvironment(ApplicationEnvironment.Test, Hidden = false)]
-    [RequiredForEnvironment(ApplicationEnvironment.PreProduction, Hidden = false)]
-    [RequiredForEnvironment(ApplicationEnvironment.Production, Hidden = false)]
+    [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false)]
     string AppInsightsConnectionString { get; }
 
     [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false, Obfuscate = false)]
@@ -21,9 +19,10 @@ public interface IApplicationConfiguration
     [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false)]
     string ContentfulDeliveryApiKey { get; }
 
-    [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false)]
+    [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false, Obfuscate = false)]
     string ContentfulEnvironment { get; }
 
+    [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false)]
     string ContentfulGraphqlConnectionString { get; }
     
     [RequiredForEnvironment(ApplicationEnvironment.PreProduction, Hidden = false)]
@@ -36,7 +35,7 @@ public interface IApplicationConfiguration
     string ContentfulSpaceId { get; }
 
     [DefaultValue(false)]
-    [RequiredForEnvironment(ApplicationEnvironment.Integration, Hidden = false)]
+    [RequiredForEnvironment(ApplicationEnvironment.Integration, Hidden = false, Obfuscate = false)]
     bool DisableSecureCookies { get; }
 
     [DefaultValue(0)]

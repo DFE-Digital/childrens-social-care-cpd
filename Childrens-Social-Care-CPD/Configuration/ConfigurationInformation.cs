@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Data;
 using System.Reflection;
 
 namespace Childrens_Social_Care_CPD.Configuration;
@@ -66,7 +65,8 @@ public class ConfigurationInformation
 
         if (propertyInfo.PropertyType == typeof(string))
         {
-            return !string.IsNullOrEmpty(value as string);
+            var v = value as string;
+            return !(string.IsNullOrEmpty(v) || string.IsNullOrWhiteSpace(v));
         }
 
         return true;

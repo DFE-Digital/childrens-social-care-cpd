@@ -33,6 +33,7 @@ public partial class ConfigurationInformationTests
     }
 
     [TestCase("")]
+    [TestCase(" ")]
     [TestCase(null)]
     public void Missing_Values_Are_Detected(string value)
     {

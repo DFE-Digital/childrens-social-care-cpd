@@ -2,7 +2,16 @@
 
 public class ApplicationConfiguration : IApplicationConfiguration
 {
-    private static string ValueOrStringEmpty(string key) => Environment.GetEnvironmentVariable(key) ?? string.Empty;
+    private static string ValueOrStringEmpty(string key)
+    {
+        var value = Environment.GetEnvironmentVariable(key);
+        if (string.IsNullOrEmpty(value) || string.IsNullOrWhiteSpace(value))
+        {
+            return string.Empty;
+        }
+
+        return value;
+    }
     public string AppInsightsConnectionString => ValueOrStringEmpty("CPD_INSTRUMENTATION_CONNECTIONSTRING");
     public string AppVersion => ValueOrStringEmpty("VCS-TAG");
     public string AzureEnvironment => ValueOrStringEmpty("CPD_AZURE_ENVIRONMENT");
