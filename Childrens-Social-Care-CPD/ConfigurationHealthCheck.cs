@@ -1,6 +1,5 @@
 ﻿using Childrens_Social_Care_CPD.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using System.Xml.Linq;
 
 namespace Childrens_Social_Care_CPD;
 
