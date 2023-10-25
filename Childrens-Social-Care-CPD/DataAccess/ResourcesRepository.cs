@@ -9,8 +9,8 @@ namespace Childrens_Social_Care_CPD.DataAccess;
 
 public interface IResourcesRepository
 {
-    Task<Content> FetchRootPage(CancellationToken cancellationToken);
-    Task<SearchResourcesByTags.ResponseType> FindByTags(IEnumerable<string> tags, int skip, int take, CancellationToken cancellationToken);
+    Task<Content> FetchRootPage(CancellationToken cancellationToken = default);
+    Task<SearchResourcesByTags.ResponseType> FindByTags(IEnumerable<string> tags, int skip, int take, CancellationToken cancellationToken = default);
 }
 
 public class ResourcesRepository : IResourcesRepository
