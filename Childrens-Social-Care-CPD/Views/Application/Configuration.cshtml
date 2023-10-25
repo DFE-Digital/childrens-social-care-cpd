@@ -1,0 +1,74 @@
+﻿@using Childrens_Social_Care_CPD.Configuration;
+
+@model IReadOnlyCollection<ConfigurationItemInfo>
+
+@{
+    Layout = "";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Application Configuration</title>
+        <link href="~/css/application.min.css" rel="stylesheet" />
+        <style>
+            body {
+                padding: 20px;
+            }
+
+            .missing {
+                background-color: red;
+                color: white;
+            }
+
+            .extraneous {
+                background-color: orange;
+                color: black;
+            }
+        </style>
+        
+    </head>
+    <body class="govuk-template__body js-enabled">
+        <table class="govuk-table">
+            <caption class="govuk-table__caption govuk-table__caption--m">Application Configuration</caption>
+            <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header">Name</th>
+                    <th scope="col" class="govuk-table__header">Value</th>
+                </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+        @{
+            foreach (var item in Model)
+            {
+                if (item.Hidden) continue;
+                if (!item.HasValue && item.Extraneous) continue;
+
+                var className = "";
+                if (item.Extraneous && item.HasValue)
+                    className = "extraneous";
+
+                if (!item.Extraneous && !item.HasValue)
+                    className = "missing";
+
+                <tr class="govuk-table__row @className">
+                    <th scope="row" class="govuk-table__header">@item.Name</th>
+                    <td class="govuk-table__cell">
+                        @{
+                            if (item.Obfuscated)
+                            {
+                                <i>@item.Value</i>
+                            }
+                            else
+                            {
+                                @item.Value
+                            }
+                        }
+                    </td>
+                </tr>
+            }
+        }
+            </tbody>
+        </table>
+    </body>
+</html>
