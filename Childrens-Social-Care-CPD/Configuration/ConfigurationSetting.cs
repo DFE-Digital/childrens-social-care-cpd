@@ -5,7 +5,7 @@ public interface IConfigurationSetting
     bool IsSet { get; }
 }
 
-public interface IConfigurationSetting<T> : IConfigurationSetting
+public interface IConfigurationSetting<out T> : IConfigurationSetting
 {
     T Value { get; }
 }
@@ -18,8 +18,8 @@ public class ConfigurationSetting<T> : IConfigurationSetting<T>
 
     public ConfigurationSetting(Func<string> valueGetter, Func<string, T> valueParser, T defaultValue = default)
     {
-        ArgumentNullException.ThrowIfNull(valueGetter, nameof(valueGetter));
-        ArgumentNullException.ThrowIfNull(valueParser, nameof(valueParser));
+        ArgumentNullException.ThrowIfNull(valueGetter);
+        ArgumentNullException.ThrowIfNull(valueParser);
 
         _valueGetter = valueGetter;
         _valueParser = valueParser;
