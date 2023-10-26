@@ -21,7 +21,6 @@ public static class ContentfulConfiguration
         configuration["ContentfulOptions:SpaceId"] = applicationConfiguration.ContentfulSpaceId.Value;
         configuration["ContentfulOptions:DeliveryApiKey"] = applicationConfiguration.ContentfulDeliveryApiKey.Value;
 
-        var azureEnvironment = applicationConfiguration.AzureEnvironment;
         if (IsPreviewEnabled(applicationConfiguration))
         {
             configuration["ContentfulOptions:host"] = applicationConfiguration.ContentfulPreviewHost.Value;
