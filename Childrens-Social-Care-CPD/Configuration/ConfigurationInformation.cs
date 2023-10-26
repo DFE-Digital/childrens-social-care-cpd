@@ -27,18 +27,18 @@ public class ConfigurationInformation
             var rule = propertyPair.Value;
 
             var value = property.GetValue(applicationConfiguration);
-            var hasValue = HasValue(property, value);
-            var displayValue = GetDisplayValue(rule, hasValue, value);
+            var isSet = IsSet(value);
+            var displayValue = GetDisplayValue(rule, isSet, value);
 
             // Don't add extraneous values that haven't been set
-            if (rule == null && !hasValue) continue;
+            if (rule == null && !isSet) continue;
 
             list.Add(new ConfigurationItemInfo(
                 Name: property.Name,
                 Required: rule != null,
                 Obfuscated: rule?.Obfuscate ?? true,
                 Hidden: rule?.Hidden ?? false,
-                IsSet: hasValue,
+                IsSet: isSet,
                 Value: displayValue,
                 Extraneous: rule == null));
         }
@@ -57,20 +57,20 @@ public class ConfigurationInformation
             : value?.ToString();
     }
 
-    private static bool HasValue(PropertyInfo propertyInfo, object value)
+    private static bool IsSet(object value)
     {
         if (value == null)
         {
             return false;
         }
 
-        if (propertyInfo.PropertyType == typeof(string))
+        if (value is string)
         {
             var v = value as string;
             return !(string.IsNullOrEmpty(v) || string.IsNullOrWhiteSpace(v));
         }
 
-        if (propertyInfo.PropertyType.GetInterfaces().Any(x => x == typeof(IConfigurationSetting)))
+        if (value is IConfigurationSetting)
         {
             return (value as IConfigurationSetting).IsSet;
         }
