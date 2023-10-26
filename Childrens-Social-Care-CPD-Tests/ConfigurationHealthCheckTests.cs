@@ -1,10 +1,8 @@
 ﻿using Childrens_Social_Care_CPD;
-using Childrens_Social_Care_CPD.Configuration;
 using FluentAssertions;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
-using NSubstitute.Extensions;
 using NUnit.Framework;
 using System.Threading.Tasks;
 
@@ -13,20 +11,21 @@ namespace Childrens_Social_Care_CPD_Tests;
 public class ConfigurationHealthCheckTests
 {
     private ILogger<ConfigurationHealthCheck> _logger;
-    private IApplicationConfiguration _applicationConfiguration;
+    private MockApplicationConfiguration _applicationConfiguration;
 
     [SetUp]
     public void Setup()
     {
         _logger = Substitute.For<ILogger<ConfigurationHealthCheck>>();
-        _applicationConfiguration = Substitute.For<IApplicationConfiguration>();
+        _applicationConfiguration = new MockApplicationConfiguration();
     }
 
     [Test]
     public async Task Passes_When_All_Values_Set_And_Cookies_Are_Secured()
     {
         // arrange
-        _applicationConfiguration.ReturnsForAll("foo");
+        _applicationConfiguration.SetAllValid();
+        _applicationConfiguration._featurePollingInterval = "0";
         var sut = new ConfigurationHealthCheck(_logger, _applicationConfiguration);
 
         // act
@@ -40,8 +39,8 @@ public class ConfigurationHealthCheckTests
     public async Task Fails_When_Disable_Cookies_Is_True()
     {
         // arrange
-        _applicationConfiguration.ReturnsForAll("foo");
-        _applicationConfiguration.DisableSecureCookies.Returns(true);
+        _applicationConfiguration.SetAllValid();
+        _applicationConfiguration._disableSecureCookies = "true";
         var sut = new ConfigurationHealthCheck(_logger, _applicationConfiguration);
 
         // act

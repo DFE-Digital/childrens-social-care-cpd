@@ -5,46 +5,46 @@ namespace Childrens_Social_Care_CPD.Configuration;
 public interface IApplicationConfiguration
 {
     [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false)]
-    string AppInsightsConnectionString { get; }
+    IConfigurationSetting<string> AppInsightsConnectionString { get; }
 
     [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false, Obfuscate = false)]
-    string AppVersion { get; }
+    IConfigurationSetting<string> AppVersion { get; }
 
     [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false, Obfuscate = false)]
-    string AzureEnvironment { get; }
+    IConfigurationSetting<string> AzureEnvironment { get; }
 
     [RequiredForEnvironment(ApplicationEnvironment.Production, Hidden = false)]
-    string ClarityProjectId { get; }
+    IConfigurationSetting<string> ClarityProjectId { get; }
 
     [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false)]
-    string ContentfulDeliveryApiKey { get; }
+    IConfigurationSetting<string> ContentfulDeliveryApiKey { get; }
 
     [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false, Obfuscate = false)]
-    string ContentfulEnvironment { get; }
+    IConfigurationSetting<string> ContentfulEnvironment { get; }
 
     [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false)]
-    string ContentfulGraphqlConnectionString { get; }
-    
-    [RequiredForEnvironment(ApplicationEnvironment.PreProduction, Hidden = false)]
-    string ContentfulPreviewHost { get; }
+    IConfigurationSetting<string> ContentfulGraphqlConnectionString { get; }
 
     [RequiredForEnvironment(ApplicationEnvironment.PreProduction, Hidden = false)]
-    string ContentfulPreviewId { get; }
+    IConfigurationSetting<string> ContentfulPreviewHost { get; }
+
+    [RequiredForEnvironment(ApplicationEnvironment.PreProduction, Hidden = false)]
+    IConfigurationSetting<string> ContentfulPreviewId { get; }
 
     [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false)]
-    string ContentfulSpaceId { get; }
+    IConfigurationSetting<string> ContentfulSpaceId { get; }
 
     [DefaultValue(false)]
     [RequiredForEnvironment(ApplicationEnvironment.Integration, Hidden = false, Obfuscate = false)]
-    bool DisableSecureCookies { get; }
+    IConfigurationSetting<bool> DisableSecureCookies { get; }
 
     [DefaultValue(0)]
     [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false, Obfuscate = false)]
-    int FeaturePollingInterval { get; }
+    IConfigurationSetting<int> FeaturePollingInterval { get; }
 
     [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false, Obfuscate = false)]
-    string GitHash { get; }
+    IConfigurationSetting<string> GitHash { get; }
 
     [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false)]
-    string GoogleTagManagerKey { get; }
+    IConfigurationSetting<string> GoogleTagManagerKey { get; }
 }

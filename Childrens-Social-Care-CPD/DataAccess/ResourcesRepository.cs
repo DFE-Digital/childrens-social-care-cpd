@@ -23,7 +23,7 @@ public class ResourcesRepository : IResourcesRepository
     {
         _cpdClient = cpdClient;
         _gqlClient = gqlClient;
-        _isPreview = !string.IsNullOrEmpty(applicationConfiguration.ContentfulPreviewId);
+        _isPreview = ContentfulConfiguration.IsPreviewEnabled(applicationConfiguration);
     }
 
     public Task<Content> FetchRootPage(CancellationToken cancellationToken = default)

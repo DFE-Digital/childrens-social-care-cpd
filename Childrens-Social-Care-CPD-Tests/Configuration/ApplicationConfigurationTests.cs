@@ -47,7 +47,7 @@ public class ApplicationConfigurationTests
         var sut = new ApplicationConfiguration();
 
         // act
-        var actual = sut.AzureEnvironment;
+        var actual = sut.AzureEnvironment.Value;
 
         // assert
         actual.Should().Be(Value);
@@ -61,7 +61,7 @@ public class ApplicationConfigurationTests
         var sut = new ApplicationConfiguration();
 
         // act
-        var actual = sut.ClarityProjectId;
+        var actual = sut.ClarityProjectId.Value;
 
         // assert
         actual.Should().Be(Value);
@@ -76,7 +76,7 @@ public class ApplicationConfigurationTests
         var sut = new ApplicationConfiguration();
 
         // act
-        var actual = sut.ContentfulDeliveryApiKey;
+        var actual = sut.ContentfulDeliveryApiKey.Value;
 
         // assert
         actual.Should().Be(Value);
@@ -90,7 +90,7 @@ public class ApplicationConfigurationTests
         var sut = new ApplicationConfiguration();
 
         // act
-        var actual = sut.ContentfulEnvironment;
+        var actual = sut.ContentfulEnvironment.Value;
 
         // assert
         actual.Should().Be(Value);
@@ -105,7 +105,7 @@ public class ApplicationConfigurationTests
         var sut = new ApplicationConfiguration();
 
         // act
-        var actual = sut.ContentfulGraphqlConnectionString;
+        var actual = sut.ContentfulGraphqlConnectionString.Value;
 
         // assert
         actual.Should().Be($"https://graphql.contentful.com/content/v1/spaces/{Value}/environments/{Value}");
@@ -119,7 +119,7 @@ public class ApplicationConfigurationTests
         var sut = new ApplicationConfiguration();
 
         // act
-        var actual = sut.ContentfulPreviewHost;
+        var actual = sut.ContentfulPreviewHost.Value;
 
         // assert
         actual.Should().Be(value);
@@ -133,7 +133,7 @@ public class ApplicationConfigurationTests
         var sut = new ApplicationConfiguration();
 
         // act
-        var actual = sut.ContentfulPreviewId;
+        var actual = sut.ContentfulPreviewId.Value;
 
         // assert
         actual.Should().Be(Value);
@@ -147,7 +147,7 @@ public class ApplicationConfigurationTests
         var sut = new ApplicationConfiguration();
 
         // act
-        var actual = sut.ContentfulSpaceId;
+        var actual = sut.ContentfulSpaceId.Value;
 
         // assert
         actual.Should().Be(Value);
@@ -161,7 +161,7 @@ public class ApplicationConfigurationTests
         var sut = new ApplicationConfiguration();
 
         // act
-        var actual = sut.GoogleTagManagerKey;
+        var actual = sut.GoogleTagManagerKey.Value;
 
         // assert
         actual.Should().Be(Value);
@@ -175,7 +175,7 @@ public class ApplicationConfigurationTests
         var sut = new ApplicationConfiguration();
 
         // act
-        var actual = sut.AppInsightsConnectionString;
+        var actual = sut.AppInsightsConnectionString.Value;
 
         // assert
         actual.Should().Be(Value);
@@ -189,7 +189,7 @@ public class ApplicationConfigurationTests
         var sut = new ApplicationConfiguration();
 
         // act
-        var actual = sut.GitHash;
+        var actual = sut.GitHash.Value;
 
         // assert
         actual.Should().Be(Value);
@@ -203,7 +203,7 @@ public class ApplicationConfigurationTests
         var sut = new ApplicationConfiguration();
 
         // act
-        var actual = sut.DisableSecureCookies;
+        var actual = sut.DisableSecureCookies.Value;
 
         // assert
         actual.Should().Be(false);
@@ -217,7 +217,7 @@ public class ApplicationConfigurationTests
         var sut = new ApplicationConfiguration();
 
         // act
-        var actual = sut.AppVersion;
+        var actual = sut.AppVersion.Value;
 
         // assert
         actual.Should().Be(Value);
@@ -231,7 +231,7 @@ public class ApplicationConfigurationTests
         var sut = new ApplicationConfiguration();
 
         // act
-        var actual = sut.FeaturePollingInterval;
+        var actual = sut.FeaturePollingInterval.Value;
 
         // assert
         actual.Should().Be(10000);
@@ -244,7 +244,7 @@ public class ApplicationConfigurationTests
         var sut = new ApplicationConfiguration();
 
         // act
-        var actual = sut.FeaturePollingInterval;
+        var actual = sut.FeaturePollingInterval.Value;
 
         // assert
         actual.Should().Be(0);
@@ -257,7 +257,7 @@ public class ApplicationConfigurationTests
         var sut = new ApplicationConfiguration();
 
         // act
-        var actual = sut.AzureEnvironment;
+        var actual = sut.AzureEnvironment.Value;
 
         // assert
         actual.Should().Be(string.Empty);
@@ -270,7 +270,7 @@ public class ApplicationConfigurationTests
         var sut = new ApplicationConfiguration();
 
         // act
-        var actual = sut.ClarityProjectId;
+        var actual = sut.ClarityProjectId.Value;
 
         // assert
         actual.Should().Be(string.Empty);
@@ -283,7 +283,7 @@ public class ApplicationConfigurationTests
         var sut = new ApplicationConfiguration();
 
         // act
-        var actual = sut.ContentfulDeliveryApiKey;
+        var actual = sut.ContentfulDeliveryApiKey.Value;
 
         // assert
         actual.Should().Be(string.Empty);
@@ -296,7 +296,7 @@ public class ApplicationConfigurationTests
         var sut = new ApplicationConfiguration();
 
         // act
-        var actual = sut.ContentfulEnvironment;
+        var actual = sut.ContentfulEnvironment.Value;
 
         // assert
         actual.Should().Be(string.Empty);
@@ -309,7 +309,7 @@ public class ApplicationConfigurationTests
         var sut = new ApplicationConfiguration();
 
         // act
-        var actual = sut.ContentfulPreviewId;
+        var actual = sut.ContentfulPreviewId.Value;
 
         // assert
         actual.Should().Be(string.Empty);
@@ -322,7 +322,7 @@ public class ApplicationConfigurationTests
         var sut = new ApplicationConfiguration();
 
         // act
-        var actual = sut.ContentfulSpaceId;
+        var actual = sut.ContentfulSpaceId.Value;
 
         // assert
         actual.Should().Be(string.Empty);
@@ -335,7 +335,7 @@ public class ApplicationConfigurationTests
         var sut = new ApplicationConfiguration();
 
         // act
-        var actual = sut.GoogleTagManagerKey;
+        var actual = sut.GoogleTagManagerKey.Value;
 
         // assert
         actual.Should().Be(string.Empty);
@@ -348,7 +348,7 @@ public class ApplicationConfigurationTests
         var sut = new ApplicationConfiguration();
 
         // act
-        var actual = sut.AppInsightsConnectionString;
+        var actual = sut.AppInsightsConnectionString.Value;
 
         // assert
         actual.Should().Be(string.Empty);
@@ -361,7 +361,7 @@ public class ApplicationConfigurationTests
         var sut = new ApplicationConfiguration();
 
         // act
-        var actual = sut.GitHash;
+        var actual = sut.GitHash.Value;
 
         // assert
         actual.Should().Be(string.Empty);
@@ -374,7 +374,7 @@ public class ApplicationConfigurationTests
         var sut = new ApplicationConfiguration();
 
         // act
-        var actual = sut.DisableSecureCookies;
+        var actual = sut.DisableSecureCookies.Value;
 
         // assert
         actual.Should().Be(false);
@@ -387,7 +387,7 @@ public class ApplicationConfigurationTests
         var sut = new ApplicationConfiguration();
 
         // act
-        var actual = sut.AppVersion;
+        var actual = sut.AppVersion.Value;
 
         // assert
         actual.Should().Be(string.Empty);

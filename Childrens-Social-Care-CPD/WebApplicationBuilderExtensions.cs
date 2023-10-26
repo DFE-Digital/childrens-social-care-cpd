@@ -32,8 +32,8 @@ public static class WebApplicationBuilderExtensions
 
         builder.Services.AddScoped<IGraphQLWebSocketClient>(services => {
             var config = services.GetService<IApplicationConfiguration>();
-            var client = new GraphQLHttpClient(config.ContentfulGraphqlConnectionString, new SystemTextJsonSerializer());
-            var key = string.IsNullOrEmpty(config.ContentfulPreviewId) ? config.ContentfulDeliveryApiKey : config.ContentfulPreviewId;
+            var client = new GraphQLHttpClient(config.ContentfulGraphqlConnectionString.Value, new SystemTextJsonSerializer());
+            var key = ContentfulConfiguration.IsPreviewEnabled(config) ? config.ContentfulPreviewId.Value : config.ContentfulDeliveryApiKey.Value;
             
             client.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", key);
             return client;
@@ -41,14 +41,14 @@ public static class WebApplicationBuilderExtensions
 
         // Register all the IRender<T> implementations in the assembly
         System.Reflection.Assembly.GetExecutingAssembly()
-        .GetTypes()
-        .Where(item => item.GetInterfaces().Where(i => i.IsGenericType).Any(i => i.GetGenericTypeDefinition() == typeof(IRenderer<>)) && !item.IsAbstract && !item.IsInterface)
-        .ToList()
-        .ForEach(assignedTypes =>
-        {
-            var serviceType = assignedTypes.GetInterfaces().First(i => i.GetGenericTypeDefinition() == typeof(IRenderer<>));
-            builder.Services.AddScoped(serviceType, assignedTypes);
-        });
+            .GetTypes()
+            .Where(item => item.GetInterfaces().Where(i => i.IsGenericType).Any(i => i.GetGenericTypeDefinition() == typeof(IRenderer<>)) && !item.IsAbstract && !item.IsInterface)
+            .ToList()
+            .ForEach(assignedTypes =>
+            {
+                var serviceType = assignedTypes.GetInterfaces().First(i => i.GetGenericTypeDefinition() == typeof(IRenderer<>));
+                builder.Services.AddScoped(serviceType, assignedTypes);
+            });
     }
 
     public static void AddFeatures(this WebApplicationBuilder builder)
@@ -75,8 +75,8 @@ public static class WebApplicationBuilderExtensions
 
         var options = new ApplicationInsightsServiceOptions
         {
-            ApplicationVersion = applicationConfiguration.AppVersion,
-            ConnectionString = applicationConfiguration.AppInsightsConnectionString,
+            ApplicationVersion = applicationConfiguration.AppVersion.Value,
+            ConnectionString = applicationConfiguration.AppInsightsConnectionString.Value,
         };
 
         builder.Services.AddApplicationInsightsTelemetry(options: options);
