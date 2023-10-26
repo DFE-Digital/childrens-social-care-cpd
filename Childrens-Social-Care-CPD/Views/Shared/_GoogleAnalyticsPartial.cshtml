@@ -3,7 +3,7 @@
 @inject IApplicationConfiguration applicationConfiguration
 
 @{
-    var googleAnalyticsKey = applicationConfiguration.GoogleTagManagerKey;
+    var googleAnalyticsKey = applicationConfiguration.GoogleTagManagerKey.Value;
     var googleAnalyticsUrl = string.Format("https://www.googletagmanager.com/gtag/js?id={0}", googleAnalyticsKey);
     var clarityProjectId = applicationConfiguration.ClarityProjectId;
     var pageName = (ViewBag.pageName ?? ViewBag.ContextModel?.Id) ?? "Homepage";
@@ -18,7 +18,7 @@
             gtag('config', '@googleAnalyticsKey');
         </script>
 
-        if (applicationConfiguration.AzureEnvironment == ApplicationEnvironment.Test || applicationConfiguration.AzureEnvironment == ApplicationEnvironment.Production)
+        if (applicationConfiguration.AzureEnvironment.Value == ApplicationEnvironment.Test || applicationConfiguration.AzureEnvironment.Value == ApplicationEnvironment.Production)
         {
             <script type="text/javascript">
                 (function(c,l,a,r,i,t,y){

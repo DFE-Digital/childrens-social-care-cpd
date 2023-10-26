@@ -2,11 +2,9 @@
 using Childrens_Social_Care_CPD.Contentful;
 using Childrens_Social_Care_CPD.Contentful.Models;
 using Childrens_Social_Care_CPD.DataAccess;
-using Childrens_Social_Care_CPD.GraphQL.Queries;
 using Contentful.Core.Models;
 using Contentful.Core.Search;
 using FluentAssertions;
-using GraphQL.Client.Abstractions;
 using GraphQL;
 using GraphQL.Client.Abstractions.Websocket;
 using NSubstitute;
@@ -17,8 +15,6 @@ using System.Threading.Tasks;
 using static Childrens_Social_Care_CPD.GraphQL.Queries.SearchResourcesByTags;
 using System.Collections.ObjectModel;
 using System;
-using Newtonsoft.Json.Linq;
-using NSubstitute.Core;
 
 namespace Childrens_Social_Care_CPD_Tests.DataAccess;
 
@@ -38,7 +34,8 @@ public class ResourcesRepositoryTests
         _gqlClient = Substitute.For<IGraphQLWebSocketClient>();
 
         // By default we want the preview flag set to false
-        _applicationConfiguration.ContentfulPreviewId.Returns(string.Empty);
+        _applicationConfiguration.AzureEnvironment.Returns(new StringConfigSetting(() => ApplicationEnvironment.Development));
+        _applicationConfiguration.ContentfulEnvironment.Returns(new StringConfigSetting(() => ApplicationEnvironment.Development));
     }
 
     [Test]
@@ -176,7 +173,7 @@ public class ResourcesRepositoryTests
     public async Task FindByTags_Sets_Preview_Flag()
     {
         // arrange
-        _applicationConfiguration.ContentfulPreviewId.Returns("foo");
+        _applicationConfiguration.ContentfulEnvironment.Returns(new StringConfigSetting(() => ApplicationEnvironment.PreProduction));
 
         var response = Substitute.For<GraphQLResponse<ResponseType>>();
         response.Data = new ResponseType();

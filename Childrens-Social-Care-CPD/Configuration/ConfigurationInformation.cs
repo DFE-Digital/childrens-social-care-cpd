@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace Childrens_Social_Care_CPD.Configuration;
 
-public record ConfigurationItemInfo(string Name, bool Required, bool Obfuscated, bool Hidden, bool HasValue, string Value, bool Extraneous);
+public record ConfigurationItemInfo(string Name, bool Required, bool Obfuscated, bool Hidden, bool IsSet, string Value, bool Extraneous);
 
 public class ConfigurationInformation
 {
@@ -12,7 +12,7 @@ public class ConfigurationInformation
 
     public ConfigurationInformation(IApplicationConfiguration applicationConfiguration)
     {
-        Environment = applicationConfiguration.AzureEnvironment;
+        Environment = applicationConfiguration.AzureEnvironment.Value;
         ExtractInfo(applicationConfiguration);
     }
 
@@ -25,6 +25,7 @@ public class ConfigurationInformation
         {
             var property = propertyPair.Key;
             var rule = propertyPair.Value;
+
             var value = property.GetValue(applicationConfiguration);
             var hasValue = HasValue(property, value);
             var displayValue = GetDisplayValue(rule, hasValue, value);
@@ -37,7 +38,7 @@ public class ConfigurationInformation
                 Required: rule != null,
                 Obfuscated: rule?.Obfuscate ?? true,
                 Hidden: rule?.Hidden ?? false,
-                HasValue: hasValue,
+                IsSet: hasValue,
                 Value: displayValue,
                 Extraneous: rule == null));
         }
@@ -67,6 +68,11 @@ public class ConfigurationInformation
         {
             var v = value as string;
             return !(string.IsNullOrEmpty(v) || string.IsNullOrWhiteSpace(v));
+        }
+
+        if (propertyInfo.PropertyType.GetInterfaces().Any(x => x == typeof(IConfigurationSetting)))
+        {
+            return (value as IConfigurationSetting).IsSet;
         }
 
         return true;

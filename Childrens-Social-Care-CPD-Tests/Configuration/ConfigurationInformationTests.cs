@@ -12,24 +12,24 @@ public partial class ConfigurationInformationTests
 
     [SetUp]
     public void Setup()
-    { 
+    {
         _applicationConfiguration = Substitute.For<IApplicationConfiguration>();
-        _applicationConfiguration.AzureEnvironment.Returns("dev");
+        _applicationConfiguration.AzureEnvironment.Value.Returns(ApplicationEnvironment.Development);
     }
 
     [Test]
     public void Required_Values_Are_Detected()
     {
         // arrange
-        _applicationConfiguration.AppVersion.Returns("foo");
-        
+        _applicationConfiguration.AppVersion.Returns(new StringConfigSetting(() => "foo"));
+
         // act
         var sut = new ConfigurationInformation(_applicationConfiguration);
         var actual = sut.ConfigurationInfo.Single(x => x.Name == "AppVersion");
 
         // assert
         actual.Required.Should().BeTrue();
-        actual.HasValue.Should().BeTrue();
+        actual.IsSet.Should().BeTrue();
     }
 
     [TestCase("")]
@@ -38,7 +38,7 @@ public partial class ConfigurationInformationTests
     public void Missing_Values_Are_Detected(string value)
     {
         // arrange
-        _applicationConfiguration.AppVersion.Returns(value);
+        _applicationConfiguration.AppVersion.Returns(new StringConfigSetting(() => value));
 
         // act
         var sut = new ConfigurationInformation(_applicationConfiguration);
@@ -46,14 +46,14 @@ public partial class ConfigurationInformationTests
 
         // assert
         actual.Required.Should().BeTrue();
-        actual.HasValue.Should().BeFalse();
+        actual.IsSet.Should().BeFalse();
     }
 
     [Test]
     public void Extraneous_Values_Are_Detected()
     {
         // arrange
-        _applicationConfiguration.ClarityProjectId.Returns("foo");
+        _applicationConfiguration.ClarityProjectId.Returns(new StringConfigSetting(() => "foo"));
 
         // act
         var sut = new ConfigurationInformation(_applicationConfiguration);
@@ -80,8 +80,8 @@ public partial class ConfigurationInformationTests
     {
         // arrange
         var value = "sensitive value";
-        _applicationConfiguration.AzureEnvironment.Returns(ApplicationEnvironment.Production);
-        _applicationConfiguration.AppInsightsConnectionString.Returns(value);
+        _applicationConfiguration.AzureEnvironment.Returns(new StringConfigSetting(() => ApplicationEnvironment.Production));
+        _applicationConfiguration.AppInsightsConnectionString.Returns(new StringConfigSetting(() => value));
 
         // act
         var sut = new ConfigurationInformation(_applicationConfiguration);
