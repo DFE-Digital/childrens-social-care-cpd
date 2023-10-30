@@ -87,7 +87,7 @@ public class CookieHelperTests
     public void Disables_Secure_Cookies_On_Config()
     {
         // arrange
-        _applicationConfiguration.DisableSecureCookies.Returns(false);
+        _applicationConfiguration.DisableSecureCookies.Returns(new BooleanConfigSetting(() => "false"));
         var httpContext = Substitute.For<HttpContext>();
         CookieOptions cookieOptions = null;
         httpContext.Response.Cookies.Append(CookieHelper.ANALYTICSCOOKIENAME, CookieHelper.ANALYTICSCOOKIEACCEPTED, Arg.Do<CookieOptions>(x => cookieOptions = x));

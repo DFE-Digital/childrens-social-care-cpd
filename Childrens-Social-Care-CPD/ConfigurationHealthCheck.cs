@@ -1,6 +1,5 @@
 ﻿using Childrens_Social_Care_CPD.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using System.Xml.Linq;
 
 namespace Childrens_Social_Care_CPD;
 
@@ -22,7 +21,7 @@ public class ConfigurationHealthCheck : IHealthCheck
         
         foreach (var item in configurationInformation.ConfigurationInfo)
         {
-            if (item.Required && !item.HasValue)
+            if (item.Required && !item.IsSet)
             {
                 _logger.LogError("Configuration setting {propertyName} does not have a value", item.Name);
                 healthy = false;
@@ -30,7 +29,7 @@ public class ConfigurationHealthCheck : IHealthCheck
         }
 
         // Specific check as this is super important.
-        if (_applicationConfiguration.DisableSecureCookies)
+        if (_applicationConfiguration.DisableSecureCookies.Value)
         {
             _logger.LogError("DisableSecureCookies should not be enabled for standard environments");
             healthy = false;

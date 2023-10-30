@@ -42,13 +42,13 @@
             foreach (var item in Model)
             {
                 if (item.Hidden) continue;
-                if (!item.HasValue && item.Extraneous) continue;
+                if (!item.IsSet && item.Extraneous) continue;
 
                 var className = "";
-                if (item.Extraneous && item.HasValue)
+                if (item.Extraneous && item.IsSet)
                     className = "extraneous";
 
-                if (!item.Extraneous && !item.HasValue)
+                if (!item.Extraneous && !item.IsSet)
                     className = "missing";
 
                 <tr class="govuk-table__row @className">
