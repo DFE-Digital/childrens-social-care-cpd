@@ -20,10 +20,10 @@ public class ApplicationController : Controller
     {
         var applicationInfo = new ApplicationInfo()
         {
-            Environment = _applicationConfiguration.AzureEnvironment,
-            ContentfulEnvironment = _applicationConfiguration.ContentfulEnvironment,
-            GitShortHash = _applicationConfiguration.GitHash,
-            Version = _applicationConfiguration.AppVersion,
+            Environment = _applicationConfiguration.AzureEnvironment.Value,
+            ContentfulEnvironment = _applicationConfiguration.ContentfulEnvironment.Value,
+            GitShortHash = _applicationConfiguration.GitHash.Value,
+            Version = _applicationConfiguration.AppVersion.Value,
         };
 
         return Json(applicationInfo);
@@ -38,7 +38,7 @@ public class ApplicationController : Controller
         if (Request.Headers.Accept == MediaTypeNames.Application.Json)
         {
             var info = configurationInformation.ConfigurationInfo.Where(x => !x.Hidden);
-            return Json(info.Select(x => new { x.Name, x.Extraneous, x.HasValue, x.Value, x.Obfuscated }));
+            return Json(info.Select(x => new { x.Name, x.Extraneous, x.IsSet, x.Value, x.Obfuscated }));
         }
 
         return View(configurationInformation.ConfigurationInfo);

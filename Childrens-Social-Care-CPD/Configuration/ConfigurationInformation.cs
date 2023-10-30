@@ -1,10 +1,9 @@
 ﻿using System.Collections.ObjectModel;
-using System.Data;
 using System.Reflection;
 
 namespace Childrens_Social_Care_CPD.Configuration;
 
-public record ConfigurationItemInfo(string Name, bool Required, bool Obfuscated, bool Hidden, bool HasValue, string Value, bool Extraneous);
+public record ConfigurationItemInfo(string Name, bool Required, bool Obfuscated, bool Hidden, bool IsSet, string Value, bool Extraneous);
 
 public class ConfigurationInformation
 {
@@ -13,7 +12,7 @@ public class ConfigurationInformation
 
     public ConfigurationInformation(IApplicationConfiguration applicationConfiguration)
     {
-        Environment = applicationConfiguration.AzureEnvironment;
+        Environment = applicationConfiguration.AzureEnvironment.Value;
         ExtractInfo(applicationConfiguration);
     }
 
@@ -26,19 +25,20 @@ public class ConfigurationInformation
         {
             var property = propertyPair.Key;
             var rule = propertyPair.Value;
+
             var value = property.GetValue(applicationConfiguration);
-            var hasValue = HasValue(property, value);
-            var displayValue = GetDisplayValue(rule, hasValue, value);
+            var isSet = IsSet(value);
+            var displayValue = GetDisplayValue(rule, isSet, value);
 
             // Don't add extraneous values that haven't been set
-            if (rule == null && !hasValue) continue;
+            if (rule == null && !isSet) continue;
 
             list.Add(new ConfigurationItemInfo(
                 Name: property.Name,
                 Required: rule != null,
                 Obfuscated: rule?.Obfuscate ?? true,
                 Hidden: rule?.Hidden ?? false,
-                HasValue: hasValue,
+                IsSet: isSet,
                 Value: displayValue,
                 Extraneous: rule == null));
         }
@@ -57,16 +57,22 @@ public class ConfigurationInformation
             : value?.ToString();
     }
 
-    private static bool HasValue(PropertyInfo propertyInfo, object value)
+    private static bool IsSet(object value)
     {
         if (value == null)
         {
             return false;
         }
 
-        if (propertyInfo.PropertyType == typeof(string))
+        if (value is string)
         {
-            return !string.IsNullOrEmpty(value as string);
+            var v = value as string;
+            return !(string.IsNullOrEmpty(v) || string.IsNullOrWhiteSpace(v));
+        }
+
+        if (value is IConfigurationSetting)
+        {
+            return (value as IConfigurationSetting).IsSet;
         }
 
         return true;

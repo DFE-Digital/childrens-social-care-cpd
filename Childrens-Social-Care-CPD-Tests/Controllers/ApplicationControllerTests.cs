@@ -32,7 +32,7 @@ public class ApplicationControllerTests
     {
         // arrange
         var value = "foo";
-        _applicationConfiguration.ContentfulEnvironment.Returns(value);
+        _applicationConfiguration.ContentfulEnvironment.Value.Returns(value);
 
         // act
         var actual = _controller.AppInfo().Value as ApplicationInfo;
@@ -46,7 +46,7 @@ public class ApplicationControllerTests
     {
         // arrange
         var value = "foo";
-        _applicationConfiguration.AzureEnvironment.Returns(value);
+        _applicationConfiguration.AzureEnvironment.Value.Returns(value);
 
         // act
         var actual = _controller.AppInfo().Value as ApplicationInfo;
@@ -60,7 +60,7 @@ public class ApplicationControllerTests
     {
         // arrange
         var value = "foo";
-        _applicationConfiguration.GitHash.Returns(value);
+        _applicationConfiguration.GitHash.Value.Returns(value);
 
         // act
         var actual = _controller.AppInfo().Value as ApplicationInfo;
@@ -74,7 +74,7 @@ public class ApplicationControllerTests
     {
         // arrange
         var value = "foo";
-        _applicationConfiguration.AppVersion.Returns(value);
+        _applicationConfiguration.AppVersion.Value.Returns(value);
 
         // act
         var actual = _controller.AppInfo().Value as ApplicationInfo;

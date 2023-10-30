@@ -23,7 +23,7 @@ public class CookieHelper: ICookieHelper
             HttpOnly = true,
             SameSite = SameSiteMode.Strict,
             IsEssential = true,
-            Secure = !_applicationConfiguration.DisableSecureCookies
+            Secure = !_applicationConfiguration.DisableSecureCookies.Value
         };
 
         switch (state)

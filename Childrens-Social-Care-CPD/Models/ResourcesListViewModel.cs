@@ -1,12 +1,12 @@
 ﻿using Childrens_Social_Care_CPD.Contentful.Models;
 using Childrens_Social_Care_CPD.Controllers;
-using Contentful.Core.Models;
+using Childrens_Social_Care_CPD.GraphQL.Queries;
 
 namespace Childrens_Social_Care_CPD.Models;
 
 public record ResourcesListViewModel(
     Content Content,
-    ContentfulCollection<Resource> SearchResults,
+    SearchResourcesByTags.ResourceCollection Results,
     IEnumerable<TagInfo> TagInfos,
     int[] SelectedTags,
     int CurrentPage = 0,
