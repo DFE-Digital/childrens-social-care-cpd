@@ -57,7 +57,7 @@ public class GdsFilterTagHelper : TagHelper
     {
         var h2 = new TagBuilder("h2");
         h2.AddCssClass("govuk-heading-m");
-        h2.InnerHtml.Append("Filter");
+        h2.InnerHtml.Append("Filters");
 
         var div = new TagBuilder("div");
         div.AddCssClass("govuk-summary-card__title-wrapper");
