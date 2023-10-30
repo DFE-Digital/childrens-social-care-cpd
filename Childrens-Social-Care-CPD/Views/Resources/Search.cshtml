@@ -15,88 +15,26 @@
     @{
         var tagsDict = new Dictionary<int, TagInfo>(Model.TagInfos.Select((tagInfo, index) => KeyValuePair.Create(index, tagInfo)));
     }
-    <form method="get" asp-route="Resources">
-        <div class="moj-filter">
-            <div class="moj-filter__header">
-                <div class="moj-filter__header-title">
-                    <h2 class="govuk-heading-m">Filter</h2>
-                </div>
-                <div class="moj-filter__header-action">
-                </div>
-            </div>
 
-            <div class="moj-filter__content">
-
-            @if (Model.SelectedTags != null && Model.SelectedTags.Length > 0)
+    <gds-filter clear-filters-uri="/resources">
+        @{
+            var groupsx = tagsDict.GroupBy(kvp => kvp.Value.Category);
+            var index = 1; // gov uk js requires starting at 1 for this control
+            foreach (var group in groupsx)
             {
-                <div class="moj-filter__selected">
-                    <div class="moj-filter__selected-heading">
-                        <div class="moj-filter__heading-title">
-                            <h2 class="govuk-heading-m">Selected filters</h2>
-                        </div>
-                        <div class="moj-filter__heading-action">
-                            <p><a class="govuk-link govuk-link--no-visited-state" href="/resources">Clear filters</a></p>
-                        </div>
-                    </div>
-
-                    @{
-                        var selected = tagsDict.Where(kvp => Model.SelectedTags.Contains(kvp.Key));
-                        var grouped = selected.GroupBy(x => x.Value.Category);
-
-                        foreach (var group in grouped)
-                        {
-                            <h3 class="govuk-heading-s govuk-!-margin-bottom-0">@group.Key</h3>
-                            <ul class="moj-filter-tags">
-                                @foreach (var value in group.Select(x => x.Value))
-                                {
-                                    // build link for all other selected
-                                    var tags = selected.Where(x => x.Value.TagName != value.TagName).Select(x => $"tags={x.Key}");
-                                    var qsTags = $"&{string.Join("&", tags)}".Trim('&');
-                                    var url = $"/resources?{qsTags}";
-
-                                    <li><a class="moj-filter__tag" href="@url"><span class="govuk-visually-hidden">Remove this filter</span>@value.DisplayName</a></li>
-                                }
-                            </ul>
-                        }
+                <gds-filter-category title="@group.Key" index="@index">
+                    @foreach (var kvp in group)
+                    {
+                        var isChecked = Model.SelectedTags.Contains(kvp.Key);
+                        <gds-filter-checkbox id="tag-@kvp.Key" name="tags" checked="@isChecked" value="@kvp.Key">
+                            @kvp.Value.DisplayName
+                        </gds-filter-checkbox>
                     }
-                </div>
+                </gds-filter-category>
+                index++;
             }
-                
-                <div class="moj-filter__options">
-                    <button class="govuk-button" data-module="govuk-button" data-test-id="submit-button">
-                        Apply filters
-                    </button>
-
-                    @{
-                        var groups = tagsDict.GroupBy(kvp => kvp.Value.Category);
-                        foreach (var group in groups)
-                        {
-                            <div class="govuk-form-group">
-                                <fieldset class="govuk-fieldset">
-                                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                                        @group.Key
-                                    </legend>
-                                    <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
-
-                                    @foreach (var kvp in group)
-                                    {
-                                        var isChecked = Model.SelectedTags.Contains(kvp.Key);
-                                        <div class="govuk-checkboxes__item">
-                                            <input class="govuk-checkboxes__input" id="tag-@kvp.Key" name="tags" type="checkbox" value="@kvp.Key" checked="@isChecked">
-                                                <label class="govuk-label govuk-checkboxes__label" for="tag-@kvp.Key">
-                                                @kvp.Value.DisplayName
-                                            </label>
-                                        </div>
-                                    }
-                                    </div>
-                                </fieldset>
-                            </div>
-                        }
-                    }
-                </div>
-            </div>
-        </div>
-    </form>
+        }
+    </gds-filter>
 }
 
 @{
