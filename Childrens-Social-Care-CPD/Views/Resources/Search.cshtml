@@ -1,7 +1,10 @@
-﻿@using Childrens_Social_Care_CPD.Controllers
+﻿@using Childrens_Social_Care_CPD.Configuration
+@using Childrens_Social_Care_CPD.Core.Resources;
 @using Microsoft.AspNetCore.Html
 
 @model ResourcesListViewModel
+
+@inject IFeaturesConfig featuresConfig
 
 @{
     Layout = "_SearchPageLayout";
@@ -12,11 +15,33 @@
 }
 
 @section SearchCriteria {
-    @{
-        var tagsDict = new Dictionary<int, TagInfo>(Model.TagInfos.Select((tagInfo, index) => KeyValuePair.Create(index, tagInfo)));
-    }
 
-    <gds-filter clear-filters-uri="/resources">
+    @if (featuresConfig.IsEnabled(Features.ResourcesUseDynamicTags))
+    {
+        <gds-filter clear-filters-uri="/resources">
+            @{
+                var groups = Model.TagInfos.GroupBy(x => x.Category);
+                var index = 1; // gov uk js requires starting at 1 for this control
+                foreach (var group in groups)
+                {
+                    <gds-filter-category title="@group.Key" index="@index">
+                        @foreach (var tagInfo in group)
+                        {
+                            var isChecked = Model.SelectedTags.Contains(tagInfo.TagName);
+                            <gds-filter-checkbox id="tag-@tagInfo.TagName" name="tags" checked="@isChecked" value="@tagInfo.TagName">
+                                @tagInfo.DisplayName
+                            </gds-filter-checkbox>
+                        }
+                    </gds-filter-category>
+                    index++;
+                }
+            }
+        </gds-filter>
+    }
+    else
+    {
+        var tagsDict = new Dictionary<int, TagInfo>(Model.TagInfos.Select((tagInfo, index) => KeyValuePair.Create(index, tagInfo)));
+        <gds-filter clear-filters-uri="/resources">
         @{
             var groupsx = tagsDict.GroupBy(kvp => kvp.Value.Category);
             var index = 1; // gov uk js requires starting at 1 for this control
@@ -25,7 +50,7 @@
                 <gds-filter-category title="@group.Key" index="@index">
                     @foreach (var kvp in group)
                     {
-                        var isChecked = Model.SelectedTags.Contains(kvp.Key);
+                        var isChecked = Model.SelectedTags.Contains(kvp.Key.ToString());
                         <gds-filter-checkbox id="tag-@kvp.Key" name="tags" checked="@isChecked" value="@kvp.Key">
                             @kvp.Value.DisplayName
                         </gds-filter-checkbox>
@@ -34,7 +59,8 @@
                 index++;
             }
         }
-    </gds-filter>
+        </gds-filter>
+    }
 }
 
 @{
