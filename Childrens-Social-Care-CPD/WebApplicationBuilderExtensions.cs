@@ -9,6 +9,7 @@ using GraphQL.Client.Abstractions.Websocket;
 using GraphQL.Client.Http;
 using GraphQL.Client.Serializer.SystemTextJson;
 using Microsoft.ApplicationInsights.AspNetCore.Extensions;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.ApplicationInsights;
 using Microsoft.Extensions.Logging.AzureAppServices;
 using System.Diagnostics.CodeAnalysis;
@@ -29,8 +30,18 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddSingleton<ICookieHelper, CookieHelper>();
         builder.Services.AddTransient<IFeaturesConfig, FeaturesConfig>();
         builder.Services.AddTransient<IFeaturesConfigUpdater, FeaturesConfigUpdater>();
-        builder.Services.AddTransient<IResourcesRepository,  ResourcesRepository>();
-        builder.Services.AddScoped<IResourcesSearchStrategyFactory, ResourcesSearchStrategyFactory>();
+        builder.Services.AddTransient<IResourcesRepository, ResourcesRepository>();
+        
+        // Resources search feature
+        builder.Services.AddScoped<ResourcesDynamicTagsSearchStategy>();
+        builder.Services.AddScoped<ResourcesFixedTagsSearchStrategy>();
+        builder.Services.AddScoped<IResourcesSearchStrategy>(services =>
+        {
+            var featuresConfig = services.GetService<IFeaturesConfig>();
+            return featuresConfig.IsEnabled(Features.ResourcesUseDynamicTags)
+                ? services.GetService<ResourcesDynamicTagsSearchStategy>()
+                : services.GetService<ResourcesFixedTagsSearchStrategy>();
+        });
 
         builder.Services.AddScoped<IGraphQLWebSocketClient>(services => {
             var config = services.GetService<IApplicationConfiguration>();

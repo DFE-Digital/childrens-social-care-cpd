@@ -14,7 +14,7 @@ namespace Childrens_Social_Care_CPD_Tests.Controllers;
 
 public class ResourcesControllerTests
 {
-    private IResourcesSearchStrategyFactory _searchStrategyFactory;
+    private IResourcesSearchStrategy _searchStrategy;
     private ResourcesController _resourcesController;
     private IRequestCookieCollection _cookies;
     private HttpContext _httpContext;
@@ -31,9 +31,9 @@ public class ResourcesControllerTests
         _httpRequest.Cookies.Returns(_cookies);
         _httpContext.Request.Returns(_httpRequest);
         controllerContext.HttpContext = _httpContext;
-        
-        _searchStrategyFactory = Substitute.For<IResourcesSearchStrategyFactory>();
-        _resourcesController = new ResourcesController(_searchStrategyFactory)
+
+        _searchStrategy = Substitute.For<IResourcesSearchStrategy>();
+        _resourcesController = new ResourcesController(_searchStrategy)
         {
             ControllerContext = controllerContext,
             TempData = Substitute.For<ITempDataDictionary>()
@@ -44,10 +44,8 @@ public class ResourcesControllerTests
     public async Task Search_Returns_Strategy_Model()
     {
         // arrange
-        var strategy = Substitute.For<IResourcesSearchStrategy>();
-        _searchStrategyFactory.Create().Returns(strategy);
         var model = new ResourcesListViewModel(null, null, null, null);
-        strategy.SearchAsync(Arg.Any<ResourcesQuery>(), Arg.Any<CancellationToken>()).Returns(model);
+        _searchStrategy.SearchAsync(Arg.Any<ResourcesQuery>(), Arg.Any<CancellationToken>()).Returns(model);
 
         // act
         var actual = await _resourcesController.Search(query: null) as ViewResult;
