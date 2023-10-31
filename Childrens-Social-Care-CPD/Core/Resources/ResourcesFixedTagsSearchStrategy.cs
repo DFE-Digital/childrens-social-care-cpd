@@ -34,7 +34,7 @@ internal class ResourcesFixedTagsSearchStrategy : IResourcesSearchStrategy
             return _allTags;
         }
 
-        if (tags.Any(x => x < 0 || x >= _tagInfos.Count))
+        if (Array.Exists(tags, x => x < 0 || x >= _tagInfos.Count))
         {
             _logger.LogWarning("Passed tag values do not match known values: {Passed Values}", tags);
             return Array.Empty<string>();
