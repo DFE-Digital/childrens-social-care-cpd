@@ -54,7 +54,7 @@ public class ResourcesRepository : IResourcesRepository
         var allTags = await _cpdClient.GetTags();
 
         var tags = allTags
-            .Where(x => _tagPrefixes.Any(prefix => x.Name.StartsWith($"{prefix}:")))
+            .Where(x => Array.Exists(_tagPrefixes, prefix => x.Name.StartsWith($"{prefix}:")))
             .Select(x =>
             {
                 var i = x.Name.IndexOf(':');
