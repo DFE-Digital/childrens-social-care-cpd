@@ -17,23 +17,23 @@ public class ResourcesQuery
 
 public class ResourcesController : Controller
 {
-    private readonly IResourcesSearchStrategyFactory _factory;
+    private readonly IResourcesSearchStrategy _strategy;
 
-    public ResourcesController(IResourcesSearchStrategyFactory factory)
+    public ResourcesController(IResourcesSearchStrategy strategy)
     {
-        _factory = factory;
+        ArgumentNullException.ThrowIfNull(strategy);
+
+        _strategy = strategy;
     }
 
     [Route("resources", Name = "Resource")]
     [HttpGet]
     public async Task<IActionResult> Search([FromQuery] ResourcesQuery query, bool preferencesSet = false, CancellationToken cancellationToken = default)
     {
-        var strategy = _factory.Create();
-
         var contextModel = new ContextModel(string.Empty, "Resources", "Resources", "Resources", true, preferencesSet);
         ViewData["ContextModel"] = contextModel;
 
-        var viewModel = await strategy.SearchAsync(query, cancellationToken);
+        var viewModel = await _strategy.SearchAsync(query, cancellationToken);
         return View(viewModel);
     }
 }
