@@ -1,4 +1,5 @@
-﻿using Childrens_Social_Care_CPD.Controllers;
+﻿using Childrens_Social_Care_CPD.Configuration;
+using Childrens_Social_Care_CPD.Controllers;
 using Childrens_Social_Care_CPD.Core.Resources;
 using Childrens_Social_Care_CPD.Models;
 using FluentAssertions;
@@ -14,6 +15,7 @@ namespace Childrens_Social_Care_CPD_Tests.Controllers;
 
 public class ResourcesControllerTests
 {
+    private IFeaturesConfig _featuresConfig;
     private IResourcesSearchStrategy _searchStrategy;
     private ResourcesController _resourcesController;
     private IRequestCookieCollection _cookies;
@@ -32,8 +34,10 @@ public class ResourcesControllerTests
         _httpContext.Request.Returns(_httpRequest);
         controllerContext.HttpContext = _httpContext;
 
+        _featuresConfig = Substitute.For<IFeaturesConfig>();
+        _featuresConfig.IsEnabled(Features.ResourcesAndLearning).Returns(true);
         _searchStrategy = Substitute.For<IResourcesSearchStrategy>();
-        _resourcesController = new ResourcesController(_searchStrategy)
+        _resourcesController = new ResourcesController(_featuresConfig, _searchStrategy)
         {
             ControllerContext = controllerContext,
             TempData = Substitute.For<ITempDataDictionary>()
@@ -52,5 +56,20 @@ public class ResourcesControllerTests
 
         // assert
         actual.Model.Should().Be(model);
+    }
+
+    [Test]
+    public async Task Disabling_Resources_Feature_Returns_NotFoundResult()
+    {
+        // arrange
+        _featuresConfig.IsEnabled(Features.ResourcesAndLearning).Returns(false);
+        var model = new ResourcesListViewModel(null, null, null, null);
+        _searchStrategy.SearchAsync(Arg.Any<ResourcesQuery>(), Arg.Any<CancellationToken>()).Returns(model);
+
+        // act
+        var actual = await _resourcesController.Search(query: null);
+
+        // assert
+        actual.Should().BeOfType<NotFoundResult>();
     }
 }
