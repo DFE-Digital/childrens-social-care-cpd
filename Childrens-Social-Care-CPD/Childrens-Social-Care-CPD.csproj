@@ -11,6 +11,7 @@
   </PropertyGroup>
 	<ItemGroup>
 		<InternalsVisibleTo Include="Childrens-Social-Care-CPD-Tests" />
+		<InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
 	</ItemGroup>
   <ItemGroup>
     <PackageReference Include="contentful.aspnetcore" Version="7.3.0" />
