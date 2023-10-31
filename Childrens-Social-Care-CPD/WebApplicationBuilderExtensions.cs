@@ -1,6 +1,7 @@
 ﻿using Childrens_Social_Care_CPD.Configuration;
 using Childrens_Social_Care_CPD.Contentful;
 using Childrens_Social_Care_CPD.Contentful.Renderers;
+using Childrens_Social_Care_CPD.Core.Resources;
 using Childrens_Social_Care_CPD.DataAccess;
 using Contentful.AspNetCore;
 using Contentful.Core.Configuration;
@@ -29,6 +30,7 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddTransient<IFeaturesConfig, FeaturesConfig>();
         builder.Services.AddTransient<IFeaturesConfigUpdater, FeaturesConfigUpdater>();
         builder.Services.AddTransient<IResourcesRepository,  ResourcesRepository>();
+        builder.Services.AddScoped<IResourcesSearchStrategyFactory, ResourcesSearchStrategyFactory>();
 
         builder.Services.AddScoped<IGraphQLWebSocketClient>(services => {
             var config = services.GetService<IApplicationConfiguration>();
