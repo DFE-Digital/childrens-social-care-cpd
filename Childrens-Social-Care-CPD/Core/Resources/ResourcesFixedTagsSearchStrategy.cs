@@ -57,10 +57,10 @@ internal class ResourcesFixedTagsSearchStrategy : IResourcesSearchStrategy
         {
             var tagStrings = tags.Select(x => $"tags={x}");
             var allTags = string.Join("&", tagStrings);
-            return $"/resources?page={{0}}&{allTags}";
+            return $"/resources-learning?page={{0}}&{allTags}";
         }
 
-        return $"/resources?page={{0}}";
+        return $"/resources-learning?page={{0}}";
     }
 
     public async Task<ResourcesListViewModel> SearchAsync(ResourcesQuery query, CancellationToken cancellationToken = default)
