@@ -11,7 +11,7 @@ test.describe('Header', () => {
         ['Career stages', '/career-stages'],
         ['Development programmes', '/development-programmes'],
         ['Explore roles', '/explore-roles'],
-        ['Resources', '/training-resources'],
+        ['Resources and learning', '/resources-learning'],
     ]
 
     for (const link of links) {

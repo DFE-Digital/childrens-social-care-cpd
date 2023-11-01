@@ -18,7 +18,7 @@
 
     @if (featuresConfig.IsEnabled(Features.ResourcesUseDynamicTags))
     {
-        <gds-filter clear-filters-uri="/resources">
+        <gds-filter clear-filters-uri="/resources-learning">
             @{
                 var groups = Model.TagInfos.GroupBy(x => x.Category);
                 var index = 1; // gov uk js requires starting at 1 for this control
@@ -41,7 +41,7 @@
     else
     {
         var tagsDict = new Dictionary<int, TagInfo>(Model.TagInfos.Select((tagInfo, index) => KeyValuePair.Create(index, tagInfo)));
-        <gds-filter clear-filters-uri="/resources">
+        <gds-filter clear-filters-uri="/resources-learning">
         @{
             var groupsx = tagsDict.GroupBy(kvp => kvp.Value.Category);
             var index = 1; // gov uk js requires starting at 1 for this control
@@ -65,7 +65,7 @@
 
 @{
     var resultString = Model.TotalResults == 1 ? "result" : "results";
-    <h2 class="gem-c-heading govuk-heading-s govuk-!-margin-bottom-2">
+    <h2 class="gem-c-heading govuk-heading-s govuk-!-margin-bottom-2" data-testid="results-count">
         @Model.TotalResults @resultString
     </h2>
     <hr />
