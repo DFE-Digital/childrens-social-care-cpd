@@ -28,7 +28,7 @@ public class ResourcesController : Controller
         _strategy = strategy;
     }
 
-    [Route("resources", Name = "Resource")]
+    [Route("resources-learning")]
     [HttpGet]
     public async Task<IActionResult> Search([FromQuery] ResourcesQuery query, bool preferencesSet = false, CancellationToken cancellationToken = default)
     {

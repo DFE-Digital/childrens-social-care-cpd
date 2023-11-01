@@ -4,7 +4,7 @@
 @model SearchResourcesByTags.SearchResult
 
 <div>
-    <h2><a href="@Model.LinkedFrom.ContentCollection.Items.First().Id">@Model.Title</a></h2>
+    <h2><a href="/@Model.LinkedFrom.ContentCollection.Items.First().Id">@Model.Title</a></h2>
     <p>@Model.SearchSummary</p>
     <ul class="govuk-list govuk-body-s" style="display:flex; gap:15px; flex-flow:row">
         <li>From: @Model.From</li>
