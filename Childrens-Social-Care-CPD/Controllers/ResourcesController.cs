@@ -46,7 +46,7 @@ public class ResourcesController : Controller
             return NotFound();
         }
 
-        if (!string.IsNullOrEmpty(query.Order))
+        if (query is not null && !string.IsNullOrEmpty(query.Order))
         {
             query.SortOrder = query.Order.ToEnum<ResourceSortOrder>();
         }
