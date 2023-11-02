@@ -32,7 +32,7 @@ public class ResourcesDynamicTagsSearchStategyTests
     private void SetSearchResults(ResponseType content)
     {
         _resourcesRepository
-            .FindByTagsAsync(Arg.Any<IEnumerable<string>>(), Arg.Any<int>(), Arg.Any<int>(), Arg.Any<CancellationToken>())
+            .FindByTagsAsync(Arg.Any<IEnumerable<string>>(), Arg.Any<int>(), Arg.Any<int>(), Arg.Any<ResourceSortOrder>(), Arg.Any<CancellationToken>())
             .Returns(content);
     }
 
@@ -147,10 +147,10 @@ public class ResourcesDynamicTagsSearchStategyTests
             Page = 2,
             Tags = tags
         };
-        await _resourcesRepository.FindByTagsAsync(Arg.Do<IEnumerable<string>>(value => passedTags = value), Arg.Any<int>(), Arg.Any<int>(), Arg.Any<CancellationToken>());
+        await _resourcesRepository.FindByTagsAsync(Arg.Do<IEnumerable<string>>(value => passedTags = value), Arg.Any<int>(), Arg.Any<int>(), Arg.Any<ResourceSortOrder>(), Arg.Any<CancellationToken>());
 
         // act
-        var actual = await _sut.SearchAsync(query);
+        await _sut.SearchAsync(query);
 
         //assert
         passedTags.Should().NotContain(value);

@@ -1,5 +1,6 @@
 ﻿using Childrens_Social_Care_CPD.Controllers;
 using Childrens_Social_Care_CPD.DataAccess;
+using Childrens_Social_Care_CPD.Extensions;
 using Childrens_Social_Care_CPD.GraphQL.Queries;
 using Childrens_Social_Care_CPD.Models;
 
@@ -71,7 +72,7 @@ internal class ResourcesFixedTagsSearchStrategy : IResourcesSearchStrategy
         var page = Math.Max(query.Page, 1);
         var skip = (page - 1) * PAGE_SIZE;
         var pageContentTask = _resourcesRepository.FetchRootPageAsync(cancellationToken);
-        var searchResults = await _resourcesRepository.FindByTagsAsync(GetQueryTags(queryTags), skip, PAGE_SIZE, cancellationToken);
+        var searchResults = await _resourcesRepository.FindByTagsAsync(GetQueryTags(queryTags), skip, PAGE_SIZE, query.SortOrder, cancellationToken);
         var pageContent = await pageContentTask;
         (var totalResults, var totalPages, var currentPage) = CalculatePageStats(searchResults, page);
 
@@ -80,6 +81,7 @@ internal class ResourcesFixedTagsSearchStrategy : IResourcesSearchStrategy
             searchResults?.ResourceCollection,
             _tagInfos,
             queryTags.Select(x => x.ToString()),
+            (int)query.SortOrder,
             currentPage,
             totalPages,
             totalResults,
