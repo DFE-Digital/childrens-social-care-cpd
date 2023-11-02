@@ -35,6 +35,8 @@
 
             // Update the hidden input value with the selected label
             hiddenInput.value = selectedValue;
+
+            sourceDiv.submit();
         });
 
         
