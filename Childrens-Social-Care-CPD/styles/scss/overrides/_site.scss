@@ -193,3 +193,48 @@
 .ons-document-list__item--full-width {
     padding: 2rem 0;
 }
+
+/* Pagination and sort stack */
+.pagination-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Vertically center the elements */
+}
+
+/* Media query for mobile view (adjust the max-width as needed) */
+/*.pagination-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;*/ /* Vertically center the elements */
+/*}*/
+
+@media (max-width: 768px) {
+    .pagination-container {
+        flex-direction: column;
+        align-items: flex-start; /* Align elements to the left */
+    }
+
+    .column-half {
+        margin-bottom: 30px; /* Add a gap between the elements */
+        align-self: flex-start; /* Align individual columns to the left */
+    }
+}
+
+/* Sort options */
+.sort-options .sort-options__label {
+    padding-right: 5px;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+@media (min-width: 40.0625em) {
+    .sort-options .sort-options__label {
+        font-size: 16px;
+    }
+}
+
+@media (min-width: 40.0625em) {
+    .sort-options .sort-options__select {
+        font-size: 16px;
+    }
+}

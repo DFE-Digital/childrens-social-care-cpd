@@ -74,14 +74,15 @@
 
 @{
     var resultString = Model.TotalResults == 1 ? "result" : "results";
-
-    <div class="dfe-grid-column-one-half">
-        <h2 class="gem-c-heading govuk-heading-s govuk-!-margin-bottom-2" data-testid="results-count">
-            @Model.TotalResults @resultString
-        </h2>
-    </div>
-    <div id="sort-order-placeholder" class="dfe-grid-column-one-half">
+    <div class="grid-row pagination-container">
+        <div class="column-half">
+            <h2 class="gem-c-heading govuk-heading-s govuk-!-margin-bottom-2" data-testid="results-count">
+                @Model.TotalResults @resultString
+            </h2>
+        </div>
+        <div id="sort-order-placeholder" class="column-half">
         
+        </div>
     </div>
     
     <hr />
