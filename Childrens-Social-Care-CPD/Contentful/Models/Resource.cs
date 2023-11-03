@@ -8,8 +8,8 @@ public class Resource : IContent
     public string Id { get; set; }
     public string Title { get; set; }
     public string From { get; set; }
-    public List<string> Type { get; set; }
     public string Summary { get; set; }
+    public string Label { get; set; }
     public string SearchSummary { get; set; }
     public List<IContent> Items { get; set; }
 

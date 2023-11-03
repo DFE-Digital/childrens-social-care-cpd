@@ -24,7 +24,7 @@ public class SearchResourcesByTags
                   title
                   from
                   searchSummary
-                  type
+                  label
                   sys {
                     publishedAt
                     firstPublishedAt
@@ -69,7 +69,7 @@ public class SearchResourcesByTags
         public string Title { get; set; }
         public string From { get; set; }
         public string SearchSummary { get; set; }
-        public ICollection<string> Type { get; set; }
+        public string Label { get; set; }
         public PublishedInfo Sys { get; set; }
         public LinkedFromContentCollection LinkedFrom { get; set; }
     }
