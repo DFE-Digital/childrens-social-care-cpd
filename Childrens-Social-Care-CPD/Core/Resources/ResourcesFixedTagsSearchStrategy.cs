@@ -76,12 +76,19 @@ internal class ResourcesFixedTagsSearchStrategy : IResourcesSearchStrategy
         var pageContent = await pageContentTask;
         (var totalResults, var totalPages, var currentPage) = CalculatePageStats(searchResults, page);
 
+        int startRecord = 0;
+        if (totalResults > 0)
+        {
+            startRecord = ((currentPage * PAGE_SIZE) - PAGE_SIZE) + 1;
+        }
+
         return new ResourcesListViewModel(
             pageContent,
             searchResults?.ResourceCollection,
             _tagInfos,
             queryTags.Select(x => x.ToString()),
             (int)query.SortOrder,
+            startRecord,
             currentPage,
             totalPages,
             totalResults,
