@@ -19,6 +19,7 @@ public record ResourcesListViewModel(
     IEnumerable<TagInfo> TagInfos,
     IEnumerable<string> SelectedTags,
     int SortOrder = 0,
+    int StartRecord = 0,
     int CurrentPage = 0,
     int TotalPages = 0,
     int TotalResults = 0,
