@@ -104,8 +104,6 @@
         
         </div>
     </div>
-    
-    // <hr />
 
     if (Model.TotalPages == 0)
     {
@@ -130,9 +128,7 @@
             var linkedFrom = contentItem.LinkedFrom.ContentCollection.Items.FirstOrDefault();
             if (linkedFrom == null) continue;
             
-                <partial name="_SearchResult" model="contentItem" />
-            
-            
+            <partial name="_SearchResult" model="contentItem" />
         }
         </ul>
 
