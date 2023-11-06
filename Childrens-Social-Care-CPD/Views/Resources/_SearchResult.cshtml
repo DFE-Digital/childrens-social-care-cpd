@@ -3,18 +3,24 @@
 
 @model SearchResourcesByTags.SearchResult
 
-<div>
-    <h3>
-        <a href="/@Model.LinkedFrom.ContentCollection.Items.First().Id">@Model.Title</a> &nbsp;
+<li class="dfeuk-document-list__item dfeuk-document-list--no-underline ">
+    <h3 class="govuk-heading-m"><a href="/@Model.LinkedFrom.ContentCollection.Items.First().Id">@Model.Title</a>&nbsp;
         @if (!string.IsNullOrEmpty(@Model.Label))
         {
             <strong class="govuk-tag govuk-tag--blue">@Model.Label</strong>
         }
     </h3>
-    <p>@Model.SearchSummary</p>
-    <ul class="govuk-list govuk-body-s" style="display:flex; gap:15px; flex-flow:row">
-        <li>From: @Model.From</li>
-        <li>Update: <time datetime="@Model.Sys.PublishedAt?.ToString("yyyy-MM-dd")">@Model.Sys.PublishedAt?.ToString("dd MMMM yyyy")</time></li>
-        @* <li>Resource type: @Model.Label</li> *@
+    <p class="govuk-body">@Model.SearchSummary</p>
+    
+    <ul class="dfeuk-document-list__item-metadata">
+        <li class="gdfeuk-document-list__attribute">
+            From: @Model.From
+        </li>
+        <li class="gdfeuk-document-list__attribute">
+            Published: <time datetime="@Model.Sys.FirstPublishedAt?.ToString("yyyy-MM-dd")">@Model.Sys.FirstPublishedAt?.ToString("dd MMMM yyyy")</time>
+        </li>
+        <li class="gdfeuk-document-list__attribute">
+            Update: <time datetime="@Model.Sys.PublishedAt?.ToString("yyyy-MM-dd")">@Model.Sys.PublishedAt?.ToString("dd MMMM yyyy")</time>
+        </li>
     </ul>
-</div>
+</li>
