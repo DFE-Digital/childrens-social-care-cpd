@@ -45,7 +45,7 @@ public class ResourcesRepository : IResourcesRepository
 
     public Task<SearchResourcesByTags.ResponseType> FindByTagsAsync(IEnumerable<string> tags, int skip, int take, ResourceSortOrder resourceSortOrder, CancellationToken cancellationToken = default)
     {
-        string order = (resourceSortOrder == ResourceSortOrder.UpdatedNewest) ? "sys_publishedAt_ASC" : "sys_publishedAt_DESC";
+        string order = (resourceSortOrder == ResourceSortOrder.UpdatedNewest) ? "sys_publishedAt_DESC" : "sys_publishedAt_ASC";
 
         return _gqlClient
             .SendQueryAsync<SearchResourcesByTags.ResponseType>(SearchResourcesByTags.Query(tags, take, skip, order, _isPreview), cancellationToken)

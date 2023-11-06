@@ -89,13 +89,13 @@
         <div class="column-half">
             @if (Model.TotalResults == 1)
             {
-                <span class="summary">
+                <span>
                     Showing 1 of <span id="ResultCount" class="result-count">@Model.TotalResults</span> @resultString
                 </span>
             }
             else
             {
-                <span class="summary">
+                <span>
                     Showing @Model.StartRecord - @Model.Results.Items.Count of <span id="ResultCount" class="result-count">@Model.TotalResults</span> @resultString
                 </span>
             }
