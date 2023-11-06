@@ -10792,5 +10792,9 @@ CONTENT TITLE BANNER
     font-size: 16px;
   }
 }
+.summary {
+  position: relative;
+  top: -18px;
+}
 
 /*# sourceMappingURL=application.css.map */
