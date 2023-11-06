@@ -105,7 +105,7 @@
         </div>
     </div>
     
-    <hr />
+    // <hr />
 
     if (Model.TotalPages == 0)
     {
@@ -124,13 +124,17 @@
     }
     else
     {
-        foreach (var contentItem in Model.Results.Items)
+        <ul class="dfeuk-document-list">
+        @foreach (var contentItem in Model.Results.Items)
         {
             var linkedFrom = contentItem.LinkedFrom.ContentCollection.Items.FirstOrDefault();
             if (linkedFrom == null) continue;
-
-            <partial name="_SearchResult" model="contentItem" />
+            
+                <partial name="_SearchResult" model="contentItem" />
+            
+            
         }
+        </ul>
 
         if (Model.TotalPages > 1)
         {
