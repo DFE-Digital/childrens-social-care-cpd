@@ -16,8 +16,6 @@ public class GdsFilterTagHelper : TagHelper
     [HtmlAttributeName("clear-filters-uri")]
     public string ClearFiltersUri { get; set; }
 
-    public string SortOrder { get; set; }
-
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
         output.AddClass("govuk-summary-card", HtmlEncoder.Default);

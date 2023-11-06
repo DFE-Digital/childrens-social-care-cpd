@@ -25,24 +25,16 @@
         hiddenInput.id = "HSortOrder";
         sourceDiv.appendChild(hiddenInput);
        
-
         // Add an event listener to the select element
         selectElement.addEventListener("change", function () {
             // Get the selected option's value and label
             let selectedOption = selectElement.options[selectElement.selectedIndex];
             let selectedValue = selectedOption.value;
-            // if using label: let selectedLabel = selectedOption.getAttribute("data-track-label");
 
             // Update the hidden input value with the selected label
             hiddenInput.value = selectedValue;
 
             sourceDiv.submit();
         });
-
-        
-
     }
-
-
-   
 });
