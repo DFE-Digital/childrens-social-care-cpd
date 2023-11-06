@@ -1,5 +1,6 @@
 ﻿@using Childrens_Social_Care_CPD.Configuration
 @using Childrens_Social_Care_CPD.Core.Resources;
+@using Childrens_Social_Care_CPD.Models;
 @using Microsoft.AspNetCore.Html
 
 @model ResourcesListViewModel
@@ -16,9 +17,12 @@
 
 @section SearchCriteria {
 
+
     @if (featuresConfig.IsEnabled(Features.ResourcesUseDynamicTags))
     {
-        <gds-filter clear-filters-uri="/resources-learning">
+        <gds-filter clear-filters-uri="/resources-learning" sort-order="@Model.SortOrder">
+            <partial name="_SortSelection" model="@Model" />
+            
             @{
                 var groups = Model.TagInfos.GroupBy(x => x.Category);
                 var index = 1; // gov uk js requires starting at 1 for this control
@@ -36,13 +40,18 @@
                     index++;
                 }
             }
+            
         </gds-filter>
     }
     else
     {
         var tagsDict = new Dictionary<int, TagInfo>(Model.TagInfos.Select((tagInfo, index) => KeyValuePair.Create(index, tagInfo)));
-        <gds-filter clear-filters-uri="/resources-learning">
+        <gds-filter clear-filters-uri="/resources-learning" sort-order="@Model.SortOrder">
+            <partial name="_SortSelection" model="@Model" />
+            
         @{
+            
+
             var groupsx = tagsDict.GroupBy(kvp => kvp.Value.Category);
             var index = 1; // gov uk js requires starting at 1 for this control
             foreach (var group in groupsx)
@@ -65,9 +74,37 @@
 
 @{
     var resultString = Model.TotalResults == 1 ? "result" : "results";
-    <h2 class="gem-c-heading govuk-heading-s govuk-!-margin-bottom-2" data-testid="results-count">
-        @Model.TotalResults @resultString
-    </h2>
+    @if(Model.SelectedTags.Any())
+    {
+        <h3>Filtered results</h3>
+    }
+    else
+    {
+        <h3>All results</h3>
+        <p class="govuk-body-m">No filters have been applied, Showing all results.</p>
+        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+    }
+    
+    <div class="grid-row pagination-container">
+        <div class="column-half">
+            @if (Model.TotalResults == 1)
+            {
+                <span class="summary">
+                    Showing 1 of <span id="ResultCount" class="result-count">@Model.TotalResults</span> @resultString
+                </span>
+            }
+            else
+            {
+                <span class="summary">
+                    Showing @Model.StartRecord - @Model.Results.Items.Count of <span id="ResultCount" class="result-count">@Model.TotalResults</span> @resultString
+                </span>
+            }
+        </div>
+        <div id="sort-order-placeholder" class="column-half">
+        
+        </div>
+    </div>
+    
     <hr />
 
     if (Model.TotalPages == 0)
@@ -105,3 +142,14 @@
         }
     }
 }
+
+@if (Model.Results.Items.Any())
+{
+    @section Scripts {
+    <script src="~/javascript/search-sort.js" asp-append-version="true"></script>
+    }
+
+}
+
+
+

@@ -1,6 +1,7 @@
 ﻿using Childrens_Social_Care_CPD.Configuration;
 using Childrens_Social_Care_CPD.Contentful;
 using Childrens_Social_Care_CPD.Contentful.Models;
+using Childrens_Social_Care_CPD.Controllers;
 using Childrens_Social_Care_CPD.Core.Resources;
 using Childrens_Social_Care_CPD.GraphQL.Queries;
 using Contentful.Core.Search;
@@ -12,7 +13,7 @@ namespace Childrens_Social_Care_CPD.DataAccess;
 public interface IResourcesRepository
 {
     Task<Content> FetchRootPageAsync(CancellationToken cancellationToken = default);
-    Task<SearchResourcesByTags.ResponseType> FindByTagsAsync(IEnumerable<string> tags, int skip, int take, CancellationToken cancellationToken = default);
+    Task<SearchResourcesByTags.ResponseType> FindByTagsAsync(IEnumerable<string> tags, int skip, int take, ResourceSortOrder resourceSortOrder, CancellationToken cancellationToken = default);
     Task<IEnumerable<TagInfo>> GetSearchTagsAsync();
 }
 
@@ -42,10 +43,12 @@ public class ResourcesRepository : IResourcesRepository
             .ContinueWith(x => x.Result.FirstOrDefault());
     }
 
-    public Task<SearchResourcesByTags.ResponseType> FindByTagsAsync(IEnumerable<string> tags, int skip, int take, CancellationToken cancellationToken = default)
+    public Task<SearchResourcesByTags.ResponseType> FindByTagsAsync(IEnumerable<string> tags, int skip, int take, ResourceSortOrder resourceSortOrder, CancellationToken cancellationToken = default)
     {
+        string order = (resourceSortOrder == ResourceSortOrder.UpdatedNewest) ? "sys_publishedAt_ASC" : "sys_publishedAt_DESC";
+
         return _gqlClient
-            .SendQueryAsync<SearchResourcesByTags.ResponseType>(SearchResourcesByTags.Query(tags, take, skip, _isPreview), cancellationToken)
+            .SendQueryAsync<SearchResourcesByTags.ResponseType>(SearchResourcesByTags.Query(tags, take, skip, order, _isPreview), cancellationToken)
             .ContinueWith(x => x.Result.Data);
     }
 

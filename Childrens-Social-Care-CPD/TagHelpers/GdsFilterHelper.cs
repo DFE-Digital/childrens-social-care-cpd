@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Html;
+﻿using Childrens_Social_Care_CPD.Models;
+using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.TagHelpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -8,7 +9,6 @@ namespace Childrens_Social_Care_CPD.TagHelpers;
 
 [HtmlTargetElement(TagName)]
 [OutputElementHint("div")]
-[RestrictChildren(GdsFilterCategoryTagHelper.TagName)]
 public class GdsFilterTagHelper : TagHelper
 {
     internal const string TagName = "gds-filter";
@@ -40,10 +40,10 @@ public class GdsFilterTagHelper : TagHelper
         innerDiv.Attributes.Add("id", "accordion-default");
         innerDiv.Attributes.Add("data-module", "govuk-accordion");
         innerDiv.InnerHtml.AppendHtml(content);
-
+        
         var form = new TagBuilder("form");
+        form.Attributes.Add("id", "filter-form");
         form.Attributes.Add("method", "get");
-
         form.InnerHtml.AppendHtml(innerDiv);
         form.InnerHtml.AppendHtml(button);
 

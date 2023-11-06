@@ -5,12 +5,12 @@ namespace Childrens_Social_Care_CPD.GraphQL.Queries;
 
 public class SearchResourcesByTags
 {
-    public static GraphQLRequest Query(IEnumerable<string> tags, int limit, int skip, bool preview = false)
+    public static GraphQLRequest Query(IEnumerable<string> tags, int limit, int skip, string order = "sys_publishedAt_ASC", bool preview = false)
     {
         return new GraphQLRequest
         {
             Query = @"
-            query SearchResourcesByTags($searchTags: [String!], $limit: Int, $skip: Int, $preview: Boolean) {
+            query SearchResourcesByTags($searchTags: [String!], $limit: Int, $skip: Int, $order: [ResourceOrder], $preview: Boolean) {
               resourceCollection(where: {
                     contentfulMetadata: {
                           tags_exists: true
@@ -18,13 +18,13 @@ public class SearchResourcesByTags
                             id_contains_some: $searchTags
                           }
                         }
-                  }, limit: $limit, skip: $skip, preview: $preview) {
+                  }, limit: $limit, skip: $skip, order: $order, preview: $preview) {
                 total
                 items {
                   title
                   from
                   searchSummary
-                  type
+                  label
                   sys {
                     publishedAt
                     firstPublishedAt
@@ -45,6 +45,7 @@ public class SearchResourcesByTags
                 searchTags = tags,
                 limit,
                 skip,
+                order,
                 preview,
             }
         };
@@ -68,7 +69,7 @@ public class SearchResourcesByTags
         public string Title { get; set; }
         public string From { get; set; }
         public string SearchSummary { get; set; }
-        public ICollection<string> Type { get; set; }
+        public string Label { get; set; }
         public PublishedInfo Sys { get; set; }
         public LinkedFromContentCollection LinkedFrom { get; set; }
     }
