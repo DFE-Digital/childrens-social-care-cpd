@@ -16,7 +16,7 @@ public class ResourcesQuery
 {
     public string[] Tags { get; set; }
     public int Page { get; set; } = 1;
-    public string? Order { get; set; }
+    public string Order { get; set; }
     public ResourceSortOrder SortOrder { get; set; }
 
 public ResourcesQuery()
