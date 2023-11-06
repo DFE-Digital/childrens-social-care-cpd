@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using NSubstitute;
+using NSubstitute.Core;
 using NUnit.Framework;
 using System.Threading;
 using System.Threading.Tasks;
@@ -53,6 +54,24 @@ public class ResourcesControllerTests
 
         // act
         var actual = await _resourcesController.Search(query: null) as ViewResult;
+
+        // assert
+        actual.Model.Should().Be(model);
+    }
+
+    [Test]
+    public async Task Search_Returns_Strategy_Model_When_Order_Value_Returned()
+    {
+        // arrange
+        var model = new ResourcesListViewModel(null, null, null, null);
+        _searchStrategy.SearchAsync(Arg.Any<ResourcesQuery>(), Arg.Any<CancellationToken>()).Returns(model);
+        ResourcesQuery query = new ResourcesQuery()
+        {
+            Order = "1"
+        };
+
+    // act
+        var actual = await _resourcesController.Search(query: query) as ViewResult;
 
         // assert
         actual.Model.Should().Be(model);
