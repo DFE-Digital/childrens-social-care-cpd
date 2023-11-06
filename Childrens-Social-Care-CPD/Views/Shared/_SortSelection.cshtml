@@ -5,7 +5,7 @@
 <div id="js-sort-options" data-ga4-change-category="update-sort select">
     <div class="govuk-form-group sort-options gem-c-select">
         <label for="order" class="sort-options__label govuk-label">Sort by</label>
-        <select asp-for="SortOrder" class="js-order-results govuk-select sort-options__select" name="order" id="order" aria-controls="js-search-results-info" data-default-sort-option="relevance" data-relevance-sort-option="relevance" data-module="track-select-change">
+        <select asp-for="SortOrder" class="js-order-results govuk-select sort-options__select" name="sortOrder" id="order" aria-controls="js-search-results-info" data-default-sort-option="relevance" data-relevance-sort-option="relevance" data-module="track-select-change">
             <option value="0" data-track-category="dropDownClicked" data-track-action="clicked" data-track-label="@ResourceSort.Updatednewest">@ResourceSort.Updatednewest</option>
             <option value="1" data-track-category="dropDownClicked" data-track-action="clicked" data-track-label="@ResourceSort.Updatedoldest">@ResourceSort.Updatedoldest</option>
         </select>
