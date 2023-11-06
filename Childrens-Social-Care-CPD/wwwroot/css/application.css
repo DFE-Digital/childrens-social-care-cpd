@@ -8483,8 +8483,8 @@ h3,
 
 h4,
 .dfe-heading-s, .govuk-heading-s {
-  font-size: 18px;
-  font-size: 1.125;
+  font-size: 16px;
+  font-size: 1;
   line-height: 1.33333;
   display: block;
   font-weight: 700;
@@ -8494,15 +8494,15 @@ h4,
 @media (min-width: 40.0625em) {
   h4,
   .dfe-heading-s, .govuk-heading-s {
-    font-size: 22px;
-    font-size: 1.375;
+    font-size: 19px;
+    font-size: 1.1875;
     line-height: 1.33333;
   }
 }
 @media print {
   h4,
   .dfe-heading-s, .govuk-heading-s {
-    font-size: 18pt;
+    font-size: 14pt;
     line-height: 1.15;
   }
 }
@@ -10397,6 +10397,91 @@ CONTENT TITLE BANNER
   padding: 30px 0;
 }
 
+/* Document list */
+.dfeuk-document-list {
+  padding: 0;
+}
+
+.dfeuk-document-list .dfeuk-document-list__item {
+  margin-bottom: 25px;
+  padding-top: 10px;
+  border-top: 1px solid #b1b4b6;
+  list-style: none;
+}
+
+.dfeuk-document-list .dfeuk-document-list__item .dfeuk-document-list--no-underline {
+  font-size: 16px;
+  font-size: 1rem;
+  line-height: 1.25;
+}
+
+@media (min-width: 40.0625em) {
+  .dfeuk-document-list .dfeuk-document-list__item .dfeuk-document-list--no-underline {
+    font-size: 19px;
+    font-size: 1.1875rem;
+    line-height: 1.3157894737;
+  }
+}
+@media print {
+  .dfeuk-document-list .dfeuk-document-list__item .dfeuk-document-list--no-underline {
+    font-size: 14pt;
+    line-height: 1.15;
+  }
+}
+.dfeuk-document-list .dfeuk-document-list__item .dfeuk-document-list__item-title {
+  text-decoration: none !important;
+  font-weight: 700;
+}
+
+.dfeuk-document-list .dfeuk-document-list__item .dfeuk-document-list__item-description {
+  font-size: 14px;
+  font-size: 0.875rem;
+  line-height: 1.1428571429;
+  margin: 5px 0;
+}
+
+@media (min-width: 40.0625em) {
+  .dfeuk-document-list .dfeuk-document-list__item .dfeuk-document-list__item-description {
+    font-size: 16px;
+    font-size: 1rem;
+    line-height: 1.25;
+  }
+}
+@media print {
+  .dfeuk-document-list .dfeuk-document-list__item .dfeuk-document-list__item-description {
+    font-size: 14pt;
+    line-height: 1.2;
+  }
+}
+.dfeuk-document-list .dfeuk-document-list__item .dfeuk-document-list__item-metadata {
+  padding: 0;
+}
+
+.dfeuk-document-list .dfeuk-document-list__item .dfeuk-document-list__item-metadata .gdfeuk-document-list__attribute {
+  font-weight: 400;
+  font-size: 14px;
+  font-size: 12px;
+  font-size: 0.75rem;
+  line-height: 1.25;
+  color: #505a5f;
+  display: inline-block;
+  list-style: none;
+  padding-right: 20px;
+}
+
+@media (min-width: 40.0625em) {
+  .dfeuk-document-list .dfeuk-document-list__item .dfeuk-document-list__item-metadata .gdfeuk-document-list__attribute {
+    font-size: 14px;
+    font-size: 0.875rem;
+    line-height: 1.4285714286;
+  }
+}
+@media print {
+  .dfeuk-document-list .dfeuk-document-list__item .dfeuk-document-list__item-metadata .gdfeuk-document-list__attribute {
+    font-size: 12pt;
+    line-height: 1.2;
+  }
+}
 /*
     This component is currently not part of the dfe-frontend-alpha npm package.
 
@@ -10753,18 +10838,13 @@ CONTENT TITLE BANNER
 }
 
 /* Pagination and sort stack */
+/* Media query for mobile view (adjust the max-width as needed) */
 .pagination-container {
   display: flex;
   justify-content: space-between;
-  align-items: center; /* Vertically center the elements */
+  align-items: baseline; /* Vertically center the elements */
 }
 
-/* Media query for mobile view (adjust the max-width as needed) */
-/*.pagination-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;*/ /* Vertically center the elements */
-/*}*/
 @media (max-width: 768px) {
   .pagination-container {
     flex-direction: column;
