@@ -30,7 +30,7 @@ public class GdsFilterTagHelper : TagHelper
         output.Content.AppendHtml(RenderBody(content));
     }
 
-    private IHtmlContent RenderBody(IHtmlContent content)
+    private static IHtmlContent RenderBody(IHtmlContent content)
     {
         var button = new TagBuilder("button");
         button.AddCssClass("govuk-button");
