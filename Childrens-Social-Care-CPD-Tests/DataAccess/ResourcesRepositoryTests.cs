@@ -17,6 +17,7 @@ using System.Collections.ObjectModel;
 using System;
 using Contentful.Core.Models.Management;
 using System.Linq;
+using Childrens_Social_Care_CPD.Controllers;
 
 namespace Childrens_Social_Care_CPD_Tests.DataAccess;
 
@@ -106,7 +107,7 @@ public class ResourcesRepositoryTests
         var sut = new ResourcesRepository(_applicationConfiguration, _contentfulClient, _gqlClient);
 
         // act
-        var result = await sut.FindByTagsAsync(Array.Empty<string>(), 0, 1, _cancellationTokenSource.Token);
+        var result = await sut.FindByTagsAsync(Array.Empty<string>(), 0, 1, ResourceSortOrder.UpdatedNewest, _cancellationTokenSource.Token);
 
         // assert
         result.Should().Be(results);
@@ -125,7 +126,7 @@ public class ResourcesRepositoryTests
         var sut = new ResourcesRepository(_applicationConfiguration, _contentfulClient, _gqlClient);
 
         // act
-        await sut.FindByTagsAsync(Array.Empty<string>(), 0, 1, _cancellationTokenSource.Token);
+        await sut.FindByTagsAsync(Array.Empty<string>(), 0, 1, ResourceSortOrder.UpdatedNewest, _cancellationTokenSource.Token);
 
         // assert
         dynamic variables = request.Variables;
@@ -145,7 +146,7 @@ public class ResourcesRepositoryTests
         var sut = new ResourcesRepository(_applicationConfiguration, _contentfulClient, _gqlClient);
 
         // act
-        await sut.FindByTagsAsync(Array.Empty<string>(), 5, 1, _cancellationTokenSource.Token);
+        await sut.FindByTagsAsync(Array.Empty<string>(), 5, 1, ResourceSortOrder.UpdatedNewest, _cancellationTokenSource.Token);
 
         // assert
         dynamic variables = request.Variables;
@@ -164,7 +165,7 @@ public class ResourcesRepositoryTests
         var sut = new ResourcesRepository(_applicationConfiguration, _contentfulClient, _gqlClient);
 
         // act
-        await sut.FindByTagsAsync(Array.Empty<string>(), 5, 1, _cancellationTokenSource.Token);
+        await sut.FindByTagsAsync(Array.Empty<string>(), 5, 1, ResourceSortOrder.UpdatedNewest, _cancellationTokenSource.Token);
 
         // assert
         dynamic variables = request.Variables;
@@ -185,7 +186,7 @@ public class ResourcesRepositoryTests
         var sut = new ResourcesRepository(_applicationConfiguration, _contentfulClient, _gqlClient);
 
         // act
-        await sut.FindByTagsAsync(Array.Empty<string>(), 5, 1, _cancellationTokenSource.Token);
+        await sut.FindByTagsAsync(Array.Empty<string>(), 5, 1, ResourceSortOrder.UpdatedNewest, _cancellationTokenSource.Token);
 
         // assert
         dynamic variables = request.Variables;

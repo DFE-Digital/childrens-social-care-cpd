@@ -1,5 +1,6 @@
 ﻿using Childrens_Social_Care_CPD.Controllers;
 using Childrens_Social_Care_CPD.DataAccess;
+using Childrens_Social_Care_CPD.Extensions;
 using Childrens_Social_Care_CPD.GraphQL.Queries;
 using Childrens_Social_Care_CPD.Models;
 
@@ -62,15 +63,23 @@ internal class ResourcesDynamicTagsSearchStategy : IResourcesSearchStrategy
         var skip = (page - 1) * PAGE_SIZE;
 
         var pageContentTask = _resourcesRepository.FetchRootPageAsync(cancellationToken);
-        var searchResults = await _resourcesRepository.FindByTagsAsync(GetQueryTags(query.Tags, tagIds), skip, PAGE_SIZE, cancellationToken);
+        var searchResults = await _resourcesRepository.FindByTagsAsync(GetQueryTags(query.Tags, tagIds), skip, PAGE_SIZE, query.SortOrder, cancellationToken);
         var pageContent = await pageContentTask;
         (var totalResults, var totalPages, var currentPage) = CalculatePageStats(searchResults, page);
 
+        int startRecord = 0;
+        if (totalResults > 0)
+        {
+            startRecord = ((currentPage * PAGE_SIZE) - PAGE_SIZE) + 1;
+        }
+       
         return new ResourcesListViewModel(
             pageContent,
             searchResults?.ResourceCollection,
             tagInfos,
             query.Tags,
+            (int)query.SortOrder,
+            startRecord,
             currentPage,
             totalPages,
             totalResults,
