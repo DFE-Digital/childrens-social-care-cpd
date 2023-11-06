@@ -65,10 +65,7 @@ public class ResourcesControllerTests
         // arrange
         var model = new ResourcesListViewModel(null, null, null, null);
         _searchStrategy.SearchAsync(Arg.Any<ResourcesQuery>(), Arg.Any<CancellationToken>()).Returns(model);
-        ResourcesQuery query = new ResourcesQuery()
-        {
-            Order = "1"
-        };
+        ResourcesQuery query = new ResourcesQuery();
 
     // act
         var actual = await _resourcesController.Search(query: query) as ViewResult;
