@@ -195,18 +195,13 @@
 }
 
 /* Pagination and sort stack */
+
+/* Media query for mobile view (adjust the max-width as needed) */
 .pagination-container {
     display: flex;
     justify-content: space-between;
-    align-items: center; /* Vertically center the elements */
+    align-items: baseline; /* Vertically center the elements */
 }
-
-/* Media query for mobile view (adjust the max-width as needed) */
-/*.pagination-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;*/ /* Vertically center the elements */
-/*}*/
 
 @media (max-width: 768px) {
     .pagination-container {
@@ -237,9 +232,4 @@
     .sort-options .sort-options__select {
         font-size: 16px;
     }
-}
-
-.summary {
-    position: relative;
-    top: -18px;
 }

@@ -16,7 +16,6 @@ public class ResourcesQuery
 {
     public string[] Tags { get; set; }
     public int Page { get; set; } = 1;
-    public string Order { get; set; }
     public ResourceSortOrder SortOrder { get; set; }
 
 public ResourcesQuery()
@@ -44,11 +43,6 @@ public class ResourcesController : Controller
         if (!_featuresConfig.IsEnabled(Features.ResourcesAndLearning))
         {
             return NotFound();
-        }
-
-        if (query is not null && !string.IsNullOrEmpty(query.Order))
-        {
-            query.SortOrder = query.Order.ToEnum<ResourceSortOrder>();
         }
 
         var contextModel = new ContextModel(string.Empty, "Resources", "Resources", "Resources", true, preferencesSet);
