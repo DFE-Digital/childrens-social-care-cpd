@@ -37,19 +37,16 @@
     </div>
 </div>
 
-@* <cpd-property-list items="@Model.Properties" /> *@
+@{
+    // TODO: inject these from the controller
+    var properties = new Dictionary<string, string>()
+    {
+        { "Published", Model.Sys.CreatedAt?.ToString("dd MMMM yyyy") },
+        { "Last updated", Model.Sys.UpdatedAt?.ToString("dd MMMM yyyy") },
+    };
+}
 
-<ul class="course-details govuk-list">
-    <li>
-        <span class="govuk-!-font-size-16">From: </span>
-    </li>
-    <li>
-        <span class="govuk-!-font-size-16">Published: <time datetime="@Model.Sys.CreatedAt?.ToString("yyyy-MM-dd")">@Model.Sys.CreatedAt?.ToString("dd MMMM yyyy")</time></span>
-    </li>
-    <li>
-        <span class="govuk-!-font-size-16">Last updated: <time datetime="@Model.Sys.UpdatedAt?.ToString("yyyy-MM-dd")">@Model.Sys.UpdatedAt?.ToString("dd MMMM yyyy")</time></span>
-    </li>
-</ul>
+<cpd-properties-list items="@properties" />
 
 <partial name="_Content" model="Model" />
 
