@@ -8,16 +8,50 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
-        <video id="videoPlayer" preload="none">
-            <source src="@Model.Video.File.Url">
-        </video>
-        <details class="govuk-details govuk-!-margin-top-3" data-module="govuk-details">
-            <summary class="govuk-details__summary"> <span class="govuk-details__summary-text">View transcript  </span></summary>
-            <div class="govuk-details__text">
-                @{
-                    await Html.RenderPartialAsync("_RichText", Model.Transcript);
-                }
-            </div>
-        </details>
+        @if(!string.IsNullOrEmpty(Model.EmbededTitle) && !string.IsNullOrEmpty(Model.EmbededSourceUrl))
+        {
+            <h2>
+                @Model.EmbededTitle
+            </h2>
+            if (@Model.EmbededSourceUrl.IndexOf("vimeo") > -1)
+            {
+                <iframe width="560" height="315"
+                        src="@Model.EmbededSourceUrl"
+                        title="@Model.EmbededTitle"
+                        frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                </iframe>
+            }
+            else
+            {
+                <video id="SomeID" name="media" src="@Model.EmbededSourceUrl" />
+            }
+
+            if (Model.Transcript != null && Model.Transcript.Content != null && Model.Transcript.Content.Any())
+            {
+                <details class="govuk-details govuk-!-margin-top-3" data-module="govuk-details">
+                    <summary class="govuk-details__summary"> <span class="govuk-details__summary-text">View transcript  </span></summary>
+                    <div class="govuk-details__text">
+                        @{
+                            await Html.RenderPartialAsync("_RichText", Model.Transcript);
+                        }
+                    </div>
+                </details>
+            }
+        }
+        else
+        {
+            <video id="videoPlayer" preload="none">
+                <source src="@Model.Video.File.Url">
+            </video>
+            <details class="govuk-details govuk-!-margin-top-3" data-module="govuk-details">
+                <summary class="govuk-details__summary"> <span class="govuk-details__summary-text">View transcript  </span></summary>
+                <div class="govuk-details__text">
+                    @{
+                        await Html.RenderPartialAsync("_RichText", Model.Transcript);
+                    }
+                </div>
+            </details>
+        }  
     </div>
 </div>
