@@ -24,7 +24,7 @@
             }
             else
             {
-                <video id="videoPlayer" name="media" src="@Model.EmbededSourceUrl">
+                <video name="media" src="@Model.EmbededSourceUrl">
                     <track label="English" kind="captions" srclang="en" default>
                 </video>
             }
@@ -33,7 +33,7 @@
         }
         else
         {
-            <video id="videoPlayer" preload="none">
+            <video id="videoPlayer" name="media" preload="none">
                 <source src="@Model.Video.File.Url">
             </video>
         }
