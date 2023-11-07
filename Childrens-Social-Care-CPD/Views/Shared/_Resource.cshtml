@@ -9,40 +9,6 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
-        <span class="govuk-caption-l">Resources</span>
-        <h1>@Model.Title</h1>
-        <p>@Model.Summary</p>
-    </div>
-</div>
-<hr />
-
-<div class="govuk-grid-row">
-    <div class="govuk-grid-column-three-quarters">
-        <ul class="course-details govuk-list">
-            <li>
-                <span class="govuk-!-font-size-16">From: @Model.From</span>
-            </li>
-            @if (Model.Sys.CreatedAt.HasValue)
-            {
-                <li>
-                    <span class="govuk-!-font-size-16">Published: @Model.Sys.CreatedAt?.ToString("dd MMMM yyyy")</span>
-                </li>
-            }
-            @if (Model.Sys.UpdatedAt.HasValue)
-            {
-                <li>
-                    <span class="govuk-!-font-size-16">Last updated: @Model.Sys.UpdatedAt?.ToString("dd MMMM yyyy")</span>
-                </li>
-            }
-            <li>
-                <span class="govuk-!-font-size-16">Resource type: @Model.Label</span>
-            </li>
-        </ul>
-    </div>
-</div>
-
-<div class="govuk-grid-row">
-    <div class="govuk-grid-column-three-quarters">
         @{
             ContextModel model = (ContextModel)ViewBag.ContextModel;
             // We use the content stack to track circular dependencies and prevent overflows

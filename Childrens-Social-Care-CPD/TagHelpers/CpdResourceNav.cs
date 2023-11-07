@@ -17,7 +17,7 @@ public class CpdResourceNav : TagHelper
     public string Label { get; set; }
 
     [HtmlAttributeName("navigation")]
-    public SideMenu Navigation { get; set; }
+    public IList<ContentLink> Navigation { get; set; }
 
     [HtmlAttributeName("selected")]
     public string Selected { get; set; }
@@ -28,7 +28,11 @@ public class CpdResourceNav : TagHelper
         output.TagMode = TagMode.StartTagAndEndTag;
         output.AddClass("gem-c-contents-list", HtmlEncoder.Default);
         output.Attributes.Add("role", "navigation");
-        output.Attributes.Add("aria-label", Label);
+        
+        if (Label  != null)
+        {
+            output.Attributes.Add("aria-label", Label);
+        }
 
         var h2 = new TagBuilder("h2");
         h2.AddCssClass("gem-c-contents-list__title");
@@ -38,12 +42,12 @@ public class CpdResourceNav : TagHelper
         output.Content.AppendHtml(RenderNavigation(Navigation, Selected));
     }
 
-    private static IHtmlContent RenderNavigation(SideMenu navigation, string selected)
+    private static IHtmlContent RenderNavigation(IList<ContentLink> navigation, string selected)
     {
         var ol = new TagBuilder("ol");
         ol.AddCssClass("gem-c-contents-list__list");
 
-        foreach (var contentLink in navigation.Items)
+        foreach (var contentLink in navigation)
         {
             var li = new TagBuilder("li");
             li.AddCssClass("gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed");
