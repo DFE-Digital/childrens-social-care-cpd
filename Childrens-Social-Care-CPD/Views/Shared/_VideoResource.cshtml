@@ -18,13 +18,15 @@
                 <iframe width="560" height="315"
                         src="@Model.EmbededSourceUrl"
                         title="@Model.EmbededTitle"
-                        frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen>
                 </iframe>
             }
             else
             {
-                <video id="SomeID" name="media" src="@Model.EmbededSourceUrl" />
+                <video id="SomeID" name="media" src="@Model.EmbededSourceUrl" >
+                    <track label="English" kind="captions" srclang="en" default>
+                </video>
             }
 
             if (Model.Transcript != null && Model.Transcript.Content != null && Model.Transcript.Content.Any())
