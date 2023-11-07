@@ -62,6 +62,11 @@ public class ContentController : Controller
 
         ViewData["ContextModel"] = contextModel;
         ViewData["StateModel"] = new StateModel();
-        return View(pageContent);
+
+        return pageContent.ContentType switch
+        {
+            ContentTypes.Resource => View("Resource", pageContent),
+            _ => View(pageContent)
+        };
     }
 }
