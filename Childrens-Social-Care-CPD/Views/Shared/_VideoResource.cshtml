@@ -24,36 +24,30 @@
             }
             else
             {
-                <video id="SomeID" name="media" src="@Model.EmbededSourceUrl" >
+                <video id="videoPlayer" name="media" src="@Model.EmbededSourceUrl">
                     <track label="English" kind="captions" srclang="en" default>
                 </video>
             }
 
-            if (Model.Transcript != null && Model.Transcript.Content != null && Model.Transcript.Content.Any())
-            {
-                <details class="govuk-details govuk-!-margin-top-3" data-module="govuk-details">
-                    <summary class="govuk-details__summary"> <span class="govuk-details__summary-text">View transcript  </span></summary>
-                    <div class="govuk-details__text">
-                        @{
-                            await Html.RenderPartialAsync("_RichText", Model.Transcript);
-                        }
-                    </div>
-                </details>
-            }
+           
         }
         else
         {
             <video id="videoPlayer" preload="none">
                 <source src="@Model.Video.File.Url">
             </video>
-            <details class="govuk-details govuk-!-margin-top-3" data-module="govuk-details">
-                <summary class="govuk-details__summary"> <span class="govuk-details__summary-text">View transcript  </span></summary>
-                <div class="govuk-details__text">
-                    @{
-                        await Html.RenderPartialAsync("_RichText", Model.Transcript);
-                    }
-                </div>
-            </details>
-        }  
+        }
+
+        if (Model.Transcript?.Content != null && Model.Transcript.Content.Any())
+        {
+        <details class="govuk-details govuk-!-margin-top-3" data-module="govuk-details">
+            <summary class="govuk-details__summary"> <span class="govuk-details__summary-text">View transcript  </span></summary>
+            <div class="govuk-details__text">
+                @{
+                    await Html.RenderPartialAsync("_RichText", Model.Transcript);
+                }
+            </div>
+        </details>
+        }
     </div>
 </div>
