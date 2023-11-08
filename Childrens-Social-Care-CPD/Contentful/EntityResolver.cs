@@ -30,7 +30,6 @@ public class EntityResolver : IContentTypeResolver
             "linkCard" => typeof(LinkCard),
             "linkListCard" => typeof(LinkListCard),
             "pdfFileResource" => typeof(PdfFileResource),
-            "resource" => typeof(Resource),
             "richTextBlock" => typeof(RichTextBlock),
             "roleList" => typeof(RoleList),
             "sideMenu" => typeof(SideMenu),
