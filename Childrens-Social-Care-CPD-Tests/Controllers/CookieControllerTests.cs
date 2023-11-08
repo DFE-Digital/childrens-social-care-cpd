@@ -122,19 +122,19 @@ public partial class CookieControllerTests
         actual.PreferenceSet.Should().Be(preferenceSet);
     }
 
-    private static readonly object[] _sideMenuContent =
+    private static readonly object[] _navigationMenuContent =
         {
-            new object[] { new SideMenu() },
+            new object[] { new NavigationMenu() },
             new object[] { null },
         };
 
-    [TestCaseSource(nameof(_sideMenuContent))]
-    public async Task Cookies_Sets_The_ContextModel_UseContainers_Ignoring_The_SideMenu_Value(SideMenu sideMenu)
+    [TestCaseSource(nameof(_navigationMenuContent))]
+    public async Task Cookies_Sets_The_ContextModel_UseContainers_Ignoring_The_SideMenu_Value(NavigationMenu navigationMenu)
     {
         // arrange
         var rootContent = new Content()
         {
-            SideMenu = sideMenu
+            Navigation = navigationMenu
         };
         SetContent(rootContent);
 

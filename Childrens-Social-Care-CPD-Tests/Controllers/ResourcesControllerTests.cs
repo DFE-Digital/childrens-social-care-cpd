@@ -38,7 +38,7 @@ public class ResourcesControllerTests
         _featuresConfig = Substitute.For<IFeaturesConfig>();
         _featuresConfig.IsEnabled(Features.ResourcesAndLearning).Returns(true);
         _searchStrategy = Substitute.For<IResourcesSearchStrategy>();
-        _resourcesController = new ResourcesController(_featuresConfig, _searchStrategy)
+        _resourcesController = new ResourcesController(_featuresConfig, _searchStrategy, null)
         {
             ControllerContext = controllerContext,
             TempData = Substitute.For<ITempDataDictionary>()
@@ -65,9 +65,9 @@ public class ResourcesControllerTests
         // arrange
         var model = new ResourcesListViewModel(null, null, null, null);
         _searchStrategy.SearchAsync(Arg.Any<ResourcesQuery>(), Arg.Any<CancellationToken>()).Returns(model);
-        ResourcesQuery query = new ResourcesQuery();
+        var query = new ResourcesQuery();
 
-    // act
+        // act
         var actual = await _resourcesController.Search(query: query) as ViewResult;
 
         // assert
