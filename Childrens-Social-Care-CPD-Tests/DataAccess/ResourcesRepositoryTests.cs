@@ -94,7 +94,7 @@ public class ResourcesRepositoryTests
         // arrange
         var results = new ResponseType
         {
-            ResourceCollection = new ResourceCollection
+            ContentCollection = new ContentCollection
             {
                 Total = 1,
                 Items = new Collection<SearchResult>
