@@ -8,25 +8,19 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
-        @if(!string.IsNullOrEmpty(Model.EmbededTitle) && !string.IsNullOrEmpty(Model.EmbededSourceUrl))
+        @if(!string.IsNullOrEmpty(Model.EmbeddedSourceUrl))
         {
-            <h2>
-                @Model.EmbededTitle
-            </h2>
-            if (@Model.EmbededSourceUrl.IndexOf("vimeo") > -1)
+            if (@Model.EmbeddedSourceUrl.IndexOf("vimeo") > -1)
             {
                 <iframe width="560" height="315"
-                        src="@Model.EmbededSourceUrl"
-                        title="@Model.EmbededTitle"
+                        src="@Model.EmbeddedSourceUrl"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen>
                 </iframe>
             }
             else
             {
-                <video name="media" src="@Model.EmbededSourceUrl">
-                    <track label="English" kind="captions" srclang="en" default>
-                </video>
+                <video name="media" src="@Model.EmbeddedSourceUrl" preload="none"></video>         
             }
         }
         else
