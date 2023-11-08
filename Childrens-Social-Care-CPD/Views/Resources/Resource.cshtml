@@ -27,10 +27,10 @@
             <p class="govuk-body">@Model.ContentSubtitle</p>
         }
         
-        @if (Model.SideMenu != null)
+        @if (Model.Navigation != null)
         {
             <aside>
-                <cpd-resource-nav navigation="@Model.Navigation" selected="@Model.Id" />
+                <cpd-resource-nav navigation="@Model.Navigation?.Items" selected="@Model.Id" />
             </aside>
         }
         <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
@@ -41,7 +41,7 @@
 
 <partial name="_Content" model="Model" />
 
-<cpd-resource-page-nav navigation="@Model.Navigation" current="@Model.Id" />
+<cpd-resource-page-nav navigation="@Model.Navigation?.Items" current="@Model.Id" />
 
 @_relatedContentRenderer.Render(Model.RelatedContent)
 
