@@ -24,6 +24,12 @@ public class CpdResourceNav : TagHelper
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
+        if (Navigation == null || Navigation.Count == 0)
+        {
+            output.SuppressOutput();
+            return;
+        }
+
         output.TagName = "nav";
         output.TagMode = TagMode.StartTagAndEndTag;
         output.AddClass("gem-c-contents-list", HtmlEncoder.Default);

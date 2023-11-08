@@ -22,6 +22,8 @@ public class Content : IContent
     public List<IContent> Items { get; set; }
     public RelatedContent RelatedContent { get; set; }
 
+    public List<ContentLink> Navigation { get; set; }
+
     [JsonProperty("$metadata")]
     public ContentfulMetadata Metadata { get; set; }
     public SystemProperties Sys { get; set; }
