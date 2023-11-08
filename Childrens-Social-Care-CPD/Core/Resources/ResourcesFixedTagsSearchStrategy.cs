@@ -1,6 +1,5 @@
 ﻿using Childrens_Social_Care_CPD.Controllers;
 using Childrens_Social_Care_CPD.DataAccess;
-using Childrens_Social_Care_CPD.Extensions;
 using Childrens_Social_Care_CPD.GraphQL.Queries;
 using Childrens_Social_Care_CPD.Models;
 
