@@ -56,7 +56,7 @@ public class ContentController : Controller
             Title: content.Title,
             PageName: pageName,
             Category: content.Category,
-            UseContainers: content.SideMenu == null,
+            UseContainers: content.Navigation == null,
             PreferenceSet: preferenceSet,
             BackLink: content.BackLink);
 

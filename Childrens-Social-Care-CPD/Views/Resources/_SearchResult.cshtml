@@ -24,16 +24,16 @@
     <p class="govuk-body">@Model.SearchSummary</p>
     
     <ul class="dfeuk-document-list__item-metadata">
-        @if (properties.ContainsKey("Author"))
+        @if (properties.ContainsKey("From"))
         {
-            <li class="gdfeuk-document-list__attribute">From:&nbsp;@properties["Author"]</li>
+            <li class="gdfeuk-document-list__attribute">From:&nbsp;@properties["From"]</li>
         }
         
         <li class="gdfeuk-document-list__attribute">
             Published: <time datetime="@Model.Sys.FirstPublishedAt?.ToString("yyyy-MM-dd")">@Model.Sys.FirstPublishedAt?.ToString("dd MMMM yyyy")</time>
         </li>
         <li class="gdfeuk-document-list__attribute">
-            Update: <time datetime="@Model.Sys.PublishedAt?.ToString("yyyy-MM-dd")">@Model.Sys.PublishedAt?.ToString("dd MMMM yyyy")</time>
+            Updated: <time datetime="@Model.Sys.PublishedAt?.ToString("yyyy-MM-dd")">@Model.Sys.PublishedAt?.ToString("dd MMMM yyyy")</time>
         </li>
     </ul>
 </li>
