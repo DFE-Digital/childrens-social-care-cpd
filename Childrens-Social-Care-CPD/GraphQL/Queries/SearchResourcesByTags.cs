@@ -10,8 +10,9 @@ public class SearchResourcesByTags
         return new GraphQLRequest
         {
             Query = @"
-            query SearchResourcesByTags($searchTags: [String!], $limit: Int, $skip: Int, $order: [ResourceOrder], $preview: Boolean) {
-              resourceCollection(where: {
+            query SearchResourcesByTags($searchTags: [String!], $limit: Int, $skip: Int, $order: [ContentOrder], $preview: Boolean) {
+              contentCollection(where: {
+                    contentType: ""Resource""
                     contentfulMetadata: {
                           tags_exists: true
                           tags: {
@@ -21,19 +22,17 @@ public class SearchResourcesByTags
                   }, limit: $limit, skip: $skip, order: $order, preview: $preview) {
                 total
                 items {
-                  title
-                  from
+                  id
+                  contentTitle
                   searchSummary
-                  label
                   sys {
                     publishedAt
                     firstPublishedAt
                   }
-                  linkedFrom {
-                    contentCollection {
-                      items {
-                        id
-                      }
+                  contentfulMetadata {
+                    tags {
+                      id
+                      name
                     }
                   }
                 }
@@ -53,11 +52,11 @@ public class SearchResourcesByTags
 
     public class ResponseType
     {
-        [JsonPropertyName("resourceCollection")]
-        public ResourceCollection ResourceCollection { get; set; }
+        [JsonPropertyName("contentCollection")]
+        public ContentCollection ContentCollection { get; set; }
     }
 
-    public class ResourceCollection
+    public class ContentCollection
     {
         [JsonPropertyName("items")]
         public ICollection<SearchResult> Items { get; set; }
@@ -66,12 +65,11 @@ public class SearchResourcesByTags
 
     public class SearchResult
     {
-        public string Title { get; set; }
-        public string From { get; set; }
+        public string Id { get; set; }
+        public string ContentTitle { get; set; }
         public string SearchSummary { get; set; }
-        public string Label { get; set; }
         public PublishedInfo Sys { get; set; }
-        public LinkedFromContentCollection LinkedFrom { get; set; }
+        public MetaData ContentfulMetaData { get; set; }
     }
 
     public class PublishedInfo
@@ -80,21 +78,14 @@ public class SearchResourcesByTags
         public DateTime? FirstPublishedAt { get; set; }
     }
 
-    public class LinkedFromContentCollection
+    public class MetaData
     {
-        public LinkedFrom ContentCollection { get; set; }
+        public List<Tag> Tags { get; set; }
     }
 
-    public class LinkedFrom
-    {
-        public ICollection<LinkedItem> Items { get; set; }
-    }
-
-    public class LinkedItem
+    public class Tag
     {
         public string Id { get; set; }
+        public string Name { get; set; }
     }
 }
-
-
-
