@@ -1,0 +1,54 @@
+﻿@using Childrens_Social_Care_CPD.Contentful.Models;
+@using Childrens_Social_Care_CPD.Contentful.Renderers;
+@using Contentful.Core.Models;
+
+@model Content;
+
+@inject IRenderer<RelatedContent> _relatedContentRenderer
+
+@{
+    Layout = "_DefaultPageLayout";
+}
+
+@section Head {
+    @if (ViewData.TryGetValue("StateModel", out var stateModel) && ((StateModel)stateModel).IncludeMediaPlayer)
+    {
+        <link href="/css/mediaelement-player.min.css" rel="stylesheet" />
+    }
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+        <span class="govuk-caption-l">Resources</span>
+        <h1>@Model.ContentTitle</h1>
+
+        @if (Model.ContentSubtitle != null)
+        {
+            <p class="govuk-body">@Model.ContentSubtitle</p>
+        }
+        
+        @if (Model.SideMenu != null)
+        {
+            <aside>
+                <cpd-resource-nav navigation="@Model.Navigation" selected="@Model.Id" />
+            </aside>
+        }
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+    </div>
+</div>
+
+<cpd-properties-list items="@ViewBag.Properties" />
+
+<partial name="_Content" model="Model" />
+
+<cpd-resource-page-nav navigation="@Model.Navigation" current="@Model.Id" />
+
+@_relatedContentRenderer.Render(Model.RelatedContent)
+
+@section Scripts {
+    @if (ViewData.TryGetValue("StateModel", out var stateModel) && ((StateModel)stateModel).IncludeMediaPlayer)
+    {
+        <script src=/javascript/mediaelement-and-player.min.js></script>
+        <script src=/javascript/mediaelement-configuration.js></script>
+    }
+}

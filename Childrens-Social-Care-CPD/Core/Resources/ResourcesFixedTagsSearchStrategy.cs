@@ -46,7 +46,7 @@ internal class ResourcesFixedTagsSearchStrategy : IResourcesSearchStrategy
 
     private static Tuple<int, int, int> CalculatePageStats(SearchResourcesByTags.ResponseType searchResults, int page)
     {
-        var totalResults = searchResults?.ResourceCollection?.Total ?? 0;
+        var totalResults = searchResults?.ContentCollection?.Total ?? 0;
         var totalPages = (int)Math.Ceiling((decimal)totalResults / PAGE_SIZE);
 
         return Tuple.Create(totalResults, totalPages, Math.Min(page, totalPages));
@@ -84,7 +84,7 @@ internal class ResourcesFixedTagsSearchStrategy : IResourcesSearchStrategy
 
         return new ResourcesListViewModel(
             pageContent,
-            searchResults?.ResourceCollection,
+            searchResults?.ContentCollection,
             _tagInfos,
             queryTags.Select(x => x.ToString()),
             (int)query.SortOrder,
