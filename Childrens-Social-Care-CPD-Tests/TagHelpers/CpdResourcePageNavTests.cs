@@ -26,7 +26,7 @@ public class CpdResourcePageNavTests
         }
 
         _tagHelperContext = new TagHelperContext(new TagHelperAttributeList(), new Dictionary<object, object>(), "id");
-        _tagHelperOutput = new TagHelperOutput(CpdPropertiesList.TagName, new TagHelperAttributeList(), func);
+        _tagHelperOutput = new TagHelperOutput(CpdResourcePageNav.TagName, new TagHelperAttributeList(), func);
     }
 
     [Test]
@@ -50,7 +50,7 @@ public class CpdResourcePageNavTests
         await sut.ProcessAsync(_tagHelperContext, _tagHelperOutput);
 
         // assert
-        _tagHelperOutput.TagName.Should().BeNull();
+        _tagHelperOutput.AsString().Should().BeEmpty();
     }
 
     [Test]
@@ -64,7 +64,7 @@ public class CpdResourcePageNavTests
         await sut.ProcessAsync(_tagHelperContext, _tagHelperOutput);
 
         // assert
-        _tagHelperOutput.TagName.Should().BeNull();
+        _tagHelperOutput.AsString().Should().BeEmpty();
     }
 
     [Test]
