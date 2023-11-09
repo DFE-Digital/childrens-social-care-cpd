@@ -18,7 +18,7 @@ public class AssetStructureRenderer : IRenderer<AssetStructure>
                             {
                                 var contentType = asset.File?.ContentType.ToLower();
 
-                                if (contentType.StartsWith("image/"))
+                                if (contentType?.StartsWith("image/") ?? false)
                                 {
                                     var img = new TagBuilder("img");
                                     img.Attributes.Add("src", asset.File.Url);
