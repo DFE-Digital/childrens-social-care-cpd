@@ -37,7 +37,7 @@ public class CpdResourcePageNavTests
         Func<Task> act = () => sut.ProcessAsync(_tagHelperContext, _tagHelperOutput);
 
         // act/assert
-        await act.Should().ThrowAsync<ArgumentNullException>();
+        await act.Should().ThrowAsync<NullReferenceException>();
     }
 
     [Test]

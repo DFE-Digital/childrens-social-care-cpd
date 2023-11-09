@@ -23,7 +23,7 @@ public class CpdResourcePageNav : TagHelper
     {
         if (string.IsNullOrEmpty(Current))
         {
-            throw new ArgumentNullException(nameof(Current));
+            throw new NullReferenceException($"{nameof(Current)} must be specified");
         }
 
         if (Navigation == null || Navigation.Count == 0)
