@@ -1,10 +1,8 @@
 ﻿using Childrens_Social_Care_CPD.Configuration;
-using Childrens_Social_Care_CPD.Contentful.Models;
 using Childrens_Social_Care_CPD.Core.Resources;
 using Childrens_Social_Care_CPD.DataAccess;
 using Childrens_Social_Care_CPD.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Reflection;
 
 namespace Childrens_Social_Care_CPD.Controllers;
 
@@ -81,7 +79,7 @@ public class ResourcesController : Controller
         }))
         {
             { "Published", content.Sys.CreatedAt?.ToString("dd MMMM yyyy") },
-            { "Last updated", content.Sys.CreatedAt?.ToString("dd MMMM yyyy") }
+            { "Last updated", content.Sys.UpdatedAt?.ToString("dd MMMM yyyy") }
         };
 
         var contextModel = new ContextModel(

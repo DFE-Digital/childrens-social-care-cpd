@@ -13,9 +13,6 @@ public class CpdResourceNav : TagHelper
 {
     internal const string TagName = "cpd-resource-nav";
 
-    [HtmlAttributeName("label")]
-    public string Label { get; set; }
-
     [HtmlAttributeName("navigation")]
     public IList<ContentLink> Navigation { get; set; }
 
@@ -34,11 +31,7 @@ public class CpdResourceNav : TagHelper
         output.TagMode = TagMode.StartTagAndEndTag;
         output.AddClass("gem-c-contents-list", HtmlEncoder.Default);
         output.Attributes.Add("role", "navigation");
-        
-        if (Label != null)
-        {
-            output.Attributes.Add("aria-label", Label);
-        }
+        output.Attributes.Add("aria-label", "Resource pages");
 
         var h2 = new TagBuilder("h2");
         h2.AddCssClass("gem-c-contents-list__title");
