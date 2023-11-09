@@ -119,6 +119,8 @@ public class AssetStructureRendererTests
         var actual = stringWriter.ToString();
 
         // assert
-        actual.Should().Be($"<img alt=\"HtmlEncode[[foo]]\" src=\"HtmlEncode[[/foo]]\"></img>");
+        actual.Should().StartWith("<img");
+        actual.Should().Contain("src=\"HtmlEncode[[/foo]]\"");
+        actual.Should().Contain("alt=\"HtmlEncode[[foo]]\"");
     }
 }

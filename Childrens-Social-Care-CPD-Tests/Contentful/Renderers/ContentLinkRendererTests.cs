@@ -1,6 +1,5 @@
 ﻿using Childrens_Social_Care_CPD.Contentful.Models;
 using Childrens_Social_Care_CPD.Contentful.Renderers;
-using Contentful.Core.Models;
 using FluentAssertions;
 using Microsoft.Extensions.WebEncoders.Testing;
 using NUnit.Framework;
