@@ -47,14 +47,12 @@ public class GdsFilterCheckboxTagHelperTests
     public async Task Id_Should_Be_Used()
     {
         // arrange
-        var stringWriter = new StringWriter();
         var sut = new GdsFilterCheckboxTagHelper();
         sut.Id = "foo";
 
         // act
         await sut.ProcessAsync(_tagHelperContext, _tagHelperOutput);
-        _tagHelperOutput.WriteTo(stringWriter, new HtmlTestEncoder());
-        var actual = stringWriter.ToString();
+        var actual = _tagHelperOutput.AsString();
 
         // assert
         actual.Should().Contain("id=\"HtmlEncode[[foo]]\"");
@@ -64,14 +62,12 @@ public class GdsFilterCheckboxTagHelperTests
     public async Task Name_Should_Be_Used()
     {
         // arrange
-        var stringWriter = new StringWriter();
         var sut = new GdsFilterCheckboxTagHelper();
         sut.Name = "foo";
 
         // act
         await sut.ProcessAsync(_tagHelperContext, _tagHelperOutput);
-        _tagHelperOutput.WriteTo(stringWriter, new HtmlTestEncoder());
-        var actual = stringWriter.ToString();
+        var actual = _tagHelperOutput.AsString();
 
         // assert
         actual.Should().Contain("name=\"HtmlEncode[[foo]]\"");
@@ -81,14 +77,12 @@ public class GdsFilterCheckboxTagHelperTests
     public async Task Value_Should_Be_Used()
     {
         // arrange
-        var stringWriter = new StringWriter();
         var sut = new GdsFilterCheckboxTagHelper();
         sut.Value = "foo";
 
         // act
         await sut.ProcessAsync(_tagHelperContext, _tagHelperOutput);
-        _tagHelperOutput.WriteTo(stringWriter, new HtmlTestEncoder());
-        var actual = stringWriter.ToString();
+        var actual = _tagHelperOutput.AsString();
 
         // assert
         actual.Should().Contain("value=\"HtmlEncode[[foo]]\"");
@@ -98,14 +92,12 @@ public class GdsFilterCheckboxTagHelperTests
     public async Task Checked_Should_Be_Used()
     {
         // arrange
-        var stringWriter = new StringWriter();
         var sut = new GdsFilterCheckboxTagHelper();
         sut.Checked = true;
 
         // act
         await sut.ProcessAsync(_tagHelperContext, _tagHelperOutput);
-        _tagHelperOutput.WriteTo(stringWriter, new HtmlTestEncoder());
-        var actual = stringWriter.ToString();
+        var actual = _tagHelperOutput.AsString();
 
         // assert
         actual.Should().Contain("checked");
@@ -115,14 +107,12 @@ public class GdsFilterCheckboxTagHelperTests
     public async Task Checked_Should_Not_Be_Used()
     {
         // arrange
-        var stringWriter = new StringWriter();
         var sut = new GdsFilterCheckboxTagHelper();
         sut.Checked = false;
 
         // act
         await sut.ProcessAsync(_tagHelperContext, _tagHelperOutput);
-        _tagHelperOutput.WriteTo(stringWriter, new HtmlTestEncoder());
-        var actual = stringWriter.ToString();
+        var actual = _tagHelperOutput.AsString();
 
         // assert
         actual.Should().NotContain("checked");
@@ -132,14 +122,12 @@ public class GdsFilterCheckboxTagHelperTests
     public async Task Output_Is_A_Checkbox()
     {
         // arrange
-        var stringWriter = new StringWriter();
         var sut = new GdsFilterCheckboxTagHelper();
         sut.Checked = false;
 
         // act
         await sut.ProcessAsync(_tagHelperContext, _tagHelperOutput);
-        _tagHelperOutput.WriteTo(stringWriter, new HtmlTestEncoder());
-        var actual = stringWriter.ToString();
+        var actual = _tagHelperOutput.AsString();
 
         // assert
         actual.Should().Contain("type=\"HtmlEncode[[checkbox]]\"");
@@ -149,7 +137,6 @@ public class GdsFilterCheckboxTagHelperTests
     public async Task ChildContent_Should_Be_Rendered()
     {
         // arrange
-        var stringWriter = new StringWriter();
         var sut = new GdsFilterCheckboxTagHelper();
 
         var content = "<child content>";
@@ -166,8 +153,7 @@ public class GdsFilterCheckboxTagHelperTests
 
         // act
         await sut.ProcessAsync(_tagHelperContext, tagHelperOutput);
-        tagHelperOutput.WriteTo(stringWriter, new HtmlTestEncoder());
-        var actual = stringWriter.ToString();
+        var actual = _tagHelperOutput.AsString();
 
         // assert
         actual.Should().Contain("<child content>");

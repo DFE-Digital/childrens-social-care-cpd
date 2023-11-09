@@ -48,8 +48,10 @@ public class GdsFilterTagHelperTests
     {
         // arrange
         var stringWriter = new StringWriter();
-        var sut = new GdsFilterTagHelper();
-        sut.ClearFiltersUri = "foo";
+        var sut = new GdsFilterTagHelper
+        {
+            ClearFiltersUri = "foo"
+        };
 
         // act
         await sut.ProcessAsync(_tagHelperContext, _tagHelperOutput);

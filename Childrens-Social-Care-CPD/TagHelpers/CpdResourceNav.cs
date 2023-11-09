@@ -35,7 +35,7 @@ public class CpdResourceNav : TagHelper
         output.AddClass("gem-c-contents-list", HtmlEncoder.Default);
         output.Attributes.Add("role", "navigation");
         
-        if (Label  != null)
+        if (Label != null)
         {
             output.Attributes.Add("aria-label", Label);
         }

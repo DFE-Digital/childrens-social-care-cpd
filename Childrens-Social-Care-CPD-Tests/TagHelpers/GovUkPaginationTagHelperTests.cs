@@ -71,7 +71,6 @@ public class GovUkPaginationTagHelperTests
     public void Should_Highlight_Current_Page(int currentPage)
     {
         // arrange
-        var stringWriter = new StringWriter();
         var tagHelper = new GovUkPaginationTagHelper
         {
             PageCount = 2,
@@ -82,8 +81,7 @@ public class GovUkPaginationTagHelperTests
 
         // act
         tagHelper.Process(_tagHelperContext, _tagHelperOutput);
-        _tagHelperOutput.WriteTo(stringWriter, new HtmlTestEncoder());
-        var actual = stringWriter.ToString();
+        var actual = _tagHelperOutput.AsString();
         var match = regex.Match(actual);
 
         // assert
@@ -94,7 +92,6 @@ public class GovUkPaginationTagHelperTests
     public void Should_Not_Highlight_Next_Page()
     {
         // arrange
-        var stringWriter = new StringWriter();
         var tagHelper = new GovUkPaginationTagHelper
         {
             PageCount = 2,
@@ -105,8 +102,7 @@ public class GovUkPaginationTagHelperTests
 
         // act
         tagHelper.Process(_tagHelperContext, _tagHelperOutput);
-        _tagHelperOutput.WriteTo(stringWriter, new HtmlTestEncoder());
-        var actual = stringWriter.ToString();
+        var actual = _tagHelperOutput.AsString();
         var match = regex.Match(actual);
 
         // assert
@@ -117,7 +113,6 @@ public class GovUkPaginationTagHelperTests
     public void Shows_Next_Link()
     {
         // arrange
-        var stringWriter = new StringWriter();
         var tagHelper = new GovUkPaginationTagHelper
         {
             PageCount = 2,
@@ -127,8 +122,7 @@ public class GovUkPaginationTagHelperTests
 
         // act
         tagHelper.Process(_tagHelperContext, _tagHelperOutput);
-        _tagHelperOutput.WriteTo(stringWriter, new HtmlTestEncoder());
-        var actual = stringWriter.ToString();
+        var actual = _tagHelperOutput.AsString();
 
         // assert
         actual.Should().Contain("HtmlEncode[[Next]]");
@@ -138,7 +132,6 @@ public class GovUkPaginationTagHelperTests
     public void Does_Not_Show_Previous_Link_On_First_Page()
     {
         // arrange
-        var stringWriter = new StringWriter();
         var tagHelper = new GovUkPaginationTagHelper
         {
             PageCount = 2,
@@ -148,8 +141,7 @@ public class GovUkPaginationTagHelperTests
 
         // act
         tagHelper.Process(_tagHelperContext, _tagHelperOutput);
-        _tagHelperOutput.WriteTo(stringWriter, new HtmlTestEncoder());
-        var actual = stringWriter.ToString();
+        var actual = _tagHelperOutput.AsString();
 
         // assert
         actual.Should().NotContain("HtmlEncode[[Previous]]");
@@ -159,7 +151,6 @@ public class GovUkPaginationTagHelperTests
     public void Shows_Previous_Link()
     {
         // arrange
-        var stringWriter = new StringWriter();
         var tagHelper = new GovUkPaginationTagHelper
         {
             PageCount = 2,
@@ -169,8 +160,7 @@ public class GovUkPaginationTagHelperTests
 
         // act
         tagHelper.Process(_tagHelperContext, _tagHelperOutput);
-        _tagHelperOutput.WriteTo(stringWriter, new HtmlTestEncoder());
-        var actual = stringWriter.ToString();
+        var actual = _tagHelperOutput.AsString();
 
         // assert
         actual.Should().Contain("HtmlEncode[[Previous]]");
@@ -180,7 +170,6 @@ public class GovUkPaginationTagHelperTests
     public void Does_Not_Show_Next_Link_On_Last_Page()
     {
         // arrange
-        var stringWriter = new StringWriter();
         var tagHelper = new GovUkPaginationTagHelper
         {
             PageCount = 2,
@@ -190,8 +179,7 @@ public class GovUkPaginationTagHelperTests
 
         // act
         tagHelper.Process(_tagHelperContext, _tagHelperOutput);
-        _tagHelperOutput.WriteTo(stringWriter, new HtmlTestEncoder());
-        var actual = stringWriter.ToString();
+        var actual = _tagHelperOutput.AsString();
 
         // assert
         actual.Should().NotContain("HtmlEncode[[Next]]");
@@ -201,7 +189,6 @@ public class GovUkPaginationTagHelperTests
     public void Ellipses_Are_Generated()
     {
         // arrange
-        var stringWriter = new StringWriter();
         var tagHelper = new GovUkPaginationTagHelper
         {
             PageCount = 4,
@@ -211,8 +198,7 @@ public class GovUkPaginationTagHelperTests
 
         // act
         tagHelper.Process(_tagHelperContext, _tagHelperOutput);
-        _tagHelperOutput.WriteTo(stringWriter, new HtmlTestEncoder());
-        var actual = stringWriter.ToString();
+        var actual = _tagHelperOutput.AsString();
 
         // assert
         actual.Should().Contain("&ctdot;");
