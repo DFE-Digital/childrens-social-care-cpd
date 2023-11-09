@@ -47,8 +47,10 @@ public class GdsFilterCategoryTagHelperTests
     public async Task Index_Should_Be_Used()
     {
         // arrange
-        var sut = new GdsFilterCategoryTagHelper();
-        sut.Index = 3;
+        var sut = new GdsFilterCategoryTagHelper
+        {
+            Index = 3
+        };
 
         // act
         await sut.ProcessAsync(_tagHelperContext, _tagHelperOutput);
@@ -63,8 +65,10 @@ public class GdsFilterCategoryTagHelperTests
     public async Task Title_Should_Be_Used()
     {
         // arrange
-        var sut = new GdsFilterCategoryTagHelper();
-        sut.Title = "Foo";
+        var sut = new GdsFilterCategoryTagHelper
+        {
+            Title = "Foo"
+        };
 
         // act
         await sut.ProcessAsync(_tagHelperContext, _tagHelperOutput);

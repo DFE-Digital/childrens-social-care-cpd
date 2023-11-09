@@ -11,7 +11,7 @@ namespace Childrens_Social_Care_CPD_Tests.Contentful.Renderers;
 
 public class AssetStructureRendererTests
 {
-    private readonly AssetStructureRenderer _sut = new AssetStructureRenderer();
+    private readonly IRenderer<AssetStructure> _sut = new AssetStructureRenderer();
 
     [Test]
     public void Ignores_Empty_Structure()

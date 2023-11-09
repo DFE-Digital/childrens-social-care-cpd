@@ -46,8 +46,10 @@ public class CpdPropertiesListTests
     public async Task Output_Is_Suppressed_When_No_Items()
     {
         // arrange
-        var sut = new CpdPropertiesList();
-        sut.Items = new Dictionary<string, string>();
+        var sut = new CpdPropertiesList
+        {
+            Items = new Dictionary<string, string>()
+        };
 
         // act
         await sut.ProcessAsync(_tagHelperContext, _tagHelperOutput);
@@ -60,8 +62,10 @@ public class CpdPropertiesListTests
     public async Task Output_Is_A_UL_Element()
     {
         // arrange
-        var sut = new CpdPropertiesList();
-        sut.Items = new Dictionary<string, string>() { { "Foo", "foo" } };
+        var sut = new CpdPropertiesList
+        {
+            Items = new Dictionary<string, string>() { { "Foo", "foo" } }
+        };
 
         // act
         await sut.ProcessAsync(_tagHelperContext, _tagHelperOutput);
@@ -74,11 +78,13 @@ public class CpdPropertiesListTests
     public async Task Items_Are_Rendered()
     {
         // arrange
-        var sut = new CpdPropertiesList();
-        sut.Items = new Dictionary<string, string>()
+        var sut = new CpdPropertiesList
         {
-            { "Foo", "foo" },
-            { "Foo2", "foo2" }
+            Items = new Dictionary<string, string>()
+            {
+                { "Foo", "foo" },
+                { "Foo2", "foo2" }
+            }
         };
 
         // act
@@ -94,10 +100,12 @@ public class CpdPropertiesListTests
     public async Task Items_Are_Rendered_As_ListItem()
     {
         // arrange
-        var sut = new CpdPropertiesList();
-        sut.Items = new Dictionary<string, string>()
+        var sut = new CpdPropertiesList
         {
-            { "Foo", "foo" }
+            Items = new Dictionary<string, string>()
+            {
+                { "Foo", "foo" }
+            }
         };
 
         // act

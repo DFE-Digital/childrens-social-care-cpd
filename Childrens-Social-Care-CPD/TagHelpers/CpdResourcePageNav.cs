@@ -21,10 +21,7 @@ public class CpdResourcePageNav : TagHelper
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
-        if (string.IsNullOrEmpty(Current))
-        {
-            throw new NullReferenceException($"{nameof(Current)} must be specified");
-        }
+        ArgumentNullException.ThrowIfNull(Current);
 
         if (Navigation == null || Navigation.Count == 0)
         {
