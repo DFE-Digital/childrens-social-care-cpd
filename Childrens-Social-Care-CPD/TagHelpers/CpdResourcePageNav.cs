@@ -21,6 +21,11 @@ public class CpdResourcePageNav : TagHelper
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
+        if (string.IsNullOrEmpty(Current))
+        {
+            throw new ArgumentNullException(nameof(Current));
+        }
+
         if (Navigation == null || Navigation.Count == 0)
         {
             output.SuppressOutput();
@@ -32,7 +37,7 @@ public class CpdResourcePageNav : TagHelper
         output.AddClass("govuk-pagination", HtmlEncoder.Default);
         output.AddClass("govuk-pagination--block", HtmlEncoder.Default);
         output.Attributes.Add("role", "navigation");
-        output.Attributes.Add("aria-label", "Pagination");
+        output.Attributes.Add("aria-label", "pagination");
 
         var index = Navigation.FindIndex(x => x.Uri.TrimStart('/') == Current);
 
