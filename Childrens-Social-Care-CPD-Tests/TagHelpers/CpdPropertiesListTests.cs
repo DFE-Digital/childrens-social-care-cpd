@@ -39,7 +39,7 @@ public class CpdPropertiesListTests
         await sut.ProcessAsync(_tagHelperContext, _tagHelperOutput);
 
         // assert
-        _tagHelperOutput.TagName.Should().BeNull();
+        _tagHelperOutput.AsString().Should().BeEmpty();
     }
 
     [Test]
@@ -53,7 +53,7 @@ public class CpdPropertiesListTests
         await sut.ProcessAsync(_tagHelperContext, _tagHelperOutput);
 
         // assert
-        _tagHelperOutput.TagName.Should().BeNull();
+        _tagHelperOutput.AsString().Should().BeEmpty();
     }
 
     [Test]
