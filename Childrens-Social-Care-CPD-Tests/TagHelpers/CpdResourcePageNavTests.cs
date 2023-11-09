@@ -37,7 +37,7 @@ public class CpdResourcePageNavTests
         Func<Task> act = () => sut.ProcessAsync(_tagHelperContext, _tagHelperOutput);
 
         // act/assert
-        await act.Should().ThrowAsync<NullReferenceException>();
+        await act.Should().ThrowAsync<ArgumentNullException>();
     }
 
     [Test]
@@ -57,8 +57,11 @@ public class CpdResourcePageNavTests
     public async Task Output_Is_Suppressed_When_No_Navigation_Items()
     {
         // arrange
-        var sut = new CpdResourcePageNav { Current = "foo" };
-        sut.Navigation = new List<ContentLink>();
+        var sut = new CpdResourcePageNav
+        {
+            Current = "foo",
+            Navigation = new ()
+        };
 
         // act
         await sut.ProcessAsync(_tagHelperContext, _tagHelperOutput);
@@ -71,10 +74,13 @@ public class CpdResourcePageNavTests
     public async Task Output_Is_A_Nav_Element()
     {
         // arrange
-        var sut = new CpdResourcePageNav { Current = "foo" };
-        sut.Navigation = new List<ContentLink>
+        var sut = new CpdResourcePageNav
         {
-            new ContentLink { Uri = "/foo" }
+            Current = "foo",
+            Navigation = new ()
+            {
+                new ContentLink { Uri = "/foo" }
+            }
         };
 
         // act
@@ -89,10 +95,13 @@ public class CpdResourcePageNavTests
     public async Task Nav_Has_Attributes(string name, string value)
     {
         // arrange
-        var sut = new CpdResourcePageNav { Current = "foo" };
-        sut.Navigation = new List<ContentLink>
+        var sut = new CpdResourcePageNav
         {
-            new ContentLink { Uri = "/foo" }
+            Current = "foo",
+            Navigation = new ()
+            {
+                new ContentLink { Uri = "/foo" }
+            }
         };
 
         // act
@@ -107,14 +116,17 @@ public class CpdResourcePageNavTests
     public async Task Renders_Only_Next_When_At_Start_Of_Navigation()
     {
         // arrange
-        var sut = new CpdResourcePageNav { Current = "foo1" };
-        sut.Navigation = new List<ContentLink>
+        var sut = new CpdResourcePageNav
         {
-            new ContentLink { Uri = "/foo1" },
-            new ContentLink { Uri = "/foo2" },
-            new ContentLink { Uri = "/foo3" },
-            new ContentLink { Uri = "/foo4" },
-            new ContentLink { Uri = "/foo5" },
+            Current = "foo1",
+            Navigation = new ()
+            {
+                new ContentLink { Uri = "/foo1" },
+                new ContentLink { Uri = "/foo2" },
+                new ContentLink { Uri = "/foo3" },
+                new ContentLink { Uri = "/foo4" },
+                new ContentLink { Uri = "/foo5" },
+            }
         };
 
         // act
@@ -132,14 +144,17 @@ public class CpdResourcePageNavTests
     public async Task Renders_Only_Prev_And_Next_When_In_Middle_Of_Navigation(string current)
     {
         // arrange
-        var sut = new CpdResourcePageNav { Current = current };
-        sut.Navigation = new List<ContentLink>
+        var sut = new CpdResourcePageNav
         {
-            new ContentLink { Uri = "/foo1" },
-            new ContentLink { Uri = "/foo2" },
-            new ContentLink { Uri = "/foo3" },
-            new ContentLink { Uri = "/foo4" },
-            new ContentLink { Uri = "/foo5" },
+            Current = current,
+            Navigation = new ()
+            {
+                new ContentLink { Uri = "/foo1" },
+                new ContentLink { Uri = "/foo2" },
+                new ContentLink { Uri = "/foo3" },
+                new ContentLink { Uri = "/foo4" },
+                new ContentLink { Uri = "/foo5" },
+            }
         };
 
         // act
@@ -155,14 +170,17 @@ public class CpdResourcePageNavTests
     public async Task Renders_Only_Prev_When_At_End_Of_Navigation()
     {
         // arrange
-        var sut = new CpdResourcePageNav { Current = "foo5" };
-        sut.Navigation = new List<ContentLink>
+        var sut = new CpdResourcePageNav
         {
-            new ContentLink { Uri = "/foo1" },
-            new ContentLink { Uri = "/foo2" },
-            new ContentLink { Uri = "/foo3" },
-            new ContentLink { Uri = "/foo4" },
-            new ContentLink { Uri = "/foo5" },
+            Current = "foo5",
+            Navigation = new ()
+            {
+                new ContentLink { Uri = "/foo1" },
+                new ContentLink { Uri = "/foo2" },
+                new ContentLink { Uri = "/foo3" },
+                new ContentLink { Uri = "/foo4" },
+                new ContentLink { Uri = "/foo5" },
+            }
         };
 
         // act
