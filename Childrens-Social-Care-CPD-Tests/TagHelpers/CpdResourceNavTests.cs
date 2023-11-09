@@ -79,6 +79,7 @@ public class CpdResourceNavTests
     }
 
     [TestCase("role", "navigation")]
+    [TestCase("aria-label", "Resource pages")]
     public async Task Nav_Has_Attributes(string name, string value)
     {
         // arrange

@@ -94,7 +94,7 @@ public class GdsFilterCategoryTagHelperTests
 
         // act
         await sut.ProcessAsync(_tagHelperContext, tagHelperOutput);
-        var actual = _tagHelperOutput.AsString();
+        var actual = tagHelperOutput.AsString();
 
         // assert
         actual.Should().Contain("<child content>");
