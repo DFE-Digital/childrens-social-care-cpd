@@ -63,14 +63,14 @@ public class CpdResourceNav : TagHelper
             {
                 li.AddCssClass("gem-c-contents-list__list-item--active");
                 li.Attributes.Add("aria-current", "true");
-                li.InnerHtml.AppendHtml(contentLink.Name);
+                li.InnerHtml.Append(contentLink.Name);
             }
             else
             {
                 var a = new TagBuilder("a");
                 a.AddCssClass("gem-c-contents-list__link govuk-link");
                 a.Attributes.Add("href", $"/{uri}");
-                a.InnerHtml.AppendHtml(contentLink.Name);
+                a.InnerHtml.Append(contentLink.Name);
                 li.InnerHtml.AppendHtml(a);
             }
 
