@@ -3,28 +3,20 @@ using System.Text.Json.Serialization;
 
 namespace Childrens_Social_Care_CPD.GraphQL.Queries;
 
-public class SearchResourcesByTags
+public class GetContentTags
 {
-    public static GraphQLRequest Query(IEnumerable<string> tags, int limit, int skip, string order = "sys_publishedAt_ASC", bool preview = false)
+    public static GraphQLRequest Query(string id, bool preview = false)
     {
         return new GraphQLRequest
         {
             Query = @"
-            query SearchResourcesByTags($searchTags: [String!], $limit: Int, $skip: Int, $order: [ContentOrder], $preview: Boolean) {
-              contentCollection(where: {
-                    contentType: ""Resource""
-                    contentfulMetadata: {
-                          tags_exists: true
-                          tags: {
-                            id_contains_some: $searchTags
-                          }
-                        }
-                  }, limit: $limit, skip: $skip, order: $order, preview: $preview) {
+            query GetContentTags($id: String!, $preview: Boolean) {
+              contentCollection(where: {    
+                    id : $id,
+                  }, preview: $preview) {
                 total
                 items {
                   id
-                  contentTitle
-                  searchSummary
                   sys {
                     publishedAt
                     firstPublishedAt
@@ -38,13 +30,10 @@ public class SearchResourcesByTags
                 }
               }
             }",
-            OperationName = "SearchResourcesByTags",
+            OperationName = "GetContentTags",
             Variables = new
             {
-                searchTags = tags,
-                limit,
-                skip,
-                order,
+                id,
                 preview,
             }
         };
@@ -59,15 +48,13 @@ public class SearchResourcesByTags
     public class ContentCollection
     {
         [JsonPropertyName("items")]
-        public ICollection<SearchResult> Items { get; set; }
+        public ICollection<ContentItem> Items { get; set; }
         public int Total { get; set; }
     }
 
-    public class SearchResult
+    public class ContentItem
     {
         public string Id { get; set; }
-        public string ContentTitle { get; set; }
-        public string SearchSummary { get; set; }
         public PublishedInfo Sys { get; set; }
         public MetaData ContentfulMetaData { get; set; }
     }

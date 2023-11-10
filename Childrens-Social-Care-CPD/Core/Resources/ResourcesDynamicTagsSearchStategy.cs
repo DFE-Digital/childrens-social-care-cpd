@@ -1,6 +1,5 @@
 ﻿using Childrens_Social_Care_CPD.Controllers;
 using Childrens_Social_Care_CPD.DataAccess;
-using Childrens_Social_Care_CPD.Extensions;
 using Childrens_Social_Care_CPD.GraphQL.Queries;
 using Childrens_Social_Care_CPD.Models;
 
@@ -33,7 +32,7 @@ internal class ResourcesDynamicTagsSearchStategy : IResourcesSearchStrategy
 
     private static Tuple<int, int, int> CalculatePageStats(SearchResourcesByTags.ResponseType searchResults, int page)
     {
-        var totalResults = searchResults?.ResourceCollection?.Total ?? 0;
+        var totalResults = searchResults?.ContentCollection?.Total ?? 0;
         var totalPages = (int)Math.Ceiling((decimal)totalResults / PAGE_SIZE);
 
         return Tuple.Create(totalResults, totalPages, Math.Min(page, totalPages));
@@ -75,7 +74,7 @@ internal class ResourcesDynamicTagsSearchStategy : IResourcesSearchStrategy
        
         return new ResourcesListViewModel(
             pageContent,
-            searchResults?.ResourceCollection,
+            searchResults?.ContentCollection,
             tagInfos,
             query.Tags,
             (int)query.SortOrder,

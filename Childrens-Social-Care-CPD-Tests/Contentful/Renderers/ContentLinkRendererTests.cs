@@ -1,6 +1,5 @@
 ﻿using Childrens_Social_Care_CPD.Contentful.Models;
 using Childrens_Social_Care_CPD.Contentful.Renderers;
-using Contentful.Core.Models;
 using FluentAssertions;
 using Microsoft.Extensions.WebEncoders.Testing;
 using NUnit.Framework;
@@ -10,7 +9,7 @@ namespace Childrens_Social_Care_CPD_Tests.Contentful.Renderers;
 
 public class ContentLinkRendererTests
 {
-    private ContentLinkRenderer _sut = new ContentLinkRenderer();
+    private readonly IRenderer<ContentLink> _sut = new ContentLinkRenderer();
 
     [TestCase("http://foo", "http://foo")]
     [TestCase("https://foo", "https://foo")]

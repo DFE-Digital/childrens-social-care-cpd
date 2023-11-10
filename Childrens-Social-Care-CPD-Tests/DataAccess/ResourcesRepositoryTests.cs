@@ -12,12 +12,12 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using static Childrens_Social_Care_CPD.GraphQL.Queries.SearchResourcesByTags;
 using System.Collections.ObjectModel;
 using System;
 using Contentful.Core.Models.Management;
 using System.Linq;
 using Childrens_Social_Care_CPD.Controllers;
+using Childrens_Social_Care_CPD.GraphQL.Queries;
 
 namespace Childrens_Social_Care_CPD_Tests.DataAccess;
 
@@ -28,11 +28,11 @@ public class ResourcesRepositoryTests
     private ICpdContentfulClient _contentfulClient;
     private IGraphQLWebSocketClient _gqlClient;
 
-    private void SetSearchResults(ResponseType responseType)
+    private void SetSearchResults(SearchResourcesByTags.ResponseType responseType)
     {
-        var response = Substitute.For<GraphQLResponse<ResponseType>>();
+        var response = Substitute.For<GraphQLResponse<SearchResourcesByTags.ResponseType>>();
         response.Data = responseType;
-        _gqlClient.SendQueryAsync<ResponseType>(Arg.Any<GraphQLRequest>(), Arg.Any<CancellationToken>()).Returns(response);
+        _gqlClient.SendQueryAsync<SearchResourcesByTags.ResponseType>(Arg.Any<GraphQLRequest>(), Arg.Any<CancellationToken>()).Returns(response);
     }
 
     [SetUp]
@@ -92,14 +92,14 @@ public class ResourcesRepositoryTests
     public async Task FindByTagsAsync_Returns_Results()
     {
         // arrange
-        var results = new ResponseType
+        var results = new SearchResourcesByTags.ResponseType
         {
-            ResourceCollection = new ResourceCollection
+            ContentCollection = new SearchResourcesByTags.ContentCollection
             {
                 Total = 1,
-                Items = new Collection<SearchResult>
+                Items = new Collection<SearchResourcesByTags.SearchResult>
                 {
-                    new SearchResult()
+                    new SearchResourcesByTags.SearchResult()
                 }
             }
         };
@@ -117,11 +117,11 @@ public class ResourcesRepositoryTests
     public async Task FindByTagsAsync_Limits_Results()
     {
         // arrange
-        var results = new ResponseType();
-        var response = Substitute.For<GraphQLResponse<ResponseType>>();
+        var results = new SearchResourcesByTags.ResponseType();
+        var response = Substitute.For<GraphQLResponse<SearchResourcesByTags.ResponseType>>();
         response.Data = results;
         GraphQLRequest request = null;
-        _gqlClient.SendQueryAsync<ResponseType>(Arg.Do<GraphQLRequest>(value => request = value), Arg.Any<CancellationToken>()).Returns(response);
+        _gqlClient.SendQueryAsync<SearchResourcesByTags.ResponseType>(Arg.Do<GraphQLRequest>(value => request = value), Arg.Any<CancellationToken>()).Returns(response);
 
         var sut = new ResourcesRepository(_applicationConfiguration, _contentfulClient, _gqlClient);
 
@@ -137,11 +137,11 @@ public class ResourcesRepositoryTests
     public async Task FindByTagsAsync_Skips_Results()
     {
         // arrange
-        var results = new ResponseType();
-        var response = Substitute.For<GraphQLResponse<ResponseType>>();
+        var results = new SearchResourcesByTags.ResponseType();
+        var response = Substitute.For<GraphQLResponse<SearchResourcesByTags.ResponseType>>();
         response.Data = results;
         GraphQLRequest request = null;
-        _gqlClient.SendQueryAsync<ResponseType>(Arg.Do<GraphQLRequest>(value => request = value), Arg.Any<CancellationToken>()).Returns(response);
+        _gqlClient.SendQueryAsync<SearchResourcesByTags.ResponseType>(Arg.Do<GraphQLRequest>(value => request = value), Arg.Any<CancellationToken>()).Returns(response);
 
         var sut = new ResourcesRepository(_applicationConfiguration, _contentfulClient, _gqlClient);
 
@@ -157,10 +157,10 @@ public class ResourcesRepositoryTests
     public async Task FindByTagsAsync_Preview_Flag_Is_False_By_Default()
     {
         // arrange
-        var response = Substitute.For<GraphQLResponse<ResponseType>>();
-        response.Data = new ResponseType();
+        var response = Substitute.For<GraphQLResponse<SearchResourcesByTags.ResponseType>>();
+        response.Data = new SearchResourcesByTags.ResponseType();
         GraphQLRequest request = null;
-        _gqlClient.SendQueryAsync<ResponseType>(Arg.Do<GraphQLRequest>(value => request = value), Arg.Any<CancellationToken>()).Returns(response);
+        _gqlClient.SendQueryAsync<SearchResourcesByTags.ResponseType>(Arg.Do<GraphQLRequest>(value => request = value), Arg.Any<CancellationToken>()).Returns(response);
 
         var sut = new ResourcesRepository(_applicationConfiguration, _contentfulClient, _gqlClient);
 
@@ -178,10 +178,10 @@ public class ResourcesRepositoryTests
         // arrange
         _applicationConfiguration.ContentfulEnvironment.Returns(new StringConfigSetting(() => ApplicationEnvironment.PreProduction));
 
-        var response = Substitute.For<GraphQLResponse<ResponseType>>();
-        response.Data = new ResponseType();
+        var response = Substitute.For<GraphQLResponse<SearchResourcesByTags.ResponseType>>();
+        response.Data = new SearchResourcesByTags.ResponseType();
         GraphQLRequest request = null;
-        _gqlClient.SendQueryAsync<ResponseType>(Arg.Do<GraphQLRequest>(value => request = value), Arg.Any<CancellationToken>()).Returns(response);
+        _gqlClient.SendQueryAsync<SearchResourcesByTags.ResponseType>(Arg.Do<GraphQLRequest>(value => request = value), Arg.Any<CancellationToken>()).Returns(response);
 
         var sut = new ResourcesRepository(_applicationConfiguration, _contentfulClient, _gqlClient);
 
@@ -249,4 +249,114 @@ public class ResourcesRepositoryTests
         // assert
         actual.Any(x => x.TagName == "fooFoo").Should().BeFalse();
     }
+
+    [Test]
+    public async Task GetByIdAsync_Queries_Tags_By_Id()
+    {
+        // arrange
+        var collection = new ContentfulCollection<Content>
+        {
+            Items = new List<Content>()
+        };
+        _contentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), Arg.Any<CancellationToken>()).Returns(collection);
+
+        var results = new GetContentTags.ResponseType();
+        var response = Substitute.For<GraphQLResponse<GetContentTags.ResponseType>>();
+        response.Data = results;
+        GraphQLRequest request = null;
+        _gqlClient.SendQueryAsync<GetContentTags.ResponseType>(Arg.Do<GraphQLRequest>(value => request = value), Arg.Any<CancellationToken>()).Returns(response);
+
+        var sut = new ResourcesRepository(_applicationConfiguration, _contentfulClient, _gqlClient);
+
+        // act
+        await sut.GetByIdAsync("foo", cancellationToken: _cancellationTokenSource.Token);
+
+        // assert
+        dynamic variables = request.Variables;
+        (variables.id as object).Should().Be("foo");
+    }
+
+    [Test]
+    public async Task GetByIdAsync_Preview_Flag_Is_False_By_Default()
+    {
+        // arrange
+        var collection = new ContentfulCollection<Content>
+        {
+            Items = new List<Content>()
+        };
+        _contentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), Arg.Any<CancellationToken>()).Returns(collection);
+
+        var results = new GetContentTags.ResponseType();
+        var response = Substitute.For<GraphQLResponse<GetContentTags.ResponseType>>();
+        response.Data = results;
+        GraphQLRequest request = null;
+        _gqlClient.SendQueryAsync<GetContentTags.ResponseType>(Arg.Do<GraphQLRequest>(value => request = value), Arg.Any<CancellationToken>()).Returns(response);
+
+        var sut = new ResourcesRepository(_applicationConfiguration, _contentfulClient, _gqlClient);
+
+        // act
+        await sut.GetByIdAsync("foo", cancellationToken: _cancellationTokenSource.Token);
+
+        // assert
+        dynamic variables = request.Variables;
+        (variables.preview as object).Should().Be(false);
+    }
+
+    [Test]
+    public async Task GetByIdAsync_Sets_Preview_Flag()
+    {
+        // arrange
+        _applicationConfiguration.ContentfulEnvironment.Returns(new StringConfigSetting(() => ApplicationEnvironment.PreProduction));
+
+        var collection = new ContentfulCollection<Content>
+        {
+            Items = new List<Content>()
+        };
+        _contentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), Arg.Any<CancellationToken>()).Returns(collection);
+
+        var results = new GetContentTags.ResponseType();
+        var response = Substitute.For<GraphQLResponse<GetContentTags.ResponseType>>();
+        response.Data = results;
+        GraphQLRequest request = null;
+        _gqlClient.SendQueryAsync<GetContentTags.ResponseType>(Arg.Do<GraphQLRequest>(value => request = value), Arg.Any<CancellationToken>()).Returns(response);
+
+        var sut = new ResourcesRepository(_applicationConfiguration, _contentfulClient, _gqlClient);
+
+        // act
+        await sut.GetByIdAsync("foo", cancellationToken: _cancellationTokenSource.Token);
+
+        // assert
+        dynamic variables = request.Variables;
+        (variables.preview as object).Should().Be(true);
+    }
+
+    [Test]
+    public async Task GetByIdAsync_Returns_Data()
+    {
+        // arrange
+        _applicationConfiguration.ContentfulEnvironment.Returns(new StringConfigSetting(() => ApplicationEnvironment.PreProduction));
+
+        var content = new Content();
+        var collection = new ContentfulCollection<Content>
+        {
+            Items = new List<Content> { content }
+        };
+        _contentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), Arg.Any<CancellationToken>()).Returns(collection);
+
+        var results = new GetContentTags.ResponseType();
+        var response = Substitute.For<GraphQLResponse<GetContentTags.ResponseType>>();
+        response.Data = results;
+        GraphQLRequest request = null;
+        _gqlClient.SendQueryAsync<GetContentTags.ResponseType>(Arg.Do<GraphQLRequest>(value => request = value), Arg.Any<CancellationToken>()).Returns(response);
+
+        var sut = new ResourcesRepository(_applicationConfiguration, _contentfulClient, _gqlClient);
+
+        // act
+        (var actualContent, var actualTags) = await sut.GetByIdAsync("foo", cancellationToken: _cancellationTokenSource.Token);
+
+        // assert
+        actualContent.Should().Be(content);
+        actualTags.Should().Be(results);
+    }
+
 }

@@ -3,24 +3,37 @@
 
 @model SearchResourcesByTags.SearchResult
 
+@{
+    var properties = new Dictionary<string, string>(Model.ContentfulMetaData.Tags.Where(x => x.Name.StartsWith("Resource:")).Select(x =>
+    {
+        var property = x.Name[9..];
+        var tokens = property.Split('=');
+        return tokens.Length > 1
+            ? KeyValuePair.Create(tokens[0].Trim(' '), tokens[1].Trim(' '))
+            : KeyValuePair.Create(property, string.Empty);
+    }));
+}
+
 <li class="dfeuk-document-list__item dfeuk-document-list--no-underline ">
-    <h3 class="govuk-heading-m"><a href="/@Model.LinkedFrom.ContentCollection.Items.First().Id">@Model.Title</a>&nbsp;
-        @if (!string.IsNullOrEmpty(@Model.Label))
+    <h3 class="govuk-heading-m"><a href="/@Model.Id">@Model.ContentTitle</a>&nbsp;
+        @if (properties.ContainsKey("Label"))
         {
-            <strong class="govuk-tag govuk-tag--blue">@Model.Label</strong>
+            <strong class="govuk-tag govuk-tag--blue">@properties["Label"]</strong>
         }
     </h3>
     <p class="govuk-body">@Model.SearchSummary</p>
     
     <ul class="dfeuk-document-list__item-metadata">
-        <li class="gdfeuk-document-list__attribute">
-            From: @Model.From
-        </li>
+        @if (properties.ContainsKey("From"))
+        {
+            <li class="gdfeuk-document-list__attribute">From:&nbsp;@properties["From"]</li>
+        }
+        
         <li class="gdfeuk-document-list__attribute">
             Published: <time datetime="@Model.Sys.FirstPublishedAt?.ToString("yyyy-MM-dd")">@Model.Sys.FirstPublishedAt?.ToString("dd MMMM yyyy")</time>
         </li>
         <li class="gdfeuk-document-list__attribute">
-            Update: <time datetime="@Model.Sys.PublishedAt?.ToString("yyyy-MM-dd")">@Model.Sys.PublishedAt?.ToString("dd MMMM yyyy")</time>
+            Updated: <time datetime="@Model.Sys.PublishedAt?.ToString("yyyy-MM-dd")">@Model.Sys.PublishedAt?.ToString("dd MMMM yyyy")</time>
         </li>
     </ul>
 </li>

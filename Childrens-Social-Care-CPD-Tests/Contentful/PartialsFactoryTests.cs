@@ -9,7 +9,7 @@ namespace Childrens_Social_Care_CPD_Tests.Contentful;
 [TestFixture]
 public partial class PartialsFactoryTests
 {
-    public static object[] Successful_Resolves =
+    private static readonly object[] Successful_Resolves =
     {
         new object[] { new AreaOfPractice(), "_AreaOfPractice" },
         new object[] { new AreaOfPracticeList(), "_AreaOfPracticeList" },
@@ -23,13 +23,11 @@ public partial class PartialsFactoryTests
         new object[] { new HeroBanner(), string.Empty },
         new object[] { new LinkCard(), "_LinkCard" },
         new object[] { new ImageCard(), "_ImageCard" },
-        new object[] { new ImageResource(), "_ImageResource" },
+        new object[] { new NavigationMenu(), "_NavigationMenu" },
         new object[] { new LinkListCard(), "_LinkListCard" },
         new object[] { new PdfFileResource(), "_PdfFileResource" },
-        new object[] { new Resource(), "_Resource" },
         new object[] { new RichTextBlock(), "_RichTextBlock" },
         new object[] { new RoleList(), "_RoleList" },
-        new object[] { new SideMenu(), "_SideMenu" },
         new object[] { new TextBlock(), "_TextBlock" },
         new object[] { new VideoResource(), "_VideoResource" },
     };
@@ -42,7 +40,7 @@ public partial class PartialsFactoryTests
         actual.Should().Be(expectedPartialName);
     }
 
-    public static IContent[] Unsuccessful_Resolves =
+    private static readonly IContent[] Unsuccessful_Resolves =
     {
         new TestingContentItem(),
         null
