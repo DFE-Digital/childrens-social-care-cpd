@@ -1,5 +1,4 @@
 ﻿using Childrens_Social_Care_CPD.Contentful.Models;
-using Childrens_Social_Care_CPD.Controllers;
 using Childrens_Social_Care_CPD.Core.Resources;
 using Childrens_Social_Care_CPD.GraphQL.Queries;
 
@@ -12,10 +11,9 @@ public static class ResourceSort
     public const string MostViewed = "Most viewed";
 }
 
-
 public record ResourcesListViewModel(
     Content Content,
-    SearchResourcesByTags.ResourceCollection Results,
+    SearchResourcesByTags.ContentCollection Results,
     IEnumerable<TagInfo> TagInfos,
     IEnumerable<string> SelectedTags,
     int SortOrder = 0,

@@ -6,7 +6,6 @@ using Childrens_Social_Care_CPD.Core.Resources;
 using Childrens_Social_Care_CPD.GraphQL.Queries;
 using Contentful.Core.Search;
 using GraphQL.Client.Abstractions.Websocket;
-using System.Diagnostics;
 
 namespace Childrens_Social_Care_CPD.DataAccess;
 
@@ -15,6 +14,7 @@ public interface IResourcesRepository
     Task<Content> FetchRootPageAsync(CancellationToken cancellationToken = default);
     Task<SearchResourcesByTags.ResponseType> FindByTagsAsync(IEnumerable<string> tags, int skip, int take, ResourceSortOrder resourceSortOrder, CancellationToken cancellationToken = default);
     Task<IEnumerable<TagInfo>> GetSearchTagsAsync();
+    Task<Tuple<Content, GetContentTags.ResponseType>> GetByIdAsync(string id, int depth = 10, CancellationToken cancellationToken = default);
 }
 
 public class ResourcesRepository : IResourcesRepository
@@ -50,6 +50,25 @@ public class ResourcesRepository : IResourcesRepository
         return _gqlClient
             .SendQueryAsync<SearchResourcesByTags.ResponseType>(SearchResourcesByTags.Query(tags, take, skip, order, _isPreview), cancellationToken)
             .ContinueWith(x => x.Result.Data);
+    }
+
+    public async Task<Tuple<Content, GetContentTags.ResponseType>> GetByIdAsync(string id, int depth = 10, CancellationToken cancellationToken = default)
+    {
+        var queryBuilder = QueryBuilder<Content>.New
+            .ContentTypeIs("content")
+            .Include(depth)
+            .FieldEquals("fields.id", id);
+
+        var tagsTask = _gqlClient
+            .SendQueryAsync<GetContentTags.ResponseType>(GetContentTags.Query(id, _isPreview), cancellationToken)
+            .ContinueWith(x => x.Result.Data);
+
+        var contentTask = _cpdClient
+            .GetEntries(queryBuilder, cancellationToken)
+            .ContinueWith(x => x.Result.FirstOrDefault());
+
+        await Task.WhenAll(contentTask, tagsTask);
+        return Tuple.Create(contentTask.Result, tagsTask.Result);
     }
 
     public async Task<IEnumerable<TagInfo>> GetSearchTagsAsync()

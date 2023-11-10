@@ -125,9 +125,6 @@
         <ul class="dfeuk-document-list">
         @foreach (var contentItem in Model.Results.Items)
         {
-            var linkedFrom = contentItem.LinkedFrom.ContentCollection.Items.FirstOrDefault();
-            if (linkedFrom == null) continue;
-            
             <partial name="_SearchResult" model="contentItem" />
         }
         </ul>

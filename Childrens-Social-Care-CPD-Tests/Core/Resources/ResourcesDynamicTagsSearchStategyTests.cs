@@ -109,7 +109,7 @@ public class ResourcesDynamicTagsSearchStategyTests
         // arrange
         var results = new ResponseType()
         {
-            ResourceCollection = new ResourceCollection()
+            ContentCollection = new ContentCollection()
             {
                 Total = 3,
                 Items = new Collection<SearchResult>()
