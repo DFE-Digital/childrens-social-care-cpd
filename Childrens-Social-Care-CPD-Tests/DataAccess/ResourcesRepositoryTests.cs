@@ -12,15 +12,12 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-//using static Childrens_Social_Care_CPD.GraphQL.Queries.SearchResourcesByTags;
 using System.Collections.ObjectModel;
 using System;
 using Contentful.Core.Models.Management;
 using System.Linq;
 using Childrens_Social_Care_CPD.Controllers;
 using Childrens_Social_Care_CPD.GraphQL.Queries;
-using System.Net.Sockets;
-using Microsoft.VisualBasic;
 
 namespace Childrens_Social_Care_CPD_Tests.DataAccess;
 
@@ -252,26 +249,6 @@ public class ResourcesRepositoryTests
         // assert
         actual.Any(x => x.TagName == "fooFoo").Should().BeFalse();
     }
-
-
-    //public async Task<Tuple<Content, GetContentTags.ResponseType>> GetByIdAsync(string id, int depth = 10, CancellationToken cancellationToken = default)
-    //{
-    //    var queryBuilder = QueryBuilder<Content>.New
-    //        .ContentTypeIs("content")
-    //        .Include(depth)
-    //        .FieldEquals("fields.id", id);
-
-    //    var tagsTask = _gqlClient
-    //        .SendQueryAsync<GetContentTags.ResponseType>(GetContentTags.Query(id, _isPreview), cancellationToken)
-    //        .ContinueWith(x => x.Result.Data);
-
-    //    var contentTask = _cpdClient
-    //        .GetEntries(queryBuilder, cancellationToken)
-    //        .ContinueWith(x => x.Result.FirstOrDefault());
-
-    //    await Task.WhenAll(contentTask, tagsTask);
-    //    return Tuple.Create(contentTask.Result, tagsTask.Result);
-    //}
 
     [Test]
     public async Task GetByIdAsync_Queries_Tags_By_Id()
