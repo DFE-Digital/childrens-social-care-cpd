@@ -102,7 +102,6 @@ for (const contentTypeToDelete of contentTypesToDelete) {
         llog("found", chalk.yellow(entries.total))
         for (let entry of entries.items) {
             if (entry.sys.publishedVersion) {
-                //log(`[${chalk.yellowBright("unpublish")}]`, entry.sys.id, "...")
                 log(`[${chalk.yellowBright("unpublish")}]`, entry.sys.id, "=>")
                 entry = await entry.unpublish()
                 await sleep(600)
