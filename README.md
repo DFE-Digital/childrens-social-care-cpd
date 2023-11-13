@@ -1,7 +1,3 @@
-[![Docker Image CI](https://github.com/DFE-Digital/childrens-social-care-cpd/actions/workflows/docker-image.yml/badge.svg)](https://github.com/DFE-Digital/childrens-social-care-cpd/actions/workflows/docker-image.yml)
-
-[![Terraform](https://github.com/DFE-Digital/childrens-social-care-cpd/actions/workflows/terraform.yml/badge.svg)](https://github.com/DFE-Digital/childrens-social-care-cpd/actions/workflows/terraform.yml)
-
 # childrens-social-care-cpd
 
 This repository contains the code needed to host the Social Workforce career progression service. This service helps workers in this profession to easily find information about the pathways to further their career
