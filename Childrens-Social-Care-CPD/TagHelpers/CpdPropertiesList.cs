@@ -31,7 +31,7 @@ public class CpdPropertiesList : TagHelper
         {
             var span = new TagBuilder("span");
             span.AddCssClass("govuk-!-font-size-16");
-            span.InnerHtml.Append($"{item.Key}:&nbsp{item.Value}");
+            span.InnerHtml.Append($"{item.Key}: {item.Value}");
 
             var li = new TagBuilder("li");
             li.InnerHtml.AppendHtml(span);
