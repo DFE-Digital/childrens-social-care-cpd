@@ -6,5 +6,7 @@ public class VideoResource : IContent
 {
     public string Id { get; set; }
     public Asset Video { get; set; }
+    public string Length { get; set; }
     public Document Transcript {  get; set; }
+    public string EmbeddedSourceUrl { get; set; }
 }

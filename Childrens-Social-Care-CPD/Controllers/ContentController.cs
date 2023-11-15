@@ -45,23 +45,24 @@ public class ContentController : Controller
     public async Task<IActionResult> Index(CancellationToken cancellationToken, string pageName = "home", bool preferenceSet = false)
     {
         pageName = pageName?.TrimEnd('/');
-        var pageContent = await FetchPageContentAsync(pageName, cancellationToken);
-        if (pageContent == null)
+        var content = await FetchPageContentAsync(pageName, cancellationToken);
+        if (content == null)
         {
             return NotFound();
         }
 
         var contextModel = new ContextModel(
-            Id: pageContent.Id,
-            Title: pageContent.Title,
+            Id: content.Id,
+            Title: content.Title,
             PageName: pageName,
-            Category: pageContent.Category,
-            UseContainers: pageContent.SideMenu == null,
+            Category: content.Category,
+            UseContainers: content.Navigation == null,
             PreferenceSet: preferenceSet,
-            BackLink: pageContent.BackLink);
+            BackLink: content.BackLink);
 
         ViewData["ContextModel"] = contextModel;
         ViewData["StateModel"] = new StateModel();
-        return View(pageContent);
+
+        return View(content);
     }
 }

@@ -8,7 +8,7 @@
 @inject IRenderer<RelatedContent> _relatedContentRenderer
 
 @{
-    Layout = Model.SideMenu == null
+    Layout = Model.Navigation == null
         ? "_DefaultPageLayout"
         : "_SubPageLayout";
 }
@@ -31,9 +31,9 @@
 }
 
 @section SideMenu {
-    @if (Model.SideMenu != null)
+    @if (Model.Navigation != null)
     {
-        <partial name="_SideMenu" model="Model.SideMenu" />
+        <partial name="_NavigationMenu" model="Model.Navigation" />
     }
 }
 
