@@ -174,4 +174,45 @@ public class ResourcesDynamicTagsSearchStategyTests
         //assert
         actual.SelectedTags.Should().NotContain(value);
     }
+
+    [TestCase(ResourceSortOrder.UpdatedNewest)]
+    [TestCase(ResourceSortOrder.UpdatedOldest)]
+    public async Task SearchAsync_Paging_Should_Respect_SortOrder(ResourceSortOrder sortOrder)
+    {
+        // arrange
+        var results = new ResponseType()
+        {
+            ContentCollection = new ContentCollection()
+            {
+                Total = 11,
+                Items = new Collection<SearchResult>()
+                {
+                    new SearchResult(),
+                    new SearchResult(),
+                    new SearchResult(),
+                    new SearchResult(),
+                    new SearchResult(),
+                    new SearchResult(),
+                    new SearchResult(),
+                    new SearchResult(),
+                    new SearchResult(),
+                    new SearchResult(),
+                    new SearchResult(),
+                }
+            }
+        };
+        SetSearchResults(results);
+        var query = new ResourcesQuery
+        {
+            Page = 2,
+            Tags = new string[] { "tag1" },
+            SortOrder = sortOrder
+        };
+
+        // act
+        var actual = await _sut.SearchAsync(query);
+
+        // assert
+        actual.PagingFormatString.Should().Be($"/resources-learning?page={{0}}&sortOrder={(int)sortOrder}&tags=tag1");
+    }
 }
