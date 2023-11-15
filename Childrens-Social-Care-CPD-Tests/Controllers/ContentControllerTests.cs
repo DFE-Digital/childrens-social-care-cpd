@@ -126,21 +126,21 @@ public class ContentControllerTests
         actual.PreferenceSet.Should().Be(preferenceSet);
     }
 
-    private static readonly object[] _sideMenuContent =
+    private static readonly object[] _navigationMenuContent =
     {
-        new object[] { new SideMenu() },
+        new object[] { new NavigationMenu() },
         new object[] { null },
     };
 
-    [TestCaseSource(nameof(_sideMenuContent))]
-    public async Task Index_Sets_The_ContextModel_UseContainers_From_SideMenu_Value_Correctly(SideMenu sideMenu)
+    [TestCaseSource(nameof(_navigationMenuContent))]
+    public async Task Index_Sets_The_ContextModel_UseContainers_From_SideMenu_Value_Correctly(NavigationMenu navigationMenu)
     {
         // arrange
         var rootContent = new Content()
         {
-            SideMenu = sideMenu
+            Navigation = navigationMenu
         };
-        var expected = sideMenu == null;
+        var expected = navigationMenu == null;
         SetContent(rootContent);
 
         // act
