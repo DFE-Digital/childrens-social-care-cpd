@@ -28,7 +28,7 @@ export const fixMismatchedContentTypesTask = {
                 newControls.push(control)
             }
             editorInterface.controls = newControls;
-            //await editorInterface.update()
+            await editorInterface.update()
             await delay(200)
         }
     }
