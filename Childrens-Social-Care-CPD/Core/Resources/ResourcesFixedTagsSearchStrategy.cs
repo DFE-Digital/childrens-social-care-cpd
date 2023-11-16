@@ -51,16 +51,18 @@ internal class ResourcesFixedTagsSearchStrategy : IResourcesSearchStrategy
         return Tuple.Create(totalResults, totalPages, Math.Min(page, totalPages));
     }
 
-    private static string GetPagingFormatString(int[] tags)
+    private static string GetPagingFormatString(int[] tags, ResourceSortOrder sortOrder)
     {
+        var result = $"/resources-learning?page={{0}}&sortOrder={(int)sortOrder}";
+
         if (tags.Any())
         {
             var tagStrings = tags.Select(x => $"tags={x}");
             var allTags = string.Join("&", tagStrings);
-            return $"/resources-learning?page={{0}}&{allTags}";
+            result += $"&{allTags}";
         }
 
-        return $"/resources-learning?page={{0}}";
+        return result;
     }
 
     public async Task<ResourcesListViewModel> SearchAsync(ResourcesQuery query, CancellationToken cancellationToken = default)
@@ -91,7 +93,7 @@ internal class ResourcesFixedTagsSearchStrategy : IResourcesSearchStrategy
             currentPage,
             totalPages,
             totalResults,
-            GetPagingFormatString(queryTags)
+            GetPagingFormatString(queryTags, query.SortOrder)
         );
     }
 }
