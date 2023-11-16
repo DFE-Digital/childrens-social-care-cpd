@@ -26,7 +26,7 @@ public class ContentLinkRendererTests
         };
 
         // act
-        var htmlContent = _sut.Render(contentLink);
+        var htmlContent = (_sut as IRenderer<ContentLink>).Render(contentLink);
         htmlContent.WriteTo(stringWriter, new HtmlTestEncoder());
         var actual = stringWriter.ToString();
 
