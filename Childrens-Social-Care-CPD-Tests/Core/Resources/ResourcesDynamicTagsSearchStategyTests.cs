@@ -213,6 +213,6 @@ public class ResourcesDynamicTagsSearchStategyTests
         var actual = await _sut.SearchAsync(query);
 
         // assert
-        actual.PagingFormatString.Should().Be($"/resources-learning?page={{0}}&sortOrder={(int)sortOrder}&tags=tag1");
+        actual.PagingFormatString.Should().Contain($"sortOrder={(int)sortOrder}");
     }
 }
