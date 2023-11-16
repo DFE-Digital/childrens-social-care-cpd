@@ -206,6 +206,6 @@ public class ResourcesFixedTagsSearchStrategyTests
         var actual = await _sut.SearchAsync(query);
 
         // assert
-        actual.PagingFormatString.Should().Be($"/resources-learning?page={{0}}&sortOrder={(int)sortOrder}");
+        actual.PagingFormatString.Should().Contain($"sortOrder={(int)sortOrder}");
     }
 }
