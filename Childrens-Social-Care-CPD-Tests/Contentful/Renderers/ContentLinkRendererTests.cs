@@ -9,7 +9,7 @@ namespace Childrens_Social_Care_CPD_Tests.Contentful.Renderers;
 
 public class ContentLinkRendererTests
 {
-    private readonly IRenderer<ContentLink> _sut = new ContentLinkRenderer();
+    private readonly IRendererWithOptions<ContentLink> _sut = new ContentLinkRenderer();
 
     [TestCase("http://foo", "http://foo")]
     [TestCase("https://foo", "https://foo")]
@@ -26,11 +26,31 @@ public class ContentLinkRendererTests
         };
 
         // act
-        var htmlContent = _sut.Render(contentLink);
+        var htmlContent = (_sut as IRenderer<ContentLink>).Render(contentLink);
         htmlContent.WriteTo(stringWriter, new HtmlTestEncoder());
         var actual = stringWriter.ToString();
 
         // assert
         actual.Should().Be($"<a class=\"HtmlEncode[[govuk-link]]\" href=\"HtmlEncode[[{expectedUri}]]\">HtmlEncode[[Foo]]</a>");
+    }
+
+    [Test]
+    public void ContentLink_RenderWithOptions_Adds_Css()
+    {
+        // arrange
+        var stringWriter = new StringWriter();
+        var contentLink = new ContentLink()
+        {
+            Name = "Foo",
+            Uri = "/foo"
+        };
+
+        // act
+        var htmlContent = _sut.Render(contentLink, new RendererOptions(Css: "foo"));
+        htmlContent.WriteTo(stringWriter, new HtmlTestEncoder());
+        var actual = stringWriter.ToString();
+
+        // assert
+        actual.Should().Contain($"class=\"HtmlEncode[[govuk-link foo]]\"");
     }
 }

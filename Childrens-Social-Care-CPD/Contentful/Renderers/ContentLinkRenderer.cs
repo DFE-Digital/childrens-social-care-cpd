@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Childrens_Social_Care_CPD.Contentful.Renderers;
 
-internal class ContentLinkRenderer : IRenderer<ContentLink>
+internal class ContentLinkRenderer : IRendererWithOptions<ContentLink>
 {
-    public IHtmlContent Render(ContentLink item)
+    public IHtmlContent Render(ContentLink item, RendererOptions options = null)
     {
         var tagBuilder = new TagBuilder("a");
 
@@ -19,7 +19,16 @@ internal class ContentLinkRenderer : IRenderer<ContentLink>
 
         tagBuilder.Attributes.Add("href", href);
         tagBuilder.AddCssClass("govuk-link");
+        if (options?.HasCss ?? false)
+        {
+            tagBuilder.AddCssClass(options.Css);
+        }
         tagBuilder.InnerHtml.Append(item.Name);
         return tagBuilder;
+    }
+
+    public IHtmlContent Render(ContentLink item)
+    {
+        return Render(item, null);
     }
 }
