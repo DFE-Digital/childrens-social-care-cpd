@@ -52,14 +52,24 @@ public static class WebApplicationBuilderExtensions
             return client;
         });
 
-        // Register all the IRender<T> implementations in the assembly
-        System.Reflection.Assembly.GetExecutingAssembly()
-            .GetTypes()
+        // Register all the IRender<T> & IRenderWithOptions<T> implementations in the assembly
+        var assemblyTypes = System.Reflection.Assembly.GetExecutingAssembly().GetTypes();
+
+        assemblyTypes
             .Where(item => item.GetInterfaces().Where(i => i.IsGenericType).Any(i => i.GetGenericTypeDefinition() == typeof(IRenderer<>)) && !item.IsAbstract && !item.IsInterface)
             .ToList()
             .ForEach(assignedTypes =>
             {
                 var serviceType = assignedTypes.GetInterfaces().First(i => i.GetGenericTypeDefinition() == typeof(IRenderer<>));
+                builder.Services.AddScoped(serviceType, assignedTypes);
+            });
+
+        assemblyTypes
+            .Where(item => item.GetInterfaces().Where(i => i.IsGenericType).Any(i => i.GetGenericTypeDefinition() == typeof(IRendererWithOptions<>)) && !item.IsAbstract && !item.IsInterface)
+            .ToList()
+            .ForEach(assignedTypes =>
+            {
+                var serviceType = assignedTypes.GetInterfaces().First(i => i.GetGenericTypeDefinition() == typeof(IRendererWithOptions<>));
                 builder.Services.AddScoped(serviceType, assignedTypes);
             });
     }
