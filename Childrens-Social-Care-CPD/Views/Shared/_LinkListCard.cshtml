@@ -5,18 +5,16 @@
 @model LinkListCard
 @inject IRenderer<ContentLink> _contentLinkRenderer
 
-<div class="section-card-home">
-    <govuk-heading level="2" display-size="3">
-        @Model.Title
-    </govuk-heading>
-    <ul class="govuk-list">
-        @foreach (var contentLink in Model.Links)
-        {
-            <li>
-                <h3>
-                    @_contentLinkRenderer.Render(contentLink)
-                </h3>
-            </li>
-        }
-    </ul>
-</div>
+<govuk-heading level="2" display-size="3">
+    @Model.Title
+</govuk-heading>
+<ul class="govuk-list">
+    @foreach (var contentLink in Model.Links)
+    {
+        <li>
+            <h3>
+                @_contentLinkRenderer.Render(contentLink)
+            </h3>
+        </li>
+    }
+</ul>

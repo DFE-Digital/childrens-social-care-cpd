@@ -3,11 +3,14 @@
 @using Childrens_Social_Care_CPD.Contentful.Renderers;
 
 @model LinkCard
-@inject IRenderer<ContentLink> _contentLinkRenderer
+@inject IRendererWithOptions<ContentLink> _contentLinkRenderer
 
-<div class="section-card-home">
-    <govuk-heading level="Model.TitleLevel" display-size="3">
-        @_contentLinkRenderer.Render(Model.TitleLink)
-    </govuk-heading>
-    <p class="govuk-body">@Model.Text</p>
+<div class="dfe-card">
+    <div class="dfe-card-container">
+        <govuk-heading level="Model.TitleLevel" display-size="3">
+            @_contentLinkRenderer.Render(Model.TitleLink, new RendererOptions("govuk-link--no-visited-state dfe-card-link--header"))
+        </govuk-heading>
+        <p class="govuk-!-margin-bottom-1">@Model.Text</p>
+        <br>
+    </div>
 </div>
