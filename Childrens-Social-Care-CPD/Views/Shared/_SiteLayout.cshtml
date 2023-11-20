@@ -19,12 +19,14 @@
     <partial name="_CookiesAndAnalyticsConsent" />
     <a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
     <partial name="_Header" />
-    <partial name="_BetaBanner" />
     <partial name="_BackLink" model="@ViewBag.ContextModel?.BackLink" />
 
-    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing govuk-!-padding-top-6" id="main-content" role="main">
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing govuk-!-padding-top-0" id="main-content" role="main">
+        <partial name="_BetaBanner" />
         @await RenderSectionAsync("PageBanner", required: false)
-        @RenderBody()
+        <div class="govuk-!-padding-top-6">
+            @RenderBody()
+        </div>
     </main>
 
     <partial name="_Footer" />
