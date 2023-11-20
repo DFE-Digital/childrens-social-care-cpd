@@ -97,27 +97,12 @@
         </nav>
     </header>
 
-    <div class="govuk-width-container">
-        <div class="govuk-grid-row">
-            <div class="govuk-grid-column-full">
-                <div class="govuk-phase-banner">
-                    <p class="govuk-phase-banner__content">
-                        <strong class="govuk-tag govuk-phase-banner__content__tag">
-                            BETA
-                        </strong>
-                        <span class="govuk-phase-banner__text">
-                            This is a new service – your <a class="govuk-link" href="https://dferesearch.fra1.qualtrics.com/jfe/form/SV_bmcLDedq5wipeTA">feedback</a>  will help us to improve it
-                        </span>
-                    </p>
-                </div>
-
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing govuk-!-padding-top-0" id="main-content" role="main">
+        <partial name="_BetaBanner" />
+        <div class="govuk-width-container ">
+            <div class="govuk-!-padding-top-9">
+                @RenderBody()
             </div>
-        </div>
-    </div>
-
-    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
-        <div class="govuk-width-container">
-            @RenderBody()
         </div>
     </main>
 
