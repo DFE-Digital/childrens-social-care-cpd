@@ -618,6 +618,12 @@ variable "cpd_image_tag" {
   description = "Docker image tag of application"
 }
 
+variable "cpd_gf_password" {
+  type        = string
+  sensitive   = true
+  description = "Grafana password"
+}
+
 variable "cpd_delivery_key" {
   type        = string
   sensitive   = true
@@ -671,3 +677,52 @@ variable "fwpol_name" {
   }
   description = "Firewall Policy Name"
 }
+
+variable "grafana_sa_name" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01grafanastorageacc"
+    Test      = "s185d02grafanastorageacc"
+    Load-Test = "s185d03grafanastorageacc"
+    Pre-Prod  = "s185t01grafanastorageacc"
+    Prod      = "s185p01grafanastorageacc"
+  }
+  description = "Grafana Storage Account Name"
+}
+
+variable "grafana_webapp_name" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01grafana"
+    Test      = "s185d02grafana"
+    Load-Test = "s185d03grafana"
+    Pre-Prod  = "s185t01grafana"
+    Prod      = "s185p01grafana"
+  }
+  description = "Grafana Web App Name"
+}
+
+variable "hostname" {
+  type = map(string)
+  default = {
+    Dev       = "www.dev.develop-child-family-social-work-career.education.gov.uk"
+    Test      = "www.test.develop-child-family-social-work-career.education.gov.uk"
+    Load-Test = "20.107.65.156.nip.io"
+    Pre-Prod  = "www.pre-prod.develop-child-family-social-work-career.education.gov.uk"
+    Prod      = "www.develop-child-family-social-work-career.education.gov.uk"
+  }
+  description = "Hostname for Grafana"
+}
+
+variable "origins" {
+  type = map(string)
+  default = {
+    Dev       = "www.dev.develop-child-family-social-work-career.education.gov.uk,dev.develop-child-family-social-work-career.education.gov.uk"
+    Test      = "www.test.develop-child-family-social-work-career.education.gov.uk,test.develop-child-family-social-work-career.education.gov.uk"
+    Load-Test = "20.107.65.156.nip.io"
+    Pre-Prod  = "www.pre-proddevelop-child-family-social-work-career.education.gov.uk,pre-proddevelop-child-family-social-work-career.education.gov.uk"
+    Prod      = "www.develop-child-family-social-work-career.education.gov.uk,develop-child-family-social-work-career.education.gov.uk"
+  }
+  description = "Origins for Grafana"
+}
+

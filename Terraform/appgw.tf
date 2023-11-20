@@ -114,14 +114,84 @@ resource "azurerm_application_gateway" "appgw" {
     http_listener_name          = var.listener_name[terraform.workspace]
   }
 
-  request_routing_rule {
-    name                       = var.request_ssl_routing_rule_name[terraform.workspace]
-    rule_type                  = "Basic"
-    priority                   = 2000
-    http_listener_name         = var.ssl_listener_name[terraform.workspace]
-    backend_address_pool_name  = var.backend_address_pool_name[terraform.workspace]
-    backend_http_settings_name = var.http_setting_name[terraform.workspace]
-    rewrite_rule_set_name      = var.appgw_rewrite_rule_set[terraform.workspace]
+  dynamic "request_routing_rule" {
+    for_each = local.config_regular
+
+    content {
+      name                       = var.request_ssl_routing_rule_name[terraform.workspace]
+      rule_type                  = "Basic"
+      priority                   = 2000
+      http_listener_name         = var.ssl_listener_name[terraform.workspace]
+      backend_address_pool_name  = var.backend_address_pool_name[terraform.workspace]
+      backend_http_settings_name = var.http_setting_name[terraform.workspace]
+      rewrite_rule_set_name      = var.appgw_rewrite_rule_set[terraform.workspace]
+    }
+  }
+
+  dynamic "request_routing_rule" {
+    for_each = local.config_grafana
+
+    content {
+      name               = "grafana-request-routing-rule"
+      rule_type          = "PathBasedRouting"
+      http_listener_name = var.ssl_listener_name[terraform.workspace]
+      url_path_map_name  = "grafana-url-path-map"
+      priority           = 2222
+    }
+  }
+
+  # Grafana Configuration
+
+  dynamic "backend_address_pool" {
+    for_each = local.config_grafana
+
+    content {
+      name  = "grafana-backend-address-pool"
+      fqdns = [azurerm_linux_web_app.grafana-web-app[0].default_hostname]
+    }
+  }
+
+  dynamic "url_path_map" {
+    for_each = local.config_grafana
+
+    content {
+      name                               = "grafana-url-path-map"
+      default_backend_address_pool_name  = var.backend_address_pool_name[terraform.workspace]
+      default_backend_http_settings_name = var.http_setting_name[terraform.workspace]
+
+      # Specify the path rule
+      path_rule {
+        name                       = "app-path-rule"
+        paths                      = ["/*"]
+        backend_address_pool_name  = var.backend_address_pool_name[terraform.workspace]
+        backend_http_settings_name = var.http_setting_name[terraform.workspace]
+        rewrite_rule_set_name      = var.appgw_rewrite_rule_set[terraform.workspace]
+      }
+
+      path_rule {
+        name                       = "grafana-path-rule"
+        paths                      = ["/grafana*"]
+        backend_address_pool_name  = "grafana-backend-address-pool"
+        backend_http_settings_name = "grafana-backend-http-settings"
+        rewrite_rule_set_name      = var.appgw_rewrite_rule_set[terraform.workspace]
+      }
+    }
+  }
+
+  dynamic "backend_http_settings" {
+    for_each = local.config_grafana
+
+    content {
+      name                                = "grafana-backend-http-settings"
+      pick_host_name_from_backend_address = false
+      host_name                           = azurerm_linux_web_app.grafana-web-app[0].default_hostname
+      cookie_based_affinity               = "Enabled"
+      path                                = "/grafana/"
+      port                                = 80
+      protocol                            = "Http"
+      request_timeout                     = 30
+      probe_name                          = "${var.appgw_probe[terraform.workspace]}-gf"
+    }
   }
 
   probe {
@@ -132,6 +202,21 @@ resource "azurerm_application_gateway" "appgw" {
     timeout                                   = 30
     unhealthy_threshold                       = 3
     protocol                                  = "Http"
+  }
+
+  dynamic "probe" {
+    for_each = local.config_grafana
+
+    content {
+      name                                      = "${var.appgw_probe[terraform.workspace]}-gf"
+      pick_host_name_from_backend_http_settings = false
+      host                                      = azurerm_linux_web_app.grafana-web-app[0].default_hostname
+      path                                      = "/login"
+      interval                                  = 30
+      timeout                                   = 30
+      unhealthy_threshold                       = 3
+      protocol                                  = "Http"
+    }
   }
 
   custom_error_configuration {
@@ -166,20 +251,20 @@ resource "azurerm_application_gateway" "appgw" {
         header_value = "nosniff"
       }
 
-      response_header_configuration {
-        header_name  = "Content-Security-Policy"
-        header_value = "upgrade-insecure-requests; base-uri 'self'; frame-ancestors 'self'; form-action 'self'; object-src 'none';"
-      }
+      # response_header_configuration {
+      #   header_name  = "Content-Security-Policy"
+      #   header_value = "upgrade-insecure-requests; base-uri 'self'; frame-ancestors 'self'; form-action 'self'; object-src 'none';"
+      # }
 
       response_header_configuration {
         header_name  = "Referrer-Policy"
         header_value = "strict-origin-when-cross-origin"
       }
 
-      response_header_configuration {
-        header_name  = "Strict-Transport-Security"
-        header_value = "max-age=31536000; includeSubDomains; preload"
-      }
+      # response_header_configuration {
+      #   header_name  = "Strict-Transport-Security"
+      #   header_value = "max-age=31536000; includeSubDomains; preload"
+      # }
 
       response_header_configuration {
         header_name  = "Permissions-Policy"
