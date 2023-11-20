@@ -13,6 +13,7 @@
     @await RenderSectionAsync("Head", required: false)
 
     <link rel="shortcut icon" sizes="16x16 32x32 48x48" href="~/assets/images/favicon.ico" type="image/x-icon">
+
 </head>
 <body class="govuk-template__body">
     <partial name="_CookiesAndAnalyticsConsent" />
@@ -20,7 +21,8 @@
     <partial name="_Header" />
     <partial name="_BackLink" model="@ViewBag.ContextModel?.BackLink" />
 
-    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing govuk-!-padding-top-6" id="main-content" role="main">
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing govuk-!-padding-top-0" id="main-content" role="main">
+        <partial name="_BetaBanner" />
         @await RenderSectionAsync("PageBanner", required: false)
         @RenderBody()
     </main>
