@@ -48,7 +48,7 @@ jobs:
         run: echo "\=${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LOWER }}:${{ env.RELEASE_TAG }}" >> $GITHUB_ENV
 
       - name: Add latest tag if we're not production release
-        if: contains(env.RELEASE_TAG, "dev")
+        if: contains(env.RELEASE_TAG, 'dev')
         run: echo "IMAGE_TAGS=${IMAGE_TAGS},${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LOWER }}:latest" >> $GITHUB_ENV
 
       #debug
