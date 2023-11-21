@@ -42,6 +42,19 @@ jobs:
       # Need to lower case the image name for the docker tags when publishing
       - name: Downcase IMAGE_NAME variable
         run:  echo "IMAGE_NAME_LOWER=${IMAGE_NAME,,}" >> $GITHUB_ENV
+      
+      # Sort out the image tags 
+      - name: Set initial tag
+        run: echo "\=${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LOWER }}:${{ env.RELEASE_TAG }}" >> $GITHUB_ENV
+
+      - name: Add latest tag if we're not production release
+        if: contains(env.RELEASE_TAG, "dev")
+        run: echo "IMAGE_TAGS=${IMAGE_TAGS},${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LOWER }}:latest" >> $GITHUB_ENV
+
+      #debug
+      - name: Log the tags
+        run: echo "::notice:: Calculated tags value => ${{ env.IMAGE_TAGS }}"
+
 
       # Workaround: https://github.com/docker/build-push-action/issues/461
       - name: Setup Docker buildx
