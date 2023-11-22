@@ -2,7 +2,7 @@ name: 'Terraform TFLint'
 
 on: 
   pull_request:
-    branches: [ "master", "main" ]
+    branches: [ "main", "next" ]
 
 jobs:
   terraform-tflint:
