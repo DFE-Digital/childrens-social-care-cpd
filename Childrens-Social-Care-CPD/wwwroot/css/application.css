@@ -10654,6 +10654,7 @@ CONTENT TITLE BANNER
   background-color: #f3f2f1;
   border-bottom: 3px solid #003a69;
   max-width: 100%;
+  flex: 1;
 }
 
 .dfe-card.dfe-card--blog-card {
@@ -11101,6 +11102,14 @@ CONTENT TITLE BANNER
   .sort-options .sort-options__select {
     font-size: 16px;
   }
+}
+.column-layout-row {
+  display: flex;
+  min-height: 200px;
+}
+
+.column-layout-row .column {
+  display: flex;
 }
 
 /*# sourceMappingURL=application.css.map */
