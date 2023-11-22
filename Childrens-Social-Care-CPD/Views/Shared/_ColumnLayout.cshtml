@@ -10,10 +10,10 @@
 
     @foreach (var group in Model.Items.Select((e, i) => new { ContentItem = e, Grouping = (i / Model.ColumnCount) }).GroupBy(e => e.Grouping))
     {
-        <div class="govuk-grid-row">
+        <div class="govuk-grid-row column-layout-row">
             @foreach (var item in group)
             {
-                <div class="@gridClass govuk-!-margin-bottom-4">
+                <div class="@gridClass govuk-!-margin-bottom-4 column">
                     @{ await Html.RenderContentfulPartialAsync(item.ContentItem); }
                 </div>
             }
