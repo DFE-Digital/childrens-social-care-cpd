@@ -15,11 +15,11 @@ class QuickstartUser(HttpUser):
         self.client.get("/", name="home")
         self.client.get("/explore-roles", name="explore-roles")
 
-    #@task
-    #def explore_roles_nqsw(self):
-    #    self.client.get("/", name="home")
-    #    self.client.get("explore-roles", name="explore-roles")
-    #    self.client.get("explore-roles/newly-qualified-social-worker", name="explore-roles/newly-qualified-social-worker")
+    @task
+    def explore_roles_nqsw(self):
+        self.client.get("/", name="home")
+        self.client.get("explore-roles", name="explore-roles")
+        self.client.get("explore-roles/newly-qualified-social-worker", name="explore-roles/newly-qualified-social-worker")
 
     #@task
     #def explore_roles_sw(self):
