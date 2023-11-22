@@ -21,23 +21,23 @@ class QuickstartUser(HttpUser):
         self.client.get("explore-roles", name="explore-roles")
         self.client.get("explore-roles/newly-qualified-social-worker", name="explore-roles/newly-qualified-social-worker")
 
-    #@task
-    #def explore_roles_sw(self):
-    #    self.client.get("/", name="home")
-    #    self.client.get("explore-roles", name="explore-roles")
-    #    self.client.get("explore-roles/social-worker", name="explore-roles/social-worker")
+    @task
+    def explore_roles_sw(self):
+        self.client.get("/", name="home")
+        self.client.get("explore-roles", name="explore-roles")
+        self.client.get("explore-roles/social-worker", name="explore-roles/social-worker")
 
-    #@task
-    #def explore_roles_sp(self):
-    #    self.client.get("/", name="home")
-    #    self.client.get("explore-roles", name="explore-roles")
-    #    self.client.get("explore-roles/senior-practitioner", name="explore-roles/senior-practitioner")
+    @task
+    def explore_roles_sp(self):
+        self.client.get("/", name="home")
+        self.client.get("explore-roles", name="explore-roles")
+        self.client.get("explore-roles/senior-practitioner", name="explore-roles/senior-practitioner")
 
-    #@task
-    #def explore_roles_ps(self):
-    #    self.client.get("/", name="home")
-    #    self.client.get("explore-roles", name="explore-roles")
-    #    self.client.get("explore-roles/practise-supervisor", name="explore-roles/practise-supervisor")
+    @task
+    def explore_roles_ps(self):
+        self.client.get("/", name="home")
+        self.client.get("explore-roles", name="explore-roles")
+        self.client.get("explore-roles/practise-supervisor", name="explore-roles/practise-supervisor")
 
     #@task
     #def pathway1(self):
