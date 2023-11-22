@@ -2,7 +2,7 @@ name: 'Terraform Format'
 
 on: 
   pull_request:
-    branches: [ "master", "main" ]
+    branches: [ "main", "next" ]
 
 jobs:
   terraform-fmt:
