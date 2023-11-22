@@ -49,7 +49,7 @@ jobs:
 
       - name: Add latest tag if we're not production release
         if: contains(env.RELEASE_TAG, 'next')
-        run: echo "IMAGE_TAGS=${IMAGE_TAGS},${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LOWER }}:latest" >> $GITHUB_ENV
+        run: echo "IMAGE_TAGS=${{ env.IMAGE_TAGS }},${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LOWER }}:latest" >> $GITHUB_ENV
 
       #debug
       - name: Log the tags
@@ -85,7 +85,7 @@ jobs:
         with:
           context: Childrens-Social-Care-CPD
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LOWER }}:${{ env.RELEASE_TAG }},${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LOWER }}:latest
+          tags: ${{ env.IMAGE_TAGS }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             VCSREF=${{ env.sha_short }}
