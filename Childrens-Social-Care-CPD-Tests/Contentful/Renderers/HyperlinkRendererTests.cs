@@ -2,6 +2,7 @@
 using Contentful.Core.Models;
 using FluentAssertions;
 using Microsoft.Extensions.WebEncoders.Testing;
+using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;
@@ -10,7 +11,13 @@ namespace Childrens_Social_Care_CPD_Tests.Contentful.Renderers;
 
 public class HyperlinkRendererTests
 {
-    private readonly HyperlinkRenderer _sut = new();
+    private readonly HyperlinkRenderer _sut;
+
+    public HyperlinkRendererTests()
+    {
+        Mock<IContentLinkContext> mockContentLinkContext = new Mock<IContentLinkContext>();
+        _sut = new HyperlinkRenderer(mockContentLinkContext.Object);
+    }
 
     [Test]
     public void HyperlinkToHtml_Returns_Anchor()
@@ -34,7 +41,7 @@ public class HyperlinkRendererTests
         var actual = stringWriter.ToString();
 
         // assert
-        actual.Should().Be("<a class=\"HtmlEncode[[govuk-link]]\" href=\"HtmlEncode[[Bar]]\">HtmlEncode[[Foo]]</a>");
+        actual.Should().Be("<a class=\"HtmlEncode[[govuk-link]]\" data-track-label=\"\" href=\"HtmlEncode[[Bar]]\">HtmlEncode[[Foo]]</a>");
     }
 
     [Test]
@@ -57,6 +64,6 @@ public class HyperlinkRendererTests
         var actual = stringWriter.ToString();
 
         // assert
-        actual.Should().Be("<a class=\"HtmlEncode[[govuk-link]]\" href=\"HtmlEncode[[Bar]]\"></a>");
+        actual.Should().Be("<a class=\"HtmlEncode[[govuk-link]]\" data-track-label=\"\" href=\"HtmlEncode[[Bar]]\"></a>");
     }
 }
