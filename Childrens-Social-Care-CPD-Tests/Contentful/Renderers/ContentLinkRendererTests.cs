@@ -2,6 +2,7 @@
 using Childrens_Social_Care_CPD.Contentful.Renderers;
 using FluentAssertions;
 using Microsoft.Extensions.WebEncoders.Testing;
+using NSubstitute;
 using NUnit.Framework;
 using System.IO;
 
@@ -9,7 +10,13 @@ namespace Childrens_Social_Care_CPD_Tests.Contentful.Renderers;
 
 public class ContentLinkRendererTests
 {
-    private readonly IRendererWithOptions<ContentLink> _sut = new ContentLinkRenderer();
+    private readonly IRendererWithOptions<ContentLink> _sut;
+
+    public ContentLinkRendererTests()
+    {
+        var mockContentLinkContext = Substitute.For<IContentLinkContext>();
+        _sut = new ContentLinkRenderer(mockContentLinkContext);
+    }
 
     [TestCase("http://foo", "http://foo")]
     [TestCase("https://foo", "https://foo")]
@@ -31,7 +38,8 @@ public class ContentLinkRendererTests
         var actual = stringWriter.ToString();
 
         // assert
-        actual.Should().Be($"<a class=\"HtmlEncode[[govuk-link]]\" href=\"HtmlEncode[[{expectedUri}]]\">HtmlEncode[[Foo]]</a>");
+        actual.Should().Be($"<a class=\"HtmlEncode[[govuk-link]]\" data-track-label=\"\" href=\"HtmlEncode[[{expectedUri}]]\">HtmlEncode[[Foo]]</a>");
+        
     }
 
     [Test]
