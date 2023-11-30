@@ -2,7 +2,7 @@
 using Contentful.Core.Models;
 using FluentAssertions;
 using Microsoft.Extensions.WebEncoders.Testing;
-using Moq;
+using NSubstitute;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;
@@ -15,8 +15,8 @@ public class HyperlinkRendererTests
 
     public HyperlinkRendererTests()
     {
-        Mock<IContentLinkContext> mockContentLinkContext = new Mock<IContentLinkContext>();
-        _sut = new HyperlinkRenderer(mockContentLinkContext.Object);
+        var mockContentLinkContext = Substitute.For<IContentLinkContext>();
+        _sut = new HyperlinkRenderer(mockContentLinkContext);
     }
 
     [Test]
