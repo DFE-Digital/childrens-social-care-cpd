@@ -75,11 +75,11 @@ jobs:
       - name: Whitelist Runner IP
         run: az network nsg rule create -g s185d03-childrens-social-care-cpd-rg --nsg-name s185d03-chidrens-social-care-cpd-sn01-nsg -n GitHubRunnerRule --priority 4000 --source-address-prefixes ${{ env.theIP }} --source-port-ranges '*' --destination-address-prefixes '*' --destination-port-ranges '*' --access Allow --protocol Tcp --description "Allow Access from GitHub Action"
 
-      - name: Wait for 15 minutes
-        run: sleep 900s
+      - name: Wait for 10 minutes
+        run: sleep 600s
         
       - name: Run Load Test
-        run: locust -f ./LoadTest/locustfile.py --headless -u 50 -r 1 --run-time 60s -H https://20.107.65.156/       
+        run: locust -f ./LoadTest/locustfile.py --headless -u 5 -r 10 --run-time 300s -H https://20.107.65.156/       
 
       - name: Terraform Destroy 3
         if: always()
