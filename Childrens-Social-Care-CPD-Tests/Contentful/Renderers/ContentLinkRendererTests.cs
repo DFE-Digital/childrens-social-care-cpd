@@ -2,7 +2,7 @@
 using Childrens_Social_Care_CPD.Contentful.Renderers;
 using FluentAssertions;
 using Microsoft.Extensions.WebEncoders.Testing;
-using Moq;
+using NSubstitute;
 using NUnit.Framework;
 using System.IO;
 
@@ -14,8 +14,8 @@ public class ContentLinkRendererTests
 
     public ContentLinkRendererTests()
     {
-        Mock<IContentLinkContext> mockContentLinkContext = new Mock<IContentLinkContext>();
-        _sut = new ContentLinkRenderer(mockContentLinkContext.Object);
+        var mockContentLinkContext = Substitute.For<IContentLinkContext>();
+        _sut = new ContentLinkRenderer(mockContentLinkContext);
     }
 
     [TestCase("http://foo", "http://foo")]
