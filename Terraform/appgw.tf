@@ -23,7 +23,7 @@ resource "azurerm_application_gateway" "appgw" {
 
     content {
       enabled          = true
-      firewall_mode    = "Prevention"
+      firewall_mode    = "Detection"
       rule_set_version = "3.2"
     }
   }
