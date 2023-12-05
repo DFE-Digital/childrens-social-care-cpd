@@ -59,7 +59,9 @@ jobs:
         run: terraform -chdir=Terraform apply -auto-approve -input=false
 
       - name: Install Locust Load Test Tool
-        run: pip3 install locust
+        run: |
+            pip3 install locust
+            pip3 install charset_normalizer
 
       - name: Sign in to Azure 
         uses: azure/login@v1
