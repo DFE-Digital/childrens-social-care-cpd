@@ -1,5 +1,6 @@
 ﻿using Childrens_Social_Care_CPD.Configuration;
 using Childrens_Social_Care_CPD.Contentful;
+using Childrens_Social_Care_CPD.Contentful.Contexts;
 using Childrens_Social_Care_CPD.Contentful.Renderers;
 using Childrens_Social_Care_CPD.Core.Resources;
 using Childrens_Social_Care_CPD.DataAccess;
@@ -51,6 +52,8 @@ public static class WebApplicationBuilderExtensions
             client.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", key);
             return client;
         });
+
+        builder.Services.AddScoped<IContentLinkContext, ContentLinkContext>();
 
         // Register all the IRender<T> & IRenderWithOptions<T> implementations in the assembly
         var assemblyTypes = System.Reflection.Assembly.GetExecutingAssembly().GetTypes();

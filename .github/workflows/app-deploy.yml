@@ -27,6 +27,9 @@ jobs:
 
     steps:
 
+      - name: Docker pull check
+        run: docker pull ghcr.io/dfe-digital/childrens-social-care-cpd:${{inputs.tag}}
+
       - name: Sign in to Azure 
         uses: azure/login@v1
         with:
