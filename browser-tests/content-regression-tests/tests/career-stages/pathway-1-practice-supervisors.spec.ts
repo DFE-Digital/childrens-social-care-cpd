@@ -35,7 +35,6 @@ test.describe('Pathway 1: practice supervisors', () => {
     test.describe('External links @external', () => {
         const links = [
             ['Frontline', 'https://thefrontline.org.uk/develop-your-career/pathways-programme/'],
-            ['Find out more about Pathway 1 including how to apply', 'https://thefrontline.org.uk/develop-your-career/pathways-programme/'],
             ['Social work post-qualifying standards', 'https://www.gov.uk/government/publications/knowledge-and-skills-statements-for-child-and-family-social-work'],
         ]
         
