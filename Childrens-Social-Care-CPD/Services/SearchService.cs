@@ -8,6 +8,7 @@ namespace Childrens_Social_Care_CPD.Services;
 internal class SearchService: ISearchService
 {
     private readonly SearchClient _searchClient;
+    private const int MinPageSize = 8;
 
     public SearchService(SearchClient searchClient)
     {
@@ -34,8 +35,8 @@ internal class SearchService: ISearchService
     {
         IEnumerable<string> Formatter(KeyValuePair<string, IEnumerable<string>> kvp) =>
             kvp.Value.Select(value => $"{kvp.Key}/any(v: v eq '{value}')");
-        var foo = filter.Select(kvp => string.Join(" and ", Formatter(kvp)));
-        return string.Join("and", foo);
+        var items = filter?.Select(kvp => string.Join(" and ", Formatter(kvp)));
+        return string.Join("and", items ?? Array.Empty<string>());
     }
 
     public Task<Response<SearchResults<CpdDocument>>> SearchResourcesAsync(KeywordSearchQuery query)
@@ -47,11 +48,12 @@ internal class SearchService: ISearchService
 
         var searchOptions = new SearchOptions()
         {
+            QueryType = SearchQueryType.Simple,
             IncludeTotalCount = true,
             HighlightFields = { "Body" },
             Facets = { "Tags,count:100" },
             Filter = string.IsNullOrEmpty(filter) ? null : filter,
-            Size = query.PageSize,
+            Size = Math.Max(query.PageSize, MinPageSize),
             Skip = skip,
             OrderBy = { orderBy }
         };
