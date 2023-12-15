@@ -14,22 +14,28 @@ resource "azurerm_application_gateway" "appgw" {
     max_capacity = var.autoscale_max[terraform.workspace]
   }
 
-  # Dynamic block that only applies to Load-Test and Prod environments
-  dynamic "waf_configuration" {
-    for_each = [
-      for rg in data.azurerm_resource_group.rg : rg
-      if data.azurerm_resource_group.rg.name == "s185p01-childrens-social-care-cpd-rg" && rg == "s185p01-childrens-social-care-cpd-rg" || data.azurerm_resource_group.rg.name == "s185d03-childrens-social-care-cpd-rg" && rg == "s185d03-childrens-social-care-cpd-rg"
-    ]
+  # # Dynamic block that only applies to Load-Test and Prod environments
+  # dynamic "waf_configuration" {
+  #   for_each = [
+  #     for rg in data.azurerm_resource_group.rg : rg
+  #     if data.azurerm_resource_group.rg.name == "s185p01-childrens-social-care-cpd-rg" && rg == "s185p01-childrens-social-care-cpd-rg" || data.azurerm_resource_group.rg.name == "s185d03-childrens-social-care-cpd-rg" && rg == "s185d03-childrens-social-care-cpd-rg"
+  #   ]
 
-    content {
-      enabled          = true
-      firewall_mode    = "Prevention"
-      rule_set_version = "3.2"
-    }
-  }
+  #   content {
+  #     enabled          = true
+  #     firewall_mode    = "Prevention"
+  #     rule_set_version = "3.2"
+
+  #     exclusion {
+  #       match_variable          = "RequestCookieNames"
+  #       selector                = "grafana_session_expiry"
+  #       selector_match_operator = "Contains"
+  #     }
+  #   }
+  # }
 
   # A firewall policy that should only be populated for Load-Test and Prod environments 
-  firewall_policy_id = var.appgw_tier[terraform.workspace] == "WAF_v2" ? azurerm_web_application_firewall_policy.fwpol.id : null
+  # firewall_policy_id = var.appgw_tier[terraform.workspace] == "WAF_v2" ? azurerm_web_application_firewall_policy.fwpol.id : null
 
   gateway_ip_configuration {
     name      = var.gateway_ip_configuration[terraform.workspace]
@@ -166,6 +172,7 @@ resource "azurerm_application_gateway" "appgw" {
         backend_address_pool_name  = var.backend_address_pool_name[terraform.workspace]
         backend_http_settings_name = var.http_setting_name[terraform.workspace]
         rewrite_rule_set_name      = var.appgw_rewrite_rule_set[terraform.workspace]
+        firewall_policy_id         = azurerm_web_application_firewall_policy.fwpol.id
       }
 
       path_rule {
@@ -174,6 +181,7 @@ resource "azurerm_application_gateway" "appgw" {
         backend_address_pool_name  = "grafana-backend-address-pool"
         backend_http_settings_name = "grafana-backend-http-settings"
         rewrite_rule_set_name      = var.appgw_rewrite_rule_set[terraform.workspace]
+        firewall_policy_id         = azurerm_web_application_firewall_policy.fwpol-gf.id
       }
     }
   }
@@ -256,10 +264,10 @@ resource "azurerm_application_gateway" "appgw" {
       #   header_value = "upgrade-insecure-requests; base-uri 'self'; frame-ancestors 'self'; form-action 'self'; object-src 'none';"
       # }
 
-      response_header_configuration {
-        header_name  = "Referrer-Policy"
-        header_value = "strict-origin-when-cross-origin"
-      }
+      # response_header_configuration {
+      #   header_name  = "Referrer-Policy"
+      #   header_value = "strict-origin-when-cross-origin"
+      # }
 
       # response_header_configuration {
       #   header_name  = "Strict-Transport-Security"
@@ -301,6 +309,107 @@ resource "azurerm_web_application_firewall_policy" "fwpol" {
     managed_rule_set {
       type    = "Microsoft_BotManagerRuleSet"
       version = "0.1"
+    }
+  }
+
+  policy_settings {
+    mode = "Prevention"
+  }
+
+  tags = data.azurerm_resource_group.rg.tags
+}
+
+# A firewall policy that is only attached for Load-Test and Prod environments
+resource "azurerm_web_application_firewall_policy" "fwpol-gf" {
+  name                = "${var.fwpol_name[terraform.workspace]}-gf"
+  location            = data.azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
+
+  managed_rules {
+    managed_rule_set {
+      type    = "OWASP"
+      version = "3.2"
+
+      rule_group_override {
+        rule_group_name = "REQUEST-931-APPLICATION-ATTACK-RFI"
+
+        rule {
+          action  = "AnomalyScoring"
+          enabled = false
+          id      = "931130"
+        }
+      }
+
+      rule_group_override {
+        rule_group_name = "REQUEST-932-APPLICATION-ATTACK-RCE"
+
+        rule {
+          action  = "AnomalyScoring"
+          enabled = false
+          id      = "932105"
+        }
+        rule {
+          action  = "AnomalyScoring"
+          enabled = false
+          id      = "932110"
+        }
+        rule {
+          action  = "AnomalyScoring"
+          enabled = false
+          id      = "932115"
+        }
+      }
+
+      rule_group_override {
+        rule_group_name = "REQUEST-942-APPLICATION-ATTACK-SQLI"
+
+        rule {
+          action  = "AnomalyScoring"
+          enabled = false
+          id      = "942120"
+        }
+        rule {
+          action  = "AnomalyScoring"
+          enabled = false
+          id      = "942130"
+        }
+        rule {
+          action  = "AnomalyScoring"
+          enabled = false
+          id      = "942150"
+        }
+        rule {
+          action  = "AnomalyScoring"
+          enabled = false
+          id      = "942180"
+        }
+        rule {
+          action  = "AnomalyScoring"
+          enabled = false
+          id      = "942360"
+        }
+        rule {
+          action  = "AnomalyScoring"
+          enabled = false
+          id      = "942410"
+        }
+        rule {
+          action  = "AnomalyScoring"
+          enabled = false
+          id      = "942430"
+        }
+      }
+    }
+
+    managed_rule_set {
+      type    = "Microsoft_BotManagerRuleSet"
+      version = "0.1"
+    }
+
+    exclusion {
+      match_variable          = "RequestArgNames"
+      selector_match_operator = "EqualsAny"
+      selector                = "queries"
     }
   }
 
