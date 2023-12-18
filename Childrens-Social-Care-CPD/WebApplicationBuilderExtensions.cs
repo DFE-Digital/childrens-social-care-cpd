@@ -87,7 +87,7 @@ public static class WebApplicationBuilderExtensions
 
     private static void AddSearch(this IServiceCollection services)
     {
-        services.AddScoped<SearchClient>(services => {
+        services.AddScoped(services => {
             var config = services.GetRequiredService<IApplicationConfiguration>();
 
             var searchEndpointUri = new Uri(config.SearchEndpoint.Value);

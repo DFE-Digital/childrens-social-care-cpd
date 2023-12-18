@@ -3,7 +3,7 @@ using Azure.Search.Documents;
 using Azure.Search.Documents.Models;
 using Childrens_Social_Care_CPD.Search;
 using Childrens_Social_Care_CPD.Services;
-using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -174,5 +174,56 @@ public class SearchServiceTests
 
         // assert
         options.Size.Should().Be(actualPageSize);
+    }
+
+    [Test]
+    public async Task SearchResourcesAsync_Filters_Should_Be_Logically_ANDed()
+    {
+        // arrange
+        SearchOptions options = null;
+        var query = new KeywordSearchQuery("foo")
+        {
+            Filter = new Dictionary<string, IEnumerable<string>>()
+            {
+                { 
+                    "tag", new List<string>
+                    {
+                        "filter1",
+                        "filter2",
+                    } 
+                }
+            }
+        };
+        _searchClient.SearchAsync<CpdDocument>(Arg.Any<string>(), Arg.Do<SearchOptions>(x => options = x)).Returns(Substitute.For<Response<SearchResults<CpdDocument>>>());
+
+        // act
+        await _sut.SearchResourcesAsync(query);
+
+        // assert
+        options.Filter.Should().Be("tag/any(v: v eq 'filter1') and tag/any(v: v eq 'filter2')");
+    }
+
+    [TestCase(SortCategory.Created, SortDirection.Ascending, "CreatedAt asc")]
+    [TestCase(SortCategory.Created, SortDirection.Descending, "CreatedAt desc")]
+    [TestCase(SortCategory.Updated, SortDirection.Ascending, "UpdatedAt asc")]
+    [TestCase(SortCategory.Updated, SortDirection.Descending, "UpdatedAt desc")]
+    [TestCase(SortCategory.Relevancy, SortDirection.Ascending, "search.score() asc")]
+    [TestCase(SortCategory.Relevancy, SortDirection.Descending, "search.score() desc")]
+    public async Task SearchResourcesAsync_Constructs_OrderBy_Correctly(SortCategory sortCategory, SortDirection sortDirection, string expectedOrderBy)
+    {
+        // arrange
+        SearchOptions options = null;
+        var query = new KeywordSearchQuery("foo")
+        {
+            SortCategory = sortCategory,
+            SortDirection = sortDirection,
+        };
+        _searchClient.SearchAsync<CpdDocument>(Arg.Any<string>(), Arg.Do<SearchOptions>(x => options = x)).Returns(Substitute.For<Response<SearchResults<CpdDocument>>>());
+
+        // act
+        await _sut.SearchResourcesAsync(query);
+
+        // assert
+        options.OrderBy.Single().Should().Be(expectedOrderBy);
     }
 }
