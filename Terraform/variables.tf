@@ -671,3 +671,15 @@ variable "fwpol_name" {
   }
   description = "Firewall Policy Name"
 }
+
+variable "ai_search_service_name" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-ai-search-service"
+    Test      = "s185d02-ai-search-service"
+    Load-Test = "s185d03-ai-search-service"
+    Pre-Prod  = "s185t01-ai-search-service"
+    Prod      = "s185p01-ai-search-service"
+  }
+  description = "AI Search Service Name"
+}
