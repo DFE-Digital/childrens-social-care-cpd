@@ -1,114 +1,35 @@
 ﻿using Childrens_Social_Care_CPD.Configuration;
-using Contentful.Core.Models.Management;
-using FluentAssertions;
-using NUnit.Framework;
+using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
 
 namespace Childrens_Social_Care_CPD_Tests.Configuration;
 
 [NonParallelizable]
 public class ApplicationConfigurationTests
 {
-    private const string Value = "foo";
-
-    private static void ClearEnvironmentVariables()
-    {
-        Environment.SetEnvironmentVariable("VCS-TAG", null);
-        Environment.SetEnvironmentVariable("CPD_INSTRUMENTATION_CONNECTIONSTRING", null);
-        Environment.SetEnvironmentVariable("CPD_AZURE_ENVIRONMENT", null);
-        Environment.SetEnvironmentVariable("CPD_CLARITY", null);
-        Environment.SetEnvironmentVariable("CPD_DELIVERY_KEY", null);
-        Environment.SetEnvironmentVariable("CPD_CONTENTFUL_ENVIRONMENT", null);
-        Environment.SetEnvironmentVariable("CPD_PREVIEW_KEY", null);
-        Environment.SetEnvironmentVariable("CPD_SPACE_ID", null);
-        Environment.SetEnvironmentVariable("VCS-REF", null);
-        Environment.SetEnvironmentVariable("CPD_GOOGLEANALYTICSTAG", null);
-        Environment.SetEnvironmentVariable("CPD_DISABLE_SECURE_COOKIES", null);
-        Environment.SetEnvironmentVariable("CPD_FEATURE_POLLING_INTERVAL", null);
-    }
+    private IConfiguration _configuration;
+    private ApplicationConfiguration _sut;
 
     [SetUp]
     public void Setup()
     {
-        ClearEnvironmentVariables();
-    }
-
-    [TearDown]
-    public void Teardown()
-    {
-        ClearEnvironmentVariables();
-    }
-
-    [Test]
-    public void Returns_AzureEnvironment_Value()
-    {
-        // arrange
-        Environment.SetEnvironmentVariable("CPD_AZURE_ENVIRONMENT", Value);
-        var sut = new ApplicationConfiguration();
-
-        // act
-        var actual = sut.AzureEnvironment.Value;
-
-        // assert
-        actual.Should().Be(Value);
-    }
-
-    [Test]
-    public void Returns_ClarityProjectId_Value()
-    {
-        // arrange
-        Environment.SetEnvironmentVariable("CPD_CLARITY", Value);
-        var sut = new ApplicationConfiguration();
-
-        // act
-        var actual = sut.ClarityProjectId.Value;
-
-        // assert
-        actual.Should().Be(Value);
-    }
-
-    [Test]
-    public void Returns_ContentfulDeliveryApiKey_Value()
-    {
-        // arrange
-        var Value = "foo";
-        Environment.SetEnvironmentVariable("CPD_DELIVERY_KEY", Value);
-        var sut = new ApplicationConfiguration();
-
-        // act
-        var actual = sut.ContentfulDeliveryApiKey.Value;
-
-        // assert
-        actual.Should().Be(Value);
-    }
-
-    [Test]
-    public void Returns_ContentfulEnvironment_Value()
-    {
-        // arrange
-        Environment.SetEnvironmentVariable("CPD_CONTENTFUL_ENVIRONMENT", Value);
-        var sut = new ApplicationConfiguration();
-
-        // act
-        var actual = sut.ContentfulEnvironment.Value;
-
-        // assert
-        actual.Should().Be(Value);
+        _configuration = Substitute.For<IConfiguration>();
+        _sut = new ApplicationConfiguration(_configuration);
     }
 
     [Test]
     public void Returns_ContentfulGraphqlConnectionString_Value()
     {
         // arrange
-        Environment.SetEnvironmentVariable("CPD_SPACE_ID", Value);
-        Environment.SetEnvironmentVariable("CPD_CONTENTFUL_ENVIRONMENT", Value);
-        var sut = new ApplicationConfiguration();
+        _configuration["CPD_SPACE_ID"].Returns("foo");
+        _configuration["CPD_CONTENTFUL_ENVIRONMENT"].Returns("foo");
 
         // act
-        var actual = sut.ContentfulGraphqlConnectionString.Value;
+        var actual = _sut.ContentfulGraphqlConnectionString.Value;
 
         // assert
-        actual.Should().Be($"https://graphql.contentful.com/content/v1/spaces/{Value}/environments/{Value}");
+        actual.Should().Be($"https://graphql.contentful.com/content/v1/spaces/foo/environments/foo");
     }
 
     [Test]
@@ -116,280 +37,65 @@ public class ApplicationConfigurationTests
     {
         // arrange
         var value = "preview.contentful.com";
-        var sut = new ApplicationConfiguration();
 
         // act
-        var actual = sut.ContentfulPreviewHost.Value;
+        var actual = _sut.ContentfulPreviewHost.Value;
 
         // assert
         actual.Should().Be(value);
     }
 
-    [Test]
-    public void Returns_ContentfulPreviewId_Value()
+    public static IEnumerable<(string, Func<ApplicationConfiguration, object>, string, object)> TestCases
     {
-        // arrange
-        Environment.SetEnvironmentVariable("CPD_PREVIEW_KEY", Value);
-        var sut = new ApplicationConfiguration();
-
-        // act
-        var actual = sut.ContentfulPreviewId.Value;
-
-        // assert
-        actual.Should().Be(Value);
+        get
+        {
+            // Set values
+            yield return ("CPD_AZURE_ENVIRONMENT", (ApplicationConfiguration sut) => sut.AzureEnvironment, "foo", "foo");
+            yield return ("CPD_CLARITY", (ApplicationConfiguration sut) => sut.ClarityProjectId, "foo", "foo");
+            yield return ("CPD_DELIVERY_KEY", (ApplicationConfiguration sut) => sut.ContentfulDeliveryApiKey, "foo", "foo");
+            yield return ("CPD_CONTENTFUL_ENVIRONMENT", (ApplicationConfiguration sut) => sut.ContentfulEnvironment, "foo", "foo");
+            yield return ("CPD_PREVIEW_KEY", (ApplicationConfiguration sut) => sut.ContentfulPreviewId, "foo", "foo");
+            yield return ("CPD_SPACE_ID", (ApplicationConfiguration sut) => sut.ContentfulSpaceId, "foo", "foo");
+            yield return ("CPD_GOOGLEANALYTICSTAG", (ApplicationConfiguration sut) => sut.GoogleTagManagerKey, "foo", "foo");
+            yield return ("CPD_INSTRUMENTATION_CONNECTIONSTRING", (ApplicationConfiguration sut) => sut.AppInsightsConnectionString, "foo", "foo");
+            yield return ("VCS-REF", (ApplicationConfiguration sut) => sut.GitHash, "foo", "foo");
+            yield return ("VCS-TAG", (ApplicationConfiguration sut) => sut.AppVersion, "foo", "foo");
+            yield return ("CPD_DISABLE_SECURE_COOKIES", (ApplicationConfiguration sut) => sut.DisableSecureCookies, "true", true);
+            yield return ("CPD_FEATURE_POLLING_INTERVAL", (ApplicationConfiguration sut) => sut.FeaturePollingInterval, "10", 10);
+            yield return ("CPD_SEARCH_API_KEY", (ApplicationConfiguration sut) => sut.SearchApiKey, "foo", "foo");
+            yield return ("CPD_SEARCH_END_POINT", (ApplicationConfiguration sut) => sut.SearchEndpoint, "foo", "foo");
+            yield return ("CPD_SEARCH_INDEX_NAME", (ApplicationConfiguration sut) => sut.SearchIndexName, "foo", "foo");
+            // Default values
+            yield return ("CPD_AZURE_ENVIRONMENT", (ApplicationConfiguration sut) => sut.AzureEnvironment, null, "");
+            yield return ("CPD_CLARITY", (ApplicationConfiguration sut) => sut.ClarityProjectId, null, "");
+            yield return ("CPD_DELIVERY_KEY", (ApplicationConfiguration sut) => sut.ContentfulDeliveryApiKey, null, "");
+            yield return ("CPD_CONTENTFUL_ENVIRONMENT", (ApplicationConfiguration sut) => sut.ContentfulEnvironment, null, "");
+            yield return ("CPD_PREVIEW_KEY", (ApplicationConfiguration sut) => sut.ContentfulPreviewId, null, "");
+            yield return ("CPD_SPACE_ID", (ApplicationConfiguration sut) => sut.ContentfulSpaceId, null, "");
+            yield return ("CPD_GOOGLEANALYTICSTAG", (ApplicationConfiguration sut) => sut.GoogleTagManagerKey, null, "");
+            yield return ("CPD_INSTRUMENTATION_CONNECTIONSTRING", (ApplicationConfiguration sut) => sut.AppInsightsConnectionString, null, "");
+            yield return ("VCS-REF", (ApplicationConfiguration sut) => sut.GitHash, null, "");
+            yield return ("VCS-TAG", (ApplicationConfiguration sut) => sut.AppVersion, null, "");
+            yield return ("CPD_DISABLE_SECURE_COOKIES", (ApplicationConfiguration sut) => sut.DisableSecureCookies, null, false);
+            yield return ("CPD_FEATURE_POLLING_INTERVAL", (ApplicationConfiguration sut) => sut.FeaturePollingInterval, null, 0);
+            yield return ("CPD_SEARCH_API_KEY", (ApplicationConfiguration sut) => sut.SearchApiKey, null, "");
+            yield return ("CPD_SEARCH_END_POINT", (ApplicationConfiguration sut) => sut.SearchEndpoint, null, "");
+            yield return ("CPD_SEARCH_INDEX_NAME", (ApplicationConfiguration sut) => sut.SearchIndexName, null, "");
+        }
     }
 
-    [Test]
-    public void Returns_ContentfulSpaceId_Value()
+    [TestCaseSource(nameof(TestCases))]
+    public void Returns_AzureEnvironment_Value((string key, Func<ApplicationConfiguration, object> property, string value, object expected) values)
     {
         // arrange
-        Environment.SetEnvironmentVariable("CPD_SPACE_ID", Value);
-        var sut = new ApplicationConfiguration();
+        _configuration[values.key].Returns(values.value);
+        var targetValue = values.property(_sut);
+        var valueProperty = targetValue.GetType().GetProperty("Value");
 
         // act
-        var actual = sut.ContentfulSpaceId.Value;
+        var actual = valueProperty.GetValue(targetValue);
 
         // assert
-        actual.Should().Be(Value);
-    }
-
-    [Test]
-    public void Returns_GoogleTagManagerKey_Value()
-    {
-        // arrange
-        Environment.SetEnvironmentVariable("CPD_GOOGLEANALYTICSTAG", Value);
-        var sut = new ApplicationConfiguration();
-
-        // act
-        var actual = sut.GoogleTagManagerKey.Value;
-
-        // assert
-        actual.Should().Be(Value);
-    }
-
-    [Test]
-    public void Returns_AppInsightsConnectionString_Value()
-    {
-        // arrange
-        Environment.SetEnvironmentVariable("CPD_INSTRUMENTATION_CONNECTIONSTRING", Value);
-        var sut = new ApplicationConfiguration();
-
-        // act
-        var actual = sut.AppInsightsConnectionString.Value;
-
-        // assert
-        actual.Should().Be(Value);
-    }
-
-    [Test]
-    public void Returns_GitHash_Value()
-    {
-        // arrange
-        Environment.SetEnvironmentVariable("VCS-REF", Value);
-        var sut = new ApplicationConfiguration();
-
-        // act
-        var actual = sut.GitHash.Value;
-
-        // assert
-        actual.Should().Be(Value);
-    }
-
-    [Test]
-    public void Returns_DisableSecureCookies_Value()
-    {
-        // arrange
-        Environment.SetEnvironmentVariable("CPD_DISABLE_SECURE_COOKIES", "false");
-        var sut = new ApplicationConfiguration();
-
-        // act
-        var actual = sut.DisableSecureCookies.Value;
-
-        // assert
-        actual.Should().Be(false);
-    }
-
-    [Test]
-    public void Returns_AppVersionEnvironment_Value()
-    {
-        // arrange
-        Environment.SetEnvironmentVariable("VCS-TAG", Value);
-        var sut = new ApplicationConfiguration();
-
-        // act
-        var actual = sut.AppVersion.Value;
-
-        // assert
-        actual.Should().Be(Value);
-    }
-
-    [Test]
-    public void Returns_FeaturePollInterval_Value()
-    {
-        // arrange
-        Environment.SetEnvironmentVariable("CPD_FEATURE_POLLING_INTERVAL", "10000");
-        var sut = new ApplicationConfiguration();
-
-        // act
-        var actual = sut.FeaturePollingInterval.Value;
-
-        // assert
-        actual.Should().Be(10000);
-    }
-
-    [Test]
-    public void Returns_FeaturePollInterval_Default_Value()
-    {
-        // arrange
-        var sut = new ApplicationConfiguration();
-
-        // act
-        var actual = sut.FeaturePollingInterval.Value;
-
-        // assert
-        actual.Should().Be(0);
-    }
-
-    [Test]
-    public void Returns_AzureEnvironment_Default_Value()
-    {
-        // arrange
-        var sut = new ApplicationConfiguration();
-
-        // act
-        var actual = sut.AzureEnvironment.Value;
-
-        // assert
-        actual.Should().Be(string.Empty);
-    }
-
-    [Test]
-    public void Returns_ClarityProjectId_Default_Value()
-    {
-        // arrange
-        var sut = new ApplicationConfiguration();
-
-        // act
-        var actual = sut.ClarityProjectId.Value;
-
-        // assert
-        actual.Should().Be(string.Empty);
-    }
-
-    [Test]
-    public void Returns_ContentfulDeliveryApiKey_Default_Value()
-    {
-        // arrange
-        var sut = new ApplicationConfiguration();
-
-        // act
-        var actual = sut.ContentfulDeliveryApiKey.Value;
-
-        // assert
-        actual.Should().Be(string.Empty);
-    }
-
-    [Test]
-    public void Returns_ContentfulEnvironment_Default_Value()
-    {
-        // arrange
-        var sut = new ApplicationConfiguration();
-
-        // act
-        var actual = sut.ContentfulEnvironment.Value;
-
-        // assert
-        actual.Should().Be(string.Empty);
-    }
-
-    [Test]
-    public void Returns_ContentfulPreviewId_Default_Value()
-    {
-        // arrange
-        var sut = new ApplicationConfiguration();
-
-        // act
-        var actual = sut.ContentfulPreviewId.Value;
-
-        // assert
-        actual.Should().Be(string.Empty);
-    }
-
-    [Test]
-    public void Returns_ContentfulSpaceId_Default_Value()
-    {
-        // arrange
-        var sut = new ApplicationConfiguration();
-
-        // act
-        var actual = sut.ContentfulSpaceId.Value;
-
-        // assert
-        actual.Should().Be(string.Empty);
-    }
-
-    [Test]
-    public void Returns_GoogleTagManagerKey_Default_Value()
-    {
-        // arrange
-        var sut = new ApplicationConfiguration();
-
-        // act
-        var actual = sut.GoogleTagManagerKey.Value;
-
-        // assert
-        actual.Should().Be(string.Empty);
-    }
-
-    [Test]
-    public void Returns_AppInsightsConnectionString_Default_Value()
-    {
-        // arrange
-        var sut = new ApplicationConfiguration();
-
-        // act
-        var actual = sut.AppInsightsConnectionString.Value;
-
-        // assert
-        actual.Should().Be(string.Empty);
-    }
-
-    [Test]
-    public void Returns_GitHash_Default_Value()
-    {
-        // arrange
-        var sut = new ApplicationConfiguration();
-
-        // act
-        var actual = sut.GitHash.Value;
-
-        // assert
-        actual.Should().Be(string.Empty);
-    }
-
-    [Test]
-    public void Returns_DisableSecureCookies_Default_Value()
-    {
-        // arrange
-        var sut = new ApplicationConfiguration();
-
-        // act
-        var actual = sut.DisableSecureCookies.Value;
-
-        // assert
-        actual.Should().Be(false);
-    }
-
-    [Test]
-    public void Returns_AppVersionEnvironment_Default_Value()
-    {
-        // arrange
-        var sut = new ApplicationConfiguration();
-
-        // act
-        var actual = sut.AppVersion.Value;
-
-        // assert
-        actual.Should().Be(string.Empty);
+        actual.Should().Be(values.expected);
     }
 }
