@@ -4,6 +4,4 @@ resource "azurerm_search_service" "ai-search" {
   location            = data.azurerm_resource_group.rg.location
   sku                 = "free"
   tags                = data.azurerm_resource_group.rg.tags
-
-  
 }
