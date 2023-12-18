@@ -1,5 +1,8 @@
-﻿namespace Childrens_Social_Care_CPD.Search;
+﻿using System.Diagnostics.CodeAnalysis;
 
+namespace Childrens_Social_Care_CPD.Search;
+
+[ExcludeFromCodeCoverage]
 public partial class CpdDocument
 {
     public string Id { get; set; }
