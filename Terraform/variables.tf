@@ -683,3 +683,16 @@ variable "ai_search_service_name" {
   }
   description = "AI Search Service Name"
 }
+
+variable "ai_search_service_sku" {
+  type = map(string)
+  default = {
+    Dev       = "free"
+    Test      = "free"
+    Load-Test = "free"
+    Pre-Prod  = "free"
+    Prod      = "basic"
+  }
+  description = "AI Search Service SKU"
+}
+
