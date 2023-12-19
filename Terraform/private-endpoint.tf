@@ -47,3 +47,23 @@ resource "azurerm_private_endpoint" "privateendpoint" {
 
   tags = data.azurerm_resource_group.rg.tags
 }
+
+# Definition of the private end point for the AI Search
+resource "azurerm_private_endpoint" "searchprivateendpoint" {
+  name                = var.search_private_endpoint_name[terraform.workspace]
+  location            = data.azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
+  subnet_id           = azurerm_subnet.backend.id
+
+  # Only create when we are not on a free tier (Prod/Load-Test)
+  count = local.with_basic_aisearch_count
+
+  private_service_connection {
+    name                           = var.search_private_endpoint_conn_name[terraform.workspace]
+    private_connection_resource_id = azurerm_search_service.ai-search.id
+    subresource_names              = ["searchService"]
+    is_manual_connection           = false
+  }
+
+  tags = data.azurerm_resource_group.rg.tags
+}

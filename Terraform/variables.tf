@@ -689,10 +689,33 @@ variable "ai_search_service_sku" {
   default = {
     Dev       = "free"
     Test      = "free"
-    Load-Test = "free"
+    Load-Test = "basic"
     Pre-Prod  = "free"
     Prod      = "basic"
   }
   description = "AI Search Service SKU"
 }
 
+variable "search_private_endpoint_name" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-searchprivateendpoint"
+    Test      = "s185d02-searchprivateendpoint"
+    Load-Test = "s185d03-searchprivateendpoint"
+    Pre-Prod  = "s185t01-searchprivateendpoint"
+    Prod      = "s185p01-searchprivateendpoint"
+  }
+  description = "Name of Search Private Endpoint"
+}
+
+variable "search_private_endpoint_conn_name" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-searchprivateendpointconnection"
+    Test      = "s185d02-searchprivateendpointconnection"
+    Load-Test = "s185d03-searchprivateendpointconnection"
+    Pre-Prod  = "s185t01-searchprivateendpointconnection"
+    Prod      = "s185p01-searchprivateendpointconnection"
+  }
+  description = "Name of Private Endpoint Connection"
+}
