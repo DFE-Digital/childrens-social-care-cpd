@@ -56,7 +56,7 @@ internal class ResourcesDynamicTagsSearchStategy : IResourcesSearchStrategy
     {
         query ??= new ResourcesQuery();
 
-        var tagInfos = await _resourcesRepository.GetSearchTagsAsync();
+        var tagInfos = await _resourcesRepository.GetSearchTagsAsync(cancellationToken);
         var tagIds = new HashSet<string>(tagInfos.Select(x => x.TagName));
         query.Tags = SanitiseTags(query.Tags, tagIds).ToArray();
 

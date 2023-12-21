@@ -13,7 +13,7 @@ public interface IResourcesRepository
 {
     Task<Content> FetchRootPageAsync(CancellationToken cancellationToken = default);
     Task<SearchResourcesByTags.ResponseType> FindByTagsAsync(IEnumerable<string> tags, int skip, int take, ResourceSortOrder resourceSortOrder, CancellationToken cancellationToken = default);
-    Task<IEnumerable<TagInfo>> GetSearchTagsAsync();
+    Task<IEnumerable<TagInfo>> GetSearchTagsAsync(CancellationToken cancellationToken);
     Task<Tuple<Content, GetContentTags.ResponseType>> GetByIdAsync(string id, int depth = 10, CancellationToken cancellationToken = default);
 }
 
@@ -71,9 +71,9 @@ public class ResourcesRepository : IResourcesRepository
         return Tuple.Create(contentTask.Result, tagsTask.Result);
     }
 
-    public async Task<IEnumerable<TagInfo>> GetSearchTagsAsync()
+    public async Task<IEnumerable<TagInfo>> GetSearchTagsAsync(CancellationToken cancellationToken = default)
     {
-        var allTags = await _cpdClient.GetTags();
+        var allTags = await _cpdClient.GetTags(string.Empty, cancellationToken);
 
         var tags = allTags
             .Where(x => Array.Exists(_tagPrefixes, prefix => x.Name.StartsWith($"{prefix}:")))
