@@ -1,0 +1,23 @@
+﻿@model string
+
+<div class="govuk-form-group">
+    <h2 class="govuk-label-wrapper">
+        <label class="govuk-label govuk-label--m" for="searchTermInput">
+            Search resources
+        </label>
+    </h2>
+
+    <div class="govuk-hint">
+        Enter a keyword or search term
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-form-group govuk-grid-column-full">
+            <div class="govuk-input__wrapper">
+                <input type="text" class="govuk-input" id="searchTermInput" name="term" value="@Model">
+                <button class="govuk-button govuk-!-margin-left-2">
+                    Search
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

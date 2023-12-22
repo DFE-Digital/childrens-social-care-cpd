@@ -1,0 +1,41 @@
+﻿@using Azure.Search.Documents.Models
+@using Childrens_Social_Care_CPD.Controllers
+@using Childrens_Social_Care_CPD.Search
+
+@model ResourceSearchResultsViewModel
+
+@if (Model.SearchResults.Any())
+{
+    <div class="grid-row pagination-container">
+        <div class="column-half">
+            <span class="summary">
+                Showing @Model.StartResultCount - @Model.EndResultCount of <span id="ResultCount" class="result-count">@Model.TotalCount</span> results
+            </span>
+        </div>
+
+@*         <div class="column-half">
+            <div id="js-sort-options" data-ga4-change-category="update-sort select">
+                <div class="govuk-form-group sort-options gem-c-select">
+                    <label for="order" class="sort-options__label govuk-label">Sort by</label>
+                    <select class="js-order-results govuk-select sort-options__select" name="order" id="order" aria-controls="js-search-results-info" data-default-sort-option="relevance" data-relevance-sort-option="relevance" data-module="track-select-change">
+                        <option value="updated-newest" selected="" data-track-category="dropDownClicked" data-track-action="clicked" data-track-label="Updated (newest)">Updated (newest)</option>
+                        <option value="updated-oldest" data-track-category="dropDownClicked" data-track-action="clicked" data-track-label="Updated (oldest)">Updated (oldest)</option>
+
+                    </select>
+                </div>
+            </div>
+        </div> *@
+    </div>
+
+    <ul class="dfeuk-document-list">
+        @foreach (var contentItem in Model.SearchResults)
+        {
+            <partial name="_SearchResult" model="contentItem" />
+        }
+    </ul>
+
+    if (Model.TotalPages > 1)
+    {
+        <govuk-pagination url-format-string="@Model.PagingFormatString" page-count=@Model.TotalPages current-page=@Model.CurrentPage />
+    }
+}

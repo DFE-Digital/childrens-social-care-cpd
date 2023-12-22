@@ -1,0 +1,63 @@
+﻿@using Childrens_Social_Care_CPD.Configuration
+@using Childrens_Social_Care_CPD.Controllers
+@using Childrens_Social_Care_CPD.Core.Resources
+@using Childrens_Social_Care_CPD.Models
+@using Microsoft.AspNetCore.Html
+
+@model ResourceSearchResultsViewModel
+
+@inject IFeaturesConfig featuresConfig
+
+@section PageBanner {
+    <partial name="_PageBanner" model="Model.PageContent" />
+}
+
+<div class="govuk-width-container dfe-width-container">
+    <form method="get">
+        <div class="govuk-grid-row">
+            @* Filter column *@
+            <div class="govuk-grid-column-one-third">
+                <h2 class="govuk-heading-m">Results</h2>
+                <p>We found <strong>@Model.TotalCount</strong> results</p>
+
+                <gds-filter clear-filters-uri="/resources-learning">
+                    @{
+                        var groups = Model.Tags.GroupBy(x => x.Category);
+                        var index = 1; // gov uk js requires starting at 1 for this control
+                        foreach (var group in groups)
+                        {
+                            <gds-filter-category title="@group.Key" index="@index">
+                                @foreach (var tagInfo in group)
+                                {
+                                    var isChecked = Model.SelectedTags.Contains(tagInfo.TagName);
+                                    <gds-filter-checkbox id="tag-@tagInfo.TagName" name="tags" checked="@isChecked" value="@tagInfo.TagName">
+                                        @tagInfo.DisplayName
+                                    </gds-filter-checkbox>
+                                }
+                            </gds-filter-category>
+                            index++;
+                        }
+                    }
+
+                </gds-filter>
+            </div>
+
+            @* Results column *@
+            <div class="govuk-grid-column-two-thirds">
+                <partial name="_SearchInput" model="Model.SearchTerm" />
+                @if (Model.TotalPages == 0)
+                {
+                    <partial name="_NoResults" model="Model" />
+                }
+                else
+                {
+                    <partial name="_SearchResults" model="Model" />
+                }
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script src="~/javascript/search-sort.js" asp-append-version="true"></script>
+}

@@ -12,6 +12,7 @@ namespace Childrens_Social_Care_CPD.Controllers;
 
 public class SearchResourcesController : Controller
 {
+    private const int PageSize = 8;
     private readonly IFeaturesConfig _featuresConfig;
     private readonly ISearchService _searchService;
     private readonly IResourcesRepository _resourcesRepository;
@@ -49,7 +50,7 @@ public class SearchResourcesController : Controller
         return new ReadOnlyDictionary<TagInfo, FacetResult>(tags);
     }
 
-    private static string GetPagingFormatString(string searchTerm, IEnumerable<string> tags, SortCategory sortCategory, SortDirection sortDirection)
+    private static string GetPagingFormatString(string searchTerm, IEnumerable<string> tags, SortOrder sortOrder)
     {
         var result = $"/search?page={{0}}";
 
@@ -70,8 +71,10 @@ public class SearchResourcesController : Controller
             }
         }
 
-        Append(sortCategory.ToString(), "sortCategory");
-        Append(sortDirection.ToString(), "sortDirection");
+        if (sortOrder != SortOrder.UpdatedLatest)
+        {
+            Append(sortOrder.ToString(), "sortOrder");
+        }
         Append(searchTerm, "term");
         Append(string.Join('&', tags.Select(x => $"tags={x}")));
         return result;
@@ -79,19 +82,15 @@ public class SearchResourcesController : Controller
 
     private async Task<ResourceSearchResultsViewModel> GetSearchModel(SearchRequest request, CancellationToken cancellationToken)
     {
-        const int PageSize = 8;
         // Kick off our page content query
         var rootPageTask = _resourcesRepository.FetchRootPageAsync(cancellationToken);
 
         // Get the available tags and validate the ones we've been given
         var tagInfos = await _resourcesRepository.GetSearchTagsAsync(cancellationToken);
-
         var validTags = request.Tags?.Where(x => tagInfos.Any(y => y.TagName == x)) ?? Array.Empty<string>();
         
         // Create our search query
-        var page = Math.Max(request.Page, 1);
-        var filter = new Dictionary<string, IEnumerable<string>> { { "Tags", validTags } };
-        var query = new KeywordSearchQuery(request.Term, page, PageSize, filter, request.SortCategory, request.SortDirection);
+        var query = GetQuery(request, validTags);
 
         // Run the search and build our view model
         var searchResults = await _searchService.SearchResourcesAsync(query);
@@ -99,6 +98,10 @@ public class SearchResourcesController : Controller
         var currentPage = totalPages == 0 ? 0 : Math.Clamp(query.Page, 1, totalPages);
         var facetedTags = GetFacetedTags(tagInfos, searchResults.Value.Facets["Tags"]);
 
+        // Calculate the start and end result numbers
+        var startResult = (currentPage - 1) * PageSize + 1;
+        var endResult = Math.Min(startResult + PageSize - 1, searchResults.Value.TotalCount ?? 0);
+        
         // Wait for the page content query to complete
         var pageContent = await rootPageTask;
 
@@ -108,23 +111,49 @@ public class SearchResourcesController : Controller
             searchResults.Value.TotalCount ?? 0,
             totalPages,
             currentPage,
+            startResult,
+            endResult,
             tagInfos,
             searchResults.Value.GetResults(),
             facetedTags,
             validTags,
-            GetPagingFormatString(query.Keyword, validTags, query.SortCategory, query.SortDirection),
-            query.SortCategory,
-            query.SortDirection);
+            GetPagingFormatString(query.Keyword, validTags, request.SortOrder),
+            request.SortOrder);
     }
+
+    private KeywordSearchQuery GetQuery(SearchRequest request, IEnumerable<string> validTags)
+    {
+        var page = Math.Max(request.Page, 1);
+        var filter = new Dictionary<string, IEnumerable<string>> { { "Tags", validTags } };
+
+        var sortCategory = request.SortOrder switch
+        {
+            SortOrder.MostRelevant => SortCategory.Relevancy,
+            _ => SortCategory.Updated,
+        };
+
+        var sortDirection = request.SortOrder switch
+        {
+            SortOrder.UpdatedOldest => SortDirection.Ascending,
+            _ => SortDirection.Descending,
+        };
+
+        return new KeywordSearchQuery(request.Term, page, PageSize, filter, sortCategory, sortDirection);
+    }
+}
+
+public enum SortOrder
+{
+    UpdatedLatest,
+    UpdatedOldest,
+    MostRelevant,
 }
 
 public record SearchRequest(
     string Term,
     string[] Tags,
     int Page = 1,
-    SortCategory SortCategory = SortCategory.Relevancy,
-    SortDirection SortDirection = SortDirection.Descending);
-
+    SortOrder SortOrder = SortOrder.UpdatedLatest);
 
 public record ResourceSearchResultsViewModel(
     Content PageContent,
@@ -132,10 +161,11 @@ public record ResourceSearchResultsViewModel(
     long TotalCount,
     int TotalPages,
     int CurrentPage,
+    long StartResultCount,
+    long EndResultCount,
     IEnumerable<TagInfo> Tags,
     IEnumerable<SearchResult<CpdDocument>> SearchResults,
     IReadOnlyDictionary<TagInfo, FacetResult> FacetedTags,
     IEnumerable<string> SelectedTags,
     string PagingFormatString,
-    SortCategory SortCategory,
-    SortDirection SortDirection);
+    SortOrder SortOrder);

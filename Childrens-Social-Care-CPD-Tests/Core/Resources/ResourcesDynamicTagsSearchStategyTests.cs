@@ -21,7 +21,7 @@ public class ResourcesDynamicTagsSearchStategyTests
 
     private void SetTags(IEnumerable<TagInfo> tags)
     {
-        _resourcesRepository.GetSearchTagsAsync().Returns(tags);
+        _resourcesRepository.GetSearchTagsAsync(default).Returns(tags);
     }
 
     private void SetPageContent(Content content)
