@@ -19,7 +19,7 @@ public interface IResourcesRepository
 
 public class ResourcesRepository : IResourcesRepository
 {
-    private static readonly string[] _tagPrefixes = new string[] { "Topic", "Format", "Career stage" };
+    private static readonly string[] _tagPrefixes = new string[] { "Topic", "Resource provider", "Format", "Career stage" };
     private readonly ICpdContentfulClient _cpdClient;
     private readonly IGraphQLWebSocketClient _gqlClient;
     private readonly bool _isPreview;
