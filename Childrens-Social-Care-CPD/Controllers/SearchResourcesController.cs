@@ -5,6 +5,7 @@ using Childrens_Social_Care_CPD.Core.Resources;
 using Childrens_Social_Care_CPD.DataAccess;
 using Childrens_Social_Care_CPD.Models;
 using Childrens_Social_Care_CPD.Search;
+using Contentful.Core.Search;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.ObjectModel;
 
@@ -12,6 +13,7 @@ namespace Childrens_Social_Care_CPD.Controllers;
 
 public class SearchResourcesController : Controller
 {
+    private const string SearchRoute = "x";
     private const int PageSize = 8;
     private readonly IFeaturesConfig _featuresConfig;
     private readonly ISearchService _searchService;
@@ -26,7 +28,7 @@ public class SearchResourcesController : Controller
         _resourcesRepository = resourcesRepository;
     }
 
-    [Route("x")]
+    [Route(SearchRoute)]
     [HttpGet]
     public async Task<IActionResult> SearchResources([FromQuery] SearchRequest query, bool preferencesSet = false, CancellationToken cancellationToken = default)
     {
@@ -52,7 +54,7 @@ public class SearchResourcesController : Controller
 
     private static string GetPagingFormatString(string searchTerm, IEnumerable<string> tags, SortOrder sortOrder)
     {
-        var result = $"/search?page={{0}}";
+        var result = $"/{SearchRoute}?page={{0}}";
 
         void Append(string param, string name = null)
         {
@@ -117,8 +119,20 @@ public class SearchResourcesController : Controller
             searchResults.Value.GetResults(),
             facetedTags,
             validTags,
+            GetClearFiltersUri(request),
             GetPagingFormatString(query.Keyword, validTags, request.SortOrder),
             request.SortOrder);
+    }
+
+    private string GetClearFiltersUri(SearchRequest request)
+    {
+        var result = $"/{SearchRoute}?term={request.Term}";
+        if (request.SortOrder != SortOrder.UpdatedLatest)
+        {
+            result += $"&sortOrder={request.SortOrder}";
+        }
+        
+        return result;
     }
 
     private KeywordSearchQuery GetQuery(SearchRequest request, IEnumerable<string> validTags)
@@ -167,5 +181,6 @@ public record ResourceSearchResultsViewModel(
     IEnumerable<SearchResult<CpdDocument>> SearchResults,
     IReadOnlyDictionary<TagInfo, FacetResult> FacetedTags,
     IEnumerable<string> SelectedTags,
+    string ClearFiltersUri,
     string PagingFormatString,
     SortOrder SortOrder);

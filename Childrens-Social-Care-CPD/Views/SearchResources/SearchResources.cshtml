@@ -20,7 +20,14 @@
                 <h2 class="govuk-heading-m">Results</h2>
                 <p>We found <strong>@Model.TotalCount</strong> results</p>
 
-                <gds-filter clear-filters-uri="/resources-learning">
+                @if (Model.SelectedTags.Any())
+                {
+                    <a href=@Model.ClearFiltersUri class="govuk-button govuk-button--secondary">
+                        Clear all filters
+                    </a>
+                }
+
+                <gds-filter>
                     @{
                         var groups = Model.Tags.GroupBy(x => x.Category);
                         var index = 1; // gov uk js requires starting at 1 for this control
