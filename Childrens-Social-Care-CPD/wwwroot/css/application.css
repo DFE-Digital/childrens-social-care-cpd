@@ -11122,6 +11122,10 @@ CONTENT TITLE BANNER
   font-style: normal;
 }
 
+.govuk-grid-column-two-thirds > .govuk-form-group {
+  margin-bottom: 0;
+}
+
 .column-layout-row {
   display: flex;
   min-height: 200px;
