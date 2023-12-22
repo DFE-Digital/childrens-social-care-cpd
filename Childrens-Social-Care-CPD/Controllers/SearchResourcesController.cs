@@ -90,19 +90,21 @@ public class SearchResourcesController : Controller
         // Get the available tags and validate the ones we've been given
         var tagInfos = await _resourcesRepository.GetSearchTagsAsync(cancellationToken);
         var validTags = request.Tags?.Where(x => tagInfos.Any(y => y.TagName == x)) ?? Array.Empty<string>();
-        
+
         // Create our search query
-        var query = GetQuery(request, validTags);
+        var sortOrder = request.pl ? SortOrder.MostRelevant : request.SortOrder;
+        var query = GetQuery(request, validTags, sortOrder);
 
         // Run the search and build our view model
         var searchResults = await _searchService.SearchResourcesAsync(query);
-        var totalPages = (int)Math.Ceiling((decimal)(searchResults.Value.TotalCount ?? 0) / query.PageSize);
+        var totalCount = searchResults.Value.TotalCount ?? 0;
+        var totalPages = (int)Math.Ceiling((decimal)(totalCount) / query.PageSize);
         var currentPage = totalPages == 0 ? 0 : Math.Clamp(query.Page, 1, totalPages);
         var facetedTags = GetFacetedTags(tagInfos, searchResults.Value.Facets["Tags"]);
 
         // Calculate the start and end result numbers
         var startResult = (currentPage - 1) * PageSize + 1;
-        var endResult = Math.Min(startResult + PageSize - 1, searchResults.Value.TotalCount ?? 0);
+        var endResult = Math.Min(startResult + PageSize - 1, totalCount);
         
         // Wait for the page content query to complete
         var pageContent = await rootPageTask;
@@ -110,7 +112,7 @@ public class SearchResourcesController : Controller
         return new ResourceSearchResultsViewModel(
             pageContent,
             query.Keyword,
-            searchResults.Value.TotalCount ?? 0,
+            totalCount,
             totalPages,
             currentPage,
             startResult,
@@ -120,8 +122,8 @@ public class SearchResourcesController : Controller
             facetedTags,
             validTags,
             GetClearFiltersUri(request),
-            GetPagingFormatString(query.Keyword, validTags, request.SortOrder),
-            request.SortOrder);
+            GetPagingFormatString(query.Keyword, validTags, sortOrder),
+            sortOrder);
     }
 
     private string GetClearFiltersUri(SearchRequest request)
@@ -129,24 +131,24 @@ public class SearchResourcesController : Controller
         var result = $"/{SearchRoute}?term={request.Term}";
         if (request.SortOrder != SortOrder.UpdatedLatest)
         {
-            result += $"&sortOrder={request.SortOrder}";
+            result += $"&sortOrder={(int)request.SortOrder}";
         }
         
         return result;
     }
 
-    private KeywordSearchQuery GetQuery(SearchRequest request, IEnumerable<string> validTags)
+    private KeywordSearchQuery GetQuery(SearchRequest request, IEnumerable<string> validTags, SortOrder sortOrder)
     {
         var page = Math.Max(request.Page, 1);
         var filter = new Dictionary<string, IEnumerable<string>> { { "Tags", validTags } };
 
-        var sortCategory = request.SortOrder switch
+        var sortCategory = sortOrder switch
         {
             SortOrder.MostRelevant => SortCategory.Relevancy,
             _ => SortCategory.Updated,
         };
 
-        var sortDirection = request.SortOrder switch
+        var sortDirection = sortOrder switch
         {
             SortOrder.UpdatedOldest => SortDirection.Ascending,
             _ => SortDirection.Descending,
@@ -167,7 +169,8 @@ public record SearchRequest(
     string Term,
     string[] Tags,
     int Page = 1,
-    SortOrder SortOrder = SortOrder.UpdatedLatest);
+    SortOrder SortOrder = SortOrder.UpdatedLatest,
+    bool pl = false);
 
 public record ResourceSearchResultsViewModel(
     Content PageContent,
