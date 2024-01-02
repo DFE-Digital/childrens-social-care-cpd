@@ -14,7 +14,6 @@ using GraphQL.Client.Abstractions.Websocket;
 using GraphQL.Client.Http;
 using GraphQL.Client.Serializer.SystemTextJson;
 using Microsoft.ApplicationInsights.AspNetCore.Extensions;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.ApplicationInsights;
 using Microsoft.Extensions.Logging.AzureAppServices;
 using System.Diagnostics.CodeAnalysis;
@@ -59,7 +58,13 @@ public static class WebApplicationBuilderExtensions
 
         builder.Services.AddScoped<IContentLinkContext, ContentLinkContext>();
 
-        // Register all the IRender<T> & IRenderWithOptions<T> implementations in the assembly
+        builder.Services.AddContentRenderers();
+        builder.Services.AddSearch();
+    }
+
+    private static void AddContentRenderers(this IServiceCollection services)
+    {
+        // Register all the IRenderer<T> & IRendererWithOptions<T> implementations in the assembly
         var assemblyTypes = System.Reflection.Assembly.GetExecutingAssembly().GetTypes();
 
         assemblyTypes
@@ -68,7 +73,7 @@ public static class WebApplicationBuilderExtensions
             .ForEach(assignedTypes =>
             {
                 var serviceType = assignedTypes.GetInterfaces().First(i => i.GetGenericTypeDefinition() == typeof(IRenderer<>));
-                builder.Services.AddScoped(serviceType, assignedTypes);
+                services.AddScoped(serviceType, assignedTypes);
             });
 
         assemblyTypes
@@ -77,16 +82,14 @@ public static class WebApplicationBuilderExtensions
             .ForEach(assignedTypes =>
             {
                 var serviceType = assignedTypes.GetInterfaces().First(i => i.GetGenericTypeDefinition() == typeof(IRendererWithOptions<>));
-                builder.Services.AddScoped(serviceType, assignedTypes);
+                services.AddScoped(serviceType, assignedTypes);
             });
-
-
-        // Search client
-        builder.Services.AddSearch();
     }
 
     private static void AddSearch(this IServiceCollection services)
     {
+        services.AddScoped<ISearchResultsVMFactory, SearchResultsVMFactory>();
+
         services.AddScoped(services => {
             var config = services.GetRequiredService<IApplicationConfiguration>();
 
@@ -96,7 +99,7 @@ public static class WebApplicationBuilderExtensions
                 new AzureKeyCredential(config.SearchApiKey.Value));
         });
 
-        services.AddTransient<ISearchService, SearchService>();
+        services.AddScoped<ISearchService, SearchService>();
     }
 
     public static void AddFeatures(this WebApplicationBuilder builder)

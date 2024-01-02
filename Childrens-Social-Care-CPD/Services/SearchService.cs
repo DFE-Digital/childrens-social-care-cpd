@@ -1,5 +1,4 @@
-﻿using Azure;
-using Azure.Search.Documents;
+﻿using Azure.Search.Documents;
 using Azure.Search.Documents.Models;
 using Childrens_Social_Care_CPD.Search;
 
@@ -39,7 +38,7 @@ internal class SearchService: ISearchService
         return string.Join("and", items ?? Array.Empty<string>());
     }
 
-    public Task<Response<SearchResults<CpdDocument>>> SearchResourcesAsync(KeywordSearchQuery query)
+    public Task<SearchResourcesResult> SearchResourcesAsync(KeywordSearchQuery query)
     {
         var searchTerm = $"{query.Keyword}*";
         var skip = (Math.Max(query.Page, 1) - 1) * query.PageSize;
@@ -58,6 +57,17 @@ internal class SearchService: ISearchService
             OrderBy = { orderBy }
         };
 
-        return _searchClient.SearchAsync<CpdDocument>(searchTerm, searchOptions);
+        return _searchClient
+            .SearchAsync<CpdDocument>(searchTerm, searchOptions)
+            .ContinueWith(task =>
+            {
+                var searchResults = task.Result;
+                var totalCount = searchResults.Value.TotalCount ?? 0;
+                var totalPages = (long)Math.Ceiling((decimal)totalCount / query.PageSize);
+                var currentPage = totalPages == 0 ? 0 : Math.Clamp(query.Page, 1, totalPages);
+                var startResult = (currentPage - 1) * query.PageSize + 1;
+                var endResult = Math.Min(startResult + query.PageSize - 1, totalCount);
+                return new SearchResourcesResult(totalCount, totalPages, currentPage, startResult, endResult, searchResults.Value);
+            });
     }
 }
