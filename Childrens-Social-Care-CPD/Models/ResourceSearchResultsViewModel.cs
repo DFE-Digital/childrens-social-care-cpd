@@ -1,6 +1,5 @@
 ﻿using Azure.Search.Documents.Models;
 using Childrens_Social_Care_CPD.Contentful.Models;
-using Childrens_Social_Care_CPD.Controllers;
 using Childrens_Social_Care_CPD.Core.Resources;
 using Childrens_Social_Care_CPD.Search;
 
@@ -14,8 +13,8 @@ public record ResourceSearchResultsViewModel(
     long CurrentPage,
     long StartResultCount,
     long EndResultCount,
-    IEnumerable<TagInfo> Tags,
     IEnumerable<SearchResult<CpdDocument>> SearchResults,
+    IEnumerable<TagInfo> Tags,
     IReadOnlyDictionary<TagInfo, FacetResult> FacetedTags,
     IEnumerable<string> SelectedTags,
     string ClearFiltersUri,

@@ -24,9 +24,15 @@ internal class SearchResultsVMFactory: ISearchResultsVMFactory
         _resourcesRepository = resourcesRepository;
     }
 
-    private static IReadOnlyDictionary<TagInfo, FacetResult> GetFacetedTags(IEnumerable<TagInfo> tagInfos, IList<FacetResult> facets)
+    private static IReadOnlyDictionary<TagInfo, FacetResult> GetFacetedTags(IEnumerable<TagInfo> tagInfos, IDictionary<string, IList<FacetResult>> facets)
     {
-        var map = facets.ToDictionary(x => x.Value as string, x => x);
+        facets.TryGetValue("Tags", out var tagFacets);
+        if (tagFacets == null)
+        {
+            return new ReadOnlyDictionary<TagInfo, FacetResult>(new Dictionary<TagInfo, FacetResult>());
+        }
+
+        var map = tagFacets.ToDictionary(x => x.Value as string, x => x);
         var tags = tagInfos.ToDictionary(tagInfo => tagInfo, tagInfo => map.GetValueOrDefault(tagInfo.TagName));
 
         return new ReadOnlyDictionary<TagInfo, FacetResult>(tags);
@@ -47,7 +53,7 @@ internal class SearchResultsVMFactory: ISearchResultsVMFactory
 
         if (sortOrder != SortOrder.UpdatedLatest)
         {
-            Append(sortOrder.ToString(), "sortOrder");
+            Append(((int)sortOrder).ToString(), "sortOrder");
         }
         Append(searchTerm, "term");
         Append(string.Join('&', tags.Select(x => $"tags={x}")));
@@ -99,7 +105,7 @@ internal class SearchResultsVMFactory: ISearchResultsVMFactory
 
         // Run the search and build our view model
         var searchResults = await _searchService.SearchResourcesAsync(query);
-        var facetedTags = GetFacetedTags(tagInfos, searchResults.SearchResults.Facets["Tags"]);
+        var facetedTags = GetFacetedTags(tagInfos, searchResults.SearchResults.Facets);
 
         // Wait for the page content query to complete
         var pageContent = await rootPageTask;
@@ -112,8 +118,8 @@ internal class SearchResultsVMFactory: ISearchResultsVMFactory
             searchResults.CurrentPage,
             searchResults.StartResultCount,
             searchResults.EndResultCount,
-            tagInfos,
             searchResults.SearchResults.GetResults(),
+            tagInfos,
             facetedTags,
             validTags,
             GetClearFiltersUri(request, routeName),
