@@ -7,7 +7,7 @@ namespace Childrens_Social_Care_CPD.Controllers;
 
 public class SearchResourcesController : Controller
 {
-    private const string SearchRoute = "x";
+    private const string SearchRoute = "resources-learning";
     private const int PageSize = 8;
     private readonly IFeaturesConfig _featuresConfig;
     private readonly ISearchResultsVMFactory _searchResultsVMFactory;

@@ -8,8 +8,6 @@ using System.Threading.Tasks;
 
 namespace Childrens_Social_Care_CPD_Tests.Controllers;
 
-
-
 public class SearchResourcesControllerTests
 {
     private class MockSearchResultsVMFactory : ISearchResultsVMFactory

@@ -22,7 +22,6 @@ namespace Childrens_Social_Care_CPD_Tests.Controllers;
 public class ResourcesControllerTests
 {
     private IFeaturesConfig _featuresConfig;
-    private IResourcesSearchStrategy _searchStrategy;
     private IResourcesRepository _resourcesRepository;
     private ResourcesController _resourcesController;
     private IRequestCookieCollection _cookies;
@@ -44,56 +43,11 @@ public class ResourcesControllerTests
 
         _featuresConfig = Substitute.For<IFeaturesConfig>();
         _featuresConfig.IsEnabled(Features.ResourcesAndLearning).Returns(true);
-        _searchStrategy = Substitute.For<IResourcesSearchStrategy>();
-        _resourcesController = new ResourcesController(_featuresConfig, _searchStrategy, _resourcesRepository)
+        _resourcesController = new ResourcesController(_featuresConfig, _resourcesRepository)
         {
             ControllerContext = controllerContext,
             TempData = Substitute.For<ITempDataDictionary>()
         };
-    }
-
-    [Test]
-    public async Task Search_Returns_Strategy_Model()
-    {
-        // arrange
-        var model = new ResourcesListViewModel(null, null, null, null);
-        _searchStrategy.SearchAsync(Arg.Any<ResourcesQuery>(), Arg.Any<CancellationToken>()).Returns(model);
-
-        // act
-        var actual = await _resourcesController.Search(query: null) as ViewResult;
-
-        // assert
-        actual.Model.Should().Be(model);
-    }
-
-    [Test]
-    public async Task Search_Returns_Strategy_Model_When_Order_Value_Returned()
-    {
-        // arrange
-        var model = new ResourcesListViewModel(null, null, null, null);
-        _searchStrategy.SearchAsync(Arg.Any<ResourcesQuery>(), Arg.Any<CancellationToken>()).Returns(model);
-        var query = new ResourcesQuery();
-
-        // act
-        var actual = await _resourcesController.Search(query: query) as ViewResult;
-
-        // assert
-        actual.Model.Should().Be(model);
-    }
-
-    [Test]
-    public async Task Disabling_Resources_Feature_Returns_NotFoundResult()
-    {
-        // arrange
-        _featuresConfig.IsEnabled(Features.ResourcesAndLearning).Returns(false);
-        var model = new ResourcesListViewModel(null, null, null, null);
-        _searchStrategy.SearchAsync(Arg.Any<ResourcesQuery>(), Arg.Any<CancellationToken>()).Returns(model);
-
-        // act
-        var actual = await _resourcesController.Search(query: null);
-
-        // assert
-        actual.Should().BeOfType<NotFoundResult>();
     }
 
     [Test]

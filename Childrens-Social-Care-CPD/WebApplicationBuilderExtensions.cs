@@ -36,17 +36,6 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddTransient<IFeaturesConfigUpdater, FeaturesConfigUpdater>();
         builder.Services.AddTransient<IResourcesRepository, ResourcesRepository>();
         
-        // Resources search feature
-        builder.Services.AddScoped<ResourcesDynamicTagsSearchStategy>();
-        builder.Services.AddScoped<ResourcesFixedTagsSearchStrategy>();
-        builder.Services.AddScoped<IResourcesSearchStrategy>(services =>
-        {
-            var featuresConfig = services.GetRequiredService<IFeaturesConfig>();
-            return featuresConfig.IsEnabled(Features.ResourcesUseDynamicTags)
-                ? services.GetService<ResourcesDynamicTagsSearchStategy>()
-                : services.GetService<ResourcesFixedTagsSearchStrategy>();
-        });
-
         builder.Services.AddScoped<IGraphQLWebSocketClient>(services => {
             var config = services.GetRequiredService<IApplicationConfiguration>();
             var client = new GraphQLHttpClient(config.ContentfulGraphqlConnectionString.Value, new SystemTextJsonSerializer());

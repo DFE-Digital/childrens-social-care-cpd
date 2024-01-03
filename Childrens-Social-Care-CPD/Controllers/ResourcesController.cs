@@ -1,5 +1,4 @@
 ﻿using Childrens_Social_Care_CPD.Configuration;
-using Childrens_Social_Care_CPD.Core.Resources;
 using Childrens_Social_Care_CPD.DataAccess;
 using Childrens_Social_Care_CPD.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -27,31 +26,12 @@ public class ResourcesQuery
 public class ResourcesController : Controller
 {
     private readonly IFeaturesConfig _featuresConfig;
-    private readonly IResourcesSearchStrategy _strategy;
     private readonly IResourcesRepository _resourcesRepository;
 
-    public ResourcesController(IFeaturesConfig featuresConfig, IResourcesSearchStrategy strategy, IResourcesRepository resourcesRepository)
+    public ResourcesController(IFeaturesConfig featuresConfig, IResourcesRepository resourcesRepository)
     {
-        ArgumentNullException.ThrowIfNull(strategy);
         _featuresConfig = featuresConfig;
-        _strategy = strategy;
         _resourcesRepository = resourcesRepository;
-    }
-
-    [Route("resources-learning")]
-    [HttpGet]
-    public async Task<IActionResult> Search([FromQuery] ResourcesQuery query, bool preferencesSet = false, CancellationToken cancellationToken = default)
-    {
-        if (!_featuresConfig.IsEnabled(Features.ResourcesAndLearning))
-        {
-            return NotFound();
-        }
-
-        var contextModel = new ContextModel(string.Empty, "Resources", "Resources", "Resources", true, preferencesSet);
-        ViewData["ContextModel"] = contextModel;
-
-        var viewModel = await _strategy.SearchAsync(query, cancellationToken);
-        return View(viewModel);
     }
 
     [Route("resources-learning/{*pagename:regex(^[[0-9a-z]](\\/?[[0-9a-z\\-]])*\\/?$)}")]
