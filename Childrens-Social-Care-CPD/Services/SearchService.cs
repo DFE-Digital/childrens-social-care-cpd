@@ -44,6 +44,7 @@ internal class SearchService: ISearchService
         var skip = (Math.Max(query.Page, 1) - 1) * query.PageSize;
         var filter = GetFilter(query.Filter);
         var orderBy = GetOrderBy(query.SortCategory, query.SortDirection);
+        var pageSize = Math.Max(query.PageSize, MinPageSize);
 
         var searchOptions = new SearchOptions()
         {
@@ -52,7 +53,7 @@ internal class SearchService: ISearchService
             HighlightFields = { "Body" },
             Facets = { "Tags,count:100" },
             Filter = string.IsNullOrEmpty(filter) ? null : filter,
-            Size = Math.Max(query.PageSize, MinPageSize),
+            Size = pageSize,
             Skip = skip,
             OrderBy = { orderBy }
         };
@@ -63,10 +64,10 @@ internal class SearchService: ISearchService
             {
                 var searchResults = task.Result;
                 var totalCount = searchResults.Value.TotalCount ?? 0;
-                var totalPages = (long)Math.Ceiling((decimal)totalCount / query.PageSize);
+                var totalPages = (long)Math.Ceiling((decimal)totalCount / pageSize);
                 var currentPage = totalPages == 0 ? 0 : Math.Clamp(query.Page, 1, totalPages);
-                var startResult = (currentPage - 1) * query.PageSize + 1;
-                var endResult = Math.Min(startResult + query.PageSize - 1, totalCount);
+                var startResult = (currentPage - 1) * pageSize + 1;
+                var endResult = Math.Min(startResult + pageSize - 1, totalCount);
                 return new SearchResourcesResult(totalCount, totalPages, currentPage, startResult, endResult, searchResults.Value);
             });
     }
