@@ -1,5 +1,5 @@
 resource "azurerm_storage_account" "functionappsa" {
-  name                     = "s185d03searchappsa"
+  name                     = var.functionapp_storage_account_name[terraform.workspace]
   resource_group_name      = data.azurerm_resource_group.rg.name
   location                 = data.azurerm_resource_group.rg.location
   account_tier             = "Standard"
@@ -8,22 +8,23 @@ resource "azurerm_storage_account" "functionappsa" {
 }
 
 resource "azurerm_storage_container" "functionappsc" {
-  name                  = "s185d03searchappsc"
+  name                  = var.functionapp_storage_container_name[terraform.workspace]
   storage_account_name  = azurerm_storage_account.functionappsa.name
   container_access_type = "private"
 }
 
 resource "azurerm_service_plan" "functionappsp" {
-  name                = "s185d03searchappsp"
+  name                = var.functionapp_service_plan_name[terraform.workspace]
   resource_group_name = data.azurerm_resource_group.rg.name
   location            = data.azurerm_resource_group.rg.location
   os_type             = "Linux"
-  sku_name            = "B1"
+  sku_name            = var.functionapp_sku_name[terraform.workspace]
+  worker_count        = var.functionapp_worker_count[terraform.workspace]
   tags                = data.azurerm_resource_group.rg.tags
 }
 
 resource "azurerm_linux_function_app" "functionapp" {
-  name                       = "s185d03searchappfa"
+  name                       = var.functionapp_name[terraform.workspace]
   resource_group_name        = data.azurerm_resource_group.rg.name
   location                   = data.azurerm_resource_group.rg.location
   service_plan_id            = azurerm_service_plan.functionappsp.id
