@@ -34,7 +34,7 @@ internal class SearchService: ISearchService
     {
         IEnumerable<string> Formatter(KeyValuePair<string, IEnumerable<string>> kvp) =>
             kvp.Value.Select(value => $"{kvp.Key}/any(v: v eq '{value}')");
-        var items = filter?.Select(kvp => string.Join(" and ", Formatter(kvp)));
+        var items = filter?.Select(kvp => string.Join(" or ", Formatter(kvp)));
         return string.Join("and", items ?? Array.Empty<string>());
     }
 
