@@ -29,16 +29,17 @@
 
                 <gds-filter>
                     @{
-                        var groups = Model.Tags.GroupBy(x => x.Category);
+                        var groups = Model.FacetedTags.GroupBy(x => x.Key.Category);
                         var index = 1; // gov uk js requires starting at 1 for this control
                         foreach (var group in groups)
                         {
                             <gds-filter-category title="@group.Key" index="@index">
-                                @foreach (var tagInfo in group)
+                                @foreach (var kvp in group)
                                 {
-                                    var isChecked = Model.SelectedTags.Contains(tagInfo.TagName);
-                                    <gds-filter-checkbox id="tag-@tagInfo.TagName" name="tags" checked="@isChecked" value="@tagInfo.TagName">
-                                        @tagInfo.DisplayName
+                                    var isChecked = Model.SelectedTags.Contains(kvp.Key.TagName);
+                                    var count = kvp.Value?.Count ?? 0;
+                                    <gds-filter-checkbox id="tag-@kvp.Key.TagName" name="tags" checked="@isChecked" value="@kvp.Key.TagName">
+                                        @kvp.Key.DisplayName (@count)
                                     </gds-filter-checkbox>
                                 }
                             </gds-filter-category>
