@@ -14,25 +14,19 @@ resource "azurerm_application_gateway" "appgw" {
     max_capacity = var.autoscale_max[terraform.workspace]
   }
 
-  # # Dynamic block that only applies to Load-Test and Prod environments
-  # dynamic "waf_configuration" {
-  #   for_each = [
-  #     for rg in data.azurerm_resource_group.rg : rg
-  #     if data.azurerm_resource_group.rg.name == "s185p01-childrens-social-care-cpd-rg" && rg == "s185p01-childrens-social-care-cpd-rg" || data.azurerm_resource_group.rg.name == "s185d03-childrens-social-care-cpd-rg" && rg == "s185d03-childrens-social-care-cpd-rg"
-  #   ]
+  # Dynamic block that only applies to Load-Test and Prod environments
+  dynamic "waf_configuration" {
+    for_each = [
+      for rg in data.azurerm_resource_group.rg : rg
+      if data.azurerm_resource_group.rg.name == "s185p01-childrens-social-care-cpd-rg" && rg == "s185p01-childrens-social-care-cpd-rg" || data.azurerm_resource_group.rg.name == "s185d03-childrens-social-care-cpd-rg" && rg == "s185d03-childrens-social-care-cpd-rg"
+    ]
 
-  #   content {
-  #     enabled          = true
-  #     firewall_mode    = "Prevention"
-  #     rule_set_version = "3.2"
-
-  #     exclusion {
-  #       match_variable          = "RequestCookieNames"
-  #       selector                = "grafana_session_expiry"
-  #       selector_match_operator = "Contains"
-  #     }
-  #   }
-  # }
+    content {
+      enabled          = true
+      firewall_mode    = "Prevention"
+      rule_set_version = "3.2"
+    }
+  }
 
   # A firewall policy that should only be populated for Load-Test and Prod environments 
   # firewall_policy_id = var.appgw_tier[terraform.workspace] == "WAF_v2" ? azurerm_web_application_firewall_policy.fwpol.id : null
