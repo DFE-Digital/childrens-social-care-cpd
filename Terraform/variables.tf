@@ -777,7 +777,7 @@ variable "functionapp_sku_name" {
     Pre-Prod  = "B1"
     Prod      = "P1v3"
   }
-  description = "Name of Function App"
+  description = "Function App SKU"
 }
 
 variable "functionapp_worker_count" {
