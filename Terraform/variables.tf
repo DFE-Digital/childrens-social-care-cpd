@@ -791,3 +791,38 @@ variable "functionapp_worker_count" {
   }
   description = "Number of Function App Workers"
 }
+
+variable "cpd_search_api_key" {
+  description = "The Azure AI Search API key"
+  type        = string
+}
+
+variable "cpd_instrumentation_connectionstring" {
+  description = "The Azure ApplicationInsights connection string"
+  type        = string
+}
+
+variable "vcs_tag" {
+  description = "The application version"
+  type        = string
+}
+
+variable "cpd_search_batch_size" {
+  description = "The batch size for queries into Contentful"
+  type        = number
+}
+
+variable "cpd_search_endpoint" {
+  description = "The Azure AI Search endpoint"
+  type        = string
+}
+
+variable "cpd_search_index_name" {
+  description = "The Azure AI Search index name to access/create"
+  type        = string
+}
+
+variable "cpd_search_recreate_index_on_rebuild" {
+  description = "Whether to delete the index and recreate before populating"
+  type        = bool
+}
