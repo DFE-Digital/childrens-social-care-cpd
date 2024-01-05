@@ -794,11 +794,13 @@ variable "functionapp_worker_count" {
 
 variable "cpd_search_api_key" {
   description = "The Azure AI Search API key"
+  sensitive   = true
   type        = string
 }
 
 variable "cpd_instrumentation_connectionstring" {
   description = "The Azure ApplicationInsights connection string"
+  sensitive   = true
   type        = string
 }
 

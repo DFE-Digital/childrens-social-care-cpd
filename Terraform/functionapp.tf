@@ -38,16 +38,16 @@ resource "azurerm_linux_function_app" "functionapp" {
   app_settings = {
     FUNCTIONS_WORKER_RUNTIME = "dotnet"
 
-    CPD_SEARCH_API_KEY                    = var.cpd_search_api_key
-    CPD_INSTRUMENTATION_CONNECTIONSTRING  = var.cpd_instrumentation_connectionstring
-    VCS_TAG                               = var.vcs_tag
-    CPD_SEARCH_BATCH_SIZE                 = var.cpd_search_batch_size
-    CPD_SEARCH_ENDPOINT                   = var.cpd_search_endpoint
-    CPD_SEARCH_INDEX_NAME                 = var.cpd_search_index_name
-    CPD_DELIVERY_KEY                      = var.cpd_delivery_key
-    CPD_CONTENTFUL_ENVIRONMENT            = var.cpd_contentful_env[terraform.workspace]
-    CPD_SPACE_ID                          = var.cpd_space_id
-    CPD_SEARCH_RECREATE_INDEX_ON_REBUILD  = var.cpd_search_recreate_index_on_rebuild
+    CPD_SEARCH_API_KEY                   = var.cpd_search_api_key
+    CPD_INSTRUMENTATION_CONNECTIONSTRING = var.cpd_instrumentation_connectionstring
+    VCS_TAG                              = var.vcs_tag
+    CPD_SEARCH_BATCH_SIZE                = var.cpd_search_batch_size
+    CPD_SEARCH_ENDPOINT                  = var.cpd_search_endpoint
+    CPD_SEARCH_INDEX_NAME                = var.cpd_search_index_name
+    CPD_DELIVERY_KEY                     = var.cpd_delivery_key
+    CPD_CONTENTFUL_ENVIRONMENT           = var.cpd_contentful_env[terraform.workspace]
+    CPD_SPACE_ID                         = var.cpd_space_id
+    CPD_SEARCH_RECREATE_INDEX_ON_REBUILD = var.cpd_search_recreate_index_on_rebuild
   }
 
   tags = data.azurerm_resource_group.rg.tags
