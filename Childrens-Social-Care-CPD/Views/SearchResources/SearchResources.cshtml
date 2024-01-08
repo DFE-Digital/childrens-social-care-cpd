@@ -37,7 +37,7 @@
                                 {
                                     var isChecked = Model.SelectedTags.Contains(kvp.Key.TagName);
                                     var count = kvp.Value?.Count ?? 0;
-                                    <gds-filter-checkbox id="tag-@kvp.Key.TagName" name="tags" checked="@isChecked" value="@kvp.Key.TagName">
+                                    <gds-filter-checkbox id="tag-@kvp.Key.TagName" name="@SearchRequestPropertyNames.Tags" checked="@isChecked" value="@kvp.Key.TagName">
                                         @kvp.Key.DisplayName (@count)
                                     </gds-filter-checkbox>
                                 }

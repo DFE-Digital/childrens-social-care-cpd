@@ -47,7 +47,7 @@ public class SearchResourcesControllerTests
         _featuresConfig.IsEnabled(Features.ResourcesAndLearning).Returns(false);
 
         // act
-        var result = _sut.SearchResources(new SearchRequestModel(string.Empty, null));
+        var result = _sut.SearchResources(new SearchRequestModel { Term = string.Empty, Tags = null });
 
         // assert
         result.Result.Should().BeOfType<NotFoundResult>();
@@ -60,7 +60,7 @@ public class SearchResourcesControllerTests
         _featuresConfig.IsEnabled(Features.ResourcesAndLearning).Returns(true);
 
         // act
-        var result = _sut.SearchResources(new SearchRequestModel(string.Empty, null));
+        var result = _sut.SearchResources(new SearchRequestModel { Term = string.Empty, Tags = null });
 
         // assert
         result.Result.Should().BeOfType<ViewResult>();

@@ -1,18 +1,12 @@
 ﻿using Childrens_Social_Care_CPD.Configuration;
 using Childrens_Social_Care_CPD.Contentful.Models;
 using Childrens_Social_Care_CPD.Controllers;
-using Childrens_Social_Care_CPD.Core.Resources;
 using Childrens_Social_Care_CPD.DataAccess;
 using Childrens_Social_Care_CPD.GraphQL.Queries;
-using Childrens_Social_Care_CPD.Models;
-using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using NSubstitute;
-using NUnit.Framework;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -155,7 +149,7 @@ public class ResourcesControllerTests
                 UpdatedAt = updatedAt,
             }
         };
-        var tags = CreateTagsResponse(new() { new () { Id = "foo", Name = "Resource:Foo=foo" }, });
+        var tags = CreateTagsResponse(new() { new () { Id = "foo", Name = "Resource provider: Virtual Hubs" }, });
 
         _resourcesRepository.GetByIdAsync(Arg.Any<string>(), cancellationToken: Arg.Any<CancellationToken>())
             .Returns(Task.FromResult(Tuple.Create(content, tags)));
@@ -166,7 +160,7 @@ public class ResourcesControllerTests
 
         // assert
         properties.Should().NotBeNull();
-        properties["Foo"].Should().Be("foo");
+        properties["From"].Should().Be("Virtual Hubs");
     }
 
     [Test]

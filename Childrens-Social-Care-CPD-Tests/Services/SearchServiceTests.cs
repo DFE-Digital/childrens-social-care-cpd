@@ -93,7 +93,7 @@ public class SearchServiceTests
     private static SearchResults<CpdDocument> GenerateSearchResults(int count, IDictionary<string, IList<FacetResult>> facets = null)
     {
         var random = new Random();
-        List<SearchResult<CpdDocument>> results = new List<SearchResult<CpdDocument>>();
+        var results = new List<SearchResult<CpdDocument>>();
         for (var i = 0; i < count; i++)
         {
             results.Add(SearchModelFactory.SearchResult(new CpdDocument(), random.NextDouble(), new Dictionary<string, IList<string>>()));
@@ -209,7 +209,7 @@ public class SearchServiceTests
     }
 
     [Test]
-    public async Task SearchResourcesAsync_Filters_Should_Be_Logically_ANDed()
+    public async Task SearchResourcesAsync_Filters_Should_Be_Logically_ORed()
     {
         // arrange
         SearchOptions options = null;
@@ -233,7 +233,7 @@ public class SearchServiceTests
         await _sut.SearchResourcesAsync(query);
 
         // assert
-        options.Filter.Should().Be("tag/any(v: v eq 'filter1') and tag/any(v: v eq 'filter2')");
+        options.Filter.Should().Be("tag/any(v: v eq 'filter1') or tag/any(v: v eq 'filter2')");
     }
 
     [TestCase(SortCategory.Created, SortDirection.Ascending, "CreatedAt asc")]

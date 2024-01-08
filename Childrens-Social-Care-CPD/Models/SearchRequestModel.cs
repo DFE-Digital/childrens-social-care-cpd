@@ -1,4 +1,6 @@
-﻿namespace Childrens_Social_Care_CPD.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace Childrens_Social_Care_CPD.Models;
 
 public enum SortOrder
 {
@@ -7,8 +9,25 @@ public enum SortOrder
     MostRelevant,
 }
 
-public record SearchRequestModel(
-    string Term,
-    string[] Tags,
-    int Page = 1,
-    SortOrder SortOrder = SortOrder.UpdatedLatest);
+public static class SearchRequestPropertyNames
+{
+    public const string Term = "q";
+    public const string Tags = "t";
+    public const string Page = "p";
+    public const string SortOrder = "so";
+}
+
+public record SearchRequestModel
+{
+    [BindProperty(Name = SearchRequestPropertyNames.Term, SupportsGet = true)]
+    public required string Term { get; init; }
+
+    [BindProperty(Name = SearchRequestPropertyNames.Tags)]
+    public required string[] Tags { get; init; }
+
+    [BindProperty(Name = SearchRequestPropertyNames.Page)]
+    public int Page { get; init; } = 1;
+
+    [BindProperty(Name = SearchRequestPropertyNames.SortOrder)]
+    public SortOrder SortOrder { get; init; } = SortOrder.UpdatedLatest;
+};

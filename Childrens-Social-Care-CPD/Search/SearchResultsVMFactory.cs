@@ -39,7 +39,7 @@ internal class SearchResultsVMFactory : ISearchResultsVMFactory
 
     private static string GetPagingFormatString(string searchTerm, IEnumerable<string> tags, SortOrder sortOrder, string routeName)
     {
-        var result = $"/{routeName}?page={{0}}";
+        var result = $"/{routeName}?{SearchRequestPropertyNames.Page}={{0}}";
 
         void Append(string param, string name = null)
         {
@@ -52,19 +52,19 @@ internal class SearchResultsVMFactory : ISearchResultsVMFactory
 
         if (sortOrder != SortOrder.UpdatedLatest)
         {
-            Append(((int)sortOrder).ToString(), "sortOrder");
+            Append(((int)sortOrder).ToString(), SearchRequestPropertyNames.SortOrder);
         }
-        Append(searchTerm, "term");
-        Append(string.Join('&', tags.Select(x => $"tags={x}")));
+        Append(searchTerm, SearchRequestPropertyNames.Term);
+        Append(string.Join('&', tags.Select(x => $"{SearchRequestPropertyNames.Tags}={x}")));
         return result;
     }
 
     private static string GetClearFiltersUri(SearchRequestModel request, string routeName)
     {
-        var result = $"/{routeName}?term={request.Term}";
+        var result = $"/{routeName}?{SearchRequestPropertyNames.Term}={request.Term}";
         if (request.SortOrder != SortOrder.UpdatedLatest)
         {
-            result += $"&sortOrder={(int)request.SortOrder}";
+            result += $"&{SearchRequestPropertyNames.SortOrder}={(int)request.SortOrder}";
         }
 
         return result;
@@ -99,15 +99,8 @@ internal class SearchResultsVMFactory : ISearchResultsVMFactory
         var tagInfos = await _resourcesRepository.GetSearchTagsAsync(cancellationToken);
         var validTags = request.Tags?.Where(x => tagInfos.Any(y => y.TagName == x)) ?? Array.Empty<string>();
 
-        // If we're submitting the form via the button, we want to ignore the sort order
-        var sortOrder = request.SortOrder;
-        //if (request.Action == "submit")
-        //{
-        //    sortOrder = SortOrder.MostRelevant;
-        //}
-
         // Create our search query
-        var query = GetQuery(request, validTags, sortOrder, pageSize);
+        var query = GetQuery(request, validTags, request.SortOrder, pageSize);
 
         // Run the search and build our view model
         var searchResults = await _searchService.SearchResourcesAsync(query);
@@ -129,7 +122,7 @@ internal class SearchResultsVMFactory : ISearchResultsVMFactory
             facetedTags,
             validTags,
             GetClearFiltersUri(request, routeName),
-            GetPagingFormatString(query.Keyword, validTags, sortOrder, routeName),
-            sortOrder);
+            GetPagingFormatString(query.Keyword, validTags, request.SortOrder, routeName),
+            request.SortOrder);
     }
 }

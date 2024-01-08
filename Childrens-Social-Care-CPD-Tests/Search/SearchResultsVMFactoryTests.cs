@@ -3,13 +3,15 @@ using Childrens_Social_Care_CPD.Contentful.Models;
 using Childrens_Social_Care_CPD.DataAccess;
 using Childrens_Social_Care_CPD.Models;
 using Childrens_Social_Care_CPD.Search;
+using Contentful.Core.Search;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using SortOrder = Childrens_Social_Care_CPD.Models.SortOrder;
 
-namespace Childrens_Social_Care_CPD_Tests.Core.Resources;
+namespace Childrens_Social_Care_CPD_Tests.Search;
 
 public class SearchResultsVMFactoryTests
 {
@@ -30,7 +32,7 @@ public class SearchResultsVMFactoryTests
     private static SearchResourcesResult GenerateSearchResults(int count, IDictionary<string, IList<FacetResult>> facets = null)
     {
         var random = new Random();
-        List<SearchResult<CpdDocument>> results = new List<SearchResult<CpdDocument>>();
+        var results = new List<SearchResult<CpdDocument>>();
         for (var i = 0; i < count; i++)
         {
             results.Add(SearchModelFactory.SearchResult(new CpdDocument(), random.NextDouble(), new Dictionary<string, IList<string>>()));
@@ -51,7 +53,13 @@ public class SearchResultsVMFactoryTests
 
         KeywordSearchQuery query = null;
         _searchService.SearchResourcesAsync(Arg.Do<KeywordSearchQuery>(x => query = x)).Returns(new SearchResourcesResult(0, 0, 0, 0, 0, _emptySearchResults));
-        var request = new SearchRequestModel(string.Empty, Array.Empty<string>(), 1, sortOrder);
+        var request = new SearchRequestModel
+        {
+            Term = string.Empty,
+            Tags = Array.Empty<string>(),
+            Page = 1,
+            SortOrder = sortOrder
+        };
 
         // act
         var result = await _searchResultsVMFactory.GetSearchModel(request, 1, string.Empty, default);
@@ -70,7 +78,13 @@ public class SearchResultsVMFactoryTests
 
         KeywordSearchQuery query = null;
         _searchService.SearchResourcesAsync(Arg.Do<KeywordSearchQuery>(x => query = x)).Returns(GenerateSearchResults(50));
-        var request = new SearchRequestModel("foo", Array.Empty<string>(), 1, SortOrder.MostRelevant);
+        var request = new SearchRequestModel
+        {
+            Term = "foo",
+            Tags = Array.Empty<string>(),
+            Page = 1,
+            SortOrder = SortOrder.MostRelevant
+        };
 
         // act
         var result = await _searchResultsVMFactory.GetSearchModel(request, 1, string.Empty, default);
@@ -88,7 +102,13 @@ public class SearchResultsVMFactoryTests
         _resourcesRepository.FetchRootPageAsync().Returns(Task.FromResult<Content>(null));
 
         _searchService.SearchResourcesAsync(Arg.Any<KeywordSearchQuery>()).Returns(GenerateSearchResults(count));
-        var request = new SearchRequestModel(string.Empty, Array.Empty<string>(), 1, SortOrder.MostRelevant);
+        var request = new SearchRequestModel
+        {
+            Term = string.Empty,
+            Tags = Array.Empty<string>(),
+            Page = 1,
+            SortOrder = SortOrder.MostRelevant
+        };
 
         // act
         var result = await _searchResultsVMFactory.GetSearchModel(request, 1, string.Empty, default);
@@ -111,7 +131,13 @@ public class SearchResultsVMFactoryTests
         _resourcesRepository.FetchRootPageAsync().Returns(Task.FromResult(content));
 
         _searchService.SearchResourcesAsync(Arg.Any<KeywordSearchQuery>()).Returns(GenerateSearchResults(0));
-        var request = new SearchRequestModel(string.Empty, Array.Empty<string>(), 1, SortOrder.MostRelevant);
+        var request = new SearchRequestModel
+        {
+            Term = string.Empty,
+            Tags = Array.Empty<string>(),
+            Page = 1,
+            SortOrder = SortOrder.MostRelevant
+        };
 
         // act
         var result = await _searchResultsVMFactory.GetSearchModel(request, 1, string.Empty, default);
@@ -129,7 +155,13 @@ public class SearchResultsVMFactoryTests
         _resourcesRepository.FetchRootPageAsync().Returns(Task.FromResult<Content>(null));
 
         _searchService.SearchResourcesAsync(Arg.Any<KeywordSearchQuery>()).Returns(GenerateSearchResults(0));
-        var request = new SearchRequestModel(term, Array.Empty<string>(), 1, SortOrder.MostRelevant);
+        var request = new SearchRequestModel
+        {
+            Term = term,
+            Tags = Array.Empty<string>(),
+            Page = 1,
+            SortOrder = SortOrder.MostRelevant
+        };
 
         // act
         var result = await _searchResultsVMFactory.GetSearchModel(request, 1, string.Empty, default);
@@ -147,7 +179,13 @@ public class SearchResultsVMFactoryTests
         _resourcesRepository.FetchRootPageAsync().Returns(Task.FromResult<Content>(null));
 
         _searchService.SearchResourcesAsync(Arg.Any<KeywordSearchQuery>()).Returns(GenerateSearchResults(0));
-        var request = new SearchRequestModel(term, Array.Empty<string>(), 1, SortOrder.UpdatedOldest);
+        var request = new SearchRequestModel
+        { 
+            Term = term,
+            Tags = Array.Empty<string>(),
+            Page = 1,
+            SortOrder = SortOrder.UpdatedOldest
+        };
 
         // act
         var result = await _searchResultsVMFactory.GetSearchModel(request, 1, string.Empty, default);
@@ -156,9 +194,9 @@ public class SearchResultsVMFactoryTests
         result.SortOrder.Should().Be(SortOrder.UpdatedOldest);
     }
 
-    [TestCase(SortOrder.UpdatedLatest, "/foo?term=foo")]
-    [TestCase(SortOrder.UpdatedOldest, "/foo?term=foo&sortOrder=1")]
-    [TestCase(SortOrder.MostRelevant, "/foo?term=foo&sortOrder=2")]
+    [TestCase(SortOrder.UpdatedLatest, "/foo?q=foo")]
+    [TestCase(SortOrder.UpdatedOldest, "/foo?q=foo&so=1")]
+    [TestCase(SortOrder.MostRelevant, "/foo?q=foo&so=2")]
     public async Task GetSearchModel_Model_Should_Receive_ClearFiltersUri(SortOrder sortOrder, string expected)
     {
         // arrange
@@ -168,7 +206,13 @@ public class SearchResultsVMFactoryTests
         _resourcesRepository.FetchRootPageAsync().Returns(Task.FromResult<Content>(null));
 
         _searchService.SearchResourcesAsync(Arg.Any<KeywordSearchQuery>()).Returns(GenerateSearchResults(0));
-        var request = new SearchRequestModel(term, Array.Empty<string>(), 1, sortOrder);
+        var request = new SearchRequestModel
+        {
+            Term = term,
+            Tags = Array.Empty<string>(),
+            Page = 1,
+            SortOrder = sortOrder
+        };
 
         // act
         var result = await _searchResultsVMFactory.GetSearchModel(request, 1, routeName, default);
@@ -177,9 +221,9 @@ public class SearchResultsVMFactoryTests
         result.ClearFiltersUri.Should().Be(expected);
     }
 
-    [TestCase(SortOrder.UpdatedLatest, "/foo?page={0}&term=foo")]
-    [TestCase(SortOrder.UpdatedOldest, "/foo?page={0}&sortOrder=1&term=foo")]
-    [TestCase(SortOrder.MostRelevant, "/foo?page={0}&sortOrder=2&term=foo")]
+    [TestCase(SortOrder.UpdatedLatest, "/foo?p={0}&q=foo")]
+    [TestCase(SortOrder.UpdatedOldest, "/foo?p={0}&so=1&q=foo")]
+    [TestCase(SortOrder.MostRelevant, "/foo?p={0}&so=2&q=foo")]
     public async Task GetSearchModel_Model_Should_Receive_PagingFormatString(SortOrder sortOrder, string expected)
     {
         // arrange
@@ -189,7 +233,13 @@ public class SearchResultsVMFactoryTests
         _resourcesRepository.FetchRootPageAsync().Returns(Task.FromResult<Content>(null));
 
         _searchService.SearchResourcesAsync(Arg.Any<KeywordSearchQuery>()).Returns(GenerateSearchResults(0));
-        var request = new SearchRequestModel(term, Array.Empty<string>(), 1, sortOrder);
+        var request = new SearchRequestModel
+        {
+            Term = term,
+            Tags = Array.Empty<string>(),
+            Page = 1,
+            SortOrder = sortOrder
+        };
 
         // act
         var result = await _searchResultsVMFactory.GetSearchModel(request, 1, routeName, default);
@@ -214,13 +264,19 @@ public class SearchResultsVMFactoryTests
         _resourcesRepository.FetchRootPageAsync().Returns(Task.FromResult<Content>(null));
 
         _searchService.SearchResourcesAsync(Arg.Any<KeywordSearchQuery>()).Returns(GenerateSearchResults(0));
-        var request = new SearchRequestModel(term, new[] { "tagOne" } , 1, SortOrder.UpdatedLatest);
+        var request = new SearchRequestModel
+        {
+            Term = term,
+            Tags = new[] { "tagOne" } ,
+            Page = 1,
+            SortOrder = SortOrder.UpdatedLatest
+        };
 
         // act
         var result = await _searchResultsVMFactory.GetSearchModel(request, 1, routeName, default);
 
         // assert
-        result.PagingFormatString.Should().Be($"/foo?page={{0}}&term={term}&tags=tagOne");
+        result.PagingFormatString.Should().Be($"/foo?p={{0}}&q={term}&t=tagOne");
     }
 
     [Test]
@@ -244,7 +300,13 @@ public class SearchResultsVMFactoryTests
         _resourcesRepository.FetchRootPageAsync().Returns(Task.FromResult<Content>(null));
 
         _searchService.SearchResourcesAsync(Arg.Any<KeywordSearchQuery>()).Returns(searchResults);
-        var request = new SearchRequestModel(term, new[] { "tagOne" }, 1, SortOrder.UpdatedLatest);
+        var request = new SearchRequestModel
+        {
+            Term = term,
+            Tags = new[] { "tagOne" },
+            Page = 1,
+            SortOrder = SortOrder.UpdatedLatest
+        };
 
         // act
         var result = await _searchResultsVMFactory.GetSearchModel(request, 1, routeName, default);
