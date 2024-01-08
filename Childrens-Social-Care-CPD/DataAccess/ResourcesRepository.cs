@@ -18,7 +18,7 @@ public interface IResourcesRepository
 {
     Task<Content> FetchRootPageAsync(CancellationToken cancellationToken = default);
     Task<SearchResourcesByTags.ResponseType> FindByTagsAsync(IEnumerable<string> tags, int skip, int take, ResourceSortOrder resourceSortOrder, CancellationToken cancellationToken = default);
-    Task<IEnumerable<TagInfo>> GetSearchTagsAsync(CancellationToken cancellationToken);
+    Task<IEnumerable<TagInfo>> GetSearchTagsAsync(CancellationToken cancellationToken = default);
     Task<Tuple<Content, GetContentTags.ResponseType>> GetByIdAsync(string id, int depth = 10, CancellationToken cancellationToken = default);
 }
 

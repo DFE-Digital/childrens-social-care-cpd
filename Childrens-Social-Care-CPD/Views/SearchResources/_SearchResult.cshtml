@@ -27,7 +27,7 @@
 
     @if (Model.SearchResult.Highlights?.Any() ?? false)
     {
-        var highlight = Model.SearchResult.Highlights.First().Value.First();
+        var highlight = Model.SearchResult.Highlights.First().Value[0];
         <p class="govuk-body search-result">@Html.Raw(highlight)</p>
     }
     else
