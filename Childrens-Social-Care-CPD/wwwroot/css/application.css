@@ -10471,8 +10471,7 @@ CONTENT TITLE BANNER
 
 @media (min-width: 40.0625em) {
   .dfeuk-document-list .dfeuk-document-list__item .dfeuk-document-list__item-metadata .gdfeuk-document-list__attribute {
-    font-size: 14px;
-    font-size: 0.875rem;
+    font-size: 18px;
     line-height: 1.4285714286;
   }
 }
@@ -11120,10 +11119,6 @@ CONTENT TITLE BANNER
   background-color: #ffdd00;
   font-weight: bold;
   font-style: normal;
-}
-
-.govuk-grid-column-two-thirds > .govuk-form-group {
-  margin-bottom: 0;
 }
 
 .column-layout-row {
