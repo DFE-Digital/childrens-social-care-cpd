@@ -1,17 +1,16 @@
 ﻿using Azure.Search.Documents.Models;
 using Childrens_Social_Care_CPD.DataAccess;
 using Childrens_Social_Care_CPD.Models;
-using Childrens_Social_Care_CPD.Search;
 using System.Collections.ObjectModel;
 
-namespace Childrens_Social_Care_CPD.Core.Resources;
+namespace Childrens_Social_Care_CPD.Search;
 
 public interface ISearchResultsVMFactory
 {
     Task<ResourceSearchResultsViewModel> GetSearchModel(SearchRequestModel request, int pageSize, string routeName, CancellationToken cancellationToken);
 }
 
-internal class SearchResultsVMFactory: ISearchResultsVMFactory
+internal class SearchResultsVMFactory : ISearchResultsVMFactory
 {
     private readonly ISearchService _searchService;
     private readonly IResourcesRepository _resourcesRepository;
@@ -100,8 +99,15 @@ internal class SearchResultsVMFactory: ISearchResultsVMFactory
         var tagInfos = await _resourcesRepository.GetSearchTagsAsync(cancellationToken);
         var validTags = request.Tags?.Where(x => tagInfos.Any(y => y.TagName == x)) ?? Array.Empty<string>();
 
+        // If we're submitting the form via the button, we want to ignore the sort order
+        var sortOrder = request.SortOrder;
+        //if (request.Action == "submit")
+        //{
+        //    sortOrder = SortOrder.MostRelevant;
+        //}
+
         // Create our search query
-        var query = GetQuery(request, validTags, request.SortOrder, pageSize);
+        var query = GetQuery(request, validTags, sortOrder, pageSize);
 
         // Run the search and build our view model
         var searchResults = await _searchService.SearchResourcesAsync(query);
@@ -123,7 +129,7 @@ internal class SearchResultsVMFactory: ISearchResultsVMFactory
             facetedTags,
             validTags,
             GetClearFiltersUri(request, routeName),
-            GetPagingFormatString(query.Keyword, validTags, request.SortOrder, routeName),
-            request.SortOrder);
+            GetPagingFormatString(query.Keyword, validTags, sortOrder, routeName),
+            sortOrder);
     }
 }

@@ -36,7 +36,7 @@ public class ResourcesController : Controller
         _resourcesRepository = resourcesRepository;
     }
 
-    private Dictionary<string, string> GetProperties(GetContentTags.ResponseType tags, Content content)
+    private static Dictionary<string, string> GetProperties(GetContentTags.ResponseType tags, Content content)
     {
         var properties = new Dictionary<string, string>()
         {
@@ -47,7 +47,7 @@ public class ResourcesController : Controller
         void AddProperty(string key, string prefix)
         {
             var propertyTags = tags.ContentCollection.Items.First().ContentfulMetaData.Tags.Where(x => x.Name.StartsWith($"{prefix}:"));
-            if (propertyTags.Count() > 0)
+            if (propertyTags.Any())
             {
                 var value = string.Join(", ", propertyTags.Select(x => x.Name.Split(":")[1].Trim(' ')));
                 properties.Add(key, value);

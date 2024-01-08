@@ -1,11 +1,8 @@
 ﻿using Azure.Search.Documents.Models;
 using Childrens_Social_Care_CPD.Contentful.Models;
-using Childrens_Social_Care_CPD.Core.Resources;
 using Childrens_Social_Care_CPD.DataAccess;
 using Childrens_Social_Care_CPD.Models;
 using Childrens_Social_Care_CPD.Search;
-using Microsoft.AspNetCore.Routing;
-using NSubstitute;
 using System;
 using System.Collections.Generic;
 using System.Linq;

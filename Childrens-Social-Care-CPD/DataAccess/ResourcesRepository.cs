@@ -2,7 +2,7 @@
 using Childrens_Social_Care_CPD.Contentful;
 using Childrens_Social_Care_CPD.Contentful.Models;
 using Childrens_Social_Care_CPD.Controllers;
-using Childrens_Social_Care_CPD.Core.Resources;
+using Childrens_Social_Care_CPD.Search;
 using Childrens_Social_Care_CPD.GraphQL.Queries;
 using Contentful.Core.Search;
 using GraphQL.Client.Abstractions.Websocket;

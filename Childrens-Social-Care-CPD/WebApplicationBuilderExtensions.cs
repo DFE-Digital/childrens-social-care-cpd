@@ -4,7 +4,6 @@ using Childrens_Social_Care_CPD.Configuration;
 using Childrens_Social_Care_CPD.Contentful;
 using Childrens_Social_Care_CPD.Contentful.Contexts;
 using Childrens_Social_Care_CPD.Contentful.Renderers;
-using Childrens_Social_Care_CPD.Core.Resources;
 using Childrens_Social_Care_CPD.DataAccess;
 using Childrens_Social_Care_CPD.Search;
 using Childrens_Social_Care_CPD.Services;

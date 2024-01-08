@@ -1,6 +1,6 @@
 ﻿using Childrens_Social_Care_CPD.Configuration;
-using Childrens_Social_Care_CPD.Core.Resources;
 using Childrens_Social_Care_CPD.Models;
+using Childrens_Social_Care_CPD.Search;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Childrens_Social_Care_CPD.Controllers;
