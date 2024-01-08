@@ -163,6 +163,42 @@ public class ResourcesControllerTests
         properties["From"].Should().Be("Virtual Hubs");
     }
 
+    [TestCase("Topic", "Topic Text")]
+    [TestCase("From", "From Text")]
+    [TestCase("Estimated reading time", "15 mins")]
+    public async Task Index_Passes_Properties(string key, string value)
+    {
+        // arrange
+        var createdAt = DateTime.UtcNow.AddMinutes(-10);
+        var updatedAt = DateTime.UtcNow;
+        var content = new Content
+        {
+            EstimatedReadingTime = 15,
+            Sys = new()
+            {
+                CreatedAt = createdAt,
+                UpdatedAt = updatedAt,
+            }
+        };
+        var tags = CreateTagsResponse(new()
+        { 
+            new() { Id = "topicTopicText", Name = "Topic: Topic Text" },
+            new() { Id = "resourceProviderFromText", Name = "Resource provider: From Text" },
+            new() { Id = "estimatedReadingTime15", Name = "Estimated reading time: 15 mins" },
+        });
+
+        _resourcesRepository.GetByIdAsync(Arg.Any<string>(), cancellationToken: Arg.Any<CancellationToken>())
+            .Returns(Task.FromResult(Tuple.Create(content, tags)));
+
+        // act
+        var result = await _resourcesController.Index("foo") as ViewResult;
+        var properties = result.ViewData["Properties"] as IDictionary<string, string>;
+
+        // assert
+        properties.Should().NotBeNull();
+        properties[key].Should().Be(value);
+    }
+
     [Test]
     public async Task Index_Ignores_Unrelated_Tags_For_Properties()
     {
@@ -177,7 +213,7 @@ public class ResourcesControllerTests
                 UpdatedAt = updatedAt,
             }
         };
-        var tags = CreateTagsResponse(new() { new() { Id = "foo", Name = "Topic:Foo=foo" }, });
+        var tags = CreateTagsResponse(new() { new() { Id = "foo", Name = "Foo: Some value" }, });
 
         _resourcesRepository.GetByIdAsync(Arg.Any<string>(), cancellationToken: Arg.Any<CancellationToken>())
             .Returns(Task.FromResult(Tuple.Create(content, tags)));

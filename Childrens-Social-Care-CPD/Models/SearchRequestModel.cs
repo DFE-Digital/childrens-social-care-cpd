@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Childrens_Social_Care_CPD.Models;
 
@@ -17,6 +18,7 @@ public static class SearchRequestPropertyNames
     public const string SortOrder = "so";
 }
 
+[ExcludeFromCodeCoverage]
 public record SearchRequestModel
 {
     [BindProperty(Name = SearchRequestPropertyNames.Term, SupportsGet = true)]
