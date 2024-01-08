@@ -9,6 +9,12 @@ using GraphQL.Client.Abstractions.Websocket;
 
 namespace Childrens_Social_Care_CPD.DataAccess;
 
+public enum ResourceSortOrder
+{
+    UpdatedNewest = 0,
+    UpdatedOldest = 1
+}
+
 public interface IResourcesRepository
 {
     Task<Content> FetchRootPageAsync(CancellationToken cancellationToken = default);

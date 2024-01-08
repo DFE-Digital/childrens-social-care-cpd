@@ -7,24 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Childrens_Social_Care_CPD.Controllers;
 
-public enum ResourceSortOrder
-{ 
-    UpdatedNewest = 0,
-    UpdatedOldest = 1
-}
-
-public class ResourcesQuery
-{
-    public string[] Tags { get; set; }
-    public int Page { get; set; } = 1;
-    public ResourceSortOrder SortOrder { get; set; }
-
-    public ResourcesQuery()
-    {
-        Tags = Array.Empty<string>();
-    }
-}
-
 public class ResourcesController : Controller
 {
     private readonly IFeaturesConfig _featuresConfig;
