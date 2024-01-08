@@ -10,6 +10,15 @@
     Layout = "_DefaultPageLayout";
 }
 
+@* @{
+    const int MaxFormatTags = 2;
+
+    var tagInfos = Model.TagMap.Where(x => Model.SearchResult.Document.Tags.Contains(x.Key));
+    var from = tagInfos.Where(x => x.Value.Category == "Resource provider").OrderBy(x => x.Value.DisplayName).FirstOrDefault();
+    var topic = tagInfos.Where(x => x.Value.Category == "Topic").OrderBy(x => x.Value.DisplayName).FirstOrDefault();
+    var formats = tagInfos.Where(x => x.Value.Category == "Format").OrderBy(x => x.Value.DisplayName).Take(MaxFormatTags);
+} *@
+
 @section Head {
     @if (ViewData.TryGetValue("StateModel", out var stateModel) && ((StateModel)stateModel).IncludeMediaPlayer)
     {
@@ -33,13 +42,16 @@
                 <cpd-resource-nav navigation="@Model.Navigation?.Items" selected="@Model.Id" />
             </aside>
         }
-        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+        
     </div>
 </div>
 
+<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 <cpd-properties-list items="@ViewBag.Properties" />
+<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
 <partial name="_Content" model="Model" />
+
 
 <cpd-resource-page-nav navigation="@Model.Navigation?.Items" current="@Model.Id" />
 

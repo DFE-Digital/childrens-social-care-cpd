@@ -4,6 +4,17 @@
 
 @model ResourceSearchResultsViewModel
 
+@{
+    // var sortOrders = new[]
+    // {
+    //     new { Value = "0", Text = "Updated (newest)", Selected = (int)Model.SortOrder == 0 },
+    //     new { Value = "1", Text = "Updated (oldest)", Selected = (int)Model.SortOrder == 1 },
+    //     new { Value = "2", Text = "Most relevant", Selected = (int)Model.SortOrder == 2 },
+    // };
+
+    var tagMap = Model.Tags.ToDictionary(t => t.TagName, t => t);
+}
+
 @if (Model.SearchResults.Any())
 {
     <div class="grid-row pagination-container">
@@ -22,6 +33,13 @@
                         <option value="1">Updated (oldest)</option>
                         <option value="2">Most relevant</option>
                     </select>
+                    @* <select class="js-order-results govuk-select sort-options__select" name="sortOrder" id="sortOrder" onchange="document.getElementById('searchForm').submit()">
+                        @foreach (var item in sortOrders)
+                        {
+                            <option value="@item.Value" selected="@item.Selected">@item.Text</option>
+                        }
+                    </select> *@
+                    
                 </div>
             </div>
         </div>
@@ -30,7 +48,8 @@
     <ul class="dfeuk-document-list">
         @foreach (var contentItem in Model.SearchResults)
         {
-            <partial name="_SearchResult" model="contentItem" />
+            var model = new SearchResultViewModel(contentItem, tagMap);
+            <partial name="_SearchResult" model="model" />
         }
     </ul>
 
