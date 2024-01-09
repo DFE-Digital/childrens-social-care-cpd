@@ -1,6 +1,7 @@
 ﻿using Azure.Search.Documents;
 using Azure.Search.Documents.Models;
 using Childrens_Social_Care_CPD.Search;
+using System.Text.RegularExpressions;
 
 namespace Childrens_Social_Care_CPD.Services;
 
@@ -40,7 +41,7 @@ internal class SearchService: ISearchService
 
     public Task<SearchResourcesResult> SearchResourcesAsync(KeywordSearchQuery query)
     {
-        var searchTerm = $"{query.Keyword}*";
+        var searchTerm = RemoveSpecialCharacters(query.Keyword);
         var skip = (Math.Max(query.Page, 1) - 1) * query.PageSize;
         var filter = GetFilter(query.Filter);
         var orderBy = GetOrderBy(query.SortCategory, query.SortDirection);
@@ -49,6 +50,7 @@ internal class SearchService: ISearchService
         var searchOptions = new SearchOptions()
         {
             QueryType = SearchQueryType.Simple,
+            SearchMode = SearchMode.Any,
             IncludeTotalCount = true,
             HighlightFields = { "Body" },
             Facets = { "Tags,count:100" },
@@ -70,5 +72,12 @@ internal class SearchService: ISearchService
                 var endResult = Math.Min(startResult + pageSize - 1, totalCount);
                 return new SearchResourcesResult(totalCount, totalPages, currentPage, startResult, endResult, searchResults.Value);
             });
+    }
+
+    private static string RemoveSpecialCharacters(string str)
+    {
+        return str == null
+            ? null
+            : Regex.Replace(str, "[^a-zA-Z0-9 ]+", "", RegexOptions.Compiled);
     }
 }
