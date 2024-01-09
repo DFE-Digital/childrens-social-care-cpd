@@ -785,9 +785,9 @@ variable "functionapp_worker_count" {
   default = {
     Dev       = 1
     Test      = 1
-    Load-Test = 2
+    Load-Test = 1
     Pre-Prod  = 1
-    Prod      = 2
+    Prod      = 1
   }
   description = "Number of Function App Workers"
 }
