@@ -127,12 +127,14 @@ public class SearchServiceTests
         options.QueryType.Should().Be(SearchQueryType.Simple);
     }
 
-    [Test]
-    public async Task SearchResourcesAsync_Turns_Search_Term_Into_Prefix_Query()
+    [TestCase("foo*", "foo")]
+    [TestCase("foo* foo*", "foo foo")]
+    [TestCase("!£$foo%^&*()_+#'~@|\\-=", "foo")]
+    public async Task SearchResourcesAsync_Strips_Special_Characters(string term, string expected)
     {
         // arrange
         var searchTerm = string.Empty;
-        var query = new KeywordSearchQuery("foo");
+        var query = new KeywordSearchQuery(term);
         var response = GenerateResponse();
         _searchClient.SearchAsync<CpdDocument>(Arg.Do<string>(x => searchTerm = x), Arg.Any<SearchOptions>()).Returns(response);
 
@@ -140,7 +142,7 @@ public class SearchServiceTests
         await _sut.SearchResourcesAsync(query);
 
         // assert
-        searchTerm.Should().Be("foo*");
+        searchTerm.Should().Be(expected);
     }
 
     [Test]
