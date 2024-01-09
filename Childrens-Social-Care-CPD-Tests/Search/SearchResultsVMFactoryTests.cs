@@ -342,4 +342,28 @@ public class SearchResultsVMFactoryTests
         // assert
         query.Keyword.Length.Should().Be(255);
     }
+
+    [Test]
+    public async Task GetSearchModel_Handles_Null_Term()
+    {
+        // arrange
+        _resourcesRepository.GetSearchTagsAsync(Arg.Any<CancellationToken>()).Returns(Array.Empty<TagInfo>());
+        _resourcesRepository.FetchRootPageAsync().Returns(Task.FromResult<Content>(null));
+
+        KeywordSearchQuery query = null;
+        _searchService.SearchResourcesAsync(Arg.Do<KeywordSearchQuery>(x => query = x)).Returns(new SearchResourcesResult(0, 0, 0, 0, 0, _emptySearchResults));
+        var request = new SearchRequestModel
+        {
+            Term = null,
+            Tags = Array.Empty<string>(),
+            Page = 1,
+            SortOrder = SortOrder.MostRelevant
+        };
+
+        // act
+        var result = await _searchResultsVMFactory.GetSearchModel(request, 1, string.Empty, default);
+
+        // assert
+        query.Keyword.Should().Be(string.Empty);
+    }
 }

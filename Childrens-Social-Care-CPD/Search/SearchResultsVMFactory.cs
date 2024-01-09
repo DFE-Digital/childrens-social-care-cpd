@@ -72,7 +72,8 @@ internal class SearchResultsVMFactory : ISearchResultsVMFactory
 
     private static KeywordSearchQuery GetQuery(SearchRequestModel request, IEnumerable<string> validTags, SortOrder sortOrder, int pageSize)
     {
-        var term = (request.Term ?? string.Empty).Substring(0, Math.Min(request.Term.Length, 255));
+        var term = request.Term ?? string.Empty;
+        term = term.Substring(0, Math.Min(term.Length, 255));
         var page = Math.Max(request.Page, 1);
         var filter = new Dictionary<string, IEnumerable<string>> { { "Tags", validTags } };
 
