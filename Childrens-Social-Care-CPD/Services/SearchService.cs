@@ -78,6 +78,6 @@ internal class SearchService: ISearchService
     {
         return str == null
             ? null
-            : Regex.Replace(str, "[^a-zA-Z0-9 ]+", "", RegexOptions.Compiled);
+            : Regex.Replace(str, "[^a-zA-Z0-9 ]+", "", RegexOptions.Compiled, TimeSpan.FromSeconds(1));
     }
 }

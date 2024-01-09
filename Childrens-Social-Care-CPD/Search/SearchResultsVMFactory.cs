@@ -72,6 +72,7 @@ internal class SearchResultsVMFactory : ISearchResultsVMFactory
 
     private static KeywordSearchQuery GetQuery(SearchRequestModel request, IEnumerable<string> validTags, SortOrder sortOrder, int pageSize)
     {
+        var term = (request.Term ?? string.Empty).Substring(0, Math.Min(request.Term.Length, 255));
         var page = Math.Max(request.Page, 1);
         var filter = new Dictionary<string, IEnumerable<string>> { { "Tags", validTags } };
 
@@ -87,7 +88,7 @@ internal class SearchResultsVMFactory : ISearchResultsVMFactory
             _ => SortDirection.Descending,
         };
 
-        return new KeywordSearchQuery(request.Term, page, pageSize, filter, sortCategory, sortDirection);
+        return new KeywordSearchQuery(term, page, pageSize, filter, sortCategory, sortDirection);
     }
 
     public async Task<ResourceSearchResultsViewModel> GetSearchModel(SearchRequestModel request, int pageSize, string routeName, CancellationToken cancellationToken)

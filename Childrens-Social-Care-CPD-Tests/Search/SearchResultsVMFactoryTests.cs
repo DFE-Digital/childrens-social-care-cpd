@@ -318,4 +318,28 @@ public class SearchResultsVMFactoryTests
         result.FacetedTags.First().Value.Should().BeSameAs(facet);
         result.FacetedTags.Last().Value.Should().BeNull();
     }
+
+    [Test]
+    public async Task GetSearchModel_Truncates_Search_Term()
+    {
+        // arrange
+        _resourcesRepository.GetSearchTagsAsync(Arg.Any<CancellationToken>()).Returns(Array.Empty<TagInfo>());
+        _resourcesRepository.FetchRootPageAsync().Returns(Task.FromResult<Content>(null));
+
+        KeywordSearchQuery query = null;
+        _searchService.SearchResourcesAsync(Arg.Do<KeywordSearchQuery>(x => query = x)).Returns(new SearchResourcesResult(0, 0, 0, 0, 0, _emptySearchResults));
+        var request = new SearchRequestModel
+        {
+            Term = new string('x', 300),
+            Tags = Array.Empty<string>(),
+            Page = 1,
+            SortOrder = SortOrder.MostRelevant
+        };
+
+        // act
+        var result = await _searchResultsVMFactory.GetSearchModel(request, 1, string.Empty, default);
+
+        // assert
+        query.Keyword.Length.Should().Be(255);
+    }
 }
