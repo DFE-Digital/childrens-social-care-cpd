@@ -10,15 +10,6 @@
     Layout = "_DefaultPageLayout";
 }
 
-@* @{
-    const int MaxFormatTags = 2;
-
-    var tagInfos = Model.TagMap.Where(x => Model.SearchResult.Document.Tags.Contains(x.Key));
-    var from = tagInfos.Where(x => x.Value.Category == "Resource provider").OrderBy(x => x.Value.DisplayName).FirstOrDefault();
-    var topic = tagInfos.Where(x => x.Value.Category == "Topic").OrderBy(x => x.Value.DisplayName).FirstOrDefault();
-    var formats = tagInfos.Where(x => x.Value.Category == "Format").OrderBy(x => x.Value.DisplayName).Take(MaxFormatTags);
-} *@
-
 @section Head {
     @if (ViewData.TryGetValue("StateModel", out var stateModel) && ((StateModel)stateModel).IncludeMediaPlayer)
     {
