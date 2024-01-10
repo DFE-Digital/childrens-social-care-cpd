@@ -719,3 +719,112 @@ variable "search_private_endpoint_conn_name" {
   }
   description = "Name of Private Endpoint Connection"
 }
+
+variable "functionapp_storage_account_name" {
+  type = map(string)
+  default = {
+    Test      = "s185d02searchstorageacct"
+    Load-Test = "s185d03searchstorageacct"
+    Pre-Prod  = "s185t01searchstorageacct"
+    Prod      = "s185p01searchstorageacct"
+    Dev       = "s185d01searchstorageacct"
+  }
+  description = "Name of Function App Storage Account"
+}
+
+variable "functionapp_storage_container_name" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-search-storage-container"
+    Test      = "s185d02-search-storage-container"
+    Load-Test = "s185d03-search-storage-container"
+    Pre-Prod  = "s185t01-search-storage-container"
+    Prod      = "s185p01-search-storage-container"
+  }
+  description = "Name of Function App Storage Container"
+}
+
+variable "functionapp_service_plan_name" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-search-service-plan"
+    Test      = "s185d02-search-service-plan"
+    Load-Test = "s185d03-search-service-plan"
+    Pre-Prod  = "s185t01-search-service-plan"
+    Prod      = "s185p01-search-service-plan"
+  }
+  description = "Name of Function App Service Plan"
+}
+
+variable "functionapp_name" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-search"
+    Test      = "s185d02-search"
+    Load-Test = "s185d03-search"
+    Pre-Prod  = "s185t01-search"
+    Prod      = "s185p01-search"
+  }
+  description = "Name of Function App"
+}
+
+variable "functionapp_sku_name" {
+  type = map(string)
+  default = {
+    Dev       = "B1"
+    Test      = "B1"
+    Load-Test = "P1v3"
+    Pre-Prod  = "B1"
+    Prod      = "P1v3"
+  }
+  description = "Function App SKU"
+}
+
+variable "functionapp_worker_count" {
+  type = map(number)
+  default = {
+    Dev       = 1
+    Test      = 1
+    Load-Test = 1
+    Pre-Prod  = 1
+    Prod      = 1
+  }
+  description = "Number of Function App Workers"
+}
+
+variable "cpd_search_api_key" {
+  description = "The Azure AI Search API key"
+  sensitive   = true
+  type        = string
+}
+
+variable "cpd_instrumentation_connectionstring" {
+  description = "The Azure ApplicationInsights connection string"
+  sensitive   = true
+  type        = string
+}
+
+variable "vcs_tag" {
+  description = "The application version"
+  type        = string
+}
+
+variable "cpd_search_batch_size" {
+  description = "The batch size for queries into Contentful"
+  type        = number
+}
+
+variable "cpd_search_endpoint" {
+  description = "The Azure AI Search endpoint"
+  type        = string
+}
+
+variable "cpd_search_index_name" {
+  description = "The Azure AI Search index name to access/create"
+  type        = string
+}
+
+variable "cpd_search_recreate_index_on_rebuild" {
+  description = "Whether to delete the index and recreate before populating"
+  type        = bool
+}
