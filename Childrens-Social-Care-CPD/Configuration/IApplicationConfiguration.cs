@@ -48,13 +48,12 @@ public interface IApplicationConfiguration
     [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false)]
     IConfigurationSetting<string> GoogleTagManagerKey { get; }
 
-    [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false)]
+    //[RequiredForEnvironment(ApplicationEnvironment.None, Hidden = false)]
     IConfigurationSetting<string> SearchApiKey { get; }
 
-    [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false)]
+    //[RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false)]
     IConfigurationSetting<string> SearchEndpoint { get; }
 
-    [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false, Obfuscate = false)]
+    //[RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false, Obfuscate = false)]
     IConfigurationSetting<string> SearchIndexName { get; }
-
 }

@@ -19,7 +19,7 @@ public class ApplicationConfiguration : IApplicationConfiguration
         GitHash = new StringConfigSetting(() => configuration["VCS-REF"]);
         GoogleTagManagerKey = new StringConfigSetting(() => configuration["CPD_GOOGLEANALYTICSTAG"]);
         SearchApiKey = new StringConfigSetting(() => configuration["CPD_SEARCH_API_KEY"]);
-        SearchEndpoint = new StringConfigSetting(() => configuration["CPD_SEARCH_END_POINT"]);
+        SearchEndpoint = new StringConfigSetting(() => configuration["CPD_SEARCH_ENDPOINT"]);
         SearchIndexName = new StringConfigSetting(() => configuration["CPD_SEARCH_INDEX_NAME"]);
     }
 
