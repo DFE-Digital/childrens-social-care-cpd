@@ -21,6 +21,7 @@ public class Content : IContent
     public List<IContent> Items { get; set; }
     public NavigationMenu Navigation { get; set; }
     public RelatedContent RelatedContent { get; set; }
+    public int? EstimatedReadingTime { get; set; }
 
     [JsonProperty("$metadata")]
     public ContentfulMetadata Metadata { get; set; }

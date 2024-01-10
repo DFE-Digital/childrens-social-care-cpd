@@ -44,25 +44,6 @@ public class GdsFilterTagHelperTests
     }
 
     [Test]
-    public async Task ClearFiltersUri_Should_Be_Used()
-    {
-        // arrange
-        var stringWriter = new StringWriter();
-        var sut = new GdsFilterTagHelper
-        {
-            ClearFiltersUri = "foo"
-        };
-
-        // act
-        await sut.ProcessAsync(_tagHelperContext, _tagHelperOutput);
-        _tagHelperOutput.WriteTo(stringWriter, new HtmlTestEncoder());
-        var actual = stringWriter.ToString();
-
-        // assert
-        actual.Should().Contain("href=\"HtmlEncode[[foo]]\"");
-    }
-
-    [Test]
     public async Task ChildContent_Should_Be_Rendered()
     {
         // arrange

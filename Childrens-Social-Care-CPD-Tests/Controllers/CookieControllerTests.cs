@@ -17,6 +17,7 @@ using System;
 using Childrens_Social_Care_CPD;
 using Childrens_Social_Care_CPD.Configuration;
 using System.Threading;
+using Microsoft.Extensions.Configuration;
 
 namespace Childrens_Social_Care_CPD_Tests.Controllers;
 
@@ -63,7 +64,7 @@ public partial class CookieControllerTests
 
         _contentfulClient = Substitute.For<ICpdContentfulClient>();
 
-        _cookieController = new CookieController(_contentfulClient, new CookieHelper(new ApplicationConfiguration()))
+        _cookieController = new CookieController(_contentfulClient, new CookieHelper(new ApplicationConfiguration(Substitute.For<IConfiguration>())))
         {
             ControllerContext = controllerContext,
             TempData = Substitute.For<ITempDataDictionary>()

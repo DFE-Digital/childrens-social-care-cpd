@@ -1,18 +1,12 @@
 ﻿using Childrens_Social_Care_CPD.Configuration;
 using Childrens_Social_Care_CPD.Contentful.Models;
 using Childrens_Social_Care_CPD.Controllers;
-using Childrens_Social_Care_CPD.Core.Resources;
 using Childrens_Social_Care_CPD.DataAccess;
 using Childrens_Social_Care_CPD.GraphQL.Queries;
-using Childrens_Social_Care_CPD.Models;
-using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using NSubstitute;
-using NUnit.Framework;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,7 +16,6 @@ namespace Childrens_Social_Care_CPD_Tests.Controllers;
 public class ResourcesControllerTests
 {
     private IFeaturesConfig _featuresConfig;
-    private IResourcesSearchStrategy _searchStrategy;
     private IResourcesRepository _resourcesRepository;
     private ResourcesController _resourcesController;
     private IRequestCookieCollection _cookies;
@@ -44,56 +37,11 @@ public class ResourcesControllerTests
 
         _featuresConfig = Substitute.For<IFeaturesConfig>();
         _featuresConfig.IsEnabled(Features.ResourcesAndLearning).Returns(true);
-        _searchStrategy = Substitute.For<IResourcesSearchStrategy>();
-        _resourcesController = new ResourcesController(_featuresConfig, _searchStrategy, _resourcesRepository)
+        _resourcesController = new ResourcesController(_featuresConfig, _resourcesRepository)
         {
             ControllerContext = controllerContext,
             TempData = Substitute.For<ITempDataDictionary>()
         };
-    }
-
-    [Test]
-    public async Task Search_Returns_Strategy_Model()
-    {
-        // arrange
-        var model = new ResourcesListViewModel(null, null, null, null);
-        _searchStrategy.SearchAsync(Arg.Any<ResourcesQuery>(), Arg.Any<CancellationToken>()).Returns(model);
-
-        // act
-        var actual = await _resourcesController.Search(query: null) as ViewResult;
-
-        // assert
-        actual.Model.Should().Be(model);
-    }
-
-    [Test]
-    public async Task Search_Returns_Strategy_Model_When_Order_Value_Returned()
-    {
-        // arrange
-        var model = new ResourcesListViewModel(null, null, null, null);
-        _searchStrategy.SearchAsync(Arg.Any<ResourcesQuery>(), Arg.Any<CancellationToken>()).Returns(model);
-        var query = new ResourcesQuery();
-
-        // act
-        var actual = await _resourcesController.Search(query: query) as ViewResult;
-
-        // assert
-        actual.Model.Should().Be(model);
-    }
-
-    [Test]
-    public async Task Disabling_Resources_Feature_Returns_NotFoundResult()
-    {
-        // arrange
-        _featuresConfig.IsEnabled(Features.ResourcesAndLearning).Returns(false);
-        var model = new ResourcesListViewModel(null, null, null, null);
-        _searchStrategy.SearchAsync(Arg.Any<ResourcesQuery>(), Arg.Any<CancellationToken>()).Returns(model);
-
-        // act
-        var actual = await _resourcesController.Search(query: null);
-
-        // assert
-        actual.Should().BeOfType<NotFoundResult>();
     }
 
     [Test]
@@ -201,7 +149,7 @@ public class ResourcesControllerTests
                 UpdatedAt = updatedAt,
             }
         };
-        var tags = CreateTagsResponse(new() { new () { Id = "foo", Name = "Resource:Foo=foo" }, });
+        var tags = CreateTagsResponse(new() { new () { Id = "foo", Name = "Resource provider: Virtual Hubs" }, });
 
         _resourcesRepository.GetByIdAsync(Arg.Any<string>(), cancellationToken: Arg.Any<CancellationToken>())
             .Returns(Task.FromResult(Tuple.Create(content, tags)));
@@ -212,7 +160,43 @@ public class ResourcesControllerTests
 
         // assert
         properties.Should().NotBeNull();
-        properties["Foo"].Should().Be("foo");
+        properties["From"].Should().Be("Virtual Hubs");
+    }
+
+    [TestCase("Topic", "Topic Text")]
+    [TestCase("From", "From Text")]
+    [TestCase("Estimated reading time", "15 mins")]
+    public async Task Index_Passes_Properties(string key, string value)
+    {
+        // arrange
+        var createdAt = DateTime.UtcNow.AddMinutes(-10);
+        var updatedAt = DateTime.UtcNow;
+        var content = new Content
+        {
+            EstimatedReadingTime = 15,
+            Sys = new()
+            {
+                CreatedAt = createdAt,
+                UpdatedAt = updatedAt,
+            }
+        };
+        var tags = CreateTagsResponse(new()
+        { 
+            new() { Id = "topicTopicText", Name = "Topic: Topic Text" },
+            new() { Id = "resourceProviderFromText", Name = "Resource provider: From Text" },
+            new() { Id = "estimatedReadingTime15", Name = "Estimated reading time: 15 mins" },
+        });
+
+        _resourcesRepository.GetByIdAsync(Arg.Any<string>(), cancellationToken: Arg.Any<CancellationToken>())
+            .Returns(Task.FromResult(Tuple.Create(content, tags)));
+
+        // act
+        var result = await _resourcesController.Index("foo") as ViewResult;
+        var properties = result.ViewData["Properties"] as IDictionary<string, string>;
+
+        // assert
+        properties.Should().NotBeNull();
+        properties[key].Should().Be(value);
     }
 
     [Test]
@@ -229,7 +213,7 @@ public class ResourcesControllerTests
                 UpdatedAt = updatedAt,
             }
         };
-        var tags = CreateTagsResponse(new() { new() { Id = "foo", Name = "Topic:Foo=foo" }, });
+        var tags = CreateTagsResponse(new() { new() { Id = "foo", Name = "Foo: Some value" }, });
 
         _resourcesRepository.GetByIdAsync(Arg.Any<string>(), cancellationToken: Arg.Any<CancellationToken>())
             .Returns(Task.FromResult(Tuple.Create(content, tags)));

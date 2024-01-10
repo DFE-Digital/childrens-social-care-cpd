@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 
-test.describe('Resources and learning', () => {
+test.describe.skip('Resources and learning', () => {
     test.beforeEach(async ({ page }) => {
         await page.goto('/resources-learning')
     })

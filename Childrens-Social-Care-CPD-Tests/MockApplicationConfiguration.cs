@@ -18,6 +18,9 @@ public class MockApplicationConfiguration : IApplicationConfiguration
     public string _featurePollingInterval = null;
     public string _gitHash = null;
     public string _googleTagManagerKey = null;
+    public string _searchApiKey = null;
+    public string _searchEndpoint = null;
+    public string _searchIndexName = null;
 
     public IConfigurationSetting<string> AppInsightsConnectionString => new StringConfigSetting(() => _appInsightsConnectionString);
     public IConfigurationSetting<string> AppVersion => new StringConfigSetting(() => _appVersion);
@@ -33,6 +36,9 @@ public class MockApplicationConfiguration : IApplicationConfiguration
     public IConfigurationSetting<int> FeaturePollingInterval => new IntegerConfigSetting(() => _featurePollingInterval);
     public IConfigurationSetting<string> GitHash => new StringConfigSetting(() => _gitHash);
     public IConfigurationSetting<string> GoogleTagManagerKey => new StringConfigSetting(() => _googleTagManagerKey);
+    public IConfigurationSetting<string> SearchApiKey => new StringConfigSetting(() => _searchApiKey);
+    public IConfigurationSetting<string> SearchEndpoint => new StringConfigSetting(() => _searchEndpoint);
+    public IConfigurationSetting<string> SearchIndexName => new StringConfigSetting(() => _searchIndexName);
 
     public void SetAllValid(string value = "foo")
     {
@@ -50,5 +56,8 @@ public class MockApplicationConfiguration : IApplicationConfiguration
         _featurePollingInterval = "0";
         _gitHash = value;
         _googleTagManagerKey = value;
+        _searchApiKey = value;
+        _searchEndpoint = value;
+        _searchIndexName = value;
     }
 }

@@ -51,7 +51,7 @@ public class GdsFilterCategoryTagHelper : TagHelper
     private static IHtmlContent RenderCategoryBody(int index, IHtmlContent content)
     {
         var fieldsetDiv = new TagBuilder("div");
-        fieldsetDiv.AddCssClass("govuk-checkboxes govuk-checkboxes--small");
+        fieldsetDiv.AddCssClass("govuk-checkboxes");
         fieldsetDiv.Attributes.Add("data-module", "govuk-checkboxes");
 
         fieldsetDiv.InnerHtml.AppendHtml(content);
