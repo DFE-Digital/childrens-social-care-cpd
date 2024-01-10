@@ -11121,13 +11121,4 @@ CONTENT TITLE BANNER
   font-style: normal;
 }
 
-.column-layout-row {
-  display: flex;
-  min-height: 200px;
-}
-
-.column-layout-row .column {
-  display: flex;
-}
-
 /*# sourceMappingURL=application.css.map */
