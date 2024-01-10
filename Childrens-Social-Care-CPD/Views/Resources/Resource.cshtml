@@ -33,13 +33,16 @@
                 <cpd-resource-nav navigation="@Model.Navigation?.Items" selected="@Model.Id" />
             </aside>
         }
-        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+        
     </div>
 </div>
 
+<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 <cpd-properties-list items="@ViewBag.Properties" />
+<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
 <partial name="_Content" model="Model" />
+
 
 <cpd-resource-page-nav navigation="@Model.Navigation?.Items" current="@Model.Id" />
 

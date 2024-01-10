@@ -1,57 +1,52 @@
 ﻿using Childrens_Social_Care_CPD.Configuration;
-using Childrens_Social_Care_CPD.Core.Resources;
+using Childrens_Social_Care_CPD.Contentful.Models;
 using Childrens_Social_Care_CPD.DataAccess;
+using Childrens_Social_Care_CPD.GraphQL.Queries;
 using Childrens_Social_Care_CPD.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Childrens_Social_Care_CPD.Controllers;
 
-public enum ResourceSortOrder
-{ 
-    UpdatedNewest = 0,
-    UpdatedOldest = 1
-}
-
-public class ResourcesQuery
-{
-    public string[] Tags { get; set; }
-    public int Page { get; set; } = 1;
-    public ResourceSortOrder SortOrder { get; set; }
-
-    public ResourcesQuery()
-    {
-        Tags = Array.Empty<string>();
-    }
-}
-
 public class ResourcesController : Controller
 {
     private readonly IFeaturesConfig _featuresConfig;
-    private readonly IResourcesSearchStrategy _strategy;
     private readonly IResourcesRepository _resourcesRepository;
 
-    public ResourcesController(IFeaturesConfig featuresConfig, IResourcesSearchStrategy strategy, IResourcesRepository resourcesRepository)
+    public ResourcesController(IFeaturesConfig featuresConfig, IResourcesRepository resourcesRepository)
     {
-        ArgumentNullException.ThrowIfNull(strategy);
         _featuresConfig = featuresConfig;
-        _strategy = strategy;
         _resourcesRepository = resourcesRepository;
     }
 
-    [Route("resources-learning")]
-    [HttpGet]
-    public async Task<IActionResult> Search([FromQuery] ResourcesQuery query, bool preferencesSet = false, CancellationToken cancellationToken = default)
+    private static Dictionary<string, string> GetProperties(GetContentTags.ResponseType tags, Content content)
     {
-        if (!_featuresConfig.IsEnabled(Features.ResourcesAndLearning))
+        var properties = new Dictionary<string, string>()
         {
-            return NotFound();
+            { "Published", content.Sys.CreatedAt?.ToString("dd MMMM yyyy") },
+            { "Last updated", content.Sys.UpdatedAt?.ToString("dd MMMM yyyy") }
+        };
+
+        void AddProperty(string key, string prefix)
+        {
+            var propertyTags = tags.ContentCollection.Items.First().ContentfulMetaData.Tags.Where(x => x.Name.StartsWith($"{prefix}:"));
+            if (propertyTags.Any())
+            {
+                var value = string.Join(", ", propertyTags.Select(x => x.Name.Split(":")[1].Trim(' ')));
+                properties.Add(key, value);
+            }
         }
 
-        var contextModel = new ContextModel(string.Empty, "Resources", "Resources", "Resources", true, preferencesSet);
-        ViewData["ContextModel"] = contextModel;
+        AddProperty("From", "Resource provider");
+        AddProperty("Resource type", "Format");
+        AddProperty("Topic", "Topic");
+        AddProperty("Career stage", "Career stage");
 
-        var viewModel = await _strategy.SearchAsync(query, cancellationToken);
-        return View(viewModel);
+        if (content.EstimatedReadingTime.HasValue && content.EstimatedReadingTime > 0)
+        {
+            properties.Add("Estimated reading time", $"{content.EstimatedReadingTime} mins");
+        }
+
+        return properties;
     }
 
     [Route("resources-learning/{*pagename:regex(^[[0-9a-z]](\\/?[[0-9a-z\\-]])*\\/?$)}")]
@@ -69,19 +64,6 @@ public class ResourcesController : Controller
             return NotFound();
         }
 
-        var properties = new Dictionary<string, string>(tags.ContentCollection.Items.First().ContentfulMetaData.Tags.Where(x => x.Name.StartsWith("Resource:")).Select(x =>
-        {
-            var property = x.Name[9..];
-            var tokens = property.Split('=');
-            return tokens.Length > 1
-                ? KeyValuePair.Create(tokens[0].Trim(' '), tokens[1].Trim(' '))
-                : KeyValuePair.Create(property, string.Empty);
-        }))
-        {
-            { "Published", content.Sys.CreatedAt?.ToString("dd MMMM yyyy") },
-            { "Last updated", content.Sys.UpdatedAt?.ToString("dd MMMM yyyy") }
-        };
-
         var contextModel = new ContextModel(
             Id: content.Id,
             Title: content.Title,
@@ -93,7 +75,7 @@ public class ResourcesController : Controller
 
         ViewData["ContextModel"] = contextModel;
         ViewData["StateModel"] = new StateModel();
-        ViewData["Properties"] = properties;
+        ViewData["Properties"] = GetProperties(tags, content);
 
         return View("Resource", content);
     }

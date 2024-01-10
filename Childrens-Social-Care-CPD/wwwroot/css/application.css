@@ -10471,8 +10471,7 @@ CONTENT TITLE BANNER
 
 @media (min-width: 40.0625em) {
   .dfeuk-document-list .dfeuk-document-list__item .dfeuk-document-list__item-metadata .gdfeuk-document-list__attribute {
-    font-size: 14px;
-    font-size: 0.875rem;
+    font-size: 18px;
     line-height: 1.4285714286;
   }
 }
@@ -11103,6 +11102,25 @@ CONTENT TITLE BANNER
     font-size: 16px;
   }
 }
+/* Custom styles for mobile */
+@media only screen and (max-width: 768px) {
+  .govuk-form-group .govuk-input__wrapper,
+  .govuk-form-group .govuk-search-group,
+  .govuk-form-group .govuk-button {
+    width: 100%;
+    box-sizing: border-box;
+    margin-left: 0 !important; /* Override desktop margin */
+    margin-top: 1rem;
+    display: block; /* Force elements to stack on top of each other */
+  }
+}
+/* Highlight for search result text */
+.search-result em {
+  background-color: #ffdd00;
+  font-weight: bold;
+  font-style: normal;
+}
+
 .column-layout-row {
   display: flex;
   min-height: 200px;

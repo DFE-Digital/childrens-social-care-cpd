@@ -1,25 +1,30 @@
 ﻿using Childrens_Social_Care_CPD.Configuration;
 using Childrens_Social_Care_CPD.Contentful;
 using Childrens_Social_Care_CPD.Contentful.Models;
-using Childrens_Social_Care_CPD.Controllers;
-using Childrens_Social_Care_CPD.Core.Resources;
+using Childrens_Social_Care_CPD.Search;
 using Childrens_Social_Care_CPD.GraphQL.Queries;
 using Contentful.Core.Search;
 using GraphQL.Client.Abstractions.Websocket;
 
 namespace Childrens_Social_Care_CPD.DataAccess;
 
+public enum ResourceSortOrder
+{
+    UpdatedNewest = 0,
+    UpdatedOldest = 1
+}
+
 public interface IResourcesRepository
 {
     Task<Content> FetchRootPageAsync(CancellationToken cancellationToken = default);
     Task<SearchResourcesByTags.ResponseType> FindByTagsAsync(IEnumerable<string> tags, int skip, int take, ResourceSortOrder resourceSortOrder, CancellationToken cancellationToken = default);
-    Task<IEnumerable<TagInfo>> GetSearchTagsAsync();
+    Task<IEnumerable<TagInfo>> GetSearchTagsAsync(CancellationToken cancellationToken = default);
     Task<Tuple<Content, GetContentTags.ResponseType>> GetByIdAsync(string id, int depth = 10, CancellationToken cancellationToken = default);
 }
 
 public class ResourcesRepository : IResourcesRepository
 {
-    private static readonly string[] _tagPrefixes = new string[] { "Topic", "Format", "Career stage" };
+    private static readonly string[] _tagPrefixes = new string[] { "Topic", "Resource provider", "Format", "Career stage" };
     private readonly ICpdContentfulClient _cpdClient;
     private readonly IGraphQLWebSocketClient _gqlClient;
     private readonly bool _isPreview;
@@ -71,9 +76,9 @@ public class ResourcesRepository : IResourcesRepository
         return Tuple.Create(contentTask.Result, tagsTask.Result);
     }
 
-    public async Task<IEnumerable<TagInfo>> GetSearchTagsAsync()
+    public async Task<IEnumerable<TagInfo>> GetSearchTagsAsync(CancellationToken cancellationToken = default)
     {
-        var allTags = await _cpdClient.GetTags();
+        var allTags = await _cpdClient.GetTags(string.Empty, cancellationToken);
 
         var tags = allTags
             .Where(x => Array.Exists(_tagPrefixes, prefix => x.Name.StartsWith($"{prefix}:")))

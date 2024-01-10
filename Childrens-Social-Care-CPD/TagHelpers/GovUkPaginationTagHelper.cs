@@ -13,10 +13,10 @@ public class GovUkPaginationTagHelper : TagHelper
     public string UrlFormatString { get; set; }
 
     [HtmlAttributeName("page-count")]
-    public int PageCount { get; set; }
+    public long PageCount { get; set; }
 
     [HtmlAttributeName("current-page")]
-    public int CurrentPage { get; set; }
+    public long CurrentPage { get; set; }
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
@@ -44,7 +44,7 @@ public class GovUkPaginationTagHelper : TagHelper
         }
     }
 
-    private static IHtmlContent GeneratesPagesPages(int pageCount, int currentPage, string formatString)
+    private static IHtmlContent GeneratesPagesPages(long pageCount, long currentPage, string formatString)
     {
         var ul = new TagBuilder("ul");
         ul.AddCssClass("govuk-pagination__list");
