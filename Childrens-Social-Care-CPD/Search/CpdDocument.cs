@@ -11,5 +11,6 @@ public partial class CpdDocument
     public string Body { get; set; }
     public DateTimeOffset CreatedAt { get; set; }
     public DateTimeOffset UpdatedAt { get; set; }
+    public int? EstimatedReadingTime { get; set; }
     public IEnumerable<string> Tags { get; set; }
 }

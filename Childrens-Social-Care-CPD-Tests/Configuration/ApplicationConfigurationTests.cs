@@ -63,7 +63,7 @@ public class ApplicationConfigurationTests
             yield return ("CPD_DISABLE_SECURE_COOKIES", (ApplicationConfiguration sut) => sut.DisableSecureCookies, "true", true);
             yield return ("CPD_FEATURE_POLLING_INTERVAL", (ApplicationConfiguration sut) => sut.FeaturePollingInterval, "10", 10);
             yield return ("CPD_SEARCH_API_KEY", (ApplicationConfiguration sut) => sut.SearchApiKey, "foo", "foo");
-            yield return ("CPD_SEARCH_END_POINT", (ApplicationConfiguration sut) => sut.SearchEndpoint, "foo", "foo");
+            yield return ("CPD_SEARCH_ENDPOINT", (ApplicationConfiguration sut) => sut.SearchEndpoint, "foo", "foo");
             yield return ("CPD_SEARCH_INDEX_NAME", (ApplicationConfiguration sut) => sut.SearchIndexName, "foo", "foo");
             // Default values
             yield return ("CPD_AZURE_ENVIRONMENT", (ApplicationConfiguration sut) => sut.AzureEnvironment, null, "");
@@ -79,7 +79,7 @@ public class ApplicationConfigurationTests
             yield return ("CPD_DISABLE_SECURE_COOKIES", (ApplicationConfiguration sut) => sut.DisableSecureCookies, null, false);
             yield return ("CPD_FEATURE_POLLING_INTERVAL", (ApplicationConfiguration sut) => sut.FeaturePollingInterval, null, 0);
             yield return ("CPD_SEARCH_API_KEY", (ApplicationConfiguration sut) => sut.SearchApiKey, null, "");
-            yield return ("CPD_SEARCH_END_POINT", (ApplicationConfiguration sut) => sut.SearchEndpoint, null, "");
+            yield return ("CPD_SEARCH_ENDPOINT", (ApplicationConfiguration sut) => sut.SearchEndpoint, null, "");
             yield return ("CPD_SEARCH_INDEX_NAME", (ApplicationConfiguration sut) => sut.SearchIndexName, null, "");
         }
     }
