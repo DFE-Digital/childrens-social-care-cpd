@@ -2,7 +2,10 @@
 
 @model ContentLink
 
-@if (Model == null) return;
+@if (Model == null)
+{
+    return;
+}
 
 <div class="govuk-width-container back-link">
     @{

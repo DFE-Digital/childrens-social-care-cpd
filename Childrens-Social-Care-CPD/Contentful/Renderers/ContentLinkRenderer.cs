@@ -4,8 +4,18 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Childrens_Social_Care_CPD.Contentful.Renderers;
 
+interface IContentLinkContext
+{
+    string Path { get; }
+}
+
 internal class ContentLinkRenderer : IRendererWithOptions<ContentLink>
 {
+    private readonly IContentLinkContext _context;
+    public ContentLinkRenderer(IContentLinkContext contentLinkContext) 
+    { 
+        _context = contentLinkContext;
+    }
     public IHtmlContent Render(ContentLink item, RendererOptions options = null)
     {
         var tagBuilder = new TagBuilder("a");
@@ -23,6 +33,7 @@ internal class ContentLinkRenderer : IRendererWithOptions<ContentLink>
         {
             tagBuilder.AddCssClass(options.Css);
         }
+        tagBuilder.Attributes.Add("data-track-label", _context.Path);
         tagBuilder.InnerHtml.Append(item.Name);
         return tagBuilder;
     }

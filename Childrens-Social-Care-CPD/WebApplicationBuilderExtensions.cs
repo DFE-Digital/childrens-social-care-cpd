@@ -1,8 +1,13 @@
-﻿using Childrens_Social_Care_CPD.Configuration;
+﻿using Azure.Search.Documents;
+using Azure;
+using Childrens_Social_Care_CPD.Configuration;
 using Childrens_Social_Care_CPD.Contentful;
+using Childrens_Social_Care_CPD.Contentful.Contexts;
 using Childrens_Social_Care_CPD.Contentful.Renderers;
 using Childrens_Social_Care_CPD.Core.Resources;
 using Childrens_Social_Care_CPD.DataAccess;
+using Childrens_Social_Care_CPD.Search;
+using Childrens_Social_Care_CPD.Services;
 using Contentful.AspNetCore;
 using Contentful.Core.Configuration;
 using GraphQL.Client.Abstractions.Websocket;
@@ -37,20 +42,22 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddScoped<ResourcesFixedTagsSearchStrategy>();
         builder.Services.AddScoped<IResourcesSearchStrategy>(services =>
         {
-            var featuresConfig = services.GetService<IFeaturesConfig>();
+            var featuresConfig = services.GetRequiredService<IFeaturesConfig>();
             return featuresConfig.IsEnabled(Features.ResourcesUseDynamicTags)
                 ? services.GetService<ResourcesDynamicTagsSearchStategy>()
                 : services.GetService<ResourcesFixedTagsSearchStrategy>();
         });
 
         builder.Services.AddScoped<IGraphQLWebSocketClient>(services => {
-            var config = services.GetService<IApplicationConfiguration>();
+            var config = services.GetRequiredService<IApplicationConfiguration>();
             var client = new GraphQLHttpClient(config.ContentfulGraphqlConnectionString.Value, new SystemTextJsonSerializer());
             var key = ContentfulConfiguration.IsPreviewEnabled(config) ? config.ContentfulPreviewId.Value : config.ContentfulDeliveryApiKey.Value;
             
             client.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", key);
             return client;
         });
+
+        builder.Services.AddScoped<IContentLinkContext, ContentLinkContext>();
 
         // Register all the IRender<T> & IRenderWithOptions<T> implementations in the assembly
         var assemblyTypes = System.Reflection.Assembly.GetExecutingAssembly().GetTypes();
@@ -72,13 +79,31 @@ public static class WebApplicationBuilderExtensions
                 var serviceType = assignedTypes.GetInterfaces().First(i => i.GetGenericTypeDefinition() == typeof(IRendererWithOptions<>));
                 builder.Services.AddScoped(serviceType, assignedTypes);
             });
+
+
+        // Search client
+        builder.Services.AddSearch();
+    }
+
+    private static void AddSearch(this IServiceCollection services)
+    {
+        services.AddScoped(services => {
+            var config = services.GetRequiredService<IApplicationConfiguration>();
+
+            var searchEndpointUri = new Uri(config.SearchEndpoint.Value);
+            return new SearchClient(searchEndpointUri,
+                config.SearchIndexName.Value,
+                new AzureKeyCredential(config.SearchApiKey.Value));
+        });
+
+        services.AddTransient<ISearchService, SearchService>();
     }
 
     public static void AddFeatures(this WebApplicationBuilder builder)
     {
         ArgumentNullException.ThrowIfNull(builder);
 
-        var applicationConfiguration = new ApplicationConfiguration();
+        var applicationConfiguration = new ApplicationConfiguration(builder.Configuration);
 
         builder.Logging.AddAzureWebAppDiagnostics();
         builder.Services.Configure<AzureFileLoggerOptions>(options =>
