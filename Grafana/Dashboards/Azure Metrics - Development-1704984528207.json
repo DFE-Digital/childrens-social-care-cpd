@@ -36,7 +36,7 @@
           "custom": {
             "axisCenteredZero": false,
             "axisColorMode": "text",
-            "axisLabel": "",
+            "axisLabel": "Time",
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
@@ -154,7 +154,7 @@
           "custom": {
             "axisCenteredZero": false,
             "axisColorMode": "text",
-            "axisLabel": "",
+            "axisLabel": "Amount Of Memory",
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
@@ -271,7 +271,7 @@
           "custom": {
             "axisCenteredZero": false,
             "axisColorMode": "text",
-            "axisLabel": "",
+            "axisLabel": "Count Of Requests",
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
@@ -536,7 +536,7 @@
           "custom": {
             "axisCenteredZero": false,
             "axisColorMode": "text",
-            "axisLabel": "",
+            "axisLabel": "Count Of Requests",
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
@@ -654,7 +654,7 @@
           "custom": {
             "axisCenteredZero": false,
             "axisColorMode": "text",
-            "axisLabel": "",
+            "axisLabel": "Response Time",
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
@@ -767,7 +767,7 @@
           "custom": {
             "axisCenteredZero": false,
             "axisColorMode": "text",
-            "axisLabel": "",
+            "axisLabel": "Count Of Server Errors",
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
@@ -884,7 +884,7 @@
           "custom": {
             "axisCenteredZero": false,
             "axisColorMode": "text",
-            "axisLabel": "",
+            "axisLabel": "Number Of Requests",
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
@@ -916,7 +916,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1001,7 +1002,7 @@
           "custom": {
             "axisCenteredZero": false,
             "axisColorMode": "text",
-            "axisLabel": "",
+            "axisLabel": "Number Of Requests",
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
@@ -1033,7 +1034,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1118,7 +1120,7 @@
           "custom": {
             "axisCenteredZero": false,
             "axisColorMode": "text",
-            "axisLabel": "",
+            "axisLabel": "Quantity",
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
@@ -1150,7 +1152,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1235,7 +1238,7 @@
           "custom": {
             "axisCenteredZero": false,
             "axisColorMode": "text",
-            "axisLabel": "",
+            "axisLabel": "Quantity",
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
@@ -1267,7 +1270,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1354,6 +1358,6 @@
   "timezone": "",
   "title": "Azure Metrics - Development",
   "uid": "abd927f8-c474-4afd-8596-c8d9c0de798d",
-  "version": 8,
+  "version": 10,
   "weekStart": ""
 }

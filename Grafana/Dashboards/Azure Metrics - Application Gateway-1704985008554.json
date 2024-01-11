@@ -36,7 +36,7 @@
           "custom": {
             "axisCenteredZero": false,
             "axisColorMode": "text",
-            "axisLabel": "",
+            "axisLabel": "Unhealthy Hosts",
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
@@ -154,7 +154,7 @@
           "custom": {
             "axisCenteredZero": false,
             "axisColorMode": "text",
-            "axisLabel": "",
+            "axisLabel": "Hosts",
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
@@ -274,6 +274,6 @@
   "timezone": "",
   "title": "Azure Metrics - Application Gateway",
   "uid": "ab147dd4-bc98-482b-8403-87939247b7f8",
-  "version": 2,
+  "version": 3,
   "weekStart": ""
 }
