@@ -26,6 +26,7 @@ jobs:
       TF_VAR_cpd_image_tag: ${{vars.TF_VAR_CPD_IMAGE_TAG}}
       TF_VAR_cpd_feature_polling_interval: ${{vars.TF_VAR_CPD_FEATURE_POLLING_INTERVAL}}
       TF_VAR_cpd_search_api_key: ${{secrets.TF_VAR_CPD_SEARCH_API_KEY}}
+      TF_VAR_cpd_search_client_api_key: ${{secrets.TF_VAR_CPD_SEARCH_CLIENT_API_KEY}}
       TF_VAR_cpd_instrumentation_connectionstring: ${{secrets.TF_VAR_CPD_INSTRUMENTATION_CONNECTIONSTRING}}
       TF_VAR_cpd_search_batch_size: ${{secrets.TF_VAR_CPD_SEARCH_BATCH_SIZE}}
       TF_VAR_cpd_search_endpoint: ${{secrets.TF_VAR_CPD_SEARCH_ENDPOINT}}
