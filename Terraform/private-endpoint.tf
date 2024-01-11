@@ -60,7 +60,7 @@ resource "azurerm_private_endpoint" "searchprivateendpoint" {
 
   private_service_connection {
     name                           = var.search_private_endpoint_conn_name[terraform.workspace]
-    private_connection_resource_id = azurerm_search_service.ai-search.id
+    private_connection_resource_id = azurerm_search_service.ai-search[0].id
     subresource_names              = ["searchService"]
     is_manual_connection           = false
   }
