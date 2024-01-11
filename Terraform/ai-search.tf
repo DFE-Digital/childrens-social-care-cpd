@@ -1,4 +1,4 @@
-# Populate a local to use if grafana is to be configured in Pre-Prod or Prod or Load-Test
+# Populate a local to use if AI-Seach is to be configured in Test, Pre-Prod, Prod or Load-Test
 locals {
   with_basic_aisearch_count = can(regex("^Prod|Load", terraform.workspace)) ? 1 : 0
   with_basic_aisearch_bool  = can(regex("^Prod|Load", terraform.workspace)) ? true : false
