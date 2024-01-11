@@ -30,7 +30,7 @@ The following environment variables are to be configured
 | CPD_AZURE_ENVIRONMENT | The environment for the system |
 | CPD_INSTRUMENTATION_CONNECTIONSTRING | Application insights connection string |
 | CPD_FEATURE_POLLING_INTERVAL | Polling interval for feature configuration udpates |
-| CPD_SEARCH_API_KEY | API Key for the search service |
+| CPD_SEARCH_CLIENT_API_KEY | Client API Key for the search service |
 | CPD_SEARCH_ENDPOINT | Search service endpoint |
 | CPD_SEARCH_INDEX_NAME | The Index name to query against |
 
