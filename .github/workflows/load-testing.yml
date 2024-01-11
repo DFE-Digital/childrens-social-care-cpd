@@ -25,6 +25,13 @@ jobs:
       TF_VAR_cpd_clarity: ${{secrets.TF_VAR_CPD_CLARITY}}
       TF_VAR_cpd_image_tag: ${{vars.TF_VAR_CPD_IMAGE_TAG}}
       TF_VAR_cpd_feature_polling_interval: ${{vars.TF_VAR_CPD_FEATURE_POLLING_INTERVAL}}
+      TF_VAR_cpd_search_api_key: ${{secrets.TF_VAR_CPD_SEARCH_API_KEY}}
+      TF_VAR_cpd_instrumentation_connectionstring: ${{secrets.TF_VAR_CPD_INSTRUMENTATION_CONNECTIONSTRING}}
+      TF_VAR_cpd_search_batch_size: ${{secrets.TF_VAR_CPD_SEARCH_BATCH_SIZE}}
+      TF_VAR_cpd_search_endpoint: ${{secrets.TF_VAR_CPD_SEARCH_ENDPOINT}}
+      TF_VAR_cpd_search_index_name: ${{secrets.TF_VAR_CPD_SEARCH_INDEX_NAME}}
+      TF_VAR_cpd_search_recreate_index_on_rebuild: ${{secrets.TF_VAR_CPD_SEARCH_RECREATE_INDEX_ON_REBUILD}}
+      TF_VAR_vcs_tag: ${{github.event.release.tag_name}}
       TF_WORKSPACE: Load-Test
       SITE_URL: https://20.107.65.156/
     steps:
