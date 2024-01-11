@@ -799,7 +799,7 @@ variable "cpd_search_api_key" {
 }
 
 variable "cpd_search_client_api_key" {
-  description = "The ClientAzure AI Search API key"
+  description = "The Client Azure AI Search API key"
   sensitive   = true
   type        = string
 }
