@@ -26,6 +26,9 @@ resource "azurerm_linux_web_app" "linux-web-app" {
     CPD_INSTRUMENTATION_CONNECTIONSTRING = data.azurerm_application_insights.appinsights.connection_string
     CPD_CLARITY                          = var.cpd_clarity
     CPD_FEATURE_POLLING_INTERVAL         = var.cpd_feature_polling_interval
+    CPD_SEARCH_CLIENT_API_KEY            = var.cpd_search_client_api_key
+    CPD_SEARCH_ENDPOINT                  = var.cpd_search_endpoint
+    CPD_SEARCH_INDEX_NAME                = var.cpd_search_index_name
     DOCKER_ENABLE_CI                     = "true"
   }
 
