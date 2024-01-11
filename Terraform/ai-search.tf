@@ -2,7 +2,7 @@
 locals {
   with_basic_aisearch_count = can(regex("^Prod|Load", terraform.workspace)) ? 1 : 0
   with_basic_aisearch_bool  = can(regex("^Prod|Load", terraform.workspace)) ? true : false
-  create_aisearch_count     = can(regex("^Test|Prod", terraform.workspace)) ? 1 : 0
+  create_aisearch_count     = can(regex("^Test|Prod|Load", terraform.workspace)) ? 1 : 0
 }
 
 resource "azurerm_search_service" "ai-search" {
