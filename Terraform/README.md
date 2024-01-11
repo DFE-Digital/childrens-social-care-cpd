@@ -85,6 +85,7 @@ No modules.
 | <a name="input_cpd_preview_key"></a> [cpd\_preview\_key](#input\_cpd\_preview\_key) | Contentful Preview Key | `string` | n/a | yes |
 | <a name="input_cpd_search_api_key"></a> [cpd\_search\_api\_key](#input\_cpd\_search\_api\_key) | The Azure AI Search API key | `string` | n/a | yes |
 | <a name="input_cpd_search_batch_size"></a> [cpd\_search\_batch\_size](#input\_cpd\_search\_batch\_size) | The batch size for queries into Contentful | `number` | n/a | yes |
+| <a name="input_cpd_search_client_api_key"></a> [cpd\_search\_client\_api\_key](#input\_cpd\_search\_client\_api\_key) | The ClientAzure AI Search API key | `string` | n/a | yes |
 | <a name="input_cpd_search_endpoint"></a> [cpd\_search\_endpoint](#input\_cpd\_search\_endpoint) | The Azure AI Search endpoint | `string` | n/a | yes |
 | <a name="input_cpd_search_index_name"></a> [cpd\_search\_index\_name](#input\_cpd\_search\_index\_name) | The Azure AI Search index name to access/create | `string` | n/a | yes |
 | <a name="input_cpd_search_recreate_index_on_rebuild"></a> [cpd\_search\_recreate\_index\_on\_rebuild](#input\_cpd\_search\_recreate\_index\_on\_rebuild) | Whether to delete the index and recreate before populating | `bool` | n/a | yes |
