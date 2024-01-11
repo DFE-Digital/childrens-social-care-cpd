@@ -18,7 +18,7 @@ public class ApplicationConfiguration : IApplicationConfiguration
         FeaturePollingInterval = new IntegerConfigSetting(() => configuration["CPD_FEATURE_POLLING_INTERVAL"], 0);
         GitHash = new StringConfigSetting(() => configuration["VCS-REF"]);
         GoogleTagManagerKey = new StringConfigSetting(() => configuration["CPD_GOOGLEANALYTICSTAG"]);
-        SearchApiKey = new StringConfigSetting(() => configuration["CPD_SEARCH_API_KEY"]);
+        SearchApiKey = new StringConfigSetting(() => configuration["CPD_SEARCH_CLIENT_API_KEY"]);
         SearchEndpoint = new StringConfigSetting(() => configuration["CPD_SEARCH_ENDPOINT"]);
         SearchIndexName = new StringConfigSetting(() => configuration["CPD_SEARCH_INDEX_NAME"]);
     }
