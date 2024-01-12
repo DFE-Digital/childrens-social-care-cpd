@@ -39,26 +39,25 @@ internal class SearchResultsVMFactory : ISearchResultsVMFactory
         return new ReadOnlyDictionary<TagInfo, FacetResult>(tags);
     }
 
-
+    private static string AppendUrlParameter(string name, string param, bool additive = true)
+    {
+        return string.IsNullOrEmpty(param)
+            ? string.Empty
+            : $"{(additive ? '&' : string.Empty)}{name}={WebUtility.UrlEncode(param)}";
+    }
 
     private static string GetPagingFormatString(string searchTerm, IEnumerable<string> tags, SortOrder sortOrder, string routeName)
     {
         var result = $"/{routeName}?{SearchRequestPropertyNames.Page}={{0}}";
 
-        void Append(string name, string param)
-        {
-            if (string.IsNullOrEmpty(param)) return;
-            result += $"&{name}={WebUtility.UrlEncode(param)}";
-        }
-
         if (sortOrder != SortOrder.UpdatedLatest)
         {
-            Append(SearchRequestPropertyNames.SortOrder, ((int)sortOrder).ToString());
+            result += AppendUrlParameter(SearchRequestPropertyNames.SortOrder, ((int)sortOrder).ToString());
         }
-        Append(SearchRequestPropertyNames.Term, searchTerm);
+        result += AppendUrlParameter(SearchRequestPropertyNames.Term, searchTerm);
         foreach (var tag in tags)
         {
-            Append(SearchRequestPropertyNames.Tags, tag);
+            result += AppendUrlParameter(SearchRequestPropertyNames.Tags, tag);
         }
         
         return result;
@@ -66,11 +65,10 @@ internal class SearchResultsVMFactory : ISearchResultsVMFactory
 
     private static string GetClearFiltersUri(SearchRequestModel request, string routeName)
     {
-        UrlEncoder.Default.Encode(routeName);
-        var result = $"/{routeName}?{SearchRequestPropertyNames.Term}={WebUtility.UrlEncode(request.Term)}";
+        var result = $"/{routeName}?{AppendUrlParameter(SearchRequestPropertyNames.Term, request.Term, false)}";
         if (request.SortOrder != SortOrder.UpdatedLatest)
         {
-            result += $"&{SearchRequestPropertyNames.SortOrder}={(int)request.SortOrder}";
+            result += AppendUrlParameter(SearchRequestPropertyNames.SortOrder, ((int)request.SortOrder).ToString());
         }
 
         return result;
