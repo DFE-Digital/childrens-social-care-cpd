@@ -2,6 +2,8 @@
 using Childrens_Social_Care_CPD.DataAccess;
 using Childrens_Social_Care_CPD.Models;
 using System.Collections.ObjectModel;
+using System.Net;
+using System.Text.Encodings.Web;
 
 namespace Childrens_Social_Care_CPD.Search;
 
@@ -37,31 +39,35 @@ internal class SearchResultsVMFactory : ISearchResultsVMFactory
         return new ReadOnlyDictionary<TagInfo, FacetResult>(tags);
     }
 
+
+
     private static string GetPagingFormatString(string searchTerm, IEnumerable<string> tags, SortOrder sortOrder, string routeName)
     {
         var result = $"/{routeName}?{SearchRequestPropertyNames.Page}={{0}}";
 
-        void Append(string param, string name = null)
+        void Append(string name, string param)
         {
             if (string.IsNullOrEmpty(param)) return;
-
-            result += string.IsNullOrEmpty(name)
-                ? $"&{param}"
-                : $"&{name}={param}";
+            result += $"&{name}={WebUtility.UrlEncode(param)}";
         }
 
         if (sortOrder != SortOrder.UpdatedLatest)
         {
-            Append(((int)sortOrder).ToString(), SearchRequestPropertyNames.SortOrder);
+            Append(SearchRequestPropertyNames.SortOrder, ((int)sortOrder).ToString());
         }
-        Append(searchTerm, SearchRequestPropertyNames.Term);
-        Append(string.Join('&', tags.Select(x => $"{SearchRequestPropertyNames.Tags}={x}")));
+        Append(SearchRequestPropertyNames.Term, searchTerm);
+        foreach (var tag in tags)
+        {
+            Append(SearchRequestPropertyNames.Tags, tag);
+        }
+        
         return result;
     }
 
     private static string GetClearFiltersUri(SearchRequestModel request, string routeName)
     {
-        var result = $"/{routeName}?{SearchRequestPropertyNames.Term}={request.Term}";
+        UrlEncoder.Default.Encode(routeName);
+        var result = $"/{routeName}?{SearchRequestPropertyNames.Term}={WebUtility.UrlEncode(request.Term)}";
         if (request.SortOrder != SortOrder.UpdatedLatest)
         {
             result += $"&{SearchRequestPropertyNames.SortOrder}={(int)request.SortOrder}";
