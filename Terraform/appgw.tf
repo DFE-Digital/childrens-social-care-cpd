@@ -114,40 +114,38 @@ resource "azurerm_application_gateway" "appgw" {
     http_listener_name          = var.listener_name[terraform.workspace]
   }
 
-  request_routing_rule {
-    name                       = var.request_ssl_routing_rule_name[terraform.workspace]
-    rule_type                  = "Basic"
-    priority                   = 2000
-    http_listener_name         = var.ssl_listener_name[terraform.workspace]
-    backend_address_pool_name  = var.backend_address_pool_name[terraform.workspace]
-    backend_http_settings_name = var.http_setting_name[terraform.workspace]
-    rewrite_rule_set_name      = var.appgw_rewrite_rule_set[terraform.workspace]
-  }
+  # request_routing_rule {
+  #   name                       = var.request_ssl_routing_rule_name[terraform.workspace]
+  #   rule_type                  = "Basic"
+  #   priority                   = 2000
+  #   http_listener_name         = var.ssl_listener_name[terraform.workspace]
+  #   backend_address_pool_name  = var.backend_address_pool_name[terraform.workspace]
+  #   backend_http_settings_name = var.http_setting_name[terraform.workspace]
+  #   rewrite_rule_set_name      = var.appgw_rewrite_rule_set[terraform.workspace]
+  # }
 
-
   request_routing_rule {
-    name               = "grafana-request-routing-rule"
+    name               = var.grafana_request_routing_rule_name[terraform.workspace]
     rule_type          = "PathBasedRouting"
     http_listener_name = var.ssl_listener_name[terraform.workspace]
-    url_path_map_name  = "grafana-url-path-map"
+    url_path_map_name  = var.app_pathmap[terraform.workspace]
     priority           = 2222
   }
-
 
   # Grafana Configuration
 
   backend_address_pool {
-    name  = "grafana-backend-address-pool"
+    name  = var.grafana_backend_address_pool_name[terraform.workspace]
     fqdns = [azurerm_linux_web_app.grafana-web-app.default_hostname]
   }
 
   url_path_map {
-    name                               = "grafana-url-path-map"
+    name                               = var.app_pathmap[terraform.workspace]
     default_backend_address_pool_name  = var.backend_address_pool_name[terraform.workspace]
     default_backend_http_settings_name = var.http_setting_name[terraform.workspace]
 
     path_rule {
-      name                       = "app-path-rule"
+      name                       = var.app_path_rule[terraform.workspace]
       paths                      = ["/*"]
       backend_address_pool_name  = var.backend_address_pool_name[terraform.workspace]
       backend_http_settings_name = var.http_setting_name[terraform.workspace]
@@ -156,17 +154,17 @@ resource "azurerm_application_gateway" "appgw" {
     }
 
     path_rule {
-      name                       = "grafana-path-rule"
+      name                       = var.grafana_app_path_rule[terraform.workspace]
       paths                      = ["/grafana*"]
-      backend_address_pool_name  = "grafana-backend-address-pool"
-      backend_http_settings_name = "grafana-backend-http-settings"
+      backend_address_pool_name  = var.grafana_backend_address_pool_name[terraform.workspace]
+      backend_http_settings_name = var.grafana_http_setting_name[terraform.workspace]
       rewrite_rule_set_name      = var.appgw_rewrite_rule_set[terraform.workspace]
       firewall_policy_id         = azurerm_web_application_firewall_policy.fwpol-gf.id
     }
   }
 
   backend_http_settings {
-    name                                = "grafana-backend-http-settings"
+    name                                = var.grafana_http_setting_name[terraform.workspace]
     pick_host_name_from_backend_address = false
     host_name                           = azurerm_linux_web_app.grafana-web-app.default_hostname
     cookie_based_affinity               = "Enabled"
@@ -174,7 +172,7 @@ resource "azurerm_application_gateway" "appgw" {
     port                                = 80
     protocol                            = "Http"
     request_timeout                     = 30
-    probe_name                          = "${var.appgw_probe[terraform.workspace]}-gf"
+    probe_name                          = var.grafana_appgw_probe[terraform.workspace]
   }
 
   probe {
@@ -188,7 +186,7 @@ resource "azurerm_application_gateway" "appgw" {
   }
 
   probe {
-    name                                      = "${var.appgw_probe[terraform.workspace]}-gf"
+    name                                      = var.grafana_appgw_probe[terraform.workspace]
     pick_host_name_from_backend_http_settings = false
     host                                      = azurerm_linux_web_app.grafana-web-app.default_hostname
     path                                      = "/login"
@@ -292,7 +290,7 @@ resource "azurerm_web_application_firewall_policy" "fwpol" {
 
 # A firewall policy that is only attached for Load-Test and Prod environments
 resource "azurerm_web_application_firewall_policy" "fwpol-gf" {
-  name                = "${var.fwpol_name[terraform.workspace]}-gf"
+  name                = var.grafana_fwpol_name[terraform.workspace]
   location            = data.azurerm_resource_group.rg.location
   resource_group_name = data.azurerm_resource_group.rg.name
 

@@ -1,4 +1,4 @@
-# Populate a local to use if grafana is to be configured in Pre-Prod or Prod or Load-Test
+# Populate a local to use if waf with grafana is to be configured in Prod or Load-Test
 locals {
   waf_grafana_enabled = can(regex("^Prod|Load", terraform.workspace)) ? [] : [1]
   waf_grafana_count   = can(regex("^Prod|Load", terraform.workspace)) ? 1 : 0

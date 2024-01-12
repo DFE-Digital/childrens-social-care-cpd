@@ -900,3 +900,99 @@ variable "origins" {
   }
   description = "Origins for Grafana"
 }
+
+variable "grafana_fwpol_name" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-firewall-policy-gf"
+    Test      = "s185d02-firewall-policy-gf"
+    Load-Test = "s185d03-firewall-policy-gf"
+    Pre-Prod  = "s185t01-firewall-policy-gf"
+    Prod      = "s185p01-firewall-policy-gf"
+  }
+  description = "Firewall Policy Name for Grafana"
+}
+
+variable "grafana_appgw_probe" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-chidrens-social-care-grafana-hp"
+    Test      = "s185d02-chidrens-social-care-grafana-hp"
+    Load-Test = "s185d03-chidrens-social-care-grafana-hp"
+    Pre-Prod  = "s185t01-chidrens-social-care-grafana-hp"
+    Prod      = "s185p01-chidrens-social-care-grafana-hp"
+  }
+  description = "Name of App Gateway Grafana Health Probe"
+}
+
+variable "grafana_http_setting_name" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-chidrens-social-grafana-bes-http"
+    Test      = "s185d02-chidrens-social-grafana-bes-http"
+    Load-Test = "s185d03-chidrens-social-grafana-bes-http"
+    Pre-Prod  = "s185t01-chidrens-social-grafana-bes-http"
+    Prod      = "s185p01-chidrens-social-grafana-bes-http"
+  }
+  description = "Name of Grafana HTTP Setting"
+}
+
+variable "app_path_rule" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-app-path-rule"
+    Test      = "s185d02-app-path-rule"
+    Load-Test = "s185d03-app-path-rule"
+    Pre-Prod  = "s185t01-app-path-rule"
+    Prod      = "s185p01-app-path-rule"
+  }
+  description = "Name of app path rule"
+}
+
+variable "grafana_app_path_rule" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-grafana-app-path-rule"
+    Test      = "s185d02-grafana-app-path-rule"
+    Load-Test = "s185d03-grafana-app-path-rule"
+    Pre-Prod  = "s185t01-grafana-app-path-rule"
+    Prod      = "s185p01-grafana-app-path-rule"
+  }
+  description = "Name of Grafana app path rule"
+}
+
+variable "app_pathmap" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-cpd-app-gw-rewrite-pathmap"
+    Test      = "s185d02-cpd-app-gw-rewrite-pathmap"
+    Load-Test = "s185d03-cpd-app-gw-rewrite-pathmap"
+    Pre-Prod  = "s185t01-cpd-app-gw-rewrite-pathmap"
+    Prod      = "s185p01-cpd-app-gw-rewrite-pathmap"
+  }
+  description = "Name of app gateway path map"
+}
+
+variable "grafana_backend_address_pool_name" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-chidrens-social-care-grafana-bep"
+    Test      = "s185d02-chidrens-social-care-grafana-bep"
+    Load-Test = "s185d03-chidrens-social-care-grafana-bep"
+    Pre-Prod  = "s185t01-chidrens-social-care-grafana-bep"
+    Prod      = "s185p01-chidrens-social-care-grafana-bep"
+  }
+  description = "Name of grafana backend address pool"
+}
+
+variable "grafana_request_routing_rule_name" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-chidrens-social-care-grafana-rule"
+    Test      = "s185d02-chidrens-social-care-grafana-rule"
+    Load-Test = "s185d03-chidrens-social-care-grafana-rule"
+    Pre-Prod  = "s185t01-chidrens-social-care-grafana-rule"
+    Prod      = "s185p01-chidrens-social-care-grafana-rule"
+  }
+  description = "Name of Grafana Request Routing Rule"
+}
