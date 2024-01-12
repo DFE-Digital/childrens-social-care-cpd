@@ -2,6 +2,8 @@
 using Childrens_Social_Care_CPD.DataAccess;
 using Childrens_Social_Care_CPD.Models;
 using System.Collections.ObjectModel;
+using System.Net;
+using System.Text.Encodings.Web;
 
 namespace Childrens_Social_Care_CPD.Search;
 
@@ -37,34 +39,36 @@ internal class SearchResultsVMFactory : ISearchResultsVMFactory
         return new ReadOnlyDictionary<TagInfo, FacetResult>(tags);
     }
 
+    private static string AppendUrlParameter(string name, string param, bool additive = true)
+    {
+        return string.IsNullOrEmpty(param)
+            ? string.Empty
+            : $"{(additive ? '&' : string.Empty)}{name}={WebUtility.UrlEncode(param)}";
+    }
+
     private static string GetPagingFormatString(string searchTerm, IEnumerable<string> tags, SortOrder sortOrder, string routeName)
     {
         var result = $"/{routeName}?{SearchRequestPropertyNames.Page}={{0}}";
 
-        void Append(string param, string name = null)
-        {
-            if (string.IsNullOrEmpty(param)) return;
-
-            result += string.IsNullOrEmpty(name)
-                ? $"&{param}"
-                : $"&{name}={param}";
-        }
-
         if (sortOrder != SortOrder.UpdatedLatest)
         {
-            Append(((int)sortOrder).ToString(), SearchRequestPropertyNames.SortOrder);
+            result += AppendUrlParameter(SearchRequestPropertyNames.SortOrder, ((int)sortOrder).ToString());
         }
-        Append(searchTerm, SearchRequestPropertyNames.Term);
-        Append(string.Join('&', tags.Select(x => $"{SearchRequestPropertyNames.Tags}={x}")));
+        result += AppendUrlParameter(SearchRequestPropertyNames.Term, searchTerm);
+        foreach (var tag in tags)
+        {
+            result += AppendUrlParameter(SearchRequestPropertyNames.Tags, tag);
+        }
+        
         return result;
     }
 
     private static string GetClearFiltersUri(SearchRequestModel request, string routeName)
     {
-        var result = $"/{routeName}?{SearchRequestPropertyNames.Term}={request.Term}";
+        var result = $"/{routeName}?{AppendUrlParameter(SearchRequestPropertyNames.Term, request.Term, false)}";
         if (request.SortOrder != SortOrder.UpdatedLatest)
         {
-            result += $"&{SearchRequestPropertyNames.SortOrder}={(int)request.SortOrder}";
+            result += AppendUrlParameter(SearchRequestPropertyNames.SortOrder, ((int)request.SortOrder).ToString());
         }
 
         return result;

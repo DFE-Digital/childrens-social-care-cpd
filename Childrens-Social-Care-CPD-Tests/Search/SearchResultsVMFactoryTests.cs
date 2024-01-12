@@ -221,6 +221,31 @@ public class SearchResultsVMFactoryTests
         result.ClearFiltersUri.Should().Be(expected);
     }
 
+    [Test]
+    public async Task GetSearchModel_Model_Should_Receive_ClearFiltersUri_That_Has_Been_Url_Encoded()
+    {
+        // arrange
+        var term = "foo foo";
+        var routeName = "foo";
+        _resourcesRepository.GetSearchTagsAsync(Arg.Any<CancellationToken>()).Returns(Array.Empty<TagInfo>());
+        _resourcesRepository.FetchRootPageAsync().Returns(Task.FromResult<Content>(null));
+
+        _searchService.SearchResourcesAsync(Arg.Any<KeywordSearchQuery>()).Returns(GenerateSearchResults(0));
+        var request = new SearchRequestModel
+        {
+            Term = term,
+            Tags = Array.Empty<string>(),
+            Page = 1,
+            SortOrder = SortOrder.UpdatedLatest
+        };
+
+        // act
+        var result = await _searchResultsVMFactory.GetSearchModel(request, 1, routeName, default);
+
+        // assert
+        result.ClearFiltersUri.Should().Be("/foo?q=foo+foo");
+    }
+
     [TestCase(SortOrder.UpdatedLatest, "/foo?p={0}&q=foo")]
     [TestCase(SortOrder.UpdatedOldest, "/foo?p={0}&so=1&q=foo")]
     [TestCase(SortOrder.MostRelevant, "/foo?p={0}&so=2&q=foo")]
