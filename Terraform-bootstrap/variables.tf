@@ -14,9 +14,9 @@ variable "env_name" {
   type = map(string)
   default = {
     Dev       = "Dev"
-    Test      = "Test"
+    Test      = "Dev"
     Load-Test = "Dev"
-    Pre-Prod  = "Pre-Pro"
+    Pre-Prod  = "Test"
     Prod      = "Prod"
   }
   description = "Name of Environment"
