@@ -1,0 +1,3182 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 5,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 18,
+      "panels": [
+        {
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Time",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 1
+          },
+          "id": 1,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "azureMonitor": {
+                "aggregation": "Count",
+                "allowedTimeGrainsMs": [
+                  60000,
+                  300000,
+                  900000,
+                  1800000,
+                  3600000,
+                  21600000,
+                  43200000,
+                  86400000
+                ],
+                "dimensionFilters": [],
+                "metricName": "CpuTime",
+                "metricNamespace": "microsoft.web/sites",
+                "region": "westeurope",
+                "resources": [
+                  {
+                    "metricNamespace": "Microsoft.Web/sites",
+                    "region": "westeurope",
+                    "resourceGroup": "s185d01-childrens-social-care-cpd-rg",
+                    "resourceName": "s185d01-chidrens-social-care-cpd-app-service",
+                    "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+                  }
+                ],
+                "timeGrain": "auto"
+              },
+              "datasource": {
+                "type": "grafana-azure-monitor-datasource",
+                "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+              },
+              "queryType": "Azure Monitor",
+              "refId": "A",
+              "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+            }
+          ],
+          "title": "CPU Consumption",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Amount Of Memory",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 1
+          },
+          "id": 3,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "azureMonitor": {
+                "aggregation": "Average",
+                "allowedTimeGrainsMs": [
+                  60000,
+                  300000,
+                  900000,
+                  1800000,
+                  3600000,
+                  21600000,
+                  43200000,
+                  86400000
+                ],
+                "dimensionFilters": [],
+                "metricName": "AverageMemoryWorkingSet",
+                "metricNamespace": "microsoft.web/sites",
+                "region": "westeurope",
+                "resources": [
+                  {
+                    "metricNamespace": "Microsoft.Web/sites",
+                    "region": "westeurope",
+                    "resourceGroup": "s185d01-childrens-social-care-cpd-rg",
+                    "resourceName": "s185d01-chidrens-social-care-cpd-app-service",
+                    "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+                  }
+                ],
+                "timeGrain": "auto"
+              },
+              "datasource": {
+                "type": "grafana-azure-monitor-datasource",
+                "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+              },
+              "queryType": "Azure Monitor",
+              "refId": "A",
+              "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+            }
+          ],
+          "title": "Average Memory Usage",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Count Of Requests",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 6,
+            "x": 0,
+            "y": 9
+          },
+          "id": 9,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "azureMonitor": {
+                "aggregation": "Total",
+                "allowedTimeGrainsMs": [
+                  60000,
+                  300000,
+                  900000,
+                  1800000,
+                  3600000,
+                  21600000,
+                  43200000,
+                  86400000
+                ],
+                "dimensionFilters": [],
+                "metricName": "Http2xx",
+                "metricNamespace": "microsoft.web/sites",
+                "region": "westeurope",
+                "resources": [
+                  {
+                    "metricNamespace": "Microsoft.Web/sites",
+                    "region": "westeurope",
+                    "resourceGroup": "s185d01-childrens-social-care-cpd-rg",
+                    "resourceName": "s185d01-chidrens-social-care-cpd-app-service",
+                    "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+                  }
+                ],
+                "timeGrain": "auto"
+              },
+              "datasource": {
+                "type": "grafana-azure-monitor-datasource",
+                "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+              },
+              "queryType": "Azure Monitor",
+              "refId": "A",
+              "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+            },
+            {
+              "azureMonitor": {
+                "aggregation": "Count",
+                "allowedTimeGrainsMs": [
+                  60000,
+                  300000,
+                  900000,
+                  1800000,
+                  3600000,
+                  21600000,
+                  43200000,
+                  86400000
+                ],
+                "dimensionFilters": [],
+                "metricName": "Http401",
+                "metricNamespace": "microsoft.web/sites",
+                "region": "westeurope",
+                "resources": [
+                  {
+                    "metricNamespace": "Microsoft.Web/sites",
+                    "region": "westeurope",
+                    "resourceGroup": "s185d01-childrens-social-care-cpd-rg",
+                    "resourceName": "s185d01-chidrens-social-care-cpd-app-service",
+                    "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+                  }
+                ],
+                "timeGrain": "auto"
+              },
+              "datasource": {
+                "type": "grafana-azure-monitor-datasource",
+                "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+              },
+              "hide": false,
+              "queryType": "Azure Monitor",
+              "refId": "B",
+              "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+            },
+            {
+              "azureMonitor": {
+                "aggregation": "Count",
+                "allowedTimeGrainsMs": [
+                  60000,
+                  300000,
+                  900000,
+                  1800000,
+                  3600000,
+                  21600000,
+                  43200000,
+                  86400000
+                ],
+                "dimensionFilters": [],
+                "metricName": "Http403",
+                "metricNamespace": "microsoft.web/sites",
+                "region": "westeurope",
+                "resources": [
+                  {
+                    "metricNamespace": "Microsoft.Web/sites",
+                    "region": "westeurope",
+                    "resourceGroup": "s185d01-childrens-social-care-cpd-rg",
+                    "resourceName": "s185d01-chidrens-social-care-cpd-app-service",
+                    "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+                  }
+                ],
+                "timeGrain": "auto"
+              },
+              "datasource": {
+                "type": "grafana-azure-monitor-datasource",
+                "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+              },
+              "hide": false,
+              "queryType": "Azure Monitor",
+              "refId": "C",
+              "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+            },
+            {
+              "azureMonitor": {
+                "aggregation": "Count",
+                "allowedTimeGrainsMs": [
+                  60000,
+                  300000,
+                  900000,
+                  1800000,
+                  3600000,
+                  21600000,
+                  43200000,
+                  86400000
+                ],
+                "dimensionFilters": [],
+                "metricName": "Http404",
+                "metricNamespace": "microsoft.web/sites",
+                "region": "westeurope",
+                "resources": [
+                  {
+                    "metricNamespace": "Microsoft.Web/sites",
+                    "region": "westeurope",
+                    "resourceGroup": "s185d01-childrens-social-care-cpd-rg",
+                    "resourceName": "s185d01-chidrens-social-care-cpd-app-service",
+                    "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+                  }
+                ],
+                "timeGrain": "auto"
+              },
+              "datasource": {
+                "type": "grafana-azure-monitor-datasource",
+                "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+              },
+              "hide": false,
+              "queryType": "Azure Monitor",
+              "refId": "D",
+              "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+            },
+            {
+              "azureMonitor": {
+                "aggregation": "Count",
+                "allowedTimeGrainsMs": [
+                  60000,
+                  300000,
+                  900000,
+                  1800000,
+                  3600000,
+                  21600000,
+                  43200000,
+                  86400000
+                ],
+                "dimensionFilters": [],
+                "metricName": "Http406",
+                "metricNamespace": "microsoft.web/sites",
+                "region": "westeurope",
+                "resources": [
+                  {
+                    "metricNamespace": "Microsoft.Web/sites",
+                    "region": "westeurope",
+                    "resourceGroup": "s185d01-childrens-social-care-cpd-rg",
+                    "resourceName": "s185d01-chidrens-social-care-cpd-app-service",
+                    "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+                  }
+                ],
+                "timeGrain": "auto"
+              },
+              "datasource": {
+                "type": "grafana-azure-monitor-datasource",
+                "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+              },
+              "hide": false,
+              "queryType": "Azure Monitor",
+              "refId": "E",
+              "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+            }
+          ],
+          "title": "Count Http status codes",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Count Of Server Errors",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 6,
+            "x": 6,
+            "y": 9
+          },
+          "id": 6,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "azureMonitor": {
+                "aggregation": "Count",
+                "allowedTimeGrainsMs": [
+                  60000,
+                  300000,
+                  900000,
+                  1800000,
+                  3600000,
+                  21600000,
+                  43200000,
+                  86400000
+                ],
+                "dimensionFilters": [],
+                "metricName": "Http5xx",
+                "metricNamespace": "microsoft.web/sites",
+                "region": "westeurope",
+                "resources": [
+                  {
+                    "metricNamespace": "Microsoft.Web/sites",
+                    "region": "westeurope",
+                    "resourceGroup": "s185d01-childrens-social-care-cpd-rg",
+                    "resourceName": "s185d01-chidrens-social-care-cpd-app-service",
+                    "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+                  }
+                ],
+                "timeGrain": "auto"
+              },
+              "datasource": {
+                "type": "grafana-azure-monitor-datasource",
+                "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+              },
+              "queryType": "Azure Monitor",
+              "refId": "A",
+              "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+            }
+          ],
+          "title": "Count of Http Server Errors",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Count Of Requests",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 6,
+            "x": 12,
+            "y": 9
+          },
+          "id": 2,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "azureMonitor": {
+                "aggregation": "Total",
+                "allowedTimeGrainsMs": [
+                  60000,
+                  300000,
+                  900000,
+                  1800000,
+                  3600000,
+                  21600000,
+                  43200000,
+                  86400000
+                ],
+                "dimensionFilters": [],
+                "metricName": "Http2xx",
+                "metricNamespace": "microsoft.web/sites",
+                "region": "westeurope",
+                "resources": [
+                  {
+                    "metricNamespace": "Microsoft.Web/sites",
+                    "region": "westeurope",
+                    "resourceGroup": "s185d01-childrens-social-care-cpd-rg",
+                    "resourceName": "s185d01-chidrens-social-care-cpd-app-service",
+                    "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+                  }
+                ],
+                "timeGrain": "auto"
+              },
+              "datasource": {
+                "type": "grafana-azure-monitor-datasource",
+                "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+              },
+              "queryType": "Azure Monitor",
+              "refId": "A",
+              "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+            }
+          ],
+          "title": "Http 2xx Requests",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Number Of Requests",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 6,
+            "x": 18,
+            "y": 9
+          },
+          "id": 5,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "azureMonitor": {
+                "aggregation": "Total",
+                "allowedTimeGrainsMs": [
+                  60000,
+                  300000,
+                  900000,
+                  1800000,
+                  3600000,
+                  21600000,
+                  43200000,
+                  86400000
+                ],
+                "dimensionFilters": [],
+                "metricName": "Http404",
+                "metricNamespace": "microsoft.web/sites",
+                "region": "westeurope",
+                "resources": [
+                  {
+                    "metricNamespace": "Microsoft.Web/sites",
+                    "region": "westeurope",
+                    "resourceGroup": "s185d01-childrens-social-care-cpd-rg",
+                    "resourceName": "s185d01-chidrens-social-care-cpd-app-service",
+                    "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+                  }
+                ],
+                "timeGrain": "auto"
+              },
+              "datasource": {
+                "type": "grafana-azure-monitor-datasource",
+                "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+              },
+              "queryType": "Azure Monitor",
+              "refId": "A",
+              "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+            }
+          ],
+          "title": "Http 404 Requests",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Number Of Requests",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 6,
+            "x": 0,
+            "y": 17
+          },
+          "id": 10,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "azureMonitor": {
+                "aggregation": "Count",
+                "allowedTimeGrainsMs": [
+                  60000,
+                  300000,
+                  900000,
+                  1800000,
+                  3600000,
+                  21600000,
+                  43200000,
+                  86400000
+                ],
+                "dimensionFilters": [],
+                "metricName": "Requests",
+                "metricNamespace": "microsoft.web/sites",
+                "region": "westeurope",
+                "resources": [
+                  {
+                    "metricNamespace": "Microsoft.Web/sites",
+                    "region": "westeurope",
+                    "resourceGroup": "s185d01-childrens-social-care-cpd-rg",
+                    "resourceName": "s185d01-chidrens-social-care-cpd-app-service",
+                    "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+                  }
+                ],
+                "timeGrain": "auto"
+              },
+              "datasource": {
+                "type": "grafana-azure-monitor-datasource",
+                "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+              },
+              "queryType": "Azure Monitor",
+              "refId": "A",
+              "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+            }
+          ],
+          "title": "Requests",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Response Time",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 6,
+            "x": 6,
+            "y": 17
+          },
+          "id": 4,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "azureMonitor": {
+                "aggregation": "Average",
+                "allowedTimeGrainsMs": [
+                  300000,
+                  3600000,
+                  86400000
+                ],
+                "dimensionFilters": [],
+                "metricName": "HttpResponseTime",
+                "metricNamespace": "microsoft.web/sites",
+                "region": "westeurope",
+                "resources": [
+                  {
+                    "metricNamespace": "microsoft.web/sites",
+                    "region": "westeurope",
+                    "resourceGroup": "s185d01-childrens-social-care-cpd-rg",
+                    "resourceName": "s185d01-chidrens-social-care-cpd-app-service",
+                    "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+                  }
+                ],
+                "timeGrain": "auto"
+              },
+              "datasource": {
+                "type": "grafana-azure-monitor-datasource",
+                "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+              },
+              "queryType": "Azure Monitor",
+              "refId": "A",
+              "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+            }
+          ],
+          "title": "Average Response Time",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Quantity",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 6,
+            "x": 12,
+            "y": 17
+          },
+          "id": 7,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "azureMonitor": {
+                "aggregation": "Total",
+                "allowedTimeGrainsMs": [
+                  60000,
+                  300000,
+                  900000,
+                  1800000,
+                  3600000,
+                  21600000,
+                  43200000,
+                  86400000
+                ],
+                "dimensionFilters": [],
+                "metricName": "BytesReceived",
+                "metricNamespace": "microsoft.web/sites",
+                "region": "westeurope",
+                "resources": [
+                  {
+                    "metricNamespace": "Microsoft.Web/sites",
+                    "region": "westeurope",
+                    "resourceGroup": "s185d01-childrens-social-care-cpd-rg",
+                    "resourceName": "s185d01-chidrens-social-care-cpd-app-service",
+                    "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+                  }
+                ],
+                "timeGrain": "auto"
+              },
+              "datasource": {
+                "type": "grafana-azure-monitor-datasource",
+                "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+              },
+              "queryType": "Azure Monitor",
+              "refId": "A",
+              "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+            }
+          ],
+          "title": "Data In",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Quantity",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 6,
+            "x": 18,
+            "y": 17
+          },
+          "id": 8,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "azureMonitor": {
+                "aggregation": "Total",
+                "allowedTimeGrainsMs": [
+                  60000,
+                  300000,
+                  900000,
+                  1800000,
+                  3600000,
+                  21600000,
+                  43200000,
+                  86400000
+                ],
+                "dimensionFilters": [],
+                "metricName": "BytesSent",
+                "metricNamespace": "microsoft.web/sites",
+                "region": "westeurope",
+                "resources": [
+                  {
+                    "metricNamespace": "Microsoft.Web/sites",
+                    "region": "westeurope",
+                    "resourceGroup": "s185d01-childrens-social-care-cpd-rg",
+                    "resourceName": "s185d01-chidrens-social-care-cpd-app-service",
+                    "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+                  }
+                ],
+                "timeGrain": "auto"
+              },
+              "datasource": {
+                "type": "grafana-azure-monitor-datasource",
+                "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+              },
+              "queryType": "Azure Monitor",
+              "refId": "A",
+              "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+            }
+          ],
+          "title": "Data Out",
+          "type": "timeseries"
+        }
+      ],
+      "title": "s185d01 App Service",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 17,
+      "panels": [
+        {
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Host Count",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 6,
+            "x": 0,
+            "y": 2
+          },
+          "id": 11,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "azureMonitor": {
+                "aggregation": "Average",
+                "allowedTimeGrainsMs": [
+                  60000,
+                  300000,
+                  900000,
+                  1800000,
+                  3600000,
+                  21600000,
+                  43200000,
+                  86400000
+                ],
+                "dimensionFilters": [],
+                "metricName": "HealthyHostCount",
+                "metricNamespace": "microsoft.network/applicationgateways",
+                "region": "West Europe",
+                "resources": [
+                  {
+                    "metricNamespace": "Microsoft.Network/applicationGateways",
+                    "region": "West Europe",
+                    "resourceGroup": "s185d01-childrens-social-care-cpd-rg",
+                    "resourceName": "s185d01-csc-cpd-app-gateway",
+                    "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+                  }
+                ],
+                "timeGrain": "auto"
+              },
+              "datasource": {
+                "type": "grafana-azure-monitor-datasource",
+                "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+              },
+              "queryType": "Azure Monitor",
+              "refId": "A",
+              "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+            },
+            {
+              "azureMonitor": {
+                "aggregation": "Average",
+                "allowedTimeGrainsMs": [
+                  60000,
+                  300000,
+                  900000,
+                  1800000,
+                  3600000,
+                  21600000,
+                  43200000,
+                  86400000
+                ],
+                "dimensionFilters": [],
+                "metricName": "UnhealthyHostCount",
+                "metricNamespace": "microsoft.network/applicationgateways",
+                "region": "West Europe",
+                "resources": [
+                  {
+                    "metricNamespace": "Microsoft.Network/applicationGateways",
+                    "region": "West Europe",
+                    "resourceGroup": "s185d01-childrens-social-care-cpd-rg",
+                    "resourceName": "s185d01-csc-cpd-app-gateway",
+                    "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+                  }
+                ],
+                "timeGrain": "auto"
+              },
+              "datasource": {
+                "type": "grafana-azure-monitor-datasource",
+                "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+              },
+              "hide": false,
+              "queryType": "Azure Monitor",
+              "refId": "B",
+              "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+            }
+          ],
+          "title": "Healthy and Unhealthy Host Count for s185d01 App Gateway",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Response Status",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 6,
+            "y": 2
+          },
+          "id": 14,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "azureMonitor": {
+                "aggregation": "Total",
+                "allowedTimeGrainsMs": [
+                  60000,
+                  300000,
+                  900000,
+                  1800000,
+                  3600000,
+                  21600000,
+                  43200000,
+                  86400000
+                ],
+                "dimensionFilters": [],
+                "metricName": "TotalRequests",
+                "metricNamespace": "microsoft.network/applicationgateways",
+                "region": "West Europe",
+                "resources": [
+                  {
+                    "metricNamespace": "Microsoft.Network/applicationGateways",
+                    "region": "West Europe",
+                    "resourceGroup": "s185d01-childrens-social-care-cpd-rg",
+                    "resourceName": "s185d01-csc-cpd-app-gateway",
+                    "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+                  }
+                ],
+                "timeGrain": "auto"
+              },
+              "datasource": {
+                "type": "grafana-azure-monitor-datasource",
+                "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+              },
+              "queryType": "Azure Monitor",
+              "refId": "A",
+              "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+            }
+          ],
+          "title": "Total Requests for s185d01 App Gateway",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Requests",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 6,
+            "x": 18,
+            "y": 2
+          },
+          "id": 13,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "azureMonitor": {
+                "aggregation": "Total",
+                "allowedTimeGrainsMs": [
+                  60000,
+                  300000,
+                  900000,
+                  1800000,
+                  3600000,
+                  21600000,
+                  43200000,
+                  86400000
+                ],
+                "dimensionFilters": [],
+                "metricName": "FailedRequests",
+                "metricNamespace": "microsoft.network/applicationgateways",
+                "region": "West Europe",
+                "resources": [
+                  {
+                    "metricNamespace": "Microsoft.Network/applicationGateways",
+                    "region": "West Europe",
+                    "resourceGroup": "s185d01-childrens-social-care-cpd-rg",
+                    "resourceName": "s185d01-csc-cpd-app-gateway",
+                    "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+                  }
+                ],
+                "timeGrain": "auto"
+              },
+              "datasource": {
+                "type": "grafana-azure-monitor-datasource",
+                "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+              },
+              "queryType": "Azure Monitor",
+              "refId": "A",
+              "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+            }
+          ],
+          "title": "Failed Requests for s185d01 App Gateway",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Connect Time",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 10
+          },
+          "id": 15,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "azureMonitor": {
+                "aggregation": "Average",
+                "allowedTimeGrainsMs": [
+                  60000,
+                  300000,
+                  900000,
+                  1800000,
+                  3600000,
+                  21600000,
+                  43200000,
+                  86400000
+                ],
+                "dimensionFilters": [],
+                "metricName": "BackendConnectTime",
+                "metricNamespace": "microsoft.network/applicationgateways",
+                "region": "West Europe",
+                "resources": [
+                  {
+                    "metricNamespace": "Microsoft.Network/applicationGateways",
+                    "region": "West Europe",
+                    "resourceGroup": "s185d01-childrens-social-care-cpd-rg",
+                    "resourceName": "s185d01-csc-cpd-app-gateway",
+                    "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+                  }
+                ],
+                "timeGrain": "auto"
+              },
+              "datasource": {
+                "type": "grafana-azure-monitor-datasource",
+                "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+              },
+              "queryType": "Azure Monitor",
+              "refId": "A",
+              "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+            }
+          ],
+          "title": "Backend Connect Time for s185d01 App Gateway",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Response Status",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 10
+          },
+          "id": 16,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "azureMonitor": {
+                "aggregation": "Average",
+                "allowedTimeGrainsMs": [
+                  60000,
+                  300000,
+                  900000,
+                  1800000,
+                  3600000,
+                  21600000,
+                  43200000,
+                  86400000
+                ],
+                "dimensionFilters": [],
+                "metricName": "ResponseStatus",
+                "metricNamespace": "microsoft.network/applicationgateways",
+                "region": "West Europe",
+                "resources": [
+                  {
+                    "metricNamespace": "Microsoft.Network/applicationGateways",
+                    "region": "West Europe",
+                    "resourceGroup": "s185d01-childrens-social-care-cpd-rg",
+                    "resourceName": "s185d01-csc-cpd-app-gateway",
+                    "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+                  }
+                ],
+                "timeGrain": "auto"
+              },
+              "datasource": {
+                "type": "grafana-azure-monitor-datasource",
+                "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+              },
+              "queryType": "Azure Monitor",
+              "refId": "A",
+              "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+            }
+          ],
+          "title": "Response Status for s185d01 App Gateway",
+          "type": "timeseries"
+        }
+      ],
+      "title": "s185d01 App Gateway",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 2
+      },
+      "id": 19,
+      "panels": [
+        {
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Amount Of Memory",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 3
+          },
+          "id": 22,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "azureMonitor": {
+                "aggregation": "Total",
+                "allowedTimeGrainsMs": [
+                  60000,
+                  300000,
+                  900000,
+                  1800000,
+                  3600000,
+                  21600000,
+                  43200000,
+                  86400000
+                ],
+                "dimensionFilters": [],
+                "metricName": "AverageMemoryWorkingSet",
+                "metricNamespace": "microsoft.web/sites",
+                "region": "West Europe",
+                "resources": [
+                  {
+                    "metricNamespace": "Microsoft.Web/sites",
+                    "region": "West Europe",
+                    "resourceGroup": "s185d01-childrens-social-care-cpd-rg",
+                    "resourceName": "s185d01-search",
+                    "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+                  }
+                ],
+                "timeGrain": "auto"
+              },
+              "datasource": {
+                "type": "grafana-azure-monitor-datasource",
+                "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+              },
+              "queryType": "Azure Monitor",
+              "refId": "A",
+              "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+            }
+          ],
+          "title": "Average Memory working set",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Count Of Requests",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 3
+          },
+          "id": 23,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "azureMonitor": {
+                "aggregation": "Total",
+                "allowedTimeGrainsMs": [
+                  60000,
+                  300000,
+                  900000,
+                  1800000,
+                  3600000,
+                  21600000,
+                  43200000,
+                  86400000
+                ],
+                "dimensionFilters": [],
+                "metricName": "Http2xx",
+                "metricNamespace": "microsoft.web/sites",
+                "region": "West Europe",
+                "resources": [
+                  {
+                    "metricNamespace": "Microsoft.Web/sites",
+                    "region": "West Europe",
+                    "resourceGroup": "s185d01-childrens-social-care-cpd-rg",
+                    "resourceName": "s185d01-search",
+                    "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+                  }
+                ],
+                "timeGrain": "auto"
+              },
+              "datasource": {
+                "type": "grafana-azure-monitor-datasource",
+                "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+              },
+              "queryType": "Azure Monitor",
+              "refId": "A",
+              "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+            },
+            {
+              "azureMonitor": {
+                "aggregation": "Total",
+                "allowedTimeGrainsMs": [
+                  60000,
+                  300000,
+                  900000,
+                  1800000,
+                  3600000,
+                  21600000,
+                  43200000,
+                  86400000
+                ],
+                "dimensionFilters": [],
+                "metricName": "Http401",
+                "metricNamespace": "microsoft.web/sites",
+                "region": "West Europe",
+                "resources": [
+                  {
+                    "metricNamespace": "Microsoft.Web/sites",
+                    "region": "West Europe",
+                    "resourceGroup": "s185d01-childrens-social-care-cpd-rg",
+                    "resourceName": "s185d01-search",
+                    "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+                  }
+                ],
+                "timeGrain": "auto"
+              },
+              "datasource": {
+                "type": "grafana-azure-monitor-datasource",
+                "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+              },
+              "hide": false,
+              "queryType": "Azure Monitor",
+              "refId": "B",
+              "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+            },
+            {
+              "azureMonitor": {
+                "aggregation": "Total",
+                "allowedTimeGrainsMs": [
+                  60000,
+                  300000,
+                  900000,
+                  1800000,
+                  3600000,
+                  21600000,
+                  43200000,
+                  86400000
+                ],
+                "dimensionFilters": [],
+                "metricName": "Http403",
+                "metricNamespace": "microsoft.web/sites",
+                "region": "West Europe",
+                "resources": [
+                  {
+                    "metricNamespace": "Microsoft.Web/sites",
+                    "region": "West Europe",
+                    "resourceGroup": "s185d01-childrens-social-care-cpd-rg",
+                    "resourceName": "s185d01-search",
+                    "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+                  }
+                ],
+                "timeGrain": "auto"
+              },
+              "datasource": {
+                "type": "grafana-azure-monitor-datasource",
+                "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+              },
+              "hide": false,
+              "queryType": "Azure Monitor",
+              "refId": "C",
+              "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+            },
+            {
+              "azureMonitor": {
+                "aggregation": "Total",
+                "allowedTimeGrainsMs": [
+                  60000,
+                  300000,
+                  900000,
+                  1800000,
+                  3600000,
+                  21600000,
+                  43200000,
+                  86400000
+                ],
+                "dimensionFilters": [],
+                "metricName": "Http404",
+                "metricNamespace": "microsoft.web/sites",
+                "region": "West Europe",
+                "resources": [
+                  {
+                    "metricNamespace": "Microsoft.Web/sites",
+                    "region": "West Europe",
+                    "resourceGroup": "s185d01-childrens-social-care-cpd-rg",
+                    "resourceName": "s185d01-search",
+                    "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+                  }
+                ],
+                "timeGrain": "auto"
+              },
+              "datasource": {
+                "type": "grafana-azure-monitor-datasource",
+                "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+              },
+              "hide": false,
+              "queryType": "Azure Monitor",
+              "refId": "D",
+              "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+            }
+          ],
+          "title": "Count Http status codes",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Count Of Server Errors",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 11
+          },
+          "id": 20,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "azureMonitor": {
+                "aggregation": "Total",
+                "allowedTimeGrainsMs": [
+                  60000,
+                  300000,
+                  900000,
+                  1800000,
+                  3600000,
+                  21600000,
+                  43200000,
+                  86400000
+                ],
+                "dimensionFilters": [],
+                "metricName": "Http5xx",
+                "metricNamespace": "microsoft.web/sites",
+                "region": "West Europe",
+                "resources": [
+                  {
+                    "metricNamespace": "Microsoft.Web/sites",
+                    "region": "West Europe",
+                    "resourceGroup": "s185d01-childrens-social-care-cpd-rg",
+                    "resourceName": "s185d01-search",
+                    "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+                  }
+                ],
+                "timeGrain": "auto"
+              },
+              "datasource": {
+                "type": "grafana-azure-monitor-datasource",
+                "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+              },
+              "queryType": "Azure Monitor",
+              "refId": "A",
+              "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+            }
+          ],
+          "title": "Count Of Http Server Errors",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Count Of Requests",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 6,
+            "x": 12,
+            "y": 11
+          },
+          "id": 24,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "azureMonitor": {
+                "aggregation": "Total",
+                "allowedTimeGrainsMs": [
+                  60000,
+                  300000,
+                  900000,
+                  1800000,
+                  3600000,
+                  21600000,
+                  43200000,
+                  86400000
+                ],
+                "dimensionFilters": [],
+                "metricName": "Http2xx",
+                "metricNamespace": "microsoft.web/sites",
+                "region": "West Europe",
+                "resources": [
+                  {
+                    "metricNamespace": "Microsoft.Web/sites",
+                    "region": "West Europe",
+                    "resourceGroup": "s185d01-childrens-social-care-cpd-rg",
+                    "resourceName": "s185d01-search",
+                    "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+                  }
+                ],
+                "timeGrain": "auto"
+              },
+              "datasource": {
+                "type": "grafana-azure-monitor-datasource",
+                "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+              },
+              "queryType": "Azure Monitor",
+              "refId": "A",
+              "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+            }
+          ],
+          "title": "Http 2xx Requests",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Count Of 404 Requests",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 6,
+            "x": 18,
+            "y": 11
+          },
+          "id": 25,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "azureMonitor": {
+                "aggregation": "Total",
+                "allowedTimeGrainsMs": [
+                  60000,
+                  300000,
+                  900000,
+                  1800000,
+                  3600000,
+                  21600000,
+                  43200000,
+                  86400000
+                ],
+                "dimensionFilters": [],
+                "metricName": "Http2xx",
+                "metricNamespace": "microsoft.web/sites",
+                "region": "West Europe",
+                "resources": [
+                  {
+                    "metricNamespace": "Microsoft.Web/sites",
+                    "region": "West Europe",
+                    "resourceGroup": "s185d01-childrens-social-care-cpd-rg",
+                    "resourceName": "s185d01-search",
+                    "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+                  }
+                ],
+                "timeGrain": "auto"
+              },
+              "datasource": {
+                "type": "grafana-azure-monitor-datasource",
+                "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+              },
+              "queryType": "Azure Monitor",
+              "refId": "A",
+              "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+            }
+          ],
+          "title": "Http 404 Requests",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Count Of Requests",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 6,
+            "x": 0,
+            "y": 19
+          },
+          "id": 26,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "azureMonitor": {
+                "aggregation": "Total",
+                "allowedTimeGrainsMs": [
+                  60000,
+                  300000,
+                  900000,
+                  1800000,
+                  3600000,
+                  21600000,
+                  43200000,
+                  86400000
+                ],
+                "dimensionFilters": [],
+                "metricName": "Requests",
+                "metricNamespace": "microsoft.web/sites",
+                "region": "West Europe",
+                "resources": [
+                  {
+                    "metricNamespace": "Microsoft.Web/sites",
+                    "region": "West Europe",
+                    "resourceGroup": "s185d01-childrens-social-care-cpd-rg",
+                    "resourceName": "s185d01-search",
+                    "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+                  }
+                ],
+                "timeGrain": "auto"
+              },
+              "datasource": {
+                "type": "grafana-azure-monitor-datasource",
+                "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+              },
+              "queryType": "Azure Monitor",
+              "refId": "A",
+              "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+            }
+          ],
+          "title": "Count Of Requests",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Response Time",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 6,
+            "x": 6,
+            "y": 19
+          },
+          "id": 27,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "azureMonitor": {
+                "aggregation": "Average",
+                "allowedTimeGrainsMs": [
+                  60000,
+                  300000,
+                  900000,
+                  1800000,
+                  3600000,
+                  21600000,
+                  43200000,
+                  86400000
+                ],
+                "dimensionFilters": [],
+                "metricName": "HttpResponseTime",
+                "metricNamespace": "microsoft.web/sites",
+                "region": "West Europe",
+                "resources": [
+                  {
+                    "metricNamespace": "Microsoft.Web/sites",
+                    "region": "West Europe",
+                    "resourceGroup": "s185d01-childrens-social-care-cpd-rg",
+                    "resourceName": "s185d01-search",
+                    "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+                  }
+                ],
+                "timeGrain": "auto"
+              },
+              "datasource": {
+                "type": "grafana-azure-monitor-datasource",
+                "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+              },
+              "queryType": "Azure Monitor",
+              "refId": "A",
+              "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+            }
+          ],
+          "title": "Response Time",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Quantity",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 6,
+            "x": 12,
+            "y": 19
+          },
+          "id": 28,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "azureMonitor": {
+                "aggregation": "Total",
+                "allowedTimeGrainsMs": [
+                  60000,
+                  300000,
+                  900000,
+                  1800000,
+                  3600000,
+                  21600000,
+                  43200000,
+                  86400000
+                ],
+                "dimensionFilters": [],
+                "metricName": "BytesReceived",
+                "metricNamespace": "microsoft.web/sites",
+                "region": "West Europe",
+                "resources": [
+                  {
+                    "metricNamespace": "Microsoft.Web/sites",
+                    "region": "West Europe",
+                    "resourceGroup": "s185d01-childrens-social-care-cpd-rg",
+                    "resourceName": "s185d01-search",
+                    "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+                  }
+                ],
+                "timeGrain": "auto"
+              },
+              "datasource": {
+                "type": "grafana-azure-monitor-datasource",
+                "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+              },
+              "queryType": "Azure Monitor",
+              "refId": "A",
+              "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+            }
+          ],
+          "title": "Data In",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Quantity",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 6,
+            "x": 18,
+            "y": 19
+          },
+          "id": 29,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "azureMonitor": {
+                "aggregation": "Total",
+                "allowedTimeGrainsMs": [
+                  60000,
+                  300000,
+                  900000,
+                  1800000,
+                  3600000,
+                  21600000,
+                  43200000,
+                  86400000
+                ],
+                "dimensionFilters": [],
+                "metricName": "BytesSent",
+                "metricNamespace": "microsoft.web/sites",
+                "region": "West Europe",
+                "resources": [
+                  {
+                    "metricNamespace": "Microsoft.Web/sites",
+                    "region": "West Europe",
+                    "resourceGroup": "s185d01-childrens-social-care-cpd-rg",
+                    "resourceName": "s185d01-search",
+                    "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+                  }
+                ],
+                "timeGrain": "auto"
+              },
+              "datasource": {
+                "type": "grafana-azure-monitor-datasource",
+                "uid": "ff98c186-15d6-4663-99d2-101b4459cf53"
+              },
+              "queryType": "Azure Monitor",
+              "refId": "A",
+              "subscription": "31a2beaa-81c6-47f4-8b88-02f0419dc2a3"
+            }
+          ],
+          "title": "Data Out",
+          "type": "timeseries"
+        }
+      ],
+      "title": "s185d01 Search",
+      "type": "row"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-30d",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Azure Metrics - Development-s185d01",
+  "uid": "abd927f8-c474-4afd-8596-c8d9c0de798d",
+  "version": 17,
+  "weekStart": ""
+}
