@@ -32,6 +32,7 @@ jobs:
       TF_VAR_cpd_search_endpoint: ${{secrets.TF_VAR_CPD_SEARCH_ENDPOINT}}
       TF_VAR_cpd_search_index_name: ${{secrets.TF_VAR_CPD_SEARCH_INDEX_NAME}}
       TF_VAR_cpd_search_recreate_index_on_rebuild: ${{secrets.TF_VAR_CPD_SEARCH_RECREATE_INDEX_ON_REBUILD}}
+      TF_VAR_cpd_gf_password: ${{secrets.TF_CPD_GF_PASSWORD}}
       TF_VAR_vcs_tag: ${{github.event.release.tag_name}}
       TF_WORKSPACE: Load-Test
       SITE_URL: https://20.107.65.156/
