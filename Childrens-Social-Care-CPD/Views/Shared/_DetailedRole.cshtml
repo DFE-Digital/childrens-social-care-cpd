@@ -26,73 +26,69 @@
 }
 
 <div class="govuk-grid-row">
-    <div class="govuk-grid-column-three-quarters">
-        <h1 class="govuk-heading-xl">@Model.Title</h1>
-    </div>
+    <h1 class="govuk-heading-xl">@Model.Title</h1>
 </div>
 
 <div class="govuk-grid-row">
-    <div class="govuk-grid-column-three-quarters">
-        <dl class="govuk-summary-list">
-        @if(!string.IsNullOrEmpty(Model.SalaryRange))
+    <dl class="govuk-summary-list">
+    @if(!string.IsNullOrEmpty(Model.SalaryRange))
+    {
+        <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+                Salary range
+            </dt>
+            <dd class="govuk-summary-list__value">
+                @Model.SalaryRange <span>depending on location, responsibilities and experience</span>
+            </dd>
+        </div>
+    }
+        <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+                Summary
+            </dt>
+            <dd class="govuk-summary-list__value">
+                @Model.Summary
+            </dd>
+        </div>
+
+        @if (!string.IsNullOrEmpty(Model.OtherNames))
         {
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                    Salary range
+                    Other names
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    @Model.SalaryRange <span>depending on location, responsibilities and experience</span>
+                    @Model.OtherNames
                 </dd>
             </div>
         }
-            <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                    Summary
-                </dt>
-                <dd class="govuk-summary-list__value">
-                    @Model.Summary
-                </dd>
-            </div>
+    </dl>
 
-            @if (!string.IsNullOrEmpty(Model.OtherNames))
-            {
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">
-                        Other names
-                    </dt>
-                    <dd class="govuk-summary-list__value">
-                        @Model.OtherNames
-                    </dd>
-                </div>
-            }
-        </dl>
+    <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-with-summary-sections">
 
-        <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-with-summary-sections">
+        @if (Model.WhatYoullDo != null)
+        {
+            await RenderAccordianSection("What you'll do", Model.WhatYoullDo, 1);
+        }
 
-            @if (Model.WhatYoullDo != null)
-            {
-                await RenderAccordianSection("What you'll do", Model.WhatYoullDo, 1);
-            }
+        @if (Model.SkillsAndKnowledge != null)
+        {
+            await RenderAccordianSection("Skills and knowledge", Model.SkillsAndKnowledge, 2);
+        }
 
-            @if (Model.SkillsAndKnowledge != null)
-            {
-                await RenderAccordianSection("Skills and knowledge", Model.SkillsAndKnowledge, 2);
-            }
+        @if (Model.HowToBecomeOne != null)
+        {
+            await RenderAccordianSection("How to become one", Model.HowToBecomeOne, 3);
+        }
 
-            @if (Model.HowToBecomeOne != null)
-            {
-                await RenderAccordianSection("How to become one", Model.HowToBecomeOne, 3);
-            }
+        @if (Model.CareerPathsAndProgression != null)
+        {
+            await RenderAccordianSection("Career paths and progression", Model.CareerPathsAndProgression, 4);
+        }
 
-            @if (Model.CareerPathsAndProgression != null)
-            {
-                await RenderAccordianSection("Career paths and progression", Model.CareerPathsAndProgression, 4);
-            }
-
-            @if (Model.CurrentOpportunities != null)
-            {
-                await RenderAccordianSection("Current opportunities", Model.CurrentOpportunities, 5);
-            }
-        </div>
+        @if (Model.CurrentOpportunities != null)
+        {
+            await RenderAccordianSection("Current opportunities", Model.CurrentOpportunities, 5);
+        }
     </div>
 </div>
