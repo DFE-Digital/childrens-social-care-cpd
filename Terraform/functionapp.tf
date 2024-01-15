@@ -33,6 +33,12 @@ resource "azurerm_linux_function_app" "functionapp" {
 
   site_config {
     always_on = false
+
+    application_stack {
+      dotnet_version              = "8.0"
+      use_custom_runtime          = false
+      use_dotnet_isolated_runtime = true
+    }
   }
 
   app_settings = {
