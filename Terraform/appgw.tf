@@ -150,7 +150,7 @@ resource "azurerm_application_gateway" "appgw" {
       backend_address_pool_name  = var.backend_address_pool_name[terraform.workspace]
       backend_http_settings_name = var.http_setting_name[terraform.workspace]
       rewrite_rule_set_name      = var.appgw_rewrite_rule_set[terraform.workspace]
-      firewall_policy_id         = azurerm_web_application_firewall_policy.fwpol.id
+      firewall_policy_id         = var.appgw_tier[terraform.workspace] == "WAF_v2" ? azurerm_web_application_firewall_policy.fwpol.id : null
     }
 
     path_rule {
@@ -159,7 +159,7 @@ resource "azurerm_application_gateway" "appgw" {
       backend_address_pool_name  = var.grafana_backend_address_pool_name[terraform.workspace]
       backend_http_settings_name = var.grafana_http_setting_name[terraform.workspace]
       rewrite_rule_set_name      = var.appgw_rewrite_rule_set[terraform.workspace]
-      firewall_policy_id         = azurerm_web_application_firewall_policy.fwpol-gf.id
+      firewall_policy_id         = var.appgw_tier[terraform.workspace] == "WAF_v2" ? azurerm_web_application_firewall_policy.fwpol-gf.id : null
     }
   }
 
