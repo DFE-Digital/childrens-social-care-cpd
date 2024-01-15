@@ -26,63 +26,63 @@
 }
 
 <div class="govuk-grid-row">
-    <div class="govuk-grid-column-three-quarters">
-        <span class="govuk-caption-l">Areas of practice</span>
-        <h1 class="govuk-heading-xl">@Model.Title</h1>
-    </div>
+
+    <span class="govuk-caption-l">Areas of practice</span>
+    <h1 class="govuk-heading-xl">@Model.Title</h1>
+
 </div>
 
 <div class="govuk-grid-row">
-    <div class="govuk-grid-column-three-quarters">
-        <dl class="govuk-summary-list">
+    
+    <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+                Summary
+            </dt>
+            <dd class="govuk-summary-list__value">
+                @Model.Summary
+            </dd>
+        </div>
+
+        @if (!string.IsNullOrEmpty(Model.OtherNames))
+        {
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                    Summary
+                    Other names
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    @Model.Summary
+                    @Model.OtherNames
                 </dd>
             </div>
+        }
+    </dl>
 
-            @if (!string.IsNullOrEmpty(Model.OtherNames))
-            {
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">
-                        Other names
-                    </dt>
-                    <dd class="govuk-summary-list__value">
-                        @Model.OtherNames
-                    </dd>
-                </div>
-            }
-        </dl>
+    <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-with-summary-sections">
 
-        <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-with-summary-sections">
+        @if (Model.WhatYoullDo != null)
+        {
+            await RenderAccordianSection("What you'll do", Model.WhatYoullDo, 1);
+        }
 
-            @if (Model.WhatYoullDo != null)
-            {
-                await RenderAccordianSection("What you'll do", Model.WhatYoullDo, 1);
-            }
+        @if (Model.SkillsAndKnowledge != null)
+        {
+            await RenderAccordianSection("Skills and knowledge", Model.SkillsAndKnowledge, 2);
+        }
 
-            @if (Model.SkillsAndKnowledge != null)
-            {
-                await RenderAccordianSection("Skills and knowledge", Model.SkillsAndKnowledge, 2);
-            }
+        @if (Model.WhoYouWillWorkWith != null)
+        {
+            await RenderAccordianSection("Who you'll work with", Model.WhoYouWillWorkWith, 3);
+        }
 
-            @if (Model.WhoYouWillWorkWith != null)
-            {
-                await RenderAccordianSection("Who you'll work with", Model.WhoYouWillWorkWith, 3);
-            }
+        @if (Model.HowYouWillWork != null)
+        {
+            await RenderAccordianSection("How you'll work", Model.HowYouWillWork, 4);
+        }
 
-            @if (Model.HowYouWillWork != null)
-            {
-                await RenderAccordianSection("How you'll work", Model.HowYouWillWork, 4);
-            }
-
-            @if (Model.CurrentOpportunities != null)
-            {
-                await RenderAccordianSection("Current opportunities", Model.CurrentOpportunities, 5);
-            }
-        </div>
+        @if (Model.CurrentOpportunities != null)
+        {
+            await RenderAccordianSection("Current opportunities", Model.CurrentOpportunities, 5);
+        }
     </div>
+    
 </div>
