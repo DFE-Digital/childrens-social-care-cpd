@@ -10,7 +10,7 @@
 
     @foreach (var group in Model.Items.Select((e, i) => new { ContentItem = e, Grouping = (i / Model.ColumnCount) }).GroupBy(e => e.Grouping))
     {
-        <div class="govuk-grid-row" style="display: flex">
+        <div class="govuk-grid-row">
             @foreach (var item in group)
             {
                 <div class="@gridClass govuk-!-margin-bottom-4" style="display: flex">
