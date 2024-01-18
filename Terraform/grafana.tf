@@ -47,6 +47,7 @@ resource "azurerm_linux_web_app" "grafana-web-app" {
     GF_SECURITY_CSRF_ADDITIONAL_HEADERS = "X-Forwarded-Host"
     GF_SECURITY_CSRF_TRUSTED_ORIGINS    = var.origins[terraform.workspace]
     GF_SECURITY_ADMIN_PASSWORD          = var.cpd_gf_password
+    GF_INSTALL_PLUGINS                  = var.cpd_gf_plugins
   }
 
   site_config {
