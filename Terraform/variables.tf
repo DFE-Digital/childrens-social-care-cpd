@@ -836,6 +836,11 @@ variable "cpd_search_index_name" {
   type        = string
 }
 
+variable "cpd_gf_plugins" {
+  type = map(string)
+  description = "List of Grafana plugins to install"
+}
+
 variable "cpd_search_recreate_index_on_rebuild" {
   description = "Whether to delete the index and recreate before populating"
   type        = bool
