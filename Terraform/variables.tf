@@ -837,7 +837,7 @@ variable "cpd_search_index_name" {
 }
 
 variable "cpd_gf_plugins" {
-  type        = map(string)
+  type        = string
   description = "List of Grafana plugins to install"
 }
 
