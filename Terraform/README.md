@@ -88,6 +88,7 @@ No modules.
 | <a name="input_cpd_delivery_key"></a> [cpd\_delivery\_key](#input\_cpd\_delivery\_key) | Contentful Delivery Key | `string` | n/a | yes |
 | <a name="input_cpd_feature_polling_interval"></a> [cpd\_feature\_polling\_interval](#input\_cpd\_feature\_polling\_interval) | Feature polling interval | `number` | n/a | yes |
 | <a name="input_cpd_gf_password"></a> [cpd\_gf\_password](#input\_cpd\_gf\_password) | Grafana password | `string` | n/a | yes |
+| <a name="input_cpd_gf_plugins"></a> [cpd\_gf\_plugins](#input\_cpd\_gf\_plugins) | List of Grafana plugins to install | `string` | n/a | yes |
 | <a name="input_cpd_googleanalyticstag"></a> [cpd\_googleanalyticstag](#input\_cpd\_googleanalyticstag) | Google Analytics Tag | `string` | n/a | yes |
 | <a name="input_cpd_image_tag"></a> [cpd\_image\_tag](#input\_cpd\_image\_tag) | Docker image tag of application | `string` | n/a | yes |
 | <a name="input_cpd_instrumentation_connectionstring"></a> [cpd\_instrumentation\_connectionstring](#input\_cpd\_instrumentation\_connectionstring) | The Azure ApplicationInsights connection string | `string` | n/a | yes |
