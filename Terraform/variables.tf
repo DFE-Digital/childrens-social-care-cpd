@@ -841,6 +841,11 @@ variable "cpd_gf_plugins" {
   description = "List of Grafana plugins to install"
 }
 
+variable "cpd_gf_image_tag" {
+  type        = string
+  description = "Grafana Docker image tag to use"
+}
+
 variable "cpd_search_recreate_index_on_rebuild" {
   description = "Whether to delete the index and recreate before populating"
   type        = bool
