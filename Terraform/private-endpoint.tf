@@ -60,8 +60,31 @@ resource "azurerm_private_endpoint" "searchprivateendpoint" {
 
   private_service_connection {
     name                           = var.search_private_endpoint_conn_name[terraform.workspace]
-    private_connection_resource_id = azurerm_search_service.ai-search.id
+    private_connection_resource_id = azurerm_search_service.ai-search[0].id
     subresource_names              = ["searchService"]
+    is_manual_connection           = false
+  }
+
+  tags = data.azurerm_resource_group.rg.tags
+}
+
+# Definition of the private end point for the grafana web app
+resource "azurerm_private_endpoint" "privateendpoint-gf" {
+  count               = local.waf_grafana_count
+  name                = "${var.private_endpoint_name[terraform.workspace]}-gf"
+  location            = data.azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
+  subnet_id           = azurerm_subnet.backend.id
+
+  private_dns_zone_group {
+    name                 = var.private_dns_zone_group_name[terraform.workspace]
+    private_dns_zone_ids = [azurerm_private_dns_zone.dnsprivatezone.id]
+  }
+
+  private_service_connection {
+    name                           = "${var.private_endpoint_conn_name[terraform.workspace]}-gf"
+    private_connection_resource_id = azurerm_linux_web_app.grafana-web-app.id
+    subresource_names              = ["sites"]
     is_manual_connection           = false
   }
 
