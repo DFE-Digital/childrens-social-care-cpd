@@ -93,6 +93,7 @@ public static class WebApplicationBuilderExtensions
     public static void AddFeatures(this WebApplicationBuilder builder)
     {
         ArgumentNullException.ThrowIfNull(builder);
+        builder.Configuration.AddUserSecrets<Program>();
 
         var applicationConfiguration = new ApplicationConfiguration(builder.Configuration);
 
