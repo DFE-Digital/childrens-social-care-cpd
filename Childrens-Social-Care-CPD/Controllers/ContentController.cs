@@ -23,7 +23,7 @@ public class ContentController : Controller
         if (!string.IsNullOrEmpty(contentId) && contentId.Equals("explore-roles"))
         {
             var roles = await _rolesRepository.GetByIdAsync(contentId, 1, cancellationToken);
-            return roles;
+            //return roles;
         }
 
         var queryBuilder = QueryBuilder<Content>.New

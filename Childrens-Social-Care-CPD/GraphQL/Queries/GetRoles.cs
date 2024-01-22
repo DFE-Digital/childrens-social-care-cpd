@@ -1,4 +1,5 @@
-﻿using Contentful.Core.Models;
+﻿using Childrens_Social_Care_CPD.Contentful.Models;
+using Contentful.Core.Models;
 using GraphQL;
 using System.Text.Json.Serialization;
 
@@ -6,6 +7,56 @@ namespace Childrens_Social_Care_CPD.GraphQL.Queries
 {
     public static class GetRoles
     {
+        public static GraphQLRequest GetDetailedRoles(bool preview = false)
+        {
+            return new GraphQLRequest
+            {
+                Query = @"query GetDetailedRoles($preview: Boolean) {
+                          detailedRoleCollection (preview: $preview) {
+                            items {
+                              title
+                              roleListSummary
+                              linkedFrom {
+                                contentCollection (preview: $preview) {
+                                  items {
+                                    id
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }",
+                OperationName = "GetDetailedRoles",
+                Variables = new
+                {
+                    preview,
+                }
+            };
+        }
+
+        public static GraphQLRequest GetRoleList(bool preview = false)
+        {
+            return new GraphQLRequest
+            {
+                Query = @"query GetRoleList($preview: Boolean){
+                    roleListCollection(preview: $preview) {
+                        items {
+                            title
+                            rolesCollection {
+                                items {
+                                    id
+                                }
+                            }
+                        }
+                    }
+                }",
+                OperationName = "GetRoleList",
+                Variables = new
+                {
+                    preview,
+                }
+            };
+        }
         public static GraphQLRequest Query(string id, bool preview = false)
         {
             return new GraphQLRequest
@@ -23,6 +74,16 @@ namespace Childrens_Social_Care_CPD.GraphQL.Queries
                       contentTitle
                       contentSubtitle
                       showContentHeader
+                      #roleListCollection {
+                      #  items {
+                      #      title
+                      #      rolesCollection {
+                      #          items {
+                      #              id
+                      #          }
+                      #       }
+                      #   }
+                      #}
                       sys {
                         publishedAt
                         firstPublishedAt
@@ -74,11 +135,6 @@ namespace Childrens_Social_Care_CPD.GraphQL.Queries
             public MetaDataEx ContentfulMetaData { get; set; }
         }
 
-        //public class RoleItem
-        //{
-        //    public string Title { get; set; }
-        //}
-
         public class PublishedInfoEx
         {
             public DateTime? PublishedAt { get; set; }
@@ -94,6 +150,37 @@ namespace Childrens_Social_Care_CPD.GraphQL.Queries
         {
             public string Id { get; set; }
             public string Name { get; set; }
+        }
+
+        public class ResponseType2
+        {
+            [JsonPropertyName("roleListCollection")]
+            public RoleListCollection RoleListCollection { get; set; }
+        }
+
+        public class RoleListCollection
+        {
+            [JsonPropertyName("items")]
+            public ICollection<RoleItems> Items { get; set; }
+        }
+
+        public class RoleItems
+        {
+            public string Title { get; set; }
+            [JsonPropertyName("rolesCollection")]
+            public RolesCollection RolesCollection { get; set; }
+
+        }
+
+        public class RolesCollection
+        {
+            [JsonPropertyName("items")]
+            public ICollection<RoleItem> Items { get; set; }
+        }
+
+        public class RoleItem
+        {
+            public string Id { get; set; }
         }
     }
     

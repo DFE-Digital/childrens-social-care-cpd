@@ -25,6 +25,10 @@ namespace Childrens_Social_Care_CPD.DataAccess
             var result = await _gqlClient
                 .SendQueryAsync<GetRoles.ResponseType>(GetRoles.Query(id, _isPreview), cancellationToken);
 
+            var roleList = await _gqlClient
+                .SendQueryAsync<GetRoles.ResponseType2>(GetRoles.GetRoleList(_isPreview), cancellationToken);
+
+
             var first = result.Data.ContentCollection.Items.FirstOrDefault(); //.ContentfulMetaData.Tags.Where(x => x.Name.StartsWith($"{prefix}:"));
 
             if (first == null)
