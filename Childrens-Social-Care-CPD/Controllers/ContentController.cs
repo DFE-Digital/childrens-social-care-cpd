@@ -1,5 +1,6 @@
 ﻿using Childrens_Social_Care_CPD.Contentful;
 using Childrens_Social_Care_CPD.Contentful.Models;
+using Childrens_Social_Care_CPD.DataAccess;
 using Childrens_Social_Care_CPD.Models;
 using Contentful.Core.Search;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +10,7 @@ namespace Childrens_Social_Care_CPD.Controllers;
 public class ContentController : Controller
 {
     private readonly ICpdContentfulClient _cpdClient;
+    private readonly IRolesRepository rolesRepository;
 
     public ContentController(ICpdContentfulClient cpdClient)
     {
