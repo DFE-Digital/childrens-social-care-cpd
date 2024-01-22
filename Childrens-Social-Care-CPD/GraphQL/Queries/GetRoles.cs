@@ -1,4 +1,5 @@
-﻿using GraphQL;
+﻿using Contentful.Core.Models;
+using GraphQL;
 using System.Text.Json.Serialization;
 
 namespace Childrens_Social_Care_CPD.GraphQL.Queries
@@ -17,6 +18,11 @@ namespace Childrens_Social_Care_CPD.GraphQL.Queries
                     total
                     items {
                       id
+                      title
+                      category
+                      contentTitle
+                      contentSubtitle
+                      showContentHeader
                       sys {
                         publishedAt
                         firstPublishedAt
@@ -42,32 +48,44 @@ namespace Childrens_Social_Care_CPD.GraphQL.Queries
         public class ResponseType
         {
             [JsonPropertyName("contentCollection")]
-            public ContentCollection ContentCollection { get; set; }
+            public ContentCollectionEx ContentCollection { get; set; }
         }
 
-        public class ContentCollection
+        public class ContentCollectionEx
         {
             [JsonPropertyName("items")]
-            public ICollection<SearchResult> Items { get; set; }
+            public ICollection<MainRoleContent> Items { get; set; }
             public int Total { get; set; }
         }
 
-        public class SearchResult
+        public class MainRoleContent
         {
             public string Id { get; set; }
+            public string Title { get; set; }
+            public string Category { get; set; }
             public string ContentTitle { get; set; }
+            public string ContentSubtitle { get; set; }
             public string SearchSummary { get; set; }
-            public PublishedInfo Sys { get; set; }
-            public MetaData ContentfulMetaData { get; set; }
+            public bool ShowContentHeader { get; set; }
+
+            [JsonPropertyName("items")]
+            public ICollection<IContent> Items { get; set; }
+            public PublishedInfoEx Sys { get; set; }
+            public MetaDataEx ContentfulMetaData { get; set; }
         }
 
-        public class PublishedInfo
+        //public class RoleItem
+        //{
+        //    public string Title { get; set; }
+        //}
+
+        public class PublishedInfoEx
         {
             public DateTime? PublishedAt { get; set; }
             public DateTime? FirstPublishedAt { get; set; }
         }
 
-        public class MetaData
+        public class MetaDataEx
         {
             public List<Tag> Tags { get; set; }
         }

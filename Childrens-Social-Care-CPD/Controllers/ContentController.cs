@@ -10,15 +10,22 @@ namespace Childrens_Social_Care_CPD.Controllers;
 public class ContentController : Controller
 {
     private readonly ICpdContentfulClient _cpdClient;
-    private readonly IRolesRepository rolesRepository;
+    private readonly IRolesRepository _rolesRepository;
 
-    public ContentController(ICpdContentfulClient cpdClient)
+    public ContentController(ICpdContentfulClient cpdClient, IRolesRepository rolesRepository)
     {
         _cpdClient = cpdClient;
+        _rolesRepository = rolesRepository;
     }
 
     private async Task<Content> FetchPageContentAsync(string contentId, CancellationToken cancellationToken)
     {
+        if (!string.IsNullOrEmpty(contentId) && contentId.Equals("explore-roles"))
+        {
+            var roles = await _rolesRepository.GetByIdAsync(contentId, 1, cancellationToken);
+            return roles;
+        }
+
         var queryBuilder = QueryBuilder<Content>.New
             .ContentTypeIs("content")
             .FieldEquals("fields.id", contentId)

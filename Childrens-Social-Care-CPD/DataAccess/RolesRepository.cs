@@ -23,10 +23,37 @@ namespace Childrens_Social_Care_CPD.DataAccess
         {
 
             var result = await _gqlClient
-                .SendQueryAsync<GetContentTags.ResponseType>(GetRoles.Query(id, _isPreview), cancellationToken);
-                //.ContinueWith(x => x.Result.Data);
+                .SendQueryAsync<GetRoles.ResponseType>(GetRoles.Query(id, _isPreview), cancellationToken);
 
-            return new Content();
+            var first = result.Data.ContentCollection.Items.FirstOrDefault(); //.ContentfulMetaData.Tags.Where(x => x.Name.StartsWith($"{prefix}:"));
+
+            if (first == null)
+            {
+                return new Content();
+            }
+
+            //var roles = first.Items.Select(x => new RoleItem
+            //{
+            //    Title = x.Title,
+
+            //});
+
+            //List<IContent> roleList = new List<IContent>();
+            //foreach(var item in roles)
+            //{
+            //    roleList.Add(new RoleList { Title = item.Title });
+            //}
+
+            return new Content
+            {
+                Id = first.Id,
+                Title = first.Title,
+                Category = first.Category,
+                ContentTitle = first.ContentTitle,
+                ContentSubtitle = first.ContentSubtitle,
+                ShowContentHeader = first.ShowContentHeader,
+                //Items = roleList
+            };
 
         }
     }

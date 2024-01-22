@@ -1,6 +1,7 @@
 ﻿using Childrens_Social_Care_CPD.Contentful;
 using Childrens_Social_Care_CPD.Contentful.Models;
 using Childrens_Social_Care_CPD.Controllers;
+using Childrens_Social_Care_CPD.DataAccess;
 using Childrens_Social_Care_CPD.Models;
 using Contentful.Core.Models;
 using Contentful.Core.Search;
@@ -47,6 +48,7 @@ public class ContentControllerTests
         _httpContext = Substitute.For<HttpContext>();
         _httpRequest = Substitute.For<HttpRequest>();
         var controllerContext = Substitute.For<ControllerContext>();
+        var roleRepository = Substitute.For<IRolesRepository>();
 
         _httpRequest.Cookies.Returns(_cookies);
         _httpContext.Request.Returns(_httpRequest);
@@ -54,7 +56,7 @@ public class ContentControllerTests
 
         _contentfulClient = Substitute.For<ICpdContentfulClient>();
 
-        _contentController = new ContentController(_contentfulClient)
+        _contentController = new ContentController(_contentfulClient, roleRepository)
         {
             ControllerContext = controllerContext,
             TempData = Substitute.For<ITempDataDictionary>()
