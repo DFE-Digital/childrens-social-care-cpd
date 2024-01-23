@@ -20,10 +20,11 @@ public class ContentController : Controller
 
     private async Task<Content> FetchPageContentAsync(string contentId, CancellationToken cancellationToken)
     {
+        Content roles = null;
         if (!string.IsNullOrEmpty(contentId) && contentId.Equals("explore-roles"))
         {
-            var roles = await _rolesRepository.GetByIdAsync(contentId, 1, cancellationToken);
-            //return roles;
+            roles = await _rolesRepository.GetByIdAsync(contentId, 1, cancellationToken);
+            return roles;
         }
 
         var queryBuilder = QueryBuilder<Content>.New
@@ -32,6 +33,8 @@ public class ContentController : Controller
             .Include(10);
 
         var result = await _cpdClient.GetEntries(queryBuilder, cancellationToken);
+
+        var content = result?.FirstOrDefault();
 
         return result?.FirstOrDefault();
     }

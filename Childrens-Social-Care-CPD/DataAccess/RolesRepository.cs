@@ -1,7 +1,9 @@
 ﻿using Childrens_Social_Care_CPD.Configuration;
 using Childrens_Social_Care_CPD.Contentful.Models;
 using Childrens_Social_Care_CPD.GraphQL.Queries;
+using Contentful.Core.Models;
 using GraphQL.Client.Abstractions.Websocket;
+using System.Collections;
 
 namespace Childrens_Social_Care_CPD.DataAccess
 {
@@ -28,6 +30,9 @@ namespace Childrens_Social_Care_CPD.DataAccess
             var roleList = await _gqlClient
                 .SendQueryAsync<GetRoles.ResponseType2>(GetRoles.GetRoleList(_isPreview), cancellationToken);
 
+            var detailsList = await _gqlClient
+                .SendQueryAsync<GetRoles.ResponseType3>(GetRoles.GetDetailedRoles(_isPreview), cancellationToken);
+
 
             var first = result.Data.ContentCollection.Items.FirstOrDefault(); //.ContentfulMetaData.Tags.Where(x => x.Name.StartsWith($"{prefix}:"));
 
@@ -36,17 +41,67 @@ namespace Childrens_Social_Care_CPD.DataAccess
                 return new Content();
             }
 
-            //var roles = first.Items.Select(x => new RoleItem
-            //{
-            //    Title = x.Title,
+            Dictionary<string, DetailedRole> detailedRoles = new();
+            foreach (var item in detailsList.Data.DetailedRoleCollection.Items)
+            {
 
-            //});
+                foreach (var item2 in item.LinkedFrom.ContentCollection.Items)
+                {
+                    if (item2 != null)
+                    {
+                        detailedRoles.Add(item2.Id, new DetailedRole { Title = item.Title, SalaryRange = item.SalaryRange });
+                    }
+                }
+            }
 
-            //List<IContent> roleList = new List<IContent>();
-            //foreach(var item in roles)
-            //{
-            //    roleList.Add(new RoleList { Title = item.Title });
-            //}
+
+            ArrayList arrayList = new();
+
+            foreach (var item in roleList.Data.RoleListCollection.Items)
+            {
+                RoleList roleListItem = new()
+                {
+                    Title = item.Title,
+
+                };
+                foreach (var item2 in item.RolesCollection.Items)
+                {
+                    if (item2 != null)
+                    {
+                        
+                        if (roleListItem.Roles == null)
+                        {
+                            roleListItem.Roles = new();
+                        }
+                        if (detailedRoles.ContainsKey(item2.Id))
+                        {
+                            Content content2 = new Content { Id = item2.Id, Title = detailedRoles[item2.Id].Title, ContentType = detailedRoles[item2.Id].GetType().ToString() };
+                            content2.Items = new();
+                            content2.Items.Add(detailedRoles[item2.Id]);
+                            roleListItem.Roles.Add(content2);
+                        }
+                        
+                        //var link = item2.Id;
+                        //roleListItem.Roles.Add(new Content { Id = item2.Id, Title = item.Title });
+                    }      
+                }
+
+                if (arrayList.Count > 0)
+                {
+                    arrayList.Add(new ContentSeparator());
+                }
+
+                arrayList.Add(roleListItem);
+            }
+
+            List<IContent> roles = new();
+            foreach (var item in arrayList)
+            {
+                IContent content = (IContent)item;
+                roles.Add(content);
+            }
+
+            
 
             return new Content
             {
@@ -56,7 +111,7 @@ namespace Childrens_Social_Care_CPD.DataAccess
                 ContentTitle = first.ContentTitle,
                 ContentSubtitle = first.ContentSubtitle,
                 ShowContentHeader = first.ShowContentHeader,
-                //Items = roleList
+                Items = new List<IContent>(roles)
             };
 
         }

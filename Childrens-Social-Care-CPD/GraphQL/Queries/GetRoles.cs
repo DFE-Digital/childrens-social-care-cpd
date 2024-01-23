@@ -15,6 +15,7 @@ namespace Childrens_Social_Care_CPD.GraphQL.Queries
                           detailedRoleCollection (preview: $preview) {
                             items {
                               title
+                              salaryRange
                               roleListSummary
                               linkedFrom {
                                 contentCollection (preview: $preview) {
@@ -45,6 +46,7 @@ namespace Childrens_Social_Care_CPD.GraphQL.Queries
                             rolesCollection {
                                 items {
                                     id
+
                                 }
                             }
                         }
@@ -179,6 +181,44 @@ namespace Childrens_Social_Care_CPD.GraphQL.Queries
         }
 
         public class RoleItem
+        {
+            public string Id { get; set; }
+        }
+
+        public class ResponseType3
+        {
+            [JsonPropertyName("detailedRoleCollection")]
+            public DetailedRoleCollection DetailedRoleCollection { get; set; }
+        }
+
+        public class DetailedRoleCollection
+        {
+            [JsonPropertyName("items")]
+            public ICollection<DetailItem> Items { get; set; }
+        }
+
+        public class DetailItem
+        {
+            public string Title { get; set; }
+            public string SalaryRange { get; set; }
+            public string RoleListSummary { get; set; }
+            [JsonPropertyName("linkedFrom")]
+            public LinkedFrom LinkedFrom { get; set; }
+        }
+
+        public class LinkedFrom 
+        {
+            [JsonPropertyName("contentCollection")]
+            public ContentCollection ContentCollection { get; set; }
+        }
+
+        public class ContentCollection
+        {
+            [JsonPropertyName("items")]
+            public ICollection<ContentItem> Items { get; set; }
+        }
+
+        public class ContentItem
         {
             public string Id { get; set; }
         }
