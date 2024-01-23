@@ -42,7 +42,7 @@ public class SearchResultsVMFactoryTests
         return new SearchResourcesResult(count, count, 1, 1, 1, searchResults);
     }
 
-    [TestCase(SortOrder.MostRelevant, SortCategory.Relevancy, SortDirection.Descending)]
+    [TestCase(SortOrder.Relevance, SortCategory.Relevancy, SortDirection.Descending)]
     [TestCase(SortOrder.UpdatedLatest, SortCategory.Updated, SortDirection.Descending)]
     [TestCase(SortOrder.UpdatedOldest, SortCategory.Updated, SortDirection.Ascending)]
     public async Task GetSearchModel_Converts_SortOrder(SortOrder sortOrder, SortCategory sortCategory, SortDirection sortDirection)
@@ -83,7 +83,7 @@ public class SearchResultsVMFactoryTests
             Term = "foo",
             Tags = Array.Empty<string>(),
             Page = 1,
-            SortOrder = SortOrder.MostRelevant
+            SortOrder = SortOrder.Relevance
         };
 
         // act
@@ -107,7 +107,7 @@ public class SearchResultsVMFactoryTests
             Term = string.Empty,
             Tags = Array.Empty<string>(),
             Page = 1,
-            SortOrder = SortOrder.MostRelevant
+            SortOrder = SortOrder.Relevance
         };
 
         // act
@@ -136,7 +136,7 @@ public class SearchResultsVMFactoryTests
             Term = string.Empty,
             Tags = Array.Empty<string>(),
             Page = 1,
-            SortOrder = SortOrder.MostRelevant
+            SortOrder = SortOrder.Relevance
         };
 
         // act
@@ -160,7 +160,7 @@ public class SearchResultsVMFactoryTests
             Term = term,
             Tags = Array.Empty<string>(),
             Page = 1,
-            SortOrder = SortOrder.MostRelevant
+            SortOrder = SortOrder.Relevance
         };
 
         // act
@@ -196,7 +196,7 @@ public class SearchResultsVMFactoryTests
 
     [TestCase(SortOrder.UpdatedLatest, "/foo?q=foo")]
     [TestCase(SortOrder.UpdatedOldest, "/foo?q=foo&so=1")]
-    [TestCase(SortOrder.MostRelevant, "/foo?q=foo&so=2")]
+    [TestCase(SortOrder.Relevance, "/foo?q=foo&so=2")]
     public async Task GetSearchModel_Model_Should_Receive_ClearFiltersUri(SortOrder sortOrder, string expected)
     {
         // arrange
@@ -248,7 +248,7 @@ public class SearchResultsVMFactoryTests
 
     [TestCase(SortOrder.UpdatedLatest, "/foo?p={0}&q=foo")]
     [TestCase(SortOrder.UpdatedOldest, "/foo?p={0}&so=1&q=foo")]
-    [TestCase(SortOrder.MostRelevant, "/foo?p={0}&so=2&q=foo")]
+    [TestCase(SortOrder.Relevance, "/foo?p={0}&so=2&q=foo")]
     public async Task GetSearchModel_Model_Should_Receive_PagingFormatString(SortOrder sortOrder, string expected)
     {
         // arrange
@@ -358,7 +358,7 @@ public class SearchResultsVMFactoryTests
             Term = new string('x', 300),
             Tags = Array.Empty<string>(),
             Page = 1,
-            SortOrder = SortOrder.MostRelevant
+            SortOrder = SortOrder.Relevance
         };
 
         // act
@@ -382,7 +382,7 @@ public class SearchResultsVMFactoryTests
             Term = null,
             Tags = Array.Empty<string>(),
             Page = 1,
-            SortOrder = SortOrder.MostRelevant
+            SortOrder = SortOrder.Relevance
         };
 
         // act
