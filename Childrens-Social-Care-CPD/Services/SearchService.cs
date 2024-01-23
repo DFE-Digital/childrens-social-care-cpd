@@ -52,6 +52,7 @@ internal class SearchService: ISearchService
             QueryType = SearchQueryType.Simple,
             SearchMode = SearchMode.Any,
             IncludeTotalCount = true,
+            SearchFields = { "Title", "Body" },
             HighlightFields = { "Body" },
             Facets = { "Tags,count:100" },
             Filter = string.IsNullOrEmpty(filter) ? null : filter,
