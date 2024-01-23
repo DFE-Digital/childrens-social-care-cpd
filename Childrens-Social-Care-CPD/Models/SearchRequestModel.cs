@@ -7,7 +7,7 @@ public enum SortOrder
 {
     UpdatedLatest,
     UpdatedOldest,
-    MostRelevant,
+    Relevance,
 }
 
 public static class SearchRequestPropertyNames
