@@ -49,7 +49,7 @@ namespace Childrens_Social_Care_CPD.DataAccess
                 {
                     if (item2 != null)
                     {
-                        detailedRoles.Add(item2.Id, new DetailedRole { Title = item.Title, SalaryRange = item.SalaryRange });
+                        detailedRoles.Add(item2.Id, new DetailedRole { Title = item.Title, SalaryRange = item.SalaryRange, RoleListSummary = item.RoleListSummary });
                     }
                 }
             }
