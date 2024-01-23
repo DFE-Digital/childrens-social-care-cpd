@@ -20,11 +20,9 @@ public class ContentController : Controller
 
     private async Task<Content> FetchPageContentAsync(string contentId, CancellationToken cancellationToken)
     {
-        Content roles = null;
         if (!string.IsNullOrEmpty(contentId) && contentId.Equals("explore-roles"))
         {
-            roles = await _rolesRepository.GetByIdAsync(contentId, 1, cancellationToken);
-            return roles;
+            return await _rolesRepository.GetByIdAsync(contentId, 1, cancellationToken);
         }
 
         var queryBuilder = QueryBuilder<Content>.New
