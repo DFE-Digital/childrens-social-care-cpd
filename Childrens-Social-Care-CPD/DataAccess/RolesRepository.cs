@@ -34,7 +34,7 @@ namespace Childrens_Social_Care_CPD.DataAccess
                 .SendQueryAsync<GetRoles.ResponseType3>(GetRoles.GetDetailedRoles(_isPreview), cancellationToken);
 
 
-            var first = result.Data.ContentCollection.Items.FirstOrDefault(); //.ContentfulMetaData.Tags.Where(x => x.Name.StartsWith($"{prefix}:"));
+            var first = result.Data.ContentCollection.Items.FirstOrDefault();
 
             if (first == null)
             {
@@ -80,9 +80,6 @@ namespace Childrens_Social_Care_CPD.DataAccess
                             content2.Items.Add(detailedRoles[item2.Id]);
                             roleListItem.Roles.Add(content2);
                         }
-                        
-                        //var link = item2.Id;
-                        //roleListItem.Roles.Add(new Content { Id = item2.Id, Title = item.Title });
                     }      
                 }
 

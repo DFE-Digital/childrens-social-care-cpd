@@ -34,8 +34,6 @@ public class ContentController : Controller
 
         var result = await _cpdClient.GetEntries(queryBuilder, cancellationToken);
 
-        var content = result?.FirstOrDefault();
-
         return result?.FirstOrDefault();
     }
 
