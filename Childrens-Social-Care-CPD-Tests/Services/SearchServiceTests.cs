@@ -127,6 +127,23 @@ public class SearchServiceTests
         options.QueryType.Should().Be(SearchQueryType.Simple);
     }
 
+    [TestCase("Title")]
+    [TestCase("Body")]
+    public async Task SearchResourcesAsync_Searches_Field(string fieldName)
+    {
+        // arrange
+        SearchOptions options = null;
+        var query = new KeywordSearchQuery("foo");
+        var response = GenerateResponse();
+        _searchClient.SearchAsync<CpdDocument>(Arg.Any<string>(), Arg.Do<SearchOptions>(x => options = x)).Returns(response);
+
+        // act
+        await _sut.SearchResourcesAsync(query);
+
+        // assert
+        options.SearchFields.Should().Contain(fieldName);
+    }
+
     [TestCase("foo*", "foo")]
     [TestCase("foo* foo*", "foo foo")]
     [TestCase("!£$foo%^&*()_+#'~@|\\-=", "foo")]
