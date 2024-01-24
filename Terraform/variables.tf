@@ -836,6 +836,11 @@ variable "cpd_search_index_name" {
   type        = string
 }
 
+variable "cpd_gf_plugins" {
+  type        = string
+  description = "List of Grafana plugins to install"
+}
+
 variable "cpd_search_recreate_index_on_rebuild" {
   description = "Whether to delete the index and recreate before populating"
   type        = bool
@@ -892,11 +897,11 @@ variable "hostname" {
 variable "origins" {
   type = map(string)
   default = {
-    Dev       = "www.dev.develop-child-family-social-work-career.education.gov.uk,dev.develop-child-family-social-work-career.education.gov.uk"
-    Test      = "www.test.develop-child-family-social-work-career.education.gov.uk,test.develop-child-family-social-work-career.education.gov.uk"
+    Dev       = "www.dev.develop-child-family-social-work-career.education.gov.uk"
+    Test      = "www.test.develop-child-family-social-work-career.education.gov.uk"
     Load-Test = "20.107.65.156.nip.io"
-    Pre-Prod  = "www.pre-proddevelop-child-family-social-work-career.education.gov.uk,pre-proddevelop-child-family-social-work-career.education.gov.uk"
-    Prod      = "www.develop-child-family-social-work-career.education.gov.uk,develop-child-family-social-work-career.education.gov.uk"
+    Pre-Prod  = "www.pre-prod.develop-child-family-social-work-career.education.gov.uk"
+    Prod      = "www.develop-child-family-social-work-career.education.gov.uk"
   }
   description = "Origins for Grafana"
 }
