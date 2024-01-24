@@ -22,4 +22,4 @@ jobs:
           CPD_SPACE_ID: ${{ secrets.TF_VAR_CPD_SPACE_ID }}
         working-directory: ./Contentful-Schema
         run: |
-          node ./dist/scripts/schema-release-process/create-new-env-version.js -s pre-prod -t master
+          node ./dist/scripts/schema-release-process/create-new-env-version.js -s pre-prod -t dummy
