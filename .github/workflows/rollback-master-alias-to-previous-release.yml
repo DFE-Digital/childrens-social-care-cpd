@@ -1,4 +1,4 @@
-name: Switch master alias for release
+name: Rollback master alias to previous release
 
 jobs:
   create-schema-release:
@@ -22,4 +22,4 @@ jobs:
           CPD_SPACE_ID: ${{ secrets.TF_VAR_CPD_SPACE_ID }}
         working-directory: ./Contentful-Schema
         run: |
-          node ./dist/scripts/schema-release-process/switch-alias-for-release.js -a master
+          node ./dist/scripts/schema-release-process/switch-alias-for-release.js -a master -r
