@@ -3,7 +3,6 @@ using Childrens_Social_Care_CPD.Contentful.Models;
 using Childrens_Social_Care_CPD.GraphQL.Queries;
 using Contentful.Core.Models;
 using GraphQL.Client.Abstractions.Websocket;
-using System.Collections;
 
 namespace Childrens_Social_Care_CPD.DataAccess
 {
