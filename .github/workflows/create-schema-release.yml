@@ -1,4 +1,6 @@
-name: Create Schema Release
+name: Production Create Schema Release
+
+on: workflow_dispatch
 
 jobs:
   create-schema-release:

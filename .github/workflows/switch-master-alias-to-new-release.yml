@@ -1,4 +1,6 @@
-name: Switch master alias to new release
+name: Production switch master alias to new release
+
+on: workflow_dispatch
 
 jobs:
   create-schema-release:

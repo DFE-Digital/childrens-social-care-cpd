@@ -1,4 +1,6 @@
-name: Rollback master alias to previous release
+name: Production rollback master alias to previous release
+
+on: workflow_dispatch
 
 jobs:
   create-schema-release:
