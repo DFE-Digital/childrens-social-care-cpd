@@ -49,6 +49,6 @@ const newEnvName = `${tokens[0]}__${version+1}`
 
 console.log(`New environment name will be ${chalk.yellowBright(newEnvName)}`)
 console.log(`Cloning new environment ${chalk.yellowBright(newEnvName)} from ${chalk.yellowBright(environment.name)}`)
-//await space.createEnvironmentWithId(newEnvName, { name: newEnvName }, environment.name)
+await space.createEnvironmentWithId(newEnvName, { name: newEnvName }, environment.name)
 
 console.log("Done")
