@@ -1,0 +1,25 @@
+name: Create Schema Release
+
+jobs:
+  create-schema-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install dependencies
+        working-directory: ./Contentful-Schema/
+        run: |
+          npm ci
+      - name: Build scripts
+        working-directory: ./Contentful-Schema/
+        run: |
+          npx tsc
+      - name: Run script
+        env:
+          CONTENTFUL_MANAGEMENT_TOKEN: ${{ secrets.CONTENTFUL_MANAGEMENT_TOKEN }}
+          CPD_SPACE_ID: ${{ secrets.TF_VAR_CPD_SPACE_ID }}
+        working-directory: ./Contentful-Schema
+        run: |
+          node ./dist/scripts/schema-release-process/create-new-env-version.js -s pre-prod -t master
