@@ -8,12 +8,14 @@ import contentful from 'contentful-management'
 console.log(boxen(chalk.whiteBright("Switch Alias environment to a new version"), {padding: 1}));
 const argv = await yargs(hideBin(process.argv))
     .usage('Usage: $0 [options]')
-    .describe("a", "The environment Alias")
+    .describe("a", "The environment alias to be switched to a new version")
     .alias("a", "alias")
     .boolean("rollback")
     .alias("r", "rollback")
-    .help(false)
+    .help(true)
     .version(false)
+    .example("$0 -a master", "Switch the master alias to the next (calculated) version of the environment it points to")
+    .example("$0 -a master -r", "Rollback the master alias to the previous (calculated) version")
     .demandOption(["a"])
     .argv;
 
@@ -35,7 +37,7 @@ const space = await client.getSpace(spaceId)
 console.log(`Fetching environment alias ${chalk.yellowBright(aliasId)}`)
 const alias = await space.getEnvironmentAlias(argv.a as string)
 
-console.log(`Fetching alias' target environment ${chalk.yellowBright(alias.environment.sys.id)}`)
+console.log(`Fetching alias's target environment ${chalk.yellowBright(alias.environment.sys.id)}`)
 const environment = await space.getEnvironment(alias.environment.sys.id)
 
 console.log("Generating new environment name")
