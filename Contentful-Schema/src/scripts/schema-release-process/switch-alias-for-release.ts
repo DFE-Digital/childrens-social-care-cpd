@@ -19,7 +19,7 @@ const argv = await yargs(hideBin(process.argv))
     .demandOption(["a"])
     .argv;
 
-const token = process.env.CONTENTFUL_MANAGEMENT_ACCESS_TOKEN as string
+const token = process.env.CONTENTFUL_MANAGEMENT_TOKEN as string
 if (!token) throw new Error("No Contentful management API key specified, make sure you've set the CONTENTFUL_MANAGEMENT_ACCESS_TOKEN environment variable")
 
 const spaceId = process.env.CPD_SPACE_ID as string
