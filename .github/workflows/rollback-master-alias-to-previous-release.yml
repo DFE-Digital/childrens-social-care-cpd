@@ -5,6 +5,7 @@ on: workflow_dispatch
 jobs:
   create-schema-release:
     runs-on: ubuntu-latest
+    environment: Prod
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -24,4 +25,4 @@ jobs:
           CPD_SPACE_ID: ${{ secrets.TF_VAR_CPD_SPACE_ID }}
         working-directory: ./Contentful-Schema
         run: |
-          node ./dist/scripts/schema-release-process/switch-alias-for-release.js -a dummy -r
+          node ./dist/scripts/schema-release-process/switch-alias-for-release.js -a master -r
