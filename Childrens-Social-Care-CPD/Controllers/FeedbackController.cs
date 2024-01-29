@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Childrens_Social_Care_CPD.Configuration;
+using Microsoft.AspNetCore.Mvc;
 using System.Text.RegularExpressions;
 
 namespace Childrens_Social_Care_CPD.Controllers;
@@ -13,6 +14,15 @@ public class FeedbackModel
 
 public class FeedbackController : Controller
 {
+    private readonly IFeaturesConfig _featuresConfig;
+
+    public FeedbackController(IFeaturesConfig featuresConfig)
+    {
+        ArgumentNullException.ThrowIfNull(featuresConfig);
+
+        _featuresConfig = featuresConfig;
+    }
+
     private bool IsModelValid(FeedbackModel model, out string pageId)
     {
         pageId = model.Page ?? string.Empty;
@@ -33,6 +43,11 @@ public class FeedbackController : Controller
     [Route("feedback")]
     public IActionResult Feedback([FromForm]FeedbackModel feedback)
     {
+        if (!_featuresConfig.IsEnabled(Features.FeedbackControl))
+        {
+            return NotFound();
+        }
+
         // Validate the page id
         if (!IsModelValid(feedback, out var pageId))
         {
@@ -48,6 +63,11 @@ public class FeedbackController : Controller
     [Route("api/feedback")]
     public IActionResult JsonFeedback([FromBody]FeedbackModel feedback)
     {
+        if (!_featuresConfig.IsEnabled(Features.FeedbackControl))
+        {
+            return NotFound();
+        }
+
         // Validate the page id
         if (!IsModelValid(feedback, out var pageId))
         {
