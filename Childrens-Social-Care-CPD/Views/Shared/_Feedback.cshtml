@@ -1,0 +1,94 @@
+﻿@{
+    var contextModel = (ContextModel)ViewBag.ContextModel;
+}
+
+@if (contextModel.FeedbackSubmitted)
+{
+    <details class="govuk-details" data-module="govuk-details" open>
+        <summary class="govuk-details__summary">
+            <span class="govuk-details__summary-text">
+                Give feedback about this page
+            </span>
+        </summary>
+        <div class="govuk-details__text">
+            <div>Thank you for your feedback on this resource! If you have more general feedback about this website, please use the form <a href="https://dferesearch.fra1.qualtrics.com/jfe/form/SV_bmcLDedq5wipeTA">here</a>.</div>
+        </div>
+    </details>
+    
+    return;
+}
+
+<details class="govuk-details" data-module="govuk-details">
+    <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+            Give feedback about this page
+        </span>
+    </summary>
+
+    <form action="feedback" method="post">
+        <input id="page" type="hidden" name="page" value="@contextModel.Id" />
+        
+        <!-- Intro Text -->
+        <div id="introText" class="govuk-details__text">Use this form to provide feedback about this page. If you have more general feedback about this website, please use the form <a href="#">here</a>. <br><br><span id="usefulQuestion">Did you find this page useful?</span></div>
+
+        <div class="govuk-details__text">
+            <!-- Question -->
+            <div class="govuk-form-group" id="questionContainer">
+                <fieldset class="govuk-fieldset">
+                    <div class="govuk-radios" data-module="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="isUsefulYes" name="isUseful" type="radio" value="true" onclick="feedbackStep2()">
+                            <label class="govuk-label govuk-radios__label" for="DidYouFindThisPageUseful">
+                                Yes
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="isUsefulNo" name="isUseful" type="radio" value="false" onclick="feedbackStep2()">
+                            <label class="govuk-label govuk-radios__label" for="DidYouFindThisPageUseful-2">
+                                No
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <!-- More feedback -->
+            <div id="feedbackContainer" class="govuk-!-margin-top-4 feedback-container">
+                <p id="feedbackMessage">Thank you for your feedback. Any further details you can provide will help us to improve this page:</p>
+
+                <div class="govuk-!-margin-top-4 feedback-container">
+                    <label id="feedbackLabel" class="govuk-label" for="feebackText">
+                        Tell us about your experience with this page.
+                    </label>
+                    <textarea class="govuk-textarea" id="feebackText" name="comments" rows="5" aria-labelledby="feedbackLabel"></textarea> <!-- currently there is no hint -->
+                </div>
+
+                <div class="govuk-!-margin-top-4 feedback-container">
+                    <label id="otherFeedbackLabel" class="govuk-label" for="otherFeedbackText">
+                        Do you have any additional comments?
+                    </label>
+                    <textarea class="govuk-textarea" id="otherFeedbackText" name="additionalComments" rows="5" aria-labelledby="otherFeedbackLabel"></textarea>
+                </div>
+
+                <div class="govuk-button-group">
+                    <!-- Submit -->
+                    <button id="submitButton" class="govuk-button" data-module="govuk-button" onclick="submitFeedback(...arguments)" type="submit">
+                        Submit Feedback
+                    </button>
+
+                    <!-- Cancel -->
+                    <a id="cancelButton" class="govuk-link" href="#0" onclick="resetForm()" style="display: none">Cancel</a>
+                </div>
+            </div>
+
+            <!-- Thank you -->
+            <div id="thankYouMessage" style="display: none;">
+                Thank you for your feedback on this resource! If you have more general feedback about this website, please use the form <a href="https://dferesearch.fra1.qualtrics.com/jfe/form/SV_bmcLDedq5wipeTA">here</a>.
+            </div>
+        </div>
+    </form>
+</details>
+
+@{
+    Html.RequireScriptUrl("~/javascript/feedback.js"); 
+}

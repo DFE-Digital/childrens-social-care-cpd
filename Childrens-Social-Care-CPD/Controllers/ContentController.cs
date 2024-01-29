@@ -41,8 +41,8 @@ public class ContentController : Controller
             <=
         Etc.
     */
-    [Route("/{*pagename:regex(^[[0-9a-z]](\\/?[[0-9a-z\\-]])*\\/?$)}")] 
-    public async Task<IActionResult> Index(CancellationToken cancellationToken, string pageName = "home", bool preferenceSet = false)
+    [Route("/{*pagename:regex(^[[0-9a-z]](\\/?[[0-9a-z\\-]])*\\/?$)}")]
+    public async Task<IActionResult> Index(CancellationToken cancellationToken, string pageName = "home", bool preferenceSet = false, bool fs = false)
     {
         pageName = pageName?.TrimEnd('/');
         var content = await FetchPageContentAsync(pageName, cancellationToken);
@@ -58,7 +58,8 @@ public class ContentController : Controller
             Category: content.Category,
             UseContainers: content.Navigation == null,
             PreferenceSet: preferenceSet,
-            BackLink: content.BackLink);
+            BackLink: content.BackLink,
+            FeedbackSubmitted: fs);
 
         ViewData["ContextModel"] = contextModel;
         ViewData["StateModel"] = new StateModel();
