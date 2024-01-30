@@ -36,17 +36,13 @@
         <input id="page" type="hidden" name="page" value="@contextModel.Id" />
         <div id="controlsContainer">
             <div class="govuk-details__text">
-                <span>
-                    Use this form to provide feedback about this page. If you have more general feedback about this website, please use the form <a href="#">here</a>.
-                </span>
-                <br />
-                <br />
-                <span id="usefulQuestion">Did you find this page useful?</span>
+                Use this form to provide feedback about this page. If you have more general feedback about this website, please use the form <a href="#">here</a>.
             </div>
             
             <div class="govuk-details__text">
                 <div class="govuk-form-group">
                     <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend">Did you find this page useful?</legend>
                         <div class="govuk-radios" data-module="govuk-radios">
                             <div class="govuk-radios__item">
                                 <input class="govuk-radios__input" id="isUsefulYes" name="isUseful" type="radio" value="true" onclick="feedbackStep2()">
