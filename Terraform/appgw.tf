@@ -228,20 +228,20 @@ resource "azurerm_application_gateway" "appgw" {
         header_value = "nosniff"
       }
 
-      # response_header_configuration {
-      #   header_name  = "Content-Security-Policy"
-      #   header_value = "upgrade-insecure-requests; base-uri 'self'; frame-ancestors 'self'; form-action 'self'; object-src 'none';"
-      # }
+      response_header_configuration {
+        header_name  = "Content-Security-Policy"
+        header_value = "upgrade-insecure-requests; base-uri 'self'; frame-ancestors 'self'; form-action 'self'; object-src 'none';"
+      }
 
-      # response_header_configuration {
-      #   header_name  = "Referrer-Policy"
-      #   header_value = "strict-origin-when-cross-origin"
-      # }
+      response_header_configuration {
+        header_name  = "Referrer-Policy"
+        header_value = "strict-origin-when-cross-origin"
+      }
 
-      # response_header_configuration {
-      #   header_name  = "Strict-Transport-Security"
-      #   header_value = "max-age=31536000; includeSubDomains; preload"
-      # }
+      response_header_configuration {
+        header_name  = "Strict-Transport-Security"
+        header_value = "max-age=31536000; includeSubDomains; preload"
+      }
 
       response_header_configuration {
         header_name  = "Permissions-Policy"
