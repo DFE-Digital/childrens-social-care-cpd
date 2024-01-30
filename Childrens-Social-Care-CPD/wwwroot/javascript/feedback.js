@@ -2,6 +2,7 @@ let cancelButton
 let submitButton
 let introText
 let controlsContainer
+let thankYouMessage
 
 const show = (element) => element.style.display = "block"
 const hide = (element) => element.style.display = "none"
