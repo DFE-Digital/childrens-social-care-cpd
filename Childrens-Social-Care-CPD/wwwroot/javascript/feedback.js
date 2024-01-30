@@ -48,7 +48,18 @@ async function submitFeedback(event) {
     return false
 }
 
+function setSubmitEnabled(enabled) {
+    if (enabled) {
+        submitButton.removeAttribute("disabled")
+        return
+    }
+
+    submitButton.setAttribute("disabled", true)
+}
+
 function resetForm() {
+    setSubmitEnabled(false)
+    
     document.getElementById("feedback-control").removeAttribute("open")
     document.getElementById("isUsefulYes").checked = false
     document.getElementById("isUsefulNo").checked = false

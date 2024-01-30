@@ -8,7 +8,6 @@
     var contextModel = (ContextModel)ViewBag.ContextModel;
 }
 
-
 @if (contextModel.FeedbackSubmitted)
 {
     <details class="govuk-details" data-module="govuk-details" open>
@@ -32,11 +31,12 @@
         </span>
     </summary>
 
-    <form action="/feedback" method="post">
+    @using (@Html.BeginForm("feedback", "Feedback", null, FormMethod.Post, true, null))
+    {
         <input id="page" type="hidden" name="page" value="@contextModel.Id" />
         <div id="controlsContainer">
             <div class="govuk-details__text">
-                Use this form to provide feedback about this page. If you have more general feedback about this website, please use the form <a href="#">here</a>.
+                Use this form to provide feedback about this page. If you have more general feedback about this website, please use the <a href="https://dferesearch.fra1.qualtrics.com/jfe/form/SV_bmcLDedq5wipeTA">feedback form</a>.
             </div>
             
             <div class="govuk-details__text">
@@ -45,13 +45,13 @@
                         <legend class="govuk-fieldset__legend">Did you find this page useful?</legend>
                         <div class="govuk-radios" data-module="govuk-radios">
                             <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="isUsefulYes" name="isUseful" type="radio" value="true" onclick="feedbackStep2()">
+                                <input class="govuk-radios__input" id="isUsefulYes" name="isUseful" type="radio" value="true" onclick="setSubmitEnabled(true)">
                                 <label class="govuk-label govuk-radios__label" for="DidYouFindThisPageUseful">
                                     Yes
                                 </label>
                             </div>
                             <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="isUsefulNo" name="isUseful" type="radio" value="false" onclick="feedbackStep2()">
+                                <input class="govuk-radios__input" id="isUsefulNo" name="isUseful" type="radio" value="false" onclick="setSubmitEnabled(true)">
                                 <label class="govuk-label govuk-radios__label" for="DidYouFindThisPageUseful-2">
                                     No
                                 </label>
@@ -61,16 +61,13 @@
                 </div>
 
                 <div class="govuk-!-margin-top-4 feedback-container">
-
-                    <div class="govuk-!-margin-top-4 feedback-container">
-                        <label id="feedbackLabel" class="govuk-label" for="feebackText">
-                            Tell us about your experience with this page (optional):
-                        </label>
-                        <textarea class="govuk-textarea" id="feebackText" name="comments" rows="5" aria-labelledby="feedbackLabel"></textarea> <!-- currently there is no hint -->
-                    </div>
+                    <label id="feedbackLabel" class="govuk-label" for="feebackText">
+                        Tell us about your experience with this page (optional):
+                    </label>
+                    <textarea class="govuk-textarea" id="feebackText" name="comments" rows="5" aria-labelledby="feedbackLabel"></textarea>
 
                     <div class="govuk-button-group">
-                        <button id="submitButton" class="govuk-button" data-module="govuk-button" onclick="submitFeedback(...arguments)" type="submit">
+                        <button id="submitButton" class="govuk-button" data-module="govuk-button" onclick="submitFeedback(...arguments)" type="submit" disabled>
                             Submit Feedback
                         </button>
 
@@ -83,7 +80,7 @@
         <div id="thankYouMessage" class="govuk-details__text" style="display: none;">
             Thank you for your feedback on this resource! If you have more general feedback about this website, please use the form <a href="https://dferesearch.fra1.qualtrics.com/jfe/form/SV_bmcLDedq5wipeTA">here</a>.
         </div>
-    </form>
+    }
 </details>
 
 @{
