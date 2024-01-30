@@ -1,6 +1,13 @@
-﻿@{
+﻿@using Childrens_Social_Care_CPD.Configuration
+
+@inject IFeaturesConfig featureConfig
+
+@if (!featureConfig.IsEnabled(Features.FeedbackControl)) return;
+
+@{
     var contextModel = (ContextModel)ViewBag.ContextModel;
 }
+
 
 @if (contextModel.FeedbackSubmitted)
 {

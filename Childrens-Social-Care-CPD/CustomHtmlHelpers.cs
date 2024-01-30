@@ -19,12 +19,17 @@ public static partial class CustomHtmlHelpers
     public static void RequireScriptUrl(this IHtmlHelper htmlHelper, string url, bool async = false, bool defer = false, ScriptPosition position = ScriptPosition.BodyEnd)
     {
         ArgumentNullException.ThrowIfNull(htmlHelper);
-        ArgumentException.ThrowIfNullOrEmpty(url);
 
         if (string.IsNullOrEmpty(url)) return;
 
         var key = url.ToLowerInvariant();
-        var scripts = htmlHelper.ViewContext.HttpContext.Items["CustomScripts"] as IDictionary<string, ScriptInfo> ?? new Dictionary<string, ScriptInfo>();
+
+        if (!htmlHelper.ViewContext.HttpContext.Items.TryGetValue("CustomScripts", out var items))
+        {
+            items = new Dictionary<string, ScriptInfo>();
+        }
+        var scripts = items as IDictionary<string, ScriptInfo> ?? new Dictionary<string, ScriptInfo>();
+        
         if (!scripts.ContainsKey(key))
         {
             scripts.Add(url, new ScriptInfo(url, async, defer, position));
@@ -36,7 +41,12 @@ public static partial class CustomHtmlHelpers
     {
         ArgumentNullException.ThrowIfNull(htmlHelper);
 
-        var scripts = htmlHelper.ViewContext.HttpContext.Items["CustomScripts"] as IDictionary<string, ScriptInfo> ?? new Dictionary<string, ScriptInfo>();
+        if (!htmlHelper.ViewContext.HttpContext.Items.TryGetValue("CustomScripts", out var items))
+        {
+            items = new Dictionary<string, ScriptInfo>();
+        }
+        var scripts = items as IDictionary<string, ScriptInfo> ?? new Dictionary<string, ScriptInfo>();
+
         if (scripts.Count == 0)
         {
             return HtmlString.Empty;
@@ -48,7 +58,7 @@ public static partial class CustomHtmlHelpers
         foreach (var script in scripts.Where(s => s.Value.Position == position))
         {
             var url = urlHelper.Content(script.Value.Source);
-            builder.AppendLine($"<script src=\"{url}\" {(script.Value.Defer ? " defer" : null)} {(script.Value.Async ? " async" : null)}></script>");
+            builder.AppendLine($"<script src=\"{url}\"{(script.Value.Defer ? " defer" : null)}{(script.Value.Async ? " async" : null)}></script>");
         }
 
         return new HtmlString(builder.ToString());
