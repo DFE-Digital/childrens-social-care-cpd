@@ -1,43 +1,20 @@
-let resetButton;
-let submitButton;
-let introText;
-let questionContainer;
-let feedbackContainer;
-let thankYouMessage;
+let cancelButton
+let submitButton
+let introText
+let controlsContainer
+
+const show = (element) => element.style.display = "block"
+const hide = (element) => element.style.display = "none"
 
 addEventListener("DOMContentLoaded", () => {
     submitButton = document.getElementById("submitButton")
-    resetButton = document.getElementById("resetButton")
-    introText = document.getElementById('introText')
-    questionContainer = document.getElementById('questionContainer')
-    feedbackContainer = document.getElementById('feedbackContainer')
-    thankYouMessage = document.getElementById('thankYouMessage')
+    cancelButton = document.getElementById("cancelButton")
 
-    show(document.getElementById("cancelButton"))
-    submitButton.removeAttribute("type")
+    controlsContainer = document.getElementById("controlsContainer")
+    thankYouMessage = document.getElementById("thankYouMessage")
 
-    feedbackStep1()
+    show(cancelButton)
 })
-
-function show(element) {
-    element.style.display = "block"
-}
-
-function hide(element) {
-    element.style.display = "none"
-}
-
-function feedbackStep1() {
-    show(introText)
-    show(questionContainer)
-    hide(feedbackContainer)
-}
-
-function feedbackStep2() {
-    hide(introText)
-    hide(questionContainer)
-    show(feedbackContainer)
-}
 
 async function submitFeedback(event) {
     event.preventDefault()
@@ -46,7 +23,6 @@ async function submitFeedback(event) {
         Page: document.getElementById("page").value,
         IsUseful: document.getElementById("isUsefulYes").checked,
         Comments: document.getElementById("feebackText").value,
-        AdditionalComments: document.getElementById("otherFeedbackText").value,
     }
 
     submitButton.disabled = true
@@ -60,23 +36,20 @@ async function submitFeedback(event) {
                 "Content-Type": "application/json",
             },
             redirect: "error",
-            referrerPolicy: "same-origin", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-            body: JSON.stringify(data), // body data type must match "Content-Type" header
+            referrerPolicy: "same-origin",
+            body: JSON.stringify(data),
         });
     } finally {
-        hide(feedbackContainer)
+        hide(controlsContainer)
         show(thankYouMessage)
         return false
     }
 }
 
 function resetForm() {
+    document.getElementById("feedback-control").removeAttribute("open")
     document.getElementById("isUsefulYes").checked = false
     document.getElementById("isUsefulNo").checked = false
-
     document.getElementById("feebackText").value = ""
-    document.getElementById("otherFeedbackText").value = ""
-
-    feedbackStep1()
     return false
 }
