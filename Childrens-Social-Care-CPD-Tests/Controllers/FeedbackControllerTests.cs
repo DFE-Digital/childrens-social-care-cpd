@@ -30,11 +30,6 @@ public class FeedbackControllerTests
     {
         _contentfulClient = Substitute.For<ICpdContentfulClient>();
 
-        //var contentCollection = new ContentfulCollection<Content>();
-        //_contentfulClient
-        //    .GetEntries(Arg.Any<QueryBuilder<Content>>(), Arg.Any<CancellationToken>())
-        //    .Returns(contentCollection);
-
         _cookies = Substitute.For<IRequestCookieCollection>();
         _httpContext = Substitute.For<HttpContext>();
         _httpRequest = Substitute.For<HttpRequest>();
