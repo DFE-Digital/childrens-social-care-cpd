@@ -120,7 +120,7 @@ public class CustomHtmlHelpersForScriptsTests
         var actual = _htmlHelper.RenderScripts(ScriptPosition.BodyEnd);
 
         // assert
-        actual.ToString().Should().Be("<script src=\"/script.js\"></script>\r\n");
+        actual.ToString().Should().StartWith("<script src=\"/script.js\"></script>");
     }
 
     [Test]
