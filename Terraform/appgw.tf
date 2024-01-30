@@ -158,7 +158,7 @@ resource "azurerm_application_gateway" "appgw" {
       paths                      = ["/grafana*"]
       backend_address_pool_name  = var.grafana_backend_address_pool_name[terraform.workspace]
       backend_http_settings_name = var.grafana_http_setting_name[terraform.workspace]
-      rewrite_rule_set_name      = var.appgw_rewrite_rule_set[terraform.workspace]
+      rewrite_rule_set_name      = var.appgw_gf_rewrite_rule_set[terraform.workspace]
       firewall_policy_id         = var.appgw_tier[terraform.workspace] == "WAF_v2" ? azurerm_web_application_firewall_policy.fwpol-gf.id : null
     }
   }
@@ -241,6 +241,45 @@ resource "azurerm_application_gateway" "appgw" {
       response_header_configuration {
         header_name  = "Strict-Transport-Security"
         header_value = "max-age=31536000; includeSubDomains; preload"
+      }
+
+      response_header_configuration {
+        header_name  = "Permissions-Policy"
+        header_value = "accelerometer=(), ambient-light-sensor=(), autoplay=(), camera=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), speaker=(), sync-xhr=self, usb=(), vr=()"
+      }
+
+      response_header_configuration {
+        header_name  = "Server"
+        header_value = ""
+      }
+
+      response_header_configuration {
+        header_name  = "X-Powered-By"
+        header_value = ""
+      }
+    }
+  }
+
+  rewrite_rule_set {
+    name = var.appgw_gf_rewrite_rule_set[terraform.workspace]
+
+    rewrite_rule {
+      name          = var.appgw_rewrite_rule[terraform.workspace]
+      rule_sequence = 1
+
+      response_header_configuration {
+        header_name  = "X-Frame-Options"
+        header_value = "SAMEORIGIN"
+      }
+
+      response_header_configuration {
+        header_name  = "X-Xss-Protection"
+        header_value = "0"
+      }
+
+      response_header_configuration {
+        header_name  = "X-Content-Type-Options"
+        header_value = "nosniff"
       }
 
       response_header_configuration {
