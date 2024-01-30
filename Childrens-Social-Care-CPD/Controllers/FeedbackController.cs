@@ -54,7 +54,7 @@ public class FeedbackController : Controller
 
         // TODO: do something with the feedback
         
-        return Redirect($"/{pageId}?fs=true");
+        return Redirect($"~/{pageId}?fs=true");
     }
 
     [HttpPost]
