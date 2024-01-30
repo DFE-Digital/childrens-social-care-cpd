@@ -180,6 +180,18 @@ variable "appgw_rewrite_rule_set" {
   description = "Name of the Application Gateway Rewrite Rule Set"
 }
 
+variable "appgw_gf_rewrite_rule_set" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-csc-cpd-app-gw-gf-rewrite-rule-set"
+    Test      = "s185d02-csc-cpd-app-gw-gf-rewrite-rule-set"
+    Load-Test = "s185d03-csc-cpd-app-gw-gf-rewrite-rule-set"
+    Pre-Prod  = "s185t01-csc-cpd-app-gw-gf-rewrite-rule-set"
+    Prod      = "s185p01-csc-cpd-app-gw-gf-rewrite-rule-set"
+  }
+  description = "Name of the Application Gateway Grafana Rewrite Rule Set"
+}
+
 variable "appgw_rewrite_rule" {
   type = map(string)
   default = {
@@ -647,7 +659,7 @@ variable "cpd_contentful_env" {
   default = {
     Dev       = "dev"
     Test      = "test"
-    Load-Test = "prod"
+    Load-Test = "test"
     Pre-Prod  = "prod"
     Prod      = "prod"
   }
