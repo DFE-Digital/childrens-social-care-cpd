@@ -1,6 +1,11 @@
 ﻿using Childrens_Social_Care_CPD.Configuration;
+using Childrens_Social_Care_CPD.Contentful;
+using Childrens_Social_Care_CPD.Contentful.Models;
+using Contentful.Core.Search;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Sockets;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace Childrens_Social_Care_CPD.Controllers;
 
@@ -14,15 +19,29 @@ public class FeedbackModel
 public class FeedbackController : Controller
 {
     private readonly IFeaturesConfig _featuresConfig;
+    private readonly ICpdContentfulClient _cpdClient;
 
-    public FeedbackController(IFeaturesConfig featuresConfig)
+    public FeedbackController(IFeaturesConfig featuresConfig, ICpdContentfulClient cpdClient)
     {
         ArgumentNullException.ThrowIfNull(featuresConfig);
 
         _featuresConfig = featuresConfig;
+        _cpdClient = cpdClient;
     }
 
-    private bool IsModelValid(FeedbackModel model, out string pageId)
+    private async Task<Content> FetchPageContentAsync(string contentId, CancellationToken cancellationToken)
+    {
+        var queryBuilder = QueryBuilder<Content>.New
+            .ContentTypeIs("content")
+            .FieldEquals("fields.id", contentId)
+            .Include(10);
+
+        var result = await _cpdClient.GetEntries(queryBuilder, cancellationToken);
+
+        return result?.FirstOrDefault();
+    }
+
+    private static bool IsModelValid(FeedbackModel model, out string pageId)
     {
         pageId = model.Page ?? string.Empty;
         pageId = pageId.Trim('/');
@@ -39,7 +58,7 @@ public class FeedbackController : Controller
 
     [HttpPost]
     [Route("feedback")]
-    public IActionResult Feedback([FromForm]FeedbackModel feedback)
+    public async Task<IActionResult> Feedback([FromForm]FeedbackModel feedback, CancellationToken cancellationToken = default)
     {
         if (!_featuresConfig.IsEnabled(Features.FeedbackControl))
         {
@@ -52,14 +71,21 @@ public class FeedbackController : Controller
             return BadRequest();
         }
 
+        // Check the page exists
+        var content = await FetchPageContentAsync(pageId, cancellationToken);
+        if (content == null)
+        {
+            return BadRequest();
+        }
+
         // TODO: do something with the feedback
         
-        return Redirect($"~/{pageId}?fs=true");
+        return Redirect($"~/{content.Id}?fs=true");
     }
 
     [HttpPost]
     [Route("api/feedback")]
-    public IActionResult JsonFeedback([FromBody]FeedbackModel feedback)
+    public async Task<IActionResult> JsonFeedback([FromBody]FeedbackModel feedback, CancellationToken cancellationToken = default)
     {
         if (!_featuresConfig.IsEnabled(Features.FeedbackControl))
         {
@@ -68,6 +94,13 @@ public class FeedbackController : Controller
 
         // Validate the page id
         if (!IsModelValid(feedback, out var pageId))
+        {
+            return BadRequest();
+        }
+
+        // Check the page exists
+        var content = await FetchPageContentAsync(pageId, cancellationToken);
+        if (content == null)
         {
             return BadRequest();
         }

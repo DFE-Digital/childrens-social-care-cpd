@@ -39,11 +39,12 @@ async function submitFeedback(event) {
             referrerPolicy: "same-origin",
             body: JSON.stringify(data),
         });
-    } finally {
+    }
+    finally {
         hide(controlsContainer)
         show(thankYouMessage)
-        return false
     }
+    return false
 }
 
 function resetForm() {

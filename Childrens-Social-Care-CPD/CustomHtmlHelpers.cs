@@ -12,11 +12,11 @@ public enum ScriptPosition
     BodyEnd
 }
 
-internal record ScriptInfo(string Source, bool Async, bool Defer, ScriptPosition Position);
+internal record ScriptInfo(string Source, bool Asynchronous, bool Defer, ScriptPosition Position);
 
 public static partial class CustomHtmlHelpers
 {
-    public static void RequireScriptUrl(this IHtmlHelper htmlHelper, string url, bool async = false, bool defer = false, ScriptPosition position = ScriptPosition.BodyEnd)
+    public static void RequireScriptUrl(this IHtmlHelper htmlHelper, string url, bool asynchronous = false, bool defer = false, ScriptPosition position = ScriptPosition.BodyEnd)
     {
         ArgumentNullException.ThrowIfNull(htmlHelper);
 
@@ -32,7 +32,7 @@ public static partial class CustomHtmlHelpers
         
         if (!scripts.ContainsKey(key))
         {
-            scripts.Add(url, new ScriptInfo(url, async, defer, position));
+            scripts.Add(url, new ScriptInfo(url, asynchronous, defer, position));
             htmlHelper.ViewContext.HttpContext.Items["CustomScripts"] = scripts;
         }
     }
@@ -58,7 +58,7 @@ public static partial class CustomHtmlHelpers
         foreach (var script in scripts.Where(s => s.Value.Position == position))
         {
             var url = urlHelper.Content(script.Value.Source);
-            builder.AppendLine($"<script src=\"{url}\"{(script.Value.Defer ? " defer" : null)}{(script.Value.Async ? " async" : null)}></script>");
+            builder.AppendLine($"<script src=\"{url}\"{(script.Value.Defer ? " defer" : null)}{(script.Value.Asynchronous ? " async" : null)}></script>");
         }
 
         return new HtmlString(builder.ToString());

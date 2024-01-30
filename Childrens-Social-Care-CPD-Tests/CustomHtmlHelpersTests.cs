@@ -78,14 +78,14 @@ public class CustomHtmlHelpersForScriptsTests
         var scriptUrl = "/script.js";
 
         //act
-        _htmlHelper.RequireScriptUrl(scriptUrl, async: true, defer: true, ScriptPosition.BodyStart);
+        _htmlHelper.RequireScriptUrl(scriptUrl, asynchronous: true, defer: true, ScriptPosition.BodyStart);
         var scripts = _items["CustomScripts"] as IDictionary<string, ScriptInfo>;
         var scriptInfo = scripts[scriptUrl];
         
         // assert
         scriptInfo.Should().NotBeNull();
         scriptInfo.Source.Should().Be(scriptUrl);
-        scriptInfo.Async.Should().BeTrue();
+        scriptInfo.Asynchronous.Should().BeTrue();
         scriptInfo.Defer.Should().BeTrue();
         scriptInfo.Position.Should().Be(ScriptPosition.BodyStart);
     }

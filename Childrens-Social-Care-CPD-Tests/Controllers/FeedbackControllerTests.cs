@@ -1,8 +1,11 @@
 ﻿using Childrens_Social_Care_CPD.Configuration;
+using Childrens_Social_Care_CPD.Contentful;
 using Childrens_Social_Care_CPD.Contentful.Models;
 using Childrens_Social_Care_CPD.Controllers;
 using Childrens_Social_Care_CPD.DataAccess;
 using Childrens_Social_Care_CPD.GraphQL.Queries;
+using Contentful.Core.Models;
+using Contentful.Core.Search;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -20,10 +23,18 @@ public class FeedbackControllerTests
     private IRequestCookieCollection _cookies;
     private HttpContext _httpContext;
     private HttpRequest _httpRequest;
+    private ICpdContentfulClient _contentfulClient;
 
     [SetUp]
     public void SetUp()
     {
+        _contentfulClient = Substitute.For<ICpdContentfulClient>();
+
+        //var contentCollection = new ContentfulCollection<Content>();
+        //_contentfulClient
+        //    .GetEntries(Arg.Any<QueryBuilder<Content>>(), Arg.Any<CancellationToken>())
+        //    .Returns(contentCollection);
+
         _cookies = Substitute.For<IRequestCookieCollection>();
         _httpContext = Substitute.For<HttpContext>();
         _httpRequest = Substitute.For<HttpRequest>();
@@ -35,7 +46,7 @@ public class FeedbackControllerTests
 
         _featuresConfig = Substitute.For<IFeaturesConfig>();
         _featuresConfig.IsEnabled(Features.FeedbackControl).Returns(true);
-        _feedbackController = new FeedbackController(_featuresConfig)
+        _feedbackController = new FeedbackController(_featuresConfig, _contentfulClient)
         {
             ControllerContext = controllerContext,
             TempData = Substitute.For<ITempDataDictionary>()
@@ -43,46 +54,120 @@ public class FeedbackControllerTests
     }
 
     [Test]
-    public void Feedback_Returns_404_When_Resource_Feature_Disabled()
+    public async Task Feedback_Returns_404_When_Resource_Feature_Disabled()
     {
         // arrange
         _featuresConfig.IsEnabled(Features.FeedbackControl).Returns(false);
 
         // act
-        var actual = _feedbackController.Feedback(new FeedbackModel());
+        var actual = await _feedbackController.Feedback(new FeedbackModel());
 
         // assert
         actual.Should().BeOfType<NotFoundResult>();
     }
 
     [Test]
-    public void JsonFeedback_Returns_404_When_Resource_Feature_Disabled()
+    public async Task JsonFeedback_Returns_404_When_Resource_Feature_Disabled()
     {
         // arrange
         _featuresConfig.IsEnabled(Features.FeedbackControl).Returns(false);
 
         // act
-        var actual = _feedbackController.JsonFeedback(new FeedbackModel());
+        var actual = await _feedbackController.JsonFeedback(new FeedbackModel());
 
         // assert
         actual.Should().BeOfType<NotFoundResult>();
     }
 
     [Test]
-    public void Feedback_Redirects_To_PageId()
+    public async Task Feedback_Redirects_To_PageId_When_Page_Exists()
     {
         // arrange
+        var content = new Content()
+        {
+            Id = "fooId"
+        };
+
+        _contentfulClient
+            .GetEntries(Arg.Any<QueryBuilder<Content>>(), Arg.Any<CancellationToken>())
+            .Returns(new ContentfulCollection<Content>() { Items = new List<Content>() { content } });
+
         var model = new FeedbackModel()
         {
             Page = "foo"
         };
 
         // act
-        var actual = _feedbackController.Feedback(model) as RedirectResult;
+        var actual = await _feedbackController.Feedback(model) as RedirectResult;
 
         // assert
         actual.Should().NotBeNull();
-        actual.Url.Should().StartWith("/foo?fs=true");
+        actual.Url.Should().StartWith("~/fooId?fs=true");
+    }
+
+    [Test]
+    public async Task Feedback_Returns_BadRequest_When_Page_Does_Not_Exist()
+    {
+        // arrange
+        _contentfulClient
+            .GetEntries(Arg.Any<QueryBuilder<Content>>(), Arg.Any<CancellationToken>())
+            .Returns(new ContentfulCollection<Content>() { Items = new List<Content>() });
+
+        var model = new FeedbackModel()
+        {
+            Page = "foo"
+        };
+
+        // act
+        var actual = await _feedbackController.Feedback(model) as BadRequestResult;
+
+        // assert
+        actual.Should().NotBeNull();
+    }
+
+    [Test]
+    public async Task JsonFeedback_Returns_BadRequest_When_Page_Does_Not_Exist()
+    {
+        // arrange
+        _contentfulClient
+            .GetEntries(Arg.Any<QueryBuilder<Content>>(), Arg.Any<CancellationToken>())
+            .Returns(new ContentfulCollection<Content>() { Items = new List<Content>() });
+
+        var model = new FeedbackModel()
+        {
+            Page = "foo"
+        };
+
+        // act
+        var actual = await _feedbackController.JsonFeedback(model) as BadRequestResult;
+
+        // assert
+        actual.Should().NotBeNull();
+    }
+
+    [Test]
+    public async Task JsonFeedback_Returns_Ok_When_Page_Exists()
+    {
+        // arrange
+        var content = new Content()
+        {
+            Id = "fooId"
+        };
+
+        _contentfulClient
+            .GetEntries(Arg.Any<QueryBuilder<Content>>(), Arg.Any<CancellationToken>())
+            .Returns(new ContentfulCollection<Content>() { Items = new List<Content>() { content } });
+
+        var model = new FeedbackModel()
+        {
+            Page = "foo"
+        };
+
+        // act
+        var actual = await _feedbackController.JsonFeedback(model) as OkResult;
+
+        // assert
+        actual.Should().NotBeNull();
     }
 
     [TestCase("!")]
@@ -91,13 +176,13 @@ public class FeedbackControllerTests
     [TestCase("some-fo:o")]
     [TestCase("'some-foo'")]
     [TestCase("1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890")]
-    public void Feedback_Rejects_Invalid_PageId(string pageId)
+    public async Task Feedback_Rejects_Invalid_PageId(string pageId)
     {
         // arrange
         var model = new FeedbackModel { Page = pageId };
 
         // act
-        var actual = _feedbackController.Feedback(model) as BadRequestResult;
+        var actual = await _feedbackController.Feedback(model) as BadRequestResult;
 
         // assert
         actual.Should().NotBeNull();
@@ -109,39 +194,39 @@ public class FeedbackControllerTests
     [TestCase("some-fo:o")]
     [TestCase("'some-foo'")]
     [TestCase("1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890")]
-    public void JsonFeedback_Rejects_Invalid_PageId(string pageId)
+    public async Task JsonFeedback_Rejects_Invalid_PageId(string pageId)
     {
         // arrange
         var model = new FeedbackModel { Page = pageId };
 
         // act
-        var actual = _feedbackController.JsonFeedback(model) as BadRequestResult;
+        var actual = await _feedbackController.JsonFeedback(model) as BadRequestResult;
 
         // assert
         actual.Should().NotBeNull();
     }
 
     [Test]
-    public void Feedback_Rejects_Invalid_Comments()
+    public async Task Feedback_Rejects_Invalid_Comments()
     {
         // arrange
         var model = new FeedbackModel { Comments = new string('a', 501) };
 
         // act
-        var actual = _feedbackController.Feedback(model) as BadRequestResult;
+        var actual = await _feedbackController.Feedback(model) as BadRequestResult;
 
         // assert
         actual.Should().NotBeNull();
     }
 
     [Test]
-    public void JsonFeedback_Rejects_Invalid_Comments()
+    public async Task JsonFeedback_Rejects_Invalid_Comments()
     {
         // arrange
         var model = new FeedbackModel { Comments = new string('a', 501) };
 
         // act
-        var actual = _feedbackController.JsonFeedback(model) as BadRequestResult;
+        var actual = await _feedbackController.JsonFeedback(model) as BadRequestResult;
 
         // assert
         actual.Should().NotBeNull();
