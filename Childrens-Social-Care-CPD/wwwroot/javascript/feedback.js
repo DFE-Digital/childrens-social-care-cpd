@@ -1,27 +1,25 @@
 let submitButton
-let controlsContainer
-let thankYouMessage
-let feedbackForm
 
 const show = (element) => element.style.display = "block"
 const hide = (element) => element.style.display = "none"
 
 addEventListener("DOMContentLoaded", () => {
     submitButton = document.getElementById("submitButton")
-    controlsContainer = document.getElementById("controlsContainer")
-    thankYouMessage = document.getElementById("thankYouMessage")
-    feedbackForm = document.getElementById("feedbackForm")
-
-    feedbackForm.addEventListener("submit", handleFormSubmit)
-
+    document.getElementById("isUsefulYes").removeAttribute("required")
+    document.getElementById("feedbackForm").addEventListener("submit", handleFormSubmit)
     show(document.getElementById("cancelButton"))
 })
 
 function handleFormSubmit(event) {
-    const isValid = feedbackForm.reportValidity()
+    const isValid = validateForm()
     try {
         if (isValid) {
+            document.getElementById("isUsefulQuestionGroup").classList.remove("govuk-form-group--error")
+            hide(document.getElementById("was-useful-error-message"))
             submitFeedback()
+        } else {
+            document.getElementById("isUsefulQuestionGroup").classList.add("govuk-form-group--error")
+            show(document.getElementById("was-useful-error-message"))
         }
     }
     finally {
@@ -52,8 +50,8 @@ async function submitFeedback() {
         });
     }
     finally {
-        hide(controlsContainer)
-        show(thankYouMessage)
+        hide(document.getElementById("controlsContainer"))
+        show(document.getElementById("thankYouMessage"))
     }
     return false
 }
@@ -63,5 +61,11 @@ function resetForm() {
     document.getElementById("isUsefulYes").checked = false
     document.getElementById("isUsefulNo").checked = false
     document.getElementById("feebackText").value = ""
+    document.getElementById("isUsefulQuestionGroup").classList.remove("govuk-form-group--error")
+    hide(document.getElementById("was-useful-error-message"))
     return false
+}
+
+function validateForm() {
+    return document.getElementById("isUsefulYes").checked === true || document.getElementById("isUsefulNo").checked === true
 }

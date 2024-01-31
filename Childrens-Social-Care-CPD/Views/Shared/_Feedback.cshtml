@@ -38,20 +38,23 @@
             <div class="govuk-details__text">
                 Use this form to provide feedback about this page. If you have more general feedback about this website, please use this <a href="https://dferesearch.fra1.qualtrics.com/jfe/form/SV_bmcLDedq5wipeTA">feedback form</a>.
             </div>
-            
+
             <div class="govuk-details__text">
-                <div class="govuk-form-group">
+                <div id="isUsefulQuestionGroup" class="govuk-form-group">
                     <fieldset class="govuk-fieldset">
                         <legend class="govuk-fieldset__legend">Did you find this page useful?</legend>
+                        <p id="was-useful-error-message" class="govuk-error-message" style="display:none">
+                            <span class="govuk-visually-hidden">Error:</span> Please select yes or no
+                        </p>
                         <div class="govuk-radios" data-module="govuk-radios">
                             <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="isUsefulYes" name="isUseful" type="radio" value="true" required>
+                                <input class="govuk-radios__input" id="isUsefulYes" name="isUseful" type="radio" value="true">
                                 <label class="govuk-label govuk-radios__label" for="isUsefulYes">
                                     Yes
                                 </label>
                             </div>
                             <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="isUsefulNo" name="isUseful" type="radio" value="false" required>
+                                <input class="govuk-radios__input" id="isUsefulNo" name="isUseful" type="radio" value="false">
                                 <label class="govuk-label govuk-radios__label" for="isUsefulNo">
                                     No
                                 </label>
