@@ -35,6 +35,9 @@ async function submitFeedback() {
     }
 
     submitButton.disabled = true
+    hide(document.getElementById("controlsContainer"))
+    show(document.getElementById("thankYouMessage"))
+
     try {
         await fetch("/api/feedback", {
             method: "POST",
@@ -48,11 +51,8 @@ async function submitFeedback() {
             referrerPolicy: "same-origin",
             body: JSON.stringify(data),
         });
-    }
-    finally {
-        hide(document.getElementById("controlsContainer"))
-        show(document.getElementById("thankYouMessage"))
-    }
+    } catch { }
+
     return false
 }
 
