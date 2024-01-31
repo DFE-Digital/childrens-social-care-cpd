@@ -1,25 +1,35 @@
-let cancelButton
 let submitButton
-let introText
 let controlsContainer
 let thankYouMessage
+let feedbackForm
 
 const show = (element) => element.style.display = "block"
 const hide = (element) => element.style.display = "none"
 
 addEventListener("DOMContentLoaded", () => {
     submitButton = document.getElementById("submitButton")
-    cancelButton = document.getElementById("cancelButton")
-
     controlsContainer = document.getElementById("controlsContainer")
     thankYouMessage = document.getElementById("thankYouMessage")
+    feedbackForm = document.getElementById("feedbackForm")
 
-    show(cancelButton)
+    feedbackForm.addEventListener("submit", handleFormSubmit)
+
+    show(document.getElementById("cancelButton"))
 })
 
-async function submitFeedback(event) {
-    event.preventDefault()
+function handleFormSubmit(event) {
+    const isValid = feedbackForm.reportValidity()
+    try {
+        if (isValid) {
+            submitFeedback()
+        }
+    }
+    finally {
+        event.preventDefault()
+    }
+}
 
+async function submitFeedback() {
     const data = {
         Page: document.getElementById("page").value,
         IsUseful: document.getElementById("isUsefulYes").checked,
@@ -48,18 +58,7 @@ async function submitFeedback(event) {
     return false
 }
 
-function setSubmitEnabled(enabled) {
-    if (enabled) {
-        submitButton.removeAttribute("disabled")
-        return
-    }
-
-    submitButton.setAttribute("disabled", true)
-}
-
 function resetForm() {
-    setSubmitEnabled(false)
-    
     document.getElementById("feedback-control").removeAttribute("open")
     document.getElementById("isUsefulYes").checked = false
     document.getElementById("isUsefulNo").checked = false

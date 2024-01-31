@@ -3,16 +3,14 @@ using Childrens_Social_Care_CPD.Contentful;
 using Childrens_Social_Care_CPD.Contentful.Models;
 using Contentful.Core.Search;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Sockets;
 using System.Text.RegularExpressions;
-using System.Threading;
 
 namespace Childrens_Social_Care_CPD.Controllers;
 
 public class FeedbackModel
 {
     public string Page { get; set; }
-    public bool IsUseful { get; set; }
+    public bool? IsUseful { get; set; }
     public string Comments { get; set; }
 }
 

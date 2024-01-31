@@ -2,14 +2,11 @@
 using Childrens_Social_Care_CPD.Contentful;
 using Childrens_Social_Care_CPD.Contentful.Models;
 using Childrens_Social_Care_CPD.Controllers;
-using Childrens_Social_Care_CPD.DataAccess;
-using Childrens_Social_Care_CPD.GraphQL.Queries;
 using Contentful.Core.Models;
 using Contentful.Core.Search;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
