@@ -12,7 +12,9 @@
 }
 
 <div class="govuk-width-container dfe-width-container">
-    <form id="searchForm" method="get">
+
+    @using (@Html.BeginForm("SearchResources", "SearchResources", null, FormMethod.Get, false, null))
+    {
         <div class="govuk-grid-row">
             @* Filter column *@
             <div class="govuk-grid-column-one-third">
@@ -62,7 +64,7 @@
                 }
             </div>
         </div>
-    </form>
+    }
 </div>
 
 @section Scripts {
