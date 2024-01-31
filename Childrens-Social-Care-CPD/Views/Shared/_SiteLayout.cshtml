@@ -11,11 +11,13 @@
         <partial name="_GoogleAnalyticsPartial" />
     }
     @await RenderSectionAsync("Head", required: false)
+    @Html.RenderScripts(ScriptPosition.HeadEnd)
 
     <link rel="shortcut icon" sizes="16x16 32x32 48x48" href="~/assets/images/favicon.ico" type="image/x-icon">
 
 </head>
 <body class="govuk-template__body">
+    @Html.RenderScripts(ScriptPosition.BodyStart)
     <partial name="_CookiesAndAnalyticsConsent" />
     <a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
     <partial name="_Header" />
@@ -39,5 +41,6 @@
         window.GOVUKFrontend.initAll()
     </script>
     @await RenderSectionAsync("Scripts", required: false)
+    @Html.RenderScripts(ScriptPosition.BodyEnd)
 </body>
 </html>
