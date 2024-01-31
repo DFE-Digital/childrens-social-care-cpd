@@ -21,6 +21,7 @@ public class EntityResolverTests
     [TestCase("contentSeparator", typeof(ContentSeparator))]
     [TestCase("detailedPathway", typeof(DetailedPathway))]
     [TestCase("detailedRole", typeof(DetailedRole))]
+    [TestCase("feedback", typeof(Feedback))]
     [TestCase("heroBanner", typeof(HeroBanner))]
     [TestCase("imageCard", typeof(ImageCard))]
     [TestCase("linkCard", typeof(LinkCard))]
