@@ -230,7 +230,7 @@ resource "azurerm_application_gateway" "appgw" {
 
       response_header_configuration {
         header_name  = "Content-Security-Policy"
-        header_value = "upgrade-insecure-requests; base-uri 'self'; frame-ancestors 'self'; form-action 'self'; object-src 'none';"
+        header_value = "upgrade-insecure-requests; base-uri 'self'; frame-ancestors 'self'; form-action 'self'; default-src 'self';"
       }
 
       response_header_configuration {
