@@ -831,10 +831,10 @@ variable "grafana_webapp_name" {
 variable "hostname" {
   type = map(string)
   default = {
-    Dev       = "www.dev.develop-child-family-social-work-career.education.gov.uk"
-    Test      = "www.test.develop-child-family-social-work-career.education.gov.uk"
+    Dev       = "dev.develop-child-family-social-work-career.education.gov.uk"
+    Test      = "test.develop-child-family-social-work-career.education.gov.uk"
     Load-Test = "20.107.65.156.nip.io"
-    Pre-Prod  = "www.pre-prod.develop-child-family-social-work-career.education.gov.uk"
+    Pre-Prod  = "pre-prod.develop-child-family-social-work-career.education.gov.uk"
     Prod      = "www.develop-child-family-social-work-career.education.gov.uk"
   }
   description = "Hostname for Grafana"
@@ -843,10 +843,10 @@ variable "hostname" {
 variable "origins" {
   type = map(string)
   default = {
-    Dev       = "www.dev.develop-child-family-social-work-career.education.gov.uk"
-    Test      = "www.test.develop-child-family-social-work-career.education.gov.uk"
+    Dev       = "dev.develop-child-family-social-work-career.education.gov.uk"
+    Test      = "test.develop-child-family-social-work-career.education.gov.uk"
     Load-Test = "20.107.65.156.nip.io"
-    Pre-Prod  = "www.pre-prod.develop-child-family-social-work-career.education.gov.uk"
+    Pre-Prod  = "pre-prod.develop-child-family-social-work-career.education.gov.uk"
     Prod      = "www.develop-child-family-social-work-career.education.gov.uk"
   }
   description = "Origins for Grafana"
