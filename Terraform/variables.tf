@@ -835,7 +835,7 @@ variable "hostname" {
     Test      = "test.develop-child-family-social-work-career.education.gov.uk"
     Load-Test = "20.107.65.156.nip.io"
     Pre-Prod  = "pre-prod.develop-child-family-social-work-career.education.gov.uk"
-    Prod      = "develop-child-family-social-work-career.education.gov.uk"
+    Prod      = "www.develop-child-family-social-work-career.education.gov.uk"
   }
   description = "Hostname for Grafana"
 }
@@ -847,7 +847,7 @@ variable "origins" {
     Test      = "test.develop-child-family-social-work-career.education.gov.uk"
     Load-Test = "20.107.65.156.nip.io"
     Pre-Prod  = "pre-prod.develop-child-family-social-work-career.education.gov.uk"
-    Prod      = "develop-child-family-social-work-career.education.gov.uk"
+    Prod      = "www.develop-child-family-social-work-career.education.gov.uk"
   }
   description = "Origins for Grafana"
 }
