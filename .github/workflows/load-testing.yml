@@ -1,7 +1,7 @@
 name: Locust Load Testing
 
 on: 
-  schedule:
+#  schedule:
 #    - cron: '0 0 * * 0' # every sunday at midnight
   workflow_dispatch: 
     
