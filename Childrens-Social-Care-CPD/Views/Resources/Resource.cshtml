@@ -1,10 +1,12 @@
-﻿@using Childrens_Social_Care_CPD.Contentful.Models;
+﻿@using Childrens_Social_Care_CPD.Configuration
+@using Childrens_Social_Care_CPD.Contentful.Models;
 @using Childrens_Social_Care_CPD.Contentful.Renderers;
 @using Contentful.Core.Models;
 
 @model Content;
 
 @inject IRenderer<RelatedContent> _relatedContentRenderer
+@inject IFeaturesConfig featuresConfig
 
 @{
     Layout = "_DefaultPageLayout";
@@ -38,7 +40,18 @@
 </div>
 
 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
-<cpd-properties-list items="@ViewBag.Properties" />
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+        <cpd-properties-list items="@ViewBag.Properties" />
+    </div>
+</div>
+
+@if (featuresConfig.IsEnabled(Features.FeedbackControl))
+{
+    <partial name="_Feedback" />
+}
+
 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
 <partial name="_Content" model="Model" />
