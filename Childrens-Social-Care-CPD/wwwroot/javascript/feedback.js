@@ -46,6 +46,7 @@ async function submitFeedback() {
             credentials: "same-origin",
             headers: {
                 "Content-Type": "application/json",
+                RequestVerificationToken: document.getElementsByName("__RequestVerificationToken")[0].value
             },
             redirect: "error",
             referrerPolicy: "same-origin",
