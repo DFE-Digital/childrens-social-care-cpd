@@ -24,7 +24,7 @@
 
 @if (consentState == AnalyticsConsentState.NotSet)
 {
-    @using (@Html.BeginForm("SetPreferences", "Cookie", new { sourcePage = path }, FormMethod.Post, false, null))
+    @using (@Html.BeginForm("SetPreferences", "Cookie", new { sourcePage = path }, FormMethod.Post, true, null))
     {
         <div class="govuk-cookie-banner" id="divCookieBannerId" data-nosnippet="" role="region" aria-label="@headingText">
             <div class="govuk-cookie-banner__message govuk-width-container">
