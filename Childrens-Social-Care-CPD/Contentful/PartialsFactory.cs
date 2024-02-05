@@ -23,6 +23,7 @@ public static class PartialsFactory
             ContentSeparator => "_ContentSeparator",
             DetailedRole => "_DetailedRole",
             DetailedPathway => "_DetailedPathway",
+            Feedback => "_Feedback",
             HeroBanner => string.Empty,// skip - handled in specific layout section
             ImageCard => "_ImageCard",
             LinkCard => "_LinkCard",
