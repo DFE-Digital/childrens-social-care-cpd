@@ -55,6 +55,7 @@ public class FeedbackController : Controller
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     [Route("feedback")]
     public async Task<IActionResult> Feedback([FromForm]FeedbackModel feedback, CancellationToken cancellationToken = default)
     {
@@ -82,6 +83,7 @@ public class FeedbackController : Controller
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     [Route("api/feedback")]
     public async Task<IActionResult> JsonFeedback([FromBody]FeedbackModel feedback, CancellationToken cancellationToken = default)
     {
