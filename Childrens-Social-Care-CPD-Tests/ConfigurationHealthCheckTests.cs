@@ -1,9 +1,6 @@
 ﻿using Childrens_Social_Care_CPD;
-using FluentAssertions;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Logging;
-using NSubstitute;
-using NUnit.Framework;
 using System.Threading.Tasks;
 
 namespace Childrens_Social_Care_CPD_Tests;
