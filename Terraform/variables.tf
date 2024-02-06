@@ -690,7 +690,7 @@ variable "fwpol_name" {
   description = "Firewall Policy Name for the Gateway"
 }
 
-variable "fwpol_app_name" {
+variable "app_fwpol_name" {
   type = map(string)
   default = {
     Dev       = "s185d01-firewall-policy-app"
