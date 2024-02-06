@@ -687,7 +687,19 @@ variable "fwpol_name" {
     Pre-Prod  = "s185t01-firewall-policy"
     Prod      = "s185p01-firewall-policy"
   }
-  description = "Firewall Policy Name"
+  description = "Firewall Policy Name for the Gateway"
+}
+
+variable "fwpol_app_name" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-firewall-policy-app"
+    Test      = "s185d02-firewall-policy-app"
+    Load-Test = "s185d03-firewall-policy-app"
+    Pre-Prod  = "s185t01-firewall-policy-app"
+    Prod      = "s185p01-firewall-policy-app"
+  }
+  description = "Firewall Policy Name for the Application"
 }
 
 variable "ai_search_service_name" {
