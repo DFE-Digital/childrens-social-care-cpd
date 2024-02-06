@@ -304,7 +304,7 @@ resource "azurerm_application_gateway" "appgw" {
 
 # A firewall policy that is only attached for Load-Test and Prod environments for the Application
 resource "azurerm_web_application_firewall_policy" "fwpol-app" {
-  name                = var.fwpol_app_name[terraform.workspace]
+  name                = var.app_fwpol_name[terraform.workspace]
   location            = data.azurerm_resource_group.rg.location
   resource_group_name = data.azurerm_resource_group.rg.name
 
@@ -431,7 +431,7 @@ resource "azurerm_web_application_firewall_policy" "fwpol-gf" {
 
 # A firewall policy that is only attached for Load-Test and Prod environments for the Applicaton Gateway
 resource "azurerm_web_application_firewall_policy" "fwpol" {
-  name                = var.grafana_fwpol_name[terraform.workspace]
+  name                = var.fwpol_name[terraform.workspace]
   location            = data.azurerm_resource_group.rg.location
   resource_group_name = data.azurerm_resource_group.rg.name
 
