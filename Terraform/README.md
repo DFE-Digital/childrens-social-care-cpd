@@ -3,7 +3,7 @@
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0 |
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | 3.75.0 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | 3.90.0 |
 
 ## Providers
 
@@ -19,41 +19,42 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [azurerm_application_gateway.appgw](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/application_gateway) | resource |
-| [azurerm_linux_web_app.grafana-web-app](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/linux_web_app) | resource |
-| [azurerm_linux_web_app.linux-web-app](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/linux_web_app) | resource |
-| [azurerm_linux_web_app_slot.staging](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/linux_web_app_slot) | resource |
-| [azurerm_monitor_autoscale_setting.autoscale](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/monitor_autoscale_setting) | resource |
-| [azurerm_monitor_diagnostic_setting.firewall-diagnostics](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/monitor_diagnostic_setting) | resource |
-| [azurerm_network_interface.nic](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/network_interface) | resource |
-| [azurerm_network_security_group.nsg](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/network_security_group) | resource |
-| [azurerm_network_security_rule.dev-whitelist-rules](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/network_security_rule) | resource |
-| [azurerm_network_security_rule.nsg-rule-03](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/network_security_rule) | resource |
-| [azurerm_network_security_rule.whitelist-rules](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/network_security_rule) | resource |
-| [azurerm_private_dns_zone.dnsprivatezone](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/private_dns_zone) | resource |
-| [azurerm_private_dns_zone_virtual_network_link.dnszonelink](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/private_dns_zone_virtual_network_link) | resource |
-| [azurerm_private_endpoint.privateendpoint](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/private_endpoint) | resource |
-| [azurerm_private_endpoint.privateendpoint-gf](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/private_endpoint) | resource |
-| [azurerm_private_endpoint.searchprivateendpoint](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/private_endpoint) | resource |
-| [azurerm_search_service.ai-search](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/search_service) | resource |
-| [azurerm_service_plan.service-plan](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/service_plan) | resource |
-| [azurerm_service_plan.service-plan-gf](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/service_plan) | resource |
-| [azurerm_storage_account.gfsa](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/storage_account) | resource |
-| [azurerm_storage_share.gffileshare](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/storage_share) | resource |
-| [azurerm_subnet.backend](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/subnet) | resource |
-| [azurerm_subnet.frontend](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/subnet) | resource |
-| [azurerm_subnet_network_security_group_association.blockall](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/subnet_network_security_group_association) | resource |
-| [azurerm_web_application_firewall_policy.fwpol](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/web_application_firewall_policy) | resource |
-| [azurerm_web_application_firewall_policy.fwpol-gf](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/web_application_firewall_policy) | resource |
-| [azurerm_application_insights.appinsights](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/data-sources/application_insights) | data source |
-| [azurerm_key_vault.kv](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/data-sources/key_vault) | data source |
-| [azurerm_key_vault_secret.dev-ips](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/data-sources/key_vault_secret) | data source |
-| [azurerm_key_vault_secret.ips](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/data-sources/key_vault_secret) | data source |
-| [azurerm_log_analytics_workspace.log-analytics-ws](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/data-sources/log_analytics_workspace) | data source |
-| [azurerm_public_ip.pip1](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/data-sources/public_ip) | data source |
-| [azurerm_resource_group.rg](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/data-sources/resource_group) | data source |
-| [azurerm_user_assigned_identity.uai](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/data-sources/user_assigned_identity) | data source |
-| [azurerm_virtual_network.vnet1](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/data-sources/virtual_network) | data source |
+| [azurerm_application_gateway.appgw](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/application_gateway) | resource |
+| [azurerm_linux_web_app.grafana-web-app](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/linux_web_app) | resource |
+| [azurerm_linux_web_app.linux-web-app](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/linux_web_app) | resource |
+| [azurerm_linux_web_app_slot.staging](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/linux_web_app_slot) | resource |
+| [azurerm_monitor_autoscale_setting.autoscale](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/monitor_autoscale_setting) | resource |
+| [azurerm_monitor_diagnostic_setting.firewall-diagnostics](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/monitor_diagnostic_setting) | resource |
+| [azurerm_network_interface.nic](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/network_interface) | resource |
+| [azurerm_network_security_group.nsg](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/network_security_group) | resource |
+| [azurerm_network_security_rule.dev-whitelist-rules](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/network_security_rule) | resource |
+| [azurerm_network_security_rule.nsg-rule-03](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/network_security_rule) | resource |
+| [azurerm_network_security_rule.whitelist-rules](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/network_security_rule) | resource |
+| [azurerm_private_dns_zone.dnsprivatezone](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/private_dns_zone) | resource |
+| [azurerm_private_dns_zone_virtual_network_link.dnszonelink](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/private_dns_zone_virtual_network_link) | resource |
+| [azurerm_private_endpoint.privateendpoint](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/private_endpoint) | resource |
+| [azurerm_private_endpoint.privateendpoint-gf](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/private_endpoint) | resource |
+| [azurerm_private_endpoint.searchprivateendpoint](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/private_endpoint) | resource |
+| [azurerm_search_service.ai-search](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/search_service) | resource |
+| [azurerm_service_plan.service-plan](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/service_plan) | resource |
+| [azurerm_service_plan.service-plan-gf](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/service_plan) | resource |
+| [azurerm_storage_account.gfsa](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/storage_account) | resource |
+| [azurerm_storage_share.gffileshare](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/storage_share) | resource |
+| [azurerm_subnet.backend](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/subnet) | resource |
+| [azurerm_subnet.frontend](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/subnet) | resource |
+| [azurerm_subnet_network_security_group_association.blockall](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/subnet_network_security_group_association) | resource |
+| [azurerm_web_application_firewall_policy.fwpol](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/web_application_firewall_policy) | resource |
+| [azurerm_web_application_firewall_policy.fwpol-app](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/web_application_firewall_policy) | resource |
+| [azurerm_web_application_firewall_policy.fwpol-gf](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/web_application_firewall_policy) | resource |
+| [azurerm_application_insights.appinsights](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/data-sources/application_insights) | data source |
+| [azurerm_key_vault.kv](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/data-sources/key_vault) | data source |
+| [azurerm_key_vault_secret.dev-ips](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/data-sources/key_vault_secret) | data source |
+| [azurerm_key_vault_secret.ips](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/data-sources/key_vault_secret) | data source |
+| [azurerm_log_analytics_workspace.log-analytics-ws](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/data-sources/log_analytics_workspace) | data source |
+| [azurerm_public_ip.pip1](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/data-sources/public_ip) | data source |
+| [azurerm_resource_group.rg](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/data-sources/resource_group) | data source |
+| [azurerm_user_assigned_identity.uai](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/data-sources/user_assigned_identity) | data source |
+| [azurerm_virtual_network.vnet1](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/data-sources/virtual_network) | data source |
 
 ## Inputs
 
@@ -102,7 +103,8 @@ No modules.
 | <a name="input_frontend_port_name"></a> [frontend\_port\_name](#input\_frontend\_port\_name) | Name of Frontend Port | `map(string)` | <pre>{<br>  "Dev": "s185d01FrontendPort",<br>  "Load-Test": "s185d03FrontendPort",<br>  "Pre-Prod": "s185t01FrontendPort",<br>  "Prod": "s185p01FrontendPort",<br>  "Test": "s185d02FrontendPort"<br>}</pre> | no |
 | <a name="input_frontend_ssl_port_name"></a> [frontend\_ssl\_port\_name](#input\_frontend\_ssl\_port\_name) | Name of Frontend SSL Port | `map(string)` | <pre>{<br>  "Dev": "s185d01FrontendSSLPort",<br>  "Load-Test": "s185d03FrontendSSLPort",<br>  "Pre-Prod": "s185t01FrontendSSLPort",<br>  "Prod": "s185p01FrontendSSLPort",<br>  "Test": "s185d02FrontendSSLPort"<br>}</pre> | no |
 | <a name="input_fw_diag_name"></a> [fw\_diag\_name](#input\_fw\_diag\_name) | Firewall Diagnostic Name | `map(string)` | <pre>{<br>  "Dev": "s185d01-firewall-diagnostics",<br>  "Load-Test": "s185d03-firewall-diagnostics",<br>  "Pre-Prod": "s185t01-firewall-diagnostics",<br>  "Prod": "s185p01-firewall-diagnostics",<br>  "Test": "s185d02-firewall-diagnostics"<br>}</pre> | no |
-| <a name="input_fwpol_name"></a> [fwpol\_name](#input\_fwpol\_name) | Firewall Policy Name | `map(string)` | <pre>{<br>  "Dev": "s185d01-firewall-policy",<br>  "Load-Test": "s185d03-firewall-policy",<br>  "Pre-Prod": "s185t01-firewall-policy",<br>  "Prod": "s185p01-firewall-policy",<br>  "Test": "s185d02-firewall-policy"<br>}</pre> | no |
+| <a name="input_fwpol_app_name"></a> [fwpol\_app\_name](#input\_fwpol\_app\_name) | Firewall Policy Name for the Application | `map(string)` | <pre>{<br>  "Dev": "s185d01-firewall-policy-app",<br>  "Load-Test": "s185d03-firewall-policy-app",<br>  "Pre-Prod": "s185t01-firewall-policy-app",<br>  "Prod": "s185p01-firewall-policy-app",<br>  "Test": "s185d02-firewall-policy-app"<br>}</pre> | no |
+| <a name="input_fwpol_name"></a> [fwpol\_name](#input\_fwpol\_name) | Firewall Policy Name for the Gateway | `map(string)` | <pre>{<br>  "Dev": "s185d01-firewall-policy",<br>  "Load-Test": "s185d03-firewall-policy",<br>  "Pre-Prod": "s185t01-firewall-policy",<br>  "Prod": "s185p01-firewall-policy",<br>  "Test": "s185d02-firewall-policy"<br>}</pre> | no |
 | <a name="input_gateway_ip_configuration"></a> [gateway\_ip\_configuration](#input\_gateway\_ip\_configuration) | Name of Gateway IP Configuration | `map(string)` | <pre>{<br>  "Dev": "s185d01-gateway-ip-configuration",<br>  "Load-Test": "s185d03-gateway-ip-configuration",<br>  "Pre-Prod": "s185t01-gateway-ip-configuration",<br>  "Prod": "s185p01-gateway-ip-configuration",<br>  "Test": "s185d02-gateway-ip-configuration"<br>}</pre> | no |
 | <a name="input_grafana_app_path_rule"></a> [grafana\_app\_path\_rule](#input\_grafana\_app\_path\_rule) | Name of Grafana app path rule | `map(string)` | <pre>{<br>  "Dev": "s185d01-grafana-app-path-rule",<br>  "Load-Test": "s185d03-grafana-app-path-rule",<br>  "Pre-Prod": "s185t01-grafana-app-path-rule",<br>  "Prod": "s185p01-grafana-app-path-rule",<br>  "Test": "s185d02-grafana-app-path-rule"<br>}</pre> | no |
 | <a name="input_grafana_appgw_probe"></a> [grafana\_appgw\_probe](#input\_grafana\_appgw\_probe) | Name of App Gateway Grafana Health Probe | `map(string)` | <pre>{<br>  "Dev": "s185d01-chidrens-social-care-grafana-hp",<br>  "Load-Test": "s185d03-chidrens-social-care-grafana-hp",<br>  "Pre-Prod": "s185t01-chidrens-social-care-grafana-hp",<br>  "Prod": "s185p01-chidrens-social-care-grafana-hp",<br>  "Test": "s185d02-chidrens-social-care-grafana-hp"<br>}</pre> | no |
@@ -113,7 +115,7 @@ No modules.
 | <a name="input_grafana_sa_name"></a> [grafana\_sa\_name](#input\_grafana\_sa\_name) | Grafana Storage Account Name | `map(string)` | <pre>{<br>  "Dev": "s185d01grafanasa",<br>  "Load-Test": "s185d03grafanasa",<br>  "Pre-Prod": "s185t01grafanasa",<br>  "Prod": "s185p01grafanasa",<br>  "Test": "s185d02grafanasa"<br>}</pre> | no |
 | <a name="input_grafana_service_plan_name"></a> [grafana\_service\_plan\_name](#input\_grafana\_service\_plan\_name) | Grafana Storage Account Name | `map(string)` | <pre>{<br>  "Dev": "s185d01-csc-cpd-gf-service-plan",<br>  "Load-Test": "s185d03-csc-cpd-gf-service-plan",<br>  "Pre-Prod": "s185t01-csc-cpd-gf-service-plan",<br>  "Prod": "s185p01-csc-cpd-gf-service-plan",<br>  "Test": "s185d02-csc-cpd-gf-service-plan"<br>}</pre> | no |
 | <a name="input_grafana_webapp_name"></a> [grafana\_webapp\_name](#input\_grafana\_webapp\_name) | Grafana Web App Name | `map(string)` | <pre>{<br>  "Dev": "s185d01grafana",<br>  "Load-Test": "s185d03grafana",<br>  "Pre-Prod": "s185t01grafana",<br>  "Prod": "s185p01grafana",<br>  "Test": "s185d02grafana"<br>}</pre> | no |
-| <a name="input_hostname"></a> [hostname](#input\_hostname) | Hostname for Grafana | `map(string)` | <pre>{<br>  "Dev": "www.dev.develop-child-family-social-work-career.education.gov.uk",<br>  "Load-Test": "20.107.65.156.nip.io",<br>  "Pre-Prod": "www.pre-prod.develop-child-family-social-work-career.education.gov.uk",<br>  "Prod": "www.develop-child-family-social-work-career.education.gov.uk",<br>  "Test": "www.test.develop-child-family-social-work-career.education.gov.uk"<br>}</pre> | no |
+| <a name="input_hostname"></a> [hostname](#input\_hostname) | Hostname for Grafana | `map(string)` | <pre>{<br>  "Dev": "dev.develop-child-family-social-work-career.education.gov.uk",<br>  "Load-Test": "20.107.65.156.nip.io",<br>  "Pre-Prod": "pre-prod.develop-child-family-social-work-career.education.gov.uk",<br>  "Prod": "www.develop-child-family-social-work-career.education.gov.uk",<br>  "Test": "test.develop-child-family-social-work-career.education.gov.uk"<br>}</pre> | no |
 | <a name="input_http_setting_name"></a> [http\_setting\_name](#input\_http\_setting\_name) | Name of HTTP Setting | `map(string)` | <pre>{<br>  "Dev": "s185d01-chidrens-social-care-cpd-bes-http",<br>  "Load-Test": "s185d03-chidrens-social-care-cpd-bes-http",<br>  "Pre-Prod": "s185t01-chidrens-social-care-cpd-bes-http",<br>  "Prod": "s185p01-chidrens-social-care-cpd-bes-http",<br>  "Test": "s185d02-chidrens-social-care-cpd-bes-http"<br>}</pre> | no |
 | <a name="input_key_vault_name"></a> [key\_vault\_name](#input\_key\_vault\_name) | Name of Key Vault | `map(string)` | <pre>{<br>  "Dev": "s185d-CPD-Key-Vault",<br>  "Load-Test": "s185d-CPD-Key-Vault",<br>  "Pre-Prod": "s185t-CPD-Key-Vault",<br>  "Prod": "s185p-CPD-Key-Vault",<br>  "Test": "s185d-CPD-Key-Vault"<br>}</pre> | no |
 | <a name="input_key_vault_rg"></a> [key\_vault\_rg](#input\_key\_vault\_rg) | Name of Key Vault Resource Group | `map(string)` | <pre>{<br>  "Dev": "s185d01-childrens-social-care-shared-rg",<br>  "Load-Test": "s185d01-childrens-social-care-shared-rg",<br>  "Pre-Prod": "s185t01-childrens-social-care-shared-rg",<br>  "Prod": "s185p01-childrens-social-care-shared-rg",<br>  "Test": "s185d01-childrens-social-care-shared-rg"<br>}</pre> | no |
@@ -125,7 +127,7 @@ No modules.
 | <a name="input_network_nic_ip_conf_name"></a> [network\_nic\_ip\_conf\_name](#input\_network\_nic\_ip\_conf\_name) | Name of NIC IP Configuration | `map(string)` | <pre>{<br>  "Dev": "s185d01nic-ipconfig-1",<br>  "Load-Test": "s185d03nic-ipconfig-1",<br>  "Pre-Prod": "s185t01nic-ipconfig-1",<br>  "Prod": "s185p01nic-ipconfig-1",<br>  "Test": "s185d02nic-ipconfig-1"<br>}</pre> | no |
 | <a name="input_nic_name"></a> [nic\_name](#input\_nic\_name) | Name of Network Interface | `map(string)` | <pre>{<br>  "Dev": "s185d01nic-1",<br>  "Load-Test": "s185d03nic-1",<br>  "Pre-Prod": "s185t01nic-1",<br>  "Prod": "s185p01nic-1",<br>  "Test": "s185d02nic-1"<br>}</pre> | no |
 | <a name="input_nsg_name"></a> [nsg\_name](#input\_nsg\_name) | Name of Network Security Group | `map(string)` | <pre>{<br>  "Dev": "s185d01-chidrens-social-care-cpd-sn01-nsg",<br>  "Load-Test": "s185d03-chidrens-social-care-cpd-sn01-nsg",<br>  "Pre-Prod": "s185t01-chidrens-social-care-cpd-sn01-nsg",<br>  "Prod": "s185p01-chidrens-social-care-cpd-sn01-nsg",<br>  "Test": "s185d02-chidrens-social-care-cpd-sn01-nsg"<br>}</pre> | no |
-| <a name="input_origins"></a> [origins](#input\_origins) | Origins for Grafana | `map(string)` | <pre>{<br>  "Dev": "www.dev.develop-child-family-social-work-career.education.gov.uk",<br>  "Load-Test": "20.107.65.156.nip.io",<br>  "Pre-Prod": "www.pre-prod.develop-child-family-social-work-career.education.gov.uk",<br>  "Prod": "www.develop-child-family-social-work-career.education.gov.uk",<br>  "Test": "www.test.develop-child-family-social-work-career.education.gov.uk"<br>}</pre> | no |
+| <a name="input_origins"></a> [origins](#input\_origins) | Origins for Grafana | `map(string)` | <pre>{<br>  "Dev": "dev.develop-child-family-social-work-career.education.gov.uk",<br>  "Load-Test": "20.107.65.156.nip.io",<br>  "Pre-Prod": "pre-prod.develop-child-family-social-work-career.education.gov.uk",<br>  "Prod": "www.develop-child-family-social-work-career.education.gov.uk",<br>  "Test": "test.develop-child-family-social-work-career.education.gov.uk"<br>}</pre> | no |
 | <a name="input_pip_name"></a> [pip\_name](#input\_pip\_name) | Name of Public IP address | `map(string)` | <pre>{<br>  "Dev": "s185d01AGPublicIPAddress",<br>  "Load-Test": "s185d03AGPublicIPAddress",<br>  "Pre-Prod": "s185t01AGPublicIPAddress",<br>  "Prod": "s185p01AGPublicIPAddress",<br>  "Test": "s185d02AGPublicIPAddress"<br>}</pre> | no |
 | <a name="input_private_dns_zone_group_name"></a> [private\_dns\_zone\_group\_name](#input\_private\_dns\_zone\_group\_name) | Name of Private DNS Zone Group | `map(string)` | <pre>{<br>  "Dev": "s185d01-privatednszonegroup",<br>  "Load-Test": "s185d03-privatednszonegroup",<br>  "Pre-Prod": "s185t01-privatednszonegroup",<br>  "Prod": "s185p01-privatednszonegroup",<br>  "Test": "s185d02-privatednszonegroup"<br>}</pre> | no |
 | <a name="input_private_dns_zone_vn_link_name"></a> [private\_dns\_zone\_vn\_link\_name](#input\_private\_dns\_zone\_vn\_link\_name) | Name of Private DNS Zone Virtual Network Link | `map(string)` | <pre>{<br>  "Dev": "s185d01-dnszonelink",<br>  "Load-Test": "s185d03-dnszonelink",<br>  "Pre-Prod": "s185t01-dnszonelink",<br>  "Prod": "s185p01-dnszonelink",<br>  "Test": "s185d02-dnszonelink"<br>}</pre> | no |

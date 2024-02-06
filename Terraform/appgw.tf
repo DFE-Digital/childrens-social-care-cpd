@@ -29,7 +29,7 @@ resource "azurerm_application_gateway" "appgw" {
   }
 
   # A firewall policy that should only be populated for Load-Test and Prod environments 
-  # firewall_policy_id = var.appgw_tier[terraform.workspace] == "WAF_v2" ? azurerm_web_application_firewall_policy.fwpol.id : null
+  firewall_policy_id = var.appgw_tier[terraform.workspace] == "WAF_v2" ? azurerm_web_application_firewall_policy.fwpol.id : null
 
   gateway_ip_configuration {
     name      = var.gateway_ip_configuration[terraform.workspace]
@@ -150,7 +150,7 @@ resource "azurerm_application_gateway" "appgw" {
       backend_address_pool_name  = var.backend_address_pool_name[terraform.workspace]
       backend_http_settings_name = var.http_setting_name[terraform.workspace]
       rewrite_rule_set_name      = var.appgw_rewrite_rule_set[terraform.workspace]
-      firewall_policy_id         = var.appgw_tier[terraform.workspace] == "WAF_v2" ? azurerm_web_application_firewall_policy.fwpol.id : null
+      firewall_policy_id         = var.appgw_tier[terraform.workspace] == "WAF_v2" ? azurerm_web_application_firewall_policy.fwpol-app.id : null
     }
 
     path_rule {
@@ -302,9 +302,9 @@ resource "azurerm_application_gateway" "appgw" {
   tags = data.azurerm_resource_group.rg.tags
 }
 
-# A firewall policy that is only attached for Load-Test and Prod environments
-resource "azurerm_web_application_firewall_policy" "fwpol" {
-  name                = var.fwpol_name[terraform.workspace]
+# A firewall policy that is only attached for Load-Test and Prod environments for the Application
+resource "azurerm_web_application_firewall_policy" "fwpol-app" {
+  name                = var.fwpol_app_name[terraform.workspace]
   location            = data.azurerm_resource_group.rg.location
   resource_group_name = data.azurerm_resource_group.rg.name
 
@@ -327,7 +327,7 @@ resource "azurerm_web_application_firewall_policy" "fwpol" {
   tags = data.azurerm_resource_group.rg.tags
 }
 
-# A firewall policy that is only attached for Load-Test and Prod environments
+# A firewall policy that is only attached for Load-Test and Prod environments for Grafana
 resource "azurerm_web_application_firewall_policy" "fwpol-gf" {
   name                = var.grafana_fwpol_name[terraform.workspace]
   location            = data.azurerm_resource_group.rg.location
@@ -427,3 +427,25 @@ resource "azurerm_web_application_firewall_policy" "fwpol-gf" {
 
   tags = data.azurerm_resource_group.rg.tags
 }
+
+
+# A firewall policy that is only attached for Load-Test and Prod environments for the Applicaton Gateway
+resource "azurerm_web_application_firewall_policy" "fwpol" {
+  name                = var.grafana_fwpol_name[terraform.workspace]
+  location            = data.azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
+
+  managed_rules {
+    managed_rule_set {
+      type    = "OWASP"
+      version = "3.2"
+    }
+  }
+
+  policy_settings {
+    mode = "Detection"
+  }
+
+  tags = data.azurerm_resource_group.rg.tags
+}
+
