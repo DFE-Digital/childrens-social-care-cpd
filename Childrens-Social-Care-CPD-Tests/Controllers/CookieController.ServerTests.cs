@@ -2,10 +2,7 @@
 using Childrens_Social_Care_CPD.Contentful.Models;
 using Contentful.Core.Models;
 using Contentful.Core.Search;
-using FluentAssertions;
-using Microsoft.AspNetCore.Mvc.Testing;
-using NSubstitute;
-using NUnit.Framework;
+using Microsoft.AspNetCore.Mvc.Testing.Handlers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -17,7 +14,6 @@ namespace Childrens_Social_Care_CPD_Tests.Controllers;
 public class CookieControllerServerTests
 {
     private CpdTestServerApplication _application;
-    private HttpClient _httpClient;
     private static string SetPrefencesUrl = "/cookies/setpreferences";
 
     [SetUp]
@@ -26,28 +22,26 @@ public class CookieControllerServerTests
         _application = new CpdTestServerApplication();
         var contentCollection = new ContentfulCollection<Content>() { Items = new List<Content>() { new Content() } };
         _application.CpdContentfulClient.GetEntries(Arg.Any<QueryBuilder<Content>>(), default).Returns(contentCollection);
-
-        _httpClient = _application.CreateClient(new WebApplicationFactoryClientOptions
-        {
-            AllowAutoRedirect = false
-        });
     }
 
     #region SetPreferences
 
     [Test]
-    [Ignore("")]
     [TestCase(CookieHelper.ANALYTICSCOOKIEACCEPTED)]
     [TestCase(CookieHelper.ANALYTICSCOOKIEREJECTED)]
     public async Task SetPreferences_Sets_Cookie(string consentValue)
     {
         // arrange
-        var formContent = new FormUrlEncodedContent(new[] {
-            new KeyValuePair<string, string>("consentValue", consentValue),
-        });
+        var antiforgeryTokens = await _application.GetAntiforgeryTokensAsync();
+        var cookies = new CookieContainerHandler();
+        cookies.Container.Add(_application.Server.BaseAddress, new Cookie(antiforgeryTokens.CookieName, antiforgeryTokens.CookieValue));
+        var client = _application.CreateDefaultClient(cookies);
+
+        var formContent = new FormUrlEncodedContent(new Dictionary<string, string> { ["consentValue"] = consentValue });
+        formContent.Headers.Add(antiforgeryTokens.HeaderName, antiforgeryTokens.RequestToken);
 
         // act
-        var response = await _httpClient.PostAsync(SetPrefencesUrl, formContent);
+        var response = await client.PostAsync(SetPrefencesUrl, formContent);
 
         // assert
         response.StatusCode.Should().Be(HttpStatusCode.Redirect);
@@ -56,18 +50,21 @@ public class CookieControllerServerTests
     }
 
     [Test]
-    [Ignore("")]
     [TestCase("")]
     [TestCase("invalid")]
     public async Task SetPreferences_Clear_Cookie(string consentValue)
     {
         // arrange
-        var formContent = new FormUrlEncodedContent(new[] {
-            new KeyValuePair<string, string>("consentValue", consentValue),
-        });
+        var antiforgeryTokens = await _application.GetAntiforgeryTokensAsync();
+        var cookies = new CookieContainerHandler();
+        cookies.Container.Add(_application.Server.BaseAddress, new Cookie(antiforgeryTokens.CookieName, antiforgeryTokens.CookieValue));
+        var client = _application.CreateDefaultClient(cookies);
+
+        var formContent = new FormUrlEncodedContent(new Dictionary<string, string> { ["consentValue"] = consentValue });
+        formContent.Headers.Add(antiforgeryTokens.HeaderName, antiforgeryTokens.RequestToken);
 
         // act
-        var response = await _httpClient.PostAsync(SetPrefencesUrl, formContent);
+        var response = await client.PostAsync(SetPrefencesUrl, formContent);
 
         // assert
         response.StatusCode.Should().Be(HttpStatusCode.Redirect);
