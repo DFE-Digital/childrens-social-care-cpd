@@ -59,7 +59,7 @@ resource "azurerm_application_gateway" "appgw" {
   backend_http_settings {
     name                                = var.http_setting_name[terraform.workspace]
     pick_host_name_from_backend_address = true
-    cookie_based_affinity               = "Enabled"
+    cookie_based_affinity               = "Disabled"
     path                                = "/"
     port                                = 80
     protocol                            = "Http"
