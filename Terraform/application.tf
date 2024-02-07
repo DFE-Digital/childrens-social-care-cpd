@@ -10,10 +10,11 @@ resource "azurerm_service_plan" "service-plan" {
 
 # Definition of the linux web app for the service
 resource "azurerm_linux_web_app" "linux-web-app" {
-  name                = var.web_app_name[terraform.workspace]
-  resource_group_name = data.azurerm_resource_group.rg.name
-  location            = data.azurerm_resource_group.rg.location
-  service_plan_id     = azurerm_service_plan.service-plan.id
+  name                          = var.web_app_name[terraform.workspace]
+  resource_group_name           = data.azurerm_resource_group.rg.name
+  location                      = data.azurerm_resource_group.rg.location
+  service_plan_id               = azurerm_service_plan.service-plan.id
+  public_network_access_enabled = false
 
   app_settings = {
     CPD_GOOGLEANALYTICSTAG               = var.cpd_googleanalyticstag
