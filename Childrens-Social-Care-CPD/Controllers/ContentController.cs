@@ -1,31 +1,20 @@
-﻿using Childrens_Social_Care_CPD.Contentful;
-using Childrens_Social_Care_CPD.Contentful.Models;
+﻿using Childrens_Social_Care_CPD.DataAccess;
 using Childrens_Social_Care_CPD.Models;
-using Contentful.Core.Search;
+using Childrens_Social_Care_CPD.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Childrens_Social_Care_CPD.Controllers;
 
 public class ContentController : Controller
 {
-    private readonly ICpdContentfulClient _cpdClient;
+    private readonly IContentRepository _contentRepository;
 
-    public ContentController(ICpdContentfulClient cpdClient)
+    public ContentController(IContentRepository contentRepository, IMemoryCache cache)
     {
-        _cpdClient = cpdClient;
+        _contentRepository = new ContentCacheService(contentRepository, cache);
     }
 
-    private async Task<Content> FetchPageContentAsync(string contentId, CancellationToken cancellationToken)
-    {
-        var queryBuilder = QueryBuilder<Content>.New
-            .ContentTypeIs("content")
-            .FieldEquals("fields.id", contentId)
-            .Include(10);
-
-        var result = await _cpdClient.GetEntries(queryBuilder, cancellationToken);
-
-        return result?.FirstOrDefault();
-    }
 
     [HttpGet]
     [Route("/")]
@@ -45,7 +34,7 @@ public class ContentController : Controller
     public async Task<IActionResult> Index(string pageName = "home", bool preferenceSet = false, bool fs = false, CancellationToken cancellationToken = default)
     {
         pageName = pageName?.TrimEnd('/');
-        var content = await FetchPageContentAsync(pageName, cancellationToken);
+        var content = await _contentRepository.FetchPageContentAsync(pageName, cancellationToken);
         if (content == null)
         {
             return NotFound();

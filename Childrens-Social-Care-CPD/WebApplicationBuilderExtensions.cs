@@ -34,6 +34,7 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddTransient<IFeaturesConfig, FeaturesConfig>();
         builder.Services.AddTransient<IFeaturesConfigUpdater, FeaturesConfigUpdater>();
         builder.Services.AddTransient<IResourcesRepository, ResourcesRepository>();
+        builder.Services.AddTransient<IContentRepository, ContentRepository>();
         
         builder.Services.AddScoped<IGraphQLWebSocketClient>(services => {
             var config = services.GetRequiredService<IApplicationConfiguration>();

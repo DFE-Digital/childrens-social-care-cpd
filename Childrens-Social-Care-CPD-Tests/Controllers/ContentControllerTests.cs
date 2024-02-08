@@ -1,13 +1,12 @@
-﻿using Childrens_Social_Care_CPD.Contentful;
-using Childrens_Social_Care_CPD.Contentful.Models;
+﻿using Childrens_Social_Care_CPD.Contentful.Models;
 using Childrens_Social_Care_CPD.Controllers;
+using Childrens_Social_Care_CPD.DataAccess;
 using Childrens_Social_Care_CPD.Models;
 using Contentful.Core.Models;
-using Contentful.Core.Search;
-using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.Extensions.Caching.Memory;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,7 +19,10 @@ public class ContentControllerTests
     private IRequestCookieCollection _cookies;
     private HttpContext _httpContext;
     private HttpRequest _httpRequest;
-    private ICpdContentfulClient _contentfulClient;
+    private IContentRepository _contentRepository;
+    private IMemoryCache _cache;
+
+#pragma warning disable S1121 // Assignments should not be made from within sub-expressions
 
     private void SetContent(Content content)
     {
@@ -30,10 +32,11 @@ public class ContentControllerTests
             ? new List<Content>()
             : contentCollection.Items = new List<Content> { content };
 
-        _contentfulClient
-            .GetEntries(Arg.Any<QueryBuilder<Content>>(), Arg.Any<CancellationToken>())
-            .Returns(contentCollection);
+        _contentRepository.FetchPageContentAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
+            .Returns(content);
     }
+
+#pragma warning restore S1121 // Assignments should not be made from within sub-expressions
 
     [SetUp]
     public void SetUp()
@@ -47,9 +50,10 @@ public class ContentControllerTests
         _httpContext.Request.Returns(_httpRequest);
         controllerContext.HttpContext = _httpContext;
 
-        _contentfulClient = Substitute.For<ICpdContentfulClient>();
+        _contentRepository = Substitute.For<IContentRepository>();
+        _cache = Substitute.For<IMemoryCache>();
 
-        _contentController = new ContentController(_contentfulClient)
+        _contentController = new ContentController(_contentRepository, _cache)
         {
             ControllerContext = controllerContext,
             TempData = Substitute.For<ITempDataDictionary>()
@@ -145,20 +149,5 @@ public class ContentControllerTests
         // assert
         actual.Should().NotBeNull();
         actual.UseContainers.Should().Be(expected);
-    }
-
-    [Test]
-    public async Task Index_Trims_Trailing_Slashes()
-    {
-        // arrange
-        SetContent(new Content());
-        var query = "";
-        await _contentfulClient.GetEntries(Arg.Do<QueryBuilder<Content>>(value => query = value.Build()), Arg.Any<CancellationToken>());
-
-        // act
-        var actual = await _contentController.Index("home/", false);
-
-        // assert
-        query.Should().Contain("fields.id=home&");
     }
 }
