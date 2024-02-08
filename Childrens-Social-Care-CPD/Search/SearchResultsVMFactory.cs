@@ -83,7 +83,7 @@ internal class SearchResultsVMFactory : ISearchResultsVMFactory
 
         var sortCategory = sortOrder switch
         {
-            SortOrder.MostRelevant => SortCategory.Relevancy,
+            SortOrder.Relevance => SortCategory.Relevancy,
             _ => SortCategory.Updated,
         };
 

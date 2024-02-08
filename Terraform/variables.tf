@@ -180,6 +180,18 @@ variable "appgw_rewrite_rule_set" {
   description = "Name of the Application Gateway Rewrite Rule Set"
 }
 
+variable "appgw_gf_rewrite_rule_set" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-csc-cpd-app-gw-gf-rewrite-rule-set"
+    Test      = "s185d02-csc-cpd-app-gw-gf-rewrite-rule-set"
+    Load-Test = "s185d03-csc-cpd-app-gw-gf-rewrite-rule-set"
+    Pre-Prod  = "s185t01-csc-cpd-app-gw-gf-rewrite-rule-set"
+    Prod      = "s185p01-csc-cpd-app-gw-gf-rewrite-rule-set"
+  }
+  description = "Name of the Application Gateway Grafana Rewrite Rule Set"
+}
+
 variable "appgw_rewrite_rule" {
   type = map(string)
   default = {
@@ -675,7 +687,19 @@ variable "fwpol_name" {
     Pre-Prod  = "s185t01-firewall-policy"
     Prod      = "s185p01-firewall-policy"
   }
-  description = "Firewall Policy Name"
+  description = "Firewall Policy Name for the Gateway"
+}
+
+variable "app_fwpol_name" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-firewall-policy-app"
+    Test      = "s185d02-firewall-policy-app"
+    Load-Test = "s185d03-firewall-policy-app"
+    Pre-Prod  = "s185t01-firewall-policy-app"
+    Prod      = "s185p01-firewall-policy-app"
+  }
+  description = "Firewall Policy Name for the Application"
 }
 
 variable "ai_search_service_name" {
@@ -726,77 +750,6 @@ variable "search_private_endpoint_conn_name" {
   description = "Name of Private Endpoint Connection"
 }
 
-variable "functionapp_storage_account_name" {
-  type = map(string)
-  default = {
-    Test      = "s185d02searchstorageacct"
-    Load-Test = "s185d03searchstorageacct"
-    Pre-Prod  = "s185t01searchstorageacct"
-    Prod      = "s185p01searchstorageacct"
-    Dev       = "s185d01searchstorageacct"
-  }
-  description = "Name of Function App Storage Account"
-}
-
-variable "functionapp_storage_container_name" {
-  type = map(string)
-  default = {
-    Dev       = "s185d01-search-storage-container"
-    Test      = "s185d02-search-storage-container"
-    Load-Test = "s185d03-search-storage-container"
-    Pre-Prod  = "s185t01-search-storage-container"
-    Prod      = "s185p01-search-storage-container"
-  }
-  description = "Name of Function App Storage Container"
-}
-
-variable "functionapp_service_plan_name" {
-  type = map(string)
-  default = {
-    Dev       = "s185d01-search-service-plan"
-    Test      = "s185d02-search-service-plan"
-    Load-Test = "s185d03-search-service-plan"
-    Pre-Prod  = "s185t01-search-service-plan"
-    Prod      = "s185p01-search-service-plan"
-  }
-  description = "Name of Function App Service Plan"
-}
-
-variable "functionapp_name" {
-  type = map(string)
-  default = {
-    Dev       = "s185d01-search"
-    Test      = "s185d02-search"
-    Load-Test = "s185d03-search"
-    Pre-Prod  = "s185t01-search"
-    Prod      = "s185p01-search"
-  }
-  description = "Name of Function App"
-}
-
-variable "functionapp_sku_name" {
-  type = map(string)
-  default = {
-    Dev       = "B1"
-    Test      = "B1"
-    Load-Test = "P1v3"
-    Pre-Prod  = "B1"
-    Prod      = "P1v3"
-  }
-  description = "Function App SKU"
-}
-
-variable "functionapp_worker_count" {
-  type = map(number)
-  default = {
-    Dev       = 1
-    Test      = 1
-    Load-Test = 1
-    Pre-Prod  = 1
-    Prod      = 1
-  }
-  description = "Number of Function App Workers"
-}
 
 variable "cpd_search_api_key" {
   description = "The Azure AI Search API key"
@@ -839,6 +792,11 @@ variable "cpd_search_index_name" {
 variable "cpd_gf_plugins" {
   type        = string
   description = "List of Grafana plugins to install"
+}
+
+variable "cpd_gf_image_tag" {
+  type        = string
+  description = "Grafana Docker image tag to use"
 }
 
 variable "cpd_search_recreate_index_on_rebuild" {
@@ -885,10 +843,10 @@ variable "grafana_webapp_name" {
 variable "hostname" {
   type = map(string)
   default = {
-    Dev       = "www.dev.develop-child-family-social-work-career.education.gov.uk"
-    Test      = "www.test.develop-child-family-social-work-career.education.gov.uk"
+    Dev       = "dev.develop-child-family-social-work-career.education.gov.uk"
+    Test      = "test.develop-child-family-social-work-career.education.gov.uk"
     Load-Test = "20.107.65.156.nip.io"
-    Pre-Prod  = "www.pre-prod.develop-child-family-social-work-career.education.gov.uk"
+    Pre-Prod  = "pre-prod.develop-child-family-social-work-career.education.gov.uk"
     Prod      = "www.develop-child-family-social-work-career.education.gov.uk"
   }
   description = "Hostname for Grafana"
@@ -897,10 +855,10 @@ variable "hostname" {
 variable "origins" {
   type = map(string)
   default = {
-    Dev       = "www.dev.develop-child-family-social-work-career.education.gov.uk"
-    Test      = "www.test.develop-child-family-social-work-career.education.gov.uk"
+    Dev       = "dev.develop-child-family-social-work-career.education.gov.uk"
+    Test      = "test.develop-child-family-social-work-career.education.gov.uk"
     Load-Test = "20.107.65.156.nip.io"
-    Pre-Prod  = "www.pre-prod.develop-child-family-social-work-career.education.gov.uk"
+    Pre-Prod  = "pre-prod.develop-child-family-social-work-career.education.gov.uk"
     Prod      = "www.develop-child-family-social-work-career.education.gov.uk"
   }
   description = "Origins for Grafana"

@@ -9,8 +9,6 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using NSubstitute;
-using NUnit.Framework;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,7 +22,6 @@ public class ContentControllerTests
     private HttpContext _httpContext;
     private HttpRequest _httpRequest;
     private ICpdContentfulClient _contentfulClient;
-    private CancellationTokenSource _cancellationTokenSource;
 
     private void SetContent(Content content)
     {
@@ -37,8 +34,6 @@ public class ContentControllerTests
         _contentfulClient
             .GetEntries(Arg.Any<QueryBuilder<Content>>(), Arg.Any<CancellationToken>())
             .Returns(contentCollection);
-
-        _cancellationTokenSource = new CancellationTokenSource();
     }
 
     [SetUp]
@@ -70,7 +65,7 @@ public class ContentControllerTests
         SetContent(null);
 
         // act
-        var actual = await _contentController.Index(_cancellationTokenSource.Token, "home");
+        var actual = await _contentController.Index("home");
 
         // assert
         actual.Should().BeOfType<NotFoundResult>();
@@ -83,7 +78,7 @@ public class ContentControllerTests
         SetContent(new Content());
 
         // act
-        var actual = await _contentController.Index(_cancellationTokenSource.Token, "home");
+        var actual = await _contentController.Index("home");
 
         // assert
         actual.Should().BeOfType<ViewResult>();
@@ -102,7 +97,7 @@ public class ContentControllerTests
         SetContent(rootContent);
 
         // act
-        await _contentController.Index(_cancellationTokenSource.Token, "home");
+        await _contentController.Index("home");
         var actual = _contentController.ViewData["ContextModel"] as ContextModel;
 
         // assert
@@ -120,7 +115,7 @@ public class ContentControllerTests
         SetContent(new Content());
 
         // act
-        await _contentController.Index(_cancellationTokenSource.Token, "home", preferenceSet);
+        await _contentController.Index("home", preferenceSet);
         var actual = _contentController.ViewData["ContextModel"] as ContextModel;
 
         // assert
@@ -146,7 +141,7 @@ public class ContentControllerTests
         SetContent(rootContent);
 
         // act
-        await _contentController.Index(_cancellationTokenSource.Token, "home");
+        await _contentController.Index("home");
         var actual = _contentController.ViewData["ContextModel"] as ContextModel;
 
         // assert
@@ -163,7 +158,7 @@ public class ContentControllerTests
         await _contentfulClient.GetEntries(Arg.Do<QueryBuilder<Content>>(value => query = value.Build()), Arg.Any<CancellationToken>());
 
         // act
-        var actual = await _contentController.Index(_cancellationTokenSource.Token, "home/");
+        var actual = await _contentController.Index("home/", false);
 
         // assert
         query.Should().Contain("fields.id=home&");

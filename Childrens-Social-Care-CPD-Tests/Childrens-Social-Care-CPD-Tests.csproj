@@ -25,6 +25,12 @@
     <ProjectReference Include="..\Childrens-Social-Care-CPD\Childrens-Social-Care-CPD.csproj" />
   </ItemGroup>
 
+    <ItemGroup>
+	    <AssemblyAttribute Include="Microsoft.AspNetCore.Mvc.ApplicationParts.ApplicationPartAttribute">
+		    <_Parameter1>Childrens_Social_Care_CPD_Tests</_Parameter1>
+	    </AssemblyAttribute>
+    </ItemGroup>
+
   <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>

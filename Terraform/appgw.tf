@@ -29,7 +29,7 @@ resource "azurerm_application_gateway" "appgw" {
   }
 
   # A firewall policy that should only be populated for Load-Test and Prod environments 
-  # firewall_policy_id = var.appgw_tier[terraform.workspace] == "WAF_v2" ? azurerm_web_application_firewall_policy.fwpol.id : null
+  firewall_policy_id = var.appgw_tier[terraform.workspace] == "WAF_v2" ? azurerm_web_application_firewall_policy.fwpol.id : null
 
   gateway_ip_configuration {
     name      = var.gateway_ip_configuration[terraform.workspace]
@@ -150,7 +150,7 @@ resource "azurerm_application_gateway" "appgw" {
       backend_address_pool_name  = var.backend_address_pool_name[terraform.workspace]
       backend_http_settings_name = var.http_setting_name[terraform.workspace]
       rewrite_rule_set_name      = var.appgw_rewrite_rule_set[terraform.workspace]
-      firewall_policy_id         = var.appgw_tier[terraform.workspace] == "WAF_v2" ? azurerm_web_application_firewall_policy.fwpol.id : null
+      firewall_policy_id         = var.appgw_tier[terraform.workspace] == "WAF_v2" ? azurerm_web_application_firewall_policy.fwpol-app.id : null
     }
 
     path_rule {
@@ -158,7 +158,7 @@ resource "azurerm_application_gateway" "appgw" {
       paths                      = ["/grafana*"]
       backend_address_pool_name  = var.grafana_backend_address_pool_name[terraform.workspace]
       backend_http_settings_name = var.grafana_http_setting_name[terraform.workspace]
-      rewrite_rule_set_name      = var.appgw_rewrite_rule_set[terraform.workspace]
+      rewrite_rule_set_name      = var.appgw_gf_rewrite_rule_set[terraform.workspace]
       firewall_policy_id         = var.appgw_tier[terraform.workspace] == "WAF_v2" ? azurerm_web_application_firewall_policy.fwpol-gf.id : null
     }
   }
@@ -228,20 +228,59 @@ resource "azurerm_application_gateway" "appgw" {
         header_value = "nosniff"
       }
 
-      # response_header_configuration {
-      #   header_name  = "Content-Security-Policy"
-      #   header_value = "upgrade-insecure-requests; base-uri 'self'; frame-ancestors 'self'; form-action 'self'; object-src 'none';"
-      # }
+      response_header_configuration {
+        header_name  = "Content-Security-Policy"
+        header_value = "upgrade-insecure-requests; base-uri 'self'; frame-ancestors 'self'; form-action 'self'; object-src 'none';"
+      }
 
-      # response_header_configuration {
-      #   header_name  = "Referrer-Policy"
-      #   header_value = "strict-origin-when-cross-origin"
-      # }
+      response_header_configuration {
+        header_name  = "Referrer-Policy"
+        header_value = "strict-origin-when-cross-origin"
+      }
 
-      # response_header_configuration {
-      #   header_name  = "Strict-Transport-Security"
-      #   header_value = "max-age=31536000; includeSubDomains; preload"
-      # }
+      response_header_configuration {
+        header_name  = "Strict-Transport-Security"
+        header_value = "max-age=31536000; includeSubDomains; preload"
+      }
+
+      response_header_configuration {
+        header_name  = "Permissions-Policy"
+        header_value = "accelerometer=(), ambient-light-sensor=(), autoplay=(), camera=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), speaker=(), sync-xhr=self, usb=(), vr=()"
+      }
+
+      response_header_configuration {
+        header_name  = "Server"
+        header_value = ""
+      }
+
+      response_header_configuration {
+        header_name  = "X-Powered-By"
+        header_value = ""
+      }
+    }
+  }
+
+  rewrite_rule_set {
+    name = var.appgw_gf_rewrite_rule_set[terraform.workspace]
+
+    rewrite_rule {
+      name          = var.appgw_rewrite_rule[terraform.workspace]
+      rule_sequence = 1
+
+      response_header_configuration {
+        header_name  = "X-Frame-Options"
+        header_value = "SAMEORIGIN"
+      }
+
+      response_header_configuration {
+        header_name  = "X-Xss-Protection"
+        header_value = "0"
+      }
+
+      response_header_configuration {
+        header_name  = "X-Content-Type-Options"
+        header_value = "nosniff"
+      }
 
       response_header_configuration {
         header_name  = "Permissions-Policy"
@@ -263,9 +302,9 @@ resource "azurerm_application_gateway" "appgw" {
   tags = data.azurerm_resource_group.rg.tags
 }
 
-# A firewall policy that is only attached for Load-Test and Prod environments
-resource "azurerm_web_application_firewall_policy" "fwpol" {
-  name                = var.fwpol_name[terraform.workspace]
+# A firewall policy that is only attached for Load-Test and Prod environments for the Application
+resource "azurerm_web_application_firewall_policy" "fwpol-app" {
+  name                = var.app_fwpol_name[terraform.workspace]
   location            = data.azurerm_resource_group.rg.location
   resource_group_name = data.azurerm_resource_group.rg.name
 
@@ -288,7 +327,7 @@ resource "azurerm_web_application_firewall_policy" "fwpol" {
   tags = data.azurerm_resource_group.rg.tags
 }
 
-# A firewall policy that is only attached for Load-Test and Prod environments
+# A firewall policy that is only attached for Load-Test and Prod environments for Grafana
 resource "azurerm_web_application_firewall_policy" "fwpol-gf" {
   name                = var.grafana_fwpol_name[terraform.workspace]
   location            = data.azurerm_resource_group.rg.location
@@ -388,3 +427,25 @@ resource "azurerm_web_application_firewall_policy" "fwpol-gf" {
 
   tags = data.azurerm_resource_group.rg.tags
 }
+
+
+# A firewall policy that is only attached for Load-Test and Prod environments for the Applicaton Gateway
+resource "azurerm_web_application_firewall_policy" "fwpol" {
+  name                = var.fwpol_name[terraform.workspace]
+  location            = data.azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
+
+  managed_rules {
+    managed_rule_set {
+      type    = "OWASP"
+      version = "3.2"
+    }
+  }
+
+  policy_settings {
+    mode = "Detection"
+  }
+
+  tags = data.azurerm_resource_group.rg.tags
+}
+

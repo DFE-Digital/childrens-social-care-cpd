@@ -31,10 +31,11 @@ resource "azurerm_storage_share" "gffileshare" {
 
 # Definition of the Grafana linux web app for the service
 resource "azurerm_linux_web_app" "grafana-web-app" {
-  name                = var.grafana_webapp_name[terraform.workspace]
-  resource_group_name = data.azurerm_resource_group.rg.name
-  location            = data.azurerm_resource_group.rg.location
-  service_plan_id     = azurerm_service_plan.service-plan-gf.id
+  name                          = var.grafana_webapp_name[terraform.workspace]
+  resource_group_name           = data.azurerm_resource_group.rg.name
+  location                      = data.azurerm_resource_group.rg.location
+  service_plan_id               = azurerm_service_plan.service-plan-gf.id
+  public_network_access_enabled = false
 
   app_settings = {
     DOCKER_ENABLE_CI                    = "true"
@@ -52,8 +53,8 @@ resource "azurerm_linux_web_app" "grafana-web-app" {
 
   site_config {
     application_stack {
-      docker_registry_url = "https://index.docker.io"
-      docker_image_name   = "grafana/grafana:latest"
+      docker_registry_url = "https://ghcr.io"
+      docker_image_name   = "dfe-digital/grafana-azurecostplugin-grafana:${var.cpd_gf_image_tag}"
     }
   }
 

@@ -13,7 +13,7 @@
     "boxen": "^7.1.1",
     "chalk": "^5.3.0",
     "contentful-cli": "^3.1.14",
-    "contentful-management": "^11.5.1",
+    "contentful-management": "^11.13.1",
     "inquirer": "^9.2.12",
     "listr2": "^7.0.2",
     "yargs": "^17.7.2"

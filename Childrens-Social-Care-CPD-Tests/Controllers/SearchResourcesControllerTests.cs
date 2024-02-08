@@ -24,7 +24,7 @@ public class SearchResourcesControllerTests
                 null,
                 string.Empty,
                 string.Empty,
-                SortOrder.MostRelevant));
+                SortOrder.Relevance));
         }
     }
 

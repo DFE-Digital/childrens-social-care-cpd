@@ -55,6 +55,11 @@ const ctx: MainContext = {
     contentTypes: []
 }
 
+const options = {
+    concurrent: false, 
+    ctx,
+    renderer: argv.o as string
+}
 
 const tasks = new Listr<MainContext>(
   [
@@ -85,11 +90,7 @@ const tasks = new Listr<MainContext>(
         }
     }
   ],
-  {
-    concurrent: false, 
-    ctx,
-    renderer: argv.o as string
-  }
+  options as unknown as any
 )
 
 try {

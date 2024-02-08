@@ -11121,4 +11121,13 @@ CONTENT TITLE BANNER
   font-style: normal;
 }
 
+.columns-layout {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.columns-layout-col {
+  display: flex;
+}
+
 /*# sourceMappingURL=application.css.map */
