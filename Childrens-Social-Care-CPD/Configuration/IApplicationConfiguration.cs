@@ -17,6 +17,9 @@ public interface IApplicationConfiguration
     IConfigurationSetting<string> AzureEnvironment { get; }
 
     [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false)]
+    IConfigurationSetting<string> AzureManagedIdentityId { get; }
+
+    [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false)]
     IConfigurationSetting<string> AzureStorageAccount { get; }
 
     [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false)]
