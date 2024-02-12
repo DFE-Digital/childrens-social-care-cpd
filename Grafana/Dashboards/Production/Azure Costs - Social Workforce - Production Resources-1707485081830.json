@@ -18,14 +18,14 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 1,
+  "id": 3,
   "links": [],
   "liveNow": false,
   "panels": [
     {
       "datasource": {
         "type": "dfe-azurecostbackend-datasource",
-        "uid": "eafe9b44-e4b6-489e-9287-864a418ee0e2"
+        "uid": "c6010183-ddc5-494c-8524-c4718fe77680"
       },
       "description": "",
       "fieldConfig": {
@@ -34,6 +34,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "Daily Cost in Pounds",
@@ -47,6 +48,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -77,7 +79,8 @@
               }
             ]
           },
-          "unit": "currencyGBP"
+          "unit": "currencyGBP",
+          "unitScale": true
         },
         "overrides": [
           {
@@ -101,6 +104,18 @@
               {
                 "id": "custom.axisLabel",
                 "value": "Aggregated Cost in Pounds"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "time"
+            },
+            "properties": [
+              {
+                "id": "custom.axisLabel",
+                "value": "Month / Day"
               }
             ]
           }
@@ -130,12 +145,14 @@
           "constant": 6.5,
           "datasource": {
             "type": "dfe-azurecostbackend-datasource",
-            "uid": "eafe9b44-e4b6-489e-9287-864a418ee0e2"
+            "uid": "c154b260-5810-42c2-bb41-b24db270cf77"
           },
+          "hide": false,
+          "queryText": "s185p01-childrens-social-care-cpd-rg",
           "refId": "A"
         }
       ],
-      "title": "Azure Costs for s185-social workforce-development",
+      "title": "Azure Costs for Production Environment - Main Application",
       "transformations": [
         {
           "id": "organize",
@@ -154,7 +171,7 @@
     {
       "datasource": {
         "type": "dfe-azurecostbackend-datasource",
-        "uid": "eafe9b44-e4b6-489e-9287-864a418ee0e2"
+        "uid": "c6010183-ddc5-494c-8524-c4718fe77680"
       },
       "description": "",
       "fieldConfig": {
@@ -175,7 +192,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unitScale": true
         },
         "overrides": [
           {
@@ -211,20 +229,24 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.0.3",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "constant": 6.5,
           "datasource": {
             "type": "dfe-azurecostbackend-datasource",
-            "uid": "eafe9b44-e4b6-489e-9287-864a418ee0e2"
+            "uid": "c154b260-5810-42c2-bb41-b24db270cf77"
           },
+          "hide": false,
+          "queryText": "s185p01-childrens-social-care-cpd-rg",
           "refId": "A"
         }
       ],
-      "title": "Azure Costs for s185-social workforce-development",
+      "title": "Azure Costs for Production Environment - Main Application",
       "transformations": [
         {
           "id": "organize",
@@ -243,7 +265,7 @@
     {
       "datasource": {
         "type": "dfe-azurecostbackend-datasource",
-        "uid": "eafe9b44-e4b6-489e-9287-864a418ee0e2"
+        "uid": "c6010183-ddc5-494c-8524-c4718fe77680"
       },
       "description": "",
       "fieldConfig": {
@@ -252,6 +274,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "Daily Cost in Pounds",
@@ -265,6 +288,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -295,7 +319,8 @@
               }
             ]
           },
-          "unit": "currencyGBP"
+          "unit": "currencyGBP",
+          "unitScale": true
         },
         "overrides": [
           {
@@ -319,6 +344,18 @@
               {
                 "id": "custom.axisLabel",
                 "value": "Aggregated Cost in Pounds"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "time"
+            },
+            "properties": [
+              {
+                "id": "custom.axisLabel",
+                "value": "Month / Day"
               }
             ]
           }
@@ -348,13 +385,14 @@
           "constant": 6.5,
           "datasource": {
             "type": "dfe-azurecostbackend-datasource",
-            "uid": "eafe9b44-e4b6-489e-9287-864a418ee0e2"
+            "uid": "c154b260-5810-42c2-bb41-b24db270cf77"
           },
-          "queryText": "s185d01-childrens-social-care-cpd-rg",
+          "hide": false,
+          "queryText": "s185p01-childrens-social-care-shared-rg",
           "refId": "A"
         }
       ],
-      "title": "Azure Costs for s185d01-childrens-social-care-cpd-rg by Date",
+      "title": "Azure Costs for Production Environment - Shared services",
       "transformations": [
         {
           "id": "organize",
@@ -373,7 +411,7 @@
     {
       "datasource": {
         "type": "dfe-azurecostbackend-datasource",
-        "uid": "eafe9b44-e4b6-489e-9287-864a418ee0e2"
+        "uid": "c6010183-ddc5-494c-8524-c4718fe77680"
       },
       "description": "",
       "fieldConfig": {
@@ -394,7 +432,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unitScale": true
         },
         "overrides": [
           {
@@ -430,21 +469,24 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.0.3",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "constant": 6.5,
           "datasource": {
             "type": "dfe-azurecostbackend-datasource",
-            "uid": "eafe9b44-e4b6-489e-9287-864a418ee0e2"
+            "uid": "c154b260-5810-42c2-bb41-b24db270cf77"
           },
-          "queryText": "s185d01-childrens-social-care-cpd-rg",
+          "hide": false,
+          "queryText": "s185p01-childrens-social-care-shared-rg",
           "refId": "A"
         }
       ],
-      "title": "Azure Costs for s185d01-childrens-social-care-cpd-rg",
+      "title": "Azure Costs for Production Environment - Shared services",
       "transformations": [
         {
           "id": "organize",
@@ -463,7 +505,7 @@
     {
       "datasource": {
         "type": "dfe-azurecostbackend-datasource",
-        "uid": "eafe9b44-e4b6-489e-9287-864a418ee0e2"
+        "uid": "c6010183-ddc5-494c-8524-c4718fe77680"
       },
       "description": "",
       "fieldConfig": {
@@ -472,6 +514,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "Daily Cost in Pounds",
@@ -485,6 +528,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -515,7 +559,8 @@
               }
             ]
           },
-          "unit": "currencyGBP"
+          "unit": "currencyGBP",
+          "unitScale": true
         },
         "overrides": [
           {
@@ -539,6 +584,18 @@
               {
                 "id": "custom.axisLabel",
                 "value": "Aggregated Cost in Pounds"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "time"
+            },
+            "properties": [
+              {
+                "id": "custom.axisLabel",
+                "value": "Month / Day"
               }
             ]
           }
@@ -568,13 +625,14 @@
           "constant": 6.5,
           "datasource": {
             "type": "dfe-azurecostbackend-datasource",
-            "uid": "eafe9b44-e4b6-489e-9287-864a418ee0e2"
+            "uid": "c154b260-5810-42c2-bb41-b24db270cf77"
           },
-          "queryText": "s185d01-childrens-social-care-shared-rg",
+          "hide": false,
+          "queryText": "s185p01-tfstate-rg",
           "refId": "A"
         }
       ],
-      "title": "Azure Costs for s185d01-childrens-social-care-shared-rg by Date",
+      "title": "Azure Costs for Production Environment - Terraform State",
       "transformations": [
         {
           "id": "organize",
@@ -593,7 +651,7 @@
     {
       "datasource": {
         "type": "dfe-azurecostbackend-datasource",
-        "uid": "eafe9b44-e4b6-489e-9287-864a418ee0e2"
+        "uid": "c6010183-ddc5-494c-8524-c4718fe77680"
       },
       "description": "",
       "fieldConfig": {
@@ -614,7 +672,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unitScale": true
         },
         "overrides": [
           {
@@ -650,21 +709,24 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.0.3",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "constant": 6.5,
           "datasource": {
             "type": "dfe-azurecostbackend-datasource",
-            "uid": "eafe9b44-e4b6-489e-9287-864a418ee0e2"
+            "uid": "c154b260-5810-42c2-bb41-b24db270cf77"
           },
-          "queryText": "s185d01-childrens-social-care-shared-rg",
+          "hide": false,
+          "queryText": "s185p01-tfstate-rg",
           "refId": "A"
         }
       ],
-      "title": "Azure Costs for s185d01-childrens-social-care-shared-rg",
+      "title": "Azure Costs for Production Environment - Terraform State",
       "transformations": [
         {
           "id": "organize",
@@ -683,7 +745,7 @@
     {
       "datasource": {
         "type": "dfe-azurecostbackend-datasource",
-        "uid": "eafe9b44-e4b6-489e-9287-864a418ee0e2"
+        "uid": "c6010183-ddc5-494c-8524-c4718fe77680"
       },
       "description": "",
       "fieldConfig": {
@@ -692,6 +754,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "Daily Cost in Pounds",
@@ -705,6 +768,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -726,8 +790,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -735,7 +798,8 @@
               }
             ]
           },
-          "unit": "currencyGBP"
+          "unit": "currencyGBP",
+          "unitScale": true
         },
         "overrides": [
           {
@@ -759,6 +823,18 @@
               {
                 "id": "custom.axisLabel",
                 "value": "Aggregated Cost in Pounds"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "time"
+            },
+            "properties": [
+              {
+                "id": "custom.axisLabel",
+                "value": "Month / Day"
               }
             ]
           }
@@ -788,13 +864,14 @@
           "constant": 6.5,
           "datasource": {
             "type": "dfe-azurecostbackend-datasource",
-            "uid": "eafe9b44-e4b6-489e-9287-864a418ee0e2"
+            "uid": "c154b260-5810-42c2-bb41-b24db270cf77"
           },
-          "queryText": "s185d01-tfstate-rg",
+          "hide": false,
+          "queryText": "s185p01-core",
           "refId": "A"
         }
       ],
-      "title": "Azure Costs for s185d01-tfstate-rg by Date",
+      "title": "Azure Costs for Production Environment - DfE Core Services",
       "transformations": [
         {
           "id": "organize",
@@ -813,7 +890,7 @@
     {
       "datasource": {
         "type": "dfe-azurecostbackend-datasource",
-        "uid": "eafe9b44-e4b6-489e-9287-864a418ee0e2"
+        "uid": "c6010183-ddc5-494c-8524-c4718fe77680"
       },
       "description": "",
       "fieldConfig": {
@@ -826,15 +903,15 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
                 "value": 80
               }
             ]
-          }
+          },
+          "unitScale": true
         },
         "overrides": [
           {
@@ -870,241 +947,24 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.0.3",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "constant": 6.5,
           "datasource": {
             "type": "dfe-azurecostbackend-datasource",
-            "uid": "eafe9b44-e4b6-489e-9287-864a418ee0e2"
+            "uid": "c154b260-5810-42c2-bb41-b24db270cf77"
           },
-          "queryText": "s185d01-tfstate-rg",
+          "hide": false,
+          "queryText": "s185p01-core",
           "refId": "A"
         }
       ],
-      "title": "Azure Costs for s185d01-tfstate-rg",
-      "transformations": [
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {},
-            "indexByName": {},
-            "renameByName": {
-              "sum-values": "Aggregation Value",
-              "values": "Last Daily Value"
-            }
-          }
-        }
-      ],
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "dfe-azurecostbackend-datasource",
-        "uid": "eafe9b44-e4b6-489e-9287-864a418ee0e2"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "Daily Cost in Pounds",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "currencyGBP"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "sum-values"
-            },
-            "properties": [
-              {
-                "id": "custom.axisPlacement",
-                "value": "right"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Aggregation Values"
-            },
-            "properties": [
-              {
-                "id": "custom.axisLabel",
-                "value": "Aggregated Cost in Pounds"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 32
-      },
-      "id": 13,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "constant": 6.5,
-          "datasource": {
-            "type": "dfe-azurecostbackend-datasource",
-            "uid": "eafe9b44-e4b6-489e-9287-864a418ee0e2"
-          },
-          "queryText": "s185d01-core",
-          "refId": "A"
-        }
-      ],
-      "title": "Azure Costs fors185d01-core by Date",
-      "transformations": [
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {},
-            "indexByName": {},
-            "renameByName": {
-              "sum-values": "Aggregation Values",
-              "values": "Daily Values"
-            }
-          }
-        }
-      ],
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "dfe-azurecostbackend-datasource",
-        "uid": "eafe9b44-e4b6-489e-9287-864a418ee0e2"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byType",
-              "options": "number"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "currencyGBP"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 32
-      },
-      "id": 14,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "10.0.3",
-      "targets": [
-        {
-          "constant": 6.5,
-          "datasource": {
-            "type": "dfe-azurecostbackend-datasource",
-            "uid": "eafe9b44-e4b6-489e-9287-864a418ee0e2"
-          },
-          "queryText": "s185d01-core",
-          "refId": "A"
-        }
-      ],
-      "title": "Azure Costs for s185d01-core",
+      "title": "Azure Costs for Production Environment - DfE Core Services",
       "transformations": [
         {
           "id": "organize",
@@ -1122,8 +982,7 @@
     }
   ],
   "refresh": "",
-  "schemaVersion": 38,
-  "style": "dark",
+  "schemaVersion": 39,
   "tags": [],
   "templating": {
     "list": []
@@ -1134,8 +993,8 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Azure Costs - Social Workforce - Development",
-  "uid": "f3f61cfe-84ba-4a26-a45f-d824fbdb6409",
-  "version": 3,
+  "title": "Azure Costs - Social Workforce - Production Resources",
+  "uid": "f6cecf5e-e311-45a8-a4d1-223dc9469499",
+  "version": 6,
   "weekStart": ""
 }
