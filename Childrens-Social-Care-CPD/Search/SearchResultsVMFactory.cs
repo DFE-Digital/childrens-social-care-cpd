@@ -3,7 +3,6 @@ using Childrens_Social_Care_CPD.DataAccess;
 using Childrens_Social_Care_CPD.Models;
 using System.Collections.ObjectModel;
 using System.Net;
-using System.Text.Encodings.Web;
 
 namespace Childrens_Social_Care_CPD.Search;
 
@@ -98,9 +97,6 @@ internal class SearchResultsVMFactory : ISearchResultsVMFactory
 
     public async Task<ResourceSearchResultsViewModel> GetSearchModel(SearchRequestModel request, int pageSize, string routeName, CancellationToken cancellationToken)
     {
-        // Kick off our page content query
-        var rootPageTask = _resourcesRepository.FetchRootPageAsync(cancellationToken);
-
         // Get the available tags and validate the ones we've been given
         var tagInfos = await _resourcesRepository.GetSearchTagsAsync(cancellationToken);
         var validTags = request.Tags?.Where(x => tagInfos.Any(y => y.TagName == x)) ?? Array.Empty<string>();
@@ -112,11 +108,7 @@ internal class SearchResultsVMFactory : ISearchResultsVMFactory
         var searchResults = await _searchService.SearchResourcesAsync(query);
         var facetedTags = GetFacetedTags(tagInfos, searchResults.SearchResults.Facets);
 
-        // Wait for the page content query to complete
-        var pageContent = await rootPageTask;
-
         return new ResourceSearchResultsViewModel(
-            pageContent,
             query.Keyword,
             searchResults.TotalCount,
             searchResults.TotalPages,

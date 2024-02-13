@@ -15,7 +15,6 @@ public class SearchResourcesControllerTests
         public Task<ResourceSearchResultsViewModel> GetSearchModel(SearchRequestModel query, int pageSize, string searchRoute, CancellationToken cancellationToken)
         {
             return Task.FromResult(new ResourceSearchResultsViewModel(
-                null,
                 string.Empty,
                 0,0,0,0,0,
                 null,
