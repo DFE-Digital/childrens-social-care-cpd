@@ -678,6 +678,18 @@ variable "fw_diag_name" {
   description = "Firewall Diagnostic Name"
 }
 
+variable "app_diag_name" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-app-diagnostics"
+    Test      = "s185d02-app-diagnostics"
+    Load-Test = "s185d03-app-diagnostics"
+    Pre-Prod  = "s185t01-app-diagnostics"
+    Prod      = "s185p01-app-diagnostics"
+  }
+  description = "App Diagnostic Name"
+}
+
 variable "gf_diag_name" {
   type = map(string)
   default = {
