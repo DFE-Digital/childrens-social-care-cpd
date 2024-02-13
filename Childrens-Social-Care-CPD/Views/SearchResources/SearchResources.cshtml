@@ -19,7 +19,7 @@
             @* Filter column *@
             <div class="govuk-grid-column-one-third">
                 <h2 class="govuk-heading-m govuk-!-margin-bottom-2">Results</h2>
-                <p class="govuk-!-margin-bottom-3">We found <strong>@Model.TotalCount</strong> results</p>
+                <p class="govuk-!-margin-bottom-3">We found <strong data-testid="results-count">@Model.TotalCount</strong> results</p>
 
                 @if (Model.SelectedTags.Any())
                 {
