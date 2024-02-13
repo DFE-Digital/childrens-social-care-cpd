@@ -13,9 +13,7 @@ class MobileFiltersModal {
     handleClick(event) {
         event.preventDefault()
         this.$wrapper.classList.toggle('facets--visible')
-        this.$wrapper.classList.contains("facets--visible")
-            ? this.$module.textContent = "Hide filters"
-            : this.$module.textContent = "Show filters"
+        this.$module.textContent = this.$wrapper.classList.contains("facets--visible") ? "Hide filters" : "Show filters"
     }
 }
 
