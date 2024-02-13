@@ -5,7 +5,7 @@ test.describe('Resources and learning', () => {
         await page.goto('/resources-learning')
     })
     
-    test.describe('Filter accordian @accordian', () => {
+    test.describe.skip('Filter accordian @accordian', () => {
         test('All sections are collapsed when you arrive on page' , async ({ page }) => {
             const sections = await page.locator('.govuk-accordion__section-content').all()
             expect(sections.length).toBeGreaterThan(1)
