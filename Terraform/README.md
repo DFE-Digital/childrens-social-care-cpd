@@ -9,7 +9,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.75.0 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.90.0 |
 
 ## Modules
 
@@ -25,6 +25,7 @@ No modules.
 | [azurerm_linux_web_app_slot.staging](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/linux_web_app_slot) | resource |
 | [azurerm_monitor_autoscale_setting.autoscale](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/monitor_autoscale_setting) | resource |
 | [azurerm_monitor_diagnostic_setting.firewall-diagnostics](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/monitor_diagnostic_setting) | resource |
+| [azurerm_monitor_diagnostic_setting.grafana-diagnostics](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/monitor_diagnostic_setting) | resource |
 | [azurerm_network_interface.nic](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/network_interface) | resource |
 | [azurerm_network_security_group.nsg](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/network_security_group) | resource |
 | [azurerm_network_security_rule.dev-whitelist-rules](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/network_security_rule) | resource |
@@ -106,6 +107,7 @@ No modules.
 | <a name="input_fw_diag_name"></a> [fw\_diag\_name](#input\_fw\_diag\_name) | Firewall Diagnostic Name | `map(string)` | <pre>{<br>  "Dev": "s185d01-firewall-diagnostics",<br>  "Load-Test": "s185d03-firewall-diagnostics",<br>  "Pre-Prod": "s185t01-firewall-diagnostics",<br>  "Prod": "s185p01-firewall-diagnostics",<br>  "Test": "s185d02-firewall-diagnostics"<br>}</pre> | no |
 | <a name="input_fwpol_name"></a> [fwpol\_name](#input\_fwpol\_name) | Firewall Policy Name for the Gateway | `map(string)` | <pre>{<br>  "Dev": "s185d01-firewall-policy",<br>  "Load-Test": "s185d03-firewall-policy",<br>  "Pre-Prod": "s185t01-firewall-policy",<br>  "Prod": "s185p01-firewall-policy",<br>  "Test": "s185d02-firewall-policy"<br>}</pre> | no |
 | <a name="input_gateway_ip_configuration"></a> [gateway\_ip\_configuration](#input\_gateway\_ip\_configuration) | Name of Gateway IP Configuration | `map(string)` | <pre>{<br>  "Dev": "s185d01-gateway-ip-configuration",<br>  "Load-Test": "s185d03-gateway-ip-configuration",<br>  "Pre-Prod": "s185t01-gateway-ip-configuration",<br>  "Prod": "s185p01-gateway-ip-configuration",<br>  "Test": "s185d02-gateway-ip-configuration"<br>}</pre> | no |
+| <a name="input_gf_diag_name"></a> [gf\_diag\_name](#input\_gf\_diag\_name) | Grafana Diagnostic Name | `map(string)` | <pre>{<br>  "Dev": "s185d01-grafana-diagnostics",<br>  "Load-Test": "s185d03-grafana-diagnostics",<br>  "Pre-Prod": "s185t01-grafana-diagnostics",<br>  "Prod": "s185p01-grafana-diagnostics",<br>  "Test": "s185d02-grafana-diagnostics"<br>}</pre> | no |
 | <a name="input_grafana_app_path_rule"></a> [grafana\_app\_path\_rule](#input\_grafana\_app\_path\_rule) | Name of Grafana app path rule | `map(string)` | <pre>{<br>  "Dev": "s185d01-grafana-app-path-rule",<br>  "Load-Test": "s185d03-grafana-app-path-rule",<br>  "Pre-Prod": "s185t01-grafana-app-path-rule",<br>  "Prod": "s185p01-grafana-app-path-rule",<br>  "Test": "s185d02-grafana-app-path-rule"<br>}</pre> | no |
 | <a name="input_grafana_appgw_probe"></a> [grafana\_appgw\_probe](#input\_grafana\_appgw\_probe) | Name of App Gateway Grafana Health Probe | `map(string)` | <pre>{<br>  "Dev": "s185d01-chidrens-social-care-grafana-hp",<br>  "Load-Test": "s185d03-chidrens-social-care-grafana-hp",<br>  "Pre-Prod": "s185t01-chidrens-social-care-grafana-hp",<br>  "Prod": "s185p01-chidrens-social-care-grafana-hp",<br>  "Test": "s185d02-chidrens-social-care-grafana-hp"<br>}</pre> | no |
 | <a name="input_grafana_backend_address_pool_name"></a> [grafana\_backend\_address\_pool\_name](#input\_grafana\_backend\_address\_pool\_name) | Name of grafana backend address pool | `map(string)` | <pre>{<br>  "Dev": "s185d01-chidrens-social-care-grafana-bep",<br>  "Load-Test": "s185d03-chidrens-social-care-grafana-bep",<br>  "Pre-Prod": "s185t01-chidrens-social-care-grafana-bep",<br>  "Prod": "s185p01-chidrens-social-care-grafana-bep",<br>  "Test": "s185d02-chidrens-social-care-grafana-bep"<br>}</pre> | no |
