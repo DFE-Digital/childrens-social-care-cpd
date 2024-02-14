@@ -420,6 +420,30 @@ variable "key_vault_url" {
   description = "URL of Key Vault"
 }
 
+variable "search_indexer_key_vault_name" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-SearchIndexer-KV"
+    Test      = "s185d02-SearchIndexer-KV"
+    Load-Test = "s185d03-SearchIndexer-KV"
+    Pre-Prod  = "s185t01-SearchIndexer-KV"
+    Prod      = "s185p01-SearchIndexer-KV"
+  }
+  description = "Name of Search Indexer Key Vault"
+}
+
+variable "search_indexer_key_vault_url" {
+  type = map(string)
+  default = {
+    Dev       = "https://s185d01-search-indexer-key-vault.vault.azure.net/"
+    Test      = "https://s185d02-search-indexer-key-vault.vault.azure.net/"
+    Load-Test = "https://s185d03-search-indexer-key-vault.vault.azure.net/"
+    Pre-Prod  = "https://s185t01-search-indexer-key-vault.vault.azure.net/"
+    Prod      = "https://s185p01-search-indexer-key-vault.vault.azure.net/"
+  }
+  description = "URL of Search Indexer Key Vault"
+}
+
 variable "autoscale_name" {
   type = map(string)
   default = {
@@ -604,6 +628,12 @@ variable "tenant_id" {
   type        = string
   sensitive   = true
   description = "The Tenant ID of the subscription being used"
+}
+
+variable "whitelist_ips" {
+  type        = string
+  sensitive   = true
+  description = "List of IP addresses to Whitelist on the App GW"
 }
 
 variable "cpd_googleanalyticstag" {
