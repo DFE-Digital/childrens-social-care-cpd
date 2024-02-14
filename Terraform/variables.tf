@@ -423,11 +423,11 @@ variable "key_vault_url" {
 variable "search_indexer_key_vault_name" {
   type = map(string)
   default = {
-    Dev       = "s185d01-SearchIndexer-KV"
-    Test      = "s185d02-SearchIndexer-KV"
-    Load-Test = "s185d03-SearchIndexer-KV"
-    Pre-Prod  = "s185t01-SearchIndexer-KV"
-    Prod      = "s185p01-SearchIndexer-KV"
+    Dev       = "s185d01-kv-search"
+    Test      = "s185d02-kv-search"
+    Load-Test = "s185d03-kv-search"
+    Pre-Prod  = "s185t01-kv-search"
+    Prod      = "s185p01-kv-search"
   }
   description = "Name of Search Indexer Key Vault"
 }
@@ -435,11 +435,11 @@ variable "search_indexer_key_vault_name" {
 variable "search_indexer_key_vault_url" {
   type = map(string)
   default = {
-    Dev       = "https://s185d01-search-indexer-key-vault.vault.azure.net/"
-    Test      = "https://s185d02-search-indexer-key-vault.vault.azure.net/"
-    Load-Test = "https://s185d03-search-indexer-key-vault.vault.azure.net/"
-    Pre-Prod  = "https://s185t01-search-indexer-key-vault.vault.azure.net/"
-    Prod      = "https://s185p01-search-indexer-key-vault.vault.azure.net/"
+    Dev       = "https://s185d01-kv-search.vault.azure.net/"
+    Test      = "https://s185d02-kv-search.vault.azure.net/"
+    Load-Test = "https://s185d03-kv-search.vault.azure.net/"
+    Pre-Prod  = "https://s185t01-kv-search.vault.azure.net/"
+    Prod      = "https://s185p01-kv-search.vault.azure.net/"
   }
   description = "URL of Search Indexer Key Vault"
 }
