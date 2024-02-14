@@ -61,8 +61,6 @@ test.describe('Resources and learning', () => {
         
     })
 
-
-    /////
     test('Check that Filters exist and are in correct order', async ({ page }) => {
         await page.getByRole('button', { name: 'Show all sections', exact: true }).click();
         
