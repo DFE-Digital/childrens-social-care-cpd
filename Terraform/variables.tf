@@ -420,6 +420,30 @@ variable "key_vault_url" {
   description = "URL of Key Vault"
 }
 
+variable "search_indexer_key_vault_name" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-kv-search"
+    Test      = "s185d02-kv-search"
+    Load-Test = "s185d03-kv-search"
+    Pre-Prod  = "s185t01-kv-search"
+    Prod      = "s185p01-kv-search"
+  }
+  description = "Name of Search Indexer Key Vault"
+}
+
+variable "search_indexer_key_vault_url" {
+  type = map(string)
+  default = {
+    Dev       = "https://s185d01-kv-search.vault.azure.net/"
+    Test      = "https://s185d02-kv-search.vault.azure.net/"
+    Load-Test = "https://s185d03-kv-search.vault.azure.net/"
+    Pre-Prod  = "https://s185t01-kv-search.vault.azure.net/"
+    Prod      = "https://s185p01-kv-search.vault.azure.net/"
+  }
+  description = "URL of Search Indexer Key Vault"
+}
+
 variable "autoscale_name" {
   type = map(string)
   default = {
@@ -606,6 +630,12 @@ variable "tenant_id" {
   description = "The Tenant ID of the subscription being used"
 }
 
+variable "whitelist_ips" {
+  type        = string
+  sensitive   = true
+  description = "List of IP addresses to Whitelist on the App GW"
+}
+
 variable "cpd_googleanalyticstag" {
   type        = string
   sensitive   = true
@@ -676,6 +706,30 @@ variable "fw_diag_name" {
     Prod      = "s185p01-firewall-diagnostics"
   }
   description = "Firewall Diagnostic Name"
+}
+
+variable "app_diag_name" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-app-diagnostics"
+    Test      = "s185d02-app-diagnostics"
+    Load-Test = "s185d03-app-diagnostics"
+    Pre-Prod  = "s185t01-app-diagnostics"
+    Prod      = "s185p01-app-diagnostics"
+  }
+  description = "App Diagnostic Name"
+}
+
+variable "gf_diag_name" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-grafana-diagnostics"
+    Test      = "s185d02-grafana-diagnostics"
+    Load-Test = "s185d03-grafana-diagnostics"
+    Pre-Prod  = "s185t01-grafana-diagnostics"
+    Prod      = "s185p01-grafana-diagnostics"
+  }
+  description = "Grafana Diagnostic Name"
 }
 
 variable "fwpol_name" {
