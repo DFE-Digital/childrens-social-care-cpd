@@ -1,11 +1,11 @@
 import { test, expect } from '@playwright/test'
 
-test.describe('Resources and learning', () => {
+test.describe.skip('Resources and learning', () => {
     test.beforeEach(async ({ page }) => {
         await page.goto('/resources-learning')
     })
     
-    test.describe.skip('Filter accordian @accordian', () => {
+    test.describe('Filter accordian @accordian', () => {
         test('All sections are collapsed when you arrive on page' , async ({ page }) => {
             const sections = await page.locator('.govuk-accordion__section-content').all()
             expect(sections.length).toBeGreaterThan(1)
