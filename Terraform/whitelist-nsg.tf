@@ -12,7 +12,7 @@ resource "azurerm_network_security_rule" "whitelist-rules" {
   access                      = "Allow"
   protocol                    = "Tcp"
   source_port_range           = "*"
-  destination_port_range      = "80,443"
+  destination_port_range      = "*"
   source_address_prefix       = local.ips[count.index]
   destination_address_prefix  = "*"
   resource_group_name         = data.azurerm_resource_group.rg.name
