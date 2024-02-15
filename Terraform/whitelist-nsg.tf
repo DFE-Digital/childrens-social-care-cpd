@@ -1,32 +1,13 @@
-# The keyvault to be used for secrets
-data "azurerm_key_vault" "kv" {
-  name                = var.key_vault_name[terraform.workspace]
-  resource_group_name = var.key_vault_rg[terraform.workspace]
-}
-
-# A secret to define the internal DfE IP addresses
-data "azurerm_key_vault_secret" "ips" {
-  name         = "dfe-ips"
-  key_vault_id = data.azurerm_key_vault.kv.id
-}
-
-# A secret to define IP addresses of developer and select users
-data "azurerm_key_vault_secret" "dev-ips" {
-  name         = "dfe-dev-ips"
-  key_vault_id = data.azurerm_key_vault.kv.id
-}
-
 # Locals used within the security rules
 locals {
-  ips     = compact((split(" ", data.azurerm_key_vault_secret.ips.value)))
-  dev-ips = compact((split(" ", data.azurerm_key_vault_secret.dev-ips.value)))
+  ips = compact(split(" ", var.whitelist_ips))
 }
 
 # Network security rules for the DfE IP addresses
 resource "azurerm_network_security_rule" "whitelist-rules" {
   count                       = length(local.ips)
-  name                        = "Allow-WhiteList-${count.index}"
-  priority                    = 1500 + count.index
+  name                        = "GitHub-WhiteList-${count.index}"
+  priority                    = 1000 + count.index
   direction                   = "Inbound"
   access                      = "Allow"
   protocol                    = "Tcp"
@@ -38,18 +19,3 @@ resource "azurerm_network_security_rule" "whitelist-rules" {
   network_security_group_name = azurerm_network_security_group.nsg.name
 }
 
-# Network security rules for the Developer IP Addresses
-resource "azurerm_network_security_rule" "dev-whitelist-rules" {
-  count                       = length(local.dev-ips)
-  name                        = "Allow-WhiteList-Dev-${count.index}"
-  priority                    = 500 + count.index
-  direction                   = "Inbound"
-  access                      = "Allow"
-  protocol                    = "Tcp"
-  source_port_range           = "*"
-  destination_port_range      = "*"
-  source_address_prefix       = local.dev-ips[count.index]
-  destination_address_prefix  = "*"
-  resource_group_name         = data.azurerm_resource_group.rg.name
-  network_security_group_name = azurerm_network_security_group.nsg.name
-}

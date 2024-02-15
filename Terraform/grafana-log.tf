@@ -9,7 +9,7 @@ resource "azurerm_monitor_diagnostic_setting" "grafana-diagnostics" {
   }
 
   enabled_log {
-    category = "HTTPLogs"
+    category = "AppServiceHTTPLogs"
   }
 
   enabled_log {
