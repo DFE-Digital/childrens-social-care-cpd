@@ -1,107 +1,121 @@
-let submitButton
-
 class FeedbackControl {
-    constructor($root) {
-        this.$root = $root
+    #root
+    #isUsefulYesRadioButton
+    #isUsefulNoRadioButton
+    #pageInput
+    #feedbackForm
+    #cancelLink
+    #isUsefulQuestionGroup
+    #commentsInput
+    #commentsFormGroup
+
+    constructor(root) {
+        this.#root = root
     }
 
     init() {
-        this.$submitButton = document.getElementById("submitButton")
-        document.getElementById("isUsefulYes").removeAttribute("required")
-        document.getElementById("feedbackForm").addEventListener("submit", handleFormSubmit)
-        show("cancelButton")
+        this.#feedbackForm = this.#root.querySelector("[data-module-id=feedbackForm]")
+        this.#cancelLink = this.#root.querySelector("[data-module-id=cancelLink]")
+        this.#isUsefulYesRadioButton = this.#root.querySelector("[data-module-id=isUsefulYes]")
+        this.#isUsefulNoRadioButton = this.#root.querySelector("[data-module-id=isUsefulNo]")
+        this.#isUsefulQuestionGroup = this.#root.querySelector("[data-module-id=isUsefulQuestionGroup]")
+        this.#pageInput = this.#root.querySelector("[data-module-id=page]")
+        this.#commentsInput = this.#root.querySelector("[data-module-id=comments]")
+        this.#commentsFormGroup = this.#root.querySelector("[data-module-id=commentsFormGroup]")
+
+        // Initialise the event handlers
+        this.#feedbackForm.addEventListener("submit", this.#handleFormSubmit.bind(this))
+        this.#feedbackForm.addEventListener("reset", this.#handleFormReset.bind(this))
+        this.#cancelLink.addEventListener("click", this.#resetForm.bind(this))
+
+        this.#show(this.#cancelLink)
+    }
+
+    #show = element => element.style.display = "block"
+    #hide = element => element.style.display = "none"
+
+    #handleFormSubmit(event) {
+        event.preventDefault()
+
+        if (this.#validateForm()) {
+            const data = {
+                Page: this.#pageInput.value,
+                IsUseful: this.#isUsefulYesRadioButton.checked,
+                Comments: this.#commentsInput.value,
+            }
+            this.#submitFeedback(data)
+            this.#root.querySelector("[data-module-id=submitButton]").disabled = true
+            this.#hide(this.#root.querySelector("[data-module-id=controlsContainer]"))
+            this.#show(this.#root.querySelector("[data-module-id=thankYouMessage]"))
+        }
+    }
+
+    #handleFormReset() {
+        // Close the detail
+        this.#root.querySelector("[data-module-id=feedbackDetail]").removeAttribute("open")
+
+        // Hide the error messages
+        this.#isUsefulQuestionGroup.classList.remove("govuk-form-group--error")
+        this.#commentsFormGroup.classList.remove("govuk-form-group--error")
+        this.#hide(this.#root.querySelector("[data-module-id=isUsefulErrorMessage]"))
+        this.#hide(this.#root.querySelector("[data-module-id=commentsErrorMessage]"))
+
+        // Executes after the form has been reset - resets the character count component
+        setTimeout((() => this.#commentsInput.dispatchEvent(new KeyboardEvent("keyup"))).bind(this), 1);
+    }
+
+    #resetForm(event) {
+        event.preventDefault()
+        this.#feedbackForm.reset()
+    }
+
+    async #submitFeedback(data) {
+        try {
+            await fetch("/api/feedback", {
+                method: "POST",
+                mode: "cors",
+                cache: "no-cache",
+                credentials: "same-origin",
+                headers: {
+                    "Content-Type": "application/json",
+                    RequestVerificationToken: this.#root.querySelector("[name=__RequestVerificationToken]").value
+                },
+                redirect: "error",
+                referrerPolicy: "same-origin",
+                body: JSON.stringify(data),
+            });
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
+    #validateForm() {
+        let isValid = true
+        if (this.#isUsefulYesRadioButton.checked === false && this.#isUsefulNoRadioButton.checked === false) {
+            isValid = false
+            this.#isUsefulQuestionGroup.classList.add("govuk-form-group--error")
+            this.#show(this.#root.querySelector("[data-module-id=isUsefulErrorMessage]"))
+        } else {
+            this.#isUsefulQuestionGroup.classList.remove("govuk-form-group--error")
+            this.#hide(this.#root.querySelector("[data-module-id=isUsefulErrorMessage]"))
+        }
+
+        if (this.#commentsInput.value.length > 400) {
+            isValid = false
+            this.#commentsFormGroup.classList.add("govuk-form-group--error")
+            this.#show(this.#root.querySelector("[data-module-id=commentsErrorMessage]"))
+        } else {
+            this.#commentsFormGroup.classList.remove("govuk-form-group--error")
+            this.#hide(this.#root.querySelector("[data-module-id=commentsErrorMessage]"))
+        }
+
+        return isValid
     }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    const controls = document.querySelectorAll("[data-module='feedback-module']")
+    const controls = document.querySelectorAll("[data-module=feedback-module]")
     controls.forEach(control => {
-        const feedbackControl = new FeedbackControl(control)
-        feedbackControl.init()
+        new FeedbackControl(control).init()
     })
 })
-
-const show = (id) => document.getElementById(id).style.display = "block"
-const hide = (id) => document.getElementById(id).style.display = "none"
-
-addEventListener("DOMContentLoaded", () => {
-    submitButton = document.getElementById("submitButton")
-    document.getElementById("isUsefulYes").removeAttribute("required")
-    document.getElementById("feedbackForm").addEventListener("submit", handleFormSubmit)
-    show("cancelButton")
-})
-
-function handleFormSubmit(event) {
-    const isValid = validateForm()
-    try {
-        if (isValid) {
-            const data = {
-                Page: document.getElementById("page").value,
-                IsUseful: document.getElementById("isUsefulYes").checked,
-                Comments: document.getElementById("comments").value,
-            }
-            submitFeedback(data)
-            submitButton.disabled = true
-            hide("controlsContainer")
-            show("thankYouMessage")
-        }
-    }
-    finally {
-        event.preventDefault()
-    }
-}
-
-async function submitFeedback(data) {
-    try {
-        await fetch("/api/feedback", {
-            method: "POST",
-            mode: "cors",
-            cache: "no-cache",
-            credentials: "same-origin",
-            headers: {
-                "Content-Type": "application/json",
-                RequestVerificationToken: document.getElementsByName("__RequestVerificationToken")[0].value
-            },
-            redirect: "error",
-            referrerPolicy: "same-origin",
-            body: JSON.stringify(data),
-        });
-    } catch { }
-
-    return false
-}
-
-function resetForm() {
-    document.getElementById("feedback-control").removeAttribute("open")
-    document.getElementById("isUsefulYes").checked = false
-    document.getElementById("isUsefulNo").checked = false
-    document.getElementById("comments").value = ""
-    document.getElementById("isUsefulQuestionGroup").classList.remove("govuk-form-group--error")
-    hide("was-useful-error-message")
-    return false
-}
-
-function validateForm() {
-
-    let isValid = true
-
-    if (document.getElementById("isUsefulYes").checked === false && document.getElementById("isUsefulNo").checked === false) {
-        isValid = false
-        document.getElementById("isUsefulQuestionGroup").classList.add("govuk-form-group--error")
-        show("isUsefulErrorMessage")
-    } else {
-        document.getElementById("isUsefulQuestionGroup").classList.remove("govuk-form-group--error")
-        hide("isUsefulErrorMessage")
-    }
-
-    if (document.getElementById("comments").value.length > 400) {
-        isValid = false
-        document.getElementById("commentsFormGroup").classList.add("govuk-form-group--error")
-        show("commentsErrorMessage")
-    } else {
-        document.getElementById("commentsFormGroup").classList.remove("govuk-form-group--error")
-        hide("commentsErrorMessage")
-    }
-
-    return isValid
-}
