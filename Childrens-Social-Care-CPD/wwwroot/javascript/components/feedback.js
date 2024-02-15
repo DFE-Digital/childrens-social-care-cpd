@@ -13,7 +13,7 @@ class FeedbackControl {
         this.#root = root
     }
 
-    init() {
+    init = () => {
         this.#feedbackForm = this.#root.querySelector("[data-module-id=feedbackForm]")
         this.#cancelLink = this.#root.querySelector("[data-module-id=cancelLink]")
         this.#isUsefulYesRadioButton = this.#root.querySelector("[data-module-id=isUsefulYes]")
@@ -24,9 +24,9 @@ class FeedbackControl {
         this.#commentsFormGroup = this.#root.querySelector("[data-module-id=commentsFormGroup]")
 
         // Initialise the event handlers
-        this.#feedbackForm.addEventListener("submit", this.#handleFormSubmit.bind(this))
-        this.#feedbackForm.addEventListener("reset", this.#handleFormReset.bind(this))
-        this.#cancelLink.addEventListener("click", this.#resetForm.bind(this))
+        this.#feedbackForm.addEventListener("submit", this.#handleFormSubmit)
+        this.#feedbackForm.addEventListener("reset", this.#handleFormReset)
+        this.#cancelLink.addEventListener("click", this.#resetForm)
 
         this.#show(this.#cancelLink)
     }
@@ -34,7 +34,7 @@ class FeedbackControl {
     #show = element => element.style.display = "block"
     #hide = element => element.style.display = "none"
 
-    #handleFormSubmit(event) {
+    #handleFormSubmit = (event) => {
         event.preventDefault()
 
         if (this.#validateForm()) {
@@ -50,7 +50,7 @@ class FeedbackControl {
         }
     }
 
-    #handleFormReset() {
+    #handleFormReset = () => {
         // Close the detail
         this.#root.querySelector("[data-module-id=feedbackDetail]").removeAttribute("open")
 
@@ -61,15 +61,15 @@ class FeedbackControl {
         this.#hide(this.#root.querySelector("[data-module-id=commentsErrorMessage]"))
 
         // Executes after the form has been reset - resets the character count component
-        setTimeout((() => this.#commentsInput.dispatchEvent(new KeyboardEvent("keyup"))).bind(this), 1);
+        setTimeout((() => this.#commentsInput.dispatchEvent(new KeyboardEvent("keyup"))), 1);
     }
 
-    #resetForm(event) {
+    #resetForm = (event) => {
         event.preventDefault()
         this.#feedbackForm.reset()
     }
 
-    async #submitFeedback(data) {
+    #submitFeedback = async (data) => {
         try {
             await fetch("/api/feedback", {
                 method: "POST",
@@ -89,7 +89,7 @@ class FeedbackControl {
         }
     }
 
-    #validateForm() {
+    #validateForm = () => {
         let isValid = true
         if (this.#isUsefulYesRadioButton.checked === false && this.#isUsefulNoRadioButton.checked === false) {
             isValid = false
