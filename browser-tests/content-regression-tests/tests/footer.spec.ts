@@ -10,6 +10,7 @@ test.describe('Page Footer', () => {
         ['Privacy policy', '/privacy', 'Privacy policy'],
         ['Accessibility', '/accessibility', 'Accessibility statement'],
         ['Terms and conditions', '/termsconditions', 'Terms and conditions'],
+        ['Site Map', '/sitemap'],
     ]
 
     for (const link of links) {
