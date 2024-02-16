@@ -70,7 +70,6 @@ resource "azurerm_private_endpoint" "searchprivateendpoint" {
 
 # Definition of the private end point for the grafana web app
 resource "azurerm_private_endpoint" "privateendpoint-gf" {
-  count               = local.waf_grafana_count
   name                = "${var.private_endpoint_name[terraform.workspace]}-gf"
   location            = data.azurerm_resource_group.rg.location
   resource_group_name = data.azurerm_resource_group.rg.name
