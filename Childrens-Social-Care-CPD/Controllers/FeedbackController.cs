@@ -45,7 +45,7 @@ public class FeedbackController : Controller
         pageId = pageId.Trim('/');
         
         if (pageId.Length > 512
-            || model.Comments?.Length > 500 
+            || model.Comments?.Length > 400 
             || !Regex.IsMatch(pageId, @"^[0-9a-z](\/?[0-9a-z\-])*\/?$", RegexOptions.Compiled, TimeSpan.FromSeconds(1)))
         {
             return false; 
