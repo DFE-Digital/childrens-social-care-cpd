@@ -1,6 +1,6 @@
 # Locals used within the security rules
 locals {
-  ips = compact(split("\n", var.whitelist_ips))
+  ips = compact(split(" ", var.whitelist_ips))
 }
 
 # Network security rules for the DfE IP addresses
