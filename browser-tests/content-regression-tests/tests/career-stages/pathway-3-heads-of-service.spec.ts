@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test'
 test.describe('Pathway 3: heads of service', () => {
     test('User journey from homepage @journey', async ({ page }) => {
         await page.goto('/')
-        await page.getByRole('link', { name: 'Managers', exact: true }).click()
+        await page.getByRole('link', { name: 'Manager', exact: true }).click()
         await page.getByRole('link', { name: 'Pathway 3: heads of service', exact: true }).click()
 
         await expect(page.locator('h1', { hasText: /^Pathway 3: heads of service$/ })).toBeVisible()
@@ -13,7 +13,7 @@ test.describe('Pathway 3: heads of service', () => {
 
     test('User journey from homepage - 2 @journey', async ({ page }) => {
         await page.goto('/')
-        await page.getByRole('link', { name: 'Senior managers', exact: true }).click()
+        await page.getByRole('link', { name: 'Senior manager', exact: true }).click()
         await page.getByRole('link', { name: 'Pathway 3: heads of service', exact: true }).click()
 
         await expect(page.locator('h1', { hasText: /^Pathway 3: heads of service$/ })).toBeVisible()
@@ -24,7 +24,7 @@ test.describe('Pathway 3: heads of service', () => {
     test('User journey via Career menu @journey', async ({ page }) => {
         await page.goto('/')
         await page.getByLabel('Menu').getByRole('link', { name: 'Career stages', exact: true }).click()
-        await page.getByRole('link', { name: 'Managers', exact: true }).click()
+        await page.getByRole('link', { name: 'Manager', exact: true }).click()
         await page.getByRole('link', { name: 'Pathway 3: heads of service', exact: true }).click()
 
         await expect(page.locator('h1', { hasText: /^Pathway 3: heads of service$/ })).toBeVisible()
