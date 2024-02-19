@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test'
 test.describe('Upon: new directors programme', () => {
     test('User journey from homepage @journey', async ({ page }) => {
         await page.goto('/')
-        await page.getByRole('link', { name: 'Leaders', exact: true }).click()
+        await page.getByRole('link', { name: 'Senior leader', exact: true }).click()
         await page.getByRole('link', { name: 'Upon: new directors programme', exact: true }).click()
 
         await expect(page.locator('h1', { hasText: /^Upon: new directors programme$/ })).toBeVisible()
@@ -14,7 +14,7 @@ test.describe('Upon: new directors programme', () => {
     test('User journey via menu @journey', async ({ page }) => {
         await page.goto('/')
         await page.getByLabel('Menu').getByRole('link', { name: 'Career stages', exact: true }).click()
-        await page.getByRole('link', { name: 'Leaders', exact: true }).click()
+        await page.getByRole('link', { name: 'Senior leader', exact: true }).click()
         await page.getByRole('link', { name: 'Upon: new directors programme', exact: true }).click()
 
         await expect(page.locator('h1', { hasText: /^Upon: new directors programme$/ })).toBeVisible()
