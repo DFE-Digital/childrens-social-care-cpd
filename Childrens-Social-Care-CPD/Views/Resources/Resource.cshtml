@@ -35,7 +35,6 @@
                 <cpd-resource-nav navigation="@Model.Navigation?.Items" selected="@Model.Id" />
             </aside>
         }
-        
     </div>
 </div>
 
@@ -44,27 +43,44 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
         <cpd-properties-list items="@ViewBag.Properties" />
+        <p class="govuk-body">
+            <a id="feedbackAnchor" href="#page-Feedback">Give feedback about this page</a>
+        </p>
     </div>
 </div>
-
-@if (featuresConfig.IsEnabled(Features.FeedbackControl))
-{
-    <partial name="_Feedback" />
-}
 
 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
 <partial name="_Content" model="Model" />
 
-
 <cpd-resource-page-nav navigation="@Model.Navigation?.Items" current="@Model.Id" />
+
+@if (featuresConfig.IsEnabled(Features.FeedbackControl))
+{
+    <div id="pageFeedback" class="govuk-!-margin-top-2" tabindex="-1">
+        <partial name="_Feedback" />
+    </div>
+}
 
 @_relatedContentRenderer.Render(Model.RelatedContent)
 
 @section Scripts {
-    @if (ViewData.TryGetValue("StateModel", out var stateModel) && ((StateModel)stateModel).IncludeMediaPlayer)
-    {
-        <script src=/javascript/mediaelement-and-player.min.js></script>
-        <script src=/javascript/mediaelement-configuration.js></script>
-    }
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            const feedbackAnchor = document.getElementById("feedbackAnchor")
+            const feedbackDetails = document.querySelector("[data-module-id=feedbackDetail]")
+
+            if (feedbackDetails) {
+                feedbackAnchor.addEventListener("click", (event) => {
+                    feedbackDetails.setAttribute("open", "")
+                })
+            }
+        });
+    </script>
+}
+
+@if (ViewData.TryGetValue("StateModel", out var stateModel) && ((StateModel)stateModel).IncludeMediaPlayer)
+{
+    Html.RequireScriptUrl("~/javascript/mediaelement-and-player.min.js");
+    Html.RequireScriptUrl("~/javascript/mediaelement-configuration.js");
 }
