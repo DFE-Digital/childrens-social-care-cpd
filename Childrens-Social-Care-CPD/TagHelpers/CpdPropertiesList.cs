@@ -30,7 +30,7 @@ public class CpdPropertiesList : TagHelper
         foreach (var item in Items)
         {
             var li = new TagBuilder("li");
-            li.InnerHtml.AppendHtml($"{item.Key}: {item.Value}");
+            li.InnerHtml.Append($"{item.Key}: {item.Value}");
 
             output.Content.AppendHtml(li);
         }
