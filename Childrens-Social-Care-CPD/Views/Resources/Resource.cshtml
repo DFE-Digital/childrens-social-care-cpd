@@ -44,20 +44,24 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
         <cpd-properties-list items="@ViewBag.Properties" />
+        <p class="govuk-body">
+            <a href="#page-feedback">Give feedback about this page</a>
+        </p>
     </div>
 </div>
-
-@if (featuresConfig.IsEnabled(Features.FeedbackControl))
-{
-    <partial name="_Feedback" />
-}
 
 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
 <partial name="_Content" model="Model" />
 
-
 <cpd-resource-page-nav navigation="@Model.Navigation?.Items" current="@Model.Id" />
+
+@if (featuresConfig.IsEnabled(Features.FeedbackControl))
+{
+    <div class="govuk-!-margin-top-2">
+        <partial name="_Feedback" />
+    </div>
+}
 
 @_relatedContentRenderer.Render(Model.RelatedContent)
 
