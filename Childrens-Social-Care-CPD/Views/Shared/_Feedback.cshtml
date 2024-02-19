@@ -9,7 +9,7 @@
     var commentsId = $"comments-{Guid.NewGuid()}";
 }
 
-<div class="govuk-grid-row" data-module="feedback-module">
+<div id="page-feedback" class="govuk-grid-row" data-module="feedback-module">
     <div class="govuk-grid-column-three-quarters">
 
         @if (contextModel.FeedbackSubmitted)
@@ -51,13 +51,13 @@
                                 </p>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" name="isUseful" type="radio" value="true" data-module-id="isUsefulYes">
+                                        <input id="idUsefulYes" class="govuk-radios__input" name="isUseful" type="radio" value="true" data-module-id="isUsefulYes">
                                         <label class="govuk-label govuk-radios__label" for="isUsefulYes">
                                             Yes
                                         </label>
                                     </div>
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" name="isUseful" type="radio" value="false" data-module-id="isUsefulNo">
+                                        <input id="idUsefulNo" class="govuk-radios__input" name="isUseful" type="radio" value="false" data-module-id="isUsefulNo">
                                         <label class="govuk-label govuk-radios__label" for="isUsefulNo">
                                             No
                                         </label>
