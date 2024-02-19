@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test'
 test.describe('Pathway 4: practice leaders', () => {
     test('User journey from homepage @journey', async ({ page }) => {
         await page.goto('/')
-        await page.getByRole('link', { name: 'Senior managers', exact: true }).click()
+        await page.getByRole('link', { name: 'Senior manager', exact: true }).click()
         await page.getByRole('link', { name: 'Pathway 4: practice leaders', exact: true }).click()
 
         await expect(page.locator('h1', { hasText: /^Pathway 4: practice leaders$/ })).toBeVisible()
@@ -13,7 +13,7 @@ test.describe('Pathway 4: practice leaders', () => {
 
     test('User journey from homepage - 2 @journey', async ({ page }) => {
         await page.goto('/')
-        await page.getByRole('link', { name: 'Leaders', exact: true }).click()
+        await page.getByRole('link', { name: 'Senior leader', exact: true }).click()
         await page.getByRole('link', { name: 'Pathway 4: practice leaders', exact: true }).click()
 
         await expect(page.locator('h1', { hasText: /^Pathway 4: practice leaders$/ })).toBeVisible()
@@ -24,7 +24,7 @@ test.describe('Pathway 4: practice leaders', () => {
     test('User journey via Career menu @journey', async ({ page }) => {
         await page.goto('/')
         await page.getByLabel('Menu').getByRole('link', { name: 'Career stages', exact: true }).click()
-        await page.getByRole('link', { name: 'Leaders', exact: true }).click()
+        await page.getByRole('link', { name: 'Senior leader', exact: true }).click()
         await page.getByRole('link', { name: 'Pathway 4: practice leaders', exact: true }).click()
 
         await expect(page.locator('h1', { hasText: /^Pathway 4: practice leaders$/ })).toBeVisible()
