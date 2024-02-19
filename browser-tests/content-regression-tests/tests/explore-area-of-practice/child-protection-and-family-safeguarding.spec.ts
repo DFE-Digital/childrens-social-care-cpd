@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test'
 
 //area of practice appear to have been removed
 
-test.describe.skip('Child Protection and Family Safeguarding', () => {
+test.describe('Child Protection and Family Safeguarding', () => {
     test('User journey via Explore menu @journey', async ({ page }) => {
         await page.goto('/')
         await page.getByLabel('Menu').getByRole('link', { name: 'Explore roles', exact: true }).click()
