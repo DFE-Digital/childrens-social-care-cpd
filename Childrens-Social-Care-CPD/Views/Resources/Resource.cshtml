@@ -43,9 +43,13 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
         <cpd-properties-list items="@ViewBag.Properties" />
-        <p class="govuk-body">
-            <a id="feedbackAnchor" href="#page-Feedback">Give feedback about this page</a>
-        </p>
+
+        @if (featuresConfig.IsEnabled(Features.FeedbackControl))
+        {
+            <p class="govuk-body">
+                <a id="feedbackAnchor" href="#page-Feedback">Give feedback about this page</a>
+            </p>
+        }
     </div>
 </div>
 
@@ -65,18 +69,21 @@
 @_relatedContentRenderer.Render(Model.RelatedContent)
 
 @section Scripts {
-    <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', function () {
-            const feedbackAnchor = document.getElementById("feedbackAnchor")
-            const feedbackDetails = document.querySelector("[data-module-id=feedbackDetail]")
+    @if (featuresConfig.IsEnabled(Features.FeedbackControl))
+    {
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', function () {
+                const feedbackAnchor = document.getElementById("feedbackAnchor")
+                const feedbackDetails = document.querySelector("[data-module-id=feedbackDetail]")
 
-            if (feedbackDetails) {
-                feedbackAnchor.addEventListener("click", (event) => {
-                    feedbackDetails.setAttribute("open", "")
-                })
-            }
-        });
-    </script>
+                if (feedbackDetails) {
+                    feedbackAnchor.addEventListener("click", (event) => {
+                        feedbackDetails.setAttribute("open", "")
+                    })
+                }
+            });
+        </script>
+    }
 }
 
 @if (ViewData.TryGetValue("StateModel", out var stateModel) && ((StateModel)stateModel).IncludeMediaPlayer)
