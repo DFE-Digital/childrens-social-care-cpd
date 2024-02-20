@@ -17,6 +17,9 @@ using Microsoft.Extensions.Logging.ApplicationInsights;
 using Microsoft.Extensions.Logging.AzureAppServices;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http.Headers;
+using Microsoft.AspNetCore.DataProtection;
+using Azure.Storage.Blobs;
+using Azure.Identity;
 
 namespace Childrens_Social_Care_CPD;
 
@@ -129,7 +132,27 @@ public static class WebApplicationBuilderExtensions
                 options.Rules.Insert(0, new LoggerFilterRule(typeof(ApplicationInsightsLoggerProvider).FullName, null, LogLevel.Information, null));
             }
         });
-        
+
         builder.Services.AddHealthChecks().AddCheck<ConfigurationHealthCheck>("Configuration Health Check", tags: new[] {"configuration"});
+
+        if (applicationConfiguration.AzureDataProtectionContainerName.IsSet)
+        {
+            var url = string.Format(applicationConfiguration.AzureStorageAccountUriFormatString.Value,
+                applicationConfiguration.AzureStorageAccount.Value, 
+                applicationConfiguration.AzureDataProtectionContainerName.Value);
+
+            var managedIdentityCredential = new ManagedIdentityCredential(clientId: applicationConfiguration.AzureManagedIdentityId.Value);
+
+            var blobContainerUri = new Uri(url);
+            var blobContainerClient = new BlobContainerClient(blobContainerUri, managedIdentityCredential);
+            blobContainerClient.CreateIfNotExists();
+
+            var blobUri = new Uri($"{url}/data-protection");
+            builder.Services
+                .AddDataProtection()
+                .SetApplicationName($"Childrens-Social-Care-CPD-{applicationConfiguration.AzureEnvironment.Value}")
+                .PersistKeysToAzureBlobStorage(blobUri, managedIdentityCredential);
+                //.ProtectKeysWithAzureKeyVault("<keyid>", defaultAzureCredential); // TODO: add key vault encryption once blob storage has been tested
+        }
     }
 }

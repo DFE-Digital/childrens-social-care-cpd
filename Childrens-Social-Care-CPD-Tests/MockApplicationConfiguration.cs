@@ -21,6 +21,11 @@ public class MockApplicationConfiguration : IApplicationConfiguration
     public string _searchApiKey = null;
     public string _searchEndpoint = null;
     public string _searchIndexName = null;
+    public string _azureDataProtectionContainerName = null;
+    public string _azureManagedIdentityId = null;
+    public string _azureStorageAccount = null;
+    public string _azureStorageAccountUriFormatString = null;
+
 
     public IConfigurationSetting<string> AppInsightsConnectionString => new StringConfigSetting(() => _appInsightsConnectionString);
     public IConfigurationSetting<string> AppVersion => new StringConfigSetting(() => _appVersion);
@@ -39,6 +44,11 @@ public class MockApplicationConfiguration : IApplicationConfiguration
     public IConfigurationSetting<string> SearchApiKey => new StringConfigSetting(() => _searchApiKey);
     public IConfigurationSetting<string> SearchEndpoint => new StringConfigSetting(() => _searchEndpoint);
     public IConfigurationSetting<string> SearchIndexName => new StringConfigSetting(() => _searchIndexName);
+
+    public IConfigurationSetting<string> AzureDataProtectionContainerName => new StringConfigSetting(() => _azureDataProtectionContainerName);
+    public IConfigurationSetting<string> AzureManagedIdentityId => new StringConfigSetting(() => _azureManagedIdentityId);
+    public IConfigurationSetting<string> AzureStorageAccount => new StringConfigSetting(() => _azureStorageAccount);
+    public IConfigurationSetting<string> AzureStorageAccountUriFormatString => new StringConfigSetting(() => _azureStorageAccountUriFormatString);
 
     public void SetAllValid(string value = "foo")
     {
@@ -59,5 +69,9 @@ public class MockApplicationConfiguration : IApplicationConfiguration
         _searchApiKey = value;
         _searchEndpoint = value;
         _searchIndexName = value;
+        _azureDataProtectionContainerName = value;
+        _azureManagedIdentityId = value;
+        _azureStorageAccount = value;
+        _azureStorageAccountUriFormatString = value;
     }
 }

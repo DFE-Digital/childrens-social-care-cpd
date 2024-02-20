@@ -6,7 +6,11 @@ public class ApplicationConfiguration : IApplicationConfiguration
     {
         AppInsightsConnectionString = new StringConfigSetting(() => configuration["CPD_INSTRUMENTATION_CONNECTIONSTRING"]);
         AppVersion = new StringConfigSetting(() => configuration["VCS-TAG"]);
+        AzureDataProtectionContainerName = new StringConfigSetting(() => configuration["CPD_AZURE_DATA_PROTECTION_CONTAINER_NAME"]);
         AzureEnvironment = new StringConfigSetting(() => configuration["CPD_AZURE_ENVIRONMENT"]);
+        AzureManagedIdentityId = new StringConfigSetting(() => configuration["CPD_AZURE_MANAGED_IDENTITY_ID"]);
+        AzureStorageAccount = new StringConfigSetting(() => configuration["CPD_AZURE_STORAGE_ACCOUNT"]);
+        AzureStorageAccountUriFormatString = new StringConfigSetting(() => configuration["CPD_AZURE_STORAGE_ACCOUNT_URI_FORMAT_STRING"]);
         ClarityProjectId = new StringConfigSetting(() => configuration["CPD_CLARITY"]);
         ContentfulDeliveryApiKey = new StringConfigSetting(() => configuration["CPD_DELIVERY_KEY"]);
         ContentfulEnvironment = new StringConfigSetting(() => configuration["CPD_CONTENTFUL_ENVIRONMENT"]);
@@ -25,7 +29,11 @@ public class ApplicationConfiguration : IApplicationConfiguration
 
     public IConfigurationSetting<string> AppInsightsConnectionString { get; init; }
     public IConfigurationSetting<string> AppVersion { get; init; }
+    public IConfigurationSetting<string> AzureDataProtectionContainerName { get; init; }
     public IConfigurationSetting<string> AzureEnvironment { get; init; }
+    public IConfigurationSetting<string> AzureManagedIdentityId { get; init; }
+    public IConfigurationSetting<string> AzureStorageAccount { get; init; }
+    public IConfigurationSetting<string> AzureStorageAccountUriFormatString { get; init; }
     public IConfigurationSetting<string> ClarityProjectId { get; init; }
     public IConfigurationSetting<string> ContentfulDeliveryApiKey { get; init; }
     public IConfigurationSetting<string> ContentfulEnvironment { get; init; }
