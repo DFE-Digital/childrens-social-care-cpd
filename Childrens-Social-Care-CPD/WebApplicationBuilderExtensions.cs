@@ -143,9 +143,9 @@ public static class WebApplicationBuilderExtensions
 
             var managedIdentityCredential = new ManagedIdentityCredential(clientId: applicationConfiguration.AzureManagedIdentityId.Value);
 
-            var blobContainerUri = new Uri(url);
-            var blobContainerClient = new BlobContainerClient(blobContainerUri, managedIdentityCredential);
-            blobContainerClient.CreateIfNotExists();
+            //var blobContainerUri = new Uri(url);
+            //var blobContainerClient = new BlobContainerClient(blobContainerUri, managedIdentityCredential);
+            //blobContainerClient.CreateIfNotExists();
 
             var blobUri = new Uri($"{url}/data-protection");
             builder.Services
