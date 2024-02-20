@@ -18,15 +18,16 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 1,
+  "id": 6,
   "links": [],
   "liveNow": false,
   "panels": [
     {
       "datasource": {
         "type": "blackcowmoo-googleanalytics-datasource",
-        "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+        "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
       },
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -55,27 +56,28 @@
         "x": 0,
         "y": 0
       },
-      "id": 19,
+      "id": 32,
       "options": {
+        "minVizHeight": 200,
+        "minVizWidth": 200,
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
+          "calcs": [],
           "fields": "",
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": true,
+        "sizing": "auto"
       },
-      "pluginVersion": "10.0.3",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
-          "accountId": "accounts/286366463",
+          "accountId": "accounts/244647801",
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "blackcowmoo-googleanalytics-datasource",
-            "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+            "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
           },
           "dimensionFilter": {},
           "displayName": {},
@@ -99,18 +101,18 @@
           "timeDimension": "dateHourMinute",
           "timezone": "Etc/GMT",
           "version": "v4",
-          "webPropertyId": "properties/349995171"
+          "webPropertyId": "properties/336167131"
         }
       ],
-      "title": "Active Users",
+      "title": "Active Users per minute",
+      "transformations": [],
       "type": "gauge"
     },
     {
       "datasource": {
         "type": "blackcowmoo-googleanalytics-datasource",
-        "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+        "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
       },
-      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -139,7 +141,7 @@
         "x": 12,
         "y": 0
       },
-      "id": 8,
+      "id": 4,
       "options": {
         "colorMode": "value",
         "graphMode": "area",
@@ -147,21 +149,22 @@
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "firstNotNull"
+            "lastNotNull"
           ],
-          "fields": "/.*/",
+          "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.0.3",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
-          "accountId": "accounts/286366463",
+          "accountId": "accounts/244647801",
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "blackcowmoo-googleanalytics-datasource",
-            "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+            "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
           },
           "dimensionFilter": {},
           "displayName": {},
@@ -183,10 +186,9 @@
               "value": "newUsers"
             }
           ],
-          "timeDimension": "",
           "timezone": "Etc/GMT",
           "version": "v4",
-          "webPropertyId": "properties/349995171"
+          "webPropertyId": "properties/336167131"
         }
       ],
       "title": "Users",
@@ -225,17 +227,19 @@
     {
       "datasource": {
         "type": "blackcowmoo-googleanalytics-datasource",
-        "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+        "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
       },
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
-            "axisLabel": "Number Of Users",
+            "axisLabel": "Number of Users",
             "axisPlacement": "auto",
             "fillOpacity": 80,
             "gradientMode": "none",
@@ -288,7 +292,7 @@
         "x": 0,
         "y": 8
       },
-      "id": 20,
+      "id": 28,
       "options": {
         "barRadius": 0,
         "barWidth": 0.97,
@@ -312,13 +316,14 @@
       },
       "targets": [
         {
-          "accountId": "accounts/286366463",
+          "accountId": "accounts/244647801",
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "blackcowmoo-googleanalytics-datasource",
-            "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+            "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
           },
           "dimensionFilter": {},
+          "dimensions": [],
           "displayName": {},
           "metrics": [
             "newUsers",
@@ -326,6 +331,7 @@
           ],
           "mode": "table",
           "refId": "A",
+          "selectedDimensions": [],
           "selectedMetrics": [
             {
               "description": "The number of users who interacted with your site or launched your app for the first time (event triggered: first_open or first_visit).",
@@ -346,7 +352,7 @@
           "timeDimension": "date",
           "timezone": "Etc/GMT",
           "version": "v4",
-          "webPropertyId": "properties/349995171"
+          "webPropertyId": "properties/336167131"
         }
       ],
       "title": "Month on Month Progress",
@@ -357,6 +363,7 @@
             "excludeByName": {},
             "indexByName": {},
             "renameByName": {
+              "date": "",
               "newUsers": "New Users",
               "totalUsers": "Total Users"
             }
@@ -368,17 +375,19 @@
     {
       "datasource": {
         "type": "blackcowmoo-googleanalytics-datasource",
-        "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+        "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
       },
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
-            "axisLabel": "Engagement Time",
+            "axisLabel": "Total Time in Seconds",
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
@@ -389,6 +398,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -428,7 +438,7 @@
         "x": 12,
         "y": 8
       },
-      "id": 21,
+      "id": 30,
       "options": {
         "legend": {
           "calcs": [],
@@ -443,19 +453,21 @@
       },
       "targets": [
         {
-          "accountId": "accounts/286366463",
+          "accountId": "accounts/244647801",
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "blackcowmoo-googleanalytics-datasource",
-            "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+            "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
           },
           "dimensionFilter": {},
+          "dimensions": [],
           "displayName": {},
           "metrics": [
             "userEngagementDuration"
           ],
           "mode": "time series",
           "refId": "A",
+          "selectedDimensions": [],
           "selectedMetrics": [
             {
               "description": "The total amount of time (in seconds) your website or app was in the foreground of users' devices.",
@@ -471,7 +483,7 @@
           "timeDimension": "date",
           "timezone": "Etc/GMT",
           "version": "v4",
-          "webPropertyId": "properties/349995171"
+          "webPropertyId": "properties/336167131"
         }
       ],
       "title": "Engagement Time (Target 180 to 300 seconds)",
@@ -482,6 +494,7 @@
             "excludeByName": {},
             "indexByName": {},
             "renameByName": {
+              "date": "",
               "userEngagementDuration": "User Engagement Duration"
             }
           }
@@ -492,17 +505,19 @@
     {
       "datasource": {
         "type": "blackcowmoo-googleanalytics-datasource",
-        "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+        "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
       },
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
-            "axisLabel": "Engagement Rate",
+            "axisLabel": "User Engagement Rate %",
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
@@ -513,6 +528,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -552,7 +568,7 @@
         "x": 0,
         "y": 16
       },
-      "id": 22,
+      "id": 29,
       "options": {
         "legend": {
           "calcs": [],
@@ -567,11 +583,11 @@
       },
       "targets": [
         {
-          "accountId": "accounts/286366463",
+          "accountId": "accounts/244647801",
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "blackcowmoo-googleanalytics-datasource",
-            "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+            "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
           },
           "dimensionFilter": {},
           "displayName": {},
@@ -595,7 +611,7 @@
           "timeDimension": "date",
           "timezone": "Etc/GMT",
           "version": "v4",
-          "webPropertyId": "properties/349995171"
+          "webPropertyId": "properties/336167131"
         }
       ],
       "title": "User Engagement Rate",
@@ -610,6 +626,23 @@
               "engagementRate": "Engagement Rate"
             }
           }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "Engagement Rate",
+            "binary": {
+              "left": "Engagement Rate",
+              "operator": "*",
+              "reducer": "sum",
+              "right": "100"
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            },
+            "replaceFields": true
+          }
         }
       ],
       "type": "timeseries"
@@ -617,17 +650,19 @@
     {
       "datasource": {
         "type": "blackcowmoo-googleanalytics-datasource",
-        "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+        "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
       },
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
-            "axisLabel": "Number Of Conversions",
+            "axisLabel": "Count of Conversions",
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
@@ -638,6 +673,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -677,7 +713,7 @@
         "x": 12,
         "y": 16
       },
-      "id": 23,
+      "id": 31,
       "options": {
         "legend": {
           "calcs": [],
@@ -692,11 +728,11 @@
       },
       "targets": [
         {
-          "accountId": "accounts/286366463",
+          "accountId": "accounts/244647801",
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "blackcowmoo-googleanalytics-datasource",
-            "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+            "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
           },
           "dimensionFilter": {},
           "displayName": {},
@@ -720,7 +756,7 @@
           "timeDimension": "date",
           "timezone": "Etc/GMT",
           "version": "v4",
-          "webPropertyId": "properties/349995171"
+          "webPropertyId": "properties/336167131"
         }
       ],
       "title": "Conversion Metrics over Time",
@@ -729,14 +765,15 @@
     {
       "datasource": {
         "type": "blackcowmoo-googleanalytics-datasource",
-        "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+        "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
       },
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "palette-classic"
+            "mode": "thresholds"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "Number Of Users",
@@ -779,7 +816,7 @@
         "x": 0,
         "y": 24
       },
-      "id": 9,
+      "id": 12,
       "options": {
         "barRadius": 0,
         "barWidth": 0.97,
@@ -801,13 +838,14 @@
         "xTickLabelRotation": 45,
         "xTickLabelSpacing": 0
       },
+      "pluginVersion": "10.0.3",
       "targets": [
         {
-          "accountId": "accounts/286366463",
+          "accountId": "accounts/244647801",
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "blackcowmoo-googleanalytics-datasource",
-            "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+            "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
           },
           "dimensionFilter": {},
           "dimensions": [
@@ -835,7 +873,7 @@
           ],
           "timezone": "Etc/GMT",
           "version": "v4",
-          "webPropertyId": "properties/349995171"
+          "webPropertyId": "properties/336167131"
         }
       ],
       "title": "Most Visited Pages",
@@ -846,6 +884,7 @@
             "fields": {},
             "sort": [
               {
+                "desc": true,
                 "field": "totalUsers"
               }
             ]
@@ -868,7 +907,7 @@
     {
       "datasource": {
         "type": "blackcowmoo-googleanalytics-datasource",
-        "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+        "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
       },
       "fieldConfig": {
         "defaults": {
@@ -905,7 +944,7 @@
         "x": 12,
         "y": 24
       },
-      "id": 25,
+      "id": 13,
       "options": {
         "cellHeight": "sm",
         "footer": {
@@ -918,14 +957,14 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "10.0.3",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
-          "accountId": "accounts/286366463",
+          "accountId": "accounts/244647801",
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "blackcowmoo-googleanalytics-datasource",
-            "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+            "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
           },
           "dimensionFilter": {},
           "dimensions": [
@@ -983,7 +1022,7 @@
           ],
           "timezone": "Etc/GMT",
           "version": "v4",
-          "webPropertyId": "properties/349995171"
+          "webPropertyId": "properties/336167131"
         }
       ],
       "title": "Most Visited Pages",
@@ -994,6 +1033,7 @@
             "fields": {},
             "sort": [
               {
+                "desc": true,
                 "field": "totalUsers"
               }
             ]
@@ -1005,6 +1045,12 @@
             "excludeByName": {},
             "indexByName": {},
             "renameByName": {
+              "Conversions": "Conversions",
+              "Engagement Rate": "Engagement Rate",
+              "Event Count": "Event Count",
+              "Total Users": "Total Users",
+              "Views": "Views",
+              "Views per user": "Views per user",
               "conversions": "Conversions",
               "engagementRate": "Engagement Rate",
               "eventCount": "Event Count",
@@ -1021,7 +1067,7 @@
     {
       "datasource": {
         "type": "blackcowmoo-googleanalytics-datasource",
-        "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+        "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
       },
       "fieldConfig": {
         "defaults": {
@@ -1058,7 +1104,7 @@
         "x": 0,
         "y": 32
       },
-      "id": 11,
+      "id": 14,
       "options": {
         "cellHeight": "sm",
         "footer": {
@@ -1071,18 +1117,18 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "10.0.3",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
-          "accountId": "accounts/286366463",
+          "accountId": "accounts/244647801",
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "blackcowmoo-googleanalytics-datasource",
-            "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+            "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
           },
           "dimensionFilter": {},
           "dimensions": [
-            "unifiedPagePathScreen"
+            "unifiedScreenClass"
           ],
           "displayName": {},
           "metrics": [
@@ -1094,9 +1140,9 @@
           "refId": "A",
           "selectedDimensions": [
             {
-              "description": "The page path (web) or screen class (app) on which the event was logged.",
-              "label": "Page path and screen class",
-              "value": "unifiedPagePathScreen"
+              "description": "The page title (web) or screen class (app) on which the event was logged.",
+              "label": "Page title and screen class",
+              "value": "unifiedScreenClass"
             }
           ],
           "selectedMetrics": [
@@ -1118,7 +1164,7 @@
           ],
           "timezone": "Etc/GMT",
           "version": "v4",
-          "webPropertyId": "properties/349995171"
+          "webPropertyId": "properties/336167131"
         }
       ],
       "title": "Most Visited Pages - Events",
@@ -1141,13 +1187,10 @@
             "excludeByName": {},
             "indexByName": {},
             "renameByName": {
-              "Event Count": "Event Count",
-              "Event count per user": "Event count per user",
-              "Total Users": "Total Users",
               "eventCount": "Event Count",
-              "eventCountPerUser": "Event Count Per User",
+              "eventCountPerUser": "Event count per user",
               "totalUsers": "Total Users",
-              "unifiedPagePathScreen": "Page Url"
+              "unifiedScreenClass": "Page Name"
             }
           }
         }
@@ -1157,9 +1200,8 @@
     {
       "datasource": {
         "type": "blackcowmoo-googleanalytics-datasource",
-        "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+        "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
       },
-      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1188,7 +1230,7 @@
         "x": 12,
         "y": 32
       },
-      "id": 4,
+      "id": 5,
       "options": {
         "colorMode": "value",
         "graphMode": "area",
@@ -1201,16 +1243,17 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.0.3",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
-          "accountId": "accounts/286366463",
+          "accountId": "accounts/244647801",
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "blackcowmoo-googleanalytics-datasource",
-            "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+            "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
           },
           "dimensionFilter": {},
           "displayName": {},
@@ -1226,10 +1269,9 @@
               "value": "engagedSessions"
             }
           ],
-          "timeDimension": "",
           "timezone": "Etc/GMT",
           "version": "v4",
-          "webPropertyId": "properties/349995171"
+          "webPropertyId": "properties/336167131"
         }
       ],
       "title": "Engaged Sessions",
@@ -1238,13 +1280,20 @@
     {
       "datasource": {
         "type": "blackcowmoo-googleanalytics-datasource",
-        "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+        "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
       },
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
+          "links": [
+            {
+              "title": "",
+              "url": "${__value.raw}"
+            }
+          ],
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -1268,27 +1317,30 @@
         "x": 0,
         "y": 40
       },
-      "id": 24,
+      "id": 33,
       "options": {
+        "minVizHeight": 200,
+        "minVizWidth": 200,
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "lastNotNull"
+            "sum"
           ],
           "fields": "",
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": true,
+        "sizing": "auto"
       },
-      "pluginVersion": "10.0.3",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
-          "accountId": "accounts/286366463",
+          "accountId": "accounts/244647801",
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "blackcowmoo-googleanalytics-datasource",
-            "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+            "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
           },
           "dimensionFilter": {},
           "dimensions": [
@@ -1322,17 +1374,48 @@
           ],
           "timezone": "Etc/GMT",
           "version": "v4",
-          "webPropertyId": "properties/349995171"
+          "webPropertyId": "properties/336167131"
         }
       ],
       "title": "Links",
-      "transformations": [],
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "conversions": "Conversions",
+              "linkUrl": "URL Link",
+              "totalUsers": "Total Users"
+            }
+          }
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "filters": [
+              {
+                "config": {
+                  "id": "regex",
+                  "options": {
+                    "value": "^http"
+                  }
+                },
+                "fieldName": "URL Link"
+              }
+            ],
+            "match": "all",
+            "type": "include"
+          }
+        }
+      ],
       "type": "gauge"
     },
     {
       "datasource": {
         "type": "blackcowmoo-googleanalytics-datasource",
-        "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+        "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
       },
       "fieldConfig": {
         "defaults": {
@@ -1340,6 +1423,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "Sessions",
@@ -1372,8 +1456,7 @@
                 "value": 80
               }
             ]
-          },
-          "unit": "string"
+          }
         },
         "overrides": []
       },
@@ -1383,7 +1466,7 @@
         "x": 12,
         "y": 40
       },
-      "id": 6,
+      "id": 21,
       "options": {
         "barRadius": 0,
         "barWidth": 0.97,
@@ -1407,11 +1490,11 @@
       },
       "targets": [
         {
-          "accountId": "accounts/286366463",
+          "accountId": "accounts/244647801",
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "blackcowmoo-googleanalytics-datasource",
-            "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+            "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
           },
           "dimensionFilter": {},
           "dimensions": [
@@ -1443,10 +1526,9 @@
               "value": "sessions"
             }
           ],
-          "timeDimension": "",
           "timezone": "Etc/GMT",
           "version": "v4",
-          "webPropertyId": "properties/349995171"
+          "webPropertyId": "properties/336167131"
         }
       ],
       "title": "Sessions by days of the Week",
@@ -1455,8 +1537,9 @@
     {
       "datasource": {
         "type": "blackcowmoo-googleanalytics-datasource",
-        "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+        "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
       },
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1498,7 +1581,7 @@
         "x": 0,
         "y": 48
       },
-      "id": 17,
+      "id": 16,
       "options": {
         "cellHeight": "sm",
         "footer": {
@@ -1511,14 +1594,14 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "10.0.3",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
-          "accountId": "accounts/286366463",
+          "accountId": "accounts/244647801",
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "blackcowmoo-googleanalytics-datasource",
-            "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+            "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
           },
           "dimensionFilter": {},
           "dimensions": [
@@ -1546,7 +1629,7 @@
           ],
           "timezone": "Etc/GMT",
           "version": "v4",
-          "webPropertyId": "properties/349995171"
+          "webPropertyId": "properties/336167131"
         }
       ],
       "title": "Link Conversions",
@@ -1568,14 +1651,15 @@
     {
       "datasource": {
         "type": "blackcowmoo-googleanalytics-datasource",
-        "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+        "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
       },
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "palette-classic"
+            "mode": "thresholds"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "Sessions",
@@ -1608,8 +1692,7 @@
                 "value": 80
               }
             ]
-          },
-          "unit": "string"
+          }
         },
         "overrides": []
       },
@@ -1619,7 +1702,7 @@
         "x": 12,
         "y": 48
       },
-      "id": 16,
+      "id": 22,
       "options": {
         "barRadius": 0,
         "barWidth": 0.97,
@@ -1641,13 +1724,14 @@
         "xTickLabelRotation": 0,
         "xTickLabelSpacing": 0
       },
+      "pluginVersion": "10.0.3",
       "targets": [
         {
-          "accountId": "accounts/286366463",
+          "accountId": "accounts/244647801",
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "blackcowmoo-googleanalytics-datasource",
-            "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+            "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
           },
           "dimensionFilter": {},
           "dimensions": [
@@ -1673,10 +1757,9 @@
               "value": "sessions"
             }
           ],
-          "timeDimension": "",
           "timezone": "Etc/GMT",
           "version": "v4",
-          "webPropertyId": "properties/349995171"
+          "webPropertyId": "properties/336167131"
         }
       ],
       "title": "Sessions by hours",
@@ -1687,11 +1770,15 @@
             "alias": "CalcHour",
             "binary": {
               "left": "hour",
+              "operator": "+",
               "reducer": "sum",
               "right": "0"
             },
             "mode": "binary",
             "reduce": {
+              "include": [
+                "hour"
+              ],
               "reducer": "sum"
             }
           }
@@ -1736,7 +1823,7 @@
     {
       "datasource": {
         "type": "blackcowmoo-googleanalytics-datasource",
-        "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+        "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
       },
       "fieldConfig": {
         "defaults": {
@@ -1744,6 +1831,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "Number Of Users",
@@ -1786,7 +1874,7 @@
         "x": 0,
         "y": 56
       },
-      "id": 18,
+      "id": 15,
       "options": {
         "barRadius": 0,
         "barWidth": 0.97,
@@ -1810,11 +1898,11 @@
       },
       "targets": [
         {
-          "accountId": "accounts/286366463",
+          "accountId": "accounts/244647801",
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "blackcowmoo-googleanalytics-datasource",
-            "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+            "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
           },
           "dimensionFilter": {},
           "dimensions": [
@@ -1842,7 +1930,7 @@
           ],
           "timezone": "Etc/GMT",
           "version": "v4",
-          "webPropertyId": "properties/349995171"
+          "webPropertyId": "properties/336167131"
         }
       ],
       "title": "Users by Channel",
@@ -1853,7 +1941,7 @@
             "excludeByName": {},
             "indexByName": {},
             "renameByName": {
-              "sessionSourceMedium": "Session Source Medium",
+              "sessionSourceMedium": "",
               "totalUsers": "Total Users"
             }
           }
@@ -1864,18 +1952,18 @@
     {
       "datasource": {
         "type": "blackcowmoo-googleanalytics-datasource",
-        "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+        "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
       },
-      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
-            "axisLabel": "Total Users",
+            "axisLabel": "Number Of Users",
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
@@ -1886,6 +1974,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1925,7 +2014,7 @@
         "x": 12,
         "y": 56
       },
-      "id": 1,
+      "id": 2,
       "options": {
         "legend": {
           "calcs": [],
@@ -1940,16 +2029,18 @@
       },
       "targets": [
         {
-          "accountId": "accounts/286366463",
+          "accountId": "accounts/244647801",
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "blackcowmoo-googleanalytics-datasource",
-            "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+            "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
           },
           "dimensionFilter": {},
           "displayName": {},
           "metrics": [
-            "activeUsers"
+            "activeUsers",
+            "totalUsers",
+            "newUsers"
           ],
           "mode": "time series",
           "refId": "A",
@@ -1958,6 +2049,16 @@
               "description": "The number of distinct users who visited your site or app.",
               "label": "Active users",
               "value": "activeUsers"
+            },
+            {
+              "description": "The number of distinct users who have logged at least one event, regardless of whether the site or app was in use when that event was logged.",
+              "label": "Total users",
+              "value": "totalUsers"
+            },
+            {
+              "description": "The number of users who interacted with your site or launched your app for the first time (event triggered: first_open or first_visit).",
+              "label": "New users",
+              "value": "newUsers"
             }
           ],
           "selectedTimeDimensions": {
@@ -1968,23 +2069,39 @@
           "timeDimension": "date",
           "timezone": "Etc/GMT",
           "version": "v4",
-          "webPropertyId": "properties/349995171"
+          "webPropertyId": "properties/336167131"
         }
       ],
-      "title": "Users on Test Environment",
+      "title": "Users on Production",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "activeUsers": "Active Users",
+              "newUsers": "New Users",
+              "totalUsers": "Total Users"
+            }
+          }
+        }
+      ],
       "type": "timeseries"
     },
     {
       "datasource": {
         "type": "blackcowmoo-googleanalytics-datasource",
-        "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+        "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
       },
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "palette-classic"
+            "mode": "thresholds"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "Number Of Users",
@@ -2027,7 +2144,277 @@
         "x": 0,
         "y": 64
       },
-      "id": 12,
+      "id": 23,
+      "options": {
+        "barRadius": 0,
+        "barWidth": 0.97,
+        "fullHighlight": false,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "orientation": "horizontal",
+        "showValue": "auto",
+        "stacking": "none",
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
+      },
+      "pluginVersion": "10.0.3",
+      "targets": [
+        {
+          "accountId": "accounts/244647801",
+          "cacheDurationSeconds": 300,
+          "datasource": {
+            "type": "blackcowmoo-googleanalytics-datasource",
+            "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
+          },
+          "dimensionFilter": {},
+          "dimensions": [
+            "screenResolution"
+          ],
+          "displayName": {},
+          "metrics": [
+            "totalUsers"
+          ],
+          "mode": "table",
+          "refId": "A",
+          "selectedDimensions": [
+            {
+              "description": "The screen resolution of the user's monitor. For example, 1920x1080.",
+              "label": "Screen resolution",
+              "value": "screenResolution"
+            }
+          ],
+          "selectedMetrics": [
+            {
+              "description": "The number of distinct users who have logged at least one event, regardless of whether the site or app was in use when that event was logged.",
+              "label": "Total users",
+              "value": "totalUsers"
+            }
+          ],
+          "timezone": "Etc/GMT",
+          "version": "v4",
+          "webPropertyId": "properties/336167131"
+        }
+      ],
+      "title": "Top Ten Users by Screen Resolution",
+      "transformations": [
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": true,
+                "field": "totalUsers"
+              }
+            ]
+          }
+        },
+        {
+          "id": "limit",
+          "options": {}
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "screenResolution": "Screen Resolution",
+              "totalUsers": "Total Users"
+            }
+          }
+        }
+      ],
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "blackcowmoo-googleanalytics-datasource",
+        "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 64
+      },
+      "id": 24,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "10.2.3",
+      "targets": [
+        {
+          "accountId": "accounts/244647801",
+          "cacheDurationSeconds": 300,
+          "datasource": {
+            "type": "blackcowmoo-googleanalytics-datasource",
+            "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
+          },
+          "dimensionFilter": {},
+          "dimensions": [
+            "screenResolution"
+          ],
+          "displayName": {},
+          "metrics": [
+            "totalUsers"
+          ],
+          "mode": "table",
+          "refId": "A",
+          "selectedDimensions": [
+            {
+              "description": "The screen resolution of the user's monitor. For example, 1920x1080.",
+              "label": "Screen resolution",
+              "value": "screenResolution"
+            }
+          ],
+          "selectedMetrics": [
+            {
+              "description": "The number of distinct users who have logged at least one event, regardless of whether the site or app was in use when that event was logged.",
+              "label": "Total users",
+              "value": "totalUsers"
+            }
+          ],
+          "timezone": "Etc/GMT",
+          "version": "v4",
+          "webPropertyId": "properties/336167131"
+        }
+      ],
+      "title": "Top Ten Users by Screen Resolution",
+      "transformations": [
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": true,
+                "field": "totalUsers"
+              }
+            ]
+          }
+        },
+        {
+          "id": "limit",
+          "options": {}
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "screenResolution": "Screen Resolution",
+              "totalUsers": "Users"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "blackcowmoo-googleanalytics-datasource",
+        "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Number Of Users",
+            "axisPlacement": "auto",
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 72
+      },
+      "id": 25,
       "options": {
         "barRadius": 0,
         "barWidth": 0.97,
@@ -2051,15 +2438,15 @@
       },
       "targets": [
         {
-          "accountId": "accounts/286366463",
+          "accountId": "accounts/244647801",
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "blackcowmoo-googleanalytics-datasource",
-            "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+            "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
           },
           "dimensionFilter": {},
           "dimensions": [
-            "screenResolution"
+            "operatingSystem"
           ],
           "displayName": {},
           "metrics": [
@@ -2069,9 +2456,9 @@
           "refId": "A",
           "selectedDimensions": [
             {
-              "description": "The screen resolution of the user's monitor. For example, 1920x1080.",
-              "label": "Screen resolution",
-              "value": "screenResolution"
+              "description": "The operating systems used by visitors to your app or website. Includes desktop and mobile operating systems such as Windows and Android.",
+              "label": "Operating system",
+              "value": "operatingSystem"
             }
           ],
           "selectedMetrics": [
@@ -2083,34 +2470,17 @@
           ],
           "timezone": "Etc/GMT",
           "version": "v4",
-          "webPropertyId": "properties/349995171"
+          "webPropertyId": "properties/336167131"
         }
       ],
-      "title": "Top Ten Users by Screen Resolution",
+      "title": "Users by Operating System",
       "transformations": [
-        {
-          "id": "sortBy",
-          "options": {
-            "fields": {},
-            "sort": [
-              {
-                "desc": true,
-                "field": "totalUsers"
-              }
-            ]
-          }
-        },
-        {
-          "id": "limit",
-          "options": {}
-        },
         {
           "id": "organize",
           "options": {
             "excludeByName": {},
             "indexByName": {},
             "renameByName": {
-              "screenResolution": "Screen Resolution",
               "totalUsers": "Total Users"
             }
           }
@@ -2121,7 +2491,7 @@
     {
       "datasource": {
         "type": "blackcowmoo-googleanalytics-datasource",
-        "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+        "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
       },
       "fieldConfig": {
         "defaults": {
@@ -2156,146 +2526,132 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 64
+        "y": 72
+      },
+      "id": 8,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "10.2.3",
+      "targets": [
+        {
+          "accountId": "accounts/244647801",
+          "cacheDurationSeconds": 300,
+          "datasource": {
+            "type": "blackcowmoo-googleanalytics-datasource",
+            "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
+          },
+          "dimensionFilter": {},
+          "dimensions": [
+            "operatingSystem"
+          ],
+          "displayName": {},
+          "metrics": [
+            "totalUsers"
+          ],
+          "mode": "table",
+          "refId": "A",
+          "selectedDimensions": [
+            {
+              "description": "The operating systems used by visitors to your app or website. Includes desktop and mobile operating systems such as Windows and Android.",
+              "label": "Operating system",
+              "value": "operatingSystem"
+            }
+          ],
+          "selectedMetrics": [
+            {
+              "description": "The number of distinct users who have logged at least one event, regardless of whether the site or app was in use when that event was logged.",
+              "label": "Total users",
+              "value": "totalUsers"
+            }
+          ],
+          "timezone": "Etc/GMT",
+          "version": "v4",
+          "webPropertyId": "properties/336167131"
+        }
+      ],
+      "title": "Users by Operating System",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "operatingSystem": "Operating System",
+              "totalUsers": "Users"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "blackcowmoo-googleanalytics-datasource",
+        "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Number Of Users",
+            "axisPlacement": "auto",
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 80
       },
       "id": 26,
       "options": {
-        "cellHeight": "sm",
-        "footer": {
-          "countRows": false,
-          "fields": "",
-          "reducer": [
-            "sum"
-          ],
-          "show": false
-        },
-        "showHeader": true
-      },
-      "pluginVersion": "10.0.3",
-      "targets": [
-        {
-          "accountId": "accounts/286366463",
-          "cacheDurationSeconds": 300,
-          "datasource": {
-            "type": "blackcowmoo-googleanalytics-datasource",
-            "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
-          },
-          "dimensionFilter": {},
-          "dimensions": [
-            "screenResolution"
-          ],
-          "displayName": {},
-          "metrics": [
-            "totalUsers"
-          ],
-          "mode": "table",
-          "refId": "A",
-          "selectedDimensions": [
-            {
-              "description": "The screen resolution of the user's monitor. For example, 1920x1080.",
-              "label": "Screen resolution",
-              "value": "screenResolution"
-            }
-          ],
-          "selectedMetrics": [
-            {
-              "description": "The number of distinct users who have logged at least one event, regardless of whether the site or app was in use when that event was logged.",
-              "label": "Total users",
-              "value": "totalUsers"
-            }
-          ],
-          "timezone": "Etc/GMT",
-          "version": "v4",
-          "webPropertyId": "properties/349995171"
-        }
-      ],
-      "title": "Top Ten Users by Screen Resolution",
-      "transformations": [
-        {
-          "id": "sortBy",
-          "options": {
-            "fields": {},
-            "sort": [
-              {
-                "desc": true,
-                "field": "totalUsers"
-              }
-            ]
-          }
-        },
-        {
-          "id": "limit",
-          "options": {}
-        },
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {},
-            "indexByName": {},
-            "renameByName": {
-              "screenResolution": "Screen Resolution",
-              "totalUsers": "Users"
-            }
-          }
-        }
-      ],
-      "type": "table"
-    },
-    {
-      "datasource": {
-        "type": "blackcowmoo-googleanalytics-datasource",
-        "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "Number Of Users",
-            "axisPlacement": "auto",
-            "fillOpacity": 80,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineWidth": 1,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 72
-      },
-      "id": 14,
-      "options": {
         "barRadius": 0,
         "barWidth": 0.97,
         "fullHighlight": false,
@@ -2306,7 +2662,7 @@
           "placement": "bottom",
           "showLegend": true
         },
-        "orientation": "auto",
+        "orientation": "horizontal",
         "showValue": "auto",
         "stacking": "none",
         "tooltip": {
@@ -2318,246 +2674,11 @@
       },
       "targets": [
         {
-          "accountId": "accounts/286366463",
+          "accountId": "accounts/244647801",
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "blackcowmoo-googleanalytics-datasource",
-            "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
-          },
-          "dimensionFilter": {},
-          "dimensions": [
-            "operatingSystem"
-          ],
-          "displayName": {},
-          "metrics": [
-            "totalUsers"
-          ],
-          "mode": "table",
-          "refId": "A",
-          "selectedDimensions": [
-            {
-              "description": "The operating systems used by visitors to your app or website. Includes desktop and mobile operating systems such as Windows and Android.",
-              "label": "Operating system",
-              "value": "operatingSystem"
-            }
-          ],
-          "selectedMetrics": [
-            {
-              "description": "The number of distinct users who have logged at least one event, regardless of whether the site or app was in use when that event was logged.",
-              "label": "Total users",
-              "value": "totalUsers"
-            }
-          ],
-          "timezone": "Etc/GMT",
-          "version": "v4",
-          "webPropertyId": "properties/349995171"
-        }
-      ],
-      "title": "Users by Operating System",
-      "transformations": [
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {},
-            "indexByName": {},
-            "renameByName": {
-              "operatingSystem": "Operating System",
-              "totalUsers": "Total Users"
-            }
-          }
-        }
-      ],
-      "type": "barchart"
-    },
-    {
-      "datasource": {
-        "type": "blackcowmoo-googleanalytics-datasource",
-        "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {
-            "align": "auto",
-            "cellOptions": {
-              "type": "auto"
-            },
-            "inspect": false
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 72
-      },
-      "id": 27,
-      "options": {
-        "cellHeight": "sm",
-        "footer": {
-          "countRows": false,
-          "fields": "",
-          "reducer": [
-            "sum"
-          ],
-          "show": false
-        },
-        "showHeader": true
-      },
-      "pluginVersion": "10.0.3",
-      "targets": [
-        {
-          "accountId": "accounts/286366463",
-          "cacheDurationSeconds": 300,
-          "datasource": {
-            "type": "blackcowmoo-googleanalytics-datasource",
-            "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
-          },
-          "dimensionFilter": {},
-          "dimensions": [
-            "operatingSystem"
-          ],
-          "displayName": {},
-          "metrics": [
-            "totalUsers"
-          ],
-          "mode": "table",
-          "refId": "A",
-          "selectedDimensions": [
-            {
-              "description": "The operating systems used by visitors to your app or website. Includes desktop and mobile operating systems such as Windows and Android.",
-              "label": "Operating system",
-              "value": "operatingSystem"
-            }
-          ],
-          "selectedMetrics": [
-            {
-              "description": "The number of distinct users who have logged at least one event, regardless of whether the site or app was in use when that event was logged.",
-              "label": "Total users",
-              "value": "totalUsers"
-            }
-          ],
-          "timezone": "Etc/GMT",
-          "version": "v4",
-          "webPropertyId": "properties/349995171"
-        }
-      ],
-      "title": "Users by Operating System",
-      "transformations": [
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {},
-            "indexByName": {},
-            "renameByName": {
-              "operatingSystem": "Operating System",
-              "totalUsers": "Users"
-            }
-          }
-        }
-      ],
-      "type": "table"
-    },
-    {
-      "datasource": {
-        "type": "blackcowmoo-googleanalytics-datasource",
-        "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "Number Of Users",
-            "axisPlacement": "auto",
-            "fillOpacity": 80,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineWidth": 1,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 80
-      },
-      "id": 15,
-      "options": {
-        "barRadius": 0,
-        "barWidth": 0.97,
-        "fullHighlight": false,
-        "groupWidth": 0.7,
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "orientation": "auto",
-        "showValue": "auto",
-        "stacking": "none",
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        },
-        "xTickLabelRotation": 0,
-        "xTickLabelSpacing": 0
-      },
-      "targets": [
-        {
-          "accountId": "accounts/286366463",
-          "cacheDurationSeconds": 300,
-          "datasource": {
-            "type": "blackcowmoo-googleanalytics-datasource",
-            "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+            "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
           },
           "dimensionFilter": {},
           "dimensions": [
@@ -2585,7 +2706,7 @@
           ],
           "timezone": "Etc/GMT",
           "version": "v4",
-          "webPropertyId": "properties/349995171"
+          "webPropertyId": "properties/336167131"
         }
       ],
       "title": "Users by Browser",
@@ -2607,8 +2728,9 @@
     {
       "datasource": {
         "type": "blackcowmoo-googleanalytics-datasource",
-        "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+        "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
       },
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2644,7 +2766,7 @@
         "x": 12,
         "y": 80
       },
-      "id": 28,
+      "id": 7,
       "options": {
         "cellHeight": "sm",
         "footer": {
@@ -2657,14 +2779,14 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "10.0.3",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
-          "accountId": "accounts/286366463",
+          "accountId": "accounts/244647801",
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "blackcowmoo-googleanalytics-datasource",
-            "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+            "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
           },
           "dimensionFilter": {},
           "dimensions": [
@@ -2692,7 +2814,7 @@
           ],
           "timezone": "Etc/GMT",
           "version": "v4",
-          "webPropertyId": "properties/349995171"
+          "webPropertyId": "properties/336167131"
         }
       ],
       "title": "Users by Browser",
@@ -2714,14 +2836,16 @@
     {
       "datasource": {
         "type": "blackcowmoo-googleanalytics-datasource",
-        "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+        "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
       },
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "Number Of Users",
@@ -2764,7 +2888,7 @@
         "x": 0,
         "y": 88
       },
-      "id": 13,
+      "id": 9,
       "options": {
         "barRadius": 0,
         "barWidth": 0.97,
@@ -2788,11 +2912,11 @@
       },
       "targets": [
         {
-          "accountId": "accounts/286366463",
+          "accountId": "accounts/244647801",
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "blackcowmoo-googleanalytics-datasource",
-            "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+            "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
           },
           "dimensionFilter": {},
           "dimensions": [
@@ -2820,7 +2944,7 @@
           ],
           "timezone": "Etc/GMT",
           "version": "v4",
-          "webPropertyId": "properties/349995171"
+          "webPropertyId": "properties/336167131"
         }
       ],
       "title": "Users by Device",
@@ -2842,7 +2966,7 @@
     {
       "datasource": {
         "type": "blackcowmoo-googleanalytics-datasource",
-        "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+        "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
       },
       "fieldConfig": {
         "defaults": {
@@ -2879,7 +3003,7 @@
         "x": 12,
         "y": 88
       },
-      "id": 29,
+      "id": 27,
       "options": {
         "cellHeight": "sm",
         "footer": {
@@ -2892,14 +3016,14 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "10.0.3",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
-          "accountId": "accounts/286366463",
+          "accountId": "accounts/244647801",
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "blackcowmoo-googleanalytics-datasource",
-            "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+            "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
           },
           "dimensionFilter": {},
           "dimensions": [
@@ -2927,7 +3051,7 @@
           ],
           "timezone": "Etc/GMT",
           "version": "v4",
-          "webPropertyId": "properties/349995171"
+          "webPropertyId": "properties/336167131"
         }
       ],
       "title": "Users by Town or City",
@@ -2949,7 +3073,7 @@
     {
       "datasource": {
         "type": "blackcowmoo-googleanalytics-datasource",
-        "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+        "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
       },
       "description": "",
       "fieldConfig": {
@@ -2981,7 +3105,7 @@
         "x": 0,
         "y": 96
       },
-      "id": 5,
+      "id": 1,
       "options": {
         "colorMode": "value",
         "graphMode": "area",
@@ -2992,16 +3116,17 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.0.3",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
-          "accountId": "accounts/286366463",
+          "accountId": "accounts/244647801",
           "cacheDurationSeconds": 300,
           "datasource": {
             "type": "blackcowmoo-googleanalytics-datasource",
-            "uid": "a54421aa-163b-4edb-acbe-1a3c4edea442"
+            "uid": "e178d3e1-44ef-4ab6-84d9-dfe330fdbbc4"
           },
           "dimensionFilter": {},
           "displayName": {},
@@ -3019,7 +3144,7 @@
           ],
           "timezone": "Etc/GMT",
           "version": "v4",
-          "webPropertyId": "properties/349995171"
+          "webPropertyId": "properties/336167131"
         }
       ],
       "title": "Average Session Duration",
@@ -3027,8 +3152,7 @@
     }
   ],
   "refresh": "",
-  "schemaVersion": 38,
-  "style": "dark",
+  "schemaVersion": 39,
   "tags": [],
   "templating": {
     "list": []
@@ -3039,8 +3163,8 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Test Environment - Traffic acquisition metrics",
-  "uid": "c38c6889-518a-4936-9023-aa0e4a14802c",
-  "version": 22,
+  "title": "Production Environment - Traffic acquisition metrics",
+  "uid": "ebcf1dae-43aa-4148-8292-302060908f18",
+  "version": 2,
   "weekStart": ""
 }

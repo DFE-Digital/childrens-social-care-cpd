@@ -7,19 +7,25 @@
 
 @inject IFeaturesConfig featuresConfig
 
-@section PageBanner {
-    <partial name="_PageBanner" model="Model.PageContent" />
-}
+@using (@Html.BeginForm("SearchResources", "SearchResources", null, FormMethod.Get, false, new { id = "searchForm" }))
+{
+    <section id="content-banner" class="app-section-content app-section-content--blue govuk-!-margin-bottom-8">
+        <div class="dfe-width-container">
+            <div class="govuk-grid-row govuk-!-padding-top-3 govuk-!-padding-bottom-0">
+                <div class="govuk-grid-column-two-thirds-from-desktop govuk-!-padding-top-3">
+                    <h1 id="content-banner-title" class="govuk-heading-xl">Resources and learning</h1>
+                    <partial name="_SearchInput" model="Model.SearchTerm" />
+                </div>
+            </div>
+        </div>
+    </section>
 
-<div class="govuk-width-container dfe-width-container">
-
-    @using (@Html.BeginForm("SearchResources", "SearchResources", null, FormMethod.Get, false, null))
-    {
+    <div class="govuk-width-container dfe-width-container">
         <div class="govuk-grid-row">
             @* Filter column *@
             <div class="govuk-grid-column-one-third">
                 <h2 class="govuk-heading-m govuk-!-margin-bottom-2">Results</h2>
-                <p class="govuk-!-margin-bottom-3">We found <strong>@Model.TotalCount</strong> results</p>
+                <p class="govuk-!-margin-bottom-3">We found <strong data-testid="results-count">@Model.TotalCount</strong> results</p>
 
                 @if (Model.SelectedTags.Any())
                 {
@@ -28,32 +34,33 @@
                     </a>
                 }
 
-                <gds-filter>
-                    @{
-                        var groups = Model.FacetedTags.GroupBy(x => x.Key.Category);
-                        var index = 1; // gov uk js requires starting at 1 for this control
-                        foreach (var group in groups)
-                        {
-                            <gds-filter-category title="@group.Key" index="@index">
-                                @foreach (var kvp in group)
-                                {
-                                    var isChecked = Model.SelectedTags.Contains(kvp.Key.TagName);
-                                    var count = kvp.Value?.Count ?? 0;
-                                    <gds-filter-checkbox id="tag-@kvp.Key.TagName" name="@SearchRequestPropertyNames.Tags" checked="@isChecked" value="@kvp.Key.TagName">
-                                        @kvp.Key.DisplayName (@count)
-                                    </gds-filter-checkbox>
-                                }
-                            </gds-filter-category>
-                            index++;
+                <div id="facets-wrapper" role="Search" aria-label="Search filters" class="facets">
+                    <gds-filter>
+                        @{
+                            var groups = Model.FacetedTags.GroupBy(x => x.Key.Category);
+                            var index = 1; // gov uk js requires starting at 1 for this control
+                            foreach (var group in groups)
+                            {
+                                <gds-filter-category title="@group.Key" index="@index">
+                                    @foreach (var kvp in group)
+                                    {
+                                        var isChecked = Model.SelectedTags.Contains(kvp.Key.TagName);
+                                        var count = kvp.Value?.Count ?? 0;
+                                        <gds-filter-checkbox id="tag-@kvp.Key.TagName" name="@SearchRequestPropertyNames.Tags" checked="@isChecked" value="@kvp.Key.TagName">
+                                            @kvp.Key.DisplayName (@count)
+                                        </gds-filter-checkbox>
+                                    }
+                                </gds-filter-category>
+                                index++;
+                            }
                         }
-                    }
-
-                </gds-filter>
+                    </gds-filter>
+                </div>
+                <button id="mobile-filters-button" class="govuk-button mobile-filters-button">Show filters</button>
             </div>
 
             @* Results column *@
             <div class="govuk-grid-column-two-thirds">
-                <partial name="_SearchInput" model="Model.SearchTerm" />
                 @if (Model.TotalPages == 0)
                 {
                     <partial name="_NoResults" model="Model" />
@@ -64,9 +71,9 @@
                 }
             </div>
         </div>
-    }
-</div>
+    </div>
+}
 
-@section Scripts {
-    <script src="~/javascript/search.js" asp-append-version="true"></script>
+@{
+    Html.RequireScriptUrl("~/javascript/pages/search.js");
 }
