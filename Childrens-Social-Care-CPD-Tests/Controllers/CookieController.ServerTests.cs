@@ -33,15 +33,15 @@ public class CookieControllerServerTests
     {
         // arrange
         var antiforgeryTokens = await _application.GetAntiforgeryTokensAsync();
-        var cookies = new CookieContainerHandler();
+        using var cookies = new CookieContainerHandler();
         cookies.Container.Add(_application.Server.BaseAddress, new Cookie(antiforgeryTokens.CookieName, antiforgeryTokens.CookieValue));
-        var client = _application.CreateDefaultClient(cookies);
+        using var client = _application.CreateDefaultClient(cookies);
 
-        var formContent = new FormUrlEncodedContent(new Dictionary<string, string> { ["consentValue"] = consentValue });
+        using var formContent = new FormUrlEncodedContent(new Dictionary<string, string> { ["consentValue"] = consentValue });
         formContent.Headers.Add(antiforgeryTokens.HeaderName, antiforgeryTokens.RequestToken);
 
         // act
-        var response = await client.PostAsync(SetPrefencesUrl, formContent);
+        using var response = await client.PostAsync(SetPrefencesUrl, formContent);
 
         // assert
         response.StatusCode.Should().Be(HttpStatusCode.Redirect);
@@ -56,15 +56,15 @@ public class CookieControllerServerTests
     {
         // arrange
         var antiforgeryTokens = await _application.GetAntiforgeryTokensAsync();
-        var cookies = new CookieContainerHandler();
+        using var cookies = new CookieContainerHandler();
         cookies.Container.Add(_application.Server.BaseAddress, new Cookie(antiforgeryTokens.CookieName, antiforgeryTokens.CookieValue));
-        var client = _application.CreateDefaultClient(cookies);
+        using var client = _application.CreateDefaultClient(cookies);
 
-        var formContent = new FormUrlEncodedContent(new Dictionary<string, string> { ["consentValue"] = consentValue });
+        using var formContent = new FormUrlEncodedContent(new Dictionary<string, string> { ["consentValue"] = consentValue });
         formContent.Headers.Add(antiforgeryTokens.HeaderName, antiforgeryTokens.RequestToken);
 
         // act
-        var response = await client.PostAsync(SetPrefencesUrl, formContent);
+        using var response = await client.PostAsync(SetPrefencesUrl, formContent);
 
         // assert
         response.StatusCode.Should().Be(HttpStatusCode.Redirect);
