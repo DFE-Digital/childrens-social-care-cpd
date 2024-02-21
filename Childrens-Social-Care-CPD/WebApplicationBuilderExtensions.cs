@@ -93,7 +93,7 @@ public static class WebApplicationBuilderExtensions
         services.AddScoped<ISearchService, SearchService>();
     }
 
-    public static void AddFeatures(this WebApplicationBuilder builder)
+    public static async Task AddFeatures(this WebApplicationBuilder builder)
     {
         ArgumentNullException.ThrowIfNull(builder);
         builder.Configuration.AddUserSecrets<Program>();
@@ -138,21 +138,21 @@ public static class WebApplicationBuilderExtensions
         if (applicationConfiguration.AzureDataProtectionContainerName.IsSet)
         {
             var url = string.Format(applicationConfiguration.AzureStorageAccountUriFormatString.Value,
-                applicationConfiguration.AzureStorageAccount.Value, 
+                applicationConfiguration.AzureStorageAccount.Value,
                 applicationConfiguration.AzureDataProtectionContainerName.Value);
 
             var managedIdentityCredential = new ManagedIdentityCredential(clientId: applicationConfiguration.AzureManagedIdentityId.Value);
 
-            //var blobContainerUri = new Uri(url);
-            //var blobContainerClient = new BlobContainerClient(blobContainerUri, managedIdentityCredential);
-            //blobContainerClient.CreateIfNotExists();
+            var blobContainerUri = new Uri(url);
+            var blobContainerClient = new BlobContainerClient(blobContainerUri, managedIdentityCredential);
+            await blobContainerClient.CreateIfNotExistsAsync();
 
             var blobUri = new Uri($"{url}/data-protection");
             builder.Services
                 .AddDataProtection()
                 .SetApplicationName($"Childrens-Social-Care-CPD-{applicationConfiguration.AzureEnvironment.Value}")
                 .PersistKeysToAzureBlobStorage(blobUri, managedIdentityCredential);
-                //.ProtectKeysWithAzureKeyVault("<keyid>", defaultAzureCredential); // TODO: add key vault encryption once blob storage has been tested
+                //.ProtectKeysWithAzureKeyVault("<keyid>", managedIdentityCredential); // TODO: add key vault encryption once blob storage has been tested
         }
     }
 }
