@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.AddDependencies();
-builder.AddFeatures();
+await builder.AddFeatures();
 
 var app = builder.Build();
 

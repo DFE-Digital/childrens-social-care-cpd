@@ -20,7 +20,7 @@ public class CookieController : Controller
     }
 
     [HttpPost]
-    //[ValidateAntiForgeryToken]
+    [ValidateAntiForgeryToken]
     [Route("/cookies/setpreferences")]
     public IActionResult SetPreferences(string consentValue, string sourcePage = null, bool fromCookies = false)
     {
