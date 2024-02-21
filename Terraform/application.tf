@@ -17,20 +17,24 @@ resource "azurerm_linux_web_app" "linux-web-app" {
   public_network_access_enabled = false
 
   app_settings = {
-    CPD_GOOGLEANALYTICSTAG               = var.cpd_googleanalyticstag
-    CPD_SPACE_ID                         = var.cpd_space_id
-    CPD_PREVIEW_KEY                      = var.cpd_preview_key
-    CPD_DELIVERY_KEY                     = var.cpd_delivery_key
-    CPD_TENANTID                         = var.tenant_id
-    CPD_AZURE_ENVIRONMENT                = lower(terraform.workspace)
-    CPD_CONTENTFUL_ENVIRONMENT           = var.cpd_contentful_env[terraform.workspace]
-    CPD_INSTRUMENTATION_CONNECTIONSTRING = data.azurerm_application_insights.appinsights.connection_string
-    CPD_CLARITY                          = var.cpd_clarity
-    CPD_FEATURE_POLLING_INTERVAL         = var.cpd_feature_polling_interval
-    CPD_SEARCH_CLIENT_API_KEY            = var.cpd_search_client_api_key
-    CPD_SEARCH_ENDPOINT                  = var.cpd_search_endpoint
-    CPD_SEARCH_INDEX_NAME                = var.cpd_search_index_name
-    DOCKER_ENABLE_CI                     = "true"
+    CPD_GOOGLEANALYTICSTAG                      = var.cpd_googleanalyticstag
+    CPD_SPACE_ID                                = var.cpd_space_id
+    CPD_PREVIEW_KEY                             = var.cpd_preview_key
+    CPD_DELIVERY_KEY                            = var.cpd_delivery_key
+    CPD_TENANTID                                = var.tenant_id
+    CPD_AZURE_ENVIRONMENT                       = lower(terraform.workspace)
+    CPD_CONTENTFUL_ENVIRONMENT                  = var.cpd_contentful_env[terraform.workspace]
+    CPD_INSTRUMENTATION_CONNECTIONSTRING        = data.azurerm_application_insights.appinsights.connection_string
+    CPD_CLARITY                                 = var.cpd_clarity
+    CPD_FEATURE_POLLING_INTERVAL                = var.cpd_feature_polling_interval
+    CPD_SEARCH_CLIENT_API_KEY                   = var.cpd_search_client_api_key
+    CPD_SEARCH_ENDPOINT                         = var.cpd_search_endpoint
+    CPD_SEARCH_INDEX_NAME                       = var.cpd_search_index_name
+    CPD_AZURE_DATA_PROTECTION_CONTAINER_NAME    = var.cpd_azure_data_protection_container_name[terraform.workspace]
+    CPD_AZURE_STORAGE_ACCOUNT                   = var.cpd_azure_storage_account[terraform.workspace]
+    CPD_AZURE_MANAGED_IDENTITY_ID               = data.azurerm_user_assigned_identity.appsauai.client_id
+    CPD_AZURE_STORAGE_ACCOUNT_URI_FORMAT_STRING = var.cpd_azure_storage_account_uri_format_string[terraform.workspace]
+    DOCKER_ENABLE_CI                            = "true"
   }
 
   site_config {
@@ -38,7 +42,10 @@ resource "azurerm_linux_web_app" "linux-web-app" {
       docker_registry_url = "https://ghcr.io"
       docker_image_name   = "dfe-digital/childrens-social-care-cpd:${nonsensitive(var.cpd_image_tag)}"
     }
+    vnet_route_all_enabled = true
   }
+
+  virtual_network_subnet_id = azurerm_subnet.appstorage.id
 
   logs {
     http_logs {
@@ -47,6 +54,11 @@ resource "azurerm_linux_web_app" "linux-web-app" {
         retention_in_mb   = 100
       }
     }
+  }
+
+  identity {
+    identity_ids = [data.azurerm_user_assigned_identity.appsauai.id]
+    type         = "UserAssigned"
   }
 
   tags = data.azurerm_resource_group.rg.tags
@@ -59,20 +71,24 @@ resource "azurerm_linux_web_app_slot" "staging" {
   count = terraform.workspace == "Prod" || terraform.workspace == "Load-Test" ? 1 : 0
 
   app_settings = {
-    CPD_GOOGLEANALYTICSTAG               = var.cpd_googleanalyticstag
-    CPD_SPACE_ID                         = var.cpd_space_id
-    CPD_PREVIEW_KEY                      = var.cpd_preview_key
-    CPD_DELIVERY_KEY                     = var.cpd_delivery_key
-    CPD_TENANTID                         = var.tenant_id
-    CPD_AZURE_ENVIRONMENT                = lower(terraform.workspace)
-    CPD_CONTENTFUL_ENVIRONMENT           = var.cpd_contentful_env[terraform.workspace]
-    CPD_INSTRUMENTATION_CONNECTIONSTRING = data.azurerm_application_insights.appinsights.connection_string
-    CPD_CLARITY                          = var.cpd_clarity
-    CPD_FEATURE_POLLING_INTERVAL         = var.cpd_feature_polling_interval
-    CPD_SEARCH_CLIENT_API_KEY            = var.cpd_search_client_api_key
-    CPD_SEARCH_ENDPOINT                  = var.cpd_search_endpoint
-    CPD_SEARCH_INDEX_NAME                = var.cpd_search_index_name
-    DOCKER_ENABLE_CI                     = "true"
+    CPD_GOOGLEANALYTICSTAG                      = var.cpd_googleanalyticstag
+    CPD_SPACE_ID                                = var.cpd_space_id
+    CPD_PREVIEW_KEY                             = var.cpd_preview_key
+    CPD_DELIVERY_KEY                            = var.cpd_delivery_key
+    CPD_TENANTID                                = var.tenant_id
+    CPD_AZURE_ENVIRONMENT                       = lower(terraform.workspace)
+    CPD_CONTENTFUL_ENVIRONMENT                  = var.cpd_contentful_env[terraform.workspace]
+    CPD_INSTRUMENTATION_CONNECTIONSTRING        = data.azurerm_application_insights.appinsights.connection_string
+    CPD_CLARITY                                 = var.cpd_clarity
+    CPD_FEATURE_POLLING_INTERVAL                = var.cpd_feature_polling_interval
+    CPD_SEARCH_CLIENT_API_KEY                   = var.cpd_search_client_api_key
+    CPD_SEARCH_ENDPOINT                         = var.cpd_search_endpoint
+    CPD_SEARCH_INDEX_NAME                       = var.cpd_search_index_name
+    CPD_AZURE_DATA_PROTECTION_CONTAINER_NAME    = var.cpd_azure_data_protection_container_name[terraform.workspace]
+    CPD_AZURE_STORAGE_ACCOUNT                   = var.cpd_azure_storage_account[terraform.workspace]
+    CPD_AZURE_MANAGED_IDENTITY_ID               = data.azurerm_user_assigned_identity.appsauai.client_id
+    CPD_AZURE_STORAGE_ACCOUNT_URI_FORMAT_STRING = var.cpd_azure_storage_account_uri_format_string[terraform.workspace]
+    DOCKER_ENABLE_CI                            = "true"
   }
 
   site_config {
