@@ -141,7 +141,8 @@ public static class WebApplicationBuilderExtensions
                 applicationConfiguration.AzureStorageAccount.Value, 
                 applicationConfiguration.AzureDataProtectionContainerName.Value);
 
-            var managedIdentityCredential = new ManagedIdentityCredential(clientId: applicationConfiguration.AzureManagedIdentityId.Value);
+            //var managedIdentityCredential = new ManagedIdentityCredential(clientId: applicationConfiguration.AzureManagedIdentityId.Value);
+            var defaultAzureCredential = new DefaultAzureCredential();
 
             //var blobContainerUri = new Uri(url);
             //var blobContainerClient = new BlobContainerClient(blobContainerUri, managedIdentityCredential);
@@ -151,7 +152,7 @@ public static class WebApplicationBuilderExtensions
             builder.Services
                 .AddDataProtection()
                 .SetApplicationName($"Childrens-Social-Care-CPD-{applicationConfiguration.AzureEnvironment.Value}")
-                .PersistKeysToAzureBlobStorage(blobUri, managedIdentityCredential);
+                .PersistKeysToAzureBlobStorage(blobUri, defaultAzureCredential);
                 //.ProtectKeysWithAzureKeyVault("<keyid>", defaultAzureCredential); // TODO: add key vault encryption once blob storage has been tested
         }
     }
