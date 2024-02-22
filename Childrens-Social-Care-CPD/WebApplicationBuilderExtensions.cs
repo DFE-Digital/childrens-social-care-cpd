@@ -40,8 +40,8 @@ public static class WebApplicationBuilderExtensions
         
         builder.Services.AddScoped<IGraphQLWebSocketClient>(services => {
             var config = services.GetRequiredService<IApplicationConfiguration>();
-            var client = new GraphQLHttpClient(config.ContentfulGraphqlConnectionString.Value, new SystemTextJsonSerializer());
-            var key = ContentfulConfiguration.IsPreviewEnabled(config) ? config.ContentfulPreviewId.Value : config.ContentfulDeliveryApiKey.Value;
+            var client = new GraphQLHttpClient(config.ContentfulGraphqlConnectionString, new SystemTextJsonSerializer());
+            var key = ContentfulConfiguration.IsPreviewEnabled(config) ? config.ContentfulPreviewId : config.ContentfulDeliveryApiKey;
             
             client.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", key);
             return client;
@@ -84,10 +84,10 @@ public static class WebApplicationBuilderExtensions
         services.AddScoped(services => {
             var config = services.GetRequiredService<IApplicationConfiguration>();
 
-            var searchEndpointUri = new Uri(config.SearchEndpoint.Value);
+            var searchEndpointUri = new Uri(config.SearchEndpoint);
             return new SearchClient(searchEndpointUri,
-                config.SearchIndexName.Value,
-                new AzureKeyCredential(config.SearchApiKey.Value));
+                config.SearchIndexName,
+                new AzureKeyCredential(config.SearchApiKey));
         });
 
         services.AddScoped<ISearchService, SearchService>();
@@ -118,8 +118,8 @@ public static class WebApplicationBuilderExtensions
 
         var options = new ApplicationInsightsServiceOptions
         {
-            ApplicationVersion = applicationConfiguration.AppVersion.Value,
-            ConnectionString = applicationConfiguration.AppInsightsConnectionString.Value,
+            ApplicationVersion = applicationConfiguration.AppVersion,
+            ConnectionString = applicationConfiguration.AppInsightsConnectionString,
         };
 
         builder.Services.AddApplicationInsightsTelemetry(options: options);
@@ -135,13 +135,13 @@ public static class WebApplicationBuilderExtensions
 
         builder.Services.AddHealthChecks().AddCheck<ConfigurationHealthCheck>("Configuration Health Check", tags: new[] {"configuration"});
 
-        if (applicationConfiguration.AzureDataProtectionContainerName.IsSet)
+        if (!string.IsNullOrEmpty(applicationConfiguration.AzureDataProtectionContainerName))
         {
-            var url = string.Format(applicationConfiguration.AzureStorageAccountUriFormatString.Value,
-                applicationConfiguration.AzureStorageAccount.Value,
-                applicationConfiguration.AzureDataProtectionContainerName.Value);
+            var url = string.Format(applicationConfiguration.AzureStorageAccountUriFormatString,
+                applicationConfiguration.AzureStorageAccount,
+                applicationConfiguration.AzureDataProtectionContainerName);
 
-            var managedIdentityCredential = new ManagedIdentityCredential(clientId: applicationConfiguration.AzureManagedIdentityId.Value);
+            var managedIdentityCredential = new ManagedIdentityCredential(clientId: applicationConfiguration.AzureManagedIdentityId);
 
             var blobContainerUri = new Uri(url);
             var blobContainerClient = new BlobContainerClient(blobContainerUri, managedIdentityCredential);
@@ -150,7 +150,7 @@ public static class WebApplicationBuilderExtensions
             var blobUri = new Uri($"{url}/data-protection");
             builder.Services
                 .AddDataProtection()
-                .SetApplicationName($"Childrens-Social-Care-CPD-{applicationConfiguration.AzureEnvironment.Value}")
+                .SetApplicationName($"Childrens-Social-Care-CPD-{applicationConfiguration.AzureEnvironment}")
                 .PersistKeysToAzureBlobStorage(blobUri, managedIdentityCredential);
                 //.ProtectKeysWithAzureKeyVault("<keyid>", managedIdentityCredential); // TODO: add key vault encryption once blob storage has been tested
         }

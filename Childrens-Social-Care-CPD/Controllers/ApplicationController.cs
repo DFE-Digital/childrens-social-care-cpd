@@ -20,10 +20,10 @@ public class ApplicationController : Controller
     {
         var applicationInfo = new ApplicationInfo()
         {
-            Environment = _applicationConfiguration.AzureEnvironment.Value,
-            ContentfulEnvironment = _applicationConfiguration.ContentfulEnvironment.Value,
-            GitShortHash = _applicationConfiguration.GitHash.Value,
-            Version = _applicationConfiguration.AppVersion.Value,
+            Environment = _applicationConfiguration.AzureEnvironment,
+            ContentfulEnvironment = _applicationConfiguration.ContentfulEnvironment,
+            GitShortHash = _applicationConfiguration.GitHash,
+            Version = _applicationConfiguration.AppVersion,
         };
 
         return Json(applicationInfo);

@@ -26,7 +26,7 @@ public class FeaturesConfigBackgroundServiceTests
     public async Task Calls_Updater_At_Specified_Interval(int interval)
     {
         // arrange
-        _applicationConfiguration.FeaturePollingInterval.Value.Returns(interval);
+        _applicationConfiguration.FeaturePollingInterval.Returns(interval);
         var featuresConfigBackgroundService = new FeaturesConfigBackgroundService(
             _logger,
             _applicationConfiguration,
@@ -50,7 +50,7 @@ public class FeaturesConfigBackgroundServiceTests
     public async Task Returns_If_Interval_Is_Zero()
     {
         // arrange
-        _applicationConfiguration.FeaturePollingInterval.Value.Returns(0);
+        _applicationConfiguration.FeaturePollingInterval.Returns(0);
         var featuresConfigBackgroundService = new FeaturesConfigBackgroundService(
             _logger,
             _applicationConfiguration,

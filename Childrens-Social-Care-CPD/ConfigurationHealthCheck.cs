@@ -29,7 +29,7 @@ public class ConfigurationHealthCheck : IHealthCheck
         }
 
         // Specific check as this is super important.
-        if (_applicationConfiguration.DisableSecureCookies.Value)
+        if (_applicationConfiguration.DisableSecureCookies)
         {
             _logger.LogError("DisableSecureCookies should not be enabled for standard environments");
             healthy = false;
