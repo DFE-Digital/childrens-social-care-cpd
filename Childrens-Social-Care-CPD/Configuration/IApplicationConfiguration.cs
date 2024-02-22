@@ -10,19 +10,19 @@ public interface IApplicationConfiguration
     [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false, Obfuscate = false)]
     string AppVersion { get; }
 
-    //[RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false, Obfuscate = false)]
+    [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false, Obfuscate = false)]
     string AzureDataProtectionContainerName { get; }
 
     [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false, Obfuscate = false)]
     string AzureEnvironment { get; }
 
-    //[RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false)]
+    [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false)]
     string AzureManagedIdentityId { get; }
 
-    //[RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false)]
+    [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false)]
     string AzureStorageAccount { get; }
 
-    //[RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false)]
+    [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false, Obfuscate = false)]
     string AzureStorageAccountUriFormatString { get; }
 
     [RequiredForEnvironment(ApplicationEnvironment.Production, Hidden = false)]
@@ -60,12 +60,12 @@ public interface IApplicationConfiguration
     [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false)]
     string GoogleTagManagerKey { get; }
 
-    //[RequiredForEnvironment(ApplicationEnvironment.None, Hidden = false)]
+    [RequiredForEnvironment(ApplicationEnvironment.None, Hidden = false)] // TODO: when released, set the env to ALL
     string SearchApiKey { get; }
 
-    //[RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false)]
+    [RequiredForEnvironment(ApplicationEnvironment.None, Hidden = false)] // TODO: when released, set the env to ALL
     string SearchEndpoint { get; }
 
-    //[RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false, Obfuscate = false)]
+    [RequiredForEnvironment(ApplicationEnvironment.None, Hidden = false, Obfuscate = false)] // TODO: when released, set the env to ALL
     string SearchIndexName { get; }
 }
