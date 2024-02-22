@@ -45,8 +45,6 @@ resource "azurerm_linux_web_app" "linux-web-app" {
     vnet_route_all_enabled = true
   }
 
-  virtual_network_subnet_id = azurerm_subnet.appstorage.id
-
   logs {
     http_logs {
       file_system {

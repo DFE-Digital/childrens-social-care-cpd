@@ -25,15 +25,6 @@ resource "azurerm_subnet" "backend" {
   service_endpoints                             = ["Microsoft.Storage"]
 }
 
-# Private subnet for the applicaton storage
-resource "azurerm_subnet" "appstorage" {
-  name                                          = var.vnet_appstorage_name[terraform.workspace]
-  resource_group_name                           = data.azurerm_resource_group.rg.name
-  virtual_network_name                          = data.azurerm_virtual_network.vnet1.name
-  address_prefixes                              = [var.vnet_appstorage_prefixes[terraform.workspace]]
-  private_link_service_network_policies_enabled = false
-}
-
 # The public IP address for this service
 data "azurerm_public_ip" "pip1" {
   name                = var.pip_name[terraform.workspace]

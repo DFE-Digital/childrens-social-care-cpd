@@ -132,31 +132,6 @@ variable "vnet_backend_prefixes" {
   description = "Subnets used for Backend VNET"
 }
 
-
-variable "vnet_appstorage_name" {
-  type = map(string)
-  default = {
-    Dev       = "s185d01-chidrens-social-care-cpd-sn03"
-    Test      = "s185d02-chidrens-social-care-cpd-sn03"
-    Load-Test = "s185d03-chidrens-social-care-cpd-sn03"
-    Pre-Prod  = "s185t01-chidrens-social-care-cpd-sn03"
-    Prod      = "s185p01-chidrens-social-care-cpd-sn03"
-  }
-  description = "Name of Application Storage VNET"
-}
-
-variable "vnet_appstorage_prefixes" {
-  type = map(string)
-  default = {
-    Dev       = "10.0.0.128/26"
-    Test      = "10.1.0.128/26"
-    Load-Test = "10.2.0.128/26"
-    Pre-Prod  = "10.0.0.128/26"
-    Prod      = "10.0.0.128/26"
-  }
-  description = "Subnets used for Application Storage VNET"
-}
-
 variable "pip_name" {
   type = map(string)
   default = {
