@@ -3,6 +3,7 @@ using Childrens_Social_Care_CPD.DataAccess;
 using Childrens_Social_Care_CPD.Models;
 using System.Collections.ObjectModel;
 using System.Net;
+using System.Text;
 
 namespace Childrens_Social_Care_CPD.Search;
 
@@ -47,19 +48,20 @@ internal class SearchResultsVMFactory : ISearchResultsVMFactory
 
     private static string GetPagingFormatString(string searchTerm, IEnumerable<string> tags, SortOrder sortOrder, string routeName)
     {
-        var result = $"/{routeName}?{SearchRequestPropertyNames.Page}={{0}}";
-
+        var sb = new StringBuilder($"/{routeName}?{SearchRequestPropertyNames.Page}={{0}}");
         if (sortOrder != SortOrder.UpdatedLatest)
         {
-            result += AppendUrlParameter(SearchRequestPropertyNames.SortOrder, ((int)sortOrder).ToString());
-        }
-        result += AppendUrlParameter(SearchRequestPropertyNames.Term, searchTerm);
-        foreach (var tag in tags)
-        {
-            result += AppendUrlParameter(SearchRequestPropertyNames.Tags, tag);
+            sb.Append(AppendUrlParameter(SearchRequestPropertyNames.SortOrder, ((int)sortOrder).ToString()));
         }
         
-        return result;
+        sb.Append(AppendUrlParameter(SearchRequestPropertyNames.Term, searchTerm));
+
+        foreach (var tag in tags)
+        {
+            sb.Append(AppendUrlParameter(SearchRequestPropertyNames.Tags, tag));
+        }
+
+        return sb.ToString();
     }
 
     private static string GetClearFiltersUri(SearchRequestModel request, string routeName)
