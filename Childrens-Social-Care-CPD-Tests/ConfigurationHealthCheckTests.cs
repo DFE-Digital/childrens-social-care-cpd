@@ -22,7 +22,7 @@ public class ConfigurationHealthCheckTests
     {
         // arrange
         _applicationConfiguration.SetAllValid();
-        _applicationConfiguration._featurePollingInterval = "0";
+        _applicationConfiguration._featurePollingInterval = 0;
         var sut = new ConfigurationHealthCheck(_logger, _applicationConfiguration);
 
         // act
@@ -37,7 +37,7 @@ public class ConfigurationHealthCheckTests
     {
         // arrange
         _applicationConfiguration.SetAllValid();
-        _applicationConfiguration._disableSecureCookies = "true";
+        _applicationConfiguration._disableSecureCookies = true;
         var sut = new ConfigurationHealthCheck(_logger, _applicationConfiguration);
 
         // act
