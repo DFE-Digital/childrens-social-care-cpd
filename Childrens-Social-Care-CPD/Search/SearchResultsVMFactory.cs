@@ -41,9 +41,9 @@ internal class SearchResultsVMFactory : ISearchResultsVMFactory
 
     private static string AppendUrlParameter(string name, string param, bool additive = true)
     {
-        return string.IsNullOrEmpty(param)
-            ? string.Empty
-            : $"{(additive ? '&' : string.Empty)}{name}={WebUtility.UrlEncode(param)}";
+        if (string.IsNullOrEmpty(name)) return string.Empty;
+
+        return $"{(additive ? '&' : string.Empty)}{name}={WebUtility.UrlEncode(param)}";
     }
 
     private static string GetPagingFormatString(string searchTerm, IEnumerable<string> tags, SortOrder sortOrder, string routeName)
