@@ -3,35 +3,26 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace Childrens_Social_Care_CPD;
 
-public class ConfigurationHealthCheck : IHealthCheck
+public class ConfigurationHealthCheck(ILogger<ConfigurationHealthCheck> logger, IApplicationConfiguration applicationConfiguration) : IHealthCheck
 {
-    private readonly ILogger _logger;
-    private readonly IApplicationConfiguration _applicationConfiguration;
-
-    public ConfigurationHealthCheck(ILogger<ConfigurationHealthCheck> logger, IApplicationConfiguration applicationConfiguration)
-    {
-        _logger = logger;
-        _applicationConfiguration = applicationConfiguration;
-    }
-
     public Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
     {
-        var configurationInformation = new ConfigurationInformation(_applicationConfiguration);
+        var configurationInformation = new ConfigurationInformation(applicationConfiguration);
         var healthy = true;
         
         foreach (var item in configurationInformation.ConfigurationInfo)
         {
             if (item.Required && !item.IsSet)
             {
-                _logger.LogError("Configuration setting {propertyName} does not have a value", item.Name);
+                logger.LogError("Configuration setting {propertyName} does not have a value", item.Name);
                 healthy = false;
             }
         }
 
         // Specific check as this is super important.
-        if (_applicationConfiguration.DisableSecureCookies)
+        if (applicationConfiguration.DisableSecureCookies)
         {
-            _logger.LogError("DisableSecureCookies should not be enabled for standard environments");
+            logger.LogError("DisableSecureCookies should not be enabled for standard environments");
             healthy = false;
         }
 

@@ -31,7 +31,7 @@ public class GdsFilterCategoryTagHelper : TagHelper
         output.Content.AppendHtml(RenderCategoryBody(Index, content));
     }
 
-    private static IHtmlContent RenderCategoryHeader(int index, string categoryTitle)
+    private static TagBuilder RenderCategoryHeader(int index, string categoryTitle)
     {
         var headerSpan = new TagBuilder("span");
         headerSpan.AddCssClass("govuk-accordion__section-button");
@@ -48,7 +48,7 @@ public class GdsFilterCategoryTagHelper : TagHelper
         return div;
     }
 
-    private IHtmlContent RenderCategoryBody(int index, IHtmlContent content)
+    private TagBuilder RenderCategoryBody(int index, IHtmlContent content)
     {
         var fieldsetDiv = new TagBuilder("div");
         fieldsetDiv.AddCssClass("govuk-checkboxes");
