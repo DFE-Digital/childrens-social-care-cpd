@@ -20,8 +20,7 @@ internal class QuoteRenderer : IRenderer<Quote>
 
         foreach (var content in item.Content)
         {
-            var paragraph = content as Paragraph;
-            if (paragraph != null)
+            if (content is Paragraph paragraph)
             {
                 div.InnerHtml.AppendHtml(_paragraphRenderer.Render(paragraph));
             }

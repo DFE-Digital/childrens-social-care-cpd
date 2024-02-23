@@ -28,8 +28,7 @@ public class ListRenderer : IRenderer<List>
 
         foreach (var listItem in item.Content.OfType<ListItem>())
         {
-            var paragraph = listItem.Content[0] as Paragraph;
-            if (paragraph == null) continue;
+            if (listItem.Content[0] is not Paragraph paragraph) continue;
 
             var li = new TagBuilder("li");
             foreach (var content in paragraph.Content)

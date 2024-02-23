@@ -34,14 +34,14 @@ internal class InlineAreaOfPracticeListRenderer : IRenderer<AreaOfPracticeList>
         return htmlContentBuilder;
     }
 
-    private static IHtmlContent NoAreasOfpractice()
+    private static TagBuilder NoAreasOfpractice()
     {
         var span = new TagBuilder("span");
         span.InnerHtml.Append("No Areas Of practice Available");
         return span;
     }
 
-    private IHtmlContent AreaOfPracticeTitle(string id, AreaOfPractice areaOfPractice)
+    private TagBuilder AreaOfPracticeTitle(string id, AreaOfPractice areaOfPractice)
     {
         var div = new TagBuilder("div");
         div.AddCssClass("govuk-heading-s govuk-!-margin-bottom-1");
@@ -59,7 +59,7 @@ internal class InlineAreaOfPracticeListRenderer : IRenderer<AreaOfPracticeList>
         return div;
     }
 
-    private static IHtmlContent AreaOfPracticeSummary(AreaOfPractice areaOfPractice)
+    private static HtmlContentBuilder AreaOfPracticeSummary(AreaOfPractice areaOfPractice)
     {
         var htmlContentBuilder = new HtmlContentBuilder();
         var p = new TagBuilder("p");

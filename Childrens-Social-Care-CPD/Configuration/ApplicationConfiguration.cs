@@ -23,7 +23,7 @@ public class ApplicationConfiguration : IApplicationConfiguration
     public string ContentfulPreviewHost => "preview.contentful.com";
     public string ContentfulPreviewId => _configuration["CPD_PREVIEW_KEY"];
     public string ContentfulSpaceId => _configuration["CPD_SPACE_ID"];
-    public bool DisableSecureCookies => bool.TryParse(_configuration["CPD_DISABLE_SECURE_COOKIES"], out var result) ? result : false;
+    public bool DisableSecureCookies => bool.TryParse(_configuration["CPD_DISABLE_SECURE_COOKIES"], out var result) && result;
     public int FeaturePollingInterval => int.TryParse(_configuration["CPD_FEATURE_POLLING_INTERVAL"], out var result) ? result : 0;
     public string GitHash => _configuration["VCS-REF"];
     public string GoogleTagManagerKey => _configuration["CPD_GOOGLEANALYTICSTAG"];

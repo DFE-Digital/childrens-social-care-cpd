@@ -18,7 +18,7 @@ internal class HeadingRendererBase
         _contentLinkRenderer = contentLinkRenderer;
     }
 
-    protected IHtmlContent HeadingToHtml(string tag, IHeading heading)
+    protected TagBuilder HeadingToHtml(string tag, IHeading heading)
     {
         var h = new TagBuilder(tag);
         foreach (var content in heading.Content)
