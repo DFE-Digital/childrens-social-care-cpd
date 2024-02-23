@@ -1,4 +1,4 @@
-﻿namespace Childrens_Social_Care_CPD.Configuration;
+﻿namespace Childrens_Social_Care_CPD.Configuration.Features;
 
 public class FeaturesConfigBackgroundService : BackgroundService
 {
@@ -29,6 +29,6 @@ public class FeaturesConfigBackgroundService : BackgroundService
         {
             _logger.LogInformation("Polling at: {utcNow}", DateTime.UtcNow.ToShortTimeString());
             await _featureConfigurationUpdater.UpdateFeaturesAsync(stoppingToken);
-        }   
+        }
     }
 }

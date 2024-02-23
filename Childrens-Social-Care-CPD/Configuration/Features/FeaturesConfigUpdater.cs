@@ -3,7 +3,7 @@ using Childrens_Social_Care_CPD.Contentful.Models;
 using Contentful.Core.Extensions;
 using Contentful.Core.Search;
 
-namespace Childrens_Social_Care_CPD.Configuration;
+namespace Childrens_Social_Care_CPD.Configuration.Features;
 
 public class FeaturesConfigUpdater : IFeaturesConfigUpdater
 {
