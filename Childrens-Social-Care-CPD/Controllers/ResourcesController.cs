@@ -50,7 +50,7 @@ public class ResourcesController : Controller
         return properties;
     }
 
-    [Route("resources-learning/{*pagename:regex(^[[0-9a-z]](\\/?[[0-9a-z\\-]])*\\/?$)}")]
+    [Route("resources-learning/{*pagename:regex(^[[0-9a-z]]+[[0-9a-z\\/\\-]]*$)}")]
     public async Task<IActionResult> Index(string pageName = "home", bool preferenceSet = false, bool fs = false, CancellationToken cancellationToken = default)
     {
         if (!_featuresConfig.IsEnabled(Features.ResourcesAndLearning))
