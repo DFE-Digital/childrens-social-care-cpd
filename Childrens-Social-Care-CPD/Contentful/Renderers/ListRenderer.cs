@@ -5,17 +5,8 @@ using Text = Contentful.Core.Models.Text;
 
 namespace Childrens_Social_Care_CPD.Contentful.Renderers;
 
-public class ListRenderer : IRenderer<List>
+public class ListRenderer(IRenderer<Text> textRenderer, IRenderer<Hyperlink> hyperlinkRenderer) : IRenderer<List>
 {
-    private readonly IRenderer<Text> _textRenderer;
-    private readonly IRenderer<Hyperlink> _hyperlinkRenderer;
-
-    public ListRenderer(IRenderer<Text> textRenderer, IRenderer<Hyperlink> hyperlinkRenderer)
-    {
-        _textRenderer = textRenderer;
-        _hyperlinkRenderer = hyperlinkRenderer;
-    }
-
     public IHtmlContent Render(List item)
     {
         if (item.Content.Count == 0)
@@ -37,12 +28,12 @@ public class ListRenderer : IRenderer<List>
                 {
                     case Text text:
                         {
-                            li.InnerHtml.AppendHtml(_textRenderer.Render(text));
+                            li.InnerHtml.AppendHtml(textRenderer.Render(text));
                             break;
                         }
                     case Hyperlink hyperlink:
                         {
-                            li.InnerHtml.AppendHtml(_hyperlinkRenderer.Render(hyperlink));
+                            li.InnerHtml.AppendHtml(hyperlinkRenderer.Render(hyperlink));
                             break;
                         }
                 }

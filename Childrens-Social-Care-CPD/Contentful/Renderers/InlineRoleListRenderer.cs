@@ -4,15 +4,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Childrens_Social_Care_CPD.Contentful.Renderers;
 
-internal class InlineRoleListRenderer : IRenderer<RoleList>
+internal class InlineRoleListRenderer(IRenderer<ContentLink> contentLinkRenderer) : IRenderer<RoleList>
 {
-    private readonly IRenderer<ContentLink> _contentLinkRenderer;
-
-    public InlineRoleListRenderer(IRenderer<ContentLink> contentLinkRenderer)
-    {
-        _contentLinkRenderer = contentLinkRenderer;
-    }
-
     public IHtmlContent Render(RoleList item)
     {
         if (item.Roles.Count == 0)
@@ -52,7 +45,7 @@ internal class InlineRoleListRenderer : IRenderer<RoleList>
             Uri = id
         };
 
-        heading3.InnerHtml.AppendHtml(_contentLinkRenderer.Render(contentLink));
+        heading3.InnerHtml.AppendHtml(contentLinkRenderer.Render(contentLink));
 
         div.InnerHtml.AppendHtml(heading3);
         return div;

@@ -5,25 +5,18 @@ using System.Net.Mime;
 
 namespace Childrens_Social_Care_CPD.Controllers;
 
-public class ApplicationController : Controller
+public class ApplicationController(IApplicationConfiguration applicationConfiguration) : Controller
 {
-    private readonly IApplicationConfiguration _applicationConfiguration;
-
-    public ApplicationController(IApplicationConfiguration applicationConfiguration)
-    {
-        _applicationConfiguration = applicationConfiguration;
-    }
-
     [HttpGet]
     [Route("CPD/AppInfo")]
     public JsonResult AppInfo()
     {
         var applicationInfo = new ApplicationInfo()
         {
-            Environment = _applicationConfiguration.AzureEnvironment,
-            ContentfulEnvironment = _applicationConfiguration.ContentfulEnvironment,
-            GitShortHash = _applicationConfiguration.GitHash,
-            Version = _applicationConfiguration.AppVersion,
+            Environment = applicationConfiguration.AzureEnvironment,
+            ContentfulEnvironment = applicationConfiguration.ContentfulEnvironment,
+            GitShortHash = applicationConfiguration.GitHash,
+            Version = applicationConfiguration.AppVersion,
         };
 
         return Json(applicationInfo);
@@ -33,7 +26,7 @@ public class ApplicationController : Controller
     [Route("application/configuration")]
     public IActionResult Configuration()
     {
-        var configurationInformation = new ConfigurationInformation(_applicationConfiguration);
+        var configurationInformation = new ConfigurationInformation(applicationConfiguration);
         
         if (Request.Headers.Accept == MediaTypeNames.Application.Json)
         {
