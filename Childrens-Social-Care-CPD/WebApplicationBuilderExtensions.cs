@@ -50,11 +50,11 @@ public static class WebApplicationBuilderExtensions
 
         builder.Services.AddScoped<IContentLinkContext, ContentLinkContext>();
 
-        builder.Services.AddContentRenderers();
-        builder.Services.AddSearch();
+        AddContentRenderers(builder.Services);
+        AddSearch(builder.Services);
     }
 
-    private static void AddContentRenderers(this IServiceCollection services)
+    private static void AddContentRenderers(IServiceCollection services)
     {
         // Register all the IRenderer<T> & IRendererWithOptions<T> implementations in the assembly
         var assemblyTypes = System.Reflection.Assembly.GetExecutingAssembly().GetTypes();
@@ -78,7 +78,7 @@ public static class WebApplicationBuilderExtensions
             });
     }
 
-    private static void AddSearch(this IServiceCollection services)
+    private static void AddSearch(IServiceCollection services)
     {
         services.AddScoped<ISearchResultsVMFactory, SearchResultsVMFactory>();
 
@@ -98,9 +98,20 @@ public static class WebApplicationBuilderExtensions
     {
         ArgumentNullException.ThrowIfNull(builder);
         builder.Configuration.AddUserSecrets<Program>();
+        builder.Services.AddResponseCompression();
+        builder.Services.AddControllersWithViews();
 
         var applicationConfiguration = new ApplicationConfiguration(builder.Configuration);
 
+        AddLogging(builder, applicationConfiguration);
+        AddContentful(builder, applicationConfiguration);
+        AddHostedServices(builder.Services);
+        AddHealthChecks(builder.Services);
+        await AddDataProtection(builder.Services, applicationConfiguration);
+    }
+
+    private static void AddLogging(WebApplicationBuilder builder, ApplicationConfiguration applicationConfiguration)
+    {
         builder.Logging.AddAzureWebAppDiagnostics();
         builder.Services.Configure<AzureFileLoggerOptions>(options =>
         {
@@ -111,11 +122,6 @@ public static class WebApplicationBuilderExtensions
         {
             options.BlobName = "log.txt";
         });
-
-        builder.Services.AddResponseCompression();
-        builder.Services.AddControllersWithViews();
-        builder.Services.AddContentful(ContentfulConfiguration.GetContentfulConfiguration(builder.Configuration, applicationConfiguration));
-        builder.Services.AddHostedService<FeaturesConfigBackgroundService>();
 
         var options = new ApplicationInsightsServiceOptions
         {
@@ -133,9 +139,26 @@ public static class WebApplicationBuilderExtensions
                 options.Rules.Insert(0, new LoggerFilterRule(typeof(ApplicationInsightsLoggerProvider).FullName, null, LogLevel.Information, null));
             }
         });
+    }
 
-        builder.Services.AddHealthChecks().AddCheck<ConfigurationHealthCheck>("Configuration Health Check", tags: new[] {"configuration"});
+    private static void AddContentful(WebApplicationBuilder builder, ApplicationConfiguration applicationConfiguration)
+    {
+        var contentfulConfiguration = ContentfulConfiguration.GetContentfulConfiguration(builder.Configuration, applicationConfiguration);
+        builder.Services.AddContentful(contentfulConfiguration);
+    }
 
+    private static void AddHostedServices(IServiceCollection services)
+    {
+        services.AddHostedService<FeaturesConfigBackgroundService>();
+    }
+
+    private static void AddHealthChecks(IServiceCollection services)
+    {
+        services.AddHealthChecks().AddCheck<ConfigurationHealthCheck>("Configuration Health Check", tags: new[] { "configuration" });
+    }
+
+    private static async Task AddDataProtection(IServiceCollection services, ApplicationConfiguration applicationConfiguration)
+    {
         if (!string.IsNullOrEmpty(applicationConfiguration.AzureDataProtectionContainerName))
         {
             var url = string.Format(applicationConfiguration.AzureStorageAccountUriFormatString,
@@ -149,7 +172,7 @@ public static class WebApplicationBuilderExtensions
             await blobContainerClient.CreateIfNotExistsAsync();
 
             var blobUri = new Uri($"{url}/data-protection");
-            builder.Services
+            services
                 .AddDataProtection()
                 .SetApplicationName($"Childrens-Social-Care-CPD-{applicationConfiguration.AzureEnvironment}")
                 .PersistKeysToAzureBlobStorage(blobUri, managedIdentityCredential);
