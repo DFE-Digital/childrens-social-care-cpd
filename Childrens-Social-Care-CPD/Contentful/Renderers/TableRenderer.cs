@@ -4,17 +4,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Childrens_Social_Care_CPD.Contentful.Renderers;
 
-internal class TableRenderer : IRenderer<Table>
+internal class TableRenderer(IRenderer<TableHeader> tableHeaderRenderer, IRenderer<TableCell> tableCellRenderer) : IRenderer<Table>
 {
-    private readonly IRenderer<TableHeader> _tableHeaderRenderer;
-    private readonly IRenderer<TableCell> _tableCellRenderer;
-
-    public TableRenderer(IRenderer<TableHeader> tableHeaderRenderer, IRenderer<TableCell> tableCellRenderer)
-    {
-        _tableHeaderRenderer = tableHeaderRenderer;
-        _tableCellRenderer = tableCellRenderer;
-    }
-
     public IHtmlContent Render(Table item)
     {
         var table = new TagBuilder("table");
@@ -32,7 +23,7 @@ internal class TableRenderer : IRenderer<Table>
 
             foreach (TableHeader tableHeader in headerRow.Content.OfType<TableHeader>())
             {
-                tr.InnerHtml.AppendHtml(_tableHeaderRenderer.Render(tableHeader));
+                tr.InnerHtml.AppendHtml(tableHeaderRenderer.Render(tableHeader));
             }
 
             thead.InnerHtml.AppendHtml(tr);
@@ -50,7 +41,7 @@ internal class TableRenderer : IRenderer<Table>
 
             foreach (TableCell tableCell in row.Content.OfType<TableCell>())
             {
-                tr.InnerHtml.AppendHtml(_tableCellRenderer.Render(tableCell));
+                tr.InnerHtml.AppendHtml(tableCellRenderer.Render(tableCell));
             }
 
             tbody.InnerHtml.AppendHtml(tr);

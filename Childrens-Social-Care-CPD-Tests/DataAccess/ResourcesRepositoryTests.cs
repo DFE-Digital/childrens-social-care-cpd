@@ -99,7 +99,7 @@ public class ResourcesRepositoryTests
                 Total = 1,
                 Items = new Collection<SearchResourcesByTags.SearchResult>
                 {
-                    new SearchResourcesByTags.SearchResult()
+                    new()
                 }
             }
         };
@@ -199,8 +199,8 @@ public class ResourcesRepositoryTests
         // arrange
         var tags = new List<ContentTag>
         {
-            new ContentTag { Name = "Foo", SystemProperties = new SystemProperties { Id = "foo" } },
-            new ContentTag { Name = "Topic: Foo", SystemProperties = new SystemProperties { Id = "topicFoo" } },
+            new() { Name = "Foo", SystemProperties = new SystemProperties { Id = "foo" } },
+            new() { Name = "Topic: Foo", SystemProperties = new SystemProperties { Id = "topicFoo" } },
         };
         _contentfulClient.GetTags().Returns(tags);
         var sut = new ResourcesRepository(_applicationConfiguration, _contentfulClient, _gqlClient);
@@ -218,7 +218,7 @@ public class ResourcesRepositoryTests
         // arrange
         var tags = new List<ContentTag>
         {
-            new ContentTag { Name = "Topic: Foo", SystemProperties = new SystemProperties { Id = "topicFoo" } },
+            new() { Name = "Topic: Foo", SystemProperties = new SystemProperties { Id = "topicFoo" } },
         };
         _contentfulClient.GetTags().Returns(tags);
         var sut = new ResourcesRepository(_applicationConfiguration, _contentfulClient, _gqlClient);
@@ -237,8 +237,8 @@ public class ResourcesRepositoryTests
         // arrange
         var tags = new List<ContentTag>
         {
-            new ContentTag { Name = "Topic: Foo", SystemProperties = new SystemProperties { Id = "topicFoo" } },
-            new ContentTag { Name = "Foo: Foo", SystemProperties = new SystemProperties { Id = "fooFoo" } },
+            new() { Name = "Topic: Foo", SystemProperties = new SystemProperties { Id = "topicFoo" } },
+            new() { Name = "Foo: Foo", SystemProperties = new SystemProperties { Id = "fooFoo" } },
         };
         _contentfulClient.GetTags().Returns(tags);
         var sut = new ResourcesRepository(_applicationConfiguration, _contentfulClient, _gqlClient);

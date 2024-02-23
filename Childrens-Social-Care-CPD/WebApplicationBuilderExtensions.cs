@@ -154,7 +154,9 @@ public static class WebApplicationBuilderExtensions
 
     private static void AddHealthChecks(IServiceCollection services)
     {
+#pragma warning disable CA1861 // Avoid constant arrays as arguments
         services.AddHealthChecks().AddCheck<ConfigurationHealthCheck>("Configuration Health Check", tags: new[] { "configuration" });
+#pragma warning restore CA1861 // Avoid constant arrays as arguments
     }
 
     private static async Task AddDataProtection(IServiceCollection services, ApplicationConfiguration applicationConfiguration)

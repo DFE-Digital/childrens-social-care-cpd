@@ -9,8 +9,8 @@ public static class ContentfulConfiguration
     {
         var azureEnvironment = applicationConfiguration.AzureEnvironment;
         return !string.IsNullOrEmpty(azureEnvironment)
-            && azureEnvironment != ApplicationEnvironment.LoadTest
-            && applicationConfiguration.ContentfulEnvironment.ToLower() != azureEnvironment.ToLower();
+            && !string.Equals(azureEnvironment, ApplicationEnvironment.LoadTest, StringComparison.OrdinalIgnoreCase)
+            && !string.Equals(applicationConfiguration.ContentfulEnvironment, azureEnvironment, StringComparison.OrdinalIgnoreCase);
     }
 
     public static ConfigurationManager GetContentfulConfiguration(ConfigurationManager configuration, IApplicationConfiguration applicationConfiguration)

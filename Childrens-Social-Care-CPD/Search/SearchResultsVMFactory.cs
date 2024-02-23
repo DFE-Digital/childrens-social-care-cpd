@@ -25,7 +25,7 @@ internal class SearchResultsVMFactory : ISearchResultsVMFactory
         _resourcesRepository = resourcesRepository;
     }
 
-    private static IReadOnlyDictionary<TagInfo, FacetResult> GetFacetedTags(IEnumerable<TagInfo> tagInfos, IDictionary<string, IList<FacetResult>> facets)
+    private static ReadOnlyDictionary<TagInfo, FacetResult> GetFacetedTags(IEnumerable<TagInfo> tagInfos, IDictionary<string, IList<FacetResult>> facets)
     {
         facets.TryGetValue("Tags", out var tagFacets);
         if (tagFacets == null)
