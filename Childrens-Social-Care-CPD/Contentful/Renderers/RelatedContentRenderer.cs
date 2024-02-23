@@ -4,15 +4,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Childrens_Social_Care_CPD.Contentful.Renderers;
 
-public class RelatedContentRenderer : IRenderer<RelatedContent>
+public class RelatedContentRenderer(IRenderer<ContentLink> contentLinkRenderer) : IRenderer<RelatedContent>
 {
-    private readonly IRenderer<ContentLink> _contentLinkRenderer;
-
-    public RelatedContentRenderer(IRenderer<ContentLink> contentLinkRenderer)
-    {
-        _contentLinkRenderer = contentLinkRenderer;
-    }
-
     public IHtmlContent Render(RelatedContent item)
     {
         if (item == null) return null;
@@ -62,7 +55,7 @@ public class RelatedContentRenderer : IRenderer<RelatedContent>
         foreach(var contentLink in relatedContent)
         {
             var li = new TagBuilder("li");
-            li.InnerHtml.AppendHtml(_contentLinkRenderer.Render(contentLink));
+            li.InnerHtml.AppendHtml(contentLinkRenderer.Render(contentLink));
             ul.InnerHtml.AppendHtml(li);
         }
 
