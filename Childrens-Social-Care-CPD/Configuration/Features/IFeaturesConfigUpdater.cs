@@ -1,4 +1,4 @@
-﻿namespace Childrens_Social_Care_CPD.Configuration;
+﻿namespace Childrens_Social_Care_CPD.Configuration.Features;
 
 public interface IFeaturesConfigUpdater
 {
