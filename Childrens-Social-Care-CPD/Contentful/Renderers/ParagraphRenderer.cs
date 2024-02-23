@@ -5,10 +5,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Childrens_Social_Care_CPD.Contentful.Renderers;
 
-internal class ParagraphRenderer(IRenderer<Text> textRenderer, IRenderer<RoleList> roleListRenderer, IRenderer<Hyperlink> hyperlinkRenderer, IRenderer<ContentLink> contentLinkRenderer, IRenderer<AreaOfPracticeList> areaOfPracticeList) : IRenderer<Paragraph>
+internal class ParagraphRenderer(IRenderer<Text> textRenderer, IRenderer<RoleList> roleListRenderer, IRenderer<Hyperlink> hyperlinkRenderer, IRenderer<ContentLink> contentLinkRenderer, IRenderer<AreaOfPracticeList> areaOfPracticeListRenderer) : IRenderer<Paragraph>
 {
-    private readonly IRenderer<AreaOfPracticeList> _areaOfPracticeList = areaOfPracticeList;
-
     public IHtmlContent Render(Paragraph item)
     {
         var p = new TagBuilder("p");
@@ -25,7 +23,7 @@ internal class ParagraphRenderer(IRenderer<Text> textRenderer, IRenderer<RoleLis
                         {
                             case ContentLink contentLink: p.InnerHtml.AppendHtml(contentLinkRenderer.Render(contentLink)); break;
                             case RoleList roleList: p.InnerHtml.AppendHtml(roleListRenderer.Render(roleList)); break;
-                            case AreaOfPracticeList areaOfPracticeList: p.InnerHtml.AppendHtml(_areaOfPracticeList.Render(areaOfPracticeList)); break;
+                            case AreaOfPracticeList areaOfPracticeList: p.InnerHtml.AppendHtml(areaOfPracticeListRenderer.Render(areaOfPracticeList)); break;
                         }
                         break;
                     }
