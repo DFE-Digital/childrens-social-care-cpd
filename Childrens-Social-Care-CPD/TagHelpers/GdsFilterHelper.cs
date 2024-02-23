@@ -24,7 +24,7 @@ public class GdsFilterTagHelper : TagHelper
         output.Content.AppendHtml(RenderBody(content));
     }
 
-    private static IHtmlContent RenderBody(IHtmlContent content)
+    private static TagBuilder RenderBody(IHtmlContent content)
     {
         var button = new TagBuilder("button");
         button.AddCssClass("govuk-button");
@@ -49,7 +49,7 @@ public class GdsFilterTagHelper : TagHelper
         return div;
     }
 
-    private static IHtmlContent RenderHeader()
+    private static TagBuilder RenderHeader()
     {
         var h2 = new TagBuilder("h2");
         h2.AddCssClass("govuk-heading-m");

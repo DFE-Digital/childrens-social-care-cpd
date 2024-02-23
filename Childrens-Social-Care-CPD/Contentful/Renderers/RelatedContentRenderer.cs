@@ -41,7 +41,7 @@ public class RelatedContentRenderer : IRenderer<RelatedContent>
         return rowDiv;
     }
 
-    private static IHtmlContent RenderHeading()
+    private static TagBuilder RenderHeading()
     {
         var h2 = new TagBuilder("h2");
         h2.AddCssClass("govuk-heading-s");
@@ -50,7 +50,7 @@ public class RelatedContentRenderer : IRenderer<RelatedContent>
         return h2;
     }
 
-    private IHtmlContent RenderNav(RelatedContent relatedContent)
+    private TagBuilder RenderNav(RelatedContent relatedContent)
     {
         var nav = new TagBuilder("nav");
         nav.Attributes.Add("role", "navigation");

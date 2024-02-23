@@ -19,7 +19,7 @@ internal class TextRenderer : IRenderer<Text>
             htmlContentBuilder.Append(parts[index]);
             htmlContentBuilder.AppendHtml("<br>");
         }
-        htmlContentBuilder.Append(parts[parts.Length - 1]);
+        htmlContentBuilder.Append(parts[^1]);
 
         IHtmlContent htmlContent = htmlContentBuilder;
         foreach (var mark in item.Marks)
@@ -38,7 +38,7 @@ internal class TextRenderer : IRenderer<Text>
         return htmlContent;
     }
 
-    private static IHtmlContent EncaseInTag(IHtmlContent htmlContent, string tag)
+    private static TagBuilder EncaseInTag(IHtmlContent htmlContent, string tag)
     {
         var tagBuilder = new TagBuilder(tag);
         tagBuilder.InnerHtml.SetHtmlContent(htmlContent);
