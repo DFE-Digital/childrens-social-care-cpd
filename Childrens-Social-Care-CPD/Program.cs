@@ -1,5 +1,5 @@
 using Childrens_Social_Care_CPD;
-using Childrens_Social_Care_CPD.Configuration;
+using Childrens_Social_Care_CPD.Configuration.Features;
 using System.Diagnostics.CodeAnalysis;
 
 var builder = WebApplication.CreateBuilder(args);

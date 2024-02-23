@@ -1,8 +1,6 @@
 ﻿using Childrens_Social_Care_CPD.Configuration;
 using Childrens_Social_Care_CPD.Configuration.Features;
 using Microsoft.Extensions.Logging;
-using NSubstitute;
-using NUnit.Framework;
 using System.Threading;
 using System.Threading.Tasks;
 namespace Childrens_Social_Care_CPD_Tests.Configuration.Features;
