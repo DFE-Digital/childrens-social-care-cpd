@@ -3,12 +3,9 @@ using Childrens_Social_Care_CPD.Controllers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Mvc;
-using NSubstitute;
-using NUnit.Framework;
 using Childrens_Social_Care_CPD.Contentful.Models;
 using Contentful.Core.Models;
 using Contentful.Core.Search;
-using FluentAssertions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Childrens_Social_Care_CPD.Models;
@@ -64,7 +61,9 @@ public partial class CookieControllerTests
 
         _contentfulClient = Substitute.For<ICpdContentfulClient>();
 
-        _cookieController = new CookieController(_contentfulClient, new CookieHelper(new ApplicationConfiguration(Substitute.For<IConfiguration>())))
+        var configuration = Substitute.For<IConfiguration>();
+        configuration.ReturnsForAll((string)null);
+        _cookieController = new CookieController(_contentfulClient, new CookieHelper(new ApplicationConfiguration(configuration)))
         {
             ControllerContext = controllerContext,
             TempData = Substitute.For<ITempDataDictionary>()

@@ -1,8 +1,5 @@
-﻿using NUnit.Framework;
-using Childrens_Social_Care_CPD.Configuration;
-using FluentAssertions;
+﻿using Childrens_Social_Care_CPD.Configuration;
 using System.Linq;
-using NSubstitute;
 
 namespace Childrens_Social_Care_CPD_Tests.Configuration;
 
@@ -14,14 +11,14 @@ public partial class ConfigurationInformationTests
     public void Setup()
     {
         _applicationConfiguration = Substitute.For<IApplicationConfiguration>();
-        _applicationConfiguration.AzureEnvironment.Value.Returns(ApplicationEnvironment.Development);
+        _applicationConfiguration.AzureEnvironment.Returns(ApplicationEnvironment.Development);
     }
 
     [Test]
     public void Required_Values_Are_Detected()
     {
         // arrange
-        _applicationConfiguration.AppVersion.Returns(new StringConfigSetting(() => "foo"));
+        _applicationConfiguration.AppVersion.Returns("foo");
 
         // act
         var sut = new ConfigurationInformation(_applicationConfiguration);
@@ -38,7 +35,7 @@ public partial class ConfigurationInformationTests
     public void Missing_Values_Are_Detected(string value)
     {
         // arrange
-        _applicationConfiguration.AppVersion.Returns(new StringConfigSetting(() => value));
+        _applicationConfiguration.AppVersion.Returns(value);
 
         // act
         var sut = new ConfigurationInformation(_applicationConfiguration);
@@ -53,7 +50,7 @@ public partial class ConfigurationInformationTests
     public void Extraneous_Values_Are_Detected()
     {
         // arrange
-        _applicationConfiguration.ClarityProjectId.Returns(new StringConfigSetting(() => "foo"));
+        _applicationConfiguration.ClarityProjectId.Returns("foo");
 
         // act
         var sut = new ConfigurationInformation(_applicationConfiguration);
@@ -80,8 +77,8 @@ public partial class ConfigurationInformationTests
     {
         // arrange
         var value = "sensitive value";
-        _applicationConfiguration.AzureEnvironment.Returns(new StringConfigSetting(() => ApplicationEnvironment.Production));
-        _applicationConfiguration.AppInsightsConnectionString.Returns(new StringConfigSetting(() => value));
+        _applicationConfiguration.AzureEnvironment.Returns(ApplicationEnvironment.Production);
+        _applicationConfiguration.AppInsightsConnectionString.Returns(value);
 
         // act
         var sut = new ConfigurationInformation(_applicationConfiguration);
