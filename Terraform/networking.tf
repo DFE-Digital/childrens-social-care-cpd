@@ -32,7 +32,7 @@ resource "azurerm_subnet" "appstorage" {
   virtual_network_name                          = data.azurerm_virtual_network.vnet1.name
   address_prefixes                              = [var.vnet_appstorage_prefixes[terraform.workspace]]
   private_link_service_network_policies_enabled = false
-  service_endpoints                             = ["Microsoft.Storage"]
+  service_endpoints                             = ["Microsoft.Web/serverFarms"]
 }
 
 # The public IP address for this service
