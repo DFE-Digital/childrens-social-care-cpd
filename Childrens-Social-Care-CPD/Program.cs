@@ -26,7 +26,6 @@ app.MapControllerRoute(
     pattern: "{controller=Content}/{action=Index}");
 app.MapHealthChecks("application/status");
 
-
 app.Run();
 
 [ExcludeFromCodeCoverage]
