@@ -33,6 +33,12 @@ resource "azurerm_subnet" "appstorage" {
   address_prefixes                              = [var.vnet_appstorage_prefixes[terraform.workspace]]
   private_link_service_network_policies_enabled = false
   service_endpoints                             = ["Microsoft.Web"]
+  delegation {
+    name = "delegation"
+    service_delegation {
+      name = "Microsoft.Web/serverFarms"
+    }
+  }
 }
 
 # The public IP address for this service
