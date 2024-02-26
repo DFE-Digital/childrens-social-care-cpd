@@ -4,15 +4,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Childrens_Social_Care_CPD.Contentful.Renderers;
 
-internal class TableCellRenderer : IRenderer<TableCell>
+internal class TableCellRenderer(IRenderer<Paragraph> paragraphRenderer) : IRenderer<TableCell>
 {
-    private readonly IRenderer<Paragraph> _paragraphRenderer;
-
-    public TableCellRenderer(IRenderer<Paragraph> paragraphRenderer)
-    {
-        _paragraphRenderer = paragraphRenderer;
-    }
-
     public IHtmlContent Render(TableCell item)
     {
         var td = new TagBuilder("td");
@@ -22,7 +15,7 @@ internal class TableCellRenderer : IRenderer<TableCell>
         {
             switch (content)
             {
-                case Paragraph paragraph: td.InnerHtml.AppendHtml(_paragraphRenderer.Render(paragraph)); break;
+                case Paragraph paragraph: td.InnerHtml.AppendHtml(paragraphRenderer.Render(paragraph)); break;
             }
         }
 

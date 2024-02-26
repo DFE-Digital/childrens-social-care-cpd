@@ -1,4 +1,4 @@
-﻿using Childrens_Social_Care_CPD.Configuration;
+﻿using Childrens_Social_Care_CPD.Configuration.Features;
 using Childrens_Social_Care_CPD.Contentful;
 using Childrens_Social_Care_CPD.Contentful.Models;
 using Contentful.Core.Search;
