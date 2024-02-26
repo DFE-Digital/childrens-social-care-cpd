@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Reflection;
 
 namespace Childrens_Social_Care_CPD.Configuration;
 
@@ -12,7 +11,7 @@ public class ConfigurationInformation
 
     public ConfigurationInformation(IApplicationConfiguration applicationConfiguration)
     {
-        Environment = applicationConfiguration.AzureEnvironment.Value;
+        Environment = applicationConfiguration.AzureEnvironment;
         ExtractInfo(applicationConfiguration);
     }
 
@@ -68,11 +67,6 @@ public class ConfigurationInformation
         {
             var v = value as string;
             return !(string.IsNullOrEmpty(v) || string.IsNullOrWhiteSpace(v));
-        }
-
-        if (value is IConfigurationSetting)
-        {
-            return (value as IConfigurationSetting).IsSet;
         }
 
         return true;

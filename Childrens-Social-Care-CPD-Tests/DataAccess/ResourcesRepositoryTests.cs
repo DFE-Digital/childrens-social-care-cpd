@@ -44,8 +44,8 @@ public class ResourcesRepositoryTests
         _gqlClient = Substitute.For<IGraphQLWebSocketClient>();
 
         // By default we want the preview flag set to false
-        _applicationConfiguration.AzureEnvironment.Returns(new StringConfigSetting(() => ApplicationEnvironment.Development));
-        _applicationConfiguration.ContentfulEnvironment.Returns(new StringConfigSetting(() => ApplicationEnvironment.Development));
+        _applicationConfiguration.AzureEnvironment.Returns(ApplicationEnvironment.Development);
+        _applicationConfiguration.ContentfulEnvironment.Returns(ApplicationEnvironment.Development);
     }
 
     [Test]
@@ -99,7 +99,7 @@ public class ResourcesRepositoryTests
                 Total = 1,
                 Items = new Collection<SearchResourcesByTags.SearchResult>
                 {
-                    new SearchResourcesByTags.SearchResult()
+                    new()
                 }
             }
         };
@@ -176,7 +176,7 @@ public class ResourcesRepositoryTests
     public async Task FindByTagsAsync_Sets_Preview_Flag()
     {
         // arrange
-        _applicationConfiguration.ContentfulEnvironment.Returns(new StringConfigSetting(() => ApplicationEnvironment.PreProduction));
+        _applicationConfiguration.ContentfulEnvironment.Returns(ApplicationEnvironment.PreProduction);
 
         var response = Substitute.For<GraphQLResponse<SearchResourcesByTags.ResponseType>>();
         response.Data = new SearchResourcesByTags.ResponseType();
@@ -199,8 +199,8 @@ public class ResourcesRepositoryTests
         // arrange
         var tags = new List<ContentTag>
         {
-            new ContentTag { Name = "Foo", SystemProperties = new SystemProperties { Id = "foo" } },
-            new ContentTag { Name = "Topic: Foo", SystemProperties = new SystemProperties { Id = "topicFoo" } },
+            new() { Name = "Foo", SystemProperties = new SystemProperties { Id = "foo" } },
+            new() { Name = "Topic: Foo", SystemProperties = new SystemProperties { Id = "topicFoo" } },
         };
         _contentfulClient.GetTags().Returns(tags);
         var sut = new ResourcesRepository(_applicationConfiguration, _contentfulClient, _gqlClient);
@@ -218,7 +218,7 @@ public class ResourcesRepositoryTests
         // arrange
         var tags = new List<ContentTag>
         {
-            new ContentTag { Name = "Topic: Foo", SystemProperties = new SystemProperties { Id = "topicFoo" } },
+            new() { Name = "Topic: Foo", SystemProperties = new SystemProperties { Id = "topicFoo" } },
         };
         _contentfulClient.GetTags().Returns(tags);
         var sut = new ResourcesRepository(_applicationConfiguration, _contentfulClient, _gqlClient);
@@ -237,8 +237,8 @@ public class ResourcesRepositoryTests
         // arrange
         var tags = new List<ContentTag>
         {
-            new ContentTag { Name = "Topic: Foo", SystemProperties = new SystemProperties { Id = "topicFoo" } },
-            new ContentTag { Name = "Foo: Foo", SystemProperties = new SystemProperties { Id = "fooFoo" } },
+            new() { Name = "Topic: Foo", SystemProperties = new SystemProperties { Id = "topicFoo" } },
+            new() { Name = "Foo: Foo", SystemProperties = new SystemProperties { Id = "fooFoo" } },
         };
         _contentfulClient.GetTags().Returns(tags);
         var sut = new ResourcesRepository(_applicationConfiguration, _contentfulClient, _gqlClient);
@@ -306,7 +306,7 @@ public class ResourcesRepositoryTests
     public async Task GetByIdAsync_Sets_Preview_Flag()
     {
         // arrange
-        _applicationConfiguration.ContentfulEnvironment.Returns(new StringConfigSetting(() => ApplicationEnvironment.PreProduction));
+        _applicationConfiguration.ContentfulEnvironment.Returns(ApplicationEnvironment.PreProduction);
 
         var collection = new ContentfulCollection<Content>
         {
@@ -334,7 +334,7 @@ public class ResourcesRepositoryTests
     public async Task GetByIdAsync_Returns_Data()
     {
         // arrange
-        _applicationConfiguration.ContentfulEnvironment.Returns(new StringConfigSetting(() => ApplicationEnvironment.PreProduction));
+        _applicationConfiguration.ContentfulEnvironment.Returns(ApplicationEnvironment.PreProduction);
 
         var content = new Content();
         var collection = new ContentfulCollection<Content>

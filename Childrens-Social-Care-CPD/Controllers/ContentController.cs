@@ -6,15 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Childrens_Social_Care_CPD.Controllers;
 
-public class ContentController : Controller
+public class ContentController(ICpdContentfulClient cpdClient) : Controller
 {
-    private readonly ICpdContentfulClient _cpdClient;
-
-    public ContentController(ICpdContentfulClient cpdClient)
-    {
-        _cpdClient = cpdClient;
-    }
-
     private async Task<Content> FetchPageContentAsync(string contentId, CancellationToken cancellationToken)
     {
         var queryBuilder = QueryBuilder<Content>.New
@@ -22,7 +15,7 @@ public class ContentController : Controller
             .FieldEquals("fields.id", contentId)
             .Include(10);
 
-        var result = await _cpdClient.GetEntries(queryBuilder, cancellationToken);
+        var result = await cpdClient.GetEntries(queryBuilder, cancellationToken);
 
         return result?.FirstOrDefault();
     }
@@ -41,7 +34,7 @@ public class ContentController : Controller
             <=
         Etc.
     */
-    [Route("/{*pagename:regex(^[[0-9a-z]](\\/?[[0-9a-z\\-]])*\\/?$)}")]
+    [Route("/{*pagename:regex(^[[0-9a-z]]+[[0-9a-z\\/\\-]]*$)}")]
     public async Task<IActionResult> Index(string pageName = "home", bool preferenceSet = false, bool fs = false, CancellationToken cancellationToken = default)
     {
         pageName = pageName?.TrimEnd('/');

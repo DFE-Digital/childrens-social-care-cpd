@@ -4,15 +4,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Childrens_Social_Care_CPD.Contentful.Renderers;
 
-internal class InlineAreaOfPracticeListRenderer : IRenderer<AreaOfPracticeList>
+internal class InlineAreaOfPracticeListRenderer(IRenderer<ContentLink> contentLinkRenderer) : IRenderer<AreaOfPracticeList>
 {
-    private readonly IRenderer<ContentLink> _contentLinkRenderer;
-
-    public InlineAreaOfPracticeListRenderer(IRenderer<ContentLink> contentLinkRenderer)
-    {
-        _contentLinkRenderer = contentLinkRenderer;
-    }
-
     public IHtmlContent Render(AreaOfPracticeList item)
     {
         if (item.Areas.Count == 0)
@@ -34,14 +27,14 @@ internal class InlineAreaOfPracticeListRenderer : IRenderer<AreaOfPracticeList>
         return htmlContentBuilder;
     }
 
-    private static IHtmlContent NoAreasOfpractice()
+    private static TagBuilder NoAreasOfpractice()
     {
         var span = new TagBuilder("span");
         span.InnerHtml.Append("No Areas Of practice Available");
         return span;
     }
 
-    private IHtmlContent AreaOfPracticeTitle(string id, AreaOfPractice areaOfPractice)
+    private TagBuilder AreaOfPracticeTitle(string id, AreaOfPractice areaOfPractice)
     {
         var div = new TagBuilder("div");
         div.AddCssClass("govuk-heading-s govuk-!-margin-bottom-1");
@@ -53,13 +46,13 @@ internal class InlineAreaOfPracticeListRenderer : IRenderer<AreaOfPracticeList>
             Uri = id
         };
 
-        heading2.InnerHtml.AppendHtml(_contentLinkRenderer.Render(contentLink));
+        heading2.InnerHtml.AppendHtml(contentLinkRenderer.Render(contentLink));
 
         div.InnerHtml.AppendHtml(heading2);
         return div;
     }
 
-    private static IHtmlContent AreaOfPracticeSummary(AreaOfPractice areaOfPractice)
+    private static HtmlContentBuilder AreaOfPracticeSummary(AreaOfPractice areaOfPractice)
     {
         var htmlContentBuilder = new HtmlContentBuilder();
         var p = new TagBuilder("p");
