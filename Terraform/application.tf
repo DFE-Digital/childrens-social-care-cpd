@@ -17,6 +17,7 @@ resource "azurerm_linux_web_app" "linux-web-app" {
   public_network_access_enabled = false
 
   app_settings = {
+    ASPNETCORE_HTTP_PORTS                       = 80
     CPD_GOOGLEANALYTICSTAG                      = var.cpd_googleanalyticstag
     CPD_SPACE_ID                                = var.cpd_space_id
     CPD_PREVIEW_KEY                             = var.cpd_preview_key
@@ -71,6 +72,7 @@ resource "azurerm_linux_web_app_slot" "staging" {
   count = terraform.workspace == "Prod" || terraform.workspace == "Load-Test" ? 1 : 0
 
   app_settings = {
+    ASPNETCORE_HTTP_PORTS                       = 80
     CPD_GOOGLEANALYTICSTAG                      = var.cpd_googleanalyticstag
     CPD_SPACE_ID                                = var.cpd_space_id
     CPD_PREVIEW_KEY                             = var.cpd_preview_key
