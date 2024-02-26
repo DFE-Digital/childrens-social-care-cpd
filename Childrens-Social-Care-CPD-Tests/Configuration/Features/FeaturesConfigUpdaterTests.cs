@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading;
 using NSubstitute.ExceptionExtensions;
+using Childrens_Social_Care_CPD.Configuration.Features;
 
 namespace Childrens_Social_Care_CPD_Tests.Configuration;
 

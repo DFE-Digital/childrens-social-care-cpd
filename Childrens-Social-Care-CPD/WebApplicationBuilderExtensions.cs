@@ -20,6 +20,7 @@ using System.Net.Http.Headers;
 using Microsoft.AspNetCore.DataProtection;
 using Azure.Storage.Blobs;
 using Azure.Identity;
+using Childrens_Social_Care_CPD.Configuration.Features;
 
 namespace Childrens_Social_Care_CPD;
 
@@ -40,8 +41,8 @@ public static class WebApplicationBuilderExtensions
         
         builder.Services.AddScoped<IGraphQLWebSocketClient>(services => {
             var config = services.GetRequiredService<IApplicationConfiguration>();
-            var client = new GraphQLHttpClient(config.ContentfulGraphqlConnectionString.Value, new SystemTextJsonSerializer());
-            var key = ContentfulConfiguration.IsPreviewEnabled(config) ? config.ContentfulPreviewId.Value : config.ContentfulDeliveryApiKey.Value;
+            var client = new GraphQLHttpClient(config.ContentfulGraphqlConnectionString, new SystemTextJsonSerializer());
+            var key = ContentfulConfiguration.IsPreviewEnabled(config) ? config.ContentfulPreviewId : config.ContentfulDeliveryApiKey;
             
             client.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", key);
             return client;
@@ -49,11 +50,11 @@ public static class WebApplicationBuilderExtensions
 
         builder.Services.AddScoped<IContentLinkContext, ContentLinkContext>();
 
-        builder.Services.AddContentRenderers();
-        builder.Services.AddSearch();
+        AddContentRenderers(builder.Services);
+        AddSearch(builder.Services);
     }
 
-    private static void AddContentRenderers(this IServiceCollection services)
+    private static void AddContentRenderers(IServiceCollection services)
     {
         // Register all the IRenderer<T> & IRendererWithOptions<T> implementations in the assembly
         var assemblyTypes = System.Reflection.Assembly.GetExecutingAssembly().GetTypes();
@@ -77,17 +78,17 @@ public static class WebApplicationBuilderExtensions
             });
     }
 
-    private static void AddSearch(this IServiceCollection services)
+    private static void AddSearch(IServiceCollection services)
     {
         services.AddScoped<ISearchResultsVMFactory, SearchResultsVMFactory>();
 
         services.AddScoped(services => {
             var config = services.GetRequiredService<IApplicationConfiguration>();
 
-            var searchEndpointUri = new Uri(config.SearchEndpoint.Value);
+            var searchEndpointUri = new Uri(config.SearchEndpoint);
             return new SearchClient(searchEndpointUri,
-                config.SearchIndexName.Value,
-                new AzureKeyCredential(config.SearchApiKey.Value));
+                config.SearchIndexName,
+                new AzureKeyCredential(config.SearchApiKey));
         });
 
         services.AddScoped<ISearchService, SearchService>();
@@ -97,9 +98,20 @@ public static class WebApplicationBuilderExtensions
     {
         ArgumentNullException.ThrowIfNull(builder);
         builder.Configuration.AddUserSecrets<Program>();
+        builder.Services.AddResponseCompression();
+        builder.Services.AddControllersWithViews();
 
         var applicationConfiguration = new ApplicationConfiguration(builder.Configuration);
 
+        AddLogging(builder, applicationConfiguration);
+        AddContentful(builder, applicationConfiguration);
+        AddHostedServices(builder.Services);
+        AddHealthChecks(builder.Services);
+        await AddDataProtection(builder.Services, applicationConfiguration);
+    }
+
+    private static void AddLogging(WebApplicationBuilder builder, ApplicationConfiguration applicationConfiguration)
+    {
         builder.Logging.AddAzureWebAppDiagnostics();
         builder.Services.Configure<AzureFileLoggerOptions>(options =>
         {
@@ -111,15 +123,10 @@ public static class WebApplicationBuilderExtensions
             options.BlobName = "log.txt";
         });
 
-        builder.Services.AddResponseCompression();
-        builder.Services.AddControllersWithViews();
-        builder.Services.AddContentful(ContentfulConfiguration.GetContentfulConfiguration(builder.Configuration, applicationConfiguration));
-        builder.Services.AddHostedService<FeaturesConfigBackgroundService>();
-
         var options = new ApplicationInsightsServiceOptions
         {
-            ApplicationVersion = applicationConfiguration.AppVersion.Value,
-            ConnectionString = applicationConfiguration.AppInsightsConnectionString.Value,
+            ApplicationVersion = applicationConfiguration.AppVersion,
+            ConnectionString = applicationConfiguration.AppInsightsConnectionString,
         };
 
         builder.Services.AddApplicationInsightsTelemetry(options: options);
@@ -132,25 +139,44 @@ public static class WebApplicationBuilderExtensions
                 options.Rules.Insert(0, new LoggerFilterRule(typeof(ApplicationInsightsLoggerProvider).FullName, null, LogLevel.Information, null));
             }
         });
+    }
 
-        builder.Services.AddHealthChecks().AddCheck<ConfigurationHealthCheck>("Configuration Health Check", tags: new[] {"configuration"});
+    private static void AddContentful(WebApplicationBuilder builder, ApplicationConfiguration applicationConfiguration)
+    {
+        var contentfulConfiguration = ContentfulConfiguration.GetContentfulConfiguration(builder.Configuration, applicationConfiguration);
+        builder.Services.AddContentful(contentfulConfiguration);
+    }
 
-        if (applicationConfiguration.AzureDataProtectionContainerName.IsSet)
+    private static void AddHostedServices(IServiceCollection services)
+    {
+        services.AddHostedService<FeaturesConfigBackgroundService>();
+    }
+
+    private static void AddHealthChecks(IServiceCollection services)
+    {
+#pragma warning disable CA1861 // Avoid constant arrays as arguments
+        services.AddHealthChecks().AddCheck<ConfigurationHealthCheck>("Configuration Health Check", tags: new[] { "configuration" });
+#pragma warning restore CA1861 // Avoid constant arrays as arguments
+    }
+
+    private static async Task AddDataProtection(IServiceCollection services, ApplicationConfiguration applicationConfiguration)
+    {
+        if (!string.IsNullOrEmpty(applicationConfiguration.AzureDataProtectionContainerName))
         {
-            var url = string.Format(applicationConfiguration.AzureStorageAccountUriFormatString.Value,
-                applicationConfiguration.AzureStorageAccount.Value,
-                applicationConfiguration.AzureDataProtectionContainerName.Value);
+            var url = string.Format(applicationConfiguration.AzureStorageAccountUriFormatString,
+                applicationConfiguration.AzureStorageAccount,
+                applicationConfiguration.AzureDataProtectionContainerName);
 
-            var managedIdentityCredential = new ManagedIdentityCredential(clientId: applicationConfiguration.AzureManagedIdentityId.Value);
+            var managedIdentityCredential = new ManagedIdentityCredential(clientId: applicationConfiguration.AzureManagedIdentityId);
 
             var blobContainerUri = new Uri(url);
             var blobContainerClient = new BlobContainerClient(blobContainerUri, managedIdentityCredential);
             await blobContainerClient.CreateIfNotExistsAsync();
 
             var blobUri = new Uri($"{url}/data-protection");
-            builder.Services
+            services
                 .AddDataProtection()
-                .SetApplicationName($"Childrens-Social-Care-CPD-{applicationConfiguration.AzureEnvironment.Value}")
+                .SetApplicationName($"Childrens-Social-Care-CPD-{applicationConfiguration.AzureEnvironment}")
                 .PersistKeysToAzureBlobStorage(blobUri, managedIdentityCredential);
                 //.ProtectKeysWithAzureKeyVault("<keyid>", managedIdentityCredential); // TODO: add key vault encryption once blob storage has been tested
         }

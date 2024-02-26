@@ -9,4 +9,5 @@ public static class ApplicationEnvironment
     public const string PreProduction = "pre-prod";
     public const string Production = "prod";
     public const string All = "*";
+    public const string None = "";
 }
