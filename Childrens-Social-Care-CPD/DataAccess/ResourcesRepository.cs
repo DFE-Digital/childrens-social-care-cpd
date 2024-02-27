@@ -25,6 +25,7 @@ public interface IResourcesRepository
 public class ResourcesRepository : IResourcesRepository
 {
     private static readonly string[] _tagPrefixes = new string[] { "Topic", "Resource provider", "Format", "Career stage" };
+    private static readonly string[] _carrerStageOrder = new string[] { "careerStagePractitioner", "careerStageExperiencedPractitioner", "careerStageManager", "careerStageSeniorManager", "careerStageSeniorLeader" };
     private readonly ICpdContentfulClient _cpdClient;
     private readonly IGraphQLWebSocketClient _gqlClient;
     private readonly bool _isPreview;
@@ -93,12 +94,21 @@ public class ResourcesRepository : IResourcesRepository
 
         foreach (var category in _tagPrefixes)
         {
-            list.AddRange(
-                tags
+            var sortedtags = tags
                     .Where(x => x.Key == category)
                     .Select(x => new TagInfo(x.Key, x.Value.Name[(x.Value.Name.IndexOf(':') + 1)..], x.Value.SystemProperties.Id))
-                    .OrderBy(x => x.TagName)
-            );
+                    .OrderBy(x => x.TagName);
+
+            switch (category)
+            {
+                //reorder career stage tags
+                case "Career stage":
+                    list.AddRange(sortedtags.OrderBy(x => Array.IndexOf(_carrerStageOrder, x.TagName)));
+                    break;
+                default:
+                    list.AddRange(sortedtags);
+                    break;
+            }
         }
 
         return list;

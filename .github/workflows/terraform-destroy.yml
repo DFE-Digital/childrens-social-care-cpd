@@ -46,6 +46,7 @@ jobs:
       TF_VAR_cpd_gf_password: ${{secrets.TF_CPD_GF_PASSWORD}}
       TF_VAR_cpd_gf_plugins: ${{secrets.TF_VAR_CPD_GF_PLUGINS}}
       TF_VAR_cpd_gf_image_tag: ${{vars.TF_VAR_CPD_GF_IMAGE_TAG}}
+      TF_VAR_whitelist_ips: ${{vars.TF_VAR_WHITELIST_IPS}}
       TF_VAR_vcs_tag: ${{github.event.release.tag_name}}
       TF_WORKSPACE: ${{inputs.workspace}}
 

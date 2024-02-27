@@ -1,4 +1,4 @@
-﻿namespace Childrens_Social_Care_CPD.Configuration;
+﻿namespace Childrens_Social_Care_CPD.Configuration.Features;
 
 public class FeaturesConfigBackgroundService : BackgroundService
 {
@@ -22,13 +22,13 @@ public class FeaturesConfigBackgroundService : BackgroundService
         _logger.LogInformation("Background polling task started");
         stoppingToken.Register(() => _logger.LogInformation("Background polling task started"));
 
-        if (_applicationConfiguration.FeaturePollingInterval.Value == 0) return;
+        if (_applicationConfiguration.FeaturePollingInterval == 0) return;
 
-        var timer = new PeriodicTimer(TimeSpan.FromSeconds(_applicationConfiguration.FeaturePollingInterval.Value));
+        var timer = new PeriodicTimer(TimeSpan.FromSeconds(_applicationConfiguration.FeaturePollingInterval));
         while (await timer.WaitForNextTickAsync(stoppingToken))
         {
             _logger.LogInformation("Polling at: {utcNow}", DateTime.UtcNow.ToShortTimeString());
             await _featureConfigurationUpdater.UpdateFeaturesAsync(stoppingToken);
-        }   
+        }
     }
 }

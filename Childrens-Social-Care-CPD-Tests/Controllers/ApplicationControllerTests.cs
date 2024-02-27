@@ -1,15 +1,9 @@
 using Childrens_Social_Care_CPD.Configuration;
 using Childrens_Social_Care_CPD.Controllers;
 using Childrens_Social_Care_CPD.Models;
-using FluentAssertions;
-using NSubstitute;
-using NUnit.Framework;
-using Childrens_Social_Care_CPD_Tests.Configuration;
 using Microsoft.AspNetCore.Mvc;
-using Childrens_Social_Care_CPD.Contentful;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using System.Net;
 using System.Net.Mime;
 using Microsoft.Extensions.Primitives;
 
@@ -32,7 +26,7 @@ public class ApplicationControllerTests
     {
         // arrange
         var value = "foo";
-        _applicationConfiguration.ContentfulEnvironment.Value.Returns(value);
+        _applicationConfiguration.ContentfulEnvironment.Returns(value);
 
         // act
         var actual = _controller.AppInfo().Value as ApplicationInfo;
@@ -46,7 +40,7 @@ public class ApplicationControllerTests
     {
         // arrange
         var value = "foo";
-        _applicationConfiguration.AzureEnvironment.Value.Returns(value);
+        _applicationConfiguration.AzureEnvironment.Returns(value);
 
         // act
         var actual = _controller.AppInfo().Value as ApplicationInfo;
@@ -60,7 +54,7 @@ public class ApplicationControllerTests
     {
         // arrange
         var value = "foo";
-        _applicationConfiguration.GitHash.Value.Returns(value);
+        _applicationConfiguration.GitHash.Returns(value);
 
         // act
         var actual = _controller.AppInfo().Value as ApplicationInfo;
@@ -74,7 +68,7 @@ public class ApplicationControllerTests
     {
         // arrange
         var value = "foo";
-        _applicationConfiguration.AppVersion.Value.Returns(value);
+        _applicationConfiguration.AppVersion.Returns(value);
 
         // act
         var actual = _controller.AppInfo().Value as ApplicationInfo;
