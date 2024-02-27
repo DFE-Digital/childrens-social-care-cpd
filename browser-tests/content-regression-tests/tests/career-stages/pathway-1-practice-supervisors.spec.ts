@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test'
 test.describe('Pathway 1: practice supervisors', () => {
     test('User journey from homepage @journey', async ({ page }) => {
         await page.goto('/')
-        await page.getByRole('link', { name: 'Experienced practitioners', exact: true }).click()
+        await page.getByRole('link', { name: 'Experienced practitioner', exact: true }).click()
         await page.getByRole('link', { name: 'Pathway 1: practice supervisors', exact: true }).click()
 
         await expect(page.locator('h1', { hasText: /^Pathway 1: practice supervisors$/ })).toBeVisible()
@@ -14,7 +14,7 @@ test.describe('Pathway 1: practice supervisors', () => {
     test('User journey via Career menu @journey', async ({ page }) => {
         await page.goto('/')
         await page.getByLabel('Menu').getByRole('link', { name: 'Career stages', exact: true }).click()
-        await page.getByRole('link', { name: 'Experienced practitioners', exact: true }).click()
+        await page.getByRole('link', { name: 'Experienced practitioner', exact: true }).click()
         await page.getByRole('link', { name: 'Pathway 1: practice supervisors', exact: true }).click()
 
         await expect(page.locator('h1', { hasText: /^Pathway 1: practice supervisors$/ })).toBeVisible()

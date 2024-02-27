@@ -1,6 +1,4 @@
-﻿using Childrens_Social_Care_CPD.Configuration;
-using FluentAssertions;
-using NUnit.Framework;
+﻿using Childrens_Social_Care_CPD.Configuration.Features;
 
 namespace Childrens_Social_Care_CPD_Tests.Configuration;
 

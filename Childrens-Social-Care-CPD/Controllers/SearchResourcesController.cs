@@ -1,4 +1,5 @@
 ﻿using Childrens_Social_Care_CPD.Configuration;
+using Childrens_Social_Care_CPD.Configuration.Features;
 using Childrens_Social_Care_CPD.Models;
 using Childrens_Social_Care_CPD.Search;
 using Microsoft.AspNetCore.Mvc;

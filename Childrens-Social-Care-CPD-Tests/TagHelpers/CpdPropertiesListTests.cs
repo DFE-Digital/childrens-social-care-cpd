@@ -113,6 +113,6 @@ public class CpdPropertiesListTests
         var actual = _tagHelperOutput.AsString();
 
         // assert
-        actual.Should().Contain("<li><span class=\"HtmlEncode[[govuk-!-font-size-16]]\">HtmlEncode[[Foo");
+        actual.Should().Contain("<li>HtmlEncode[[Foo");
     }
 }

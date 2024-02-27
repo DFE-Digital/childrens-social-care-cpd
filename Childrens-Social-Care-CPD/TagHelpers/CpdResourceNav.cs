@@ -41,7 +41,7 @@ public class CpdResourceNav : TagHelper
         output.Content.AppendHtml(RenderNavigation(Navigation, Selected));
     }
 
-    private static IHtmlContent RenderNavigation(IList<ContentLink> navigation, string selected)
+    private static TagBuilder RenderNavigation(IList<ContentLink> navigation, string selected)
     {
         var ol = new TagBuilder("ol");
         ol.AddCssClass("gem-c-contents-list__list");

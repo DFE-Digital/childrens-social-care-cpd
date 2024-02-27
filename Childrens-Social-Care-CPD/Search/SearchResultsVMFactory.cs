@@ -3,7 +3,7 @@ using Childrens_Social_Care_CPD.DataAccess;
 using Childrens_Social_Care_CPD.Models;
 using System.Collections.ObjectModel;
 using System.Net;
-using System.Text.Encodings.Web;
+using System.Text;
 
 namespace Childrens_Social_Care_CPD.Search;
 
@@ -25,7 +25,7 @@ internal class SearchResultsVMFactory : ISearchResultsVMFactory
         _resourcesRepository = resourcesRepository;
     }
 
-    private static IReadOnlyDictionary<TagInfo, FacetResult> GetFacetedTags(IEnumerable<TagInfo> tagInfos, IDictionary<string, IList<FacetResult>> facets)
+    private static ReadOnlyDictionary<TagInfo, FacetResult> GetFacetedTags(IEnumerable<TagInfo> tagInfos, IDictionary<string, IList<FacetResult>> facets)
     {
         facets.TryGetValue("Tags", out var tagFacets);
         if (tagFacets == null)
@@ -41,26 +41,27 @@ internal class SearchResultsVMFactory : ISearchResultsVMFactory
 
     private static string AppendUrlParameter(string name, string param, bool additive = true)
     {
-        return string.IsNullOrEmpty(param)
-            ? string.Empty
-            : $"{(additive ? '&' : string.Empty)}{name}={WebUtility.UrlEncode(param)}";
+        if (string.IsNullOrEmpty(name)) return string.Empty;
+
+        return $"{(additive ? '&' : string.Empty)}{name}={WebUtility.UrlEncode(param)}";
     }
 
     private static string GetPagingFormatString(string searchTerm, IEnumerable<string> tags, SortOrder sortOrder, string routeName)
     {
-        var result = $"/{routeName}?{SearchRequestPropertyNames.Page}={{0}}";
-
+        var sb = new StringBuilder($"/{routeName}?{SearchRequestPropertyNames.Page}={{0}}");
         if (sortOrder != SortOrder.UpdatedLatest)
         {
-            result += AppendUrlParameter(SearchRequestPropertyNames.SortOrder, ((int)sortOrder).ToString());
-        }
-        result += AppendUrlParameter(SearchRequestPropertyNames.Term, searchTerm);
-        foreach (var tag in tags)
-        {
-            result += AppendUrlParameter(SearchRequestPropertyNames.Tags, tag);
+            sb.Append(AppendUrlParameter(SearchRequestPropertyNames.SortOrder, ((int)sortOrder).ToString()));
         }
         
-        return result;
+        sb.Append(AppendUrlParameter(SearchRequestPropertyNames.Term, searchTerm));
+
+        foreach (var tag in tags)
+        {
+            sb.Append(AppendUrlParameter(SearchRequestPropertyNames.Tags, tag));
+        }
+
+        return sb.ToString();
     }
 
     private static string GetClearFiltersUri(SearchRequestModel request, string routeName)
@@ -98,9 +99,6 @@ internal class SearchResultsVMFactory : ISearchResultsVMFactory
 
     public async Task<ResourceSearchResultsViewModel> GetSearchModel(SearchRequestModel request, int pageSize, string routeName, CancellationToken cancellationToken)
     {
-        // Kick off our page content query
-        var rootPageTask = _resourcesRepository.FetchRootPageAsync(cancellationToken);
-
         // Get the available tags and validate the ones we've been given
         var tagInfos = await _resourcesRepository.GetSearchTagsAsync(cancellationToken);
         var validTags = request.Tags?.Where(x => tagInfos.Any(y => y.TagName == x)) ?? Array.Empty<string>();
@@ -112,11 +110,7 @@ internal class SearchResultsVMFactory : ISearchResultsVMFactory
         var searchResults = await _searchService.SearchResourcesAsync(query);
         var facetedTags = GetFacetedTags(tagInfos, searchResults.SearchResults.Facets);
 
-        // Wait for the page content query to complete
-        var pageContent = await rootPageTask;
-
         return new ResourceSearchResultsViewModel(
-            pageContent,
             query.Keyword,
             searchResults.TotalCount,
             searchResults.TotalPages,
