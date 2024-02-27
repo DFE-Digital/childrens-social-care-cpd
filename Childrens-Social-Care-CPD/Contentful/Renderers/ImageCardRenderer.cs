@@ -4,15 +4,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Childrens_Social_Care_CPD.Contentful.Renderers;
 
-internal class QuoteRenderer : IRenderer<Quote>
+internal class QuoteRenderer(IRenderer<Paragraph> paragraphRenderer) : IRenderer<Quote>
 {
-    private readonly IRenderer<Paragraph> _paragraphRenderer;
-
-    public QuoteRenderer(IRenderer<Paragraph> paragraphRenderer)
-    {
-        _paragraphRenderer = paragraphRenderer;
-    }
-
     public IHtmlContent Render(Quote item)
     {
         var div = new TagBuilder("div");
@@ -20,10 +13,9 @@ internal class QuoteRenderer : IRenderer<Quote>
 
         foreach (var content in item.Content)
         {
-            var paragraph = content as Paragraph;
-            if (paragraph != null)
+            if (content is Paragraph paragraph)
             {
-                div.InnerHtml.AppendHtml(_paragraphRenderer.Render(paragraph));
+                div.InnerHtml.AppendHtml(paragraphRenderer.Render(paragraph));
             }
         }
 

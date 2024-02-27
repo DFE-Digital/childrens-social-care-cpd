@@ -1,4 +1,5 @@
 ﻿using Childrens_Social_Care_CPD.Configuration;
+using Childrens_Social_Care_CPD.Configuration.Features;
 using Childrens_Social_Care_CPD.Controllers;
 using Childrens_Social_Care_CPD.Models;
 using Childrens_Social_Care_CPD.Search;
@@ -15,7 +16,6 @@ public class SearchResourcesControllerTests
         public Task<ResourceSearchResultsViewModel> GetSearchModel(SearchRequestModel query, int pageSize, string searchRoute, CancellationToken cancellationToken)
         {
             return Task.FromResult(new ResourceSearchResultsViewModel(
-                null,
                 string.Empty,
                 0,0,0,0,0,
                 null,

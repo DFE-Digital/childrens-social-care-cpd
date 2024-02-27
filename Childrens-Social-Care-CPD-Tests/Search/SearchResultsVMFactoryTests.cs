@@ -123,30 +123,6 @@ public class SearchResultsVMFactoryTests
     }
 
     [Test]
-    public async Task GetSearchModel_Model_Should_Receive_PageContent()
-    {
-        // arrange
-        var content = new Content();
-        _resourcesRepository.GetSearchTagsAsync(Arg.Any<CancellationToken>()).Returns(Array.Empty<TagInfo>());
-        _resourcesRepository.FetchRootPageAsync().Returns(Task.FromResult(content));
-
-        _searchService.SearchResourcesAsync(Arg.Any<KeywordSearchQuery>()).Returns(GenerateSearchResults(0));
-        var request = new SearchRequestModel
-        {
-            Term = string.Empty,
-            Tags = Array.Empty<string>(),
-            Page = 1,
-            SortOrder = SortOrder.Relevance
-        };
-
-        // act
-        var result = await _searchResultsVMFactory.GetSearchModel(request, 1, string.Empty, default);
-
-        // assert
-        result.PageContent.Should().Be(content);
-    }
-
-    [Test]
     public async Task GetSearchModel_Model_Should_Receive_SearchTerm()
     {
         // arrange
