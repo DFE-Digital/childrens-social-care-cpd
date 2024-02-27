@@ -1,4 +1,5 @@
 ﻿using Childrens_Social_Care_CPD.Configuration;
+using Childrens_Social_Care_CPD.Configuration.Features;
 using Childrens_Social_Care_CPD.Contentful.Models;
 using Childrens_Social_Care_CPD.DataAccess;
 using Childrens_Social_Care_CPD.GraphQL.Queries;
@@ -7,17 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Childrens_Social_Care_CPD.Controllers;
 
-public class ResourcesController : Controller
+public class ResourcesController(IFeaturesConfig featuresConfig, IResourcesRepository resourcesRepository) : Controller
 {
-    private readonly IFeaturesConfig _featuresConfig;
-    private readonly IResourcesRepository _resourcesRepository;
-
-    public ResourcesController(IFeaturesConfig featuresConfig, IResourcesRepository resourcesRepository)
-    {
-        _featuresConfig = featuresConfig;
-        _resourcesRepository = resourcesRepository;
-    }
-
     private static Dictionary<string, string> GetProperties(GetContentTags.ResponseType tags, Content content)
     {
         var properties = new Dictionary<string, string>()
@@ -49,16 +41,16 @@ public class ResourcesController : Controller
         return properties;
     }
 
-    [Route("resources-learning/{*pagename:regex(^[[0-9a-z]](\\/?[[0-9a-z\\-]])*\\/?$)}")]
+    [Route("resources-learning/{*pagename:regex(^[[0-9a-z]]+[[0-9a-z\\/\\-]]*$)}")]
     public async Task<IActionResult> Index(string pageName = "home", bool preferenceSet = false, bool fs = false, CancellationToken cancellationToken = default)
     {
-        if (!_featuresConfig.IsEnabled(Features.ResourcesAndLearning))
+        if (!featuresConfig.IsEnabled(Features.ResourcesAndLearning))
         {
             return NotFound();
         }
 
         pageName = $"resources-learning/{pageName?.TrimEnd('/')}";
-        (var content, var tags) = await _resourcesRepository.GetByIdAsync(pageName, cancellationToken: cancellationToken);
+        (var content, var tags) = await resourcesRepository.GetByIdAsync(pageName, cancellationToken: cancellationToken);
         if (content == null)
         {
             return NotFound();

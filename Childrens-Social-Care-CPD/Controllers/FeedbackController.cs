@@ -1,4 +1,4 @@
-﻿using Childrens_Social_Care_CPD.Configuration;
+﻿using Childrens_Social_Care_CPD.Configuration.Features;
 using Childrens_Social_Care_CPD.Contentful;
 using Childrens_Social_Care_CPD.Contentful.Models;
 using Contentful.Core.Search;
@@ -45,7 +45,7 @@ public class FeedbackController : Controller
         pageId = pageId.Trim('/');
         
         if (pageId.Length > 512
-            || model.Comments?.Length > 500 
+            || model.Comments?.Length > 400 
             || !Regex.IsMatch(pageId, @"^[0-9a-z](\/?[0-9a-z\-])*\/?$", RegexOptions.Compiled, TimeSpan.FromSeconds(1)))
         {
             return false; 

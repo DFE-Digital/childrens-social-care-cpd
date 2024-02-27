@@ -1,10 +1,9 @@
 ﻿using Childrens_Social_Care_CPD.Configuration;
+using Childrens_Social_Care_CPD.Configuration.Features;
 using Microsoft.Extensions.Logging;
-using NSubstitute;
-using NUnit.Framework;
 using System.Threading;
 using System.Threading.Tasks;
-namespace Childrens_Social_Care_CPD_Tests.Configuration;
+namespace Childrens_Social_Care_CPD_Tests.Configuration.Features;
 
 public class FeaturesConfigBackgroundServiceTests
 {
@@ -26,7 +25,7 @@ public class FeaturesConfigBackgroundServiceTests
     public async Task Calls_Updater_At_Specified_Interval(int interval)
     {
         // arrange
-        _applicationConfiguration.FeaturePollingInterval.Value.Returns(interval);
+        _applicationConfiguration.FeaturePollingInterval.Returns(interval);
         var featuresConfigBackgroundService = new FeaturesConfigBackgroundService(
             _logger,
             _applicationConfiguration,
@@ -50,7 +49,7 @@ public class FeaturesConfigBackgroundServiceTests
     public async Task Returns_If_Interval_Is_Zero()
     {
         // arrange
-        _applicationConfiguration.FeaturePollingInterval.Value.Returns(0);
+        _applicationConfiguration.FeaturePollingInterval.Returns(0);
         var featuresConfigBackgroundService = new FeaturesConfigBackgroundService(
             _logger,
             _applicationConfiguration,
