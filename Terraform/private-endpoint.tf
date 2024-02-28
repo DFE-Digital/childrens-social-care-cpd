@@ -89,3 +89,25 @@ resource "azurerm_private_endpoint" "privateendpoint-gf" {
 
   tags = data.azurerm_resource_group.rg.tags
 }
+
+# Definition of the private end point for the application storage
+resource "azurerm_private_endpoint" "privateendpoint-sa" {
+  name                = "${var.private_endpoint_name[terraform.workspace]}-sa"
+  location            = data.azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
+  subnet_id           = azurerm_subnet.backend.id
+
+  private_dns_zone_group {
+    name                 = var.private_dns_zone_group_name[terraform.workspace]
+    private_dns_zone_ids = [azurerm_private_dns_zone.dnsprivatezone.id]
+  }
+
+  private_service_connection {
+    name                           = "${var.private_endpoint_conn_name[terraform.workspace]}-sa"
+    private_connection_resource_id = azurerm_storage_account.gfsa.id
+    subresource_names              = ["blob"]
+    is_manual_connection           = false
+  }
+
+  tags = data.azurerm_resource_group.rg.tags
+}
