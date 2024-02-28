@@ -33,7 +33,9 @@ No modules.
 | [azurerm_network_security_rule.nsg-rule-03](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/network_security_rule) | resource |
 | [azurerm_network_security_rule.whitelist-rules](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/network_security_rule) | resource |
 | [azurerm_private_dns_zone.dnsprivatezone](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/private_dns_zone) | resource |
+| [azurerm_private_dns_zone.dnsprivatezone-sa](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/private_dns_zone) | resource |
 | [azurerm_private_dns_zone_virtual_network_link.dnszonelink](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/private_dns_zone_virtual_network_link) | resource |
+| [azurerm_private_dns_zone_virtual_network_link.dnszonelink-sa](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/private_dns_zone_virtual_network_link) | resource |
 | [azurerm_private_endpoint.privateendpoint](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/private_endpoint) | resource |
 | [azurerm_private_endpoint.privateendpoint-gf](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/private_endpoint) | resource |
 | [azurerm_private_endpoint.privateendpoint-sa](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/resources/private_endpoint) | resource |
