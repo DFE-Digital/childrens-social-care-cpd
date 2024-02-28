@@ -737,7 +737,7 @@ variable "cpd_azure_storage_account" {
   type = map(string)
   default = {
     Dev       = "s185d01webappsa"
-    Test      = "s185d03webappsa"
+    Test      = "s185d02webappsa"
     Load-Test = "s185d03webappsa"
     Pre-Prod  = "s185t01webappsa"
     Prod      = "s185p01webappsa"
