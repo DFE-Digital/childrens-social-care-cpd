@@ -54,6 +54,7 @@ No modules.
 | [azurerm_log_analytics_workspace.log-analytics-ws](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/data-sources/log_analytics_workspace) | data source |
 | [azurerm_public_ip.pip1](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/data-sources/public_ip) | data source |
 | [azurerm_resource_group.rg](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/data-sources/resource_group) | data source |
+| [azurerm_storage_account.webappsa](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/data-sources/storage_account) | data source |
 | [azurerm_user_assigned_identity.appsauai](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/data-sources/user_assigned_identity) | data source |
 | [azurerm_user_assigned_identity.uai](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/data-sources/user_assigned_identity) | data source |
 | [azurerm_virtual_network.vnet1](https://registry.terraform.io/providers/hashicorp/azurerm/3.90.0/docs/data-sources/virtual_network) | data source |
