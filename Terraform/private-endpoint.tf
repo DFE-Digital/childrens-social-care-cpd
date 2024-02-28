@@ -90,6 +90,11 @@ resource "azurerm_private_endpoint" "privateendpoint-gf" {
   tags = data.azurerm_resource_group.rg.tags
 }
 
+data "azurerm_storage_account" "webappsa" {
+  name                = var.cpd_azure_storage_account[terraform.workspace]
+  resource_group_name = data.azurerm_resource_group.rg.name
+}
+
 # Definition of the private end point for the application storage
 resource "azurerm_private_endpoint" "privateendpoint-sa" {
   name                = "${var.private_endpoint_name[terraform.workspace]}-sa"
@@ -104,7 +109,7 @@ resource "azurerm_private_endpoint" "privateendpoint-sa" {
 
   private_service_connection {
     name                           = "${var.private_endpoint_conn_name[terraform.workspace]}-sa"
-    private_connection_resource_id = azurerm_storage_account.gfsa.id
+    private_connection_resource_id = data.azurerm_storage_account.webappsa.id
     subresource_names              = ["blob"]
     is_manual_connection           = false
   }
