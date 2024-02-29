@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.DataProtection;
 using Azure.Storage.Blobs;
 using Azure.Identity;
 using Childrens_Social_Care_CPD.Configuration.Features;
+using System.Diagnostics;
 
 namespace Childrens_Social_Care_CPD;
 
@@ -97,17 +98,35 @@ public static class WebApplicationBuilderExtensions
     public static async Task AddFeatures(this WebApplicationBuilder builder)
     {
         ArgumentNullException.ThrowIfNull(builder);
+        var sw = new Stopwatch();
+        sw.Start();
+        
         builder.Configuration.AddUserSecrets<Program>();
+        Console.WriteLine($"After AddUserSecrets: {sw.ElapsedMilliseconds}ms");
+        
         builder.Services.AddResponseCompression();
+        Console.WriteLine($"After AddResponseCompression: {sw.ElapsedMilliseconds}ms");
+
         builder.Services.AddControllersWithViews();
+        Console.WriteLine($"After AddControllersWithViews: {sw.ElapsedMilliseconds}ms");
 
         var applicationConfiguration = new ApplicationConfiguration(builder.Configuration);
+        Console.WriteLine($"After ApplicationConfiguration creation: {sw.ElapsedMilliseconds}ms");
 
         AddLogging(builder, applicationConfiguration);
+        Console.WriteLine($"After AddLogging: {sw.ElapsedMilliseconds}ms");
+
         AddContentful(builder, applicationConfiguration);
+        Console.WriteLine($"After AddContentful: {sw.ElapsedMilliseconds}ms");
+
         AddHostedServices(builder.Services);
+        Console.WriteLine($"After AddHostedServices: {sw.ElapsedMilliseconds}ms");
+
         AddHealthChecks(builder.Services);
+        Console.WriteLine($"After AddHealthChecks: {sw.ElapsedMilliseconds}ms");
+
         await AddDataProtection(builder.Services, applicationConfiguration);
+        Console.WriteLine($"After AddDataProtection: {sw.ElapsedMilliseconds}ms");
     }
 
     private static void AddLogging(WebApplicationBuilder builder, ApplicationConfiguration applicationConfiguration)
