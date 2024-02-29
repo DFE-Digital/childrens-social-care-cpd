@@ -11,7 +11,7 @@ sw.Start();
 builder.AddDependencies();
 Console.WriteLine($"After AddDependencies {sw.ElapsedMilliseconds}ms");
 
-await builder.AddFeatures(sw);
+builder.AddFeatures(sw);
 Console.WriteLine($"After AddFeatures {sw.ElapsedMilliseconds}ms");
 
 var app = builder.Build();
