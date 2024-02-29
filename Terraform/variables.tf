@@ -132,6 +132,31 @@ variable "vnet_backend_prefixes" {
   description = "Subnets used for Backend VNET"
 }
 
+
+variable "vnet_appstorage_name" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-chidrens-social-care-cpd-sn03"
+    Test      = "s185d02-chidrens-social-care-cpd-sn03"
+    Load-Test = "s185d03-chidrens-social-care-cpd-sn03"
+    Pre-Prod  = "s185t01-chidrens-social-care-cpd-sn03"
+    Prod      = "s185p01-chidrens-social-care-cpd-sn03"
+  }
+  description = "Name of Application Storage VNET"
+}
+
+variable "vnet_appstorage_prefixes" {
+  type = map(string)
+  default = {
+    Dev       = "10.0.0.128/26"
+    Test      = "10.1.0.128/26"
+    Load-Test = "10.2.0.128/26"
+    Pre-Prod  = "10.0.0.128/26"
+    Prod      = "10.0.0.128/26"
+  }
+  description = "Subnets used for Application Storage VNET"
+}
+
 variable "pip_name" {
   type = map(string)
   default = {
@@ -696,6 +721,54 @@ variable "cpd_contentful_env" {
   description = "Contentful Environment Name"
 }
 
+variable "cpd_azure_data_protection_container_name" {
+  type = map(string)
+  default = {
+    Dev       = "data-protection"
+    Test      = "data-protection"
+    Load-Test = "data-protection"
+    Pre-Prod  = "data-protection"
+    Prod      = "data-protection"
+  }
+  description = "Data Protection Container Name"
+}
+
+variable "cpd_azure_storage_account" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01webappsa"
+    Test      = "s185d02webappsa"
+    Load-Test = "s185d03webappsa"
+    Pre-Prod  = "s185t01webappsa"
+    Prod      = "s185p01webappsa"
+  }
+  description = "Storage Account Name for Application"
+}
+
+variable "azure_managed_identity_name" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-webapprole"
+    Test      = "s185d02-webapprole"
+    Load-Test = "s185d03-webapprole"
+    Pre-Prod  = "s185t01-webapprole"
+    Prod      = "s185p01-webapprole"
+  }
+  description = "Azure Managed Identity Name to Read Storage Account"
+}
+
+variable "cpd_azure_storage_account_uri_format_string" {
+  type = map(string)
+  default = {
+    Dev       = "https://{0}.blob.core.windows.net/{1}"
+    Test      = "https://{0}.blob.core.windows.net/{1}"
+    Load-Test = "https://{0}.blob.core.windows.net/{1}"
+    Pre-Prod  = "https://{0}.blob.core.windows.net/{1}"
+    Prod      = "https://{0}.blob.core.windows.net/{1}"
+  }
+  description = "Storage Account Format String"
+}
+
 variable "fw_diag_name" {
   type = map(string)
   default = {
@@ -803,7 +876,6 @@ variable "search_private_endpoint_conn_name" {
   }
   description = "Name of Private Endpoint Connection"
 }
-
 
 variable "cpd_search_api_key" {
   description = "The Azure AI Search API key"
