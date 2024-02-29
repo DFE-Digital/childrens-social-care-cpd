@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.DataProtection;
 using Azure.Storage.Blobs;
 using Azure.Identity;
 using Childrens_Social_Care_CPD.Configuration.Features;
+using System.Diagnostics;
 
 namespace Childrens_Social_Care_CPD;
 
@@ -94,20 +95,36 @@ public static class WebApplicationBuilderExtensions
         services.AddScoped<ISearchService, SearchService>();
     }
 
-    public static async Task AddFeatures(this WebApplicationBuilder builder)
+    public static void AddFeatures(this WebApplicationBuilder builder, Stopwatch sw)
     {
         ArgumentNullException.ThrowIfNull(builder);
+        
         builder.Configuration.AddUserSecrets<Program>();
+        Console.WriteLine($"After AddUserSecrets: {sw.ElapsedMilliseconds}ms");
+        
         builder.Services.AddResponseCompression();
+        Console.WriteLine($"After AddResponseCompression: {sw.ElapsedMilliseconds}ms");
+
         builder.Services.AddControllersWithViews();
+        Console.WriteLine($"After AddControllersWithViews: {sw.ElapsedMilliseconds}ms");
 
         var applicationConfiguration = new ApplicationConfiguration(builder.Configuration);
+        Console.WriteLine($"After ApplicationConfiguration creation: {sw.ElapsedMilliseconds}ms");
 
         AddLogging(builder, applicationConfiguration);
+        Console.WriteLine($"After AddLogging: {sw.ElapsedMilliseconds}ms");
+
         AddContentful(builder, applicationConfiguration);
+        Console.WriteLine($"After AddContentful: {sw.ElapsedMilliseconds}ms");
+
         AddHostedServices(builder.Services);
+        Console.WriteLine($"After AddHostedServices: {sw.ElapsedMilliseconds}ms");
+
         AddHealthChecks(builder.Services);
-        await AddDataProtection(builder.Services, applicationConfiguration);
+        Console.WriteLine($"After AddHealthChecks: {sw.ElapsedMilliseconds}ms");
+
+        AddDataProtection(builder.Services, applicationConfiguration, sw);
+        Console.WriteLine($"After AddDataProtection: {sw.ElapsedMilliseconds}ms");
     }
 
     private static void AddLogging(WebApplicationBuilder builder, ApplicationConfiguration applicationConfiguration)
@@ -159,7 +176,7 @@ public static class WebApplicationBuilderExtensions
 #pragma warning restore CA1861 // Avoid constant arrays as arguments
     }
 
-    private static async Task AddDataProtection(IServiceCollection services, ApplicationConfiguration applicationConfiguration)
+    private static void AddDataProtection(IServiceCollection services, ApplicationConfiguration applicationConfiguration, Stopwatch sw)
     {
         if (!string.IsNullOrEmpty(applicationConfiguration.AzureDataProtectionContainerName))
         {
@@ -168,10 +185,7 @@ public static class WebApplicationBuilderExtensions
                 applicationConfiguration.AzureDataProtectionContainerName);
 
             var managedIdentityCredential = new ManagedIdentityCredential(clientId: applicationConfiguration.AzureManagedIdentityId);
-
-            var blobContainerUri = new Uri(url);
-            var blobContainerClient = new BlobContainerClient(blobContainerUri, managedIdentityCredential);
-            await blobContainerClient.CreateIfNotExistsAsync();
+            Console.WriteLine($"After AddDataProtection:new ManagedIdentityCredential: {sw.ElapsedMilliseconds}ms");
 
             var blobUri = new Uri($"{url}/data-protection");
             services
