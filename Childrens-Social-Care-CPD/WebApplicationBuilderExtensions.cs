@@ -95,11 +95,9 @@ public static class WebApplicationBuilderExtensions
         services.AddScoped<ISearchService, SearchService>();
     }
 
-    public static async Task AddFeatures(this WebApplicationBuilder builder)
+    public static async Task AddFeatures(this WebApplicationBuilder builder, Stopwatch sw)
     {
         ArgumentNullException.ThrowIfNull(builder);
-        var sw = new Stopwatch();
-        sw.Start();
         
         builder.Configuration.AddUserSecrets<Program>();
         Console.WriteLine($"After AddUserSecrets: {sw.ElapsedMilliseconds}ms");
@@ -125,7 +123,7 @@ public static class WebApplicationBuilderExtensions
         AddHealthChecks(builder.Services);
         Console.WriteLine($"After AddHealthChecks: {sw.ElapsedMilliseconds}ms");
 
-        await AddDataProtection(builder.Services, applicationConfiguration);
+        await AddDataProtection(builder.Services, applicationConfiguration, sw);
         Console.WriteLine($"After AddDataProtection: {sw.ElapsedMilliseconds}ms");
     }
 
@@ -178,7 +176,7 @@ public static class WebApplicationBuilderExtensions
 #pragma warning restore CA1861 // Avoid constant arrays as arguments
     }
 
-    private static async Task AddDataProtection(IServiceCollection services, ApplicationConfiguration applicationConfiguration)
+    private static async Task AddDataProtection(IServiceCollection services, ApplicationConfiguration applicationConfiguration, Stopwatch sw)
     {
         if (!string.IsNullOrEmpty(applicationConfiguration.AzureDataProtectionContainerName))
         {
@@ -187,10 +185,12 @@ public static class WebApplicationBuilderExtensions
                 applicationConfiguration.AzureDataProtectionContainerName);
 
             var managedIdentityCredential = new ManagedIdentityCredential(clientId: applicationConfiguration.AzureManagedIdentityId);
+            Console.WriteLine($"After AddDataProtection:new ManagedIdentityCredential: {sw.ElapsedMilliseconds}ms");
 
             var blobContainerUri = new Uri(url);
             var blobContainerClient = new BlobContainerClient(blobContainerUri, managedIdentityCredential);
             await blobContainerClient.CreateIfNotExistsAsync();
+            Console.WriteLine($"After AddDataProtection:blobContainerClient.CreateIfNotExistsAsync: {sw.ElapsedMilliseconds}ms");
 
             var blobUri = new Uri($"{url}/data-protection");
             services
