@@ -10,19 +10,19 @@ public interface IApplicationConfiguration
     [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false, Obfuscate = false)]
     string AppVersion { get; }
 
-    [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false, Obfuscate = false)]
+    [RequiredForEnvironment(ApplicationEnvironment.Production, Hidden = false, Obfuscate = false)]
     string AzureDataProtectionContainerName { get; }
 
     [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false, Obfuscate = false)]
     string AzureEnvironment { get; }
 
-    [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false)]
+    [RequiredForEnvironment(ApplicationEnvironment.Production, Hidden = false)]
     string AzureManagedIdentityId { get; }
 
-    [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false)]
+    [RequiredForEnvironment(ApplicationEnvironment.Production, Hidden = false)]
     string AzureStorageAccount { get; }
 
-    [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false, Obfuscate = false)]
+    [RequiredForEnvironment(ApplicationEnvironment.Production, Hidden = false, Obfuscate = false)]
     string AzureStorageAccountUriFormatString { get; }
 
     [RequiredForEnvironment(ApplicationEnvironment.Production, Hidden = false)]
