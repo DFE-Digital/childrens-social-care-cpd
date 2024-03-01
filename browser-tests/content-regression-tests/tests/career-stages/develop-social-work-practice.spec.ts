@@ -67,7 +67,7 @@ test.describe('Senior Leader', () => {
         await page.getByLabel('Menu').getByRole('link', { name: 'Career stages', exact: true }).click()
         await page.getByRole('link', { name: 'Senior leader', exact: true }).click()
         
-        await expect(page.locator('h1', { hasText: /^Senior Leader$/ })).toBeVisible()
+        await expect(page.locator('h1', { hasText: /^Senior leader$/ })).toBeVisible()
         await expect(page).toHaveURL(/.*\/senior-leader/)
         await expect(page.locator('#mmi-career')).toHaveClass(/dfe-header__navigation-item--current/)
         
