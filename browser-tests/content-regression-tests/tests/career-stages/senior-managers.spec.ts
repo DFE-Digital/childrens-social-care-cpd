@@ -28,7 +28,7 @@ test.describe('Senior managers', () => {
             ['Principal social worker', '/explore-roles/principal-social-worker', 'Principal social worker'],
             ['Service manager', '/explore-roles/service-manager', 'Service manager'],
             ['Head of service', '/explore-roles/head-of-service', 'Head of service'],
-            ['Explore roles', '/explore-roles', 'Explore roles in child and family social work'],
+            ['Explore roles', '/explore-roles', 'Roles in child and family social work'],
         ]
 
         for (const link of links) {

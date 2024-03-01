@@ -26,7 +26,7 @@ test.describe('Practitioners', () => {
             ['Develop your social work practice', '/develop-social-work-practice', 'Develop your social work practice'],
             ['Newly qualified social worker', '/explore-roles/newly-qualified-social-worker', 'Newly qualified social worker'],
             ['Social worker', '/explore-roles/social-worker', 'Social worker'],
-            ['Explore roles', '/explore-roles', 'Explore roles in child and family social work'],
+            ['Explore roles', '/explore-roles', 'Roles in child and family social work'],
         ]
 
         for (const link of links) {
