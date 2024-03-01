@@ -12,7 +12,7 @@ test.describe('Homepage', () => {
                 ['Experienced practitioner', '/experienced-practitioner', 'Experienced practitioner'],
                 ['Manager', '/manager', 'Manager'],
                 ['Senior manager', '/senior-manager', 'Senior manager'],
-                ['Senior leader', '/senior-leader', 'Senior Leader'],
+                ['Senior leader', '/senior-leader', 'Senior leader'],
             ]
 
             for (const link of links) {
@@ -25,8 +25,8 @@ test.describe('Homepage', () => {
 
         test.describe('Useful information', () => {
             const links = [
-                ['DfE funded programmes', '/development-programmes', 'Child and family social work development programmes'],
-                ['Explore roles', '/explore-roles', 'Explore roles in child and family social work'],
+                ['DfE-funded programmes', '/development-programmes', 'Child and family social work development programmes'],
+                ['Explore roles', '/explore-roles', 'Roles in child and family social work'],
             ]
 
             for (const link of links) {
