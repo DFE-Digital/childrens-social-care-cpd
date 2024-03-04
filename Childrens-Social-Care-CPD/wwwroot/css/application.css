@@ -10471,8 +10471,7 @@ CONTENT TITLE BANNER
 
 @media (min-width: 40.0625em) {
   .dfeuk-document-list .dfeuk-document-list__item .dfeuk-document-list__item-metadata .gdfeuk-document-list__attribute {
-    font-size: 14px;
-    font-size: 0.875rem;
+    font-size: 18px;
     line-height: 1.4285714286;
   }
 }
@@ -10884,6 +10883,49 @@ CONTENT TITLE BANNER
   max-width: 1200px;
 }
 
+.mobile-filters-button {
+  position: relative;
+}
+
+.mobile-filters-button {
+  display: none;
+}
+
+.js-enabled .mobile-filters-button {
+  display: inline-block;
+}
+
+@media (min-width: 40.0625em) {
+  .js-enabled .mobile-filters-button {
+    display: none;
+  }
+}
+.app-mobile-filters-link[aria-expanded=false] ~ .mobile-filters-expander__icon--down {
+  display: block;
+}
+
+@media (min-width: 40.0625em) {
+  .app-mobile-filters-link[aria-expanded=false] ~ .mobile-filters-expander__icon--down {
+    display: none;
+  }
+}
+.app-mobile-filters-link[aria-expanded=true] ~ .mobile-filters-expander__icon--up {
+  display: block;
+}
+
+@media (min-width: 40.0625em) {
+  .app-mobile-filters-link[aria-expanded=true] ~ .mobile-filters-expander__icon--up {
+    display: none;
+  }
+}
+@media (max-width: 40.0525em) {
+  .js-enabled .facets {
+    display: none;
+  }
+  .js-enabled .facets.facets--visible {
+    display: block;
+  }
+}
 .back-link {
   display: none;
 }
@@ -11103,12 +11145,31 @@ CONTENT TITLE BANNER
     font-size: 16px;
   }
 }
-.column-layout-row {
-  display: flex;
-  min-height: 200px;
+/* Custom styles for mobile */
+@media only screen and (max-width: 768px) {
+  .govuk-form-group .govuk-input__wrapper,
+  .govuk-form-group .govuk-search-group,
+  .govuk-form-group .govuk-button {
+    width: 100%;
+    box-sizing: border-box;
+    margin-left: 0 !important; /* Override desktop margin */
+    margin-top: 1rem;
+    display: block; /* Force elements to stack on top of each other */
+  }
+}
+/* Highlight for search result text */
+.search-result em {
+  background-color: #ffdd00;
+  font-weight: bold;
+  font-style: normal;
 }
 
-.column-layout-row .column {
+.columns-layout {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.columns-layout-col {
   display: flex;
 }
 

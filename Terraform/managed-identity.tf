@@ -28,3 +28,8 @@ data "azurerm_user_assigned_identity" "uai" {
 #     "Get", "List",
 #   ]
 # }
+
+data "azurerm_user_assigned_identity" "appsauai" {
+  resource_group_name = data.azurerm_resource_group.rg.name
+  name                = var.azure_managed_identity_name[terraform.workspace]
+}

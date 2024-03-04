@@ -5,9 +5,7 @@
 @model RoleList
 @inject IRenderer<RoleList> _inlineRoleListRenderer
 
-<div class="govuk-grid-row">
-    <div class="govuk-grid-column-three-quarters">
-        <h2>@Model.Title</h2>
-        @_inlineRoleListRenderer.Render(Model)
-    </div>
+<div>
+    <h2>@Model.Title</h2>
+    @_inlineRoleListRenderer.Render(Model)
 </div>

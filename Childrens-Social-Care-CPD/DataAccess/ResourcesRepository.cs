@@ -1,25 +1,31 @@
 ﻿using Childrens_Social_Care_CPD.Configuration;
 using Childrens_Social_Care_CPD.Contentful;
 using Childrens_Social_Care_CPD.Contentful.Models;
-using Childrens_Social_Care_CPD.Controllers;
-using Childrens_Social_Care_CPD.Core.Resources;
+using Childrens_Social_Care_CPD.Search;
 using Childrens_Social_Care_CPD.GraphQL.Queries;
 using Contentful.Core.Search;
 using GraphQL.Client.Abstractions.Websocket;
 
 namespace Childrens_Social_Care_CPD.DataAccess;
 
+public enum ResourceSortOrder
+{
+    UpdatedNewest = 0,
+    UpdatedOldest = 1
+}
+
 public interface IResourcesRepository
 {
     Task<Content> FetchRootPageAsync(CancellationToken cancellationToken = default);
     Task<SearchResourcesByTags.ResponseType> FindByTagsAsync(IEnumerable<string> tags, int skip, int take, ResourceSortOrder resourceSortOrder, CancellationToken cancellationToken = default);
-    Task<IEnumerable<TagInfo>> GetSearchTagsAsync();
+    Task<IEnumerable<TagInfo>> GetSearchTagsAsync(CancellationToken cancellationToken = default);
     Task<Tuple<Content, GetContentTags.ResponseType>> GetByIdAsync(string id, int depth = 10, CancellationToken cancellationToken = default);
 }
 
 public class ResourcesRepository : IResourcesRepository
 {
-    private static readonly string[] _tagPrefixes = new string[] { "Topic", "Format", "Career stage" };
+    private static readonly string[] _tagPrefixes = new string[] { "Topic", "Resource provider", "Format", "Career stage" };
+    private static readonly string[] _carrerStageOrder = new string[] { "careerStagePractitioner", "careerStageExperiencedPractitioner", "careerStageManager", "careerStageSeniorManager", "careerStageSeniorLeader" };
     private readonly ICpdContentfulClient _cpdClient;
     private readonly IGraphQLWebSocketClient _gqlClient;
     private readonly bool _isPreview;
@@ -71,9 +77,9 @@ public class ResourcesRepository : IResourcesRepository
         return Tuple.Create(contentTask.Result, tagsTask.Result);
     }
 
-    public async Task<IEnumerable<TagInfo>> GetSearchTagsAsync()
+    public async Task<IEnumerable<TagInfo>> GetSearchTagsAsync(CancellationToken cancellationToken = default)
     {
-        var allTags = await _cpdClient.GetTags();
+        var allTags = await _cpdClient.GetTags(string.Empty, cancellationToken);
 
         var tags = allTags
             .Where(x => Array.Exists(_tagPrefixes, prefix => x.Name.StartsWith($"{prefix}:")))
@@ -88,12 +94,21 @@ public class ResourcesRepository : IResourcesRepository
 
         foreach (var category in _tagPrefixes)
         {
-            list.AddRange(
-                tags
+            var sortedtags = tags
                     .Where(x => x.Key == category)
                     .Select(x => new TagInfo(x.Key, x.Value.Name[(x.Value.Name.IndexOf(':') + 1)..], x.Value.SystemProperties.Id))
-                    .OrderBy(x => x.TagName)
-            );
+                    .OrderBy(x => x.TagName);
+
+            switch (category)
+            {
+                //reorder career stage tags
+                case "Career stage":
+                    list.AddRange(sortedtags.OrderBy(x => Array.IndexOf(_carrerStageOrder, x.TagName)));
+                    break;
+                default:
+                    list.AddRange(sortedtags);
+                    break;
+            }
         }
 
         return list;

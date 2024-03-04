@@ -14,10 +14,6 @@ console.log(boxen(chalk.whiteBright("Resynchronise an EditorInterface Controls w
 
 const argv = await yargs(hideBin(process.argv))
     .usage('Usage: $0 [options]')
-    .describe("t", "Contentful management API token")
-    .alias("t", "management-token")
-    .describe("s", "ID of the destination space ")
-    .alias("s", "space")
     .describe("e", "ID the environment in the destination space")
     .alias("e", "environment")
     .describe("o", "Change the output format")
@@ -26,15 +22,21 @@ const argv = await yargs(hideBin(process.argv))
     .default("o", "default")
     .help(false)
     .version(false)
-    .demandOption(["t", "s", "e"])
-    .argv;
+    .demandOption(["e"])
+    .argv
 
-// const argv = {
-//     t: process.env.CONTENTFUL_MANAGEMENT_ACCESS_TOKEN,
-//     s: process.env.CPD_SPACE_ID,
-//     e: "dev",
-//     o: "default",
-// }
+argv.t = process.env.CONTENTFUL_MANAGEMENT_ACCESS_TOKEN
+argv.s = process.env.CPD_SPACE_ID
+
+if (!argv.t) {
+    console.error(`${chalk.redBright("Contentful management API token is required, please set the")} ${chalk.yellowBright.bold("CONTENTFUL_MANAGEMENT_ACCESS_TOKEN")} ${chalk.redBright("environment variable")}`)
+    process.exit(1)
+}
+
+if (!argv.s) {
+    console.error(`${chalk.redBright("Contentful space id is required, please set the")} ${chalk.yellowBright.bold("CPD_SPACE_ID")} ${chalk.redBright("environment variable")}`)
+    process.exit(1)
+}
 
 interface MainContext {
     contentfulCtx: ContentfulContext
@@ -55,6 +57,11 @@ const ctx: MainContext = {
     contentTypes: []
 }
 
+const options = {
+    concurrent: false, 
+    ctx,
+    renderer: argv.o as string
+}
 
 const tasks = new Listr<MainContext>(
   [
@@ -85,11 +92,7 @@ const tasks = new Listr<MainContext>(
         }
     }
   ],
-  {
-    concurrent: false, 
-    ctx,
-    renderer: argv.o as string
-  }
+  options as unknown as any
 )
 
 try {

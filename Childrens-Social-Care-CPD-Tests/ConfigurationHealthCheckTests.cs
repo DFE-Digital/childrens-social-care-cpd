@@ -1,9 +1,6 @@
 ﻿using Childrens_Social_Care_CPD;
-using FluentAssertions;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Logging;
-using NSubstitute;
-using NUnit.Framework;
 using System.Threading.Tasks;
 
 namespace Childrens_Social_Care_CPD_Tests;
@@ -25,7 +22,7 @@ public class ConfigurationHealthCheckTests
     {
         // arrange
         _applicationConfiguration.SetAllValid();
-        _applicationConfiguration._featurePollingInterval = "0";
+        _applicationConfiguration._featurePollingInterval = 0;
         var sut = new ConfigurationHealthCheck(_logger, _applicationConfiguration);
 
         // act
@@ -40,7 +37,7 @@ public class ConfigurationHealthCheckTests
     {
         // arrange
         _applicationConfiguration.SetAllValid();
-        _applicationConfiguration._disableSecureCookies = "true";
+        _applicationConfiguration._disableSecureCookies = true;
         var sut = new ConfigurationHealthCheck(_logger, _applicationConfiguration);
 
         // act

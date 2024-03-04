@@ -13,10 +13,10 @@ public class GovUkPaginationTagHelper : TagHelper
     public string UrlFormatString { get; set; }
 
     [HtmlAttributeName("page-count")]
-    public int PageCount { get; set; }
+    public long PageCount { get; set; }
 
     [HtmlAttributeName("current-page")]
-    public int CurrentPage { get; set; }
+    public long CurrentPage { get; set; }
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
@@ -44,7 +44,7 @@ public class GovUkPaginationTagHelper : TagHelper
         }
     }
 
-    private static IHtmlContent GeneratesPagesPages(int pageCount, int currentPage, string formatString)
+    private static TagBuilder GeneratesPagesPages(long pageCount, long currentPage, string formatString)
     {
         var ul = new TagBuilder("ul");
         ul.AddCssClass("govuk-pagination__list");
@@ -69,7 +69,7 @@ public class GovUkPaginationTagHelper : TagHelper
         return ul;
     }
 
-    private static IHtmlContent GenerateEllipses()
+    private static TagBuilder GenerateEllipses()
     {
         var li = new TagBuilder("li");
         li.AddCssClass("govuk-pagination__item govuk-pagination__item--ellipses");
@@ -77,7 +77,7 @@ public class GovUkPaginationTagHelper : TagHelper
         return li;
     }
 
-    private static IHtmlContent GeneratePageNumber(int pageNumber, string href, bool isCurrent)
+    private static TagBuilder GeneratePageNumber(int pageNumber, string href, bool isCurrent)
     {
         var listItem = new TagBuilder("li");
         listItem.AddCssClass("govuk-pagination__item");
@@ -100,7 +100,7 @@ public class GovUkPaginationTagHelper : TagHelper
         return listItem;
     }
 
-    public IHtmlContent GeneratePreviousButton(string href)
+    public TagBuilder GeneratePreviousButton(string href)
     {
         var path = new TagBuilder("path");
         path.Attributes.Add("d", "m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z");
@@ -132,7 +132,7 @@ public class GovUkPaginationTagHelper : TagHelper
         return div;
     }
 
-    public IHtmlContent GenerateNextButton(string href)
+    public TagBuilder GenerateNextButton(string href)
     {
         var path = new TagBuilder("path");
         path.Attributes.Add("d", "m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z");

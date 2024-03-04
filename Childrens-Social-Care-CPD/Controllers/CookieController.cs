@@ -7,24 +7,17 @@ using System.Text.RegularExpressions;
 
 namespace Childrens_Social_Care_CPD.Controllers;
 
-public class CookieController : Controller
+public class CookieController(ICpdContentfulClient cpdClient, ICookieHelper cookieHelper) : Controller
 {
-    private readonly ICpdContentfulClient _cpdClient;
-    private readonly ICookieHelper _cookieHelper;
     private const string _pageName = "cookies";
 
-    public CookieController(ICpdContentfulClient cpdClient, ICookieHelper cookieHelper)
-    {
-        _cpdClient = cpdClient;
-        _cookieHelper = cookieHelper;
-    }
-
     [HttpPost]
+    [ValidateAntiForgeryToken]
     [Route("/cookies/setpreferences")]
     public IActionResult SetPreferences(string consentValue, string sourcePage = null, bool fromCookies = false)
     {
         var consentState = AnalyticsConsentStateHelper.Parse(consentValue);
-        _cookieHelper.SetResponseAnalyticsCookieState(HttpContext, consentState);
+        cookieHelper.SetResponseAnalyticsCookieState(HttpContext, consentState);
 
         if (fromCookies)
         {
@@ -46,7 +39,7 @@ public class CookieController : Controller
             .FieldEquals("fields.id", _pageName)
             .Include(10);
 
-        var result = await _cpdClient.GetEntries(queryBuilder, cancellationToken);
+        var result = await cpdClient.GetEntries(queryBuilder, cancellationToken);
         var pageContent = result.FirstOrDefault();
         
         if (pageContent == null)
@@ -59,7 +52,7 @@ public class CookieController : Controller
             sourcePage = "home";
         }
 
-        var consentState = _cookieHelper.GetRequestAnalyticsCookieState(HttpContext);
+        var consentState = cookieHelper.GetRequestAnalyticsCookieState(HttpContext);
         var contextModel = new ContextModel(pageContent.Id, pageContent.Title, _pageName, pageContent.Category, true, preferenceSet, true);
         ViewData["ContextModel"] = contextModel;
 

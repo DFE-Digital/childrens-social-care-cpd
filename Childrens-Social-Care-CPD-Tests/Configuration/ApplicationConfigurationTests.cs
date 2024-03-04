@@ -1,5 +1,6 @@
 ﻿using Childrens_Social_Care_CPD.Configuration;
 using Microsoft.Extensions.Configuration;
+using NSubstitute.Extensions;
 using System;
 using System.Collections.Generic;
 
@@ -15,6 +16,7 @@ public class ApplicationConfigurationTests
     public void Setup()
     {
         _configuration = Substitute.For<IConfiguration>();
+        _configuration.ReturnsForAll((string)null);
         _sut = new ApplicationConfiguration(_configuration);
     }
 
@@ -26,7 +28,7 @@ public class ApplicationConfigurationTests
         _configuration["CPD_CONTENTFUL_ENVIRONMENT"].Returns("foo");
 
         // act
-        var actual = _sut.ContentfulGraphqlConnectionString.Value;
+        var actual = _sut.ContentfulGraphqlConnectionString;
 
         // assert
         actual.Should().Be($"https://graphql.contentful.com/content/v1/spaces/foo/environments/foo");
@@ -39,7 +41,7 @@ public class ApplicationConfigurationTests
         var value = "preview.contentful.com";
 
         // act
-        var actual = _sut.ContentfulPreviewHost.Value;
+        var actual = _sut.ContentfulPreviewHost;
 
         // assert
         actual.Should().Be(value);
@@ -50,7 +52,11 @@ public class ApplicationConfigurationTests
         get
         {
             // Set values
+            yield return ("CPD_AZURE_DATA_PROTECTION_CONTAINER_NAME", (ApplicationConfiguration sut) => sut.AzureDataProtectionContainerName, "foo", "foo");
             yield return ("CPD_AZURE_ENVIRONMENT", (ApplicationConfiguration sut) => sut.AzureEnvironment, "foo", "foo");
+            yield return ("CPD_AZURE_MANAGED_IDENTITY_ID", (ApplicationConfiguration sut) => sut.AzureManagedIdentityId, "foo", "foo");
+            yield return ("CPD_AZURE_STORAGE_ACCOUNT", (ApplicationConfiguration sut) => sut.AzureStorageAccount, "foo", "foo");
+            yield return ("CPD_AZURE_STORAGE_ACCOUNT_URI_FORMAT_STRING", (ApplicationConfiguration sut) => sut.AzureStorageAccountUriFormatString, "foo", "foo");
             yield return ("CPD_CLARITY", (ApplicationConfiguration sut) => sut.ClarityProjectId, "foo", "foo");
             yield return ("CPD_DELIVERY_KEY", (ApplicationConfiguration sut) => sut.ContentfulDeliveryApiKey, "foo", "foo");
             yield return ("CPD_CONTENTFUL_ENVIRONMENT", (ApplicationConfiguration sut) => sut.ContentfulEnvironment, "foo", "foo");
@@ -62,25 +68,30 @@ public class ApplicationConfigurationTests
             yield return ("VCS-TAG", (ApplicationConfiguration sut) => sut.AppVersion, "foo", "foo");
             yield return ("CPD_DISABLE_SECURE_COOKIES", (ApplicationConfiguration sut) => sut.DisableSecureCookies, "true", true);
             yield return ("CPD_FEATURE_POLLING_INTERVAL", (ApplicationConfiguration sut) => sut.FeaturePollingInterval, "10", 10);
-            yield return ("CPD_SEARCH_API_KEY", (ApplicationConfiguration sut) => sut.SearchApiKey, "foo", "foo");
-            yield return ("CPD_SEARCH_END_POINT", (ApplicationConfiguration sut) => sut.SearchEndpoint, "foo", "foo");
+            yield return ("CPD_SEARCH_CLIENT_API_KEY", (ApplicationConfiguration sut) => sut.SearchApiKey, "foo", "foo");
+            yield return ("CPD_SEARCH_ENDPOINT", (ApplicationConfiguration sut) => sut.SearchEndpoint, "foo", "foo");
             yield return ("CPD_SEARCH_INDEX_NAME", (ApplicationConfiguration sut) => sut.SearchIndexName, "foo", "foo");
+
             // Default values
-            yield return ("CPD_AZURE_ENVIRONMENT", (ApplicationConfiguration sut) => sut.AzureEnvironment, null, "");
-            yield return ("CPD_CLARITY", (ApplicationConfiguration sut) => sut.ClarityProjectId, null, "");
-            yield return ("CPD_DELIVERY_KEY", (ApplicationConfiguration sut) => sut.ContentfulDeliveryApiKey, null, "");
-            yield return ("CPD_CONTENTFUL_ENVIRONMENT", (ApplicationConfiguration sut) => sut.ContentfulEnvironment, null, "");
-            yield return ("CPD_PREVIEW_KEY", (ApplicationConfiguration sut) => sut.ContentfulPreviewId, null, "");
-            yield return ("CPD_SPACE_ID", (ApplicationConfiguration sut) => sut.ContentfulSpaceId, null, "");
-            yield return ("CPD_GOOGLEANALYTICSTAG", (ApplicationConfiguration sut) => sut.GoogleTagManagerKey, null, "");
-            yield return ("CPD_INSTRUMENTATION_CONNECTIONSTRING", (ApplicationConfiguration sut) => sut.AppInsightsConnectionString, null, "");
-            yield return ("VCS-REF", (ApplicationConfiguration sut) => sut.GitHash, null, "");
-            yield return ("VCS-TAG", (ApplicationConfiguration sut) => sut.AppVersion, null, "");
+            yield return ("CPD_AZURE_DATA_PROTECTION_CONTAINER_NAME", (ApplicationConfiguration sut) => sut.AzureDataProtectionContainerName, null, null);
+            yield return ("CPD_AZURE_ENVIRONMENT", (ApplicationConfiguration sut) => sut.AzureEnvironment, null, null);
+            yield return ("CPD_AZURE_MANAGED_IDENTITY_ID", (ApplicationConfiguration sut) => sut.AzureManagedIdentityId, null, null);
+            yield return ("CPD_AZURE_STORAGE_ACCOUNT", (ApplicationConfiguration sut) => sut.AzureStorageAccount, null, null);
+            yield return ("CPD_AZURE_STORAGE_ACCOUNT_URI_FORMAT_STRING", (ApplicationConfiguration sut) => sut.AzureStorageAccountUriFormatString, null, null);
+            yield return ("CPD_CLARITY", (ApplicationConfiguration sut) => sut.ClarityProjectId, null, null);
+            yield return ("CPD_DELIVERY_KEY", (ApplicationConfiguration sut) => sut.ContentfulDeliveryApiKey, null, null);
+            yield return ("CPD_CONTENTFUL_ENVIRONMENT", (ApplicationConfiguration sut) => sut.ContentfulEnvironment, null, null);
+            yield return ("CPD_PREVIEW_KEY", (ApplicationConfiguration sut) => sut.ContentfulPreviewId, null, null);
+            yield return ("CPD_SPACE_ID", (ApplicationConfiguration sut) => sut.ContentfulSpaceId, null, null);
+            yield return ("CPD_GOOGLEANALYTICSTAG", (ApplicationConfiguration sut) => sut.GoogleTagManagerKey, null, null);
+            yield return ("CPD_INSTRUMENTATION_CONNECTIONSTRING", (ApplicationConfiguration sut) => sut.AppInsightsConnectionString, null, null);
+            yield return ("VCS-REF", (ApplicationConfiguration sut) => sut.GitHash, null, null);
+            yield return ("VCS-TAG", (ApplicationConfiguration sut) => sut.AppVersion, null, null);
             yield return ("CPD_DISABLE_SECURE_COOKIES", (ApplicationConfiguration sut) => sut.DisableSecureCookies, null, false);
             yield return ("CPD_FEATURE_POLLING_INTERVAL", (ApplicationConfiguration sut) => sut.FeaturePollingInterval, null, 0);
-            yield return ("CPD_SEARCH_API_KEY", (ApplicationConfiguration sut) => sut.SearchApiKey, null, "");
-            yield return ("CPD_SEARCH_END_POINT", (ApplicationConfiguration sut) => sut.SearchEndpoint, null, "");
-            yield return ("CPD_SEARCH_INDEX_NAME", (ApplicationConfiguration sut) => sut.SearchIndexName, null, "");
+            yield return ("CPD_SEARCH_CLIENT_API_KEY", (ApplicationConfiguration sut) => sut.SearchApiKey, null, null);
+            yield return ("CPD_SEARCH_ENDPOINT", (ApplicationConfiguration sut) => sut.SearchEndpoint, null, null);
+            yield return ("CPD_SEARCH_INDEX_NAME", (ApplicationConfiguration sut) => sut.SearchIndexName, null, null);
         }
     }
 
@@ -89,11 +100,9 @@ public class ApplicationConfigurationTests
     {
         // arrange
         _configuration[values.key].Returns(values.value);
-        var targetValue = values.property(_sut);
-        var valueProperty = targetValue.GetType().GetProperty("Value");
 
         // act
-        var actual = valueProperty.GetValue(targetValue);
+        var actual = values.property(_sut);
 
         // assert
         actual.Should().Be(values.expected);

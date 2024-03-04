@@ -29,7 +29,8 @@ resource "azurerm_application_gateway" "appgw" {
   }
 
   # A firewall policy that should only be populated for Load-Test and Prod environments 
-  firewall_policy_id = var.appgw_tier[terraform.workspace] == "WAF_v2" ? azurerm_web_application_firewall_policy.fwpol.id : null
+  firewall_policy_id                = var.appgw_tier[terraform.workspace] == "WAF_v2" ? azurerm_web_application_firewall_policy.fwpol.id : null
+  force_firewall_policy_association = true
 
   gateway_ip_configuration {
     name      = var.gateway_ip_configuration[terraform.workspace]
@@ -114,20 +115,82 @@ resource "azurerm_application_gateway" "appgw" {
     http_listener_name          = var.listener_name[terraform.workspace]
   }
 
+  # request_routing_rule {
+  #   name                       = var.request_ssl_routing_rule_name[terraform.workspace]
+  #   rule_type                  = "Basic"
+  #   priority                   = 2000
+  #   http_listener_name         = var.ssl_listener_name[terraform.workspace]
+  #   backend_address_pool_name  = var.backend_address_pool_name[terraform.workspace]
+  #   backend_http_settings_name = var.http_setting_name[terraform.workspace]
+  #   rewrite_rule_set_name      = var.appgw_rewrite_rule_set[terraform.workspace]
+  # }
+
   request_routing_rule {
-    name                       = var.request_ssl_routing_rule_name[terraform.workspace]
-    rule_type                  = "Basic"
-    priority                   = 2000
-    http_listener_name         = var.ssl_listener_name[terraform.workspace]
-    backend_address_pool_name  = var.backend_address_pool_name[terraform.workspace]
-    backend_http_settings_name = var.http_setting_name[terraform.workspace]
-    rewrite_rule_set_name      = var.appgw_rewrite_rule_set[terraform.workspace]
+    name               = var.grafana_request_routing_rule_name[terraform.workspace]
+    rule_type          = "PathBasedRouting"
+    http_listener_name = var.ssl_listener_name[terraform.workspace]
+    url_path_map_name  = var.app_pathmap[terraform.workspace]
+    priority           = 2222
+  }
+
+  # Grafana Configuration
+
+  backend_address_pool {
+    name  = var.grafana_backend_address_pool_name[terraform.workspace]
+    fqdns = [azurerm_linux_web_app.grafana-web-app.default_hostname]
+  }
+
+  url_path_map {
+    name                               = var.app_pathmap[terraform.workspace]
+    default_backend_address_pool_name  = var.backend_address_pool_name[terraform.workspace]
+    default_backend_http_settings_name = var.http_setting_name[terraform.workspace]
+
+    path_rule {
+      name                       = var.app_path_rule[terraform.workspace]
+      paths                      = ["/*"]
+      backend_address_pool_name  = var.backend_address_pool_name[terraform.workspace]
+      backend_http_settings_name = var.http_setting_name[terraform.workspace]
+      rewrite_rule_set_name      = var.appgw_rewrite_rule_set[terraform.workspace]
+      firewall_policy_id         = var.appgw_tier[terraform.workspace] == "WAF_v2" ? azurerm_web_application_firewall_policy.fwpol-app.id : null
+    }
+
+    path_rule {
+      name                       = var.grafana_app_path_rule[terraform.workspace]
+      paths                      = ["/grafana*"]
+      backend_address_pool_name  = var.grafana_backend_address_pool_name[terraform.workspace]
+      backend_http_settings_name = var.grafana_http_setting_name[terraform.workspace]
+      rewrite_rule_set_name      = var.appgw_gf_rewrite_rule_set[terraform.workspace]
+      firewall_policy_id         = var.appgw_tier[terraform.workspace] == "WAF_v2" ? azurerm_web_application_firewall_policy.fwpol-gf.id : null
+    }
+  }
+
+  backend_http_settings {
+    name                                = var.grafana_http_setting_name[terraform.workspace]
+    pick_host_name_from_backend_address = false
+    host_name                           = azurerm_linux_web_app.grafana-web-app.default_hostname
+    cookie_based_affinity               = "Enabled"
+    path                                = "/grafana/"
+    port                                = 80
+    protocol                            = "Http"
+    request_timeout                     = 30
+    probe_name                          = var.grafana_appgw_probe[terraform.workspace]
   }
 
   probe {
     name                                      = var.appgw_probe[terraform.workspace]
     pick_host_name_from_backend_http_settings = true
     path                                      = "/application/status"
+    interval                                  = 30
+    timeout                                   = 30
+    unhealthy_threshold                       = 3
+    protocol                                  = "Http"
+  }
+
+  probe {
+    name                                      = var.grafana_appgw_probe[terraform.workspace]
+    pick_host_name_from_backend_http_settings = false
+    host                                      = azurerm_linux_web_app.grafana-web-app.default_hostname
+    path                                      = "/login"
     interval                                  = 30
     timeout                                   = 30
     unhealthy_threshold                       = 3
@@ -198,12 +261,51 @@ resource "azurerm_application_gateway" "appgw" {
     }
   }
 
+  rewrite_rule_set {
+    name = var.appgw_gf_rewrite_rule_set[terraform.workspace]
+
+    rewrite_rule {
+      name          = var.appgw_rewrite_rule[terraform.workspace]
+      rule_sequence = 1
+
+      response_header_configuration {
+        header_name  = "X-Frame-Options"
+        header_value = "SAMEORIGIN"
+      }
+
+      response_header_configuration {
+        header_name  = "X-Xss-Protection"
+        header_value = "0"
+      }
+
+      response_header_configuration {
+        header_name  = "X-Content-Type-Options"
+        header_value = "nosniff"
+      }
+
+      response_header_configuration {
+        header_name  = "Permissions-Policy"
+        header_value = "accelerometer=(), ambient-light-sensor=(), autoplay=(), camera=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), speaker=(), sync-xhr=self, usb=(), vr=()"
+      }
+
+      response_header_configuration {
+        header_name  = "Server"
+        header_value = ""
+      }
+
+      response_header_configuration {
+        header_name  = "X-Powered-By"
+        header_value = ""
+      }
+    }
+  }
+
   tags = data.azurerm_resource_group.rg.tags
 }
 
-# A firewall policy that is only attached for Load-Test and Prod environments
-resource "azurerm_web_application_firewall_policy" "fwpol" {
-  name                = var.fwpol_name[terraform.workspace]
+# A firewall policy that is only attached for Load-Test and Prod environments for the Application
+resource "azurerm_web_application_firewall_policy" "fwpol-app" {
+  name                = var.app_fwpol_name[terraform.workspace]
   location            = data.azurerm_resource_group.rg.location
   resource_group_name = data.azurerm_resource_group.rg.name
 
@@ -225,3 +327,126 @@ resource "azurerm_web_application_firewall_policy" "fwpol" {
 
   tags = data.azurerm_resource_group.rg.tags
 }
+
+# A firewall policy that is only attached for Load-Test and Prod environments for Grafana
+resource "azurerm_web_application_firewall_policy" "fwpol-gf" {
+  name                = var.grafana_fwpol_name[terraform.workspace]
+  location            = data.azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
+
+  managed_rules {
+    managed_rule_set {
+      type    = "OWASP"
+      version = "3.2"
+
+      rule_group_override {
+        rule_group_name = "REQUEST-931-APPLICATION-ATTACK-RFI"
+
+        rule {
+          action  = "AnomalyScoring"
+          enabled = false
+          id      = "931130"
+        }
+      }
+
+      rule_group_override {
+        rule_group_name = "REQUEST-932-APPLICATION-ATTACK-RCE"
+
+        rule {
+          action  = "AnomalyScoring"
+          enabled = false
+          id      = "932105"
+        }
+        rule {
+          action  = "AnomalyScoring"
+          enabled = false
+          id      = "932110"
+        }
+        rule {
+          action  = "AnomalyScoring"
+          enabled = false
+          id      = "932115"
+        }
+      }
+
+      rule_group_override {
+        rule_group_name = "REQUEST-942-APPLICATION-ATTACK-SQLI"
+
+        rule {
+          action  = "AnomalyScoring"
+          enabled = false
+          id      = "942120"
+        }
+        rule {
+          action  = "AnomalyScoring"
+          enabled = false
+          id      = "942130"
+        }
+        rule {
+          action  = "AnomalyScoring"
+          enabled = false
+          id      = "942150"
+        }
+        rule {
+          action  = "AnomalyScoring"
+          enabled = false
+          id      = "942180"
+        }
+        rule {
+          action  = "AnomalyScoring"
+          enabled = false
+          id      = "942360"
+        }
+        rule {
+          action  = "AnomalyScoring"
+          enabled = false
+          id      = "942410"
+        }
+        rule {
+          action  = "AnomalyScoring"
+          enabled = false
+          id      = "942430"
+        }
+      }
+    }
+
+    managed_rule_set {
+      type    = "Microsoft_BotManagerRuleSet"
+      version = "0.1"
+    }
+
+    exclusion {
+      match_variable          = "RequestArgNames"
+      selector_match_operator = "EqualsAny"
+      selector                = "queries"
+    }
+  }
+
+  policy_settings {
+    mode = "Prevention"
+  }
+
+  tags = data.azurerm_resource_group.rg.tags
+}
+
+
+# A firewall policy that is only attached for Load-Test and Prod environments for the Applicaton Gateway
+resource "azurerm_web_application_firewall_policy" "fwpol" {
+  name                = var.fwpol_name[terraform.workspace]
+  location            = data.azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
+
+  managed_rules {
+    managed_rule_set {
+      type    = "OWASP"
+      version = "3.2"
+    }
+  }
+
+  policy_settings {
+    mode = "Detection"
+  }
+
+  tags = data.azurerm_resource_group.rg.tags
+}
+

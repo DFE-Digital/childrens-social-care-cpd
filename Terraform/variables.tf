@@ -132,6 +132,31 @@ variable "vnet_backend_prefixes" {
   description = "Subnets used for Backend VNET"
 }
 
+
+variable "vnet_appstorage_name" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-chidrens-social-care-cpd-sn03"
+    Test      = "s185d02-chidrens-social-care-cpd-sn03"
+    Load-Test = "s185d03-chidrens-social-care-cpd-sn03"
+    Pre-Prod  = "s185t01-chidrens-social-care-cpd-sn03"
+    Prod      = "s185p01-chidrens-social-care-cpd-sn03"
+  }
+  description = "Name of Application Storage VNET"
+}
+
+variable "vnet_appstorage_prefixes" {
+  type = map(string)
+  default = {
+    Dev       = "10.0.0.128/26"
+    Test      = "10.1.0.128/26"
+    Load-Test = "10.2.0.128/26"
+    Pre-Prod  = "10.0.0.128/26"
+    Prod      = "10.0.0.128/26"
+  }
+  description = "Subnets used for Application Storage VNET"
+}
+
 variable "pip_name" {
   type = map(string)
   default = {
@@ -178,6 +203,18 @@ variable "appgw_rewrite_rule_set" {
     Prod      = "s185p01-csc-cpd-app-gw-rewrite-rule-set"
   }
   description = "Name of the Application Gateway Rewrite Rule Set"
+}
+
+variable "appgw_gf_rewrite_rule_set" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-csc-cpd-app-gw-gf-rewrite-rule-set"
+    Test      = "s185d02-csc-cpd-app-gw-gf-rewrite-rule-set"
+    Load-Test = "s185d03-csc-cpd-app-gw-gf-rewrite-rule-set"
+    Pre-Prod  = "s185t01-csc-cpd-app-gw-gf-rewrite-rule-set"
+    Prod      = "s185p01-csc-cpd-app-gw-gf-rewrite-rule-set"
+  }
+  description = "Name of the Application Gateway Grafana Rewrite Rule Set"
 }
 
 variable "appgw_rewrite_rule" {
@@ -408,6 +445,30 @@ variable "key_vault_url" {
   description = "URL of Key Vault"
 }
 
+variable "search_indexer_key_vault_name" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-kv-search"
+    Test      = "s185d02-kv-search"
+    Load-Test = "s185d03-kv-search"
+    Pre-Prod  = "s185t01-kv-search"
+    Prod      = "s185p01-kv-search"
+  }
+  description = "Name of Search Indexer Key Vault"
+}
+
+variable "search_indexer_key_vault_url" {
+  type = map(string)
+  default = {
+    Dev       = "https://s185d01-kv-search.vault.azure.net/"
+    Test      = "https://s185d02-kv-search.vault.azure.net/"
+    Load-Test = "https://s185d03-kv-search.vault.azure.net/"
+    Pre-Prod  = "https://s185t01-kv-search.vault.azure.net/"
+    Prod      = "https://s185p01-kv-search.vault.azure.net/"
+  }
+  description = "URL of Search Indexer Key Vault"
+}
+
 variable "autoscale_name" {
   type = map(string)
   default = {
@@ -594,6 +655,12 @@ variable "tenant_id" {
   description = "The Tenant ID of the subscription being used"
 }
 
+variable "whitelist_ips" {
+  type        = string
+  sensitive   = true
+  description = "List of IP addresses to Whitelist on the App GW"
+}
+
 variable "cpd_googleanalyticstag" {
   type        = string
   sensitive   = true
@@ -616,6 +683,12 @@ variable "cpd_image_tag" {
   type        = string
   sensitive   = true
   description = "Docker image tag of application"
+}
+
+variable "cpd_gf_password" {
+  type        = string
+  sensitive   = true
+  description = "Grafana password"
 }
 
 variable "cpd_delivery_key" {
@@ -648,6 +721,54 @@ variable "cpd_contentful_env" {
   description = "Contentful Environment Name"
 }
 
+variable "cpd_azure_data_protection_container_name" {
+  type = map(string)
+  default = {
+    Dev       = "data-protection"
+    Test      = "data-protection"
+    Load-Test = "data-protection"
+    Pre-Prod  = "data-protection"
+    Prod      = "data-protection"
+  }
+  description = "Data Protection Container Name"
+}
+
+variable "cpd_azure_storage_account" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01webappsa"
+    Test      = "s185d02webappsa"
+    Load-Test = "s185d03webappsa"
+    Pre-Prod  = "s185t01webappsa"
+    Prod      = "s185p01webappsa"
+  }
+  description = "Storage Account Name for Application"
+}
+
+variable "azure_managed_identity_name" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-webapprole"
+    Test      = "s185d02-webapprole"
+    Load-Test = "s185d03-webapprole"
+    Pre-Prod  = "s185t01-webapprole"
+    Prod      = "s185p01-webapprole"
+  }
+  description = "Azure Managed Identity Name to Read Storage Account"
+}
+
+variable "cpd_azure_storage_account_uri_format_string" {
+  type = map(string)
+  default = {
+    Dev       = "https://{0}.blob.core.windows.net/{1}"
+    Test      = "https://{0}.blob.core.windows.net/{1}"
+    Load-Test = "https://{0}.blob.core.windows.net/{1}"
+    Pre-Prod  = "https://{0}.blob.core.windows.net/{1}"
+    Prod      = "https://{0}.blob.core.windows.net/{1}"
+  }
+  description = "Storage Account Format String"
+}
+
 variable "fw_diag_name" {
   type = map(string)
   default = {
@@ -660,6 +781,30 @@ variable "fw_diag_name" {
   description = "Firewall Diagnostic Name"
 }
 
+variable "app_diag_name" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-app-diagnostics"
+    Test      = "s185d02-app-diagnostics"
+    Load-Test = "s185d03-app-diagnostics"
+    Pre-Prod  = "s185t01-app-diagnostics"
+    Prod      = "s185p01-app-diagnostics"
+  }
+  description = "App Diagnostic Name"
+}
+
+variable "gf_diag_name" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-grafana-diagnostics"
+    Test      = "s185d02-grafana-diagnostics"
+    Load-Test = "s185d03-grafana-diagnostics"
+    Pre-Prod  = "s185t01-grafana-diagnostics"
+    Prod      = "s185p01-grafana-diagnostics"
+  }
+  description = "Grafana Diagnostic Name"
+}
+
 variable "fwpol_name" {
   type = map(string)
   default = {
@@ -669,7 +814,19 @@ variable "fwpol_name" {
     Pre-Prod  = "s185t01-firewall-policy"
     Prod      = "s185p01-firewall-policy"
   }
-  description = "Firewall Policy Name"
+  description = "Firewall Policy Name for the Gateway"
+}
+
+variable "app_fwpol_name" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-firewall-policy-app"
+    Test      = "s185d02-firewall-policy-app"
+    Load-Test = "s185d03-firewall-policy-app"
+    Pre-Prod  = "s185t01-firewall-policy-app"
+    Prod      = "s185p01-firewall-policy-app"
+  }
+  description = "Firewall Policy Name for the Application"
 }
 
 variable "ai_search_service_name" {
@@ -718,4 +875,213 @@ variable "search_private_endpoint_conn_name" {
     Prod      = "s185p01-searchprivateendpointconnection"
   }
   description = "Name of Private Endpoint Connection"
+}
+
+variable "cpd_search_api_key" {
+  description = "The Azure AI Search API key"
+  sensitive   = true
+  type        = string
+}
+
+variable "cpd_search_client_api_key" {
+  description = "The Client Azure AI Search API key"
+  sensitive   = true
+  type        = string
+}
+
+variable "cpd_instrumentation_connectionstring" {
+  description = "The Azure ApplicationInsights connection string"
+  sensitive   = true
+  type        = string
+}
+
+variable "vcs_tag" {
+  description = "The application version"
+  type        = string
+}
+
+variable "cpd_search_batch_size" {
+  description = "The batch size for queries into Contentful"
+  type        = number
+}
+
+variable "cpd_search_endpoint" {
+  description = "The Azure AI Search endpoint"
+  type        = string
+}
+
+variable "cpd_search_index_name" {
+  description = "The Azure AI Search index name to access/create"
+  type        = string
+}
+
+variable "cpd_gf_plugins" {
+  type        = string
+  description = "List of Grafana plugins to install"
+}
+
+variable "cpd_gf_image_tag" {
+  type        = string
+  description = "Grafana Docker image tag to use"
+}
+
+variable "cpd_search_recreate_index_on_rebuild" {
+  description = "Whether to delete the index and recreate before populating"
+  type        = bool
+}
+
+variable "grafana_service_plan_name" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-csc-cpd-gf-service-plan"
+    Test      = "s185d02-csc-cpd-gf-service-plan"
+    Load-Test = "s185d03-csc-cpd-gf-service-plan"
+    Pre-Prod  = "s185t01-csc-cpd-gf-service-plan"
+    Prod      = "s185p01-csc-cpd-gf-service-plan"
+  }
+  description = "Grafana Storage Account Name"
+}
+
+variable "grafana_sa_name" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01grafanasa"
+    Test      = "s185d02grafanasa"
+    Load-Test = "s185d03grafanasa"
+    Pre-Prod  = "s185t01grafanasa"
+    Prod      = "s185p01grafanasa"
+  }
+  description = "Grafana Storage Account Name"
+}
+
+variable "grafana_webapp_name" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01grafana"
+    Test      = "s185d02grafana"
+    Load-Test = "s185d03grafana"
+    Pre-Prod  = "s185t01grafana"
+    Prod      = "s185p01grafana"
+  }
+  description = "Grafana Web App Name"
+}
+
+variable "hostname" {
+  type = map(string)
+  default = {
+    Dev       = "dev.develop-child-family-social-work-career.education.gov.uk"
+    Test      = "test.develop-child-family-social-work-career.education.gov.uk"
+    Load-Test = "20.107.65.156.nip.io"
+    Pre-Prod  = "pre-prod.develop-child-family-social-work-career.education.gov.uk"
+    Prod      = "www.develop-child-family-social-work-career.education.gov.uk"
+  }
+  description = "Hostname for Grafana"
+}
+
+variable "origins" {
+  type = map(string)
+  default = {
+    Dev       = "dev.develop-child-family-social-work-career.education.gov.uk"
+    Test      = "test.develop-child-family-social-work-career.education.gov.uk"
+    Load-Test = "20.107.65.156.nip.io"
+    Pre-Prod  = "pre-prod.develop-child-family-social-work-career.education.gov.uk"
+    Prod      = "www.develop-child-family-social-work-career.education.gov.uk"
+  }
+  description = "Origins for Grafana"
+}
+
+variable "grafana_fwpol_name" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-firewall-policy-gf"
+    Test      = "s185d02-firewall-policy-gf"
+    Load-Test = "s185d03-firewall-policy-gf"
+    Pre-Prod  = "s185t01-firewall-policy-gf"
+    Prod      = "s185p01-firewall-policy-gf"
+  }
+  description = "Firewall Policy Name for Grafana"
+}
+
+variable "grafana_appgw_probe" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-chidrens-social-care-grafana-hp"
+    Test      = "s185d02-chidrens-social-care-grafana-hp"
+    Load-Test = "s185d03-chidrens-social-care-grafana-hp"
+    Pre-Prod  = "s185t01-chidrens-social-care-grafana-hp"
+    Prod      = "s185p01-chidrens-social-care-grafana-hp"
+  }
+  description = "Name of App Gateway Grafana Health Probe"
+}
+
+variable "grafana_http_setting_name" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-chidrens-social-grafana-bes-http"
+    Test      = "s185d02-chidrens-social-grafana-bes-http"
+    Load-Test = "s185d03-chidrens-social-grafana-bes-http"
+    Pre-Prod  = "s185t01-chidrens-social-grafana-bes-http"
+    Prod      = "s185p01-chidrens-social-grafana-bes-http"
+  }
+  description = "Name of Grafana HTTP Setting"
+}
+
+variable "app_path_rule" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-app-path-rule"
+    Test      = "s185d02-app-path-rule"
+    Load-Test = "s185d03-app-path-rule"
+    Pre-Prod  = "s185t01-app-path-rule"
+    Prod      = "s185p01-app-path-rule"
+  }
+  description = "Name of app path rule"
+}
+
+variable "grafana_app_path_rule" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-grafana-app-path-rule"
+    Test      = "s185d02-grafana-app-path-rule"
+    Load-Test = "s185d03-grafana-app-path-rule"
+    Pre-Prod  = "s185t01-grafana-app-path-rule"
+    Prod      = "s185p01-grafana-app-path-rule"
+  }
+  description = "Name of Grafana app path rule"
+}
+
+variable "app_pathmap" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-cpd-app-gw-rewrite-pathmap"
+    Test      = "s185d02-cpd-app-gw-rewrite-pathmap"
+    Load-Test = "s185d03-cpd-app-gw-rewrite-pathmap"
+    Pre-Prod  = "s185t01-cpd-app-gw-rewrite-pathmap"
+    Prod      = "s185p01-cpd-app-gw-rewrite-pathmap"
+  }
+  description = "Name of app gateway path map"
+}
+
+variable "grafana_backend_address_pool_name" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-chidrens-social-care-grafana-bep"
+    Test      = "s185d02-chidrens-social-care-grafana-bep"
+    Load-Test = "s185d03-chidrens-social-care-grafana-bep"
+    Pre-Prod  = "s185t01-chidrens-social-care-grafana-bep"
+    Prod      = "s185p01-chidrens-social-care-grafana-bep"
+  }
+  description = "Name of grafana backend address pool"
+}
+
+variable "grafana_request_routing_rule_name" {
+  type = map(string)
+  default = {
+    Dev       = "s185d01-chidrens-social-care-grafana-rule"
+    Test      = "s185d02-chidrens-social-care-grafana-rule"
+    Load-Test = "s185d03-chidrens-social-care-grafana-rule"
+    Pre-Prod  = "s185t01-chidrens-social-care-grafana-rule"
+    Prod      = "s185p01-chidrens-social-care-grafana-rule"
+  }
+  description = "Name of Grafana Request Routing Rule"
 }

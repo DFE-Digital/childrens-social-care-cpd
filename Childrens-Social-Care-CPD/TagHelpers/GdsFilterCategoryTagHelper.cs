@@ -31,7 +31,7 @@ public class GdsFilterCategoryTagHelper : TagHelper
         output.Content.AppendHtml(RenderCategoryBody(Index, content));
     }
 
-    private static IHtmlContent RenderCategoryHeader(int index, string categoryTitle)
+    private static TagBuilder RenderCategoryHeader(int index, string categoryTitle)
     {
         var headerSpan = new TagBuilder("span");
         headerSpan.AddCssClass("govuk-accordion__section-button");
@@ -48,16 +48,23 @@ public class GdsFilterCategoryTagHelper : TagHelper
         return div;
     }
 
-    private static IHtmlContent RenderCategoryBody(int index, IHtmlContent content)
+    private TagBuilder RenderCategoryBody(int index, IHtmlContent content)
     {
         var fieldsetDiv = new TagBuilder("div");
-        fieldsetDiv.AddCssClass("govuk-checkboxes govuk-checkboxes--small");
+        fieldsetDiv.AddCssClass("govuk-checkboxes");
         fieldsetDiv.Attributes.Add("data-module", "govuk-checkboxes");
 
         fieldsetDiv.InnerHtml.AppendHtml(content);
 
+        var legend = new TagBuilder("legend");
+        legend.AddCssClass("govuk-fieldset__legend");
+        legend.AddCssClass("govuk-visually-hidden");
+        legend.InnerHtml.Append(Title);
+
         var fieldset = new TagBuilder("fieldset");
         fieldset.AddCssClass("govuk-fieldset");
+
+        fieldset.InnerHtml.AppendHtml(legend);
         fieldset.InnerHtml.AppendHtml(fieldsetDiv);
 
         var contentDiv = new TagBuilder("div");

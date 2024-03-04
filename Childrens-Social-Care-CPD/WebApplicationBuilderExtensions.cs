@@ -4,7 +4,6 @@ using Childrens_Social_Care_CPD.Configuration;
 using Childrens_Social_Care_CPD.Contentful;
 using Childrens_Social_Care_CPD.Contentful.Contexts;
 using Childrens_Social_Care_CPD.Contentful.Renderers;
-using Childrens_Social_Care_CPD.Core.Resources;
 using Childrens_Social_Care_CPD.DataAccess;
 using Childrens_Social_Care_CPD.Search;
 using Childrens_Social_Care_CPD.Services;
@@ -14,11 +13,15 @@ using GraphQL.Client.Abstractions.Websocket;
 using GraphQL.Client.Http;
 using GraphQL.Client.Serializer.SystemTextJson;
 using Microsoft.ApplicationInsights.AspNetCore.Extensions;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.ApplicationInsights;
 using Microsoft.Extensions.Logging.AzureAppServices;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http.Headers;
+using Microsoft.AspNetCore.DataProtection;
+using Azure.Storage.Blobs;
+using Azure.Identity;
+using Childrens_Social_Care_CPD.Configuration.Features;
+using System.Diagnostics;
 
 namespace Childrens_Social_Care_CPD;
 
@@ -37,21 +40,10 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddTransient<IFeaturesConfigUpdater, FeaturesConfigUpdater>();
         builder.Services.AddTransient<IResourcesRepository, ResourcesRepository>();
         
-        // Resources search feature
-        builder.Services.AddScoped<ResourcesDynamicTagsSearchStategy>();
-        builder.Services.AddScoped<ResourcesFixedTagsSearchStrategy>();
-        builder.Services.AddScoped<IResourcesSearchStrategy>(services =>
-        {
-            var featuresConfig = services.GetRequiredService<IFeaturesConfig>();
-            return featuresConfig.IsEnabled(Features.ResourcesUseDynamicTags)
-                ? services.GetService<ResourcesDynamicTagsSearchStategy>()
-                : services.GetService<ResourcesFixedTagsSearchStrategy>();
-        });
-
         builder.Services.AddScoped<IGraphQLWebSocketClient>(services => {
             var config = services.GetRequiredService<IApplicationConfiguration>();
-            var client = new GraphQLHttpClient(config.ContentfulGraphqlConnectionString.Value, new SystemTextJsonSerializer());
-            var key = ContentfulConfiguration.IsPreviewEnabled(config) ? config.ContentfulPreviewId.Value : config.ContentfulDeliveryApiKey.Value;
+            var client = new GraphQLHttpClient(config.ContentfulGraphqlConnectionString, new SystemTextJsonSerializer());
+            var key = ContentfulConfiguration.IsPreviewEnabled(config) ? config.ContentfulPreviewId : config.ContentfulDeliveryApiKey;
             
             client.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", key);
             return client;
@@ -59,7 +51,13 @@ public static class WebApplicationBuilderExtensions
 
         builder.Services.AddScoped<IContentLinkContext, ContentLinkContext>();
 
-        // Register all the IRender<T> & IRenderWithOptions<T> implementations in the assembly
+        AddContentRenderers(builder.Services);
+        AddSearch(builder.Services);
+    }
+
+    private static void AddContentRenderers(IServiceCollection services)
+    {
+        // Register all the IRenderer<T> & IRendererWithOptions<T> implementations in the assembly
         var assemblyTypes = System.Reflection.Assembly.GetExecutingAssembly().GetTypes();
 
         assemblyTypes
@@ -68,7 +66,7 @@ public static class WebApplicationBuilderExtensions
             .ForEach(assignedTypes =>
             {
                 var serviceType = assignedTypes.GetInterfaces().First(i => i.GetGenericTypeDefinition() == typeof(IRenderer<>));
-                builder.Services.AddScoped(serviceType, assignedTypes);
+                services.AddScoped(serviceType, assignedTypes);
             });
 
         assemblyTypes
@@ -77,34 +75,60 @@ public static class WebApplicationBuilderExtensions
             .ForEach(assignedTypes =>
             {
                 var serviceType = assignedTypes.GetInterfaces().First(i => i.GetGenericTypeDefinition() == typeof(IRendererWithOptions<>));
-                builder.Services.AddScoped(serviceType, assignedTypes);
+                services.AddScoped(serviceType, assignedTypes);
             });
-
-
-        // Search client
-        builder.Services.AddSearch();
     }
 
-    private static void AddSearch(this IServiceCollection services)
+    private static void AddSearch(IServiceCollection services)
     {
+        services.AddScoped<ISearchResultsVMFactory, SearchResultsVMFactory>();
+
         services.AddScoped(services => {
             var config = services.GetRequiredService<IApplicationConfiguration>();
 
-            var searchEndpointUri = new Uri(config.SearchEndpoint.Value);
+            var searchEndpointUri = new Uri(config.SearchEndpoint);
             return new SearchClient(searchEndpointUri,
-                config.SearchIndexName.Value,
-                new AzureKeyCredential(config.SearchApiKey.Value));
+                config.SearchIndexName,
+                new AzureKeyCredential(config.SearchApiKey));
         });
 
-        services.AddTransient<ISearchService, SearchService>();
+        services.AddScoped<ISearchService, SearchService>();
     }
 
-    public static void AddFeatures(this WebApplicationBuilder builder)
+    public static void AddFeatures(this WebApplicationBuilder builder, Stopwatch sw)
     {
         ArgumentNullException.ThrowIfNull(builder);
+        
+        builder.Configuration.AddUserSecrets<Program>();
+        Console.WriteLine($"After AddUserSecrets: {sw.ElapsedMilliseconds}ms");
+        
+        builder.Services.AddResponseCompression();
+        Console.WriteLine($"After AddResponseCompression: {sw.ElapsedMilliseconds}ms");
+
+        builder.Services.AddControllersWithViews();
+        Console.WriteLine($"After AddControllersWithViews: {sw.ElapsedMilliseconds}ms");
 
         var applicationConfiguration = new ApplicationConfiguration(builder.Configuration);
+        Console.WriteLine($"After ApplicationConfiguration creation: {sw.ElapsedMilliseconds}ms");
 
+        AddLogging(builder, applicationConfiguration);
+        Console.WriteLine($"After AddLogging: {sw.ElapsedMilliseconds}ms");
+
+        AddContentful(builder, applicationConfiguration);
+        Console.WriteLine($"After AddContentful: {sw.ElapsedMilliseconds}ms");
+
+        AddHostedServices(builder.Services);
+        Console.WriteLine($"After AddHostedServices: {sw.ElapsedMilliseconds}ms");
+
+        AddHealthChecks(builder.Services);
+        Console.WriteLine($"After AddHealthChecks: {sw.ElapsedMilliseconds}ms");
+
+        AddDataProtection(builder.Services, applicationConfiguration, sw);
+        Console.WriteLine($"After AddDataProtection: {sw.ElapsedMilliseconds}ms");
+    }
+
+    private static void AddLogging(WebApplicationBuilder builder, ApplicationConfiguration applicationConfiguration)
+    {
         builder.Logging.AddAzureWebAppDiagnostics();
         builder.Services.Configure<AzureFileLoggerOptions>(options =>
         {
@@ -116,15 +140,10 @@ public static class WebApplicationBuilderExtensions
             options.BlobName = "log.txt";
         });
 
-        builder.Services.AddResponseCompression();
-        builder.Services.AddControllersWithViews();
-        builder.Services.AddContentful(ContentfulConfiguration.GetContentfulConfiguration(builder.Configuration, applicationConfiguration));
-        builder.Services.AddHostedService<FeaturesConfigBackgroundService>();
-
         var options = new ApplicationInsightsServiceOptions
         {
-            ApplicationVersion = applicationConfiguration.AppVersion.Value,
-            ConnectionString = applicationConfiguration.AppInsightsConnectionString.Value,
+            ApplicationVersion = applicationConfiguration.AppVersion,
+            ConnectionString = applicationConfiguration.AppInsightsConnectionString,
         };
 
         builder.Services.AddApplicationInsightsTelemetry(options: options);
@@ -137,7 +156,43 @@ public static class WebApplicationBuilderExtensions
                 options.Rules.Insert(0, new LoggerFilterRule(typeof(ApplicationInsightsLoggerProvider).FullName, null, LogLevel.Information, null));
             }
         });
-        
-        builder.Services.AddHealthChecks().AddCheck<ConfigurationHealthCheck>("Configuration Health Check", tags: new[] {"configuration"});
+    }
+
+    private static void AddContentful(WebApplicationBuilder builder, ApplicationConfiguration applicationConfiguration)
+    {
+        var contentfulConfiguration = ContentfulConfiguration.GetContentfulConfiguration(builder.Configuration, applicationConfiguration);
+        builder.Services.AddContentful(contentfulConfiguration);
+    }
+
+    private static void AddHostedServices(IServiceCollection services)
+    {
+        services.AddHostedService<FeaturesConfigBackgroundService>();
+    }
+
+    private static void AddHealthChecks(IServiceCollection services)
+    {
+#pragma warning disable CA1861 // Avoid constant arrays as arguments
+        services.AddHealthChecks().AddCheck<ConfigurationHealthCheck>("Configuration Health Check", tags: new[] { "configuration" });
+#pragma warning restore CA1861 // Avoid constant arrays as arguments
+    }
+
+    private static void AddDataProtection(IServiceCollection services, ApplicationConfiguration applicationConfiguration, Stopwatch sw)
+    {
+        if (!string.IsNullOrEmpty(applicationConfiguration.AzureDataProtectionContainerName))
+        {
+            var url = string.Format(applicationConfiguration.AzureStorageAccountUriFormatString,
+                applicationConfiguration.AzureStorageAccount,
+                applicationConfiguration.AzureDataProtectionContainerName);
+
+            var managedIdentityCredential = new ManagedIdentityCredential(clientId: applicationConfiguration.AzureManagedIdentityId);
+            Console.WriteLine($"After AddDataProtection:new ManagedIdentityCredential: {sw.ElapsedMilliseconds}ms");
+
+            var blobUri = new Uri($"{url}/data-protection");
+            services
+                .AddDataProtection()
+                .SetApplicationName($"Childrens-Social-Care-CPD-{applicationConfiguration.AzureEnvironment}")
+                .PersistKeysToAzureBlobStorage(blobUri, managedIdentityCredential);
+                //.ProtectKeysWithAzureKeyVault("<keyid>", managedIdentityCredential); // TODO: add key vault encryption once blob storage has been tested
+        }
     }
 }

@@ -3,6 +3,7 @@ using Azure.Search.Documents;
 using Azure.Search.Documents.Models;
 using Childrens_Social_Care_CPD.Search;
 using Childrens_Social_Care_CPD.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,7 +28,8 @@ public class SearchServiceTests
         // arrange
         SearchOptions options = null;
         var query = new KeywordSearchQuery("foo");
-        _searchClient.SearchAsync<CpdDocument>(Arg.Any<string>(), Arg.Do<SearchOptions>(x => options = x)).Returns(Substitute.For<Response<SearchResults<CpdDocument>>>());
+        var response = GenerateResponse();
+        _searchClient.SearchAsync<CpdDocument>(Arg.Any<string>(), Arg.Do<SearchOptions>(x => options = x)).Returns(response);
 
         // act
         await _sut.SearchResourcesAsync(query);
@@ -42,7 +44,8 @@ public class SearchServiceTests
         // arrange
         SearchOptions options = null;
         var query = new KeywordSearchQuery("foo");
-        _searchClient.SearchAsync<CpdDocument>(Arg.Any<string>(), Arg.Do<SearchOptions>(x => options = x)).Returns(Substitute.For<Response<SearchResults<CpdDocument>>>());
+        var response = GenerateResponse();
+        _searchClient.SearchAsync<CpdDocument>(Arg.Any<string>(), Arg.Do<SearchOptions>(x => options = x)).Returns(response);
 
         // act
         await _sut.SearchResourcesAsync(query);
@@ -58,7 +61,8 @@ public class SearchServiceTests
         // arrange
         SearchOptions options = null;
         var query = new KeywordSearchQuery("foo");
-        _searchClient.SearchAsync<CpdDocument>(Arg.Any<string>(), Arg.Do<SearchOptions>(x => options = x)).Returns(Substitute.For<Response<SearchResults<CpdDocument>>>());
+        var response = GenerateResponse();
+        _searchClient.SearchAsync<CpdDocument>(Arg.Any<string>(), Arg.Do<SearchOptions>(x => options = x)).Returns(response);
 
         // act
         await _sut.SearchResourcesAsync(query);
@@ -74,7 +78,8 @@ public class SearchServiceTests
         // arrange
         SearchOptions options = null;
         var query = new KeywordSearchQuery("foo");
-        _searchClient.SearchAsync<CpdDocument>(Arg.Any<string>(), Arg.Do<SearchOptions>(x => options = x)).Returns(Substitute.For<Response<SearchResults<CpdDocument>>>());
+        var response = GenerateResponse();
+        _searchClient.SearchAsync<CpdDocument>(Arg.Any<string>(), Arg.Do<SearchOptions>(x => options = x)).Returns(response);
 
         // act
         await _sut.SearchResourcesAsync(query);
@@ -84,13 +89,36 @@ public class SearchServiceTests
         options.OrderBy.Single().Should().Be("search.score() desc");
     }
 
+
+    private static SearchResults<CpdDocument> GenerateSearchResults(int count, IDictionary<string, IList<FacetResult>> facets = null)
+    {
+        var random = new Random();
+        var results = new List<SearchResult<CpdDocument>>();
+        for (var i = 0; i < count; i++)
+        {
+            results.Add(SearchModelFactory.SearchResult(new CpdDocument(), random.NextDouble(), new Dictionary<string, IList<string>>()));
+        }
+
+        return SearchModelFactory.SearchResults(results, count, facets ?? new Dictionary<string, IList<FacetResult>>(), 0, null);
+    }
+
+    private static Response<SearchResults<CpdDocument>> GenerateResponse()
+    {
+        var searchResults = GenerateSearchResults(10);
+        var sub = Substitute.For<Response<SearchResults<CpdDocument>>>();
+        sub.Value.Returns(searchResults);
+
+        return sub;
+    }
+
     [Test]
     public async Task SearchResourcesAsync_Uses_Simple_Query_Parser()
     {
         // arrange
         SearchOptions options = null;
         var query = new KeywordSearchQuery("foo");
-        _searchClient.SearchAsync<CpdDocument>(Arg.Any<string>(), Arg.Do<SearchOptions>(x => options = x)).Returns(Substitute.For<Response<SearchResults<CpdDocument>>>());
+        var response = GenerateResponse();
+        _searchClient.SearchAsync<CpdDocument>(Arg.Any<string>(), Arg.Do<SearchOptions>(x => options = x)).Returns(response);
 
         // act
         await _sut.SearchResourcesAsync(query);
@@ -99,19 +127,39 @@ public class SearchServiceTests
         options.QueryType.Should().Be(SearchQueryType.Simple);
     }
 
-    [Test]
-    public async Task SearchResourcesAsync_Turns_Search_Term_Into_Prefix_Query()
+    [TestCase("Title")]
+    [TestCase("Body")]
+    public async Task SearchResourcesAsync_Searches_Field(string fieldName)
     {
         // arrange
-        var searchTerm = string.Empty;
+        SearchOptions options = null;
         var query = new KeywordSearchQuery("foo");
-        _searchClient.SearchAsync<CpdDocument>(Arg.Do<string>(x => searchTerm = x), Arg.Any<SearchOptions>()).Returns(Substitute.For<Response<SearchResults<CpdDocument>>>());
+        var response = GenerateResponse();
+        _searchClient.SearchAsync<CpdDocument>(Arg.Any<string>(), Arg.Do<SearchOptions>(x => options = x)).Returns(response);
 
         // act
         await _sut.SearchResourcesAsync(query);
 
         // assert
-        searchTerm.Should().Be("foo*");
+        options.SearchFields.Should().Contain(fieldName);
+    }
+
+    [TestCase("foo*", "foo")]
+    [TestCase("foo* foo*", "foo foo")]
+    [TestCase("!£$foo%^&*()_+#'~@|\\-=", "foo")]
+    public async Task SearchResourcesAsync_Strips_Special_Characters(string term, string expected)
+    {
+        // arrange
+        var searchTerm = string.Empty;
+        var query = new KeywordSearchQuery(term);
+        var response = GenerateResponse();
+        _searchClient.SearchAsync<CpdDocument>(Arg.Do<string>(x => searchTerm = x), Arg.Any<SearchOptions>()).Returns(response);
+
+        // act
+        await _sut.SearchResourcesAsync(query);
+
+        // assert
+        searchTerm.Should().Be(expected);
     }
 
     [Test]
@@ -120,7 +168,8 @@ public class SearchServiceTests
         // arrange
         SearchOptions options = null;
         var query = new KeywordSearchQuery("foo");
-        _searchClient.SearchAsync<CpdDocument>(Arg.Any<string>(), Arg.Do<SearchOptions>(x => options = x)).Returns(Substitute.For<Response<SearchResults<CpdDocument>>>());
+        var response = GenerateResponse();
+        _searchClient.SearchAsync<CpdDocument>(Arg.Any<string>(), Arg.Do<SearchOptions>(x => options = x)).Returns(response);
 
         // act
         await _sut.SearchResourcesAsync(query);
@@ -143,7 +192,8 @@ public class SearchServiceTests
         {
             Page = page
         };
-        _searchClient.SearchAsync<CpdDocument>(Arg.Any<string>(), Arg.Do<SearchOptions>(x => options = x)).Returns(Substitute.For<Response<SearchResults<CpdDocument>>>());
+        var response = GenerateResponse();
+        _searchClient.SearchAsync<CpdDocument>(Arg.Any<string>(), Arg.Do<SearchOptions>(x => options = x)).Returns(response);
 
         // act
         await _sut.SearchResourcesAsync(query);
@@ -167,7 +217,8 @@ public class SearchServiceTests
         {
             PageSize = requestedPageSize
         };
-        _searchClient.SearchAsync<CpdDocument>(Arg.Any<string>(), Arg.Do<SearchOptions>(x => options = x)).Returns(Substitute.For<Response<SearchResults<CpdDocument>>>());
+        var response = GenerateResponse();
+        _searchClient.SearchAsync<CpdDocument>(Arg.Any<string>(), Arg.Do<SearchOptions>(x => options = x)).Returns(response);
 
         // act
         await _sut.SearchResourcesAsync(query);
@@ -177,7 +228,7 @@ public class SearchServiceTests
     }
 
     [Test]
-    public async Task SearchResourcesAsync_Filters_Should_Be_Logically_ANDed()
+    public async Task SearchResourcesAsync_Filters_Should_Be_Logically_ORed()
     {
         // arrange
         SearchOptions options = null;
@@ -194,13 +245,14 @@ public class SearchServiceTests
                 }
             }
         };
-        _searchClient.SearchAsync<CpdDocument>(Arg.Any<string>(), Arg.Do<SearchOptions>(x => options = x)).Returns(Substitute.For<Response<SearchResults<CpdDocument>>>());
+        var response = GenerateResponse();
+        _searchClient.SearchAsync<CpdDocument>(Arg.Any<string>(), Arg.Do<SearchOptions>(x => options = x)).Returns(response);
 
         // act
         await _sut.SearchResourcesAsync(query);
 
         // assert
-        options.Filter.Should().Be("tag/any(v: v eq 'filter1') and tag/any(v: v eq 'filter2')");
+        options.Filter.Should().Be("tag/any(v: v eq 'filter1') or tag/any(v: v eq 'filter2')");
     }
 
     [TestCase(SortCategory.Created, SortDirection.Ascending, "CreatedAt asc")]
@@ -218,7 +270,8 @@ public class SearchServiceTests
             SortCategory = sortCategory,
             SortDirection = sortDirection,
         };
-        _searchClient.SearchAsync<CpdDocument>(Arg.Any<string>(), Arg.Do<SearchOptions>(x => options = x)).Returns(Substitute.For<Response<SearchResults<CpdDocument>>>());
+        var response = GenerateResponse();
+        _searchClient.SearchAsync<CpdDocument>(Arg.Any<string>(), Arg.Do<SearchOptions>(x => options = x)).Returns(response);
 
         // act
         await _sut.SearchResourcesAsync(query);

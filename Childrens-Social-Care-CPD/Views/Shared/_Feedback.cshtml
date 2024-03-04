@@ -1,0 +1,104 @@
+﻿@using Childrens_Social_Care_CPD.Configuration.Features
+
+@inject IFeaturesConfig featureConfig
+
+@if (!featureConfig.IsEnabled(Features.FeedbackControl)) return;
+
+@{
+    var contextModel = (ContextModel)ViewBag.ContextModel;
+    var commentsId = $"comments-{Guid.NewGuid()}";
+}
+
+<div id="page-feedback" class="govuk-grid-row" data-module="feedback-module">
+    <div class="govuk-grid-column-three-quarters">
+
+        @if (contextModel.FeedbackSubmitted)
+        {
+            <details class="govuk-details" data-module="govuk-details" open data-module-id="feedbackDetail">
+                <summary class="govuk-details__summary">
+                    <span class="govuk-details__summary-text">
+                        Give feedback about this page
+                    </span>
+                </summary>
+                <div class="govuk-details__text">
+                    <div>Thank you for your feedback on this resource! If you have more general feedback about this website, please use this <a href="https://dferesearch.fra1.qualtrics.com/jfe/form/SV_bmcLDedq5wipeTA">feedback form</a>.</div>
+                </div>
+            </details>
+    
+            return;
+        }
+
+        <details id="page-Feedback" class="govuk-details" data-module="govuk-details" data-module-id="feedbackDetail">
+            <summary class="govuk-details__summary">
+                <span class="govuk-details__summary-text">
+                    Give feedback about this page
+                </span>
+            </summary>
+
+            <form action="feedback" method="post" data-module-id="feedbackForm" asp-antiforgery="true">
+                <input data-module-id="page" type="hidden" name="page" value="@contextModel.Id" />
+                <div data-module-id="controlsContainer">
+                    <div class="govuk-details__text">
+                        Use this form to provide feedback about this page. If you have more general feedback about this website, please use this <a href="https://dferesearch.fra1.qualtrics.com/jfe/form/SV_bmcLDedq5wipeTA">feedback form</a>.
+                    </div>
+
+                    <div class="govuk-details__text">
+                        <div class="govuk-form-group" data-module-id="isUsefulQuestionGroup">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend">Did you find this page useful?</legend>
+                                <p class="govuk-error-message" style="display:none" data-module-id="isUsefulErrorMessage">
+                                    <span class="govuk-visually-hidden">Error:</span> Please select yes or no
+                                </p>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input id="idUsefulYes" class="govuk-radios__input" name="isUseful" type="radio" value="true" data-module-id="isUsefulYes">
+                                        <label class="govuk-label govuk-radios__label" for="isUsefulYes">
+                                            Yes
+                                        </label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input id="idUsefulNo" class="govuk-radios__input" name="isUseful" type="radio" value="false" data-module-id="isUsefulNo">
+                                        <label class="govuk-label govuk-radios__label" for="isUsefulNo">
+                                            No
+                                        </label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+
+                        <div class="govuk-character-count" data-module="govuk-character-count" data-maxlength="400">
+                            <div data-module-id="commentsFormGroup" class="govuk-form-group">
+                                <label class="govuk-label" for="@commentsId">
+                                    Tell us about your experience with this page (optional):
+                                </label>
+                                <p data-module-id="commentsErrorMessage" class="govuk-error-message" style="display:none">
+                                    <span class="govuk-visually-hidden">Error:</span> Experience must be 400 characters or less
+                                </p>
+                                <textarea data-module-id="comments" class="govuk-textarea govuk-js-character-count" id="@commentsId" name="comments" rows="5" aria-describedby="@commentsId-info" maxlength="400"></textarea>
+                            </div>
+                            <div id="@commentsId-info" class="govuk-hint govuk-character-count__message">
+                                You can enter up to 400 characters
+                            </div>
+                        </div>
+
+                        <div class="govuk-button-group">
+                            <button data-module-id="submitButton" class="govuk-button" data-module="govuk-button" type="submit">
+                                Submit Feedback
+                            </button>
+
+                            <a data-module-id="cancelLink" class="govuk-link" href="#0" style="display: none">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div data-module-id="thankYouMessage" class="govuk-details__text" style="display: none;">
+                    Thank you for your feedback on this resource! If you have more general feedback about this website, please use this <a href="https://dferesearch.fra1.qualtrics.com/jfe/form/SV_bmcLDedq5wipeTA">feedback form</a>.
+                </div>
+            </form>
+        </details>
+    </div>
+</div>
+
+@{
+    Html.RequireScriptUrl("~/javascript/components/feedback.js"); 
+}
