@@ -13,7 +13,7 @@
     @await RenderSectionAsync("Head", required: false)
     @Html.RenderScripts(ScriptPosition.HeadEnd)
 
-    <link rel="shortcut icon" sizes="16x16 32x32 48x48" href="~/assets/images/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="~/assets/images/favicon.ico" type="image/x-icon">
 
 </head>
 <body class="govuk-template__body">
@@ -32,13 +32,14 @@
     <partial name="_Footer" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script>
-        document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
+        document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');
     </script>
     <!-- component HTML -->
-    <script src="/javascript/govuk-frontend-4.7.0.min.js"></script>
+    <script src="/javascript/govuk-frontend.min.js" type="module"></script>
     <script src="/javascript/dfefrontend-1.0.1.min.js"></script>
-    <script>
-        window.GOVUKFrontend.initAll()
+    <script type="module">
+        import { initAll } from '/javascript/govuk-frontend.min.js'
+        initAll()
     </script>
     @await RenderSectionAsync("Scripts", required: false)
     @Html.RenderScripts(ScriptPosition.BodyEnd)
