@@ -30,8 +30,6 @@
     <Folder Include="wwwroot\assets\images\moj\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Remove="wwwroot\javascript\govuk-frontend.min.js" />
-    <Content Remove="wwwroot\javascript\govuk-frontend.min.js.map" />
     <Content Remove="wwwroot\assets\images\govuk-opengraph-image.png" />
   </ItemGroup>
   <ItemGroup>
