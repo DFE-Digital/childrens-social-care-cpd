@@ -30,9 +30,6 @@
     <Folder Include="wwwroot\assets\images\moj\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Remove="wwwroot\assets\images\govuk-opengraph-image.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Update="Views\Shared\_Footer.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
