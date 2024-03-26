@@ -28,7 +28,7 @@ test.describe('Managers', () => {
             ['Quality improvement manager', '/explore-roles/quality-improvement-manager', 'Quality improvement manager'],
             ['Team manager', '/explore-roles/team-manager', 'Team manager'],
             ['Independent reviewing officer', '/explore-roles/independent-reviewing-officer', 'Independent reviewing officer'],
-            ['Explore roles', '/explore-roles', 'Explore roles in child and family social work'],
+            ['Explore roles', '/explore-roles', 'Roles in child and family social work'],
         ]
 
         for (const link of links) {
