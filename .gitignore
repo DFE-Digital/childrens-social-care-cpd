@@ -410,3 +410,6 @@ terraform.rc
 *.vsix
 
 .sonarqube/
+
+# Mac Finder attributes files
+.DS_Store
