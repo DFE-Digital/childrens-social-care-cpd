@@ -36,10 +36,10 @@ test.describe('Assessed and supported year in employment (ASYE)', () => {
             ['post qualifying standards', 'https://www.gov.uk/government/publications/knowledge-and-skills-statements-for-child-and-family-social-work'],
             ['Professional Capabilities Framework', 'https://new.basw.co.uk/training-cpd/professional-capabilities-framework-pcf'],
             ['Find out more about each ASYE stage', 'https://www.skillsforcare.org.uk/Regulated-professions/Social-work/ASYE/ASYE-templates.aspx'],
-            ['Find out more about the ASYE', 'https://www.skillsforcare.org.uk/Regulated-professions/Social-work/ASYE/ASYE.aspx'],
+            ['Find out more about the ASYE programme', 'https://www.skillsforcare.org.uk/Regulated-professions/Social-work/ASYE/ASYE.aspx'],
             ['Social work post-qualifying standards', 'https://www.gov.uk/government/publications/knowledge-and-skills-statements-for-child-and-family-social-work'],
         ]
-        
+
         for (const link of links) {
             test(`'${link[0]}' goes to ${link[1]}`, async ({ page }) => {
                 await page.goto('/asye')

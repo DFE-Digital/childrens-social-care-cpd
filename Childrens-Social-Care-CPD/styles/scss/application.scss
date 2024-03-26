@@ -3,7 +3,7 @@ $govuk-global-styles: true;
 $govuk-new-link-styles: true;
 $moj-images-path: "/assets/images/moj/";
 
-@import "../../node_modules/govuk-frontend/govuk/all";
+@import "../../node_modules/govuk-frontend/dist/govuk/all";
 @import "../../node_modules/@ministryofjustice/frontend/moj/components/filter/filter";
 @import '../../node_modules/dfe-frontend-alpha/packages/dfefrontend';
 @import "overrides/dfe-overrides";
