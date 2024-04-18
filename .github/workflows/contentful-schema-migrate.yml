@@ -1,4 +1,4 @@
-name: contentful-schema-migrate
+name: Contentful Schema Migrate
 
 on:
   workflow_dispatch:
