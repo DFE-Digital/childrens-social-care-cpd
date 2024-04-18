@@ -8,7 +8,7 @@ var client = contentful.createClient({
     space: argv.space
 });
 
-console.log(accessToken, space);
+console.log(argv);
 /*
 client.getEntries({ content_type: 'migrationVersion' }).then(entries => {
     if(entries.total !== 1) {
