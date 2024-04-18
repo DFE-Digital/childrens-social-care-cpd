@@ -26,4 +26,4 @@ jobs:
 
       - name: Run environment preparation script
         working-directory: ./Contentful-Schema/utils
-        run: contentful space migration --space-id "${{ secrets.TF_VAR_CPD_SPACE_ID }}" --environment-id ${{ inputs.target_environment }} --management-token "${{ secrets.CONTENTFUL_MANAGEMENT_TOKEN }}" prepare-environment-for-migrations.js
+        run: contentful space migration --space-id "${{ secrets.TF_VAR_CPD_SPACE_ID }}" --environment-id ${{ inputs.target_environment }} --management-token "${{ secrets.CONTENTFUL_MANAGEMENT_TOKEN }}" prepare-environment-for-migrations.cjs
