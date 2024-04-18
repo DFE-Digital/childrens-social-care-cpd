@@ -8,13 +8,12 @@ var client = contentful.createClient({
     space: argv.space
 });
 
-console.log(argv);
-/*
+
 client.getEntries({ content_type: 'migrationVersion' }).then(entries => {
     if(entries.total !== 1) {
-        console.error ('More than one migration version record');
+        console.log('99');
+//        console.error ('More than one migration version record');
     }
     var item = entries.items[0];
     console.log(item.fields.version);
 });
-*/
