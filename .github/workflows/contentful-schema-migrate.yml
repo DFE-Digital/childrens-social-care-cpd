@@ -20,7 +20,8 @@ jobs:
         run: cd ./Contentful-Schema && npm install
 
       - name: Get target environment migration version
-        run: echo "ENVIRONMENT_MIGRATION_VERSION=$(node ./Contentful-Schema/utils/get-environment-version.js --token ${{ secrets.PAT }} --space ${{ secrets.TF_VAR_CPD_SPACE_ID }})" >> $GITHUB_ENV
+#        run: echo "ENVIRONMENT_MIGRATION_VERSION=$(node ./Contentful-Schema/utils/get-environment-version.js --token ${{ secrets.PAT }} --space ${{ secrets.TF_VAR_CPD_SPACE_ID }})" >> $GITHUB_ENV
+        run: node ./Contentful-Schema/utils/get-environment-version.js --token ${{ secrets.PAT }} --space ${{ secrets.TF_VAR_CPD_SPACE_ID }})
 
       - name: display script output
         run: echo ${{ env.ENVIRONMENT_MIGRATION_VERSION }}
