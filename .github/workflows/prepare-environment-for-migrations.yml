@@ -1,6 +1,7 @@
 name: Prepare Contentful Environment for Migrations
 
 on:
+    push:
     workflow_dispatch:
       inputs:
         target_environment:
