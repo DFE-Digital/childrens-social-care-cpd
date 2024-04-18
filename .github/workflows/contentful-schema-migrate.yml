@@ -6,6 +6,7 @@ on:
       target_environment:
         required: true
         type: string
+  push:
 
 jobs:
   setup:
