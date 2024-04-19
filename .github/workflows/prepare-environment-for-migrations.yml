@@ -24,6 +24,15 @@ jobs:
       - name: Install Contentful CLI
         run: npm install -g contentful-cli
 
-      - name: Run environment preparation script
+      - name: Run script to create migrationVersion content type
         working-directory: ./Contentful-Schema/utils
         run: contentful space migration --space-id "${{ secrets.TF_VAR_CPD_SPACE_ID }}" --environment-id ${{ inputs.target_environment }} --management-token "${{ secrets.CONTENTFUL_MANAGEMENT_TOKEN }}" create-migration-version-content-type.cjs --yes
+
+      - name: Run script to create inital migration version entry
+        working-directory: ./Contentful-Schema/utils
+        env:
+          MANAGEMENT_TOKEN: ${{ secrets.MANAGEMENT_API_KEY }}
+          SPACE_ID: ${{ vars.SPACE_ID }}
+          ENVIRONMENT: ${{ inputs.target_environment }}
+        run: node create-initial-migration-version.js
+    
