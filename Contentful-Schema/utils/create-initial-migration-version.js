@@ -1,5 +1,7 @@
 import contentful from 'contentful-management';
 
+console.log('space id: ', process.env.SPACE_ID);
+
 var client = contentful.createClient(
     { accessToken: process.env.MANAGEMENT_TOKEN },
     { type: 'plain' }
