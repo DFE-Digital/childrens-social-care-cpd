@@ -1,4 +1,4 @@
-module.exports = function (migration) {
+module.exports = async function (migration) {
     const contentType = migration
         .createContentType('migrationVersion')
         .name('Migration Version');
