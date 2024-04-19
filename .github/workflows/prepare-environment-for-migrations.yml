@@ -6,11 +6,12 @@ on:
         target_environment:
           required: true
           type: string
+
 env:
-    MANAGEMENT_TOKEN: ${{ secrets.MANAGEMENT_API_KEY }}
-    SPACE_ID: ${{ vars.SPACE_ID }}
+    MANAGEMENT_TOKEN: ${{ secrets.CONTENTFUL_MANAGEMENT_TOKEN }}
+    SPACE_ID: ${{ secrets.TF_VAR_CPD_SPACE_ID }}
     ENVIRONMENT: ${{ inputs.target_environment }}
-    
+        
 jobs:
   prepare-environment:
     runs-on: ubuntu-latest
