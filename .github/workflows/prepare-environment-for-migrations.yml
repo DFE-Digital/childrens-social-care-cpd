@@ -6,7 +6,11 @@ on:
         target_environment:
           required: true
           type: string
-  
+env:
+    MANAGEMENT_TOKEN: ${{ secrets.MANAGEMENT_API_KEY }}
+    SPACE_ID: ${{ vars.SPACE_ID }}
+    ENVIRONMENT: ${{ inputs.target_environment }}
+    
 jobs:
   prepare-environment:
     runs-on: ubuntu-latest
@@ -30,9 +34,5 @@ jobs:
 
       - name: Run script to create inital migration version entry
         working-directory: ./Contentful-Schema/utils
-        env:
-          MANAGEMENT_TOKEN: ${{ secrets.MANAGEMENT_API_KEY }}
-          SPACE_ID: ${{ vars.SPACE_ID }}
-          ENVIRONMENT: ${{ inputs.target_environment }}
         run: node create-initial-migration-version.js
     
