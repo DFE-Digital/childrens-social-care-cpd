@@ -1,19 +1,28 @@
 import contentful from 'contentful';
-import minimist from 'minimist';
+import chalk from 'chalk';
 
-const argv = minimist(process.argv.slice(2));
+const error = chalk.bold.red;
 
 var client = contentful.createClient({
-    accessToken: argv.token,
-    space: argv.space
+    accessToken: process.env.DELIVERY_KEY,
+    space: process.env.SPACE_ID,
+    environment: process.env.ENVIRONMENT
 });
 
-
-client.getEntries({ content_type: 'migrationVersion' }).then(entries => {
-    if(entries.total !== 1) {
-        console.log('99');
-//        console.error ('More than one migration version record');
-    }
-    var item = entries.items[0];
-    console.log(item.fields.version);
-});
+try {
+    client.getEntries({ content_type: 'migrationVersion' }).then(entries => {
+        if (entries.total == 0) {
+            console.error (error('migrationVersion content type exists, but no migration version record found. Environment inconsistently prepared.'));
+            process.exit(1);
+        }
+        if (entries.total > 1) {
+            console.error (error('More than one migration version record found.'));
+            process.exit(1);
+        }
+        var item = entries.items[0];
+        console.log(item.fields.version);
+    });
+} catch (x) {
+    console.error(error('migrationVersion content type not found - environment not prepared for migrations?'));
+    process.exit(1);
+}
