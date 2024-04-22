@@ -37,9 +37,12 @@ jobs:
         run: node get-environment-version.js
 
       - name: Get target environment current migration version
+        id: current-migration-version
         working-directory: ./Contentful-Schema/utils
-        run: echo "ENVIRONMENT_MIGRATION_VERSION=$(node get-environment-version.js)" >> $GITHUB_ENV
+        run: node get-environment-version.js
 
+      - name: display previous output
+        run: echo "${{ steps.current-migration-version.outputs }}"
       - name: Determine timestamp for new staging environment
         run: echo "TIMESTAMP=$(date +%Y-%m-%d-%H-%M-%S)" >> $GITHUB_ENV
 
@@ -49,7 +52,7 @@ jobs:
 
 #      - name: Determine required migrations for environment
 #        id: required-migrations
-#        run: echo "value=$(node ./schema/utils/get-required-migrations.js --currentVersion ${{ env.ENVIRONMENT_MIGRATION_VERSION }})" >> $GITHUB_OUTPUT
+#        run: echo "value=$(node ./schema/utils/get-required-migrations.js --currentVersion ${{ steps.current-migration-version.outputs.value }})" >> $GITHUB_OUTPUT
 #
 #      - run: |
 #          echo "${{ steps.required-migrations.outputs.value }}"

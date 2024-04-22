@@ -11,6 +11,7 @@ var client = contentful.createClient({
 });
 
 client.getEntries({ content_type: 'migrationVersion' }).then(entries => {
+    
     if (entries.total == 0) {
         core.setFailed(red('migrationVersion content type exists, but no migration version record found. Environment inconsistently prepared.'));
         process.exit(1);
@@ -19,8 +20,9 @@ client.getEntries({ content_type: 'migrationVersion' }).then(entries => {
         core.setFailed(red('More than one migration version record found.'));
         process.exit(1);
     }
-    var item = entries.items[0];
-    console.log(item.fields.version);
+    var migrationVersion = entries.items[0].fields.version;
+    core.setOutput('migrationVersion', migrationVersion);
+
 }).catch(x => {
     core.setFailed(red('migrationVersion content type not found - environment not prepared for migrations?'));
 });
