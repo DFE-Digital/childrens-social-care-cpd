@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      staging-environment: ${{ steps.staging-env.outputs.STAGING_ENVIRONMENT }}
+      staging-environment: ${{ steps.staging-env.outputs.staging-environment }}
       required-migrations: ${{ steps.required-migrations.outputs.required-migrations }}
 
     steps:
@@ -42,35 +42,33 @@ jobs:
 
       - name: Set var for name of new environment
         id: staging-env
-        run: echo "STAGING_ENVIRONMENT=$(echo ${{ inputs.target_environment }}-${{ env.TIMESTAMP }})" >> $GITHUB_OUTPUT
+        run: echo "staging-environment=$(echo ${{ inputs.target_environment }}-${{ env.TIMESTAMP }})" >> $GITHUB_OUTPUT
 
       - name: Determine required migrations for environment
         id: required-migrations
         working-directory: ./Contentful-Schema/utils
         run: node get-required-migrations.js --currentVersion ${{ steps.current-migration-version.outputs.migration-version }}
+ 
+  clone:
+    if: ${{ join(needs.setup.outputs.required-migrations, '') != '' }}
+    needs: [setup]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Contentful CLI
+        run: npm install -g contentful-cli
 
-      - run: |
-          echo "${{ steps.required-migrations.outputs.required-migrations }}"
-# 
-#  clone:
-#    needs: [setup]
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Install Contentful CLI
-#        run: npm install -g contentful-cli
-#
-#      - name: Login to Contentful with management token
-#        run: contentful login --management-token "${{ secrets.CONTENTFUL_CLI_TOKEN }}"
-#
-#      - name: Set target space
-#        run: contentful space use --space-id "${{ vars.SPACE_ID }}"
-#
+      - name: Login to Contentful with management token
+        run: contentful login --management-token "${{ secrets.CONTENTFUL_CLI_TOKEN }}"
+
+      - name: Set target space
+        run: contentful space use --space-id "${{ vars.SPACE_ID }}"
+
 #      - name: Clone target environment to staging environment
 #        run: contentful space environment create --name ${{ needs.setup.outputs.staging-environment }} --environment-id ${{ needs.setup.outputs.staging-environment }} --source ${{ inputs.target_environment }}
 #
 #      - name: Set new staging environment as in-use
 #        run: contentful space use --space-id "${{ vars.SPACE_ID }}" --environment-id ${{ needs.setup.outputs.staging-environment }}
-#  
+  
 #  migrate:
 #    needs: [setup,clone]
 #    runs-on: ubuntu-latest
