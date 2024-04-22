@@ -10,11 +10,12 @@ const files = await readdir('../migrations');
 
 var requiredMigrations = [];
 for (var x=0; x<files.length; x++) {
+    console.log (files[x]);
     var version = parseInt(files[x].split('-')[0]);
     if (version > currentVersion) {
         requiredMigrations = files.slice(version - 1);
         break;
     }
 }
-core.setOutput('required-migrations', JSON.stringify(requiredMigrations));
-//console.log ('[\"' + requiredMigrations.join('\",\"') + '\"]');
+console.log(requiredMigrations);
+core.setOutput('required-migrations', requiredMigrations);
