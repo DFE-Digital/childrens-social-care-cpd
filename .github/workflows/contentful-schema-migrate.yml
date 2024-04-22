@@ -42,7 +42,8 @@ jobs:
         run: node get-environment-version.js
 
       - name: display previous output
-        run: echo "${{ steps.current-migration-version.outputs }}"
+        run: echo "${{ steps.current-migration-version.outputs.migration-version }}"
+
       - name: Determine timestamp for new staging environment
         run: echo "TIMESTAMP=$(date +%Y-%m-%d-%H-%M-%S)" >> $GITHUB_ENV
 
