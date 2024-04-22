@@ -7,31 +7,48 @@ on:
         required: true
         type: string
 
+env:
+  MANAGEMENT_TOKEN: ${{ secrets.CONTENTFUL_MANAGEMENT_TOKEN }}
+  DELIVERY_KEY: ${{ secrets.TF_VAR_CPD_DELIVERY_KEY }}
+  SPACE_ID: ${{ secrets.TF_VAR_CPD_SPACE_ID }}
+  ENVIRONMENT: ${{ inputs.target_environment }}
+
 jobs:
   setup:
     runs-on: ubuntu-latest
-#    outputs:
+
+    outputs:
+      staging-environment: ${{ steps.staging-env.outputs.STAGING_ENVIRONMENT }}
 #      required-migrations: ${{ steps.required-migrations.outputs.value }}
-#      staging-environment: ${{ steps.staging-env.outputs.STAGING_ENVIRONMENT }}
+
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install npm packages used by util scripts
-        run: cd ./Contentful-Schema && npm install
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
 
-      - name: Get target environment migration version
-        run: echo "ENVIRONMENT_MIGRATION_VERSION=$(node ./Contentful-Schema/utils/get-environment-version.js --token ${{ secrets.TF_VAR_CPD_DELIVERY_KEY }} --space ${{ secrets.TF_VAR_CPD_SPACE_ID }})" >> $GITHUB_ENV
+      - name: Install npm packages used by util scripts
+        working-directory: ./Contentful-Schema
+        run: npm ci
+
+      - name: Get target environment current migration version
+        working-directory: ./Contentful-Schema/utils
+        run: echo "ENVIRONMENT_MIGRATION_VERSION=$(node get-environment-version.js)" >> $GITHUB_ENV
 
       - name: display script output
         run: echo ${{ env.ENVIRONMENT_MIGRATION_VERSION }}
 
-#      - name: Determine timestamp for new staging environment
-#        run: echo "TIMESTAMP=$(date +%Y-%m-%d-%H-%M-%S)" >> $GITHUB_ENV
-#
-#      - name: Set var for name of new environment
-#        id: staging-env
-#        run: echo "STAGING_ENVIRONMENT=$(echo ${{ inputs.target_environment }}-${{ env.TIMESTAMP }})" >> $GITHUB_OUTPUT
-#
+      - name: Determine timestamp for new staging environment
+        run: echo "TIMESTAMP=$(date +%Y-%m-%d-%H-%M-%S)" >> $GITHUB_ENV
+
+      - name: Set var for name of new environment
+        id: staging-env
+        run: echo "STAGING_ENVIRONMENT=$(echo ${{ inputs.target_environment }}-${{ env.TIMESTAMP }})" >> $GITHUB_OUTPUT
+
+      - name: display staging env name
+        run: echo ${{ steps.staging-env.outputs.STAGING_ENVIRONMENT }}
+
 #      - name: Determine required migrations for environment
 #        id: required-migrations
 #        run: echo "value=$(node ./schema/utils/get-required-migrations.js --currentVersion ${{ env.ENVIRONMENT_MIGRATION_VERSION }})" >> $GITHUB_OUTPUT
