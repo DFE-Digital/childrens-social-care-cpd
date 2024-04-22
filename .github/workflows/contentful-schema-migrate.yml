@@ -32,6 +32,10 @@ jobs:
         working-directory: ./Contentful-Schema
         run: npm ci
 
+      - name: Get target environment prepared for migrations
+        working-directory: ./Contentful-Schema/utils
+        run: node get-environment-version.js
+
       - name: Get target environment current migration version
         working-directory: ./Contentful-Schema/utils
         run: echo "ENVIRONMENT_MIGRATION_VERSION=$(node get-environment-version.js)" >> $GITHUB_ENV
