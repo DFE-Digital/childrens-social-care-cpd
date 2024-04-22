@@ -1,7 +1,8 @@
 import contentful from 'contentful';
 import chalk from 'chalk';
+import core from '@actions/core';
 
-const error = chalk.bold.red;
+const red = chalk.bold.red;
 
 var client = contentful.createClient({
     accessToken: process.env.DELIVERY_KEY,
@@ -11,16 +12,15 @@ var client = contentful.createClient({
 
 client.getEntries({ content_type: 'migrationVersion' }).then(entries => {
     if (entries.total == 0) {
-        console.error (error('migrationVersion content type exists, but no migration version record found. Environment inconsistently prepared.'));
+        console.error (red('migrationVersion content type exists, but no migration version record found. Environment inconsistently prepared.'));
         process.exit(1);
     }
     if (entries.total > 1) {
-        console.error (error('More than one migration version record found.'));
+        console.error (red('More than one migration version record found.'));
         process.exit(1);
     }
     var item = entries.items[0];
     console.log(item.fields.version);
 }).catch(x => {
-    console.error(error('migrationVersion content type not found - environment not prepared for migrations?'));
-    process.exit(1);
+    core.setFailed(red('migrationVersion content type not found - environment not prepared for migrations?'));
 });
