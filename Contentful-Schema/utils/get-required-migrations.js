@@ -1,10 +1,12 @@
 import { readdir } from 'node:fs/promises';
 import minimist from 'minimist';
+import chalk from 'chalk';
+import core from '@actions/core';
 
 const argv = minimist(process.argv.slice(2));
 const currentVersion = parseInt(argv.currentVersion);
 
-const files = await readdir('./schema/migrations');
+const files = await readdir('../migrations');
 
 var requiredMigrations = [];
 for (var x=0; x<files.length; x++) {
@@ -14,4 +16,5 @@ for (var x=0; x<files.length; x++) {
         break;
     }
 }
-console.log ('[\"' + requiredMigrations.join('\",\"') + '\"]');
+core.setOutput('required-migrations', JSON.stringify(requiredMigrations));
+//console.log ('[\"' + requiredMigrations.join('\",\"') + '\"]');
