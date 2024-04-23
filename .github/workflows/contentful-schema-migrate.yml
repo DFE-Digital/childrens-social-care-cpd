@@ -50,7 +50,7 @@ jobs:
         run: node get-required-migrations.js --currentVersion ${{ steps.current-migration-version.outputs.migration-version }}
  
   clone:
-    if: ${{ join(needs.setup.outputs.required-migrations, '') != '' }}
+    if: ${{ join(needs.setup.outputs.required-migrations, '') != '[]' }}
     needs: [setup]
     runs-on: ubuntu-latest
     steps:
