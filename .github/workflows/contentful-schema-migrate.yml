@@ -67,22 +67,32 @@ jobs:
       - name: Clone target environment to staging environment
         run: contentful space environment create --name ${{ needs.setup.outputs.staging-environment }} --environment-id ${{ needs.setup.outputs.staging-environment }} --source ${{ inputs.target_environment }}
   
-#  migrate:
-#  if: ${{ join(needs.setup.outputs.required-migrations, '') != '[]' }}
-#    needs: [setup,clone]
-#    runs-on: ubuntu-latest
-#    strategy: 
-#      max-parallel: 1
-#      matrix:
-#        value: ${{fromJSON(needs.setup.outputs.required-migrations)}}
-#    steps:
-#      - uses: actions/checkout@v3
-#
+  migrate:
+    if: ${{ join(needs.setup.outputs.required-migrations, '') != '[]' }}
+    needs: [setup,clone]
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 1
+      matrix:
+        value: ${{fromJSON(needs.setup.outputs.required-migrations)}}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
 #      - name: Install npm packages used by migration script
-#        run: cd ./schema && npm install
+#        working-directory: ./Contentful-Schema
+#        run: npm ci
 #
 #      - name: Install Contentful CLI
 #        run: npm install -g contentful-cli
+
+      - name: Display migration to run ${{ matrix.value }}
+        run: echo "${{ matrix.value }}"
+
 #
 #      - name: Run migration script ${{ matrix.value }}
 #        run: contentful space migration --space-id "${{ vars.SPACE_ID }}" --environment-id ${{ needs.setup.outputs.staging-environment }} --management-token "${{ secrets.CONTENTFUL_CLI_TOKEN }}" ./schema/migrations/${{ matrix.value }} --yes
