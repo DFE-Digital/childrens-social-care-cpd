@@ -1,4 +1,4 @@
-import { readdir } from 'node:fs/promises';
+import { readdir, access } from 'node:fs/promises';
 import minimist from 'minimist';
 import chalk from 'chalk';
 import core from '@actions/core';
@@ -8,7 +8,7 @@ const currentVersion = parseInt(argv.currentVersion);
 const migrationsDir = '../migrations';
 
 try {
-    await fs.promises.access(migrationsDir);
+    await access(migrationsDir);
 }
   catch (error) {
     core.setFailed(chalk.red("Migrations directory doesn't exist"));
