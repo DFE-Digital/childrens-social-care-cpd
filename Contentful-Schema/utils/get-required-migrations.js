@@ -5,8 +5,17 @@ import core from '@actions/core';
 
 const argv = minimist(process.argv.slice(2));
 const currentVersion = parseInt(argv.currentVersion);
+const migrationsDir = '../migrations';
 
-const files = await readdir('../migrations');
+try {
+    await fs.promises.access(migrationsDir);
+}
+  catch (error) {
+    core.setFailed(chalk.red("Migrations directory doesn't exist"));
+    process.exit();
+}
+
+const files = await readdir(migrationsDir);
 
 var requiredMigrations = [];
 for (var x=0; x<files.length; x++) {
