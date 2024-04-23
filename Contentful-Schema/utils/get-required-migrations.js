@@ -19,12 +19,11 @@ const files = await readdir(migrationsDir);
 
 var requiredMigrations = [];
 for (var x=0; x<files.length; x++) {
-    console.log (files[x]);
     var version = parseInt(files[x].split('-')[0]);
     if (version > currentVersion) {
         requiredMigrations = files.slice(version - 1);
         break;
     }
 }
-console.log(requiredMigrations);
+
 core.setOutput('required-migrations', requiredMigrations);
