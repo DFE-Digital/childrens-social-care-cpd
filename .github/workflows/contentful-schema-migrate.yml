@@ -64,11 +64,8 @@ jobs:
       - name: Set target space
         run: contentful space use --space-id "${{ env.SPACE_ID }}"
 
-#      - name: Clone target environment to staging environment
-#        run: contentful space environment create --name ${{ needs.setup.outputs.staging-environment }} --environment-id ${{ needs.setup.outputs.staging-environment }} --source ${{ inputs.target_environment }}
-#
-#      - name: Set new staging environment as in-use
-#        run: contentful space use --space-id "${{ vars.SPACE_ID }}" --environment-id ${{ needs.setup.outputs.staging-environment }}
+      - name: Clone target environment to staging environment
+        run: contentful space environment create --name ${{ needs.setup.outputs.staging-environment }} --environment-id ${{ needs.setup.outputs.staging-environment }} --source ${{ inputs.target_environment }}
   
 #  migrate:
 #  if: ${{ join(needs.setup.outputs.required-migrations, '') != '[]' }}
