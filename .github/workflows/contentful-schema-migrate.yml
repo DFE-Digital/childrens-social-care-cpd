@@ -54,14 +54,15 @@ jobs:
     needs: [setup]
     runs-on: ubuntu-latest
     steps:
+      - run: echo "x${{ join(needs.setup.outputs.required-migrations, '') }}x"
       - name: Install Contentful CLI
         run: npm install -g contentful-cli
 
       - name: Login to Contentful with management token
-        run: contentful login --management-token "${{ secrets.CONTENTFUL_CLI_TOKEN }}"
+        run: contentful login --management-token "${{ env.MANAGEMENT_TOKEN }}"
 
       - name: Set target space
-        run: contentful space use --space-id "${{ vars.SPACE_ID }}"
+        run: contentful space use --space-id "${{ env.SPACE_ID }}"
 
 #      - name: Clone target environment to staging environment
 #        run: contentful space environment create --name ${{ needs.setup.outputs.staging-environment }} --environment-id ${{ needs.setup.outputs.staging-environment }} --source ${{ inputs.target_environment }}
