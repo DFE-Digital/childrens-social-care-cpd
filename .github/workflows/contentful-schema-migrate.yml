@@ -61,6 +61,9 @@ jobs:
       - name: Login to Contentful with management token
         run: contentful login --management-token "${{ env.MANAGEMENT_TOKEN }}"
 
+      - name: Set target space
+        run: contentful space use --space-id ${{ env.SPACE_ID }} --environment-id ${{ inputs.target_environment }}
+
       - name: Clone target environment to staging environment
         run: contentful space environment create --name ${{ needs.setup.outputs.staging-environment }} --environment-id ${{ needs.setup.outputs.staging-environment }} --source ${{ inputs.target_environment }}
   
