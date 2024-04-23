@@ -54,6 +54,7 @@ jobs:
     needs: [setup]
     runs-on: ubuntu-latest
     steps:
+      - run: echo "x${{ needs.setup.outputs.required-migrations }}x"
       - run: echo "x${{ join(needs.setup.outputs.required-migrations, '') }}x"
       - name: Install Contentful CLI
         run: npm install -g contentful-cli
