@@ -83,19 +83,20 @@ jobs:
         with:
           node-version: 20
 
-#      - name: Install npm packages used by migration script
-#        working-directory: ./Contentful-Schema
-#        run: npm ci
-#
-#      - name: Install Contentful CLI
-#        run: npm install -g contentful-cli
+      - name: Install npm packages used by migration script
+        working-directory: ./Contentful-Schema
+        run: npm ci
 
-      - name: Display migration to run ${{ matrix.value }}
-        run: echo "${{ matrix.value }}"
+      - name: Install Contentful CLI
+        run: npm install -g contentful-cli
 
-#
-#      - name: Run migration script ${{ matrix.value }}
-#        run: contentful space migration --space-id "${{ vars.SPACE_ID }}" --environment-id ${{ needs.setup.outputs.staging-environment }} --management-token "${{ secrets.CONTENTFUL_CLI_TOKEN }}" ./schema/migrations/${{ matrix.value }} --yes
-#
-#      - name: Update environment's migration version
-#        run: node ./schema/utils/set-environment-version.js --token ${{ secrets.MANAGEMENT_API_KEY }} --space ${{ vars.SPACE_ID }} --environment ${{ needs.setup.outputs.staging-environment }} --migrationFilename ${{ matrix.value }}
+      - name: Run migration script ${{ matrix.value }}
+        working-directory: ./Contentful-Schema/migrations
+        run: contentful space migration --space-id "${{ env.SPACE_ID }}" --environment-id ${{ needs.setup.outputs.staging-environment }} --management-token "${{ env.MANAGEMENT_TOKEN }}" ${{ matrix.value }} --yes
+
+      - name: Update environment's migration version
+        working-directory: ./Contentful-Schema/utils
+        env:
+          STAGING_ENVIRONMENT: ${{ needs.setup.outputs.staging-environment }}
+          MIGRATION_FILENAME: ${{ matrix.value }}
+        run: node set-environment-version.js 
