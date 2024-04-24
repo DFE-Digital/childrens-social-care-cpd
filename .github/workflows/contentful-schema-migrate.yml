@@ -44,9 +44,13 @@ jobs:
         id: staging-env
         run: echo "staging-environment=$(echo ${{ inputs.target_environment }}-${{ env.TIMESTAMP }})" >> $GITHUB_OUTPUT
 
-      - name: extract migration files from archive
+      - name: Extract migration files from archive
         working-directory: ./Contentful-Schema/migrations
-        run: rm *.cjs && tar -zxvf migrations.tar.gz && rm migrations.tar.gz
+        run: rm *.cjs && tar -zxf migrations.tar.gz && rm migrations.tar.gz
+
+      - name: Verify migration files against manifest
+        working-directory: ./Contentful-Schema/utils
+        run: node verify-migrations-against-manifest.js
 
       - name: Determine required migrations for environment
         id: required-migrations
