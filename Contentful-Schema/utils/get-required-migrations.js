@@ -6,6 +6,9 @@ import core from '@actions/core';
 const argv = minimist(process.argv.slice(2));
 const currentVersion = parseInt(argv.currentVersion);
 const migrationsDir = '../migrations';
+const isMigration = filename => {
+    return filename.includes('.cjs');
+}
 
 try {
     await access(migrationsDir);
@@ -15,15 +18,16 @@ try {
     process.exit();
 }
 
-const files = await readdir(migrationsDir);
+var files = await readdir(migrationsDir);
+files = files.filter(isMigration);
 
 var requiredMigrations = [];
-for (var x=0; x<files.length; x++) {
-    var version = parseInt(files[x].split('-')[0]);
+files.every(filename => {
+    var version = parseInt(filename.split('-')[0]);
     if (version > currentVersion) {
         requiredMigrations = files.slice(version - 1);
-        break;
+        return false;
     }
-}
+});
 
 core.setOutput('required-migrations', requiredMigrations);
