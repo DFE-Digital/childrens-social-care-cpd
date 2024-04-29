@@ -12,6 +12,7 @@ env:
   DELIVERY_KEY: ${{ secrets.TF_VAR_CPD_DELIVERY_KEY }}
   SPACE_ID: ${{ secrets.TF_VAR_CPD_SPACE_ID }}
   ENVIRONMENT: ${{ inputs.target_environment }}
+  SPACE_CAPACITY: ${{ vars.CONTENTFUL_SPACE_CAPACITY }}
 
 jobs:
   setup:
@@ -31,6 +32,10 @@ jobs:
       - name: Install npm packages used by util scripts
         working-directory: ./Contentful-Schema
         run: npm ci
+
+      - name: Verify contentful space has available environment capacity
+        working-directory: ./Contentful-Schema/utils
+        run: node verify-space-capacity.js
 
       - name: Get target environment current migration version
         id: current-migration-version
