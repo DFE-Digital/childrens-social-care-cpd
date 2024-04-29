@@ -13,9 +13,11 @@ const environments = await client.environment.getMany({
     spaceId: spaceId
 });
 
-const actualEnvironments = environments.items.filter(e => !("aliasedEnvironment" in e.sys));
+console.log('total environments: ' + environments.items.length);
+const actualEnvironments = environments.items.filter(obj => !("aliasedEnvironment" in obj.sys));
 const environmentsInUse = actualEnvironments.length;
-
+console.log('actual environments: ' + environmentsInUse);
+console.log('space capacity: ' + spaceCapacity);
 if (environmentsInUse >= spaceCapacity) {
     core.setFailed('Contentful space has insufficient environment capacity.  Configured max capacity is ' + spaceCapacity + ', current environment count is ' + environmentsInUse);
 }
