@@ -19,9 +19,6 @@ catch (e) {
     process.exit();
 }
 
-// temp debug output
-console.log('Pointing alias ' + contentfulAlias + ' at environment ' + stagingEnvironment + ' on space ' + spaceId);
-
 const client = contentful.createClient(
     { accessToken: managementToken }
 );
