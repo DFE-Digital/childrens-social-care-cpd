@@ -112,4 +112,26 @@ jobs:
         env:
           STAGING_ENVIRONMENT: ${{ needs.setup.outputs.staging-environment }}
           MIGRATION_FILENAME: ${{ matrix.value }}
-        run: node set-environment-version.js 
+        run: node set-environment-version.js
+
+  slot-swap:
+    if: ${{ join(needs.setup.outputs.required-migrations, '') != '[]' }}
+    needs: [setup,migrate]
+    runs-on: ubuntu-latest
+    env:
+      STAGING_ENVIRONMENT: ${{ needs.setup.outputs.staging-environment }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install npm packages used by migration script
+        working-directory: ./Contentful-Schema
+        run: npm ci
+
+      - name: Run script to perform point alias ${{ inputs.target_environment }} at new environment ${{ env.STAGING_ENVIRONMENT }}
+        working-directory: ./Contentful-Schema/utils
+        run: node point-alias-at-environment.js
