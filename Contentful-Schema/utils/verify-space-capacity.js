@@ -1,11 +1,11 @@
 import contentful from 'contentful-management';
 import core from '@actions/core';
+import chalk from 'chalk';
 
+const red = chalk.bold.red;
 const managementToken = process.env.MANAGEMENT_TOKEN;
 const spaceId = process.env.SPACE_ID;
 const spaceCapacity = process.env.SPACE_CAPACITY;
-
-const red = chalk.bold.red;
 
 try {
     if (!managementToken) throw new Error("Environment variable MANAGEMENT_TOKEN not set");
