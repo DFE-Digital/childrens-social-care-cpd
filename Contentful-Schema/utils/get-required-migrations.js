@@ -13,7 +13,7 @@ const isMigration = filename => {
 try {
     await access(migrationsDir);
 }
-  catch (error) {
+catch (error) {
     core.setFailed(chalk.red("Migrations directory doesn't exist"));
     process.exit();
 }

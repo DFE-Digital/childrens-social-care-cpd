@@ -3,11 +3,24 @@ import chalk from 'chalk';
 import core from '@actions/core';
 
 const red = chalk.bold.red;
+const spaceId = process.env.SPACE_ID;
+const contentfulAlias = process.env.ENVIRONMENT;
+const deliveryKey = process.env.DELIVERY_KEY;
+
+try {
+    if (!deliveryKey) throw new Error("Environment variable DELIVERY_KEY not set");
+    if (!spaceId) throw new Error("Environment variable SPACE_ID not set");
+    if (!contentfulAlias) throw new Error("Environment variable ENVIRONMENT not set");
+}
+catch (e) {
+    core.setFailed(red(e));
+    process.exit();
+}
 
 var client = contentful.createClient({
-    accessToken: process.env.DELIVERY_KEY,
-    space: process.env.SPACE_ID,
-    environment: process.env.ENVIRONMENT
+    accessToken: deliveryKey,
+    space: spaceId,
+    environment: contentfulAlias
 });
 
 client.getEntries({ content_type: 'migrationVersion' }).then(entries => {

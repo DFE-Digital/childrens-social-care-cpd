@@ -2,10 +2,23 @@ import contentful from 'contentful-management';
 import core from '@actions/core';
 import chalk from 'chalk';
 
+const red = chalk.bold.red;
 const managementToken = process.env.MANAGEMENT_TOKEN;
 const stagingEnvironment = process.env.STAGING_ENVIRONMENT;
 const spaceId = process.env.SPACE_ID;
 const migrationFilename = process.env.MIGRATION_FILENAME
+
+try {
+    if (!managementToken) throw new Error("Environment variable MANAGEMENT_TOKEN not set");
+    if (!stagingEnvironment) throw new Error("Environment variable STAGING_ENVIRONMENT not set");
+    if (!spaceId) throw new Error("Environment variable SPACE_ID not set");
+    if (!migrationFilename) throw new Error("Environment variable MIGRATION_FILENAME not set");
+}
+catch (e) {
+    core.setFailed(red(e));
+    process.exit();
+}
+
 const newVersion = parseInt(migrationFilename.split('-')[0]);
 
 var client = contentful.createClient(
@@ -22,7 +35,7 @@ var entries = await client.entry.getMany({
 });
 
 if (entries.total !== 1) {
-    core.setFailed (chalk.red('Migration version record missing or not unique'));
+    core.setFailed (red('Migration version record missing or not unique'));
     process.exit();
 }
 
