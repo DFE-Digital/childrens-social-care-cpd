@@ -114,7 +114,7 @@ jobs:
           MIGRATION_FILENAME: ${{ matrix.value }}
         run: node set-environment-version.js
 
-  slot-swap:
+  repoint-alias:
     if: ${{ join(needs.setup.outputs.required-migrations, '') != '[]' }}
     needs: [setup,migrate]
     runs-on: ubuntu-latest
@@ -132,6 +132,6 @@ jobs:
         working-directory: ./Contentful-Schema
         run: npm ci
 
-      - name: Run script to perform point alias ${{ inputs.target_environment }} at new environment ${{ env.STAGING_ENVIRONMENT }}
+      - name: Run script to point alias ${{ inputs.target_environment }} at new environment ${{ env.STAGING_ENVIRONMENT }}
         working-directory: ./Contentful-Schema/utils
         run: node point-alias-at-environment.js
