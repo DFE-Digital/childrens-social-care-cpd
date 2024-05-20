@@ -1,0 +1,29 @@
+﻿@using Childrens_Social_Care_CPD.Contentful.Models;
+@using Childrens_Social_Care_CPD.Contentful;
+@using Childrens_Social_Care_CPD.Contentful.Renderers;
+
+@model Spotlight
+
+@functions
+{
+    void RenderTitle()
+    {
+        if (Model.DisplayTitle)
+        {
+            var level = Model.TitleLevel > 0
+                ? Model.TitleLevel
+                : 2;
+
+            var tagBuilder = new TagBuilder($"h{level}");
+            tagBuilder.InnerHtml.Append(Model.Title);
+
+            @tagBuilder
+        }
+    }
+}
+<div class="govuk-grid-row" style="align-self: stretch">
+    <div class="govuk-grid-column-three-quarters" style="background-color: #b3c4d2; padding: 10px">
+        @{ RenderTitle(); }
+        <partial name="_RichText" model="Model.Document" />
+    </div>
+</div>
