@@ -16,6 +16,7 @@
 
             var tagBuilder = new TagBuilder($"h{level}");
             tagBuilder.InnerHtml.Append(Model.Title);
+            tagBuilder.AddCssClass("govuk-heading-l");
 
             @tagBuilder
         }
