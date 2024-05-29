@@ -11073,11 +11073,13 @@ CONTENT TITLE BANNER
   border-top: #347ca9 solid 10px;
 }
 
+/*
 @media (min-width: 48.0625em) {
-  .prompt.prompt-home .govuk-grid-column-one-quarter {
-    margin-right: -220px;
-  }
+    .prompt.prompt-home .govuk-grid-column-one-quarter {
+        margin-right: -220px;
+    }
 }
+*/
 .prompt.prompt-home .svg-inline--fa {
   background-color: #347ca9 !important;
 }
