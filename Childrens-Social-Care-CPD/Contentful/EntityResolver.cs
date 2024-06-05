@@ -35,7 +35,7 @@ public class EntityResolver : IContentTypeResolver
             "navigationMenu" => typeof(NavigationMenu),
             "textBlock" => typeof(TextBlock),
             "videoResource" => typeof(VideoResource),
-            "infoBoxTest" => typeof(InfoBox),
+            "infoBox" => typeof(InfoBox),
             _ => null
         };
     }
