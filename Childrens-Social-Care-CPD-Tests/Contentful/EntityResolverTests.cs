@@ -32,6 +32,7 @@ public class EntityResolverTests
     [TestCase("navigationMenu", typeof(NavigationMenu))]
     [TestCase("textBlock", typeof(TextBlock))]
     [TestCase("videoResource", typeof(VideoResource))]
+    [TestCase("infoBox", typeof(InfoBox))]
     public void Resolves_Correctly(string contentTypeId, Type expectedType)
     { 
         var resolver = new EntityResolver();
