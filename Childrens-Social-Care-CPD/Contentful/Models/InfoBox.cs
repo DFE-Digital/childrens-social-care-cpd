@@ -2,7 +2,7 @@
 
 namespace Childrens_Social_Care_CPD.Contentful.Models;
 
-public class Spotlight : IContent
+public class InfoBox : IContent
 {
     public string Title { get; set; }
     public bool DisplayTitle { get; set; }
