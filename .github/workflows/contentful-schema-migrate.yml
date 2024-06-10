@@ -103,6 +103,10 @@ jobs:
       - name: Install Contentful CLI
         run: npm install -g contentful-cli
 
+      - name: Extract migration files from archive
+        working-directory: ./Contentful-Schema/migrations
+        run: rm *.cjs && rm manifest.txt && tar -zxf migrations.tar.gz && rm migrations.tar.gz
+
       - name: Run migration script ${{ matrix.value }}
         working-directory: ./Contentful-Schema/migrations
         run: contentful space migration --space-id "${{ env.SPACE_ID }}" --environment-id ${{ needs.setup.outputs.staging-environment }} --management-token "${{ env.MANAGEMENT_TOKEN }}" ${{ matrix.value }} --yes
