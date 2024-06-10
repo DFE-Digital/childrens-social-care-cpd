@@ -8,7 +8,9 @@ const red = chalk.bold.red;
 try {
 
     const file = await readFile(migrationsDir + 'manifest.txt', { encoding: 'utf8' });
-    const manifestFiles = file.split('\n');
+    const manifestFiles = file.split('\n').filter(x => x !== '');
+
+    console.log(manifestFiles);
 
     const isMigration = filename => {
         return filename.includes('.cjs');
@@ -16,6 +18,8 @@ try {
     const directoryFiles = await readdir(migrationsDir);
     const directoryMigrations = directoryFiles.filter(isMigration);
     var errors = [];
+
+    console.log(directoryMigrations);
 
     if (manifestFiles.length !== directoryMigrations.length) {
         errors.push('Manifest and archive contain inconsistent number of migrations');
