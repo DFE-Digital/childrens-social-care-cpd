@@ -1,2 +1,1 @@
-0001-mbtest-migration.cjs
-0002-mbtest-second-migration.cjs
+<< migration file names go here.  See documentation at: https://dfedigital.atlassian.net.mcas.ms/wiki/spaces/SWCD/pages/4387569672/Schema+Development >>
