@@ -4185,7 +4185,7 @@
 
 		removeData: function (elem, name) {
 			dataUser.remove(elem, name);
-		},
+		}
 	});
 
 	jQuery.fn.extend({
