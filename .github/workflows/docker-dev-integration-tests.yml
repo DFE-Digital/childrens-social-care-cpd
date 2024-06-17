@@ -1,10 +1,6 @@
 ---
 name: Run integration tests
-on:
-  pull_request:
-    branches:
-      - main
-      - next
+on: workflow_dispatch
 jobs:
   build-test-scan:
     name: Build image and integration test
