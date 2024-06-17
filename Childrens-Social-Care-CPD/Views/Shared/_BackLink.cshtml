@@ -12,7 +12,7 @@
         if (Model.Uri.ToLower().StartsWith("javascript:") && Model.Uri.Length > 11)
         {
             var js = Model.Uri.Substring(Model.Uri.IndexOf(':') + 1);
-            <govuk-back-link href="#" onclick="@js">@Model.Name</govuk-back-link>
+            <govuk-back-link href="#" onclick="@js" onkeypress="@js">@Model.Name</govuk-back-link>
         }
         else
         {
