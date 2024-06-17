@@ -65,7 +65,7 @@ public class FeedbackController : Controller
         }
 
         // Validate the page id
-        if (!IsModelValid(feedback, out var pageId))
+        if (!IsModelValid(feedback, out var pageId) || !ModelState.IsValid)
         {
             return BadRequest();
         }
@@ -91,7 +91,7 @@ public class FeedbackController : Controller
         }
 
         // Validate the page id
-        if (!IsModelValid(feedback, out var pageId))
+        if (!IsModelValid(feedback, out var pageId) || !ModelState.IsValid)
         {
             return BadRequest();
         }
