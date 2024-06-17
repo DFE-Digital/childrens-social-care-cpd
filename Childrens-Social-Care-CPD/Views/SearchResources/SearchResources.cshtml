@@ -25,7 +25,8 @@
             @* Filter column *@
             <div class="govuk-grid-column-one-third">
                 <h2 class="govuk-heading-m govuk-!-margin-bottom-2">Results</h2>
-                <p class="govuk-!-margin-bottom-3">We found <strong data-testid="results-count">@Model.TotalCount</strong> results</p>
+                <p class="govuk-!-margin-bottom-3">We found <strong data-testid="results-count">@Model.TotalCount</strong>
+                    results</p>
 
                 @if (Model.SelectedTags.Any())
                 {
@@ -34,7 +35,7 @@
                     </a>
                 }
 
-                <div id="facets-wrapper" role="Search" aria-label="Search filters" class="facets">
+                <div id="facets-wrapper" role="search" aria-label="Search filters" class="facets">
                     <gds-filter>
                         @{
                             var groups = Model.FacetedTags.GroupBy(x => x.Key.Category);
@@ -46,7 +47,8 @@
                                     {
                                         var isChecked = Model.SelectedTags.Contains(kvp.Key.TagName);
                                         var count = kvp.Value?.Count ?? 0;
-                                        <gds-filter-checkbox id="tag-@kvp.Key.TagName" name="@SearchRequestPropertyNames.Tags" checked="@isChecked" value="@kvp.Key.TagName">
+                                        <gds-filter-checkbox id="tag-@kvp.Key.TagName" name="@SearchRequestPropertyNames.Tags"
+                                            checked="@isChecked" value="@kvp.Key.TagName">
                                             @kvp.Key.DisplayName (@count)
                                         </gds-filter-checkbox>
                                     }
