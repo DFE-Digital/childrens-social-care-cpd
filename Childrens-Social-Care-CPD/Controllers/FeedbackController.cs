@@ -103,8 +103,6 @@ public class FeedbackController : Controller
             return BadRequest();
         }
 
-        // TODO: do something with the feedback
-
         return Ok();
     }
 }
