@@ -1,0 +1,141 @@
+name: Contentful Schema Migrate
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_environment:
+        required: true
+        type: string
+
+env:
+  MANAGEMENT_TOKEN: ${{ secrets.CONTENTFUL_MANAGEMENT_TOKEN }}
+  DELIVERY_KEY: ${{ secrets.TF_VAR_CPD_DELIVERY_KEY }}
+  SPACE_ID: ${{ secrets.TF_VAR_CPD_SPACE_ID }}
+  ENVIRONMENT: ${{ inputs.target_environment }}
+  SPACE_CAPACITY: ${{ vars.CONTENTFUL_SPACE_CAPACITY }}
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+
+    outputs:
+      staging-environment: ${{ steps.staging-env.outputs.staging-environment }}
+      required-migrations: ${{ steps.required-migrations.outputs.required-migrations }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install npm packages used by util scripts
+        working-directory: ./Contentful-Schema
+        run: npm ci
+
+      - name: Verify contentful space has available environment capacity
+        working-directory: ./Contentful-Schema/utils
+        run: node verify-space-capacity.js
+
+      - name: Get target environment current migration version
+        id: current-migration-version
+        working-directory: ./Contentful-Schema/utils
+        run: node get-environment-version.js
+
+      - name: Determine timestamp for new staging environment
+        run: echo "TIMESTAMP=$(date +%Y-%m-%d-%H-%M-%S)" >> $GITHUB_ENV
+
+      - name: Set var for name of new environment
+        id: staging-env
+        run: echo "staging-environment=$(echo ${{ inputs.target_environment }}-${{ env.TIMESTAMP }})" >> $GITHUB_OUTPUT
+
+      - name: Extract migration files from archive
+        working-directory: ./Contentful-Schema/migrations
+        run: rm *.cjs && rm manifest.txt && tar -zxf migrations.tar.gz && rm migrations.tar.gz
+
+      - name: Verify migration files against manifest
+        working-directory: ./Contentful-Schema/utils
+        run: node verify-migrations-against-manifest.js
+
+      - name: Determine required migrations for environment
+        id: required-migrations
+        working-directory: ./Contentful-Schema/utils
+        run: node get-required-migrations.js --currentVersion ${{ steps.current-migration-version.outputs.migration-version }}
+ 
+  clone:
+    if: ${{ join(needs.setup.outputs.required-migrations, '') != '[]' }}
+    needs: [setup]
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Install Contentful CLI
+        run: npm install -g contentful-cli
+
+      - name: Login to Contentful with management token
+        run: contentful login --management-token "${{ env.MANAGEMENT_TOKEN }}"
+
+      - name: Set target space
+        run: contentful space use --space-id ${{ env.SPACE_ID }} --environment-id ${{ inputs.target_environment }}
+
+      - name: Clone target environment ${{ inputs.target_environment }} to staging environment ${{ needs.setup.outputs.staging-environment }}
+        run: contentful space environment create --name ${{ needs.setup.outputs.staging-environment }} --environment-id ${{ needs.setup.outputs.staging-environment }} --source ${{ inputs.target_environment }}
+  
+  migrate:
+    if: ${{ join(needs.setup.outputs.required-migrations, '') != '[]' }}
+    needs: [setup,clone]
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 1
+      matrix:
+        value: ${{fromJSON(needs.setup.outputs.required-migrations)}}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install npm packages used by migration script
+        working-directory: ./Contentful-Schema
+        run: npm ci
+
+      - name: Install Contentful CLI
+        run: npm install -g contentful-cli
+
+      - name: Extract migration files from archive
+        working-directory: ./Contentful-Schema/migrations
+        run: rm *.cjs && rm manifest.txt && tar -zxf migrations.tar.gz && rm migrations.tar.gz
+
+      - name: Run migration script ${{ matrix.value }}
+        working-directory: ./Contentful-Schema/migrations
+        run: contentful space migration --space-id "${{ env.SPACE_ID }}" --environment-id ${{ needs.setup.outputs.staging-environment }} --management-token "${{ env.MANAGEMENT_TOKEN }}" ${{ matrix.value }} --yes
+
+      - name: Update environment's migration version
+        working-directory: ./Contentful-Schema/utils
+        env:
+          STAGING_ENVIRONMENT: ${{ needs.setup.outputs.staging-environment }}
+          MIGRATION_FILENAME: ${{ matrix.value }}
+        run: node set-environment-version.js
+
+  repoint-alias:
+    if: ${{ join(needs.setup.outputs.required-migrations, '') != '[]' }}
+    needs: [setup,migrate]
+    runs-on: ubuntu-latest
+    env:
+      STAGING_ENVIRONMENT: ${{ needs.setup.outputs.staging-environment }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install npm packages used by migration script
+        working-directory: ./Contentful-Schema
+        run: npm ci
+
+      - name: Run script to point alias ${{ inputs.target_environment }} at new environment ${{ env.STAGING_ENVIRONMENT }}
+        working-directory: ./Contentful-Schema/utils
+        run: node point-alias-at-environment.js
