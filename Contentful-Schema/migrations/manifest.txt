@@ -1,1 +1,1 @@
-<< migration file names go here.  See documentation at: https://dfedigital.atlassian.net.mcas.ms/wiki/spaces/SWCD/pages/4387569672/Schema+Development >>
+0001-example-migration.cjs
