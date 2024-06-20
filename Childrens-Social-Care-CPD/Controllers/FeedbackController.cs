@@ -43,12 +43,12 @@ public class FeedbackController : Controller
     {
         pageId = model.Page ?? string.Empty;
         pageId = pageId.Trim('/');
-        
+
         if (pageId.Length > 512
-            || model.Comments?.Length > 400 
+            || model.Comments?.Length > 400
             || !Regex.IsMatch(pageId, @"^[0-9a-z](\/?[0-9a-z\-])*\/?$", RegexOptions.Compiled, TimeSpan.FromSeconds(1)))
         {
-            return false; 
+            return false;
         }
 
         return true;
@@ -57,7 +57,7 @@ public class FeedbackController : Controller
     [HttpPost]
     [ValidateAntiForgeryToken]
     [Route("feedback")]
-    public async Task<IActionResult> Feedback([FromForm]FeedbackModel feedback, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> Feedback([FromForm] FeedbackModel feedback, CancellationToken cancellationToken = default)
     {
         if (!_featuresConfig.IsEnabled(Features.FeedbackControl))
         {
@@ -65,7 +65,7 @@ public class FeedbackController : Controller
         }
 
         // Validate the page id
-        if (!IsModelValid(feedback, out var pageId))
+        if (!IsModelValid(feedback, out var pageId) || !ModelState.IsValid)
         {
             return BadRequest();
         }
@@ -77,15 +77,13 @@ public class FeedbackController : Controller
             return BadRequest();
         }
 
-        // TODO: do something with the feedback
-        
         return Redirect($"~/{content.Id}?fs=true");
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
     [Route("api/feedback")]
-    public async Task<IActionResult> JsonFeedback([FromBody]FeedbackModel feedback, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> JsonFeedback([FromBody] FeedbackModel feedback, CancellationToken cancellationToken = default)
     {
         if (!_featuresConfig.IsEnabled(Features.FeedbackControl))
         {
@@ -93,7 +91,7 @@ public class FeedbackController : Controller
         }
 
         // Validate the page id
-        if (!IsModelValid(feedback, out var pageId))
+        if (!IsModelValid(feedback, out var pageId) || !ModelState.IsValid)
         {
             return BadRequest();
         }
@@ -104,8 +102,6 @@ public class FeedbackController : Controller
         {
             return BadRequest();
         }
-
-        // TODO: do something with the feedback
 
         return Ok();
     }
