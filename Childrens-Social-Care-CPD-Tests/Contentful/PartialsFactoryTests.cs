@@ -34,6 +34,7 @@ public partial class PartialsFactoryTests
         new object[] { new RoleList(), "_RoleList" },
         new object[] { new TextBlock(), "_TextBlock" },
         new object[] { new VideoResource(), "_VideoResource" },
+        new object[] { new InfoBox(), "_InfoBox" },
     };
 
     [TestCaseSource(nameof(Successful_Resolves))]
