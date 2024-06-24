@@ -33,6 +33,11 @@ public class ErrorController : Controller
     [Route("error/{code:int}")]
     public IActionResult Error(int code)
     {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest();
+        }
+
         ViewData["pageName"] = $"error/{code}";
         return code switch
         {

@@ -26,6 +26,11 @@ public class ApplicationController(IApplicationConfiguration applicationConfigur
     [Route("application/configuration")]
     public IActionResult Configuration()
     {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest();
+        }
+
         var configurationInformation = new ConfigurationInformation(applicationConfiguration);
         
         if (Request.Headers.Accept == MediaTypeNames.Application.Json)
