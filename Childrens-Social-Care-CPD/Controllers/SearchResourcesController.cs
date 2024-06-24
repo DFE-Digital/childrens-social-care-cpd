@@ -24,6 +24,11 @@ public class SearchResourcesController : Controller
     [HttpGet]
     public async Task<IActionResult> SearchResources([FromQuery] SearchRequestModel query, bool preferencesSet = false, CancellationToken cancellationToken = default)
     {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest();
+        }
+
         if (!_featuresConfig.IsEnabled(Features.ResourcesAndLearning))
         {
             return NotFound();
