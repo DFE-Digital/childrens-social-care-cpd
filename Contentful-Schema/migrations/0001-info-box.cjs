@@ -3,7 +3,7 @@ module.exports = function (migration) {
         .createContentType("infoBox")
         .name("Info Box")
         .description(
-            "A block of text on a pale blue background with an 'i' icon in the top left corner of the box."
+            "A text box with a light blue shaded background and an 'i' information icon in the top left corner. It is used to draw attention to a particular piece of text."
         )
         .displayField("title");
 
