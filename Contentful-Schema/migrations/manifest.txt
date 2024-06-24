@@ -1,1 +1,1 @@
-0001-example-migration.cjs
+0001-info-box.cjs
