@@ -32,6 +32,11 @@ public class CookieController(ICpdContentfulClient cpdClient, ICookieHelper cook
     [Route("/cookies")]
     public async Task<IActionResult> Cookies(CancellationToken cancellationToken, string sourcePage = null, bool preferenceSet = false)
     {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest();
+        }
+
         sourcePage ??= string.Empty;
 
         var queryBuilder = QueryBuilder<Content>.New
