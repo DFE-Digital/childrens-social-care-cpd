@@ -2,6 +2,7 @@
 $govuk-global-styles: true;
 $govuk-new-link-styles: true;
 $moj-images-path: "/assets/images/moj/";
+$fa-font-path: "/webfonts";
 
 @import "../../node_modules/govuk-frontend/dist/govuk/all";
 @import "../../node_modules/@ministryofjustice/frontend/moj/components/filter/filter";
@@ -11,3 +12,4 @@ $moj-images-path: "/assets/images/moj/";
 @import "overrides/govuk-overrides";
 @import "overrides/search-mobile-filter-modal";
 @import "overrides/site";
+@import "fontawesome/fontawesome";

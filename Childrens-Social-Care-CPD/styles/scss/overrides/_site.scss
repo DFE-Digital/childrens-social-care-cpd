@@ -294,3 +294,64 @@
     width: 20px;
     overflow: hidden;
 }
+
+/* PROMPT classes borrowed from Help for Early Years */
+.prompt {
+    background-color: #f3f2f1;
+    border-top: #28a197 solid 10px;
+    margin: 25px 0;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.prompt .svg-inline--fa {
+    background-color: #28a197;
+    color: #ffffff;
+    padding: 20px !important;
+    position: relative;
+    display: inline-block;
+    width: 32px;
+    top: -15px;
+    left: -30px;
+}
+
+.prompt .govuk-grid-column-one-quarter {
+    margin-right: -120px;
+}
+
+.prompt .govuk-grid-column-three-quarters {
+    padding: 15px;
+}
+
+@media (min-width: 40em) and (max-width: 61.5em) {
+    .prompt .govuk-grid-column-three-quarters {
+        padding-left: 40px;
+    }
+}
+
+@media (max-width: 40.0625em) {
+    .prompt .small-screen-padding-right {
+        padding-right: 20px;
+    }
+}
+
+.prompt.prompt-bg {
+    background-color: #d4f4f2;
+}
+
+.prompt.prompt-home {
+    background: #ebf2f6;
+    border-top: #347ca9 solid 10px;
+}
+
+/*
+@media (min-width: 48.0625em) {
+    .prompt.prompt-home .govuk-grid-column-one-quarter {
+        margin-right: -220px;
+    }
+}
+*/
+
+.prompt.prompt-home .svg-inline--fa {
+    background-color: #347ca9 !important;
+}
