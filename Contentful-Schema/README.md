@@ -22,3 +22,4 @@ When creating a new migration script file, as well as checking it into the Git r
 `rm migrations.tar.gz && tar -zcf migrations.tar.gz *.cjs manifest.txt`
 
 And then check the archive file into the Git repo.
+
