@@ -16,6 +16,11 @@ public class CookieController(ICpdContentfulClient cpdClient, ICookieHelper cook
     [Route("/cookies/setpreferences")]
     public IActionResult SetPreferences(string consentValue, string sourcePage = null, bool fromCookies = false)
     {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest();
+        }
+
         var consentState = AnalyticsConsentStateHelper.Parse(consentValue);
         cookieHelper.SetResponseAnalyticsCookieState(HttpContext, consentState);
 
