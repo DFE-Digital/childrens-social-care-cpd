@@ -11026,6 +11026,38 @@ CONTENT TITLE BANNER
   display: flex;
 }
 
+/* Page Contents Component */
+.page-contents-header {
+  padding: 40px;
+  border: 1px solid #b1b4b6;
+  border-radius: 6px;
+  background-color: #f9f9f8;
+  margin-bottom: 40px;
+}
+
+.page-contents-header ul {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+}
+
+.page-contents-header li {
+  padding-top: 10px;
+  line-height: 1.3;
+  list-style-type: none;
+  position: relative;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+.page-contents-header li ::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  width: 20px;
+  overflow: hidden;
+}
+
 /* PROMPT classes borrowed from Help for Early Years */
 .prompt {
   background-color: #f3f2f1;
