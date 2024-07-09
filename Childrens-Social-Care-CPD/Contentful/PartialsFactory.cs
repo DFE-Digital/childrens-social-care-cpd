@@ -17,6 +17,7 @@ public static class PartialsFactory
             AreaOfPractice => "_AreaOfPractice",
             AreaOfPracticeList => "_AreaOfPracticeList",
             AudioResource => "_AudioResource",
+            BackToTop => "_BackToTop",
             ColumnLayout => "_ColumnLayout",
             Content => "_Content",
             ContentLink => "_ContentLink",
