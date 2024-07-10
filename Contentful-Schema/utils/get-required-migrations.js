@@ -28,6 +28,7 @@ files.every(filename => {
         requiredMigrations = files.slice(version - 1);
         return false;
     }
+    return true;
 });
 
 core.setOutput('required-migrations', requiredMigrations);
