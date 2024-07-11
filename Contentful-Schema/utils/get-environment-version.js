@@ -34,6 +34,7 @@ client.getEntries({ content_type: 'migrationVersion' }).then(entries => {
         process.exit(1);
     }
     var migrationVersion = entries.items[0].fields.version;
+    console.log('Migration Version:', migrationVersion);
     core.setOutput('migration-version', migrationVersion);
 
 }).catch(x => {

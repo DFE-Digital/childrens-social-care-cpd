@@ -31,4 +31,5 @@ files.every(filename => {
     return true;
 });
 
+console.log('Required Migrations:', requiredMigrations);
 core.setOutput('required-migrations', requiredMigrations);

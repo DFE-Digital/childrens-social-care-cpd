@@ -31,3 +31,5 @@ const environmentsInUse = actualEnvironments.length;
 if (environmentsInUse >= spaceCapacity) {
     core.setFailed('Contentful space has insufficient environment capacity.  Configured max capacity is ' + spaceCapacity + ', current environment count is ' + environmentsInUse);
 }
+
+console.log('Current usage:', environmentsInUse, 'Configured capacity:', spaceCapacity);
