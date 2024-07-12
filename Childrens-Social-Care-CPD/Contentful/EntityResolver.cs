@@ -18,6 +18,7 @@ public class EntityResolver : IContentTypeResolver
             "applicationFeature" => typeof(ApplicationFeature),
             "applicationFeatures" => typeof(ApplicationFeatures),
             "audioResource" => typeof(AudioResource),
+            "backToTop" => typeof(BackToTop),
             "columnLayout" => typeof(ColumnLayout),
             "content" => typeof(Content),
             "contentLink" => typeof(ContentLink),

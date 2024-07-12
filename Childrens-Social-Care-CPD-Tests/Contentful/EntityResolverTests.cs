@@ -15,6 +15,7 @@ public class EntityResolverTests
     [TestCase("applicationFeature", typeof(ApplicationFeature))]
     [TestCase("applicationFeatures", typeof(ApplicationFeatures))]
     [TestCase("audioResource", typeof(AudioResource))]
+    [TestCase("backToTop", typeof(BackToTop))]
     [TestCase("columnLayout", typeof(ColumnLayout))]
     [TestCase("content", typeof(Content))]
     [TestCase("contentLink", typeof(ContentLink))]
