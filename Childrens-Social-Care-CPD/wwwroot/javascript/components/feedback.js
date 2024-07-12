@@ -65,7 +65,7 @@ class FeedbackControl {
             const pageURL = document.location.pathname + document.location.search;
             gtag('event', 'page_rating', {
                 'page_name': pageURL,
-                'is_useful': data.IsUseful ? 'yes' : 'no'
+                'feedback_score': data.IsUseful ? '1' : '0'
             });
         } catch (e) {
             console.error(e)
