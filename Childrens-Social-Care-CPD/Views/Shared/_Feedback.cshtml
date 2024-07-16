@@ -39,7 +39,10 @@
                 <input data-module-id="page" type="hidden" name="page" value="@contextModel.Id" />
                 <div data-module-id="controlsContainer">
                     <div class="govuk-details__text">
-                        Use this form to provide feedback about this page. If you have more general feedback about this website, please use this <a href="https://dferesearch.fra1.qualtrics.com/jfe/form/SV_bmcLDedq5wipeTA">feedback form</a>.
+                        Use this form to provide feedback about this page.
+                    </div>
+                    <div class="govuk-details__text">
+                        If you have more general feedback about this website, please use this <a href="https://dferesearch.fra1.qualtrics.com/jfe/form/SV_bmcLDedq5wipeTA">feedback form</a>.
                     </div>
 
                     <div class="govuk-details__text">
@@ -51,14 +54,14 @@
                                 </p>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
-                                        <input id="idUsefulYes" class="govuk-radios__input" name="isUseful" type="radio" value="true" data-module-id="isUsefulYes">
-                                        <label class="govuk-label govuk-radios__label" for="isUsefulYes">
+                                        <input id="idUsefulYes" class="govuk-radios__input" name="isUseful" type="radio" value="true" data-module-id="isUsefulYes" aria-labelledby="isUsefulYesLabel">
+                                        <label id="isUsefulYesLabel" class="govuk-label govuk-radios__label" for="isUsefulYes">
                                             Yes
                                         </label>
                                     </div>
                                     <div class="govuk-radios__item">
-                                        <input id="idUsefulNo" class="govuk-radios__input" name="isUseful" type="radio" value="false" data-module-id="isUsefulNo">
-                                        <label class="govuk-label govuk-radios__label" for="isUsefulNo">
+                                        <input id="idUsefulNo" class="govuk-radios__input" name="isUseful" type="radio" value="false" data-module-id="isUsefulNo" aria-labelledby="isUsefulNoLabel">
+                                        <label id="isUsefulNoLabel" class="govuk-label govuk-radios__label" for="isUsefulNo">
                                             No
                                         </label>
                                     </div>
