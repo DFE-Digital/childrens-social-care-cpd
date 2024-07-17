@@ -30,9 +30,9 @@
 
         <details id="page-Feedback" class="govuk-details" data-module="govuk-details" data-module-id="feedbackDetail">
             <summary class="govuk-details__summary">
-                <span class="govuk-details__summary-text">
+                <a class="govuk-details__summary-text govuk-link">
                     Give feedback about this page
-                </span>
+                </a>
             </summary>
 
             <form action="feedback" method="post" data-module-id="feedbackForm" asp-antiforgery="true">
@@ -51,13 +51,13 @@
                                 </p>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
-                                        <input id="idUsefulYes" class="govuk-radios__input" name="isUseful" type="radio" value="true" data-module-id="isUsefulYes" aria-labelledby="isUsefulYesLabel">
+                                        <input id="isUsefulYes" class="govuk-radios__input" name="isUseful" type="radio" value="true" data-module-id="isUsefulYes" aria-labelledby="isUsefulYesLabel">
                                         <label id="isUsefulYesLabel" class="govuk-label govuk-radios__label" for="isUsefulYes">
                                             Yes
                                         </label>
                                     </div>
                                     <div class="govuk-radios__item">
-                                        <input id="idUsefulNo" class="govuk-radios__input" name="isUseful" type="radio" value="false" data-module-id="isUsefulNo" aria-labelledby="isUsefulNoLabel">
+                                        <input id="isUsefulNo" class="govuk-radios__input" name="isUseful" type="radio" value="false" data-module-id="isUsefulNo" aria-labelledby="isUsefulNoLabel">
                                         <label id="isUsefulNoLabel" class="govuk-label govuk-radios__label" for="isUsefulNo">
                                             No
                                         </label>
@@ -83,7 +83,11 @@
                 </div>
 
                 <div data-module-id="thankYouMessage" class="govuk-details__text" style="display: none;">
-                    Thank you for your feedback on this resource! If you have more general feedback about this website, please use this <a href="https://dferesearch.fra1.qualtrics.com/jfe/form/SV_bmcLDedq5wipeTA">feedback form</a>.
+                    Thank you for your feedback on this resource!
+                </div>
+
+                <div class="govuk-details__text">
+                    If you have more general feedback about this website, please use this <a href="https://dferesearch.fra1.qualtrics.com/jfe/form/SV_bmcLDedq5wipeTA">feedback form</a>.
                 </div>
             </form>
         </details>
