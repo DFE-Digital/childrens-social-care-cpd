@@ -30,16 +30,16 @@
 
         <details id="page-Feedback" class="govuk-details" data-module="govuk-details" data-module-id="feedbackDetail">
             <summary class="govuk-details__summary">
-                <span class="govuk-details__summary-text">
+                <a class="govuk-details__summary-text govuk-link">
                     Give feedback about this page
-                </span>
+                </a>
             </summary>
 
             <form action="feedback" method="post" data-module-id="feedbackForm" asp-antiforgery="true">
                 <input data-module-id="page" type="hidden" name="page" value="@contextModel.Id" />
                 <div data-module-id="controlsContainer">
                     <div class="govuk-details__text">
-                        Use this form to provide feedback about this page. If you have more general feedback about this website, please use this <a href="https://dferesearch.fra1.qualtrics.com/jfe/form/SV_bmcLDedq5wipeTA">feedback form</a>.
+                        Use this form to provide feedback about this page.
                     </div>
 
                     <div class="govuk-details__text">
@@ -51,14 +51,14 @@
                                 </p>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
-                                        <input id="idUsefulYes" class="govuk-radios__input" name="isUseful" type="radio" value="true" data-module-id="isUsefulYes">
-                                        <label class="govuk-label govuk-radios__label" for="isUsefulYes">
+                                        <input id="isUsefulYes" class="govuk-radios__input" name="isUseful" type="radio" value="true" data-module-id="isUsefulYes" aria-labelledby="isUsefulYesLabel">
+                                        <label id="isUsefulYesLabel" class="govuk-label govuk-radios__label" for="isUsefulYes">
                                             Yes
                                         </label>
                                     </div>
                                     <div class="govuk-radios__item">
-                                        <input id="idUsefulNo" class="govuk-radios__input" name="isUseful" type="radio" value="false" data-module-id="isUsefulNo">
-                                        <label class="govuk-label govuk-radios__label" for="isUsefulNo">
+                                        <input id="isUsefulNo" class="govuk-radios__input" name="isUseful" type="radio" value="false" data-module-id="isUsefulNo" aria-labelledby="isUsefulNoLabel">
+                                        <label id="isUsefulNoLabel" class="govuk-label govuk-radios__label" for="isUsefulNo">
                                             No
                                         </label>
                                     </div>
@@ -80,19 +80,25 @@
                                 You can enter up to 400 characters
                             </div>
                         </div>
+                    </div>
 
+                    <div class="govuk-details__text">
                         <div class="govuk-button-group">
                             <button data-module-id="submitButton" class="govuk-button" data-module="govuk-button" type="submit">
                                 Submit Feedback
                             </button>
 
-                            <a data-module-id="cancelLink" class="govuk-link" href="#0" style="display: none">Cancel</a>
+                            <a data-module-id="cancelLink" class="govuk-link" style="display: none">Cancel</a>
                         </div>
                     </div>
                 </div>
 
                 <div data-module-id="thankYouMessage" class="govuk-details__text" style="display: none;">
-                    Thank you for your feedback on this resource! If you have more general feedback about this website, please use this <a href="https://dferesearch.fra1.qualtrics.com/jfe/form/SV_bmcLDedq5wipeTA">feedback form</a>.
+                    Thank you for your feedback on this resource!
+                </div>
+
+                <div class="govuk-details__text">
+                    If you have more general feedback about this website, please use this <a href="https://dferesearch.fra1.qualtrics.com/jfe/form/SV_bmcLDedq5wipeTA">feedback form</a>.
                 </div>
             </form>
         </details>
