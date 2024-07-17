@@ -43,8 +43,20 @@ var versionEntry = entries.items[0];
 
 versionEntry.fields.version['en-US'] = newVersion;
 
-client.entry.update({
+await client.entry.update({
     environmentId: stagingEnvironment,
     spaceId: spaceId,
     entryId: versionEntry.sys.id
 }, versionEntry);
+
+const updatedEntry = await client.entry.get({
+    spaceId: spaceId,
+    environmentId: stagingEnvironment,
+    entryId: versionEntry.sys.id,
+});
+
+await client.entry.publish({
+    environmentId: stagingEnvironment,
+    spaceId: spaceId,
+    entryId: versionEntry.sys.id
+}, updatedEntry);

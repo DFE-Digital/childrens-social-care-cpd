@@ -2,3 +2,4 @@
 0002-add-infobox-to-allowed-items-on-content.cjs
 0003-page-contents-component.cjs
 0004-back-to-top-component.cjs
+0005-create-employer-standards-page-category.cjs
