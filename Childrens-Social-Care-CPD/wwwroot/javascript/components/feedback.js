@@ -61,7 +61,6 @@ class FeedbackControl {
 
     #submitFeedback = async (data) => {
         try {
-            console.log('submitting feedback');
             const pageURL = document.location.pathname + document.location.search;
             gtag('event', 'page_rating', {
                 'feedback_page_name': pageURL,
