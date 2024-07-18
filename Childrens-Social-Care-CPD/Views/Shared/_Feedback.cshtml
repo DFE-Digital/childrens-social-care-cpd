@@ -4,28 +4,8 @@
 
 @if (!featureConfig.IsEnabled(Features.FeedbackControl)) return;
 
-@{
-    var contextModel = (ContextModel)ViewBag.ContextModel;
-}
-
 <div id="page-feedback" class="govuk-grid-row" data-module="feedback-module">
     <div class="govuk-grid-column-three-quarters">
-
-        @if (contextModel.FeedbackSubmitted)
-        {
-            <details class="govuk-details" data-module="govuk-details" open data-module-id="feedbackDetail">
-                <summary class="govuk-details__summary">
-                    <span class="govuk-details__summary-text">
-                        Give feedback about this page
-                    </span>
-                </summary>
-                <div class="govuk-details__text">
-                    <div>Thank you for your feedback on this resource! If you have more general feedback about this website, please use this <a href="https://dferesearch.fra1.qualtrics.com/jfe/form/SV_bmcLDedq5wipeTA">feedback form</a>.</div>
-                </div>
-            </details>
-    
-            return;
-        }
 
         <details id="page-Feedback" class="govuk-details" data-module="govuk-details" data-module-id="feedbackDetail">
             <summary class="govuk-details__summary">
@@ -35,7 +15,6 @@
             </summary>
 
             <form action="feedback" method="post" data-module-id="feedbackForm" asp-antiforgery="true">
-                <input data-module-id="page" type="hidden" name="page" value="@contextModel.Id" />
                 <div data-module-id="controlsContainer">
                     <div class="govuk-details__text">
                         Use this form to provide feedback about this page.
