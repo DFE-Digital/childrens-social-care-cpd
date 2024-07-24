@@ -1,0 +1,12 @@
+﻿@using Childrens_Social_Care_CPD.Contentful;
+@using Childrens_Social_Care_CPD.Contentful.Models;
+@using Childrens_Social_Care_CPD.Contentful.Renderers;
+
+@model Accordion
+
+<div class="govuk-accordion" data-module="govuk-accordion" id="accordion-@Model.Name.Replace(' ', '-')">
+    @foreach (var link in Model.Sections)
+    {
+        await Html.RenderContentfulPartialAsync(link );
+    }
+</div>

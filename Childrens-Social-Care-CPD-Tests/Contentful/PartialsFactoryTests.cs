@@ -11,6 +11,8 @@ public partial class PartialsFactoryTests
 {
     private static readonly object[] Successful_Resolves =
     {
+        new object[] { new Accordion(), "_Accordion" },
+        new object[] { new AccordionSection(), "_AccordionSection" },
         new object[] { new AreaOfPractice(), "_AreaOfPractice" },
         new object[] { new AreaOfPracticeList(), "_AreaOfPracticeList" },
         new object[] { new AudioResource(), "_AudioResource" },
