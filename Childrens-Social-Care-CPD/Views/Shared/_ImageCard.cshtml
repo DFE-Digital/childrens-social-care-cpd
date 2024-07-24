@@ -3,18 +3,30 @@
 @model ImageCard
 
 @{
-    var bannerCss = Model.ImageSide == "Left"
-                ? "dfe-o-banner dfe-o-banner--mirrored govuk-!-margin-top-2"
-                : "dfe-o-banner govuk-!-margin-top-2";
+    string bannerCss = "";
+
+    switch (Model.TextPosition) {
+        case "Left":
+            bannerCss = "dfe-o-banner govuk-!-margin-top-2";
+            break;
+        case "Right":
+            bannerCss = "dfe-o-banner dfe-o-banner--mirrored govuk-!-margin-top-2";
+            break;
+        default:
+            break;
+    }
 }
 
 <section class="govuk-section image-card govuk-!-margin-bottom-6">
     <div class="@bannerCss">
-        <div class="dfe-o-banner__content-container dfe-light-blue-tint">
-            <div class="dfe-o-banner__inner-content-container">
-                <partial name="_RichText" model="Model.Text" />
+        @if (bannerCss.Length > 0)
+        {
+            <div class="dfe-o-banner__content-container dfe-light-blue-tint">
+                <div class="dfe-o-banner__inner-content-container">
+                    <partial name="_RichText" model="Model.Text" />
+                </div>
             </div>
-        </div>
+        }
         <div class="dfe-o-banner__image-container">
             <img src="@Model.Image.File.Url" alt="@Model.Image.Description">
         </div>
