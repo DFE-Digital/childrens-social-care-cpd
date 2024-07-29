@@ -14,6 +14,8 @@ public static class PartialsFactory
     {
         return item switch
         {
+            Accordion => "_Accordion",
+            AccordionSection => "_AccordionSection",
             AreaOfPractice => "_AreaOfPractice",
             AreaOfPracticeList => "_AreaOfPracticeList",
             AudioResource => "_AudioResource",

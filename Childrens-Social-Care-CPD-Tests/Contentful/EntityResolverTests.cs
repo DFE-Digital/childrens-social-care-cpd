@@ -10,6 +10,8 @@ namespace Childrens_Social_Care_CPD_Tests.Contentful;
 public class EntityResolverTests
 {
     [Test]
+    [TestCase("accordion", typeof(Accordion))]
+    [TestCase("accordionSection", typeof(AccordionSection))]
     [TestCase("areaOfPractice", typeof(AreaOfPractice))]
     [TestCase("areaOfPracticeList", typeof(AreaOfPracticeList))]
     [TestCase("applicationFeature", typeof(ApplicationFeature))]
