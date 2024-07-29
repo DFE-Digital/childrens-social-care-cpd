@@ -3,3 +3,5 @@
 0003-page-contents-component.cjs
 0004-back-to-top-component.cjs
 0005-create-employer-standards-page-category.cjs
+0006-accordion-component.cjs
+0007-add-header-field-to-navigation-menu.cjs
