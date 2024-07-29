@@ -2,6 +2,39 @@
 
 @model NavigationMenu
 
+@functions
+{
+    void RenderHeader()
+    {
+        if (!String.IsNullOrEmpty(Model.Header.Trim()))
+        {
+            string size;
+            switch (Model.HeaderLevel)
+            {
+                case 1:
+                    size = "l";
+                break;
+
+                case 2:
+                default:
+                    size = "m";
+                break;
+
+                case 3:
+                    size = "s";
+                break;
+            }
+
+            var tagBuilder = new TagBuilder($"h{Model.HeaderLevel}");
+            tagBuilder.InnerHtml.Append(Model.Header);
+            tagBuilder.AddCssClass("govuk-heading-" + size);
+
+            @tagBuilder
+        }
+    }
+}
+
+@{ RenderHeader(); }
 <nav class="dfe-vertical-nav">
     <ul class="dfe-vertical-nav__section">
         @foreach (var menuItem in Model.Items)
