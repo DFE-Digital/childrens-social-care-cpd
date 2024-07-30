@@ -6,7 +6,7 @@
 {
     void RenderHeader()
     {
-        if (!String.IsNullOrEmpty(Model.Header.Trim()))
+        if (!String.IsNullOrEmpty(Model.Header?.Trim()))
         {
             string size;
             switch (Model.HeaderLevel)
