@@ -1,8 +1,10 @@
 ﻿@using Childrens_Social_Care_CPD.Configuration.Features
 
 @inject IFeaturesConfig featureConfig
+@inject ICookieHelper cookieHelper
 
 @if (!featureConfig.IsEnabled(Features.FeedbackControl)) return;
+@if (cookieHelper.GetRequestAnalyticsCookieState(Context) != AnalyticsConsentState.Accepted) return;
 
 @{
     var contextModel = (ContextModel)ViewBag.ContextModel;
