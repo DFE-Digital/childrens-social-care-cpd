@@ -11,13 +11,17 @@ public partial class PartialsFactoryTests
 {
     private static readonly object[] Successful_Resolves =
     {
+        new object[] { new Accordion(), "_Accordion" },
+        new object[] { new AccordionSection(), "_AccordionSection" },
         new object[] { new AreaOfPractice(), "_AreaOfPractice" },
         new object[] { new AreaOfPracticeList(), "_AreaOfPracticeList" },
         new object[] { new AudioResource(), "_AudioResource" },
+        new object[] { new BackToTop(), "_BackToTop" },
         new object[] { new ColumnLayout(), "_ColumnLayout" },
         new object[] { new Content(), "_Content" },
         new object[] { new ContentLink(), "_ContentLink" },
         new object[] { new ContentSeparator(), "_ContentSeparator" },
+        new object[] { new ContentsAnchor(), "_ContentsAnchor" },
         new object[] { new DetailedPathway(), "_DetailedPathway" },
         new object[] { new DetailedRole(), "_DetailedRole" },
         new object[] { new Feedback(), "_Feedback" },
@@ -26,11 +30,14 @@ public partial class PartialsFactoryTests
         new object[] { new ImageCard(), "_ImageCard" },
         new object[] { new NavigationMenu(), "_NavigationMenu" },
         new object[] { new LinkListCard(), "_LinkListCard" },
+        new object[] { new PageContents(), "_PageContents" },
+        new object[] { new PageContentsItem(), "_PageContentsItem" },
         new object[] { new PdfFileResource(), "_PdfFileResource" },
         new object[] { new RichTextBlock(), "_RichTextBlock" },
         new object[] { new RoleList(), "_RoleList" },
         new object[] { new TextBlock(), "_TextBlock" },
         new object[] { new VideoResource(), "_VideoResource" },
+        new object[] { new InfoBox(), "_InfoBox" },
     };
 
     [TestCaseSource(nameof(Successful_Resolves))]

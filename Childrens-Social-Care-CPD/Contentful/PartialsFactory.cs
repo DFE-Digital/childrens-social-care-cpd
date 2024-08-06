@@ -14,13 +14,17 @@ public static class PartialsFactory
     {
         return item switch
         {
+            Accordion => "_Accordion",
+            AccordionSection => "_AccordionSection",
             AreaOfPractice => "_AreaOfPractice",
             AreaOfPracticeList => "_AreaOfPracticeList",
             AudioResource => "_AudioResource",
+            BackToTop => "_BackToTop",
             ColumnLayout => "_ColumnLayout",
             Content => "_Content",
             ContentLink => "_ContentLink",
             ContentSeparator => "_ContentSeparator",
+            ContentsAnchor => "_ContentsAnchor",
             DetailedRole => "_DetailedRole",
             DetailedPathway => "_DetailedPathway",
             Feedback => "_Feedback",
@@ -28,12 +32,15 @@ public static class PartialsFactory
             ImageCard => "_ImageCard",
             LinkCard => "_LinkCard",
             LinkListCard => "_LinkListCard",
+            PageContents => "_PageContents",
+            PageContentsItem => "_PageContentsItem",
             PdfFileResource => "_PdfFileResource",
             RichTextBlock => "_RichTextBlock",
             RoleList => "_RoleList",
             NavigationMenu => "_NavigationMenu",
             TextBlock => "_TextBlock",
             VideoResource => "_VideoResource",
+            InfoBox => "_InfoBox",
             _ => "_UnknownContentWarning",
         };
     }

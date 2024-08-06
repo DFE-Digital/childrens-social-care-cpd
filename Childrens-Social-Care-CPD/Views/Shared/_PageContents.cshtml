@@ -1,0 +1,21 @@
+﻿@using Childrens_Social_Care_CPD.Contentful;
+@using Childrens_Social_Care_CPD.Contentful.Models;
+@using Childrens_Social_Care_CPD.Contentful.Renderers;
+
+@model PageContents
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+        <div class="page-contents-header">
+            <p class="govuk-body govuk-!-margin-bottom-1 govuk-!-font-weight-bold">
+                @Model.DisplayText
+            </p>
+            <ul class="govuk-list govuk-list--bullet">
+                @foreach (var link in Model.ContentLinks)
+                {
+                    await Html.RenderContentfulPartialAsync(link );
+                }
+            </ul>
+        </div>
+    </div>
+</div>

@@ -31,7 +31,7 @@ public static class WebApplicationBuilderExtensions
     public static void AddDependencies(this WebApplicationBuilder builder)
     {
         ArgumentNullException.ThrowIfNull(builder);
-        
+
         builder.Services.AddSingleton<IApplicationConfiguration, ApplicationConfiguration>();
         builder.Services.AddSingleton<IContentTypeResolver, EntityResolver>();
         builder.Services.AddTransient<ICpdContentfulClient, CpdContentfulClient>();
@@ -39,12 +39,13 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddTransient<IFeaturesConfig, FeaturesConfig>();
         builder.Services.AddTransient<IFeaturesConfigUpdater, FeaturesConfigUpdater>();
         builder.Services.AddTransient<IResourcesRepository, ResourcesRepository>();
-        
-        builder.Services.AddScoped<IGraphQLWebSocketClient>(services => {
+
+        builder.Services.AddScoped<IGraphQLWebSocketClient>(services =>
+        {
             var config = services.GetRequiredService<IApplicationConfiguration>();
             var client = new GraphQLHttpClient(config.ContentfulGraphqlConnectionString, new SystemTextJsonSerializer());
             var key = ContentfulConfiguration.IsPreviewEnabled(config) ? config.ContentfulPreviewId : config.ContentfulDeliveryApiKey;
-            
+
             client.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", key);
             return client;
         });
@@ -83,7 +84,8 @@ public static class WebApplicationBuilderExtensions
     {
         services.AddScoped<ISearchResultsVMFactory, SearchResultsVMFactory>();
 
-        services.AddScoped(services => {
+        services.AddScoped(services =>
+        {
             var config = services.GetRequiredService<IApplicationConfiguration>();
 
             var searchEndpointUri = new Uri(config.SearchEndpoint);
@@ -98,10 +100,10 @@ public static class WebApplicationBuilderExtensions
     public static void AddFeatures(this WebApplicationBuilder builder, Stopwatch sw)
     {
         ArgumentNullException.ThrowIfNull(builder);
-        
+
         builder.Configuration.AddUserSecrets<Program>();
         Console.WriteLine($"After AddUserSecrets: {sw.ElapsedMilliseconds}ms");
-        
+
         builder.Services.AddResponseCompression();
         Console.WriteLine($"After AddResponseCompression: {sw.ElapsedMilliseconds}ms");
 
@@ -192,7 +194,6 @@ public static class WebApplicationBuilderExtensions
                 .AddDataProtection()
                 .SetApplicationName($"Childrens-Social-Care-CPD-{applicationConfiguration.AzureEnvironment}")
                 .PersistKeysToAzureBlobStorage(blobUri, managedIdentityCredential);
-                //.ProtectKeysWithAzureKeyVault("<keyid>", managedIdentityCredential); // TODO: add key vault encryption once blob storage has been tested
         }
     }
 }

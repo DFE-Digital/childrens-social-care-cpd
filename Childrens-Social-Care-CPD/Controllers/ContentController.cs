@@ -37,6 +37,11 @@ public class ContentController(ICpdContentfulClient cpdClient) : Controller
     [Route("/{*pagename:regex(^[[0-9a-z]]+[[0-9a-z\\/\\-]]*$)}")]
     public async Task<IActionResult> Index(string pageName = "home", bool preferenceSet = false, bool fs = false, CancellationToken cancellationToken = default)
     {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest();
+        }
+
         pageName = pageName?.TrimEnd('/');
         var content = await FetchPageContentAsync(pageName, cancellationToken);
         if (content == null)

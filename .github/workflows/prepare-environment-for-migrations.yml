@@ -1,0 +1,39 @@
+name: Prepare Contentful Environment for Migrations
+
+on:
+    workflow_dispatch:
+      inputs:
+        target_environment:
+          required: true
+          type: string
+
+env:
+    MANAGEMENT_TOKEN: ${{ secrets.CONTENTFUL_MANAGEMENT_TOKEN }}
+    SPACE_ID: ${{ secrets.TF_VAR_CPD_SPACE_ID }}
+    ENVIRONMENT: ${{ inputs.target_environment }}
+        
+jobs:
+  prepare-environment:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install npm packages used by migration script
+        working-directory: ./Contentful-Schema
+        run: npm ci
+
+      - name: Install Contentful CLI
+        run: npm install -g contentful-cli
+
+      - name: Run script to create migrationVersion content type
+        working-directory: ./Contentful-Schema/utils
+        run: contentful space migration --space-id "${{ secrets.TF_VAR_CPD_SPACE_ID }}" --environment-id ${{ inputs.target_environment }} --management-token "${{ secrets.CONTENTFUL_MANAGEMENT_TOKEN }}" create-migration-version-content-type.cjs --yes
+
+      - name: Run script to create inital migration version entry
+        working-directory: ./Contentful-Schema/utils
+        run: node create-initial-migration-version.js
+    

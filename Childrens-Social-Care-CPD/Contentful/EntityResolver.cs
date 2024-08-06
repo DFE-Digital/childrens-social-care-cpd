@@ -13,14 +13,18 @@ public class EntityResolver : IContentTypeResolver
     {
         return contentTypeId switch
         {
+            "accordion" => typeof(Accordion),
+            "accordionSection" => typeof(AccordionSection),
             "areaOfPractice" => typeof(AreaOfPractice),
             "areaOfPracticeList" => typeof(AreaOfPracticeList),
             "applicationFeature" => typeof(ApplicationFeature),
             "applicationFeatures" => typeof(ApplicationFeatures),
             "audioResource" => typeof(AudioResource),
+            "backToTop" => typeof(BackToTop),
             "columnLayout" => typeof(ColumnLayout),
             "content" => typeof(Content),
             "contentLink" => typeof(ContentLink),
+            "contentsAnchor" => typeof(ContentsAnchor),
             "contentSeparator" => typeof(ContentSeparator),
             "detailedPathway" => typeof(DetailedPathway),
             "detailedRole" => typeof(DetailedRole),
@@ -29,12 +33,15 @@ public class EntityResolver : IContentTypeResolver
             "imageCard" => typeof(ImageCard),
             "linkCard" => typeof(LinkCard),
             "linkListCard" => typeof(LinkListCard),
+            "pageContents" => typeof(PageContents),
+            "pageContentsItem" => typeof(PageContentsItem),
             "pdfFileResource" => typeof(PdfFileResource),
             "richTextBlock" => typeof(RichTextBlock),
             "roleList" => typeof(RoleList),
             "navigationMenu" => typeof(NavigationMenu),
             "textBlock" => typeof(TextBlock),
             "videoResource" => typeof(VideoResource),
+            "infoBox" => typeof(InfoBox),
             _ => null
         };
     }
