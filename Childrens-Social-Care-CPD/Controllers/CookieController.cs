@@ -16,6 +16,11 @@ public class CookieController(ICpdContentfulClient cpdClient, ICookieHelper cook
     [Route("/cookies/setpreferences")]
     public IActionResult SetPreferences(string consentValue, string sourcePage = null, bool fromCookies = false)
     {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest();
+        }
+
         var consentState = AnalyticsConsentStateHelper.Parse(consentValue);
         cookieHelper.SetResponseAnalyticsCookieState(HttpContext, consentState);
 
@@ -32,6 +37,11 @@ public class CookieController(ICpdContentfulClient cpdClient, ICookieHelper cook
     [Route("/cookies")]
     public async Task<IActionResult> Cookies(CancellationToken cancellationToken, string sourcePage = null, bool preferenceSet = false)
     {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest();
+        }
+
         sourcePage ??= string.Empty;
 
         var queryBuilder = QueryBuilder<Content>.New

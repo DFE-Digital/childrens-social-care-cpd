@@ -62,6 +62,10 @@
                     {
                         RenderMenuItem("resources", "Resources and learning", "resources-learning", category == "Resources");
                     }
+                    if (featuresConfig.IsEnabled(Features.EmployerStandards))
+                    {
+                        RenderMenuItem("employerStandards", "Employer standards", "employer-standards", category == "Employer standards");
+                    }
                 }
             </ul>
         </div>

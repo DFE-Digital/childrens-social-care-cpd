@@ -60,12 +60,12 @@ public interface IApplicationConfiguration
     [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false)]
     string GoogleTagManagerKey { get; }
 
-    [RequiredForEnvironment(ApplicationEnvironment.None, Hidden = false)] // TODO: when released, set the env to ALL
+    [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false)]
     string SearchApiKey { get; }
 
-    [RequiredForEnvironment(ApplicationEnvironment.None, Hidden = false)] // TODO: when released, set the env to ALL
+    [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false)]
     string SearchEndpoint { get; }
 
-    [RequiredForEnvironment(ApplicationEnvironment.None, Hidden = false, Obfuscate = false)] // TODO: when released, set the env to ALL
+    [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false, Obfuscate = false)]
     string SearchIndexName { get; }
 }
