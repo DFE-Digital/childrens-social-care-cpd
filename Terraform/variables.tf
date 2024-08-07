@@ -714,9 +714,9 @@ variable "cpd_contentful_env" {
   default = {
     Dev       = "dev"
     Test      = "test"
-    Load-Test = "prod"
-    Pre-Prod  = "prod"
-    Prod      = "prod"
+    Load-Test = "master"
+    Pre-Prod  = "master"
+    Prod      = "master"
   }
   description = "Contentful Environment Name"
 }
