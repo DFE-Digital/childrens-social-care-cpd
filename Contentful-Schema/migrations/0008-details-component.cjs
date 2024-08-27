@@ -1,5 +1,5 @@
-module.exports = function (migration) {
-    const details = migration
+module.exports = async function (migration) {
+  const details = migration
     .createContentType("details")
     .description(
       "Allows users to view more detailed information if they need it, as per the GDS component of the same name."
@@ -70,28 +70,29 @@ module.exports = function (migration) {
     .omitted(false);
 
   const contentTypeId = "content",
-  linkingFieldId = "items",
-  detailsTypeId = "details";
+    linkingFieldId = "items",
+    detailsTypeId = "details";
 
   const response = await makeRequest({
     method: "GET",
-    url: `/content_types?sys.id[in]=${contentTypeId}`
+    url: `/content_types?sys.id[in]=${contentTypeId}`,
   });
 
   const validations = response.items[0].fields
-  .filter(field => field.id == linkingFieldId)[0]
-  .items.validations.map(rule => {
-      if (rule.linkContentType && !rule.linkContentType.includes(detailsTypeId)) {
-          rule.linkContentType.push(detailsTypeId)
+    .filter((field) => field.id == linkingFieldId)[0]
+    .items.validations.map((rule) => {
+      if (
+        rule.linkContentType &&
+        !rule.linkContentType.includes(detailsTypeId)
+      ) {
+        rule.linkContentType.push(detailsTypeId);
       }
       return rule;
-  });
+    });
 
-  migration.editContentType(contentTypeId)
-  .editField(linkingFieldId).items({
-      type: 'Link',
-      linkType: 'Entry',
-      validations: validations,
+  migration.editContentType(contentTypeId).editField(linkingFieldId).items({
+    type: "Link",
+    linkType: "Entry",
+    validations: validations,
   });
-
 };
