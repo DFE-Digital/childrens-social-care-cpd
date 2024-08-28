@@ -7,11 +7,10 @@
 <details class="govuk-details">
     <summary class="govuk-details__summary">
         <span class="govuk-details__summary-text">
-            @* TODO: add ID? *@
             @Model.SummaryText
         </span>
     </summary>
     <div class="govuk-details__text">
-        @Model.DetailsText
+        <partial name="_RichText" model="Model.DetailsText" />
     </div>
 </details>
