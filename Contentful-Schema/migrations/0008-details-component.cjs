@@ -1,6 +1,7 @@
 module.exports = async function (migration) {
   const details = migration
     .createContentType("details")
+    .name("Details")
     .description(
       "Allows users to view more detailed information if they need it, as per the GDS component of the same name."
     )
@@ -12,17 +13,13 @@ module.exports = async function (migration) {
     .type("Symbol")
     .localized(false)
     .required(true)
-    .validations([
-      {
-        unique: true,
-      },
-    ])
+    .validations([])
     .disabled(false)
     .omitted(false);
 
   details
-    .createfield("detailsText")
-    .name("Summary text")
+    .createField("detailsText")
+    .name("Details text")
     .type("RichText")
     .localized(false)
     .required(true)
@@ -59,6 +56,7 @@ module.exports = async function (migration) {
           "entry-hyperlink",
           "hyperlink",
         ],
+
         message:
           "Only heading 1, heading 2, heading 3, heading 4, heading 5, heading 6, ordered list, unordered list, horizontal rule, quote, block entry, asset, table, link to asset, inline entry, link to entry, and link to Url nodes are allowed",
       },
@@ -68,6 +66,9 @@ module.exports = async function (migration) {
     ])
     .disabled(false)
     .omitted(false);
+
+  details.changeFieldControl("summaryText", "builtin", "singleLine", {});
+  details.changeFieldControl("detailsText", "builtin", "richTextEditor", {});
 
   const contentTypeId = "content",
     linkingFieldId = "items",
