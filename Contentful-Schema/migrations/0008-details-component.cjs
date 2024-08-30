@@ -1,4 +1,4 @@
-module.exports = async function (migration) {
+module.exports = async function (migration, { makeRequest }) {
   const details = migration
     .createContentType("details")
     .name("Details")
