@@ -5,4 +5,3 @@
 0005-create-employer-standards-page-category.cjs
 0006-accordion-component.cjs
 0007-add-header-field-to-navigation-menu.cjs
-0008-details-component.cjs

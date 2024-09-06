@@ -24,7 +24,6 @@ public partial class PartialsFactoryTests
         new object[] { new ContentsAnchor(), "_ContentsAnchor" },
         new object[] { new DetailedPathway(), "_DetailedPathway" },
         new object[] { new DetailedRole(), "_DetailedRole" },
-        new object[] { new Details(), "_Details" },
         new object[] { new Feedback(), "_Feedback" },
         new object[] { new HeroBanner(), string.Empty },
         new object[] { new LinkCard(), "_LinkCard" },
