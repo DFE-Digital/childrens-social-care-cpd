@@ -7,6 +7,7 @@ namespace Childrens_Social_Care_CPD.Contentful;
 /// Resolves ContentTypeId strings to their POCO representations.
 /// Used by the Contentful client side library to serialize JSON objects from the response into our Models.
 /// </summary>
+/// New comment from Maria
 public class EntityResolver : IContentTypeResolver
 {
     public Type Resolve(string contentTypeId)
