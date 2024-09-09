@@ -27,6 +27,7 @@ public static class PartialsFactory
             ContentsAnchor => "_ContentsAnchor",
             DetailedRole => "_DetailedRole",
             DetailedPathway => "_DetailedPathway",
+            Details => "_Details",
             Feedback => "_Feedback",
             HeroBanner => string.Empty,// skip - handled in specific layout section
             ImageCard => "_ImageCard",
