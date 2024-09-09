@@ -14,7 +14,8 @@
         @if (Model.Transcript.Content != null)
         {
             <details class="govuk-details govuk-!-margin-top-3" data-module="govuk-details">
-                <summary class="govuk-details__summary"> <span class="govuk-details__summary-text">View transcript  </span></summary>
+                <summary class="govuk-details__summary"> <span class="govuk-details__summary-text">View transcript </span>
+                </summary>
                 <div class="govuk-details__text">
                     @{
                         await Html.RenderPartialAsync("_RichText", Model.Transcript);
@@ -24,4 +25,3 @@
         }
     </div>
 </div>
-
