@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Childrens_Social_Care_CPD.Contentful;
 using Microsoft.Net.Http.Headers;
+using Contentful.Core.Errors;
 
 namespace Childrens_Social_Care_CPD.Controllers;
 
@@ -36,8 +37,14 @@ public class DownloadController(ICpdContentfulClient cpdClient) : Controller
             return File(stream, asset.File.ContentType);
         }
         catch (Exception ex) {
-            // will need to do some excetion sniffing here to make sure we're doing 404s and 500s appropriately
-            return NotFound();
+
+            // will need to do some further exception sniffing here to make sure we're doing 404s and 500s appropriately
+            if (ex.GetType() == typeof(ContentfulException))
+            {
+                return NotFound();
+            }
+
+            throw;
         }
     }
 }
