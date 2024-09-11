@@ -1,8 +1,0 @@
-0001-info-box.cjs
-0002-add-infobox-to-allowed-items-on-content.cjs
-0003-page-contents-component.cjs
-0004-back-to-top-component.cjs
-0005-create-employer-standards-page-category.cjs
-0006-accordion-component.cjs
-0007-add-header-field-to-navigation-menu.cjs
-0008-details-component.cjs
