@@ -140,7 +140,7 @@ jobs:
       STAGING_ENVIRONMENT: ${{ needs.setup.outputs.staging-environment }}
       MANAGEMENT_TOKEN: ${{ secrets.CONTENTFUL_MANAGEMENT_TOKEN }}
       ENVIRONMENT: ${{ inputs.target_environment == 'prod' && 'master' || inputs.target_environment }}
-      SPACE_CAPACITY: ${{ vars.CONTENTFUL_SPACE_CAPACITY }}
+      SPACE_ID: ${{ secrets.TF_VAR_CPD_SPACE_ID }}
 
     steps:
       - uses: actions/checkout@v3
