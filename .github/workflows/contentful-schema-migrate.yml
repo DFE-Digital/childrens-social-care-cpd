@@ -5,7 +5,7 @@ on:
     inputs:
       target_environment:
         required: true
-        default: 'Dev'
+        default: 'dev'
         type: choice
         options:
           - dev
@@ -22,6 +22,7 @@ jobs:
       DELIVERY_KEY: ${{ secrets.TF_VAR_CPD_DELIVERY_KEY }}
       ENVIRONMENT: ${{ inputs.target_environment == 'prod' && 'master' || inputs.target_environment }}
       SPACE_CAPACITY: ${{ vars.CONTENTFUL_SPACE_CAPACITY }}
+      SPACE_ID: ${{ secrets.TF_VAR_CPD_SPACE_ID }}
 
     outputs:
       staging-environment: ${{ steps.staging-env.outputs.staging-environment }}
