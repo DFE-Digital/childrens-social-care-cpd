@@ -11416,6 +11416,7 @@ CONTENT TITLE BANNER
 /* Back to top component - styles taken from Help for Early Years */
 .app-back-to-top {
   margin-top: 60px;
+  font-size: 19px;
 }
 
 .app-back-to-top__icon {
