@@ -6,7 +6,7 @@ module.exports = async function (migration, { makeRequest }) {
   const assetDownload = migration
     .createContentType("assetDownload")
     .name("Asset Download")
-    .description("")
+    .description("Provides a link for downloading assets, formatted with a file-type icon, and a detals-type panel for requesting an accessibile file format.")
     .displayField("linkText");
     
   assetDownload
