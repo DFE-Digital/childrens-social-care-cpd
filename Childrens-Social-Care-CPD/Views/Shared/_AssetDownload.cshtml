@@ -109,8 +109,7 @@
     private bool MatchFileExtension (List<string> extensions, string fileName) {
         bool match = false;
         extensions.ForEach(extension => {
-            var regex = new Regex(@"\." + extension + "$");
-            if (regex.IsMatch(fileName)) match = true;
+            if (Regex.IsMatch(fileName,@"\." + extension + "$", RegexOptions.None, TimeSpan.FromMilliseconds(100))) match = true;
         });
         return match;
     }
@@ -139,7 +138,7 @@
         @if (fileIsOds)
         {
         <p class="gem-c-attachment__metadata">
-            This file is in an <a href="https://www.gov.uk/guidance/using-open-document-formats-odf-in-your-organisation" target="_blank" class="govuk-link">OpenDocument</a> format
+            This file is in an <a href="https://www.gov.uk/guidance/using-open-document-formats-odf-in-your-organisation" target="_blank" rel="noopener" class="govuk-link">OpenDocument</a> format
         </p>    
         }
 
