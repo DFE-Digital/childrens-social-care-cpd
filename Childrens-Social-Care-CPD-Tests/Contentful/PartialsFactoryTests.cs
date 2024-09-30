@@ -15,6 +15,7 @@ public partial class PartialsFactoryTests
         new object[] { new AccordionSection(), "_AccordionSection" },
         new object[] { new AreaOfPractice(), "_AreaOfPractice" },
         new object[] { new AreaOfPracticeList(), "_AreaOfPracticeList" },
+        new object[] { new AssetDownload(), "_AssetDownload" },
         new object[] { new AudioResource(), "_AudioResource" },
         new object[] { new BackToTop(), "_BackToTop" },
         new object[] { new ColumnLayout(), "_ColumnLayout" },
