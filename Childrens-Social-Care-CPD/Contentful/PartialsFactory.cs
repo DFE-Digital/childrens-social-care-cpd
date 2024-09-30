@@ -18,6 +18,7 @@ public static class PartialsFactory
             AccordionSection => "_AccordionSection",
             AreaOfPractice => "_AreaOfPractice",
             AreaOfPracticeList => "_AreaOfPracticeList",
+            AssetDownload => "_AssetDownload",
             AudioResource => "_AudioResource",
             BackToTop => "_BackToTop",
             ColumnLayout => "_ColumnLayout",

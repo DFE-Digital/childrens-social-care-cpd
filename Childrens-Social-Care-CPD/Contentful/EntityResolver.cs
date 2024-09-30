@@ -15,10 +15,11 @@ public class EntityResolver : IContentTypeResolver
         {
             "accordion" => typeof(Accordion),
             "accordionSection" => typeof(AccordionSection),
-            "areaOfPractice" => typeof(AreaOfPractice),
-            "areaOfPracticeList" => typeof(AreaOfPracticeList),
             "applicationFeature" => typeof(ApplicationFeature),
             "applicationFeatures" => typeof(ApplicationFeatures),
+            "areaOfPractice" => typeof(AreaOfPractice),
+            "areaOfPracticeList" => typeof(AreaOfPracticeList),
+            "assetDownload" => typeof(AssetDownload),
             "audioResource" => typeof(AudioResource),
             "backToTop" => typeof(BackToTop),
             "columnLayout" => typeof(ColumnLayout),
