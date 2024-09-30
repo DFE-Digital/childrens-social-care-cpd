@@ -3,6 +3,7 @@ using Childrens_Social_Care_CPD.Contentful.Models;
 using Childrens_Social_Care_CPD.Models;
 using Contentful.Core.Search;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Childrens_Social_Care_CPD.Controllers;
 
@@ -18,6 +19,11 @@ public class ContentController(ICpdContentfulClient cpdClient) : Controller
         var result = await cpdClient.GetEntries(queryBuilder, cancellationToken);
 
         return result?.FirstOrDefault();
+    }
+
+    private async Task<Stack<KeyValuePair<string, string>>> BuildBreadcrumbTrail(List<string> pagesVisited)
+    {
+        return new Stack<KeyValuePair<string, string>>();
     }
 
     [HttpGet]
@@ -49,6 +55,12 @@ public class ContentController(ICpdContentfulClient cpdClient) : Controller
             return NotFound();
         }
 
+        var pagesVisited = HttpContext.Session.Get<List<string>>("pagesVisited");
+        if (pagesVisited == null) pagesVisited = new List<string>();
+        pagesVisited.Add(pageName);
+        HttpContext.Session.Set<List<string>>("pagesVisited", pagesVisited);
+        Console.WriteLine("\n\nPages Visited: " + JsonConvert.SerializeObject(pagesVisited));
+
         var contextModel = new ContextModel(
             Id: content.Id,
             Title: content.Title,
@@ -57,7 +69,8 @@ public class ContentController(ICpdContentfulClient cpdClient) : Controller
             UseContainers: content.Navigation == null,
             PreferenceSet: preferenceSet,
             BackLink: content.BackLink,
-            FeedbackSubmitted: fs);
+            FeedbackSubmitted: fs,
+            BreadcrumbTrail: await BuildBreadcrumbTrail(pagesVisited));
 
         ViewData["ContextModel"] = contextModel;
         ViewData["StateModel"] = new StateModel();
