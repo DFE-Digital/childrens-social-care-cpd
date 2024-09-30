@@ -12,7 +12,7 @@ public record ContextModel(
     bool HideConsent = false,
     ContentLink BackLink = null,
     bool FeedbackSubmitted = false,
-    List<KeyValuePair<string, string>> BreadcrumbTrail = null)
+    Stack<KeyValuePair<string, string>> BreadcrumbTrail = null)
 {
     public Stack<string> ContentStack { get; } = new Stack<string>();
 }
