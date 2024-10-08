@@ -1,21 +1,21 @@
-﻿using Contentful.Core.Models;
+using Contentful.Core.Models;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Text = Contentful.Core.Models.Text;
 
 namespace Childrens_Social_Care_CPD.Contentful.Renderers;
 
-public class ListRenderer(IRenderer<Text> textRenderer, IRenderer<Hyperlink> hyperlinkRenderer) : IRenderer<List>
+public class OrderedListRenderer(IRenderer<Text> textRenderer, IRenderer<Hyperlink> hyperlinkRenderer) : IRenderer<List>
 {
-    public IHtmlContent Render(List item)
+    public IHtmlAsyncContent Render(List item)
     {
         if (item.Content.Count == 0)
         {
             return null;
         }
 
-        var ul = new TagBuilder("ul");
-        ul.AddCssClass("govuk-list govuk-list--bullet");
+        var ol = new TagBuilder("ol");
+        ol.AddCssClass("govuk-list govuk-list--number");
 
         foreach (var listItem in item.Content.OfType<ListItem>())
         {
@@ -38,9 +38,13 @@ public class ListRenderer(IRenderer<Text> textRenderer, IRenderer<Hyperlink> hyp
                         }
                 }
             }
-            ul.InnerHtml.AppendHtml(li);
+            ol.InnerHtml.AppendHtml(li);
         }
+        return (IHtmlAsyncContent)ol;
+    }
 
-        return ul;
+    IHtmlContent IRenderer<List>.Render(List item)
+    {
+        throw new NotImplementedException();
     }
 }
