@@ -66,6 +66,11 @@
     background-color: #003a69;
 }
 
+h1,
+.dfe-heading-xl, .govuk-heading-xl {
+  margin-bottom: 30px !important
+}
+
 .govuk-header__container {
     position: relative;
     margin-bottom: -10px;
