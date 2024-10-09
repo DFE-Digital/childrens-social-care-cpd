@@ -14,7 +14,6 @@ public class ListRenderer(IRenderer<Text> textRenderer, IRenderer<Hyperlink> hyp
             return null;
         }
 
-        // if node type = ol then use tag builder for orderedlist
         TagBuilder listTag;
         string cssClass;
         if (item.NodeType == "unordered-list")

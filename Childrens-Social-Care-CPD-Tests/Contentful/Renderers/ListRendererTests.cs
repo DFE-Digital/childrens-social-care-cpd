@@ -131,4 +131,49 @@ public class ListRendererTests
         actual.Should().Be("<ul class=\"HtmlEncode[[govuk-list govuk-list--bullet]]\"><li>AAA</li></ul>");
     }
 
+    [Test]
+    public void Numbered_List_Renders()
+    {
+        // arrange
+        var stringWriter = new StringWriter();
+        var list = new List()
+        {
+            NodeType = "ordered-list",
+            Content = new List<IContent>
+                        {
+                new ListItem
+                {
+                    Content = new List<IContent>
+                    {
+                        new Paragraph
+                        {
+                            Content = new List<IContent> { new Text() }
+                        }
+                    }
+                },
+                new ListItem
+                {
+                    Content = new List<IContent>
+                    {
+                        new Paragraph
+                        {
+                            Content = new List<IContent> { new Hyperlink() }
+                        }
+                    }
+
+                }
+            }
+        };
+        _textLinkRenderer.Render(Arg.Any<Text>()).Returns(new HtmlString("AAA"));
+        _hyperlinkRenderer.Render(Arg.Any<Hyperlink>()).Returns(new HtmlString("BBB"));
+
+        // act
+        var htmlContent = _sut.Render(list);
+        htmlContent.WriteTo(stringWriter, new HtmlTestEncoder());
+        var actual = stringWriter.ToString();
+
+        // assert
+        actual.Should().Be("<ol class=\"HtmlEncode[[govuk-list govuk-list--number]]\"><li>AAA</li><li>BBB</li></ol>");
+    }
+
 }
