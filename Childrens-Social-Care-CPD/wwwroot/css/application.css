@@ -39,6 +39,7 @@
 
 
 
+@import url("https://rsms.me/inter/inter.css");
 :root {
   --govuk-frontend-version: "5.2.0";
   --govuk-frontend-breakpoint-mobile: 20rem;
@@ -10044,8 +10045,8 @@ p,
 }
 
 /* STANDARD COLOURS */
-body, p, h1, h2, h3, h4, h5, h6, a, span, div, table, th, td, blockquote, li, dt, dd, tr {
-  font-family: BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !important;
+* {
+  font-family: "Inter", sans-serif !important;
 }
 
 .logo {
@@ -10107,6 +10108,11 @@ body, p, h1, h2, h3, h4, h5, h6, a, span, div, table, th, td, blockquote, li, dt
 /* DFE HEADER - CODE FROM DFE DESIGN GUIDE AND WITH EDITS --------------------------------------------------------- */
 .govuk-header {
   background-color: #003a69;
+}
+
+h1,
+.dfe-heading-xl, .govuk-heading-xl {
+  margin-bottom: 30px !important;
 }
 
 .govuk-header__container {
@@ -10366,7 +10372,7 @@ CONTENT TITLE BANNER
 
 .gem-c-contents-list__title {
   color: #0b0c0c;
-  font-family: "GDS Transport", arial, sans-serif;
+  font-family: "Inter", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-weight: 400;
@@ -10383,7 +10389,7 @@ CONTENT TITLE BANNER
 }
 @media print {
   .gem-c-contents-list__title {
-    font-family: sans-serif;
+    font-family: "Inter", sans-serif;
   }
 }
 @media (min-width: 40.0625em) {
@@ -10401,7 +10407,7 @@ CONTENT TITLE BANNER
 }
 .gem-c-contents-list__list, .gem-c-contents-list__nested-list {
   color: #0b0c0c;
-  font-family: "GDS Transport", arial, sans-serif;
+  font-family: "Inter", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-weight: 400;
@@ -10420,7 +10426,7 @@ CONTENT TITLE BANNER
 }
 @media print {
   .gem-c-contents-list__list, .gem-c-contents-list__nested-list {
-    font-family: sans-serif;
+    font-family: "Inter", sans-serif;
   }
 }
 @media (min-width: 40.0625em) {
@@ -11269,6 +11275,7 @@ CONTENT TITLE BANNER
 /* Back to top component - styles taken from Help for Early Years */
 .app-back-to-top {
   margin-top: 60px;
+  font-size: 19px;
 }
 
 .app-back-to-top__icon {
