@@ -16,8 +16,7 @@
 @inject IRenderer<Quote> _quoteRenderer
 @inject IRenderer<HorizontalRuler> _horizontalRulerRenderer
 @inject IRenderer<Table> _tableRenderer
-@inject IRenderer<List> _unorderedlistRenderer
-@inject IRenderer<List> _orderedListRenderer
+@inject IRenderer<List> _listRenderer
 @inject IRenderer<RoleList> _roleListRenderer
 @inject IRenderer<AssetStructure> _assetStructureRenderer
 
@@ -35,15 +34,7 @@
                 @_paragraphRenderer.Render(paragraph)
                 break;
             case List list:
-                if (((Contentful.Core.Models.List)node).NodeType == "unordered-list")
-                {
-                    @_unorderedlistRenderer.Render(list)
-                    ;
-                }
-                else
-                {
-                    @_orderedListRenderer.Render(list)
-                }
+                @_listRenderer.Render(list)
                 break;
             case Heading1 heading1:
                 @_heading1Renderer.Render(heading1)
