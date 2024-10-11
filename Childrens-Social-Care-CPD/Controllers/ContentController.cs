@@ -44,7 +44,7 @@ public class ContentController(ICpdContentfulClient cpdClient) : Controller
         Content parentPage = new Content();
 
         if (page.ParentPages?.Count == 1) {
-            parentPage = page.ParentPages[0] as Content;
+            parentPage = page.ParentPages[0];
         }
         else
         {
@@ -53,16 +53,22 @@ public class ContentController(ICpdContentfulClient cpdClient) : Controller
                 .ToList();
 
             var checkPages = pagesVisited.Reverse<string>();
+            bool parentFound = false;
 
             foreach (var pageId in checkPages)
             {
                 if (parentPageIds.Contains(pageId))
                 {
                     parentPage = page.ParentPages.First(p => p.Id == pageId);
+                    parentFound = true;
                     break;
                 }
             };
+
+            // if we don't find a parent page in the recently vistied pages, just use the first in the list
+            if (!parentFound) parentPage = page.ParentPages[0];
         }
+
         var parentObject = await FetchPageContentAsync(parentPage.Id, ct);
         return await BuildBreadcrumbTrail(trail, parentObject, pagesVisited, ct);
     }
