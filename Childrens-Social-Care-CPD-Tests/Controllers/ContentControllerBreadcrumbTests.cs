@@ -61,7 +61,7 @@ public class ContentControllerBreadcrumbTests
         
         var content = new List<KeyValuePair<string, Content>>()
         {
-            new KeyValuePair<string, Content>("page", page),
+            new KeyValuePair<string, Content>(page.Id, page),
         };
 
         SetContent(content);        
@@ -111,8 +111,8 @@ public class ContentControllerBreadcrumbTests
         };
 
         var content = new List<KeyValuePair<string, Content>>(){
-            new KeyValuePair<string, Content>("parent", parentPage),
-            new KeyValuePair<string, Content>("child", childPage)
+            new KeyValuePair<string, Content>(parentPage.Id, parentPage),
+            new KeyValuePair<string, Content>(childPage.Id, childPage)
         };
 
         SetContent(content);
@@ -144,5 +144,46 @@ public class ContentControllerBreadcrumbTests
         // assert
         actual.Should().NotBeNull();
         breadcrumbTrail.Should().BeEmpty();
+    }
+
+    [Test]
+    public async Task Index_Sets_Breadcrumbs_Where_Page_Has_Multiple_Parents()
+    {
+        // arrange
+        var parentPage1 = new Content()
+        {
+            Id = "parent1",
+            Title = "First Parent Page"
+        };
+        var parentPage2 = new Content()
+        {
+            Id = "parent2",
+            Title = "Second Parent Page"
+        };
+        var childPage = new Content(){
+            Id = "child",
+            Title = "Child Page",
+            ParentPages = new List<Content>(){parentPage1, parentPage2}
+        };
+
+        var content = new List<KeyValuePair<string, Content>>(){
+            new KeyValuePair<string, Content>(parentPage1.Id, parentPage1),
+            new KeyValuePair<string, Content>(parentPage2.Id, parentPage2),
+            new KeyValuePair<string, Content>(childPage.Id, childPage)
+        };
+
+        SetContent(content);
+
+        // act
+        await _contentController.Index("child");
+        var actual = _contentController.ViewData["ContextModel"] as ContextModel;
+        var breadcrumbTrail = actual?.BreadcrumbTrail;
+
+        // assert
+        actual.Should().NotBeNull();
+        breadcrumbTrail[0].Key.Should().Be("Child Page");
+        breadcrumbTrail[0].Value.Should().Be("child");
+        breadcrumbTrail[1].Key.Should().Be("First Parent Page");
+        breadcrumbTrail[1].Value.Should().Be("parent1");
     }
 }
