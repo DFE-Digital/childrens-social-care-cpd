@@ -106,7 +106,6 @@ public class ContentController(ICpdContentfulClient cpdClient) : Controller
         if (pagesVisited == null) pagesVisited = new List<string>();
         pagesVisited.Add(pageName);
         HttpContext.Session.Set("pagesVisited", pagesVisited);
-        Console.WriteLine("\n\nPages Visited: " + JsonConvert.SerializeObject(pagesVisited));
 
         var contextModel = new ContextModel(
             Id: content.Id,
