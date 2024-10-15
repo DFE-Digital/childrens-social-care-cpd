@@ -14,6 +14,12 @@ Console.WriteLine($"After AddDependencies {sw.ElapsedMilliseconds}ms");
 builder.AddFeatures(sw);
 Console.WriteLine($"After AddFeatures {sw.ElapsedMilliseconds}ms");
 
+builder.Services.AddDistributedMemoryCache();
+Console.WriteLine($"After AddDistributedMemoryCache {sw.ElapsedMilliseconds}ms");
+
+builder.Services.AddSession();
+Console.WriteLine($"After AddSession {sw.ElapsedMilliseconds}ms");
+
 var app = builder.Build();
 Console.WriteLine($"After Application Build {sw.ElapsedMilliseconds}ms");
 
@@ -42,6 +48,9 @@ Console.WriteLine($"After UseRouting {sw.ElapsedMilliseconds}ms");
 
 app.UseAuthorization();
 Console.WriteLine($"After UseAuthorization {sw.ElapsedMilliseconds}ms");
+
+app.UseSession();
+Console.WriteLine($"After UseSession {sw.ElapsedMilliseconds}ms");
 
 app.MapControllerRoute(
     name: "default",
