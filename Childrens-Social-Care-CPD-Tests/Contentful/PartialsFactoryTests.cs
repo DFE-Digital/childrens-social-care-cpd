@@ -11,9 +11,13 @@ public partial class PartialsFactoryTests
 {
     private static readonly object[] Successful_Resolves =
     {
+        new object[] { new Accordion(), "_Accordion" },
+        new object[] { new AccordionSection(), "_AccordionSection" },
         new object[] { new AreaOfPractice(), "_AreaOfPractice" },
         new object[] { new AreaOfPracticeList(), "_AreaOfPracticeList" },
+        new object[] { new AssetDownload(), "_AssetDownload" },
         new object[] { new AudioResource(), "_AudioResource" },
+        new object[] { new BackToTop(), "_BackToTop" },
         new object[] { new ColumnLayout(), "_ColumnLayout" },
         new object[] { new Content(), "_Content" },
         new object[] { new ContentLink(), "_ContentLink" },
@@ -21,6 +25,7 @@ public partial class PartialsFactoryTests
         new object[] { new ContentsAnchor(), "_ContentsAnchor" },
         new object[] { new DetailedPathway(), "_DetailedPathway" },
         new object[] { new DetailedRole(), "_DetailedRole" },
+        new object[] { new Details(), "_Details" },
         new object[] { new Feedback(), "_Feedback" },
         new object[] { new HeroBanner(), string.Empty },
         new object[] { new LinkCard(), "_LinkCard" },
