@@ -14,8 +14,19 @@ public class ListRenderer(IRenderer<Text> textRenderer, IRenderer<Hyperlink> hyp
             return null;
         }
 
-        var ul = new TagBuilder("ul");
-        ul.AddCssClass("govuk-list govuk-list--bullet");
+        TagBuilder listTag;
+        string cssClass;
+        if (item.NodeType == "unordered-list")
+        {
+            listTag = new TagBuilder("ul");
+            cssClass = "govuk-list govuk-list--bullet";
+        }
+        else
+        {
+            listTag = new TagBuilder("ol");
+            cssClass = "govuk-list govuk-list--number";
+        }
+        listTag.AddCssClass(cssClass);
 
         foreach (var listItem in item.Content.OfType<ListItem>())
         {
@@ -38,9 +49,9 @@ public class ListRenderer(IRenderer<Text> textRenderer, IRenderer<Hyperlink> hyp
                         }
                 }
             }
-            ul.InnerHtml.AppendHtml(li);
+            listTag.InnerHtml.AppendHtml(li);
         }
 
-        return ul;
+        return listTag;
     }
 }
