@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
 
 namespace Childrens_Social_Care_CPD.Controllers;
-/// comment 
+
 public class ApplicationController(IApplicationConfiguration applicationConfiguration) : Controller
 {
     [HttpGet]
