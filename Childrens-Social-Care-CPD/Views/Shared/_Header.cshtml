@@ -66,6 +66,10 @@
                     {
                         RenderMenuItem("employerStandards", "Employer standards", "employer-standards", category == "Employer standards");
                     }
+                    if (featuresConfig.IsEnabled(Features.AgencyResources))
+                    {
+                        RenderMenuItem("agencyResources", "Agency resources", "agency-resources", category == "Agency resources");
+                    }
                 }
             </ul>
         </div>
