@@ -8,3 +8,4 @@
 0008-details-component.cjs
 0009-asset-download-component.cjs
 0010-breadcrumbs.cjs
+0011-create-agency-standards-page-category.cjs
