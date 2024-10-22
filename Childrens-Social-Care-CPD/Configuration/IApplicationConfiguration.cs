@@ -43,6 +43,9 @@ public interface IApplicationConfiguration
     [RequiredForEnvironment(ApplicationEnvironment.PreProduction, Hidden = false)]
     string ContentfulPreviewId { get; }
 
+    [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false, Obfuscate = false)]
+    bool ContentfulForcePreview { get; }
+
     [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false)]
     string ContentfulSpaceId { get; }
 

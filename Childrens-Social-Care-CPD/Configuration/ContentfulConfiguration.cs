@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Security.Policy;
 
 namespace Childrens_Social_Care_CPD.Configuration;
 
@@ -9,6 +10,8 @@ public static class ContentfulConfiguration
     {
         string azureEnvironment = applicationConfiguration.AzureEnvironment,
             contentfulEnvironment = applicationConfiguration.ContentfulEnvironment;
+
+        if (applicationConfiguration.ContentfulForcePreview) return true;
 
         // return true if azure environment is pre-prod
         if (string.Equals(azureEnvironment, ApplicationEnvironment.PreProduction, StringComparison.OrdinalIgnoreCase)) return true;
