@@ -116,7 +116,11 @@ public class ContentController(ICpdContentfulClient cpdClient) : Controller
             PreferenceSet: preferenceSet,
             BackLink: content.BackLink,
             FeedbackSubmitted: fs,
-            BreadcrumbTrail: await BuildBreadcrumbTrail(new List<KeyValuePair<string, string>>(), content, pagesVisited, cancellationToken));
+            BreadcrumbTrail: await BuildBreadcrumbTrail(new List<KeyValuePair<string, string>>(), content, pagesVisited, cancellationToken),
+            PublishDates: new PublishDates(
+                FirstPublishedAt: content.Sys.CreatedAt,
+                LastPublishedAt: content.Sys.UpdatedAt
+            ));
 
         ViewData["ContextModel"] = contextModel;
         ViewData["StateModel"] = new StateModel();
