@@ -3,5 +3,10 @@
 @{
     var contextModel = (ContextModel)ViewData["ContextModel"];
     // CHANGE THIS
-    var breadcrumbs = contextModel.BreadcrumbTrail;
+    // var breadcrumbs = contextModel.BreadcrumbTrail;
 }
+
+<div>
+    @contextModel.PublishDates.FirstPublishedAt
+    @contextModel.PublishDates.LastPublishedAt
+</div>

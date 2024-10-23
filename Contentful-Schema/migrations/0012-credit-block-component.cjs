@@ -1,12 +1,12 @@
 module.exports = async function (migration, { makeRequest }) {
-  const creditsBlock = migration
-    .createContentType("creditsBlock")
-    .name("Credits Block")
+  const creditBlock = migration
+    .createContentType("creditBlock")
+    .name("Credit Block")
     .description(
       "Shows who developed a resource, the date it was published and the date it was last updated."
     );
 
-  creditsBlock
+  creditBlock
     .createField("developerOfResource")
     .name("Developer of resource")
     .type("RichText")
@@ -28,7 +28,7 @@ module.exports = async function (migration, { makeRequest }) {
     .disabled(false)
     .omitted(false);
 
-  creditsBlock
+  creditBlock
     .createField("secondaryDevelopersOfResource")
     .name("Secondary developer(s) of resource")
     .type("RichText")
@@ -50,7 +50,7 @@ module.exports = async function (migration, { makeRequest }) {
     .disabled(false)
     .omitted(false);
 
-  creditsBlock
+  creditBlock
     .createField("datePublished")
     .name("Date published")
     .type("Date")
@@ -59,7 +59,7 @@ module.exports = async function (migration, { makeRequest }) {
     .validations([])
     .disabled(false)
     .omitted(false);
-  creditsBlock
+  creditBlock
     .createField("dateLastUpdated")
     .name("Date last updated")
     .type("Date")
@@ -69,7 +69,7 @@ module.exports = async function (migration, { makeRequest }) {
     .disabled(false)
     .omitted(false);
 
-  creditsBlock.changeFieldControl(
+  creditBlock.changeFieldControl(
     "developerOfResource",
     "builtin",
     "richTextEditor",
@@ -79,7 +79,7 @@ module.exports = async function (migration, { makeRequest }) {
     }
   );
 
-  creditsBlock.changeFieldControl(
+  creditBlock.changeFieldControl(
     "secondaryDevelopersOfResource",
     "builtin",
     "richTextEditor",
@@ -89,13 +89,13 @@ module.exports = async function (migration, { makeRequest }) {
     }
   );
 
-  creditsBlock.changeFieldControl("datePublished", "builtin", "datePicker", {
+  creditBlock.changeFieldControl("datePublished", "builtin", "datePicker", {
     ampm: "24",
     format: "dateonly",
     helpText: "What date was this resource first published on?",
   });
 
-  creditsBlock.changeFieldControl("dateLastUpdated", "builtin", "datePicker", {
+  creditBlock.changeFieldControl("dateLastUpdated", "builtin", "datePicker", {
     ampm: "24",
     format: "dateonly",
     helpText: "When was this resource last updated?",
