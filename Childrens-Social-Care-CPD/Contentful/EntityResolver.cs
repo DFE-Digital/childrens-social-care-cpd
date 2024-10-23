@@ -27,6 +27,7 @@ public class EntityResolver : IContentTypeResolver
             "contentLink" => typeof(ContentLink),
             "contentsAnchor" => typeof(ContentsAnchor),
             "contentSeparator" => typeof(ContentSeparator),
+            "creditBlock" => typeof(CreditBlock),
             "detailedPathway" => typeof(DetailedPathway),
             "detailedRole" => typeof(DetailedRole),
             "details" => typeof(Details),
