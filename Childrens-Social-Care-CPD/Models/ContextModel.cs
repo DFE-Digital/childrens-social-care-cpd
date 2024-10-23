@@ -2,6 +2,11 @@
 
 namespace Childrens_Social_Care_CPD.Models;
 
+public record PublishDates (
+    DateTime ?FirstPublishedAt,
+    DateTime ?LastPublishedAt
+);
+
 public record ContextModel(
     string Id,
     string Title,
@@ -12,7 +17,8 @@ public record ContextModel(
     bool HideConsent = false,
     ContentLink BackLink = null,
     bool FeedbackSubmitted = false,
-    List<KeyValuePair<string, string>> BreadcrumbTrail = null)
+    List<KeyValuePair<string, string>> BreadcrumbTrail = null,
+    PublishDates PublishDates = null)
 {
     public Stack<string> ContentStack { get; } = new Stack<string>();
 }
