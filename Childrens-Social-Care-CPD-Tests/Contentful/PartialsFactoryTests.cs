@@ -23,6 +23,7 @@ public partial class PartialsFactoryTests
         new object[] { new ContentLink(), "_ContentLink" },
         new object[] { new ContentSeparator(), "_ContentSeparator" },
         new object[] { new ContentsAnchor(), "_ContentsAnchor" },
+        new object[] { new CreditBlock(), "_CreditBlock" },
         new object[] { new DetailedPathway(), "_DetailedPathway" },
         new object[] { new DetailedRole(), "_DetailedRole" },
         new object[] { new Details(), "_Details" },

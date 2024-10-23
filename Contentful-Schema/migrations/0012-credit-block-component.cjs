@@ -4,7 +4,22 @@ module.exports = async function (migration, { makeRequest }) {
     .name("Credit Block")
     .description(
       "Shows who developed a resource, the date it was published and the date it was last updated."
-    );
+    )
+    .displayField("name");
+
+  creditBlock
+    .createField("name")
+    .name("Name")
+    .type("Symbol")
+    .localized(false)
+    .required(true)
+    .validations([
+      {
+        unique: true,
+      },
+    ])
+    .disabled(false)
+    .omitted(false);
 
   creditBlock
     .createField("developerOfResource")
@@ -50,24 +65,15 @@ module.exports = async function (migration, { makeRequest }) {
     .disabled(false)
     .omitted(false);
 
-  creditBlock
-    .createField("datePublished")
-    .name("Date published")
-    .type("Date")
-    .localized(false)
-    .required(true)
-    .validations([])
-    .disabled(false)
-    .omitted(false);
-  creditBlock
-    .createField("dateLastUpdated")
-    .name("Date last updated")
-    .type("Date")
-    .localized(false)
-    .required(false)
-    .validations([])
-    .disabled(false)
-    .omitted(false);
+  creditBlock.changeFieldControl(
+    "name",
+    "builtin",
+    "singleLine",
+    {
+      helpText:
+        "Name is only for internal reference, and will not display on website",
+    }
+  );
 
   creditBlock.changeFieldControl(
     "developerOfResource",
@@ -89,15 +95,4 @@ module.exports = async function (migration, { makeRequest }) {
     }
   );
 
-  creditBlock.changeFieldControl("datePublished", "builtin", "datePicker", {
-    ampm: "24",
-    format: "dateonly",
-    helpText: "What date was this resource first published on?",
-  });
-
-  creditBlock.changeFieldControl("dateLastUpdated", "builtin", "datePicker", {
-    ampm: "24",
-    format: "dateonly",
-    helpText: "When was this resource last updated?",
-  });
 };
