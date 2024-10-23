@@ -118,8 +118,8 @@ public class ContentController(ICpdContentfulClient cpdClient) : Controller
             FeedbackSubmitted: fs,
             BreadcrumbTrail: await BuildBreadcrumbTrail(new List<KeyValuePair<string, string>>(), content, pagesVisited, cancellationToken),
             PublishDates: new PublishDates(
-                FirstPublishedAt: content.Sys.CreatedAt,
-                LastPublishedAt: content.Sys.UpdatedAt
+                FirstPublishedAt: content.Sys?.CreatedAt,
+                LastPublishedAt: content.Sys?.UpdatedAt
             ));
 
         ViewData["ContextModel"] = contextModel;
