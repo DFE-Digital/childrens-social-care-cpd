@@ -24,6 +24,7 @@ public class EntityResolverTests
     [TestCase("contentLink", typeof(ContentLink))]
     [TestCase("contentsAnchor", typeof(ContentsAnchor))]
     [TestCase("contentSeparator", typeof(ContentSeparator))]
+    [TestCase("creditBlock", typeof(CreditBlock))]
     [TestCase("detailedPathway", typeof(DetailedPathway))]
     [TestCase("detailedRole", typeof(DetailedRole))]
     [TestCase("details", typeof(Details))]

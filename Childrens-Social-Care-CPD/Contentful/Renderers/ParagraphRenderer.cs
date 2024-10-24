@@ -5,12 +5,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Childrens_Social_Care_CPD.Contentful.Renderers;
 
-internal class ParagraphRenderer(IRenderer<Text> textRenderer, IRenderer<RoleList> roleListRenderer, IRenderer<Hyperlink> hyperlinkRenderer, IRenderer<ContentLink> contentLinkRenderer, IRenderer<AreaOfPracticeList> areaOfPracticeListRenderer) : IRenderer<Paragraph>
+internal class ParagraphRenderer(IRenderer<Text> textRenderer, IRenderer<RoleList> roleListRenderer, IRenderer<Hyperlink> hyperlinkRenderer, IRenderer<ContentLink> contentLinkRenderer, IRenderer<AreaOfPracticeList> areaOfPracticeListRenderer) : IRendererWithOptions<Paragraph>
 {
-    public IHtmlContent Render(Paragraph item)
+    public IHtmlContent Render(Paragraph item, RendererOptions options = null)
     {
-        var p = new TagBuilder("p");
-        p.AddCssClass("govuk-body-m");
+        TagBuilder p;
+        if (options?.RenderInline ?? false) {
+            p = new TagBuilder("span");
+        }
+        else
+        {
+            p = new TagBuilder("p");
+            p.AddCssClass("govuk-body-m");
+        }
 
         foreach (var content in item.Content)
         {
@@ -32,5 +39,10 @@ internal class ParagraphRenderer(IRenderer<Text> textRenderer, IRenderer<RoleLis
         }
 
         return p;
+    }
+
+    public IHtmlContent Render(Paragraph item)
+    {
+        return Render(item, null);
     }
 }
