@@ -865,3 +865,7 @@ content: "";
 .govuk-breadcrumbs--inverse .govuk-breadcrumbs__list-item::before {
     border-color: currentcolor;
 }
+
+.govuk-breadcrumbs ul {
+    padding-left: 0px;
+}
