@@ -189,4 +189,34 @@ public class ParagraphRendererTests
         // assert
         actual.Should().Be($"<p class=\"HtmlEncode[[govuk-body-m]]\">EEE</p>");
     }
+
+    [Test]
+    public void Paragraph_Renders_Inline_If_Options_Set()
+    {
+        // arrange
+        var stringWriter = new StringWriter();
+        var paragraph = new Paragraph()
+        {
+            Content = new List<IContent>
+            {
+                new Hyperlink()
+            }
+        };
+
+        _textRenderer.Render(Arg.Any<Text>()).Returns(new HtmlString("AAA"));
+        _roleListRenderer.Render(Arg.Any<RoleList>()).Returns(new HtmlString("BBB"));
+        _hyperlinkRenderer.Render(Arg.Any<Hyperlink>()).Returns(new HtmlString("CCC"));
+        _contentLinkRenderer.Render(Arg.Any<ContentLink>()).Returns(new HtmlString("DDD"));
+        _areaOfPracticeListRenderer.Render(Arg.Any<AreaOfPracticeList>()).Returns(new HtmlString("EEE"));
+
+        var rendererOptions = new RendererOptions("", "inline");
+
+        // act
+        var htmlContent = _sut.Render(paragraph, rendererOptions);
+        htmlContent.WriteTo(stringWriter, new HtmlTestEncoder());
+        var actual = stringWriter.ToString();
+
+        // assert
+        actual.Should().Be($"<span>CCC</span>");
+    }
 }
