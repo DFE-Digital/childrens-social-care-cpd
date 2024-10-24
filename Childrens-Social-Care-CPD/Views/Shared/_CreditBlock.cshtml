@@ -11,10 +11,7 @@
 <div class="govuk-grid-row">
     <div class="credit-block govuk-details">
         The resources have been developed by <partial name="_RichText" model="Model.DeveloperOfResource" view-data="ViewData" />
-        @if (@Model.SecondaryDevelopersOfResource == null) {
-            @:.
-        }
-        else 
+        @if (@Model.SecondaryDevelopersOfResource != null)  
         {
             @:in collaboration with 
             <partial name="_RichText" model="Model.SecondaryDevelopersOfResource" view-data="ViewData" />
