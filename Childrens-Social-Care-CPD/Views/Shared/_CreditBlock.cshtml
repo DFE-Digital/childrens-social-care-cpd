@@ -1,0 +1,25 @@
+@using Childrens_Social_Care_CPD.Contentful.Models;
+
+@model CreditBlock
+
+@{
+    var contextModel = (ContextModel)ViewData["ContextModel"];
+    var dateFormat = "dd MMMM yyyy";
+    ViewData["RenderStyle"] = "inline";
+}
+
+<div class="govuk-grid-row">
+    <div class="credit-block govuk-details">
+        The resources have been developed by <partial name="_RichText" model="Model.DeveloperOfResource" view-data="ViewData" />
+        @if (@Model.SecondaryDevelopersOfResource != null)  
+        {
+            @:in collaboration with 
+            <partial name="_RichText" model="Model.SecondaryDevelopersOfResource" view-data="ViewData" />
+        }
+        <br />
+        Published: @contextModel.PublishDates.FirstPublishedAt.Value.ToString(dateFormat)
+        <br />
+        Last updated: @contextModel.PublishDates.LastPublishedAt.Value.ToString(dateFormat)
+        <br />
+    </div>
+</div>
