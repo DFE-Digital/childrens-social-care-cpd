@@ -95,4 +95,33 @@ module.exports = async function (migration, { makeRequest }) {
     }
   );
 
+  /*
+  * Add creditBlock to list of content types allowed in content pages
+  */
+  const contentTypeId = "content",
+  linkingFieldId = "items",
+  creditBlockTypeId = "creditBlock";
+
+  const response = await makeRequest({
+  method: "GET",
+  url: `/content_types?sys.id[in]=${contentTypeId}`,
+  });
+
+  const validations = response.items[0].fields
+    .filter((field) => field.id == linkingFieldId)[0]
+    .items.validations.map((rule) => {
+      if (
+        rule.linkContentType &&
+        !rule.linkContentType.includes(creditBlockTypeId)
+      ) {
+        rule.linkContentType.push(creditBlockTypeId);
+      }
+      return rule;
+    });
+
+  migration.editContentType(contentTypeId).editField(linkingFieldId).items({
+    type: "Link",
+    linkType: "Entry",
+    validations: validations,
+  });
 };
