@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       working-directory: ./browser-tests/content-regression-tests
-      PLAYWRIGHT_BASE_URL: https://${{ inputs.target_environment }}.develop-child-family-social-work-career.education.gov.uk/
+      PLAYWRIGHT_BASE_URL: https://${{ inputs.target_environment }}.support-for-social-workers.education.gov.uk/
     defaults:
       run:
         shell: bash
