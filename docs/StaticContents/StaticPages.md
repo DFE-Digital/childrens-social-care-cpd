@@ -3,7 +3,7 @@
 This application uses two static HTML error pages with DFE branding style. These pages are used by the App gateway to show error
 messages when service is down or App gateway not able to reach the web application.
 
-Repository path - https://github.com/DFE-Digital/childrens-social-care-cpd/tree/master/Childrens-Social-Care-CPD/Views/HTMLFiles
+Repository path - https://github.com/DFE-Digital/childrens-social-care-cpd/tree/main/Terraform-bootstrap/Error-pages
 
 File Names:
 
