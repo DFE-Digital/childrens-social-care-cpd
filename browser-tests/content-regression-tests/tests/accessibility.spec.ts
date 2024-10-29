@@ -6,7 +6,7 @@ test.describe('Accessibility', () => {
     })
     
     test('CPD email address is visible @external', async ({ page }) => {
-        await expect(page.getByRole('link', { name: 'develop-child-family-social-work-career-team@digital.education.gov.uk' })).toBeVisible()
+        await expect(page.getByRole('link', { name: 'support-for-social-workers-team@education.gov.uk' })).toBeVisible()
     })
 
     test.describe('External links @external', () => {

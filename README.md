@@ -4,7 +4,7 @@ This repository contains the code needed to host the Social Workforce career pro
 
 ## Live examples
 
-The live site can be found [here](https://www.develop-child-family-social-work-career.education.gov.uk)
+The live site can be found [here](https://www.support-for-social-workers.education.gov.uk)
 
 ## Nomenclature
 
