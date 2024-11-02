@@ -11069,7 +11069,7 @@ CONTENT TITLE BANNER
   margin-bottom: 5px;
   margin-left: 0.625em;
   padding-left: 0.9784375em;
-  float: left;
+  float: none;
 }
 
 .govuk-breadcrumbs__list-item::before {
