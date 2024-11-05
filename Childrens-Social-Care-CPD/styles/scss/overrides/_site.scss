@@ -359,6 +359,7 @@
 /* Back to top component - styles taken from Help for Early Years */
 .app-back-to-top {
     margin-top: 60px;
+    font-size: 19px;
 }
 
 .app-back-to-top__icon {
@@ -368,4 +369,14 @@
     margin-top: -5px;
     margin-right: 10px;
     vertical-align: middle;
+}
+
+.banner-breadcrumbs {
+    position: relative;
+    top: -35px;
+}
+
+/* feedback component tweaks */
+div#page-feedback a {
+    cursor: pointer;
 }

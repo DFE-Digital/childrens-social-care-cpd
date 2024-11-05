@@ -15,6 +15,7 @@ public class ApplicationConfiguration(IConfiguration configuration) : IApplicati
     public string ContentfulGraphqlConnectionString => $"https://graphql.contentful.com/content/v1/spaces/{ContentfulSpaceId}/environments/{ContentfulEnvironment}";
     public string ContentfulPreviewHost => "preview.contentful.com";
     public string ContentfulPreviewId => configuration["CPD_PREVIEW_KEY"];
+    public bool ContentfulForcePreview => bool.TryParse(configuration["CPD_CONTENTFUL_FORCE_PREVIEW"], out var result) && result;
     public string ContentfulSpaceId => configuration["CPD_SPACE_ID"];
     public bool DisableSecureCookies => bool.TryParse(configuration["CPD_DISABLE_SECURE_COOKIES"], out var result) && result;
     public int FeaturePollingInterval => int.TryParse(configuration["CPD_FEATURE_POLLING_INTERVAL"], out var result) ? result : 0;
