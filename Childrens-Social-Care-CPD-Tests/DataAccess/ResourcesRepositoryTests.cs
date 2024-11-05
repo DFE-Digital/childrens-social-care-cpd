@@ -176,6 +176,7 @@ public class ResourcesRepositoryTests
     public async Task FindByTagsAsync_Sets_Preview_Flag()
     {
         // arrange
+        _applicationConfiguration.AzureEnvironment.Returns(ApplicationEnvironment.PreProduction);
         _applicationConfiguration.ContentfulEnvironment.Returns(ApplicationEnvironment.PreProduction);
 
         var response = Substitute.For<GraphQLResponse<SearchResourcesByTags.ResponseType>>();
@@ -306,6 +307,7 @@ public class ResourcesRepositoryTests
     public async Task GetByIdAsync_Sets_Preview_Flag()
     {
         // arrange
+        _applicationConfiguration.AzureEnvironment.Returns(ApplicationEnvironment.PreProduction);
         _applicationConfiguration.ContentfulEnvironment.Returns(ApplicationEnvironment.PreProduction);
 
         var collection = new ContentfulCollection<Content>

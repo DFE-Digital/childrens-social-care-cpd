@@ -43,6 +43,9 @@ public interface IApplicationConfiguration
     [RequiredForEnvironment(ApplicationEnvironment.PreProduction, Hidden = false)]
     string ContentfulPreviewId { get; }
 
+    [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false, Obfuscate = false)]
+    bool ContentfulForcePreview { get; }
+
     [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false)]
     string ContentfulSpaceId { get; }
 
@@ -60,12 +63,12 @@ public interface IApplicationConfiguration
     [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false)]
     string GoogleTagManagerKey { get; }
 
-    [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false)]
+    [RequiredForEnvironment(ApplicationEnvironment.None, Hidden = false)]
     string SearchApiKey { get; }
 
-    [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false)]
+    [RequiredForEnvironment(ApplicationEnvironment.None, Hidden = false)]
     string SearchEndpoint { get; }
 
-    [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false, Obfuscate = false)]
+    [RequiredForEnvironment(ApplicationEnvironment.None, Hidden = false, Obfuscate = false)]
     string SearchIndexName { get; }
 }

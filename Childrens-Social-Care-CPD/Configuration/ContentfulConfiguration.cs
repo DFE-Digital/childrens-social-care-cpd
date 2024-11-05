@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Security.Policy;
 
 namespace Childrens_Social_Care_CPD.Configuration;
 
@@ -7,10 +8,20 @@ public static class ContentfulConfiguration
 {
     public static bool IsPreviewEnabled(IApplicationConfiguration applicationConfiguration)
     {
-        var azureEnvironment = applicationConfiguration.AzureEnvironment;
-        return !string.IsNullOrEmpty(azureEnvironment)
-            && !string.Equals(azureEnvironment, ApplicationEnvironment.LoadTest, StringComparison.OrdinalIgnoreCase)
-            && !string.Equals(applicationConfiguration.ContentfulEnvironment, azureEnvironment, StringComparison.OrdinalIgnoreCase);
+        string azureEnvironment = applicationConfiguration.AzureEnvironment,
+            contentfulEnvironment = applicationConfiguration.ContentfulEnvironment;
+
+        if (applicationConfiguration.ContentfulForcePreview) return true;
+
+        // return true if azure environment is pre-prod
+        if (string.Equals(azureEnvironment, ApplicationEnvironment.PreProduction, StringComparison.OrdinalIgnoreCase)) return true;
+
+        // return true if azure environment is dev and contentful environment is test
+        if (string.Equals(azureEnvironment, ApplicationEnvironment.Development, StringComparison.OrdinalIgnoreCase)
+            && string.Equals(contentfulEnvironment, ApplicationEnvironment.Test, StringComparison.OrdinalIgnoreCase)) return true;
+
+        // for all other cases return false
+        return false;
     }
 
     public static ConfigurationManager GetContentfulConfiguration(ConfigurationManager configuration, IApplicationConfiguration applicationConfiguration)
