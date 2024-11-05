@@ -1,8 +1,19 @@
 name: 'Terraform Format'
 
 on: 
-  pull_request:
-    branches: [ "main", "next" ]
+  workflow_dispatch:
+    inputs:
+      workspace:
+        description: 'Terraform Workspace which should map to GitHub Environment'
+        required: true
+        default: 'Dev'
+        type: choice
+        options:
+          - Dev
+          - Test
+          - Pre-Prod
+          - Prod
+          - Load-Test
 
 jobs:
   terraform-fmt:
