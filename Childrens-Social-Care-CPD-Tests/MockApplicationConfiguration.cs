@@ -13,6 +13,7 @@ public class MockApplicationConfiguration : IApplicationConfiguration
     public string _contentfulGraphqlConnectionString = null;
     public string _contentfulPreviewHost = null;
     public string _contentfulPreviewId = null;
+    public bool _contentfulForcePreview = false;
     public string _contentfulSpaceId = null;
     public bool _disableSecureCookies = false;
     public int _featurePollingInterval = 0;
@@ -35,6 +36,7 @@ public class MockApplicationConfiguration : IApplicationConfiguration
     public string ContentfulGraphqlConnectionString => _contentfulGraphqlConnectionString;
     public string ContentfulPreviewHost => _contentfulPreviewHost;
     public string ContentfulPreviewId => _contentfulPreviewId;
+    public bool ContentfulForcePreview => _contentfulForcePreview;
     public string ContentfulSpaceId => _contentfulSpaceId;
     public bool DisableSecureCookies => _disableSecureCookies;
     public int FeaturePollingInterval => _featurePollingInterval;
@@ -60,6 +62,7 @@ public class MockApplicationConfiguration : IApplicationConfiguration
         _contentfulGraphqlConnectionString = value;
         _contentfulPreviewHost = value;
         _contentfulPreviewId = value;
+        _contentfulForcePreview = false;
         _contentfulSpaceId = value;
         _disableSecureCookies = false;
         _featurePollingInterval = 0;

@@ -14,8 +14,11 @@ public static class PartialsFactory
     {
         return item switch
         {
+            Accordion => "_Accordion",
+            AccordionSection => "_AccordionSection",
             AreaOfPractice => "_AreaOfPractice",
             AreaOfPracticeList => "_AreaOfPracticeList",
+            AssetDownload => "_AssetDownload",
             AudioResource => "_AudioResource",
             BackToTop => "_BackToTop",
             ColumnLayout => "_ColumnLayout",
@@ -23,8 +26,10 @@ public static class PartialsFactory
             ContentLink => "_ContentLink",
             ContentSeparator => "_ContentSeparator",
             ContentsAnchor => "_ContentsAnchor",
+            CreditBlock => "_CreditBlock",
             DetailedRole => "_DetailedRole",
             DetailedPathway => "_DetailedPathway",
+            Details => "_Details",
             Feedback => "_Feedback",
             HeroBanner => string.Empty,// skip - handled in specific layout section
             ImageCard => "_ImageCard",
