@@ -17,7 +17,6 @@
 </td>
 </tr>
 
-
 <td>
 Content
 </td>
@@ -31,7 +30,6 @@ A content container
 N/A
 </td>
 </tr>
-
 
 <tr>
 <td>
@@ -48,7 +46,6 @@ Acts as a link to other content, either internally within the Contentful content
 </td>
 </tr>
 
-
 <tr>
 <td>
 Link List
@@ -62,7 +59,6 @@ A card with a title and a list of Content Links
 N/A
 </td>
 </tr>
-
 
 <tr>
 <td>
@@ -79,7 +75,6 @@ N/A
 </td>
 </tr>
 
-
 <tr>
 <td>
 Rich Text Block
@@ -95,7 +90,6 @@ N/A
 </td>
 </tr>
 
-
 <td>
 Info Box
 </td>
@@ -109,7 +103,6 @@ A text box with a light blue shaded background and an 'i' information icon in th
 N/A
 </td>
 </tr>
-
 
 <tr>
 <td>
@@ -126,7 +119,6 @@ N/A
 </td>
 </tr>
 
-
 <tr>
 <td>
 Navigation Menu
@@ -141,7 +133,6 @@ A single depth menu to display on the page. How it is displayed depends upon the
 N/A
 </td>
 </tr>
-
 
 <tr>
 <td>
@@ -158,7 +149,6 @@ N/A
 </td>
 </tr>
 
-
 <tr>
 <td>
 Contents Anchor
@@ -174,7 +164,6 @@ N/A
 </td>
 <tr>
 
-
 <td>
 Page Content Item
 </td>
@@ -188,7 +177,6 @@ An individual item in a Page Contents component
 N/A
 </td>
 </tr>
-
 
 <tr>
 <td>
@@ -205,7 +193,6 @@ N/A
 </td>
 </tr>
 
-
 <tr>
 <td>
 Content Separator
@@ -221,5 +208,19 @@ N/A
 </td>
 </tr>
 
+<tr>
+<td>
+Details
+</td>
+<td>
+Allows users to view more detailed information if they need it, as per the GDS component of the same name.
+</td>
+<td>
+<img src="Component-Images\details.png">
+</td>
+<td>
+N/A
+</td>
+</tr>
 
 </table>
