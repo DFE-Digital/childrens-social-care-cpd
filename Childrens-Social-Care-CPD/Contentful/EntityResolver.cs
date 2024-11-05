@@ -13,10 +13,13 @@ public class EntityResolver : IContentTypeResolver
     {
         return contentTypeId switch
         {
-            "areaOfPractice" => typeof(AreaOfPractice),
-            "areaOfPracticeList" => typeof(AreaOfPracticeList),
+            "accordion" => typeof(Accordion),
+            "accordionSection" => typeof(AccordionSection),
             "applicationFeature" => typeof(ApplicationFeature),
             "applicationFeatures" => typeof(ApplicationFeatures),
+            "areaOfPractice" => typeof(AreaOfPractice),
+            "areaOfPracticeList" => typeof(AreaOfPracticeList),
+            "assetDownload" => typeof(AssetDownload),
             "audioResource" => typeof(AudioResource),
             "backToTop" => typeof(BackToTop),
             "columnLayout" => typeof(ColumnLayout),
@@ -24,8 +27,10 @@ public class EntityResolver : IContentTypeResolver
             "contentLink" => typeof(ContentLink),
             "contentsAnchor" => typeof(ContentsAnchor),
             "contentSeparator" => typeof(ContentSeparator),
+            "creditBlock" => typeof(CreditBlock),
             "detailedPathway" => typeof(DetailedPathway),
             "detailedRole" => typeof(DetailedRole),
+            "details" => typeof(Details),
             "feedback" => typeof(Feedback),
             "heroBanner" => typeof(HeroBanner),
             "imageCard" => typeof(ImageCard),

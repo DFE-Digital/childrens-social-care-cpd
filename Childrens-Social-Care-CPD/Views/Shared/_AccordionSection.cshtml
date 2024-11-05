@@ -1,0 +1,31 @@
+﻿@using Childrens_Social_Care_CPD.Contentful;
+@using Childrens_Social_Care_CPD.Contentful.Models;
+@using Childrens_Social_Care_CPD.Contentful.Renderers;
+
+@model AccordionSection
+@{
+    string sectionId = "accordion-section-" + @Model.Name.Replace(' ', '-');
+}
+<div class="govuk-accordion__section">
+    <div class="govuk-accordion__section-header">
+        <h2 class="govuk-accordion__section-heading">
+            <span class="govuk-accordion__section-button" id="@sectionId-heading">
+                @Model.Heading
+            </span>
+        </h2>
+        @if (Model.SummaryLine != null && Model.SummaryLine.Length > 0)
+        {
+            <div class="govuk-accordion__section-summary govuk-body" id="@sectionId-summary-line">
+                @Model.SummaryLine
+            </div>
+        }
+    </div>
+    <div id="@sectionId-content" class="govuk-accordion__section-content">
+        @{
+            foreach (var item in Model.Content)
+            {
+                await Html.RenderContentfulPartialAsync(item);
+            }
+        }
+    </div>
+</div>
