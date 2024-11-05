@@ -9,9 +9,10 @@
 }
 
 <div class="govuk-grid-row">
-    <div class="govuk-grid-column-three-quarters">
+    <div class="govuk-grid-column-full">
         <div class="credit-block govuk-details">
-            The resources have been developed by <partial name="_RichText" model="Model.DeveloperOfResource" view-data="ViewData" />
+            The resources have been developed by
+            <partial name="_RichText" model="Model.DeveloperOfResource" view-data="ViewData" />
             @if (@Model.SecondaryDevelopersOfResource != null)
             {
                 @:in collaboration with
