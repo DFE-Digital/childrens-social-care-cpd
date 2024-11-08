@@ -8,6 +8,13 @@ public static class ContentTypes
     public const string Resource = "Resource";
 }
 
+public static class PrintThisPageLocations
+{
+    public const string BeforeFeedback = "Before Feedback";
+    public const string BeforeCreditBlock = "Before Credit Block";
+    public const string BottomOfPage = "Bottom of Page";
+}
+
 public class Content : IContent
 {
     public string Id { get; set; }
@@ -24,6 +31,7 @@ public class Content : IContent
     public int? EstimatedReadingTime { get; set; }
     public List<Content> ParentPages { get; set; }
     public string BreadcrumbText { get; set; }
+    public string PrintThisPageLocation { get; set; }
 
     [JsonProperty("$metadata")]
     public ContentfulMetadata Metadata { get; set; }

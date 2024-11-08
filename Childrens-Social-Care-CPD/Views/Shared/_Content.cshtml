@@ -19,9 +19,24 @@
                 continue;
             }
 
+            switch (item)
+            {
+                case Feedback feedback: if (Model.PrintThisPageLocation == PrintThisPageLocations.BeforeFeedback) {
+                    <partial name="_PrintThisPage" />
+                }; break;
+
+                case CreditBlock creditBlock: if (Model.PrintThisPageLocation == PrintThisPageLocations.BeforeCreditBlock) {
+                    <partial name="_PrintThisPage" />
+                }; break;
+            }
+
             await Html.RenderContentfulPartialAsync(item);
         }
     }
 
     model.ContentStack.Pop();
+
+    if (Model.PrintThisPageLocation == PrintThisPageLocations.BottomOfPage) {
+        <partial name="_PrintThisPage" />
+    }
 }
