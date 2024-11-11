@@ -27,6 +27,7 @@ public static class PartialsFactory
             ContentSeparator => "_ContentSeparator",
             ContentsAnchor => "_ContentsAnchor",
             CreditBlock => "_CreditBlock",
+            DefaultButton => "_DefaultButton",
             DetailedRole => "_DetailedRole",
             DetailedPathway => "_DetailedPathway",
             Details => "_Details",
