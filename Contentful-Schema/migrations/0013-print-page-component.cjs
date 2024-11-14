@@ -4,30 +4,24 @@ module.exports = async function (migration, { makeRequest }) {
 
   migration
     .editContentType(contentTypeId)
-    .createField("printThisPageLocation")
-    .name("Print this Page Location")
-    .type("Symbol")
+    .createField("showPrintThisPage")
+    .name("Show Print this Page")
+    .type("Boolean")
     .localized(false)
     .required(false)
-    .validations([
-      {
-        in: [
-          "Before Feedback",
-          "Before Credit Block",
-          "Bottom of Page",
-          "None",
-        ],
-      },
-    ])
+    .validations([])
     .defaultValue({
-      "en-US": "None",
+      "en-US": true,
     })
     .disabled(false)
     .omitted(false);
 
-    migration
-      .editContentType(contentTypeId)
-      .changeFieldControl("printThisPageLocation", "builtin", "radio", {
-      helpText: "Where should a Print this Page component be located?",
+  migration
+    .editContentType(contentTypeId)
+    .changeFieldControl("showPrintThisPage", "builtin", "boolean", {
+      helpText:
+        "Should this page include a Print this Page component?  It requires that a Feedback component is included in the page's items.",
+      trueLabel: "Yes",
+      falseLabel: "No",
     });
-  };
+};

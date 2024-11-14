@@ -19,15 +19,9 @@
                 continue;
             }
 
-            switch (item)
+            if (item is Feedback && Model.ShowPrintThisPage)
             {
-                case Feedback feedback: if (Model.PrintThisPageLocation == PrintThisPageLocations.BeforeFeedback) {
-                    <partial name="_PrintThisPage" />
-                }; break;
-
-                case CreditBlock creditBlock: if (Model.PrintThisPageLocation == PrintThisPageLocations.BeforeCreditBlock) {
-                    <partial name="_PrintThisPage" />
-                }; break;
+                <partial name="_PrintThisPage" />
             }
 
             await Html.RenderContentfulPartialAsync(item);
@@ -35,8 +29,4 @@
     }
 
     model.ContentStack.Pop();
-
-    if (Model.PrintThisPageLocation == PrintThisPageLocations.BottomOfPage) {
-        <partial name="_PrintThisPage" />
-    }
 }
