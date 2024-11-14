@@ -54,13 +54,13 @@
 else if (preferenceSet)
 {
     var consentVerb = consentState == AnalyticsConsentState.Accepted ? "accepted" : "rejected";
-    
+
     <div class="govuk-cookie-banner" id="divCookieBannerId" data-nosnippet="" role="region" aria-label="@headingText">
         <div class="govuk-cookie-banner__message govuk-width-container" id="divCookieMessageActioned">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-three-quarters">
                     <div class="govuk-cookie-banner__content">
-                        <p>You’ve @consentVerb essential and analytics cookies. You can
+                        <p>You’ve @consentVerb analytics cookies. You can
                             @_contentLinkRenderer.Render(new ContentLink() { Name = "change your cookie settings", Uri = cookiesUrl }))
                              at any time.</p>
                     </div>
