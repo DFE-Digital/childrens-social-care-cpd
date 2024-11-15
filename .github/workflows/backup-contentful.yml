@@ -16,26 +16,26 @@ jobs:
 
     steps:
     - name: Run backup container
-      run: docker run --rm -e token=$MANAGEMENT_TOKEN -e space=$SPACE -e envid=$ENVID -v $PWD:/opt/backup ghcr.io/dfe-digital/contentful-space-export:master
+      run: docker run --rm -e token=$MANAGEMENT_TOKEN -e space=$SPACE -e envid=$ENVID -v $PWD:/opt/backup ghcr.io/dfe-digital/contentful-space-export:latest
 
-    - name: Checkout destination repository
-      uses: actions/checkout@v2
-      with:
-        repository: DFE-Digital/childrens-social-care-cpd-contentful-backup
-        token: ${{ secrets.BACKUP_REPO_PAT }}
-        path: backup
+    # - name: Checkout destination repository
+    #   uses: actions/checkout@v2
+    #   with:
+    #     repository: DFE-Digital/childrens-social-care-cpd-contentful-backup
+    #     token: ${{ secrets.BACKUP_REPO_PAT }}
+    #     path: backup
 
-    - name: Copy output and commit
-      run: |
-        cp `find *.json` backup/prod-contentful-backup-output.json
-        cd backup
-        if git diff --exit-code --quiet; then
-          echo "No changes detected, skipping push"
-        else
-          git config user.name "DfE Robot"
-          git config user.email  ${{ secrets.CONTENTFUL_BACKUP_EMAIL }}
-          git add prod-contentful-backup-output.json
-          git commit -m "Upload new backup"
-          git push
-        fi
+    # - name: Copy output and commit
+    #   run: |
+    #     cp `find *.json` backup/prod-contentful-backup-output.json
+    #     cd backup
+    #     if git diff --exit-code --quiet; then
+    #       echo "No changes detected, skipping push"
+    #     else
+    #       git config user.name "DfE Robot"
+    #       git config user.email  ${{ secrets.CONTENTFUL_BACKUP_EMAIL }}
+    #       git add prod-contentful-backup-output.json
+    #       git commit -m "Upload new backup"
+    #       git push
+    #     fi
 
