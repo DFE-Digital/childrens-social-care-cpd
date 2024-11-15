@@ -30,6 +30,7 @@ public static class PartialsFactory
             DetailedRole => "_DetailedRole",
             DetailedPathway => "_DetailedPathway",
             Details => "_Details",
+            EmbeddedVideo => "_EmbeddedVideo",
             Feedback => "_Feedback",
             HeroBanner => string.Empty,// skip - handled in specific layout section
             ImageCard => "_ImageCard",

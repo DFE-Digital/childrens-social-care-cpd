@@ -31,6 +31,7 @@ public class EntityResolver : IContentTypeResolver
             "detailedPathway" => typeof(DetailedPathway),
             "detailedRole" => typeof(DetailedRole),
             "details" => typeof(Details),
+            "embeddedVideo" => typeof(EmbeddedVideo),
             "feedback" => typeof(Feedback),
             "heroBanner" => typeof(HeroBanner),
             "imageCard" => typeof(ImageCard),

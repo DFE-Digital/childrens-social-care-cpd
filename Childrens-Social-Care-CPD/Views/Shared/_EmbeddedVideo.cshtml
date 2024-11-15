@@ -1,0 +1,9 @@
+﻿@using Childrens_Social_Care_CPD.Contentful;
+@using Childrens_Social_Care_CPD.Contentful.Models;
+@using Childrens_Social_Care_CPD.Contentful.Renderers;
+
+@model EmbeddedVideo
+
+<div class="govuk-grid-row">
+    @Html.Raw(@Model.EmbeddingCode)
+</div>
