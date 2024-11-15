@@ -10,7 +10,7 @@ jobs:
     name: 'Backup Contentful'
     runs-on: ubuntu-latest
     env:
-      ENVID: prod
+      ENVID: master
       SPACE: ${{ secrets.TF_VAR_CPD_SPACE_ID }}
       MANAGEMENT_TOKEN: ${{ secrets.CONTENTFUL_MANAGEMENT_TOKEN }}
 
