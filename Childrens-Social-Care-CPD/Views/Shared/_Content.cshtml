@@ -19,6 +19,11 @@
                 continue;
             }
 
+            if (item is Feedback && Model.ShowPrintThisPage)
+            {
+                <partial name="_PrintThisPage" />
+            }
+
             await Html.RenderContentfulPartialAsync(item);
         }
     }

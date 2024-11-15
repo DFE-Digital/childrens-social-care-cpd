@@ -24,6 +24,7 @@ public class Content : IContent
     public int? EstimatedReadingTime { get; set; }
     public List<Content> ParentPages { get; set; }
     public string BreadcrumbText { get; set; }
+    public bool ShowPrintThisPage { get; set; }
 
     [JsonProperty("$metadata")]
     public ContentfulMetadata Metadata { get; set; }

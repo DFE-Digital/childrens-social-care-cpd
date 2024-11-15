@@ -10,3 +10,4 @@
 0010-breadcrumbs.cjs
 0011-create-agency-standards-page-category.cjs
 0012-credit-block-component.cjs
+0013-print-page-component.cjs
