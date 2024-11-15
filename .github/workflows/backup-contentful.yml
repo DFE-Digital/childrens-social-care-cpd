@@ -15,6 +15,9 @@ jobs:
       MANAGEMENT_TOKEN: ${{ secrets.CONTENTFUL_MANAGEMENT_TOKEN }}
 
     steps:
+    - name: Pull backup container image
+      run: docker pull ghcr.io/dfe-digital/contentful-space-export:latest
+
     - name: Run backup container
       run: docker run --rm -e token=$MANAGEMENT_TOKEN -e space=$SPACE -e envid=$ENVID -v $PWD:/opt/backup ghcr.io/dfe-digital/contentful-space-export:latest
 
