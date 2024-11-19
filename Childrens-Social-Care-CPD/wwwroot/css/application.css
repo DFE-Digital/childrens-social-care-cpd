@@ -11710,19 +11710,22 @@ CONTENT TITLE BANNER
   left: -30px;
 }
 
+.prompt .govuk-grid-row {
+  position: relative;
+}
+
 .prompt .govuk-grid-column-one-quarter {
-  margin-right: -120px;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .prompt .govuk-grid-column-three-quarters {
-  padding: 15px;
+  padding-left: 65px;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
-@media (min-width: 40em) and (max-width: 61.5em) {
-  .prompt .govuk-grid-column-three-quarters {
-    padding-left: 40px;
-  }
-}
 @media (max-width: 40.0625em) {
   .prompt .small-screen-padding-right {
     padding-right: 20px;
