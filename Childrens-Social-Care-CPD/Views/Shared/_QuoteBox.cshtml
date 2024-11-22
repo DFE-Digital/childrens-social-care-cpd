@@ -1,0 +1,14 @@
+﻿@using Childrens_Social_Care_CPD.Contentful.Models;
+@using Childrens_Social_Care_CPD.Contentful;
+@using Childrens_Social_Care_CPD.Contentful.Renderers;
+
+@model QuoteBox
+
+
+<div class="blockquote-container">
+    <blockquote class="quote">
+        @{
+            await Html.RenderPartialAsync("_RichText", Model.QuoteText);
+        }
+    </blockquote>
+</div>

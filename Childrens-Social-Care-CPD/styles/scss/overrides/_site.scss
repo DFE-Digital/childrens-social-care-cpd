@@ -395,3 +395,54 @@ div#page-feedback a {
     font-size: 19px;
     line-height: 1.1429;
 }
+
+/* quote box */
+.blockquote-container {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.blockquote-container blockquote.quote {
+    position: relative;
+    border: 3px solid #0b0c0c;
+    padding: 20px;
+    margin: 16px 20px;
+}
+
+@media (min-width: 40.0625em) {
+    .blockquote-container blockquote.quote {
+        margin: 16px 40px;
+    }
+}
+
+.blockquote-container blockquote.quote p {
+    padding: 0 0 0 10px;
+    margin-top: 10px;
+    position: relative;
+    z-index: 9999;
+    border: none;
+    max-width: 100%;
+}
+
+@media (min-width: 40.0625em) {
+    .blockquote-container blockquote.quote p {
+        padding-left: 40px;
+    }
+}
+
+.blockquote-container blockquote.quote p::before {
+    content: none;
+}
+
+.blockquote-container blockquote.quote::before {
+    position: absolute;
+    content: "“";
+    font-size: 8em;
+    margin-top: -0.4em;
+    background-color: #ffffff;
+    line-height: 0.9;
+    height: 50px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-family: serif;
+}
