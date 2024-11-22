@@ -328,6 +328,7 @@
     padding-left: 65px;
     padding-top: 15px;
     padding-bottom: 15px;
+    width: 100%;
 }
 
 @media (max-width: 40.0625em) {
@@ -352,6 +353,10 @@
     }
 }
 */
+
+.prompt .govuk-body-m {
+    max-width: 100%;
+}
 
 .prompt.prompt-home .svg-inline--fa {
     background-color: #347ca9 !important;
