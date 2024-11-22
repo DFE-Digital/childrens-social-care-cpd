@@ -295,17 +295,28 @@
     overflow: hidden;
 }
 
-/* PROMPT classes borrowed from Help for Early Years */
-.prompt {
-    background-color: #f3f2f1;
-    border-top: #28a197 solid 10px;
+/* infobox classes borrowed from Help for Early Years */
+.infobox {
+    background: #ebf2f6;
+    border-top: #347ca9 solid 10px;
     margin: 25px 0;
     padding-left: 20px;
     padding-right: 20px;
+    position: relative;
 }
 
-.prompt .svg-inline--fa {
-    background-color: #28a197;
+.infobox-green-brain {
+    background-color: rgb(212, 244, 242);
+    border-top: 10px solid rgb(40, 161, 151);
+}
+
+.infobox-green-i {
+    background-color: rgb(243, 242, 241);
+    border-top: 10px solid rgb(40, 161, 151);
+}
+
+.infobox .svg-inline--fa {
+    background-color: #347ca9;
     color: #ffffff;
     padding: 20px !important;
     position: relative;
@@ -313,53 +324,35 @@
     width: 32px;
     top: -15px;
     left: -30px;
+    height: 1em;
 }
 
-.prompt .govuk-grid-row {
-    position: relative;
+.infobox .fa-green {
+    background-color: rgb(40, 161, 151);
 }
-.prompt .govuk-grid-column-one-quarter {
+
+.infobox .govuk-grid-column-one-quarter {
     position: absolute;
     top: 0;
     left: 0;
 }
 
-.prompt .govuk-grid-column-three-quarters {
-    padding-left: 65px;
+.infobox .govuk-grid-column-three-quarters {
+    padding-left: 75px;
     padding-top: 15px;
     padding-bottom: 15px;
+    padding-right: 25px;
     width: 100%;
 }
 
-@media (max-width: 40.0625em) {
-    .prompt .small-screen-padding-right {
-        padding-right: 20px;
-    }
-}
-
-.prompt.prompt-bg {
-    background-color: #d4f4f2;
-}
-
-.prompt.prompt-home {
-    background: #ebf2f6;
-    border-top: #347ca9 solid 10px;
-}
-
-/*
-@media (min-width: 48.0625em) {
-    .prompt.prompt-home .govuk-grid-column-one-quarter {
-        margin-right: -220px;
-    }
-}
-*/
-
-.prompt .govuk-body-m {
+.infobox .govuk-body-m {
     max-width: 100%;
 }
 
-.prompt.prompt-home .svg-inline--fa {
-    background-color: #347ca9 !important;
+@media (max-width: 40.0625em) {
+    .infobox .small-screen-padding-right {
+        padding-right: 20px;
+    }
 }
 
 /* Back to top component - styles taken from Help for Early Years */
