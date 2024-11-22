@@ -38,6 +38,7 @@ public static class PartialsFactory
             PageContents => "_PageContents",
             PageContentsItem => "_PageContentsItem",
             PdfFileResource => "_PdfFileResource",
+            QuoteBox => "_QuoteBox",
             RichTextBlock => "_RichTextBlock",
             RoleList => "_RoleList",
             NavigationMenu => "_NavigationMenu",
