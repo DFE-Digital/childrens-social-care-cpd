@@ -12,3 +12,4 @@
 0012-credit-block-component.cjs
 0013-print-page-component.cjs
 0014-add-type-field-to-infobox-component.cjs
+0015-quote-box-component.cjs
