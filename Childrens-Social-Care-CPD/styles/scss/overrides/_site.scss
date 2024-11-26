@@ -446,3 +446,17 @@ div#page-feedback a {
     padding-right: 10px;
     font-family: serif;
 }
+
+.blockquote-container blockquote.quote .quote-attribution-centre p {
+    text-align: center;
+}
+
+.blockquote-container blockquote.quote .quote-attribution-left p {
+    text-align: left;
+    padding-left: 75px;
+}
+
+.blockquote-container blockquote.quote .quote-attribution-right p {
+    text-align: right;
+    padding-right: 75px;
+}
