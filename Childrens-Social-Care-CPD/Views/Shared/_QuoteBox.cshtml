@@ -6,9 +6,30 @@
 
 
 <div class="blockquote-container">
-    <blockquote class="quote">
-        @{
-            await Html.RenderPartialAsync("_RichText", Model.QuoteText);
-        }
-    </blockquote>
+    <div class="govuk-grid-row">
+        <blockquote class="quote">
+            @{
+                await Html.RenderPartialAsync("_RichText", Model.QuoteText);
+            }
+            @if (Model.Attribution != null)
+            {
+                string attributionCss;
+                switch (Model.AttributionAlignment)
+                {
+                    case QuoteAttributionAlignment.Left: attributionCss = "quote-attribution-left"; break;
+                    case QuoteAttributionAlignment.Centre: attributionCss = "quote-attribution-centre"; break;
+                    case QuoteAttributionAlignment.Right:
+                    default:
+                        attributionCss = "quote-attribution-right";
+                        break;
+                }
+
+                <div class="@attributionCss">
+                    @{
+                        await Html.RenderPartialAsync("_RichText", Model.Attribution);
+                    }
+                </div>
+            }
+        </blockquote>
+    </div>
 </div>
