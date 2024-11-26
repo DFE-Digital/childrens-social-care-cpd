@@ -5,6 +5,7 @@ module.exports = async function (migration, { makeRequest }) {
     .name("Quote Box")
     .description("Allows display of quotes in a distinctive bordered box.")
     .displayField("name");
+
   quoteBox
     .createField("name")
     .name("Name")
@@ -66,9 +67,54 @@ module.exports = async function (migration, { makeRequest }) {
     .disabled(false)
     .omitted(false);
 
+  quoteBox
+    .createField("attribution")
+    .name("Attribution")
+    .type("RichText")
+    .localized(false)
+    .required(false)
+    .validations([
+      {
+        enabledMarks: ["bold", "italic", "underline"],
+        message: "Only bold, italic, and underline marks are allowed",
+      },
+      {
+        enabledNodeTypes: ["hyperlink"],
+        message: "Only link to Url nodes are allowed",
+      },
+      {
+        nodes: {},
+      },
+    ])
+    .disabled(false)
+    .omitted(false);
+
+  quoteBox
+    .createField("attributionAlignment")
+    .name("Attribution Alignment")
+    .type("Symbol")
+    .localized(false)
+    .required(false)
+    .validations([
+      {
+        in: ["Left", "Centre", "Right"],
+      },
+    ])
+    .defaultValue({
+      "en-US": "Right",
+    })
+    .disabled(false)
+    .omitted(false);
+
   quoteBox.changeFieldControl("name", "builtin", "singleLine", {});
   quoteBox.changeFieldControl("quoteText", "builtin", "richTextEditor", {});
-
+  quoteBox.changeFieldControl("attribution", "builtin", "richTextEditor", {
+    helpText: "Optional attribution for the quote",
+  });
+  quoteBox.changeFieldControl("attributionAlignment", "builtin", "radio", {
+    helpText:
+      "How should the attribution text be aligned?  Default is 'Right'.",
+  });
 
   /*
   * Add quoteBox to list of content types allowed in content pages
