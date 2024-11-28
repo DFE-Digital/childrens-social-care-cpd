@@ -12,7 +12,7 @@ jobs:
       CPD_DELIVERY_KEY: ${{secrets.TF_VAR_CPD_DELIVERY_KEY}}
       CPD_CLARITY: ${{secrets.TF_VAR_CPD_CLARITY}}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Build the Docker App Image
         run: cd Childrens-Social-Care-CPD; docker build . --file Dockerfile --tag childrens-social-care-cpd:latest
@@ -20,7 +20,7 @@ jobs:
       - name: Run the dev integration tests
         run: cd browser-tests/dev-integration-tests; docker-compose up --exit-code-from dev-integration-tests
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         name: Playwright report
         if: always()
         with:
