@@ -17,6 +17,9 @@ jobs:
       - name: Build the Docker App Image
         run: cd Childrens-Social-Care-CPD; docker build . --file Dockerfile --tag childrens-social-care-cpd:latest
 
+      - name: Verify Docker Compose installation
+        run: docker-compose --version
+        
       - name: Run the dev integration tests
         run: cd browser-tests/dev-integration-tests; docker-compose up --exit-code-from dev-integration-tests
 
