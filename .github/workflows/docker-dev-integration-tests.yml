@@ -37,6 +37,9 @@ jobs:
       - name: Verify npm version
         run: npm version
 
+      - name: Run the dev integration tests
+        run: cd browser-tests/dev-integration-tests; docker-compose up --exit-code-from dev-integration-tests
+
       - uses: actions/upload-artifact@v4
         name: Playwright report
         if: always()
@@ -46,9 +49,6 @@ jobs:
           path: |
             ${{ github.workspace }}/browser-tests/dev-integration-tests/playwright-report
       
-      - name: Run the dev integration tests
-        run: cd browser-tests/dev-integration-tests; docker-compose up --exit-code-from dev-integration-tests
-
       - name: Run Tidy up
         if: always()
         run: cd browser-tests/dev-integration-tests; docker-compose down --volumes      

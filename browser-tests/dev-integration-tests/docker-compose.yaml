@@ -22,6 +22,6 @@ services:
       - PLAYWRIGHT_BASE_URL=http://children-social-care-cpd
       - CI=1
     volumes:
-      - ./playwright-report:/app/playwright-report/
+      - ./playwright-report:./playwright-report/
     command: npx playwright test
     working_dir: /app
