@@ -20,21 +20,21 @@ jobs:
       - name: Install Docker Compose
         uses: ndeloof/install-compose-action@v0.0.1
         with:
-          version: v2.1.0  # or latest
+          version: latest  # or latest
           legacy: true  # install in PATH as `docker-compose`
 
       - name: Verify Docker Compose installation
         run: docker-compose --version
         
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: 'latest'
       
-      - name: Install npm version 10.9.1
-        run: npm install -g npm@10.9.1
+      - name: Install latest NPM version
+        run: npm install -g npm@latest
       
-      - name: Verify npm version
+      - name: Verify NPM version
         run: npm version
 
       - name: Run the dev integration tests
