@@ -17,6 +17,12 @@ jobs:
       - name: Build the Docker App Image
         run: cd Childrens-Social-Care-CPD; docker build . --file Dockerfile --tag childrens-social-care-cpd:latest
 
+      - name: Install Docker Compose
+        uses: ndeloof/install-compose-action@v0.0.1
+        with:
+          version: v2.1.0  # or latest
+          legacy: true  # install in PATH as `docker-compose`
+
       - name: Verify Docker Compose installation
         run: docker-compose --version
         
