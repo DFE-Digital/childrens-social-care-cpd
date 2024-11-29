@@ -23,6 +23,5 @@ services:
       - CI=1
     volumes:
       - ${PWD}/playwright-report:/app/playwright-report
-    command: echo $(PWD)
-    # command: npx playwright test
+    command: npx playwright test
     working_dir: /app
