@@ -4,9 +4,9 @@ services:
   children-social-care-cpd:
     image: childrens-social-care-cpd:latest
     environment:
-      - CPD_AZURE_ENVIRONMENT=dev-integration
+      - CPD_AZURE_ENVIRONMENT=dev
       - CPD_CLARITY=${CPD_CLARITY}
-      - CPD_CONTENTFUL_ENVIRONMENT=dev-integration
+      - CPD_CONTENTFUL_ENVIRONMENT=dev
       - CPD_DELIVERY_KEY=${CPD_DELIVERY_KEY}
       - CPD_GOOGLEANALYTICSTAG=${CPD_GOOGLEANALYTICSTAG}
       - CPD_PREVIEW_KEY=${CPD_PREVIEW_KEY}
@@ -22,6 +22,6 @@ services:
       - PLAYWRIGHT_BASE_URL=http://children-social-care-cpd
       - CI=1
     volumes:
-      - ./playwright-report:/app/playwright-report/
+      - ${PWD}/playwright-report:/app/playwright-report
     command: npx playwright test
     working_dir: /app
