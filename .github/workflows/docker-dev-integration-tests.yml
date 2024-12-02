@@ -12,15 +12,35 @@ jobs:
       CPD_DELIVERY_KEY: ${{secrets.TF_VAR_CPD_DELIVERY_KEY}}
       CPD_CLARITY: ${{secrets.TF_VAR_CPD_CLARITY}}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Build the Docker App Image
         run: cd Childrens-Social-Care-CPD; docker build . --file Dockerfile --tag childrens-social-care-cpd:latest
 
+      - name: Install Docker Compose
+        uses: ndeloof/install-compose-action@v0.0.1
+        with:
+          version: latest
+          legacy: true  # install in PATH as `docker-compose`
+
+      - name: Verify Docker Compose installation
+        run: docker-compose --version
+        
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'latest'
+      
+      - name: Install latest NPM version
+        run: npm install -g npm@latest
+      
+      - name: Verify NPM version
+        run: npm version
+
       - name: Run the dev integration tests
         run: cd browser-tests/dev-integration-tests; docker-compose up --exit-code-from dev-integration-tests
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         name: Playwright report
         if: always()
         with:
