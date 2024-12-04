@@ -35,6 +35,8 @@ public class EntityResolverTests
     [TestCase("linkListCard", typeof(LinkListCard))]
     [TestCase("pageContents", typeof(PageContents))]
     [TestCase("pageContentsItem", typeof(PageContentsItem))]
+    [TestCase("pathwaysModule", typeof(PathwaysModule))]
+    [TestCase("pathwaysModuleSection", typeof(PathwaysModuleSection))]
     [TestCase("pdfFileResource", typeof(PdfFileResource))]
     [TestCase("quoteBox", typeof(QuoteBox))]
     [TestCase("richTextBlock", typeof(RichTextBlock))]
