@@ -38,6 +38,8 @@ public class EntityResolver : IContentTypeResolver
             "linkListCard" => typeof(LinkListCard),
             "pageContents" => typeof(PageContents),
             "pageContentsItem" => typeof(PageContentsItem),
+            "pathwaysModule" => typeof(PathwaysModule),
+            "pathwaysModuleSection" => typeof(PathwaysModuleSection),
             "pdfFileResource" => typeof(PdfFileResource),
             "quoteBox" => typeof(QuoteBox),
             "richTextBlock" => typeof(RichTextBlock),
