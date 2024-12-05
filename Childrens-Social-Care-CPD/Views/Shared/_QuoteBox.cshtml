@@ -1,0 +1,35 @@
+﻿@using Childrens_Social_Care_CPD.Contentful.Models;
+@using Childrens_Social_Care_CPD.Contentful;
+@using Childrens_Social_Care_CPD.Contentful.Renderers;
+
+@model QuoteBox
+
+
+<div class="blockquote-container">
+    <div class="govuk-grid-row">
+        <blockquote class="quote">
+            @{
+                await Html.RenderPartialAsync("_RichText", Model.QuoteText);
+            }
+            @if (Model.Attribution != null)
+            {
+                string attributionCss;
+                switch (Model.AttributionAlignment)
+                {
+                    case QuoteAttributionAlignment.Left: attributionCss = "quote-attribution-left"; break;
+                    case QuoteAttributionAlignment.Centre: attributionCss = "quote-attribution-centre"; break;
+                    case QuoteAttributionAlignment.Right:
+                    default:
+                        attributionCss = "quote-attribution-right";
+                        break;
+                }
+
+                <div class="@attributionCss">
+                    @{
+                        await Html.RenderPartialAsync("_RichText", Model.Attribution);
+                    }
+                </div>
+            }
+        </blockquote>
+    </div>
+</div>

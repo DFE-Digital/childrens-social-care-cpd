@@ -36,6 +36,7 @@ public class EntityResolverTests
     [TestCase("pageContents", typeof(PageContents))]
     [TestCase("pageContentsItem", typeof(PageContentsItem))]
     [TestCase("pdfFileResource", typeof(PdfFileResource))]
+    [TestCase("quoteBox", typeof(QuoteBox))]
     [TestCase("richTextBlock", typeof(RichTextBlock))]
     [TestCase("roleList", typeof(RoleList))]
     [TestCase("navigationMenu", typeof(NavigationMenu))]
