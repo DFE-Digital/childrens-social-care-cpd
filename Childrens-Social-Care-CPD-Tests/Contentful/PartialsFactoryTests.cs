@@ -36,6 +36,7 @@ public partial class PartialsFactoryTests
         new object[] { new PageContents(), "_PageContents" },
         new object[] { new PageContentsItem(), "_PageContentsItem" },
         new object[] { new PdfFileResource(), "_PdfFileResource" },
+        new object[] { new QuoteBox(), "_QuoteBox" },
         new object[] { new RichTextBlock(), "_RichTextBlock" },
         new object[] { new RoleList(), "_RoleList" },
         new object[] { new TextBlock(), "_TextBlock" },

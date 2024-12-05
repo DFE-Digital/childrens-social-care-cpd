@@ -39,6 +39,7 @@ public class EntityResolver : IContentTypeResolver
             "pageContents" => typeof(PageContents),
             "pageContentsItem" => typeof(PageContentsItem),
             "pdfFileResource" => typeof(PdfFileResource),
+            "quoteBox" => typeof(QuoteBox),
             "richTextBlock" => typeof(RichTextBlock),
             "roleList" => typeof(RoleList),
             "navigationMenu" => typeof(NavigationMenu),
