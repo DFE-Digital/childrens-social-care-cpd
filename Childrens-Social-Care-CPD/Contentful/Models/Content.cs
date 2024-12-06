@@ -34,10 +34,20 @@ public class Content : IContent
     public List<Content> ParentPages { get; set; }
     public string BreadcrumbText { get; set; }
     public bool ShowPrintThisPage { get; set; }
-    public PathwaysModule PathwaysModule {get; set; }
-    public string PageType {get; set; }
+    public PathwaysModule PathwaysModule { get; set; }
+    public string PageType { get; set; }
 
     [JsonProperty("$metadata")]
     public ContentfulMetadata Metadata { get; set; }
     public SystemProperties Sys { get; set; }
+
+    public bool IsPathwaysPage {
+        get {
+            return PageType == Models.PageType.PathwaysCertificate
+                || PageType == Models.PageType.PathwaysContentsPage
+                || PageType == Models.PageType.PathwaysDeclaration
+                || PageType == Models.PageType.PathwaysOverviewPage
+                || PageType == Models.PageType.PathwaysTrainingContent;
+        }
+    }
 }
