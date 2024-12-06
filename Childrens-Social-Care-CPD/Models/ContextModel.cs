@@ -1,4 +1,5 @@
 ﻿using Childrens_Social_Care_CPD.Contentful.Models;
+using Childrens_Social_Care_CPD.Contentful.Navigation;
 
 namespace Childrens_Social_Care_CPD.Models;
 
@@ -18,7 +19,8 @@ public record ContextModel(
     ContentLink BackLink = null,
     bool FeedbackSubmitted = false,
     List<KeyValuePair<string, string>> BreadcrumbTrail = null,
-    PublishDates PublishDates = null)
+    PublishDates PublishDates = null,
+    INavigationHelper NavigationHelper = null)
 {
     public Stack<string> ContentStack { get; } = new Stack<string>();
 }
