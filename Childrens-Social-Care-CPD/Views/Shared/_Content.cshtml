@@ -29,4 +29,9 @@
     }
 
     model.ContentStack.Pop();
+
+    if (Model.PageType == PageType.PathwaysContentsPage) 
+    {
+        <partial name="_PathwaysModuleIndex" />
+    }
 }
