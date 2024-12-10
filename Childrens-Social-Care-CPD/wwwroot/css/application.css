@@ -11948,6 +11948,11 @@ div#page-feedback a {
   font-weight: normal;
 }
 
+.module-section--header {
+  display: grid;
+  grid-template-columns: auto 139px;
+}
+
 .module-overview--section {
   display: grid;
   grid-template-columns: 81px auto;
