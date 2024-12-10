@@ -65,6 +65,6 @@ public class ContentControllerServerTests
 
         // assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-        responseContent.Should().Contain("You have used an unkown content type");
+        responseContent.Should().Contain("You have used an unknown content type");
     }
 }
