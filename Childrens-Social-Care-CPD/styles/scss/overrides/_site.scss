@@ -607,3 +607,14 @@ section.completed {
 .module-section--item ul > li:last-child {
     margin-bottom: 0;
 }
+
+.contentful-configuration-error {
+    border: 2px solid black;
+    padding: 10px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.contentful-configuration-error .highlight {
+    color: red;
+}
