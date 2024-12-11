@@ -12052,6 +12052,17 @@ section.completed {
   margin-bottom: 0;
 }
 
+.contentful-configuration-error {
+  border: 2px solid black;
+  padding: 10px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.contentful-configuration-error .highlight {
+  color: red;
+}
+
 /*!
  * Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)

@@ -36,9 +36,15 @@
             <div class="module-section--content">
                 <div class="module-section--header">
                     <h4 class="govuk-heading-s">
-                        @moduleSection.Name <span class="module-section--pages">(@moduleSection.Pages.Count pages)</span>
+                        @if (moduleSection.Pages == null) {
+                            <div class="contentful-configuration-error">
+                                Configuration problem in Module Section: <span class="highlight">No pages defined</span><br />
+                                Add content item(s) to this Module Section to resolve this.
+                            </div>
+                        }
+                        @moduleSection.Name <span class="module-section--pages">(@moduleSection.Pages?.Count pages)</span>
                     </h4>
-                    <a href="/@moduleSection.Pages[0].Id" class="section-nav-link govuk-link" data-track-label="">Go to this section</a>
+                    <a href="/@moduleSection.Pages?[0].Id" class="section-nav-link govuk-link" data-track-label="">Go to this section</a>
                 </div>
                 <p class="govuk-body">@moduleSection.Summary</p>
                 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
