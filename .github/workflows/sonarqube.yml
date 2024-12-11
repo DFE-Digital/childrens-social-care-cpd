@@ -1,9 +1,11 @@
 name: Static code analysis
+
 on:
+  workflow_dispatch:
   pull_request:
-    branches:
-      - main
-      - next
+    types: [opened, synchronize, reopened]
+    # branches: ["next", "main", "release/**", "feature/**", "fix/**"]
+
 jobs:
   code-analysis:
     name: Static code analysis
