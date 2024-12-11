@@ -10,14 +10,14 @@ public class PathwaysNavigationHelper : INavigationHelper
     private NavigationLocation _previous;
 
     // properties
-    NavigationLocation INavigationHelper.Next 
+    public NavigationLocation Next
     {
         get
         {
             return _next;
         }
     }
-    NavigationLocation INavigationHelper.Previous 
+    public NavigationLocation Previous
     {
         get
         {
@@ -32,8 +32,7 @@ public class PathwaysNavigationHelper : INavigationHelper
             case PageType.PathwaysOverviewPage:
                 this._next = new NavigationLocation
                 {
-                    Name = "Start Pathway >",
-                    Url = "/" + page.PathwaysModule.OverviewPage.Id
+                    Url = "/" + page.PathwaysModule?.OverviewPage?.Id
                 };
             break;
 
