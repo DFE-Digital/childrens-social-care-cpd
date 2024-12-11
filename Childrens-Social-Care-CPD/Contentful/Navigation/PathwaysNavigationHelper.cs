@@ -7,7 +7,10 @@ public class PathwaysNavigationHelper : INavigationHelper
 {
     // fields
     private NavigationLocation _next;
+    /*
+    * restore this when implementing main training content
     private NavigationLocation _previous;
+    */
 
     // properties
     public NavigationLocation Next
@@ -17,6 +20,8 @@ public class PathwaysNavigationHelper : INavigationHelper
             return _next;
         }
     }
+    /*
+    * restore this when implementing main training content
     public NavigationLocation Previous
     {
         get
@@ -24,6 +29,7 @@ public class PathwaysNavigationHelper : INavigationHelper
             return _previous;
         }
     }
+    */
 
     public PathwaysNavigationHelper (Content page)
     {
@@ -32,7 +38,7 @@ public class PathwaysNavigationHelper : INavigationHelper
             case PageType.PathwaysOverviewPage:
                 this._next = new NavigationLocation
                 {
-                    Url = "/" + page.PathwaysModule?.OverviewPage?.Id
+                    Url = "/" + page.PathwaysModule?.ContentsPage?.Id
                 };
             break;
 
