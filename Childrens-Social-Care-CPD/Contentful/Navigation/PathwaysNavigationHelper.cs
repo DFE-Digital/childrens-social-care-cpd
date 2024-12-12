@@ -6,7 +6,7 @@ namespace Childrens_Social_Care_CPD.Contentful.Navigation;
 public class PathwaysNavigationHelper : INavigationHelper
 {
     // fields
-    private NavigationLocation _next;
+    private readonly NavigationLocation _next;
     /*
     * restore this when implementing main training content
     private NavigationLocation _previous;
