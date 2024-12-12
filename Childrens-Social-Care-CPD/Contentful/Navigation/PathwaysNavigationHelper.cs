@@ -53,11 +53,11 @@ public class PathwaysNavigationHelper : INavigationHelper
             case PageType.PathwaysTrainingContent:
                 int sectionCounter = 0;
 
-                page.PathwaysModule.Sections.ForEach(section => {
+                page.PathwaysModule?.Sections?.ForEach(section => {
 
                     var pageCounter = 0;
 
-                    section.Pages.ForEach(sectionPage => {
+                    section.Pages?.ForEach(sectionPage => {
 
                         if (sectionPage.Id == page.Id) {
                             SetTrainingPageNextNavigation (pageCounter, sectionCounter, page, section);
