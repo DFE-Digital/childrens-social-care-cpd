@@ -44,10 +44,8 @@ public class PathwaysNavigationHelper : INavigationHelper
 
             case PageType.PathwaysContentsPage:
                 var url = page.PathwaysModule?
-                    .Sections?
-                    .First<PathwaysModuleSection>()
-                    .Pages?
-                    .First<Content>()
+                    .Sections?[0]
+                    .Pages?[0]
                     .Id;
 
                 this._next = new NavigationLocation
