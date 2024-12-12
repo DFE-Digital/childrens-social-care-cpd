@@ -38,33 +38,35 @@
             </div>
         }
         else {
-            foreach (var moduleSection in Model.PathwaysModule?.Sections?)
-            {
-                sectionCount++;
-                <section class="module-overview--section">
-                    <div class="progress-bar">
-                        <span class="icon not_started">
-                            <span class="number">@sectionCount</span>
-                        </span>
-                        <div class="line"></div>
-                    </div>
-                    <div class="module-section--content">
-                        <div class="module-section--header">
-                            <h4 class="govuk-heading-s">
-                                @if (moduleSection.Pages == null) {
-                                    <div class="contentful-configuration-error">
-                                        Configuration problem in Module Section: <span class="highlight">No pages defined</span><br />
-                                        Add Content item(s) to this Pathways Module Section to resolve this.
-                                    </div>
-                                }
-                                @moduleSection.Name <span class="module-section--pages">(@moduleSection.Pages?.Count pages)</span>
-                            </h4>
-                            <a href="/@moduleSection.Pages?[0].Id" class="section-nav-link govuk-link" data-track-label="">Go to this section</a>
+            @if (Model.PathwaysModule?.Sections != null) {
+                foreach (var moduleSection in Model.PathwaysModule?.Sections?)
+                {
+                    sectionCount++;
+                    <section class="module-overview--section">
+                        <div class="progress-bar">
+                            <span class="icon not_started">
+                                <span class="number">@sectionCount</span>
+                            </span>
+                            <div class="line"></div>
                         </div>
-                        <p class="govuk-body">@moduleSection.Summary</p>
-                        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
-                    </div>
-                </section>
+                        <div class="module-section--content">
+                            <div class="module-section--header">
+                                <h4 class="govuk-heading-s">
+                                    @if (moduleSection.Pages == null) {
+                                        <div class="contentful-configuration-error">
+                                            Configuration problem in Module Section: <span class="highlight">No pages defined</span><br />
+                                            Add Content item(s) to this Pathways Module Section to resolve this.
+                                        </div>
+                                    }
+                                    @moduleSection.Name <span class="module-section--pages">(@moduleSection.Pages?.Count pages)</span>
+                                </h4>
+                                <a href="/@moduleSection.Pages?[0].Id" class="section-nav-link govuk-link" data-track-label="">Go to this section</a>
+                            </div>
+                            <p class="govuk-body">@moduleSection.Summary</p>
+                            <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+                        </div>
+                    </section>
+                }
             }
         }
     }
