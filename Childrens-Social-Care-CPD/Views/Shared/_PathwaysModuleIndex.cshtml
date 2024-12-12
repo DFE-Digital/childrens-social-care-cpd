@@ -39,7 +39,7 @@
         }
         else {
             @if (Model.PathwaysModule?.Sections != null) {
-                foreach (var moduleSection in Model.PathwaysModule?.Sections?)
+                foreach (var moduleSection in Model.PathwaysModule.Sections)
                 {
                     sectionCount++;
                     <section class="module-overview--section">
