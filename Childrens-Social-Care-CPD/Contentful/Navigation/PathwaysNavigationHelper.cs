@@ -43,17 +43,10 @@ public class PathwaysNavigationHelper : INavigationHelper
             break;
 
             case PageType.PathwaysContentsPage:
-                /* 
-                    TODO: this line needs a lot of hardening. It will fall over if the pathways
-                    module doesn't have sections, or if the first module section doesn't have pages.
-
-                    If it falls over in circumstances like that, the user ought to see a 
-                    fairly anodyne "misconfiguration' error
-                */
-                var url = page.PathwaysModule
-                    .Sections
+                var url = page.PathwaysModule?
+                    .Sections?
                     .First<PathwaysModuleSection>()
-                    .Pages
+                    .Pages?
                     .First<Content>()
                     .Id;
 
