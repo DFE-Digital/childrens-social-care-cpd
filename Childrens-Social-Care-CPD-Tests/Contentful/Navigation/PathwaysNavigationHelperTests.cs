@@ -535,5 +535,43 @@ public class PathwaysNavigationHelperTests
         sut.Previous.Should().Be(null);
     }
 
+    [Test]
+    public void Pathways_Training_Content_Page_Which_Is_Only_Page_In_Only_Section_Should_Have_Contents_Page_As_Previous_And_All_Pathways_As_Next ()
+    {
+        // setup
+        var page = new Content
+        {
+            PageType = PageType.PathwaysTrainingContent,
+            Id = "PAGE_ID",
+            PathwaysModule = new PathwaysModule
+            {
+                ContentsPage = new Content {
+                    Id = "CONTENTS_PAGE_ID"
+                },
+                Sections = new List<PathwaysModuleSection>
+                {
+                    new PathwaysModuleSection {
+                        Pages = new List<Content>
+                        {
+                            new Content
+                            {
+                                Id = "PAGE_ID"
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        // act
+        var sut = new PathwaysNavigationHelper(page);
+
+        // assert
+        sut.Next.Name.Should().Be("Go back to all pathways");
+        sut.Next.Url.Should().Be("/all-pathways");
+        sut.Previous.Name.Should().Be("Previous");
+        sut.Previous.Url.Should().Be("/CONTENTS_PAGE_ID");
+    }
+
     #endregion
 }
