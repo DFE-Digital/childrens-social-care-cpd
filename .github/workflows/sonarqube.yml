@@ -57,6 +57,7 @@ jobs:
           SONAR_TOKEN_AS: ${{ secrets.SONAR_TOKEN }}
         run: |
           dotnet-sonarscanner begin \
+            /d:sonar.scanner.skipJreProvisioning=true
             /k:"DFE-Digital_childrens-social-care-cpd" \
             /o:"def-digital" \
             /d:sonar.qualitygate.wait=true \
