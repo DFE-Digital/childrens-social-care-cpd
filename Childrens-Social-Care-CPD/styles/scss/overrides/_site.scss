@@ -460,3 +460,161 @@ div#page-feedback a {
     text-align: right;
     padding-right: 75px;
 }
+
+/*
+    Pathways Modules
+*/
+.progress-bar {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    gap: 5px;
+}
+@media (min-width: 40.0625em) {
+    .progress-bar {
+        gap: 10px;
+    }
+}
+.progress-bar .progress-bar--item:first-child .progress--heading {
+    margin-top: 2.5px;
+}
+@media (min-width: 40.0625em) {
+    .progress-bar .progress-bar--item:first-child .progress--heading {
+        margin-top: 4px;
+    }
+}
+.progress-bar .progress-bar--item .line {
+    width: 100%;
+    height: 0;
+    position: relative;
+    bottom: 17.25px;
+    right: 54%;
+    z-index: 0;
+    border-width: 2.5px;
+    border-top-style: solid;
+}
+@media (min-width: 40.0625em) {
+    .progress-bar .progress-bar--item .line {
+        bottom: 21px;
+        border-width: 4px;
+    }
+}
+
+.module-overview-section-break {
+    margin-left: 81px;
+}
+
+.greyed-out {
+    opacity: 0.5;
+}
+
+.module-section--pages {
+    margin-left: 10px;
+    color: #505a5f;
+    font-weight: normal;
+}
+
+.module-section--header {
+    display: grid;
+    grid-template-columns: auto 139px;
+}
+
+.module-overview--section {
+    display: grid;
+    grid-template-columns: 81px auto;
+}
+@media (max-width: 40.0525em) {
+    .module-overview--section {
+        grid-template-columns: 50px auto;
+    }
+}
+.module-overview--section .icon {
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    z-index: 2;
+    position: absolute;
+}
+.module-overview--section .icon.completed {
+    background-color: #1d70b8;
+    color: #ffffff;
+}
+.module-overview--section .icon.started {
+    background-color: #ffffff;
+    color: govuk-color("blue");
+    outline: 4px solid #1d70b8;
+    outline-offset: -4px;
+}
+.module-overview--section .icon.not_started {
+    background-color: #ffffff;
+    color: govuk-color("black");
+    outline: 1px solid #b1b4b6;
+    outline-offset: -1px;
+}
+.module-overview--section .line {
+    height: 100%;
+    border-left: 1px solid #b1b4b6;
+    position: relative;
+    z-index: 1;
+    right: -18px;
+}
+.module-overview--section .module-section--container {
+    display: grid;
+    grid-template-columns: auto 139px;
+    gap: 7px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.module-overview--section .module-section--container .progress-indicator {
+    margin-left: auto;
+}
+
+section.completed {
+    background-color: #f3f2f1;
+    border-radius: 6px;
+    padding: 40px;
+}
+@media (max-width: 40.0525em) {
+    section.completed {
+        padding: 20px;
+    }
+}
+
+.govuk-table {
+    margin-bottom: 0;
+}
+
+.module-section--item {
+    font-size: 1.1875rem;
+}
+.module-section--item ul {
+    list-style-type: disc;
+    padding-left: 15px;
+    margin-bottom: 0;
+}
+@media (max-width: 40.0525em) {
+    .module-section--item ul {
+        padding-left: 10px;
+    }
+}
+.module-section--item li {
+    list-style: square;
+}
+.module-section--item ul > li:last-child {
+    margin-bottom: 0;
+}
+
+.contentful-configuration-error {
+    border: 2px solid black;
+    padding: 10px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.contentful-configuration-error .highlight {
+    color: red;
+}

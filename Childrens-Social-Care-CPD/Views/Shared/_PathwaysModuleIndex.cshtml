@@ -1,0 +1,73 @@
+@using Childrens_Social_Care_CPD.Contentful;
+@using Childrens_Social_Care_CPD.Contentful.Models;
+
+@model Content
+
+@{
+    ContextModel contextModel = (ContextModel)ViewBag.ContextModel;
+
+    <a href="@contextModel.NavigationHelper.Next.Url" draggable="false" class="govuk-button govuk-button--start" data-module="govuk-button">
+        Start from the beginning
+        <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+            <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
+        </svg>
+    </a>
+
+    <section class="module-overview--section">
+        <div class="progress-bar">
+        </div>
+        <div class="module-section--content">
+            <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+        </div>
+    </section>
+
+    int sectionCount=0;
+
+    @if (Model.PathwaysModule == null) {
+        <div class="contentful-configuration-error">
+            Configuration problem in Page: <span class="highlight">No Pathways Module defined</span><br />
+            Add Pathways Module item to this Content item to resolve this.
+        </div>
+    }
+    else {
+
+        @if (Model.PathwaysModule.Sections == null) {
+            <div class="contentful-configuration-error">
+                Configuration problem in Pathways Module: <span class="highlight">No sections defined</span><br />
+                Add Pathways Module Section item(s) to this Pathways Module to resolve this.
+            </div>
+        }
+        else {
+            @if (Model.PathwaysModule?.Sections != null) {
+                foreach (var moduleSection in Model.PathwaysModule.Sections)
+                {
+                    sectionCount++;
+                    <section class="module-overview--section">
+                        <div class="progress-bar">
+                            <span class="icon not_started">
+                                <span class="number">@sectionCount</span>
+                            </span>
+                            <div class="line"></div>
+                        </div>
+                        <div class="module-section--content">
+                            <div class="module-section--header">
+                                <h4 class="govuk-heading-s">
+                                    @if (moduleSection.Pages == null) {
+                                        <div class="contentful-configuration-error">
+                                            Configuration problem in Module Section: <span class="highlight">No pages defined</span><br />
+                                            Add Content item(s) to this Pathways Module Section to resolve this.
+                                        </div>
+                                    }
+                                    @moduleSection.Name <span class="module-section--pages">(@moduleSection.Pages?.Count pages)</span>
+                                </h4>
+                                <a href="/@moduleSection.Pages?[0].Id" class="section-nav-link govuk-link" data-track-label="">Go to this section</a>
+                            </div>
+                            <p class="govuk-body">@moduleSection.Summary</p>
+                            <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+                        </div>
+                    </section>
+                }
+            }
+        }
+    }
+}
