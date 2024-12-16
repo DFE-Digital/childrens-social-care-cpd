@@ -4,4 +4,5 @@ public interface INavigationHelper
 {
     public NavigationLocation Next { get; }
     public NavigationLocation Previous { get; }
+    public LocationInfo CurrentLocation { get; }
 }

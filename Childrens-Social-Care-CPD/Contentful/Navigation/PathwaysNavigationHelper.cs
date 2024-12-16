@@ -10,6 +10,7 @@ public class PathwaysNavigationHelper : INavigationHelper
     // fields
     private NavigationLocation _next;
     private NavigationLocation _previous;
+    private LocationInfo _currentLocation;
 
     // properties
     public NavigationLocation Next
@@ -19,11 +20,20 @@ public class PathwaysNavigationHelper : INavigationHelper
             return _next;
         }
     }
+
     public NavigationLocation Previous
     {
         get
         {
             return _previous;
+        }
+    }
+
+    public LocationInfo CurrentLocation
+    {
+        get
+        {
+            return _currentLocation;
         }
     }
 
@@ -62,6 +72,7 @@ public class PathwaysNavigationHelper : INavigationHelper
                         if (sectionPage.Id == page.Id) {
                             SetTrainingPageNextNavigation (pageCounter, sectionCounter, page, section);
                             SetTrainingPagePreviousNavigation (pageCounter, sectionCounter, page, section);
+                            SetTrainingPageCurrentLocation (sectionCounter, page, section);
                         }
 
                         pageCounter++;
@@ -89,7 +100,7 @@ public class PathwaysNavigationHelper : INavigationHelper
                 // last page in section, but not last section in the module, next navigates to first page in next section
                 this._next = new NavigationLocation {
                     Name = "Next",
-                    Url = "/" + page.PathwaysModule.Sections[sectionCounter + 1].Pages[0].Id
+                    Url = "/" + page.PathwaysModule.Sections[sectionCounter + 1].Pages?[0].Id
                 };
             }
             else{
@@ -122,7 +133,7 @@ public class PathwaysNavigationHelper : INavigationHelper
                     Url = "/" + page
                         .PathwaysModule
                         .Sections[sectionCounter - 1]
-                        .Pages[page.PathwaysModule.Sections[sectionCounter - 1].Pages.Count - 1]
+                        .Pages?[page.PathwaysModule.Sections[sectionCounter - 1].Pages.Count - 1]
                         .Id
                 };
             }
@@ -136,5 +147,15 @@ public class PathwaysNavigationHelper : INavigationHelper
                 };
             }
         }
+    }
+
+    private void SetTrainingPageCurrentLocation (int currentSectionIdx, Content page, PathwaysModuleSection section)
+    {
+        this._currentLocation = new LocationInfo
+        {
+            SectionName = section.Name,
+            SectionNumber = currentSectionIdx + 1,
+            TotalSections = page.PathwaysModule.Sections.Count
+        };
     }
 }

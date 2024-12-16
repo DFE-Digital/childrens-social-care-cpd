@@ -573,5 +573,45 @@ public class PathwaysNavigationHelperTests
         sut.Previous.Url.Should().Be("/CONTENTS_PAGE_ID");
     }
 
+    [Test]
+    public void Pathways_Training_Content_Page_Should_Render_With_Current_Location_Info ()
+    {
+        // setup
+        var page = new Content
+        {
+            PageType = PageType.PathwaysTrainingContent,
+            Id = "PAGE_ID",
+            PathwaysModule = new PathwaysModule
+            {
+                ContentsPage = new Content {
+                    Id = "CONTENTS_PAGE_ID"
+                },
+                Sections = new List<PathwaysModuleSection>
+                {
+                    new PathwaysModuleSection (),
+                    new PathwaysModuleSection {
+                        Name = "SECTION_NAME",
+                        Pages = new List<Content>
+                        {
+                            new Content
+                            {
+                                Id = "PAGE_ID"
+                            }
+                        }
+                    },
+                    new PathwaysModuleSection ()
+                }
+            }
+        };
+
+        // act
+        var sut = new PathwaysNavigationHelper(page);
+
+        // assert
+        sut.CurrentLocation.SectionName.Should().Be("SECTION_NAME");
+        sut.CurrentLocation.SectionNumber.Should().Be(2);
+        sut.CurrentLocation.TotalSections.Should().Be(3);
+    }
+
     #endregion
 }
