@@ -9,12 +9,13 @@
 
         <a href="@contextModel.NavigationHelper.Previous.Url" button type="submit"
             class="govuk-button govuk-button--secondary" data-module="govuk-button" draggable="false">
-            Previous
+            @contextModel.NavigationHelper.Previous.Name
         </a>
 
         <a href="@contextModel.NavigationHelper.Next.Url" button type="submit" class="govuk-button govuk-button"
             data-module="govuk-button" draggable="false">
-            Next
+            @contextModel.NavigationHelper.Next.Name
         </a>
+
     }
 </div>
