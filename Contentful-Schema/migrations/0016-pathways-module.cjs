@@ -50,7 +50,7 @@ module.exports = async function (migration) {
 
   pathwaysModule
     .createField("contentsPage")
-    .name("Contents Page")
+    .name("Table of Contents Page")
     .type("Link")
     .localized(false)
     .required(false)
