@@ -4,6 +4,8 @@
 
 @if (Model != null && Model.ShowContentHeader)
 {
+    ContextModel contextModel = (ContextModel)ViewBag.ContextModel;
+
     <section id="content-banner" class="app-section-content app-section-content--blue govuk-!-margin-bottom-8">
         <div class="dfe-width-container">
             <div class="govuk-grid-row govuk-!-padding-top-3 govuk-!-padding-bottom-0">
@@ -14,6 +16,18 @@
                     <h1 id="content-banner-title" class="govuk-heading-xl">@Model.ContentTitle</h1>
                     <p id="content-banner-subtitle" class="govuk-body-l">@Model.ContentSubtitle</p>
                 </div>
+                @if (Model.PageType == PageType.PathwaysTrainingContent)
+                {
+                    <div class="govuk-grid-column-two-thirds-from-desktop govuk-!-padding-top-3 pathways-location-info">
+                        <span>
+                            Section @contextModel.NavigationHelper.CurrentLocation.SectionNumber of @contextModel.NavigationHelper.CurrentLocation.TotalSections
+                        </span>
+                        <br />
+                        <span class="pathways-location-section-title">
+                            @contextModel.NavigationHelper.CurrentLocation.SectionName
+                        </span>
+                    </div>
+                }
             </div>
         </div>
     </section>

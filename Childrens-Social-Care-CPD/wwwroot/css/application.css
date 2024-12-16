@@ -12063,6 +12063,16 @@ section.completed {
   color: red;
 }
 
+.pathways-location-info {
+  font-size: 19px;
+  color: #505A5F;
+  font-weight: 400;
+}
+
+.pathways-location-info .pathways-location-section-title {
+  font-weight: 700;
+}
+
 /*!
  * Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
