@@ -1,0 +1,21 @@
+@using Childrens_Social_Care_CPD.Contentful;
+@using Childrens_Social_Care_CPD.Contentful.Models;
+
+@model Content
+
+<div class="govuk-button-group">
+    @{
+        ContextModel contextModel = (ContextModel)ViewBag.ContextModel;
+
+        <a href="@contextModel.NavigationHelper.Previous.Url" button type="submit"
+            class="govuk-button govuk-button--secondary" data-module="govuk-button" draggable="false">
+            @contextModel.NavigationHelper.Previous.Name
+        </a>
+
+        <a href="@contextModel.NavigationHelper.Next.Url" button type="submit" class="govuk-button govuk-button"
+            data-module="govuk-button" draggable="false">
+            @contextModel.NavigationHelper.Next.Name
+        </a>
+
+    }
+</div>
