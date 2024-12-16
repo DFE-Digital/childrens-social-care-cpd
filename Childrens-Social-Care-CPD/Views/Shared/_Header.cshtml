@@ -69,6 +69,10 @@
                     {
                         RenderMenuItem("agencyResources", "Agency resources", "agency-resources", category == "Agency resources");
                     }
+                    if (featuresConfig.IsEnabled(Features.PathwaysTraining))
+                    {
+                        RenderMenuItem("pathwaysTraining", "Pathways training", "pathways-social-work-leadership-modules-available", category == "Pathways training");
+                    }
                 }
             </ul>
         </div>

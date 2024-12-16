@@ -15,3 +15,4 @@
 0015-quote-box-component.cjs
 0016-pathways-module.cjs
 0017-pathways-module-section.cjs
+0018-create-pathways-page-category.cjs
