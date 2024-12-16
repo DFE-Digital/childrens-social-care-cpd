@@ -60,7 +60,7 @@ jobs:
         run: |
           dotnet-sonarscanner begin \
             /k:"DFE-Digital_childrens-social-care-cpd" \
-            /o:"def-digital" \
+            /o:"dfe-digital" \
             /d:sonar.qualitygate.wait=true \
             /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml \
             /d:sonar.exclusions="**/*.css,**/*.scss,**/Models/*,**/Program.cs,**/WebApplicationBuilderExtensions.cs,**/GraphQL/Queries/*,**/Contentful-Schema/migrations/*.cjs" \
