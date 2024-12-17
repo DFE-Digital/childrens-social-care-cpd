@@ -6,7 +6,9 @@
 @{
     string gridClass = Model.ColumnCount == 2
         ? "govuk-grid-column-one-half"
-        : "govuk-grid-column-one-third";
+        : Model.ColumnCount == 3
+            ? "govuk-grid-column-one-third"
+            : "govuk-grid-column-one-quarter";
 
     @foreach (var group in Model.Items.Select((e, i) => new { ContentItem = e, Grouping = (i / Model.ColumnCount) }).GroupBy(e => e.Grouping))
     {
