@@ -10,7 +10,12 @@ public class PathwaysNavigationHelper : INavigationHelper
     // fields
     private NavigationLocation _next;
     private NavigationLocation _previous;
+    private readonly NavigationLocation _availablePathwaysPage = new NavigationLocation
+    {
+        Url = "/pathways-social-work-leadership-modules-available"
+    };
     private LocationInfo _currentLocation;
+
 
     // properties
     public NavigationLocation Next
@@ -29,6 +34,14 @@ public class PathwaysNavigationHelper : INavigationHelper
         }
     }
 
+    public NavigationLocation AvailablePathwaysPage
+    {
+        get
+        {
+            return _availablePathwaysPage;
+        }
+    }
+
     public LocationInfo CurrentLocation
     {
         get
@@ -37,7 +50,7 @@ public class PathwaysNavigationHelper : INavigationHelper
         }
     }
 
-    public PathwaysNavigationHelper (Content page)
+    public PathwaysNavigationHelper(Content page)
     {
         switch (page.PageType)
         {
@@ -46,7 +59,7 @@ public class PathwaysNavigationHelper : INavigationHelper
                 {
                     Url = "/" + page.PathwaysModule?.ContentsPage?.Id
                 };
-            break;
+                break;
 
             case PageType.PathwaysContentsPage:
                 var url = page.PathwaysModule?
@@ -58,21 +71,24 @@ public class PathwaysNavigationHelper : INavigationHelper
                 {
                     Url = "/" + url
                 };
-            break;
+                break;
 
             case PageType.PathwaysTrainingContent:
                 int sectionCounter = 0;
 
-                page.PathwaysModule?.Sections?.ForEach(section => {
+                page.PathwaysModule?.Sections?.ForEach(section =>
+                {
 
                     var pageCounter = 0;
 
-                    section.Pages?.ForEach(sectionPage => {
+                    section.Pages?.ForEach(sectionPage =>
+                    {
 
-                        if (sectionPage.Id == page.Id) {
-                            SetTrainingPageNextNavigation (pageCounter, sectionCounter, page, section);
-                            SetTrainingPagePreviousNavigation (pageCounter, sectionCounter, page, section);
-                            SetTrainingPageCurrentLocation (sectionCounter, page, section);
+                        if (sectionPage.Id == page.Id)
+                        {
+                            SetTrainingPageNextNavigation(pageCounter, sectionCounter, page, section);
+                            SetTrainingPagePreviousNavigation(pageCounter, sectionCounter, page, section);
+                            SetTrainingPageCurrentLocation(sectionCounter, page, section);
                         }
 
                         pageCounter++;
@@ -81,41 +97,52 @@ public class PathwaysNavigationHelper : INavigationHelper
                     sectionCounter++;
                 });
 
-            break;
+                break;
+
+            case PageType.AllPathwaysOverviewPage:
+                this._next = AvailablePathwaysPage;
+                break;
         }
     }
 
-    private void SetTrainingPageNextNavigation (int pageCounter, int sectionCounter, Content page, PathwaysModuleSection section) 
+    private void SetTrainingPageNextNavigation(int pageCounter, int sectionCounter, Content page, PathwaysModuleSection section)
     {
-        if (pageCounter < section.Pages.Count - 1) {
+        if (pageCounter < section.Pages.Count - 1)
+        {
             // not the last page in the section, make the next link navigate to the next page in the section
-            this._next = new NavigationLocation {
+            this._next = new NavigationLocation
+            {
                 Name = "Next",
                 Url = "/" + section.Pages[pageCounter + 1].Id
             };
         }
-        else 
+        else
         {
-            if (sectionCounter < page.PathwaysModule.Sections.Count - 1) {
+            if (sectionCounter < page.PathwaysModule.Sections.Count - 1)
+            {
                 // last page in section, but not last section in the module, next navigates to first page in next section
-                this._next = new NavigationLocation {
+                this._next = new NavigationLocation
+                {
                     Name = "Next",
                     Url = "/" + page.PathwaysModule.Sections[sectionCounter + 1].Pages?[0].Id
                 };
             }
-            else{
+            else
+            {
                 // last page in last module, next navigates to 'all pathways page'
-                this._next = new NavigationLocation {
-                    Url = "/all-pathways",
+                this._next = new NavigationLocation
+                {
+                    Url = AvailablePathwaysPage.Url,
                     Name = "Go back to all pathways"
                 };
             }
         }
     }
 
-    private void SetTrainingPagePreviousNavigation (int pageCounter, int sectionCounter, Content page, PathwaysModuleSection section)
+    private void SetTrainingPagePreviousNavigation(int pageCounter, int sectionCounter, Content page, PathwaysModuleSection section)
     {
-        if (pageCounter > 0) {
+        if (pageCounter > 0)
+        {
             // not the first page in the section, so previous navigates to previous page
             this._previous = new NavigationLocation
             {
@@ -123,9 +150,10 @@ public class PathwaysNavigationHelper : INavigationHelper
                 Url = "/" + section.Pages[pageCounter - 1].Id
             };
         }
-        else 
+        else
         {
-            if (sectionCounter > 0) {
+            if (sectionCounter > 0)
+            {
                 // first page in section, but not first section, previous should navigate back to last page in previous section
                 this._previous = new NavigationLocation
                 {
@@ -149,7 +177,7 @@ public class PathwaysNavigationHelper : INavigationHelper
         }
     }
 
-    private void SetTrainingPageCurrentLocation (int currentSectionIdx, Content page, PathwaysModuleSection section)
+    private void SetTrainingPageCurrentLocation(int currentSectionIdx, Content page, PathwaysModuleSection section)
     {
         this._currentLocation = new LocationInfo
         {

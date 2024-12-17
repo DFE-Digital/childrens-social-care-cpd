@@ -147,7 +147,7 @@ module.exports = async function (migration) {
       showCreateEntityAction: false,
     }
   );
-  
+
   // Add content type to fields on Content content type: approach 2
   const contentTypeId = "content";
   migration
@@ -190,6 +190,7 @@ module.exports = async function (migration) {
           "Pathways: Overview Page",
           "Pathways: Table of Contents",
           "Pathways: Training Content",
+          "Pathways: All Pathways Overview Page",
         ],
       },
     ])
