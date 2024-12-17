@@ -1,5 +1,7 @@
 ﻿@using Childrens_Social_Care_CPD.Contentful.Models;
 
+@model Content
+
 @{
     var contextModel = (ContextModel)ViewData["ContextModel"];
     var breadcrumbs = contextModel.BreadcrumbTrail;
@@ -8,13 +10,25 @@
 
 <div class="govuk-breadcrumbs govuk-breadcrumbs--collapse-on-mobile">
     <ul>
-    @foreach(KeyValuePair<string, string> trailItem in breadcrumbs)
+    @if (Model.PageType == PageType.PathwaysTrainingContent)
     {
         <li class="govuk-breadcrumbs__list-item">
-            <a class="govuk-breadcrumbs__link" href="/@trailItem.Value">
-                @trailItem.Key
+            &lt; 
+            <a class="govuk-breadcrumbs__link" href="/@Model.PathwaysModule.OverviewPage.Id">
+                Back to @Model.PathwaysModule.OverviewPage.Title
             </a>
         </li>
+    }
+    else
+    {
+        @foreach(KeyValuePair<string, string> trailItem in breadcrumbs)
+        {
+            <li class="govuk-breadcrumbs__list-item">
+                <a class="govuk-breadcrumbs__link" href="/@trailItem.Value">
+                    @trailItem.Key
+                </a>
+            </li>
+        }
     }
     </ul>
 </div>
