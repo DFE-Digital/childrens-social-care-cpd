@@ -1,11 +1,5 @@
 name: Static code analysis
 
-# on:
-#   pull_request:
-#     branches:
-#       - main
-#       - next
-
 on:
   workflow_dispatch:
   # push:
