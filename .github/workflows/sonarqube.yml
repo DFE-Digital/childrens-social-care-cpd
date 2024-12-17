@@ -67,6 +67,7 @@ jobs:
           dotnet-sonarscanner begin \
             /k:"as2024ad_sfsw" \
             /o:"as2024ad" \        
+            /d:sonar.projectKey="as2024ad_sfsw" \
             /d:sonar.qualitygate.wait=true \
             /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml \
             /d:sonar.exclusions="**/*.css,**/*.scss,**/Models/*,**/Program.cs,**/WebApplicationBuilderExtensions.cs,**/GraphQL/Queries/*,**/Contentful-Schema/migrations/*.cjs" \
