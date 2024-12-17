@@ -10,12 +10,13 @@ public static class ContentTypes
 
 public static class PageType
 {
-    public const string StandardPage  = "Standard Page";
+    public const string StandardPage = "Standard Page";
     public const string PathwaysOverviewPage = "Pathways: Overview Page";
     public const string PathwaysContentsPage = "Pathways: Table of Contents";
     public const string PathwaysTrainingContent = "Pathways: Training Content";
     public const string PathwaysDeclaration = "Pathways: Declaration Page";
     public const string PathwaysCertificate = "Pathways: Certificate Page";
+    public const string AllPathwaysOverviewPage = "Pathways: All Pathways Overview Page";
 }
 public class Content : IContent
 {
@@ -41,13 +42,16 @@ public class Content : IContent
     public ContentfulMetadata Metadata { get; set; }
     public SystemProperties Sys { get; set; }
 
-    public bool IsPathwaysPage {
-        get {
+    public bool IsPathwaysPage
+    {
+        get
+        {
             return PageType == Models.PageType.PathwaysCertificate
                 || PageType == Models.PageType.PathwaysContentsPage
                 || PageType == Models.PageType.PathwaysDeclaration
                 || PageType == Models.PageType.PathwaysOverviewPage
-                || PageType == Models.PageType.PathwaysTrainingContent;
+                || PageType == Models.PageType.PathwaysTrainingContent
+                || PageType == Models.PageType.AllPathwaysOverviewPage;
         }
     }
 }
