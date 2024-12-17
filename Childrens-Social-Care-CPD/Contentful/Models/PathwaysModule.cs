@@ -18,4 +18,5 @@ public class PathwaysModule: IContent
     public Content DeclarationPage { get; set; }
     public Content CertificatePage { get; set; }
     public List<PathwaysModuleSection> Sections { get; set; }
+    public CreditBlock CreditBlock { get; set; }
 }

@@ -84,6 +84,21 @@ module.exports = async function (migration) {
       linkType: "Entry",
     });
 
+  pathwaysModule
+    .createField("creditBlock")
+    .name("Training Page Credit Block")
+    .type("Link")
+    .localized(false)
+    .required(false)
+    .validations([
+      {
+        linkContentType: ["creditBlock"],
+      },
+    ])
+    .disabled(false)
+    .omitted(false)
+    .linkType("Entry");
+
   pathwaysModule.changeFieldControl("name", "builtin", "singleLine", {
     helpText: "What is this module called? E.g. 'Pathway 1'",
   });
@@ -121,6 +136,18 @@ module.exports = async function (migration) {
     showCreateEntityAction: false,
   });
 
+  pathwaysModule.changeFieldControl(
+    "creditBlock",
+    "builtin",
+    "entryLinkEditor",
+    {
+      helpText:
+        "Which credit block entry should be displayed at the foot of training pages in this Pathway?",
+      showLinkEntityAction: true,
+      showCreateEntityAction: false,
+    }
+  );
+  
   // Add content type to fields on Content content type: approach 2
   const contentTypeId = "content";
   migration
