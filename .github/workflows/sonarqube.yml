@@ -54,17 +54,16 @@ jobs:
 
       - name: Build, Test and Analyze
         env:
-          SONAR_TOKEN_AS: ${{ secrets.SONAR_TOKEN_AS }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_AS }}
         run: |
           dotnet-sonarscanner begin \
             /k:"as2024ad_sfsw" \
-            /o:"as2024ad" \            
+            /o:"as2024ad" \        
             /d:sonar.qualitygate.wait=true \
             /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml \
             /d:sonar.exclusions="**/*.css,**/*.scss,**/Models/*,**/Program.cs,**/WebApplicationBuilderExtensions.cs,**/GraphQL/Queries/*,**/Contentful-Schema/migrations/*.cjs" \
             /d:sonar.test.exclusions="Childrens-Social-Care-CPD-Tests/**/*,Terraform-bootstrap/Error-pages/*" \
             /d:sonar.token="${{ secrets.SONAR_TOKEN_AS }}" \
-            /d:sonar.project-key="${{ secrets.SONAR_PROJECT_KEY_AS }}" \
             /d:sonar.host.url="https://sonarcloud.io"
           dotnet build --no-incremental
           dotnet-coverage collect --settings dotnet-cover-config.xml -f xml -o coverage.xml "dotnet test"
