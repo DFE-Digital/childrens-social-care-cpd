@@ -4,11 +4,19 @@
 @model ColumnLayout
 
 @{
-    string gridClass = Model.ColumnCount == 2
-        ? "govuk-grid-column-one-half"
-        : Model.ColumnCount == 3
-            ? "govuk-grid-column-one-third"
-            : "govuk-grid-column-one-quarter";
+    string gridClass = "";
+    switch (Model.ColumnCount)
+    {
+        case 2:
+            gridClass = "govuk-grid-column-one-half";
+            break;
+        case 3:
+            gridClass = "govuk-grid-column-one-third";
+            break;
+        case 4:
+            gridClass = "govuk-grid-column-one-quarter";
+            break;
+    }
 
     @foreach (var group in Model.Items.Select((e, i) => new { ContentItem = e, Grouping = (i / Model.ColumnCount) }).GroupBy(e => e.Grouping))
     {
