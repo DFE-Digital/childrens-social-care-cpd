@@ -1,0 +1,15 @@
+﻿@using Childrens_Social_Care_CPD.Contentful.Models;
+
+@{
+    ContextModel contextModel = (ContextModel)ViewBag.ContextModel;
+}
+
+<div class="govuk-grid-column-two-thirds-from-desktop govuk-!-padding-top-3 pathways-location-info">
+    <span>
+        Section @contextModel.NavigationHelper.CurrentLocation.SectionNumber of @contextModel.NavigationHelper.CurrentLocation.TotalSections
+    </span>
+    <br />
+    <span class="pathways-location-section-title">
+        @contextModel.NavigationHelper.CurrentLocation.SectionName
+    </span>
+</div>
