@@ -18,6 +18,7 @@ public static class PageType
     public const string PathwaysCertificate = "Pathways: Certificate Page";
     public const string AllPathwaysOverviewPage = "Pathways: All Pathways Overview Page";
 }
+
 public class Content : IContent
 {
     public string Id { get; set; }
