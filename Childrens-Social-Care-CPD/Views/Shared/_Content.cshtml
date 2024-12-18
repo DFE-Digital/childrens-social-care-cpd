@@ -29,4 +29,19 @@
     }
 
     model.ContentStack.Pop();
+
+    switch (Model.PageType) {
+        case PageType.PathwaysContentsPage:
+            <partial name="_PathwaysModuleIndex" />
+            break;
+        case PageType.PathwaysOverviewPage:
+            <partial name="_PathwaysOverview" />
+            break;
+        case PageType.PathwaysTrainingContent:
+            <partial name="_PathwaysContent" />
+            break;
+        case PageType.AllPathwaysOverviewPage:
+            <partial name="_AllPathwaysOverviewPage" />
+            break;
+    }
 }

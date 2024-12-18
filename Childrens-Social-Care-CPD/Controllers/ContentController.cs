@@ -1,5 +1,6 @@
 ﻿using Childrens_Social_Care_CPD.Contentful;
 using Childrens_Social_Care_CPD.Contentful.Models;
+using Childrens_Social_Care_CPD.Contentful.Navigation;
 using Childrens_Social_Care_CPD.Models;
 using Contentful.Core.Search;
 using Microsoft.AspNetCore.Mvc;
@@ -120,7 +121,8 @@ public class ContentController(ICpdContentfulClient cpdClient) : Controller
             PublishDates: new PublishDates(
                 FirstPublishedAt: content.Sys?.CreatedAt,
                 LastPublishedAt: content.Sys?.UpdatedAt
-            ));
+            ),
+            NavigationHelper: content.IsPathwaysPage ? new PathwaysNavigationHelper(content) : null);
 
         ViewData["ContextModel"] = contextModel;
         ViewData["StateModel"] = new StateModel();

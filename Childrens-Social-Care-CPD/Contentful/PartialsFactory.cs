@@ -37,6 +37,8 @@ public static class PartialsFactory
             LinkListCard => "_LinkListCard",
             PageContents => "_PageContents",
             PageContentsItem => "_PageContentsItem",
+            PathwaysModule => "_PathwaysModule",
+            PathwaysModuleSection => "_PathwaysModuleSection",
             PdfFileResource => "_PdfFileResource",
             QuoteBox => "_QuoteBox",
             RichTextBlock => "_RichTextBlock",

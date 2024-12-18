@@ -1,0 +1,39 @@
+@using Childrens_Social_Care_CPD.Contentful;
+@using Childrens_Social_Care_CPD.Contentful.Models;
+
+@model Content
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+        <hr />
+        <div class="govuk-button-group pathways-nav">
+            @{
+                ContextModel contextModel = (ContextModel)ViewBag.ContextModel;
+
+                <a href="@contextModel.NavigationHelper.Previous.Url" button type="submit"
+                    class="govuk-button govuk-button--secondary" data-module="govuk-button" draggable="false">
+                    @contextModel.NavigationHelper.Previous.Name
+                </a>
+
+                <a href="@contextModel.NavigationHelper.Next.Url" button type="submit" class="govuk-button govuk-button"
+                    data-module="govuk-button" draggable="false">
+                    @contextModel.NavigationHelper.Next.Name
+                </a>
+
+            }
+        </div>
+    </div>
+</div>
+@if (Model.PathwaysModule.CreditBlock != null)
+{
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-three-quarters">
+            <hr />
+        </div>
+    </div>
+    <div class="govuk-grid-row pathways-nav">
+        <div class="govuk-grid-column-three-quarters">
+            <partial name="_CreditBlock" model="Model.PathwaysModule.CreditBlock" />
+        </div>
+    </div>
+}
