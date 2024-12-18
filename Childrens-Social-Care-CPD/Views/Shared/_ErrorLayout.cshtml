@@ -5,6 +5,7 @@
 
 <!DOCTYPE html>
 <html lang="en" class="govuk-template">
+
 <head>
     <title>@ViewBag.Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -16,6 +17,7 @@
 
     <link rel="shortcut icon" sizes="16x16 32x32 48x48" href="~/assets/images/favicon.ico" type="image/x-icon">
 </head>
+
 <body class="govuk-template__body">
     <a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
 
@@ -32,18 +34,23 @@
             </div>
             <div class="dfe-header__content" id="content-header">
                 <div class="dfe-header__menu">
-                    <button class="dfe-header__menu-toggle" id="toggle-menu" aria-controls="header-navigation" aria-expanded="false">Menu</button>
+                    <button class="dfe-header__menu-toggle" id="toggle-menu" aria-controls="header-navigation"
+                        aria-expanded="false">Menu</button>
                 </div>
             </div>
         </div>
 
-        <nav class="dfe-header__navigation" id="header-navigation" role="navigation" aria-label="Primary navigation" aria-labelledby="label-navigation">
+        <nav class="dfe-header__navigation" id="header-navigation" role="navigation" aria-label="Primary navigation"
+            aria-labelledby="label-navigation">
             <div class="govuk-width-container">
                 <p class="dfe-header__navigation-title">
                     <span id="label-navigation">Menu</span>
                     <button class="dfe-header__navigation-close" id="close-menu">
-                        <svg class="dfe-icon dfe-icon__close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="27" height="27">
-                            <path d="M13.41 12l5.3-5.29a1 1 0 1 0-1.42-1.42L12 10.59l-5.29-5.3a1 1 0 0 0-1.42 1.42l5.3 5.29-5.3 5.29a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l5.29-5.3 5.29 5.3a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42z"></path>
+                        <svg class="dfe-icon dfe-icon__close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            aria-hidden="true" focusable="false" width="27" height="27">
+                            <path
+                                d="M13.41 12l5.3-5.29a1 1 0 1 0-1.42-1.42L12 10.59l-5.29-5.3a1 1 0 0 0-1.42 1.42l5.3 5.29-5.3 5.29a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l5.29-5.3 5.29 5.3a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42z">
+                            </path>
                         </svg>
                         <span class="govuk-visually-hidden">Close menu</span>
                     </button>
@@ -52,32 +59,44 @@
                     <li class="dfe-header__navigation-item" id="mmi-home">
                         <a class="dfe-header__navigation-link" href="/home">
                             Home
-                            <svg class="dfe-icon dfe-icon__chevron-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="34" height="34">
-                                <path d="M15.5 12a1 1 0 0 1-.29.71l-5 5a1 1 0 0 1-1.42-1.42l4.3-4.29-4.3-4.29a1 1 0 0 1 1.42-1.42l5 5a1 1 0 0 1 .29.71z"></path>
+                            <svg class="dfe-icon dfe-icon__chevron-right" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24" aria-hidden="true" width="34" height="34">
+                                <path
+                                    d="M15.5 12a1 1 0 0 1-.29.71l-5 5a1 1 0 0 1-1.42-1.42l4.3-4.29-4.3-4.29a1 1 0 0 1 1.42-1.42l5 5a1 1 0 0 1 .29.71z">
+                                </path>
                             </svg>
                         </a>
                     </li>
                     <li class="dfe-header__navigation-item" id="mmi-career">
                         <a class="dfe-header__navigation-link" href="/career-stages/practitioner">
                             Career stages
-                            <svg class="dfe-icon dfe-icon__chevron-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="34" height="34">
-                                <path d="M15.5 12a1 1 0 0 1-.29.71l-5 5a1 1 0 0 1-1.42-1.42l4.3-4.29-4.3-4.29a1 1 0 0 1 1.42-1.42l5 5a1 1 0 0 1 .29.71z"></path>
+                            <svg class="dfe-icon dfe-icon__chevron-right" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24" aria-hidden="true" width="34" height="34">
+                                <path
+                                    d="M15.5 12a1 1 0 0 1-.29.71l-5 5a1 1 0 0 1-1.42-1.42l4.3-4.29-4.3-4.29a1 1 0 0 1 1.42-1.42l5 5a1 1 0 0 1 .29.71z">
+                                </path>
                             </svg>
                         </a>
                     </li>
                     <li class="dfe-header__navigation-item" id="mmi-developmentProgrammes">
                         <a class="dfe-header__navigation-link" href="/development-programmes">
                             Development programmes
-                            <svg class="dfe-icon dfe-icon__chevron-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="34" height="34">
-                                <path d="M15.5 12a1 1 0 0 1-.29.71l-5 5a1 1 0 0 1-1.42-1.42l4.3-4.29-4.3-4.29a1 1 0 0 1 1.42-1.42l5 5a1 1 0 0 1 .29.71z"></path>
+                            <svg class="dfe-icon dfe-icon__chevron-right" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24" aria-hidden="true" width="34" height="34">
+                                <path
+                                    d="M15.5 12a1 1 0 0 1-.29.71l-5 5a1 1 0 0 1-1.42-1.42l4.3-4.29-4.3-4.29a1 1 0 0 1 1.42-1.42l5 5a1 1 0 0 1 .29.71z">
+                                </path>
                             </svg>
                         </a>
                     </li>
                     <li class="dfe-header__navigation-item" id="mmi-exploreRoles">
                         <a class="dfe-header__navigation-link" href="/explore-roles">
                             Explore roles
-                            <svg class="dfe-icon dfe-icon__chevron-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="34" height="34">
-                                <path d="M15.5 12a1 1 0 0 1-.29.71l-5 5a1 1 0 0 1-1.42-1.42l4.3-4.29-4.3-4.29a1 1 0 0 1 1.42-1.42l5 5a1 1 0 0 1 .29.71z"></path>
+                            <svg class="dfe-icon dfe-icon__chevron-right" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24" aria-hidden="true" width="34" height="34">
+                                <path
+                                    d="M15.5 12a1 1 0 0 1-.29.71l-5 5a1 1 0 0 1-1.42-1.42l4.3-4.29-4.3-4.29a1 1 0 0 1 1.42-1.42l5 5a1 1 0 0 1 .29.71z">
+                                </path>
                             </svg>
                         </a>
                     </li>
@@ -86,8 +105,11 @@
                         <li class="dfe-header__navigation-item" id="mmi-resources">
                             <a class="dfe-header__navigation-link" href="/resources-learning">
                                 Resources and learning
-                                <svg class="dfe-icon dfe-icon__chevron-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="34" height="34">
-                                    <path d="M15.5 12a1 1 0 0 1-.29.71l-5 5a1 1 0 0 1-1.42-1.42l4.3-4.29-4.3-4.29a1 1 0 0 1 1.42-1.42l5 5a1 1 0 0 1 .29.71z"></path>
+                                <svg class="dfe-icon dfe-icon__chevron-right" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24" aria-hidden="true" width="34" height="34">
+                                    <path
+                                        d="M15.5 12a1 1 0 0 1-.29.71l-5 5a1 1 0 0 1-1.42-1.42l4.3-4.29-4.3-4.29a1 1 0 0 1 1.42-1.42l5 5a1 1 0 0 1 .29.71z">
+                                    </path>
                                 </svg>
                             </a>
                         </li>
@@ -97,8 +119,11 @@
                         <li class="dfe-header__navigation-item" id="mmi-employerStandards">
                             <a class="dfe-header__navigation-link" href="/employer-standards">
                                 Employer standards
-                                <svg class="dfe-icon dfe-icon__chevron-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="34" height="34">
-                                    <path d="M15.5 12a1 1 0 0 1-.29.71l-5 5a1 1 0 0 1-1.42-1.42l4.3-4.29-4.3-4.29a1 1 0 0 1 1.42-1.42l5 5a1 1 0 0 1 .29.71z"></path>
+                                <svg class="dfe-icon dfe-icon__chevron-right" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24" aria-hidden="true" width="34" height="34">
+                                    <path
+                                        d="M15.5 12a1 1 0 0 1-.29.71l-5 5a1 1 0 0 1-1.42-1.42l4.3-4.29-4.3-4.29a1 1 0 0 1 1.42-1.42l5 5a1 1 0 0 1 .29.71z">
+                                    </path>
                                 </svg>
                             </a>
                         </li>
@@ -108,8 +133,11 @@
                         <li class="dfe-header__navigation-item" id="mmi-agencyResources">
                             <a class="dfe-header__navigation-link" href="/agency-resources">
                                 Agency resources
-                                <svg class="dfe-icon dfe-icon__chevron-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="34" height="34">
-                                    <path d="M15.5 12a1 1 0 0 1-.29.71l-5 5a1 1 0 0 1-1.42-1.42l4.3-4.29-4.3-4.29a1 1 0 0 1 1.42-1.42l5 5a1 1 0 0 1 .29.71z"></path>
+                                <svg class="dfe-icon dfe-icon__chevron-right" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24" aria-hidden="true" width="34" height="34">
+                                    <path
+                                        d="M15.5 12a1 1 0 0 1-.29.71l-5 5a1 1 0 0 1-1.42-1.42l4.3-4.29-4.3-4.29a1 1 0 0 1 1.42-1.42l5 5a1 1 0 0 1 .29.71z">
+                                    </path>
                                 </svg>
                             </a>
                         </li>
@@ -117,10 +145,13 @@
                     @if (featuresConfig.IsEnabled(Features.PathwaysTraining))
                     {
                         <li class="dfe-header__navigation-item" id="mmi-pathwaysTraning">
-                            <a class="dfe-header__navigation-link" href="/pathways-social-work-leadership-modules-available">
+                            <a class="dfe-header__navigation-link" href="/pathways-social-work-leadership-modules-overview">
                                 Pathways training
-                                <svg class="dfe-icon dfe-icon__chevron-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="34" height="34">
-                                    <path d="M15.5 12a1 1 0 0 1-.29.71l-5 5a1 1 0 0 1-1.42-1.42l4.3-4.29-4.3-4.29a1 1 0 0 1 1.42-1.42l5 5a1 1 0 0 1 .29.71z"></path>
+                                <svg class="dfe-icon dfe-icon__chevron-right" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24" aria-hidden="true" width="34" height="34">
+                                    <path
+                                        d="M15.5 12a1 1 0 0 1-.29.71l-5 5a1 1 0 0 1-1.42-1.42l4.3-4.29-4.3-4.29a1 1 0 0 1 1.42-1.42l5 5a1 1 0 0 1 .29.71z">
+                                    </path>
                                 </svg>
                             </a>
                         </li>
@@ -130,8 +161,9 @@
         </nav>
     </header>
 
-    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing govuk-!-padding-top-0" id="main-content" role="main">
-        <partial name="_BetaBanner" /> 
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing govuk-!-padding-top-0" id="main-content"
+        role="main">
+        <partial name="_BetaBanner" />
         <div class="govuk-width-container ">
             @RenderBody()
         </div>
@@ -144,7 +176,8 @@
                     <h2 class="govuk-visually-hidden">Footer links</h2>
                     <ul class="govuk-footer__inline-list">
                         <li class="govuk-footer__inline-list-item">
-                            <a class="govuk-footer__link" datatestid="Privacy policy" href="https://www.gov.uk/government/publications/privacy-information-business-contacts-and-stakeholders/privacy-information-business-contacts-and-stakeholders#using-your-data-to-carry-out-research">
+                            <a class="govuk-footer__link" datatestid="Privacy policy"
+                                href="https://www.gov.uk/government/publications/privacy-information-business-contacts-and-stakeholders/privacy-information-business-contacts-and-stakeholders#using-your-data-to-carry-out-research">
                                 Privacy policy
                             </a>
                         </li>
@@ -170,23 +203,32 @@
                             </a>
                         </li>
                         <li class="govuk-footer__inline-list-item">
-                            <a class="govuk-footer__link" datatestid="Feedback" href="https://dferesearch.fra1.qualtrics.com/jfe/form/SV_bmcLDedq5wipeTA">
+                            <a class="govuk-footer__link" datatestid="Feedback"
+                                href="https://dferesearch.fra1.qualtrics.com/jfe/form/SV_bmcLDedq5wipeTA">
                                 Feedback
                             </a>
                         </li>
                     </ul>
-                    <svg aria-hidden="true" focusable="false" class="govuk-footer__licence-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 483.2 195.7" height="17" width="41">
-                        <path fill="currentColor" d="M421.5 142.8V.1l-50.7 32.3v161.1h112.4v-50.7zm-122.3-9.6A47.12 47.12 0 0 1 221 97.8c0-26 21.1-47.1 47.1-47.1 16.7 0 31.4 8.7 39.7 21.8l42.7-27.2A97.63 97.63 0 0 0 268.1 0c-36.5 0-68.3 20.1-85.1 49.7A98 98 0 0 0 97.8 0C43.9 0 0 43.9 0 97.8s43.9 97.8 97.8 97.8c36.5 0 68.3-20.1 85.1-49.7a97.76 97.76 0 0 0 149.6 25.4l19.4 22.2h3v-87.8h-80l24.3 27.5zM97.8 145c-26 0-47.1-21.1-47.1-47.1s21.1-47.1 47.1-47.1 47.2 21 47.2 47S123.8 145 97.8 145"></path>
+                    <svg aria-hidden="true" focusable="false" class="govuk-footer__licence-logo"
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 483.2 195.7" height="17" width="41">
+                        <path fill="currentColor"
+                            d="M421.5 142.8V.1l-50.7 32.3v161.1h112.4v-50.7zm-122.3-9.6A47.12 47.12 0 0 1 221 97.8c0-26 21.1-47.1 47.1-47.1 16.7 0 31.4 8.7 39.7 21.8l42.7-27.2A97.63 97.63 0 0 0 268.1 0c-36.5 0-68.3 20.1-85.1 49.7A98 98 0 0 0 97.8 0C43.9 0 0 43.9 0 97.8s43.9 97.8 97.8 97.8c36.5 0 68.3-20.1 85.1-49.7a97.76 97.76 0 0 0 149.6 25.4l19.4 22.2h3v-87.8h-80l24.3 27.5zM97.8 145c-26 0-47.1-21.1-47.1-47.1s21.1-47.1 47.1-47.1 47.2 21 47.2 47S123.8 145 97.8 145">
+                        </path>
                     </svg>
                     <span class="govuk-footer__licence-description">
-                        All content is available under the <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" title="">Open Government Licence v3.0</a>, except where otherwise stated
+                        All content is available under the <a
+                            href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+                            title="">Open Government Licence v3.0</a>, except where otherwise stated
                     </span>
                 </div>
                 <div class="govuk-footer__meta-item">
-                    <a class="govuk-footer__link govuk-footer__copyright-logo" href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/">Crown copyright</a>
+                    <a class="govuk-footer__link govuk-footer__copyright-logo"
+                        href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/">Crown
+                        copyright</a>
                 </div>
             </div>
         </div>
     </footer>
 </body>
+
 </html>
