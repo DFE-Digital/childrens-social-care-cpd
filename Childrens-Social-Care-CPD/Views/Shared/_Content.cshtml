@@ -30,24 +30,18 @@
 
     model.ContentStack.Pop();
 
-    if (Model.PageType == PageType.PathwaysContentsPage)
-    {
-        <partial name="_PathwaysModuleIndex" />
+    switch (Model.PageType) {
+        case PageType.PathwaysContentsPage:
+            <partial name="_PathwaysModuleIndex" />
+            break;
+        case PageType.PathwaysOverviewPage:
+            <partial name="_PathwaysOverview" />
+            break;
+        case PageType.PathwaysTrainingContent:
+            <partial name="_PathwaysContent" />
+            break;
+        case PageType.AllPathwaysOverviewPage:
+            <partial name="_AllPathwaysOverviewPage" />
+            break;
     }
-
-    if (Model.PageType == PageType.PathwaysOverviewPage)
-    {
-        <partial name="_PathwaysOverview" />
-    }
-
-    if (Model.PageType == PageType.PathwaysTrainingContent)
-    {
-        <partial name="_PathwaysContent" />
-    }
-
-    if (Model.PageType == PageType.AllPathwaysOverviewPage)
-    {
-        <partial name="_AllPathwaysOverviewPage" />
-    }
-
 }
