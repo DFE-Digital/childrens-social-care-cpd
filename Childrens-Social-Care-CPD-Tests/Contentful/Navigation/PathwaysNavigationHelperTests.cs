@@ -71,6 +71,38 @@ public class PathwaysNavigationHelperTests
         sut.Next.Url.Should().Be("/" + contentsPageId);
     }
 
+    [Test]
+    public void Page_Of_Type_Pathways_Overview_Page_Associated_With_Pathways_Module_With_No_Contents_Page_Configured_Should_Have_First_Training_Content_Page_Id_As_Next_Url()
+    {
+        // setup
+        var page = new Content()
+        {
+            PageType = PageType.PathwaysOverviewPage,
+            PathwaysModule = new PathwaysModule()
+            {
+                Sections = new List<PathwaysModuleSection>
+                {
+                    new PathwaysModuleSection
+                    {
+                        Pages = new List<Content>
+                        {
+                            new Content
+                            {
+                                Id = "TRAINING_CONTENT_PAGE_ID"
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        // act
+        var sut = new PathwaysNavigationHelper(page);
+
+        // assert
+        sut.Next.Url.Should().Be("/" + "TRAINING_CONTENT_PAGE_ID");
+    }
+
     #endregion
 
     #region Contents Page
@@ -210,6 +242,48 @@ public class PathwaysNavigationHelperTests
         sut.Next.Url.Should().Be("/section 1 page 2");
         sut.Previous.Name.Should().Be("Previous");
         sut.Previous.Url.Should().Be("/contents page");
+    }
+
+    [Test]
+    public void First_Page_In_First_Section_Of_Module_When_There_Is_No_Contents_Page_Specified_Should_Have_Module_Overview_Page_As_Previous_Url()
+    {
+        // setup
+        var page = new Content()
+        {
+            PageType = PageType.PathwaysTrainingContent,
+            Id = "section 1 page 1",
+            PathwaysModule = new PathwaysModule()
+            {
+                OverviewPage = new Content
+                {
+                    Id = "overview_page"
+                },
+                Sections = new List<PathwaysModuleSection>()
+                {
+                    new PathwaysModuleSection
+                    {
+                        Pages = new List<Content>()
+                        {
+                            new Content()
+                            {
+                                Id = "section 1 page 1"
+                            },
+                            new Content()
+                            {
+                                Id = "section 1 page 2"
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        // act
+        var sut = new PathwaysNavigationHelper(page);
+
+        // assert
+        sut.Previous.Name.Should().Be("Previous");
+        sut.Previous.Url.Should().Be("/overview_page");
     }
 
     [Test]
