@@ -55,11 +55,19 @@ public class PathwaysNavigationHelper : INavigationHelper
         switch (page.PageType)
         {
             case PageType.PathwaysOverviewPage:
+                string url = "/";
+                if (page.PathwaysModule?.ContentsPage != null)
+                {
+                    url += page.PathwaysModule.ContentsPage.Id;
+                }
+                else
+                {
+                    url += GetFirstSectionFirstPageId(page);
+                }
+
                 this._next = new NavigationLocation
                 {
-                    Url = "/" + (page.PathwaysModule?.ContentsPage == null
-                        ? GetFirstSectionFirstPageId(page)
-                        : page.PathwaysModule.ContentsPage.Id)
+                    Url = url
                 };
                 break;
 
@@ -167,12 +175,20 @@ public class PathwaysNavigationHelper : INavigationHelper
             {
                 // first page in first section, previous should navigate back to contents page
                 // or overview page if there is no contents page
+                string url = "/";
+                if (page.PathwaysModule?.ContentsPage != null)
+                {
+                    url += page.PathwaysModule.ContentsPage.Id;
+                }
+                else
+                {
+                    url += page.PathwaysModule.OverviewPage?.Id;
+                }
+
                 this._previous = new NavigationLocation
                 {
                     Name = "Previous",
-                    Url = "/" + (page.PathwaysModule?.ContentsPage != null
-                        ? page.PathwaysModule.ContentsPage.Id
-                        : page.PathwaysModule.OverviewPage?.Id)
+                    Url = url
                 };
             }
         }
