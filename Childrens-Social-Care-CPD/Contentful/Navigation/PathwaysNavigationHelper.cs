@@ -57,19 +57,17 @@ public class PathwaysNavigationHelper : INavigationHelper
             case PageType.PathwaysOverviewPage:
                 this._next = new NavigationLocation
                 {
-                    Url = "/" + page.PathwaysModule?.ContentsPage?.Id
+                    Url = "/" + (page.PathwaysModule?.ContentsPage == null
+                        ? GetFirstSectionFirstPageId(page)
+                        : page.PathwaysModule.ContentsPage.Id)
                 };
                 break;
 
             case PageType.PathwaysContentsPage:
-                var url = page.PathwaysModule?
-                    .Sections?[0]
-                    .Pages?[0]
-                    .Id;
 
                 this._next = new NavigationLocation
                 {
-                    Url = "/" + url
+                    Url = "/" + GetFirstSectionFirstPageId(page)
                 };
                 break;
 
@@ -168,10 +166,13 @@ public class PathwaysNavigationHelper : INavigationHelper
             else
             {
                 // first page in first section, previous should navigate back to contents page
+                // or overview page if there is no contents page
                 this._previous = new NavigationLocation
                 {
                     Name = "Previous",
-                    Url = "/" + page.PathwaysModule.ContentsPage.Id
+                    Url = "/" + (page.PathwaysModule?.ContentsPage != null
+                        ? page.PathwaysModule.ContentsPage.Id
+                        : page.PathwaysModule.OverviewPage?.Id)
                 };
             }
         }
@@ -185,5 +186,14 @@ public class PathwaysNavigationHelper : INavigationHelper
             SectionNumber = currentSectionIdx + 1,
             TotalSections = page.PathwaysModule.Sections.Count
         };
+    }
+
+    private string GetFirstSectionFirstPageId (Content page)
+    {
+        return page
+            .PathwaysModule?
+            .Sections?[0]
+            .Pages?[0]
+            .Id;
     }
 }
