@@ -9,22 +9,29 @@
         <div class="govuk-button-group pathways-nav">
             @{
                 ContextModel contextModel = (ContextModel)ViewBag.ContextModel;
+                string previousText = contextModel.NavigationHelper.Previous == null
+                    ? "undefined"
+                    : contextModel.NavigationHelper.Previous.Name;
 
-                <a href="@contextModel.NavigationHelper.Previous.Url" button type="submit"
+                string nextText = contextModel.NavigationHelper.Next == null
+                    ? "undefined"
+                    : contextModel.NavigationHelper.Next.Name;
+
+                <a href="@contextModel.NavigationHelper.Previous?.Url" button type="submit"
                     class="govuk-button govuk-button--secondary" data-module="govuk-button" draggable="false">
-                    @contextModel.NavigationHelper.Previous.Name
+                    @previousText
                 </a>
 
-                <a href="@contextModel.NavigationHelper.Next.Url" button type="submit" class="govuk-button govuk-button"
+                <a href="@contextModel.NavigationHelper.Next?.Url" button type="submit" class="govuk-button govuk-button"
                     data-module="govuk-button" draggable="false">
-                    @contextModel.NavigationHelper.Next.Name
+                    @nextText
                 </a>
 
             }
         </div>
     </div>
 </div>
-@if (Model.PathwaysModule.CreditBlock != null)
+@if (Model.PathwaysModule?.CreditBlock != null)
 {
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-three-quarters">
