@@ -1,0 +1,53 @@
+@using Childrens_Social_Care_CPD.Contentful;
+@using Childrens_Social_Care_CPD.Contentful.Models;
+
+@model Content
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+        <hr />
+        @if(Model.PathwaysModule == null)
+        {
+            <div class="contentful-configuration-error">
+                Configuration problem in Pathways Module Content Page: <span class="highlight">Page not associated with a Module Section and/or Pathways Module</span><br />
+                Link this page correctly to resolve this.
+            </div>
+        }
+        <div class="govuk-button-group pathways-nav">
+            @{
+                ContextModel contextModel = (ContextModel)ViewBag.ContextModel;
+                string previousText = contextModel.NavigationHelper.Previous == null
+                    ? "undefined"
+                    : contextModel.NavigationHelper.Previous.Name;
+
+                string nextText = contextModel.NavigationHelper.Next == null
+                    ? "undefined"
+                    : contextModel.NavigationHelper.Next.Name;
+
+                <a href="@contextModel.NavigationHelper.Previous?.Url" button type="submit"
+                    class="govuk-button govuk-button--secondary" data-module="govuk-button" draggable="false">
+                    @previousText
+                </a>
+
+                <a href="@contextModel.NavigationHelper.Next?.Url" button type="submit" class="govuk-button govuk-button"
+                    data-module="govuk-button" draggable="false">
+                    @nextText
+                </a>
+
+            }
+        </div>
+    </div>
+</div>
+@if (Model.PathwaysModule?.CreditBlock != null)
+{
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-three-quarters">
+            <hr />
+        </div>
+    </div>
+    <div class="govuk-grid-row pathways-nav">
+        <div class="govuk-grid-column-three-quarters">
+            <partial name="_CreditBlock" model="Model.PathwaysModule.CreditBlock" />
+        </div>
+    </div>
+}
