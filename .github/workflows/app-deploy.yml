@@ -31,26 +31,26 @@ jobs:
         run: docker pull ghcr.io/dfe-digital/childrens-social-care-cpd:${{inputs.tag}}
 
       - name: Sign in to Azure 
-        uses: azure/login@v1
+        uses: azure/login@v2
         with:
           creds: '{"clientId":"${{ secrets.TF_ARM_CLIENT_ID }}","clientSecret":"${{ secrets.TF_ARM_CLIENT_SECRET }}","subscriptionId":"${{ secrets.TF_ARM_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TF_ARM_TENANT_ID }}"}'
 
       - name: Deploy Dev to Azure Web App
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v3
         with:
           app-name: 's185d01-chidrens-social-care-cpd-app-service'
           images: 'ghcr.io/dfe-digital/childrens-social-care-cpd:${{ inputs.tag }}'
         if: ${{ inputs.workspace == 'Dev' }}
 
       - name: Deploy Test to Azure Web App
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v3
         with:
           app-name: 's185d02-chidrens-social-care-cpd-app-service'
           images: 'ghcr.io/dfe-digital/childrens-social-care-cpd:${{ inputs.tag }}'
         if: ${{ inputs.workspace == 'Test' }}
 
       - name: Deploy Load-Test to Azure Web App
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v3
         with:
           app-name: 's185d03-chidrens-social-care-cpd-app-service'
           slot-name: 'staging'
@@ -62,14 +62,14 @@ jobs:
         if: ${{ inputs.workspace == 'Load-Test' }}
 
       - name: Deploy Pre-Prod to Azure Web App
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v3
         with:
           app-name: 's185t01-chidrens-social-care-cpd-app-service'
           images: 'ghcr.io/dfe-digital/childrens-social-care-cpd:${{ inputs.tag }}'
         if: ${{ inputs.workspace == 'Pre-Prod' }}
 
       - name: Deploy Prod to Azure Web App
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v3
         with:
           app-name: 's185p01-chidrens-social-care-cpd-app-service'
           slot-name: 'staging'
