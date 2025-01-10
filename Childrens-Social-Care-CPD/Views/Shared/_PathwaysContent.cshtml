@@ -6,6 +6,13 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
         <hr />
+        @if(Model.PathwaysModule == null)
+        {
+            <div class="contentful-configuration-error">
+                Configuration problem in Pathways Module Content Page: <span class="highlight">Page not associated with a Module Section and/or Pathways Module</span><br />
+                Link this page correctly to resolve this.
+            </div>
+        }
         <div class="govuk-button-group pathways-nav">
             @{
                 ContextModel contextModel = (ContextModel)ViewBag.ContextModel;
