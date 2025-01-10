@@ -1,22 +1,27 @@
-﻿using Azure.Identity;
+﻿using Azure.Search.Documents;
+using Azure;
 using Childrens_Social_Care_CPD.Configuration;
-using Childrens_Social_Care_CPD.Configuration.Features;
 using Childrens_Social_Care_CPD.Contentful;
 using Childrens_Social_Care_CPD.Contentful.Contexts;
 using Childrens_Social_Care_CPD.Contentful.Renderers;
 using Childrens_Social_Care_CPD.DataAccess;
+using Childrens_Social_Care_CPD.Search;
+using Childrens_Social_Care_CPD.Services;
 using Contentful.AspNetCore;
 using Contentful.Core.Configuration;
 using GraphQL.Client.Abstractions.Websocket;
 using GraphQL.Client.Http;
 using GraphQL.Client.Serializer.SystemTextJson;
 using Microsoft.ApplicationInsights.AspNetCore.Extensions;
-using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.Logging.ApplicationInsights;
 using Microsoft.Extensions.Logging.AzureAppServices;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http.Headers;
+using Microsoft.AspNetCore.DataProtection;
+using Azure.Storage.Blobs;
+using Azure.Identity;
+using Childrens_Social_Care_CPD.Configuration.Features;
+using System.Diagnostics;
 
 namespace Childrens_Social_Care_CPD;
 
@@ -48,6 +53,7 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddScoped<IContentLinkContext, ContentLinkContext>();
 
         AddContentRenderers(builder.Services);
+        AddSearch(builder.Services);
     }
 
     private static void AddContentRenderers(IServiceCollection services)
@@ -72,6 +78,23 @@ public static class WebApplicationBuilderExtensions
                 var serviceType = assignedTypes.GetInterfaces().First(i => i.GetGenericTypeDefinition() == typeof(IRendererWithOptions<>));
                 services.AddScoped(serviceType, assignedTypes);
             });
+    }
+
+    private static void AddSearch(IServiceCollection services)
+    {
+        services.AddScoped<ISearchResultsVMFactory, SearchResultsVMFactory>();
+
+        services.AddScoped(services =>
+        {
+            var config = services.GetRequiredService<IApplicationConfiguration>();
+
+            var searchEndpointUri = new Uri(config.SearchEndpoint);
+            return new SearchClient(searchEndpointUri,
+                config.SearchIndexName,
+                new AzureKeyCredential(config.SearchApiKey));
+        });
+
+        services.AddScoped<ISearchService, SearchService>();
     }
 
     public static void AddFeatures(this WebApplicationBuilder builder, Stopwatch sw)
