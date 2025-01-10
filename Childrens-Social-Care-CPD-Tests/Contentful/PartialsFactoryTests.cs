@@ -35,6 +35,8 @@ public partial class PartialsFactoryTests
         new object[] { new LinkListCard(), "_LinkListCard" },
         new object[] { new PageContents(), "_PageContents" },
         new object[] { new PageContentsItem(), "_PageContentsItem" },
+        new object [] { new PathwaysModule(), "_PathwaysModule"},
+        new object [] { new PathwaysModuleSection(), "_PathwaysModuleSection"},
         new object[] { new PdfFileResource(), "_PdfFileResource" },
         new object[] { new QuoteBox(), "_QuoteBox" },
         new object[] { new RichTextBlock(), "_RichTextBlock" },
