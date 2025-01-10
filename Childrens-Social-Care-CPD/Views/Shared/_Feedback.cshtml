@@ -19,7 +19,7 @@
                 </a>
             </summary>
 
-            <form action="feedback" method="post" data-module-id="feedbackForm">
+            <form action="feedback" method="post" data-module-id="feedbackForm" asp-antiforgery="true">
                 <input data-module-id="page" type="hidden" name="page" value="@contextModel.Id" />
                 <div data-module-id="controlsContainer">
                     <div class="govuk-details__text">
