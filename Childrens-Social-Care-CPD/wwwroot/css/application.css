@@ -11951,6 +11951,7 @@ div#page-feedback a {
 .module-section--header {
   display: grid;
   grid-template-columns: auto 139px;
+  padding-bottom: 24px;
 }
 
 .module-overview--section {
@@ -12075,6 +12076,10 @@ section.completed {
 
 .pathways-nav {
   padding-top: 25px;
+}
+
+.pathways-module-index {
+  margin-bottom: 0px;
 }
 
 /*!
