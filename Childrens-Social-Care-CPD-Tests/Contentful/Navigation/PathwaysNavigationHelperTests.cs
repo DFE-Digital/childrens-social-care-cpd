@@ -103,6 +103,46 @@ public class PathwaysNavigationHelperTests
         sut.Next.Url.Should().Be("/" + "TRAINING_CONTENT_PAGE_ID");
     }
 
+    [Test]
+    public void Page_Of_Type_Pathways_Overview_Page_Associated_With_Pathways_Module_Of_Type_Introductory_Module_Should_Have_Correct_Next_Location_Name()
+    {
+        // setup
+        var page = new Content()
+        {
+            PageType = PageType.PathwaysOverviewPage,
+            PathwaysModule = new PathwaysModule()
+            {
+                Type = PathwaysModuleType.IntroductoryModule
+            }
+        };
+
+        // act
+        var sut = new PathwaysNavigationHelper(page);
+
+        // assert
+        sut.Next.Name.Should().Be("Start module");
+    }
+
+    [Test]
+    public void Page_Of_Type_Pathways_Overview_Page_Associated_With_Pathways_Module_Of_Type_Regular_Module_Should_Have_Correct_Next_Location_Name()
+    {
+        // setup
+        var page = new Content()
+        {
+            PageType = PageType.PathwaysOverviewPage,
+            PathwaysModule = new PathwaysModule()
+            {
+                Type = PathwaysModuleType.RegularModule
+            }
+        };
+
+        // act
+        var sut = new PathwaysNavigationHelper(page);
+
+        // assert
+        sut.Next.Name.Should().Be("Start pathway");
+    }
+
     #endregion
 
     #region Contents Page
