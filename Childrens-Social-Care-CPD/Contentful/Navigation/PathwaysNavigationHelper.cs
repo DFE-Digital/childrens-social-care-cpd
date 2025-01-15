@@ -67,7 +67,10 @@ public class PathwaysNavigationHelper : INavigationHelper
 
                 this._next = new NavigationLocation
                 {
-                    Url = url
+                    Url = url,
+                    Name = page.PathwaysModule?.Type == PathwaysModuleType.IntroductoryModule
+                        ? "Start module"
+                        : "Start pathway"
                 };
                 break;
 
