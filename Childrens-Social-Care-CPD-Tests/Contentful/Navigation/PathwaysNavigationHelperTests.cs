@@ -551,7 +551,7 @@ public class PathwaysNavigationHelperTests
 
         // assert
         sut.Next.Name.Should().Be("Go back to all pathways");
-        sut.Next.Url.Should().Be("/pathways-social-work-leadership-modules-available");
+        sut.Next.Url.Should().Be("/pathways-social-work-leadership-modules/available-pathways");
         sut.Previous.Name.Should().Be("Previous");
         sut.Previous.Url.Should().Be("/section 2 page 2");
     }
@@ -684,7 +684,7 @@ public class PathwaysNavigationHelperTests
 
         // assert
         sut.Next.Name.Should().Be("Go back to all pathways");
-        sut.Next.Url.Should().Be("/pathways-social-work-leadership-modules-available");
+        sut.Next.Url.Should().Be("/pathways-social-work-leadership-modules/available-pathways");
         sut.Previous.Name.Should().Be("Previous");
         sut.Previous.Url.Should().Be("/CONTENTS_PAGE_ID");
     }
@@ -746,7 +746,7 @@ public class PathwaysNavigationHelperTests
         var sut = new PathwaysNavigationHelper(page);
 
         // assert
-        sut.Next.Url.Should().Be("/pathways-social-work-leadership-modules-available");
+        sut.Next.Url.Should().Be("/pathways-social-work-leadership-modules/available-pathways");
     }
 
     #endregion
