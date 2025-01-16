@@ -48,7 +48,10 @@
                             <span class="icon not_started">
                                 <span class="number">@sectionCount</span>
                             </span>
-                            <div class="line"></div>
+                            @if(moduleSection != Model.PathwaysModule.Sections[Model.PathwaysModule.Sections.Count - 1])
+                            {
+                                <div class="line"></div>
+                            }
                         </div>
                         <div class="module-section--content">
                             <div class="module-section--header">
