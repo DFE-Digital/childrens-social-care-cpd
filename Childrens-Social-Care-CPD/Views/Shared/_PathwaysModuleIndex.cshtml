@@ -41,6 +41,7 @@
             @if (Model.PathwaysModule?.Sections != null) {
                 foreach (var moduleSection in Model.PathwaysModule.Sections)
                 {
+                    string displayText = moduleSection.ShortName ?? moduleSection.Name;
                     sectionCount++;
                     <section class="module-overview--section">
                         <div class="progress-bar">
@@ -61,7 +62,7 @@
                                             Add Content item(s) to this Pathways Module Section to resolve this.
                                         </div>
                                     }
-                                    @moduleSection.Name <span class="module-section--pages">(@moduleSection.Pages?.Count pages)</span>
+                                    @displayText <span class="module-section--pages">(@moduleSection.Pages?.Count pages)</span>
                                 </h4>
                                 <a href="/@moduleSection.Pages?[0].Id" class="section-nav-link govuk-link" data-track-label="">Go to this section</a>
                             </div>
