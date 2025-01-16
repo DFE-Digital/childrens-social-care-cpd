@@ -17,3 +17,4 @@
 0017-pathways-module-section.cjs
 0018-create-pathways-page-category.cjs
 0019-extend-column-layout-to-allow-four-columns.cjs
+0020-add-new-display-text-to-pathways-module-section.cjs
