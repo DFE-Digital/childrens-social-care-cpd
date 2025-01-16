@@ -16,7 +16,7 @@ module.exports = async function (migration) {
   migration
     .editContentType(contentTypeId)
     .changeFieldControl(
-      "moduleSectionTableOfContentsName",
+      "shortName",
       "builtin",
       "singleLine",
       {
