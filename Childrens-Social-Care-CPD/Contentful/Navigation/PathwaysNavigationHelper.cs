@@ -12,7 +12,7 @@ public class PathwaysNavigationHelper : INavigationHelper
     private NavigationLocation _previous;
     private readonly NavigationLocation _availablePathwaysPage = new NavigationLocation
     {
-        Url = "/pathways-social-work-leadership-modules-available"
+        Url = "/pathways-social-work-leadership-modules/available-pathways"
     };
     private LocationInfo _currentLocation;
 
