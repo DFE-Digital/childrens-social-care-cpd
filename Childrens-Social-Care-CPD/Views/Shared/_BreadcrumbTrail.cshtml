@@ -14,10 +14,16 @@
         switch (Model.PageType)
         {
             case PageType.PathwaysTrainingContent:
+                Content navigationPage = @Model.PathwaysModule.Type == PathwaysModuleType.IntroductoryModule
+                    ? Model.PathwaysModule.OverviewPage
+                    : Model.PathwaysModule.ContentsPage;
+
+                string linkText = navigationPage.BreadcrumbText ?? navigationPage.Title;
+
                 <li class="govuk-breadcrumbs__list-item">
                     &lt;
-                    <a class="govuk-breadcrumbs__link" href="/@Model.PathwaysModule.OverviewPage.Id">
-                        Back to @Model.PathwaysModule.OverviewPage.Title
+                    <a class="govuk-breadcrumbs__link" href="/@navigationPage.Id">
+                        Back to @linkText
                     </a>
                 </li>
             break;
