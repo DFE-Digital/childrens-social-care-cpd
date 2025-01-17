@@ -13,9 +13,18 @@
     @if (Model.PageType == PageType.PathwaysTrainingContent)
     {
         <li class="govuk-breadcrumbs__list-item">
-            &lt; 
+            &lt;
             <a class="govuk-breadcrumbs__link" href="/@Model.PathwaysModule.OverviewPage.Id">
                 Back to @Model.PathwaysModule.OverviewPage.Title
+            </a>
+        </li>
+    }
+    else if (Model.PageType == PageType.PathwaysOverviewPage)
+    {
+        <li class="govuk-breadcrumbs__list-item">
+            &lt;
+            <a class="govuk-breadcrumbs__link" href="@contextModel.NavigationHelper.AvailablePathwaysPage.Url">
+                Back to available pathways
             </a>
         </li>
     }
