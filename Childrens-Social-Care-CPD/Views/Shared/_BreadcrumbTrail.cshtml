@@ -10,34 +10,48 @@
 
 <div class="govuk-breadcrumbs govuk-breadcrumbs--collapse-on-mobile">
     <ul>
-    @if (Model.PageType == PageType.PathwaysTrainingContent)
-    {
-        <li class="govuk-breadcrumbs__list-item">
-            &lt;
-            <a class="govuk-breadcrumbs__link" href="/@Model.PathwaysModule.OverviewPage.Id">
-                Back to @Model.PathwaysModule.OverviewPage.Title
-            </a>
-        </li>
-    }
-    else if (Model.PageType == PageType.PathwaysOverviewPage)
-    {
-        <li class="govuk-breadcrumbs__list-item">
-            &lt;
-            <a class="govuk-breadcrumbs__link" href="@contextModel.NavigationHelper.AvailablePathwaysPage.Url">
-                Back to available pathways
-            </a>
-        </li>
-    }
-    else
-    {
-        @foreach(KeyValuePair<string, string> trailItem in breadcrumbs)
+    @{
+        switch (Model.PageType)
         {
-            <li class="govuk-breadcrumbs__list-item">
-                <a class="govuk-breadcrumbs__link" href="/@trailItem.Value">
-                    @trailItem.Key
-                </a>
-            </li>
+            case PageType.PathwaysTrainingContent:
+                <li class="govuk-breadcrumbs__list-item">
+                    &lt;
+                    <a class="govuk-breadcrumbs__link" href="/@Model.PathwaysModule.OverviewPage.Id">
+                        Back to @Model.PathwaysModule.OverviewPage.Title
+                    </a>
+                </li>
+            break;
+
+            case PageType.PathwaysOverviewPage:
+                <li class="govuk-breadcrumbs__list-item">
+                    &lt;
+                    <a class="govuk-breadcrumbs__link" href="@contextModel.NavigationHelper.AvailablePathwaysPage.Url">
+                        Back to available pathways
+                    </a>
+                </li>
+            break;
+
+            case PageType.PathwaysContentsPage:
+                <li class="govuk-breadcrumbs__list-item">
+                    &lt;
+                    <a class="govuk-breadcrumbs__link" href="@contextModel.NavigationHelper.Previous.Url">
+                        @contextModel.NavigationHelper.Previous.Name
+                    </a>
+                </li>
+            break;
+
+            default:
+                @foreach(KeyValuePair<string, string> trailItem in breadcrumbs)
+                {
+                    <li class="govuk-breadcrumbs__list-item">
+                        <a class="govuk-breadcrumbs__link" href="/@trailItem.Value">
+                            @trailItem.Key
+                        </a>
+                    </li>
+                }
+            break;
         }
     }
+
     </ul>
 </div>

@@ -80,6 +80,12 @@ public class PathwaysNavigationHelper : INavigationHelper
                 {
                     Url = "/" + GetFirstSectionFirstPageId(page)
                 };
+
+                this._previous = new NavigationLocation
+                {
+                    Url = "/" + page.PathwaysModule?.OverviewPage?.Id,
+                    Name = "Back to " + page.PathwaysModule?.OverviewPage?.BreadcrumbText
+                };
                 break;
 
             case PageType.PathwaysTrainingContent:
