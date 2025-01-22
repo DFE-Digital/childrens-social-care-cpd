@@ -103,6 +103,46 @@ public class PathwaysNavigationHelperTests
         sut.Next.Url.Should().Be("/" + "TRAINING_CONTENT_PAGE_ID");
     }
 
+    [Test]
+    public void Page_Of_Type_Pathways_Overview_Page_Associated_With_Pathways_Module_Of_Type_Introductory_Module_Should_Have_Correct_Next_Location_Name()
+    {
+        // setup
+        var page = new Content()
+        {
+            PageType = PageType.PathwaysOverviewPage,
+            PathwaysModule = new PathwaysModule()
+            {
+                Type = PathwaysModuleType.IntroductoryModule
+            }
+        };
+
+        // act
+        var sut = new PathwaysNavigationHelper(page);
+
+        // assert
+        sut.Next.Name.Should().Be("Start module");
+    }
+
+    [Test]
+    public void Page_Of_Type_Pathways_Overview_Page_Associated_With_Pathways_Module_Of_Type_Regular_Module_Should_Have_Correct_Next_Location_Name()
+    {
+        // setup
+        var page = new Content()
+        {
+            PageType = PageType.PathwaysOverviewPage,
+            PathwaysModule = new PathwaysModule()
+            {
+                Type = PathwaysModuleType.RegularModule
+            }
+        };
+
+        // act
+        var sut = new PathwaysNavigationHelper(page);
+
+        // assert
+        sut.Next.Name.Should().Be("Start pathway");
+    }
+
     #endregion
 
     #region Contents Page
@@ -194,6 +234,32 @@ public class PathwaysNavigationHelperTests
 
         // assert
         sut.Next.Url.Should().Be("/");
+    }
+
+    [Test]
+    public void Pathway_Contents_Page_Should_Have_Pathway_Start_Page_As_Previous_Location ()
+    {
+        // setup
+        var page = new Content
+        {
+            PageType = PageType.PathwaysContentsPage,
+            Id = "PAGE_ID",
+            PathwaysModule = new PathwaysModule
+            {
+                OverviewPage = new Content
+                {
+                    Id = "START_PAGE_ID",
+                    BreadcrumbText = "START_PAGE_BREADCRUMB_TEXT"
+                }
+            }
+        };
+
+        // act
+        var sut = new PathwaysNavigationHelper(page);
+
+        // assert
+        sut.Previous.Url.Should().Be("/START_PAGE_ID");
+        sut.Previous.Name.Should().Be("Back to START_PAGE_BREADCRUMB_TEXT");
     }
 
     #endregion
@@ -510,8 +576,8 @@ public class PathwaysNavigationHelperTests
         var sut = new PathwaysNavigationHelper(page);
 
         // assert
-        sut.Next.Name.Should().Be("Go back to all pathways");
-        sut.Next.Url.Should().Be("/pathways-social-work-leadership-modules-available");
+        sut.Next.Name.Should().Be("Go back to Available pathways");
+        sut.Next.Url.Should().Be("/pathways-social-work-leadership-modules/available-pathways");
         sut.Previous.Name.Should().Be("Previous");
         sut.Previous.Url.Should().Be("/section 2 page 2");
     }
@@ -643,8 +709,8 @@ public class PathwaysNavigationHelperTests
         var sut = new PathwaysNavigationHelper(page);
 
         // assert
-        sut.Next.Name.Should().Be("Go back to all pathways");
-        sut.Next.Url.Should().Be("/pathways-social-work-leadership-modules-available");
+        sut.Next.Name.Should().Be("Go back to Available pathways");
+        sut.Next.Url.Should().Be("/pathways-social-work-leadership-modules/available-pathways");
         sut.Previous.Name.Should().Be("Previous");
         sut.Previous.Url.Should().Be("/CONTENTS_PAGE_ID");
     }
@@ -706,7 +772,7 @@ public class PathwaysNavigationHelperTests
         var sut = new PathwaysNavigationHelper(page);
 
         // assert
-        sut.Next.Url.Should().Be("/pathways-social-work-leadership-modules-available");
+        sut.Next.Url.Should().Be("/pathways-social-work-leadership-modules/available-pathways");
     }
 
     #endregion

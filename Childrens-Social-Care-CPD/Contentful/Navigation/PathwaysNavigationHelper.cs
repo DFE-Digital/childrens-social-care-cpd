@@ -12,7 +12,7 @@ public class PathwaysNavigationHelper : INavigationHelper
     private NavigationLocation _previous;
     private readonly NavigationLocation _availablePathwaysPage = new NavigationLocation
     {
-        Url = "/pathways-social-work-leadership-modules-available"
+        Url = "/pathways-social-work-leadership-modules/available-pathways"
     };
     private LocationInfo _currentLocation;
 
@@ -67,7 +67,10 @@ public class PathwaysNavigationHelper : INavigationHelper
 
                 this._next = new NavigationLocation
                 {
-                    Url = url
+                    Url = url,
+                    Name = page.PathwaysModule?.Type == PathwaysModuleType.IntroductoryModule
+                        ? "Start module"
+                        : "Start pathway"
                 };
                 break;
 
@@ -76,6 +79,12 @@ public class PathwaysNavigationHelper : INavigationHelper
                 this._next = new NavigationLocation
                 {
                     Url = "/" + GetFirstSectionFirstPageId(page)
+                };
+
+                this._previous = new NavigationLocation
+                {
+                    Url = "/" + page.PathwaysModule?.OverviewPage?.Id,
+                    Name = "Back to " + page.PathwaysModule?.OverviewPage?.BreadcrumbText
                 };
                 break;
 
@@ -135,11 +144,11 @@ public class PathwaysNavigationHelper : INavigationHelper
             }
             else
             {
-                // last page in last module, next navigates to 'all pathways page'
+                // last page in last module, next navigates to 'Available pathways page'
                 this._next = new NavigationLocation
                 {
                     Url = AvailablePathwaysPage.Url,
-                    Name = "Go back to all pathways"
+                    Name = "Go back to Available pathways"
                 };
             }
         }
