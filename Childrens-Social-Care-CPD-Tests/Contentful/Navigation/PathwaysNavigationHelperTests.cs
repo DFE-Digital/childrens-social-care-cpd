@@ -236,6 +236,32 @@ public class PathwaysNavigationHelperTests
         sut.Next.Url.Should().Be("/");
     }
 
+    [Test]
+    public void Pathway_Contents_Page_Should_Have_Pathway_Start_Page_As_Previous_Location ()
+    {
+        // setup
+        var page = new Content
+        {
+            PageType = PageType.PathwaysContentsPage,
+            Id = "PAGE_ID",
+            PathwaysModule = new PathwaysModule
+            {
+                OverviewPage = new Content
+                {
+                    Id = "START_PAGE_ID",
+                    BreadcrumbText = "START_PAGE_BREADCRUMB_TEXT"
+                }
+            }
+        };
+
+        // act
+        var sut = new PathwaysNavigationHelper(page);
+
+        // assert
+        sut.Previous.Url.Should().Be("/START_PAGE_ID");
+        sut.Previous.Name.Should().Be("Back to START_PAGE_BREADCRUMB_TEXT");
+    }
+
     #endregion
 
     #region Training Content Pages
@@ -550,7 +576,7 @@ public class PathwaysNavigationHelperTests
         var sut = new PathwaysNavigationHelper(page);
 
         // assert
-        sut.Next.Name.Should().Be("Go back to all pathways");
+        sut.Next.Name.Should().Be("Go back to Available pathways");
         sut.Next.Url.Should().Be("/pathways-social-work-leadership-modules/available-pathways");
         sut.Previous.Name.Should().Be("Previous");
         sut.Previous.Url.Should().Be("/section 2 page 2");
@@ -683,7 +709,7 @@ public class PathwaysNavigationHelperTests
         var sut = new PathwaysNavigationHelper(page);
 
         // assert
-        sut.Next.Name.Should().Be("Go back to all pathways");
+        sut.Next.Name.Should().Be("Go back to Available pathways");
         sut.Next.Url.Should().Be("/pathways-social-work-leadership-modules/available-pathways");
         sut.Previous.Name.Should().Be("Previous");
         sut.Previous.Url.Should().Be("/CONTENTS_PAGE_ID");
