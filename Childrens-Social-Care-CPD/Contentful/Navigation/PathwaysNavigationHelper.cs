@@ -80,6 +80,12 @@ public class PathwaysNavigationHelper : INavigationHelper
                 {
                     Url = "/" + GetFirstSectionFirstPageId(page)
                 };
+
+                this._previous = new NavigationLocation
+                {
+                    Url = "/" + page.PathwaysModule?.OverviewPage?.Id,
+                    Name = "Back to " + page.PathwaysModule?.OverviewPage?.BreadcrumbText
+                };
                 break;
 
             case PageType.PathwaysTrainingContent:
@@ -138,11 +144,11 @@ public class PathwaysNavigationHelper : INavigationHelper
             }
             else
             {
-                // last page in last module, next navigates to 'all pathways page'
+                // last page in last module, next navigates to 'Available pathways page'
                 this._next = new NavigationLocation
                 {
                     Url = AvailablePathwaysPage.Url,
-                    Name = "Go back to all pathways"
+                    Name = "Go back to Available pathways"
                 };
             }
         }
