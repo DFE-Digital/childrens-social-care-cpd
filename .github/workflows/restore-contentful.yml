@@ -15,7 +15,7 @@ jobs:
 
     steps:
     - name: Checkout destination repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
         repository: DFE-Digital/childrens-social-care-cpd-contentful-backup
         token: ${{ secrets.BACKUP_REPO_PAT }}

@@ -41,7 +41,7 @@ jobs:
       SITE_URL: https://20.107.65.156/
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v4
 
       # Install the latest version of Terraform CLI
       - name: Setup Terraform
