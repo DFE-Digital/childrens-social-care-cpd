@@ -35,7 +35,7 @@ module.exports = async function (migration) {
 
   pathwaysModule
     .createField("overviewPage")
-    .name("Overview Page")
+    .name("Start Page")
     .type("Link")
     .localized(false)
     .required(false)
@@ -186,11 +186,11 @@ module.exports = async function (migration) {
     .validations([
       {
         in: [
-          "Standard Page",
-          "Pathways: Overview Page",
-          "Pathways: Table of Contents",
-          "Pathways: Training Content",
-          "Pathways: All Pathways Overview Page",
+          "Content page",
+          "Pathways: Start page",
+          "Pathways: Table of contents",
+          "Pathways: Module content page",
+          "Pathways: About pathways",
         ],
       },
     ])
