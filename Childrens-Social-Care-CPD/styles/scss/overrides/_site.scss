@@ -411,7 +411,7 @@ div#page-feedback a {
 
 @media (min-width: 40.0625em) {
     .blockquote-container blockquote.quote {
-        margin: 16px 40px;
+        margin: 16px 0px 16px 40px;
     }
 }
 
@@ -517,6 +517,7 @@ div#page-feedback a {
 .module-section--header {
     display: grid;
     grid-template-columns: auto 139px;
+    padding-bottom: 24px;
 }
 
 .module-overview--section {
@@ -631,4 +632,8 @@ section.completed {
 
 .pathways-nav {
     padding-top: 25px;
+}
+
+.pathways-module-index {
+    margin-bottom: 0px;
 }
