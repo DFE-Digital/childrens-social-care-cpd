@@ -28,7 +28,7 @@ jobs:
     - name: Check out code
       uses: actions/checkout@main
     
-    - uses: terraform-linters/setup-tflint@v3
+    - uses: terraform-linters/setup-tflint@v4
       name: Setup TFLint
       with:
         tflint_version: latest
