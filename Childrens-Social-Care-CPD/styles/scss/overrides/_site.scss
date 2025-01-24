@@ -299,10 +299,14 @@
 .infobox {
     background: #ebf2f6;
     border-top: #347ca9 solid 10px;
-    margin: 25px 0;
+    margin: 25px 0 25px 15px;
     padding-left: 20px;
     padding-right: 20px;
     position: relative;
+}
+
+div.infobox-width-container {
+    margin-left: 0;
 }
 
 .infobox-green-brain {
@@ -636,4 +640,8 @@ section.completed {
 
 .pathways-module-index {
     margin-bottom: 0px;
+}
+
+a.section-nav-link {
+    height: 20px;
 }

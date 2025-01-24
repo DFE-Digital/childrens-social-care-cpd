@@ -28,7 +28,7 @@ jobs:
       CPD_FEATURE_POLLING_INTERVAL: 0 
       CPD_INSTRUMENTATION_CONNECTIONSTRING: ""
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Build the Docker App Image
         run: cd Childrens-Social-Care-CPD; docker build . --file Dockerfile --tag childrens-social-care-cpd:ContainerizeRegressionTests
