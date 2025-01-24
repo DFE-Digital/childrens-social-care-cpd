@@ -47,23 +47,19 @@
 }
     @if (ViewBag.ContextModel.UseContainers ?? true)
     {
-    <div class="govuk-width-container dfe-width-container">
-        <div class="govuk-grid-row">
-            <div class="govuk-grid-row">
-                <div class="@css govuk-grid-column-three-quarters">
-                    <div class="govuk-grid-row">
-                        <div class="govuk-grid-column-one-quarter">
-                            @Html.Raw(@svg)
-                        </div>
-                        <div class="govuk-grid-column-three-quarters">
-                            @{ RenderTitle(); }
-                            <partial name="_RichText" model="Model.Document" />
-                        </div>
+        <div class="govuk-width-container dfe-width-container infobox-width-container">
+            <div class="@css govuk-grid-column-three-quarters">
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-one-quarter">
+                        @Html.Raw(@svg)
+                    </div>
+                    <div class="govuk-grid-column-three-quarters">
+                        @{ RenderTitle(); }
+                        <partial name="_RichText" model="Model.Document" />
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     }
     else
     {
