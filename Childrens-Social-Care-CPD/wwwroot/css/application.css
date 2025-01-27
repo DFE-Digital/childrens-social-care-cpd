@@ -11774,6 +11774,7 @@ div.infobox-width-container {
   position: absolute;
   top: 0;
   left: 0;
+  pointer-events: none;
 }
 
 .infobox .govuk-grid-column-three-quarters {
