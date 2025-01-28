@@ -41,8 +41,15 @@
             @if (Model.PathwaysModule?.Sections != null) {
                 foreach (var moduleSection in Model.PathwaysModule.Sections)
                 {
-                    string displayText = moduleSection.ShortName ?? moduleSection.Name;
                     sectionCount++;
+
+                    string modulePagesText = "page";
+                    if (moduleSection.Pages?.Count > 1) {
+                        modulePagesText += "s";
+                    }
+
+                    string displayText = moduleSection.ShortName ?? moduleSection.Name;
+
                     <section class="module-overview--section">
                         <div class="progress-bar">
                             <span class="icon not_started">
@@ -62,7 +69,7 @@
                                             Add Content item(s) to this Pathways Module Section to resolve this.
                                         </div>
                                     }
-                                    @displayText <span class="module-section--pages">(@moduleSection.Pages?.Count pages)</span>
+                                    @displayText <span class="module-section--pages">(@moduleSection.Pages?.Count @modulePagesText)</span>
                                 </h4>
                                 <a href="/@moduleSection.Pages?[0].Id" class="section-nav-link govuk-link" data-track-label="">Go to this section</a>
                             </div>
