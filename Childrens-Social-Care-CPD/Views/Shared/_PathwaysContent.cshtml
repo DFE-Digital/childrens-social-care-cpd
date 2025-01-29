@@ -38,8 +38,23 @@
         </div>
     </div>
 </div>
-@* Render credit block in Module Type: Regular Module*@
-@if (Model.PathwaysModule?.CreditBlock != null && Model.PathwaysModule.Type == PathwaysModuleType.RegularModule)
+
+@* Render credit line in Module Type: Introductory Module on page 1 of section 1*@
+@if (Model.PathwaysModule?.CreditBlock != null && Model.PathwaysModule.Type == PathwaysModuleType.IntroductoryModule && @contextModel.NavigationHelper.CurrentLocation.SectionNumber==1 && @contextModel.NavigationHelper.CurrentLocation.PageNumber==1)
+{
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-three-quarters">
+            <hr />
+        </div>
+    </div>
+    <div class="govuk-grid-row pathways-nav">
+        <div class="govuk-grid-column-three-quarters">
+            <a href="https://thefrontline.org.uk/develop-your-career/pathways-programme/">Frontline 4C Leadership Framework</a> © 2024 by <a href="https://thefrontline.org.uk/">Frontline</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
+        </div>
+    </div>
+}
+@* Render credit block in Module Type: Introductory Module EXCEPT for on page 1 of section 1*@
+else if (Model.PathwaysModule?.CreditBlock != null)
 {
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-three-quarters">
@@ -52,20 +67,3 @@
         </div>
     </div>
 }
-
-@* Render credit line in Module Type: Introductory Module on page 1 of section 1*@
-@if (Model.PathwaysModule?.CreditBlock != null && Model.PathwaysModule.Type == PathwaysModuleType.IntroductoryModule && @contextModel.NavigationHelper.CurrentLocation.SectionNumber==1 && )
-{
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-three-quarters">
-            <hr />
-        </div>
-    </div>
-    <div class="govuk-grid-row pathways-nav">
-        <div class="govuk-grid-column-three-quarters">
-            Frontline 4C Leadership Framework © 2024 by Frontline is licensed under CC BY-NC-SA 4.0 
-        </div>
-    </div>
-}
-
-@* Render credit block in Module Type: Introductory Module EXCEPT for on page 1 of section 1*@
