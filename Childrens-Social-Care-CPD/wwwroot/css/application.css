@@ -10949,8 +10949,8 @@ CONTENT TITLE BANNER
 @media (min-width: 40.0625em) {
   .gem-c-attachment__thumbnail {
     position: relative;
-    width: 140px;
-    height: auto;
+    width: 110px;
+    height: 150px;
     max-width: 140px;
     margin-right: 20px;
     margin-bottom: 15px;
@@ -10961,8 +10961,8 @@ CONTENT TITLE BANNER
 .gem-c-attachment__thumbnail-image {
   display: block;
   max-width: 280px;
-  width: 140px;
-  height: auto;
+  width: 110px;
+  height: 150px;
   border: rgba(11, 12, 12, 0.1);
   outline: 5px solid rgba(11, 12, 12, 0.1);
   background: #ffffff;
@@ -11774,6 +11774,7 @@ div.infobox-width-container {
   position: absolute;
   top: 0;
   left: 0;
+  pointer-events: none;
 }
 
 .infobox .govuk-grid-column-three-quarters {
