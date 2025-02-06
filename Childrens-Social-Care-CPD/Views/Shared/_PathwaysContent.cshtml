@@ -53,8 +53,8 @@
         </div>
     </div>
 }
-@* Render credit block in Module Type: Introductory Module EXCEPT for on page 1 of section 1*@
-else if (Model.PathwaysModule?.CreditBlock != null)
+@* Render credit block in all other pages except for last page of last section*@
+else if (Model.PathwaysModule?.CreditBlock != null && @contextModel.NavigationHelper.CurrentLocation.SectionNumber!=@contextModel.NavigationHelper.CurrentLocation.TotalSections)
 {
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-three-quarters">
