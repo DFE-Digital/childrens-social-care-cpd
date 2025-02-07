@@ -204,14 +204,19 @@ public class PathwaysNavigationHelper : INavigationHelper
     }
 
     private void SetTrainingPageCurrentLocation(int currentSectionIdx, Content page, PathwaysModuleSection section, int currentPageIdx)
-    {
+    {   
+        bool isFirstPageOfFirstSection = currentPageIdx+1==1 && currentSectionIdx+1==1;
+        bool isLastSection = currentSectionIdx + 1 == page.PathwaysModule.Sections.Count;
         this._currentLocation = new LocationInfo
         {
             SectionName = section.Name,
             SectionNumber = currentSectionIdx + 1,
             TotalSections = page.PathwaysModule.Sections.Count,
-            PageNumber = currentPageIdx + 1
+            PageNumber = currentPageIdx + 1,
+            IsFirstPageOfFirstSection = isFirstPageOfFirstSection,
+            IsLastSection = isLastSection
         };
+
     }
 
     private string GetFirstSectionFirstPageId (Content page)

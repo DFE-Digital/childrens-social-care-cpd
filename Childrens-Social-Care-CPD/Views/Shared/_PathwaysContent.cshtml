@@ -40,7 +40,7 @@
 </div>
 
 @* Render credit line in Module Type: Introductory Module on page 1 of section 1*@
-@if (Model.PathwaysModule?.CreditBlock != null && Model.PathwaysModule.Type == PathwaysModuleType.IntroductoryModule && @contextModel.NavigationHelper.CurrentLocation.SectionNumber==1 && @contextModel.NavigationHelper.CurrentLocation.PageNumber==1)
+@if (Model.PathwaysModule?.CreditBlock != null && Model.PathwaysModule.Type == PathwaysModuleType.IntroductoryModule && @contextModel.NavigationHelper.CurrentLocation.IsFirstPageOfFirstSection)
 {
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-three-quarters">
@@ -54,7 +54,7 @@
     </div>
 }
 @* Render credit block in all other pages except for last page of last section*@
-else if (Model.PathwaysModule?.CreditBlock != null && @contextModel.NavigationHelper.CurrentLocation.SectionNumber!=@contextModel.NavigationHelper.CurrentLocation.TotalSections)
+else if (Model.PathwaysModule?.CreditBlock != null && !@contextModel.NavigationHelper.CurrentLocation.IsLastSection)
 {
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-three-quarters">
