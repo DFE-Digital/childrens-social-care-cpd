@@ -205,7 +205,7 @@ public class PathwaysNavigationHelper : INavigationHelper
 
     private void SetTrainingPageCurrentLocation(int currentSectionIdx, Content page, PathwaysModuleSection section, int currentPageIdx)
     {   
-        bool isFirstPageOfFirstSection = currentPageIdx+1==1 && currentSectionIdx+1==1;
+        bool isFirstPageOfFirstSection = currentPageIdx == 0 && currentSectionIdx == 0;
         bool isLastSection = currentSectionIdx + 1 == page.PathwaysModule.Sections.Count;
         this._currentLocation = new LocationInfo
         {
