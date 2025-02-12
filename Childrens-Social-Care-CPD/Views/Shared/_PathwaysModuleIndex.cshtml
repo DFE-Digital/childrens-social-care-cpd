@@ -73,7 +73,7 @@
                                 </h4>
                                 @if(moduleSection != Model.PathwaysModule.Sections[Model.PathwaysModule.Sections.Count - 1])
                                 {
-                                    <a href="/@moduleSection.Pages?[0].Id" class="section-nav-link govuk-link" data-track-label="">Go to this section</a>
+                                    <a href="/@moduleSection.Pages?[0].Id" class="section-nav-link govuk-link" data-track-label="">Go to section @sectionCount</a>
                                 }
                             </div>
                             <p class="govuk-body">@moduleSection.Summary</p>
