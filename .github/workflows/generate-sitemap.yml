@@ -31,5 +31,8 @@ jobs:
         working-directory: ./Utilities
         run: node generate-sitemap.js
 
+      - name: Display Sitemap (temp, to show it has generated something)
+        run: cat $${{ vars.CPD_SITEMAP_FILE_PATH }}
+
       - name: Git Status (temp, to demonstrate the sitemap has been updated)
         run: git status
