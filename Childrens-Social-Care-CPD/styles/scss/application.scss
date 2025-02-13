@@ -1,11 +1,9 @@
 ﻿//@use "sass:map";
 $govuk-global-styles: true;
 $govuk-new-link-styles: true;
-$moj-images-path: "/assets/images/moj/";
 $fa-font-path: "/webfonts";
 
-@import "../../node_modules/govuk-frontend/dist/govuk/all";
-@import "../../node_modules/@ministryofjustice/frontend/moj/components/filter/filter";
+@import "../../node_modules/govuk-frontend/dist/govuk/index";
 @import '../../node_modules/dfe-frontend/packages/dfefrontend';
 @import "overrides/dfe-overrides";
 @import "overrides/dfe-vertical-nav";
