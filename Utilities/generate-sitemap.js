@@ -8,7 +8,7 @@ import * as fs from 'node:fs';
 
 const red = chalk.bold.red;
 const spaceId = process.env.SPACE_ID;
-const environment = process.env.ENVIRONMENT;
+const contentfulEnvironment = process.env.CONTENTFUL_ENVIRONMENT;
 const deliveryKey = process.env.DELIVERY_KEY;
 const sitemapFilePath = process.env.SITEMAP_FILE_PATH;
 let websiteRoot = process.env.WEBSITE_ROOT;
@@ -17,7 +17,7 @@ let scannedPages = [];
 try {
     if (!deliveryKey) throw new Error("Environment variable DELIVERY_KEY not set");
     if (!spaceId) throw new Error("Environment variable SPACE_ID not set");
-    if (!environment) throw new Error("Environment variable ENVIRONMENT not set");
+    if (!contentfulEnvironment) throw new Error("Environment variable CONTENTFUL_ENVIRONMENT not set");
     if (!websiteRoot) throw new Error("Environment variable WEBSITE_ROOT not set");
     if (!sitemapFilePath) throw new Error("Environment variable SITEMAP_FILE_PATH not set");
 }
@@ -29,7 +29,7 @@ catch (e) {
 const contentfulClient = contentful.createClient({
     accessToken: deliveryKey,
     space: spaceId,
-    environment: environment
+    environment: contentfulEnvironment
 });
 
 const setup = () => {
@@ -45,22 +45,28 @@ const fetchAllEntries = async function  () {
     skip = 0;
     let entries = [];
 
-    while (!finished) {
-        let response = await contentfulClient.getEntries({
-            limit: 500,
-            skip: skip
-        });
+    try {
+        while (!finished) {
+            let response = await contentfulClient.getEntries({
+                limit: 500,
+                skip: skip
+            });
 
-        for (let item of response.items) {
-            entries.push(item);
-        }
+            for (let item of response.items) {
+                entries.push(item);
+            }
 
-        if (response.items.length == 0) {
-            finished = true;
+            if (response.items.length == 0) {
+                finished = true;
+            }
+            skip += response.items.length;
         }
-        skip += response.items.length;
+        return entries;
     }
-    return entries;
+    catch (e) {
+        core.setFailed(red(e));
+        process.exit();
+    }
 }
 
 const filterContentEntries = (items) => {
@@ -158,7 +164,13 @@ const buildSitemap = (pages, pageMetadata) => {
 }
 
 const writeSitemapFile = (sitemapContents) => {
-    fs.writeFileSync (sitemapFilePath, sitemapContents, 'utf8');
+    try {
+        fs.writeFileSync (sitemapFilePath, sitemapContents, 'utf8');
+    }
+    catch (e) {
+        core.setFailed(red(e));
+        process.exit();
+    }
 }
 
 setup();
