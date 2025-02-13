@@ -41,7 +41,7 @@
 
 @import url("https://rsms.me/inter/inter.css");
 :root {
-  --govuk-frontend-version: "5.8.0";
+  --govuk-frontend-version: "5.6.0";
   --govuk-frontend-breakpoint-mobile: 20rem;
   --govuk-frontend-breakpoint-tablet: 40.0625rem;
   --govuk-frontend-breakpoint-desktop: 48.0625rem;
@@ -3060,10 +3060,7 @@ p + .govuk-heading-s,
 }
 
 .govuk-details__summary {
-  display: block;
-}
-
-.govuk-details[open] .govuk-details__summary {
+  display: inline-block;
   margin-bottom: 5px;
 }
 
@@ -3111,8 +3108,6 @@ p + .govuk-heading-s,
 @supports not (-ms-ime-align: auto) {
   .govuk-details__summary {
     position: relative;
-    width: -webkit-fit-content;
-    width: fit-content;
     padding-left: 25px;
     color: #1d70b8;
     cursor: pointer;
@@ -3601,19 +3596,23 @@ p + .govuk-heading-s,
 
 .govuk-footer__licence-description {
   display: inline-block;
-  text-wrap: balance;
 }
 
 .govuk-footer__copyright-logo {
   display: inline-block;
   min-width: 125px;
   padding-top: 112px;
-  background-image: url("/assets/images/govuk-crest.svg");
+  background-image: url("/assets/images/govuk-crest.png");
   background-repeat: no-repeat;
   background-position: 50% 0%;
   background-size: 125px 102px;
   text-align: center;
   white-space: nowrap;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  .govuk-footer__copyright-logo {
+    background-image: url("/assets/images/govuk-crest-2x.png");
+  }
 }
 
 .govuk-footer__inline-list {
@@ -5243,7 +5242,7 @@ p + .govuk-heading-s,
   font-size: 1rem;
   line-height: 1.25;
   display: inline-flex;
-  margin: 10px 0;
+  margin: 0 0 10px;
   padding: 0;
   border: 0;
   color: #1a65a6;
@@ -5304,9 +5303,6 @@ p + .govuk-heading-s,
 }
 .govuk-service-navigation__toggle[hidden] {
   display: none;
-}
-.govuk-service-navigation__service-name + .govuk-service-navigation__wrapper .govuk-service-navigation__toggle {
-  margin-top: 0;
 }
 
 .govuk-service-navigation__list {
@@ -6253,7 +6249,6 @@ p + .govuk-heading-s,
   font-size: 1rem;
   line-height: 1.25;
   margin-bottom: 20px;
-  font-weight: 700;
   position: relative;
   padding: 10px 0;
 }
@@ -6281,6 +6276,7 @@ p + .govuk-heading-s,
 }
 
 .govuk-warning-text__icon {
+  font-weight: 700;
   box-sizing: border-box;
   display: inline-block;
   position: absolute;
@@ -6317,7 +6313,6 @@ p + .govuk-heading-s,
   color: #0b0c0c;
   display: block;
   padding-left: 45px;
-  font-weight: inherit;
 }
 @media print {
   .govuk-warning-text__text {
