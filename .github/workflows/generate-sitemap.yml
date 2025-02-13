@@ -6,10 +6,14 @@ on:
 jobs:
   generate:
     runs-on: ubuntu-latest
+    environment: dev
 
     env:
       DELIVERY_KEY: ${{ secrets.TF_VAR_CPD_DELIVERY_KEY }}
       SPACE_ID: ${{ secrets.TF_VAR_CPD_SPACE_ID }}
+      CONTENTFUL_ENVIRONMENT: dev
+      WEBSITE_ROOT: ${{ vars.CPD_WEBSITE_ROOT }}
+      SITEMAP_FILE_PATH: ${{ vars.CPD_SITEMAP_FILE_PATH }}
 
     steps:
       - uses: actions/checkout@v4
@@ -26,3 +30,6 @@ jobs:
         id: generate-sitemap
         working-directory: ./Utilities
         run: node generate-sitemap.js
+
+      - name: Git Status (temp, to demonstrate the sitemap has been updated)
+        run: git status
