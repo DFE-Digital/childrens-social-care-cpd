@@ -1,4 +1,4 @@
-name: Contentful Schema Migrate
+name: Generate Sitemap
 
 on:
   workflow_dispatch:
