@@ -2,9 +2,6 @@ name: Generate Sitemap
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - SFSW-2532-Create-XML-Sitemap
 
 jobs:
   generate:
