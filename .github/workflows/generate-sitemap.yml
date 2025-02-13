@@ -2,8 +2,10 @@ name: Generate Sitemap
 
 on:
   workflow_dispatch:
-  pull_request:
-    
+  push:
+    branches:
+      - SFSW-2532-Create-XML-Sitemap
+
 jobs:
   generate:
     runs-on: ubuntu-latest
