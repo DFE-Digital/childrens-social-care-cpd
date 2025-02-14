@@ -1,12 +1,12 @@
 name: Sitemap Generator Auto PR
 
 on:
-  push:
-    branches:
-      - SFSW-2532-Create-XML-Sitemap 
-  # schedule:
-  #   - cron: "00 00 * * 5"
-  # workflow_dispatch:
+  schedule:
+    - cron: "00 00 * * 5"
+  workflow_dispatch:
+  # push:
+  #   branches:
+  #     - SFSW-2532-Create-XML-Sitemap 
 
 jobs:
   generate-sitemap:
@@ -18,7 +18,7 @@ jobs:
       SPACE_ID: ${{ secrets.TF_VAR_CPD_SPACE_ID }}
       CONTENTFUL_ENVIRONMENT: dev
       WEBSITE_ROOT: ${{ vars.CPD_WEBSITE_ROOT }}
-      SITEMAP_FILE_PATH: ${{ vars.CPD_SITEMAP_FILE_PATH }}
+      SITEMAP_FILE_PATH: ${{ github.workspace }}/sitemap.xml
 
     steps:
       - uses: actions/checkout@v4
