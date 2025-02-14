@@ -1,10 +1,12 @@
-name: Generate Sitemap
+name: Sitemap Generator Auto PR
 
 on:
+  schedule:
+    - cron: "00 00 * * 5"
   workflow_dispatch:
 
 jobs:
-  generate:
+  generate-sitemap:
     runs-on: ubuntu-latest
     environment: dev
 
@@ -31,9 +33,25 @@ jobs:
         working-directory: ./Utilities
         run: node generate-sitemap.js
 
-      - name: Display Sitemap (temp, to show it has generated something)
-        working-directory: ./Utilities
-        run: cat ${{ vars.CPD_SITEMAP_FILE_PATH }}
+      - name: Move sitemap to target directory
+        run: mv -f Utilities/sitemap.xml app-directory/wwwroot/sitemap.xml
 
-      - name: Git Status (temp, to demonstrate the sitemap has been updated)
-        run: git status
+      - name: Set dynamic PR title with today's date
+        run: echo "PR_TITLE=Sitemap change $(date '+%A %d-%m-%Y %H:%M:%S')" >> $GITHUB_ENV
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        env:
+          BRANCH_NAME: create-pull-request/sitemap-${{ github.run_id }}
+          PR_TITLE: ${{ env.PR_TITLE }}
+        with:
+          token: ${{ secrets.PAT_TOKEN }}
+          commit-message: Sitemap latest updates
+          author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
+          signoff: false
+          branch: ${{ env.BRANCH_NAME }}
+          delete-branch: false
+          title: ${{ env.PR_TITLE }}
+          body: |
+            Please review the latest changes to the sitemap.
+          draft: false
