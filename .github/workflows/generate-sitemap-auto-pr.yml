@@ -37,7 +37,7 @@ jobs:
         run: node generate-sitemap.js
 
       - name: Move sitemap to target directory
-        run: mv -f Utilities/sitemap.xml app-directory/wwwroot/sitemap.xml
+        run: mv -f ./Utilities/sitemap.xml ./Childrens-Social-Care-CPD/wwwroot/sitemap.xml
 
       - name: Set dynamic PR title with today's date
         run: echo "PR_TITLE=Sitemap change $(date '+%A %d-%m-%Y %H:%M:%S')" >> $GITHUB_ENV
