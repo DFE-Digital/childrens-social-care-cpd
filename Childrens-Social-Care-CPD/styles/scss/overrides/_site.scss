@@ -466,6 +466,13 @@ div#page-feedback a {
     padding-right: 75px;
 }
 
+/* Reduce indentation of left-aligned quote attribution on smaller screens */
+@media (max-width: 768px) {
+    .blockquote-container blockquote.quote .quote-attribution-left p {
+        padding-left: 10px; 
+    }
+}
+
 /*
     Pathways Modules
 */

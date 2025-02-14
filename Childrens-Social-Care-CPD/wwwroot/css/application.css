@@ -11623,6 +11623,11 @@ div#page-feedback a {
   padding-right: 75px;
 }
 
+@media (max-width: 768px) {
+  .blockquote-container blockquote.quote .quote-attribution-left p {
+    padding-left: 10px; /* Reduce indentation on smaller screens */
+  }
+}
 /*
     Pathways Modules
 */
