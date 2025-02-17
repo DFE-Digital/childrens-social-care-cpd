@@ -82,6 +82,31 @@ const filterContentEntries = (items) => {
     return filteredItems;
 }
 
+const transformSitemapUrl = (url) => {
+
+    if (url.startsWith('/')) {
+        url = websiteRoot + url;
+    }
+
+    if (url.slice(-1) == '/') {
+        url = url.slice(0, -1)
+    }
+
+    if (url.indexOf('?') > -1) {
+        url = url.slice(0, url.indexOf('?'));
+    }
+    return url;
+}
+
+const validPageForSitemap = (url) => {
+
+    if (url.startsWith('//assets.ctfassets.net')) return false;
+    if (url.startsWith('/') || url.startsWith(websiteRoot)) {
+        return transformSitemapUrl(url);
+    }
+    return false;
+}
+
 const scanPage = async (url, foundPages=[], level=0) => {
 
     try {
@@ -93,21 +118,9 @@ const scanPage = async (url, foundPages=[], level=0) => {
         let childPagesToScan = [];
 
         for (const element of links) {
-            let linkHref = $(element).attr('href');
+            let linkHref = validPageForSitemap($(element).attr('href'));
 
-            if ((linkHref.startsWith('/') || linkHref.startsWith(websiteRoot)) && !linkHref.startsWith('//assets.ctfassets.net')) {
-                if (linkHref.startsWith('/')) {
-                    linkHref = websiteRoot + linkHref;
-                }
-
-                if (linkHref.slice(-1) == '/') {
-                    linkHref = linkHref.slice(0, -1)
-                }
-
-                if (linkHref.indexOf('?') > -1) {
-                    linkHref = linkHref.slice(0, linkHref.indexOf('?'));
-                }
-
+            if (linkHref) {
                 if (scannedPages.indexOf(linkHref) == -1) {
                     scannedPages.push(linkHref);
                     childPagesToScan.push(linkHref);
