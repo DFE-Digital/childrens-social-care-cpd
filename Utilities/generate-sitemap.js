@@ -159,7 +159,7 @@ const scanPage = async (url, foundPages=[], level=0) => {
 const buildSitemap = (pages, pageMetadata) => {
 
     let xmlDoc = xmlbuilder2.create({ version: '1.0'})
-        .ele('urlset', {xmlns: 'http://www.sitemaps.org/schemas/sitemap/0.9'});
+        .ele('urlset', {xmlns: 'https://www.sitemaps.org/schemas/sitemap/0.9'});
     
     for (let page of pages) {
         let metadata = pageMetadata.find(m => m.id == page.url);
