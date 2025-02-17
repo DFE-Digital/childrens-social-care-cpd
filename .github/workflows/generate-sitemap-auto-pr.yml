@@ -8,12 +8,12 @@ on:
 jobs:
   generate-sitemap:
     runs-on: ubuntu-latest
-    environment: master
+    environment: prod
 
     env:
       DELIVERY_KEY: ${{ secrets.TF_VAR_CPD_DELIVERY_KEY }}
       SPACE_ID: ${{ secrets.TF_VAR_CPD_SPACE_ID }}
-      CONTENTFUL_ENVIRONMENT: prod
+      CONTENTFUL_ENVIRONMENT: master
       WEBSITE_ROOT: ${{ vars.CPD_WEBSITE_ROOT }}
       SITEMAP_FILE_PATH: ${{ github.workspace }}/${{ vars.CPD_SITEMAP_FILE_PATH }}
 
