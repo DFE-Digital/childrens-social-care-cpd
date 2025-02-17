@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
   # push:
   #   branches: ["main", "release/**", "feature/**", "fix/**"]      
-  pull_request:
-    types: [opened, synchronize, reopened]
-    branches: ["next", "main", "release/**", "feature/**", "fix/**"]
+  # pull_request:
+  #   types: [opened, synchronize, reopened]
+  #   branches: ["next", "main", "release/**", "feature/**", "fix/**"]
 
 jobs:
   code-analysis:
