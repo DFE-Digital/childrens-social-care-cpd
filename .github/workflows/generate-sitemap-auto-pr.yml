@@ -4,9 +4,6 @@ on:
   schedule:
     - cron: "00 00 * * 5"
   workflow_dispatch:
-  push:
-    branches:
-      - SFSW-2532-Create-XML-Sitemap 
 
 jobs:
   generate-sitemap:
@@ -18,7 +15,7 @@ jobs:
       SPACE_ID: ${{ secrets.TF_VAR_CPD_SPACE_ID }}
       CONTENTFUL_ENVIRONMENT: dev
       WEBSITE_ROOT: ${{ vars.CPD_WEBSITE_ROOT }}
-      SITEMAP_FILE_PATH: ${{ github.workspace }}/Utilities/sitemap.xml
+      SITEMAP_FILE_PATH: ${{ github.workspace }}/${{ vars.CPD_SITEMAP_FILE_PATH }}
 
     steps:
       - uses: actions/checkout@v4
@@ -35,9 +32,6 @@ jobs:
         id: generate-sitemap
         working-directory: ./Utilities
         run: node generate-sitemap.js
-
-      - name: Move sitemap to target directory
-        run: mv -f Utilities/sitemap.xml Childrens-Social-Care-CPD/wwwroot/sitemap.xml
 
       - name: Set dynamic PR title with today's date
         run: echo "PR_TITLE=Sitemap change $(date '+%A %d-%m-%Y %H:%M:%S')" >> $GITHUB_ENV
