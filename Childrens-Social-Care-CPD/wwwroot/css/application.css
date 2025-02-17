@@ -11589,7 +11589,7 @@ div#page-feedback a {
 
 @media (min-width: 40.0625em) {
   .blockquote-container blockquote.quote p {
-    padding-left: 40px;
+    padding-left: 60px;
   }
 }
 .blockquote-container blockquote.quote p::before {
@@ -11615,7 +11615,7 @@ div#page-feedback a {
 
 .blockquote-container blockquote.quote .quote-attribution-left p {
   text-align: left;
-  padding-left: 75px;
+  padding-left: 60px;
 }
 
 .blockquote-container blockquote.quote .quote-attribution-right p {
@@ -11623,6 +11623,11 @@ div#page-feedback a {
   padding-right: 75px;
 }
 
+@media (max-width: 768px) {
+  .blockquote-container blockquote.quote .quote-attribution-left p {
+    padding-left: 10px; /* Reduce indentation on smaller screens */
+  }
+}
 /*
     Pathways Modules
 */
