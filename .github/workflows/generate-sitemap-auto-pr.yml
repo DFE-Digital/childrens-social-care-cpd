@@ -33,10 +33,17 @@ jobs:
         working-directory: ./Utilities
         run: node generate-sitemap.js
 
+      - name: Test for local modifications
+        id: local-modifications
+        continue-on-error: true
+        run: if git status | grep -q "${{ vars.CPD_SITEMAP_FILE_PATH }}"; then exit 1; fi
+
       - name: Set dynamic PR title with today's date
+        if: steps.local-modifications.outcome == 'failure'
         run: echo "PR_TITLE=Sitemap change $(date '+%A %d-%m-%Y %H:%M:%S')" >> $GITHUB_ENV
 
       - name: Create Pull Request
+        if: steps.local-modifications.outcome == 'failure'
         uses: peter-evans/create-pull-request@v7
         env:
           BRANCH_NAME: create-pull-request/sitemap-${{ github.run_id }}
