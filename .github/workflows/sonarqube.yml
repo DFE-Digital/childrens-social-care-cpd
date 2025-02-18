@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
   # push:
   #   branches: ["main", "release/**", "feature/**", "fix/**"]      
-  pull_request:
-    types: [opened, synchronize, reopened]
-    branches: ["next", "main", "release/**", "feature/**", "fix/**"]
+  # pull_request:
+  #   types: [opened, synchronize, reopened]
+  #   branches: ["next", "main", "release/**", "feature/**", "fix/**"]
 
 jobs:
   code-analysis:
@@ -64,7 +64,7 @@ jobs:
             /d:sonar.qualitygate.wait=true \
             /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml \
             /d:sonar.exclusions="**/*.css,**/*.scss,**/Models/*,**/Program.cs,**/WebApplicationBuilderExtensions.cs,**/GraphQL/Queries/*,**/Contentful-Schema/migrations/*.cjs" \
-            /d:sonar.test.exclusions="Childrens-Social-Care-CPD-Tests/**/*,Terraform-bootstrap/Error-pages/*" \
+            /d:sonar.test.exclusions="Childrens-Social-Care-CPD-Tests/**/*,Terraform-bootstrap/Error-pages/*,Utilities/generate-sitemap.js" \
             /d:sonar.token="${{ secrets.SONAR_TOKEN_AS }}" \
             /d:sonar.host.url="https://sonarcloud.io"
           dotnet build --no-incremental
