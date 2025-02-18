@@ -1,0 +1,29 @@
+name: MB Test
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - mb-sandbox  
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    environment: dev
+
+    env:
+      FILE_PATH: ${{ github.workspace }}/Utilities.temp.txt
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Update textfile
+        working-directory: ./Utilities
+        run: date > temp.txt
+
+      - name: Git Status
+        run: git status
