@@ -2,9 +2,6 @@ name: MB Test
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - mb-sandbox  
 
 jobs:
   test:
