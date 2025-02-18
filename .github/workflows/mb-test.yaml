@@ -12,7 +12,7 @@ jobs:
     environment: dev
 
     env:
-      FILE_PATH: ${{ github.workspace }}/Utilities.temp.txt
+      FILE_PATH: Utilities/temp.txt
 
     steps:
       - uses: actions/checkout@v4
@@ -21,9 +21,26 @@ jobs:
         with:
           node-version: 20
 
+      - name: Git Status 1
+        run: git status
+
+      - name: Conditional 1
+        id: conditional1
+        run: if git status | grep -q "${{ env.FILE_PATH }}"; then exit 1; fi
+
+      - name: Test 1
+        run: echo ${{ steps.conditional1.conclusion }}
+
       - name: Update textfile
         working-directory: ./Utilities
         run: date > temp.txt
 
-      - name: Git Status
+      - name: Git Status 2
         run: git status
+        
+      - name: Conditional 2
+        id: conditional2
+        run: if git status | grep -q "${{ env.FILE_PATH }}"; then exit 1; fi
+
+      - name: Test 2
+        run: echo ${{ steps.conditional2.conclusion }}
