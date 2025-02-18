@@ -14,16 +14,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
       - name: Git Status 1
         run: git status
 
       - name: Conditional 1
         id: conditional1
-        run: if git status | grep -q "${{ env.FILE_PATH }}"; then exit 0; fi
+        run: if git status | grep -q "${{ env.FILE_PATH }}"; then exit 1; fi
 
       - name: Test 1
         run: echo ${{ steps.conditional1.conclusion }}
@@ -37,7 +33,11 @@ jobs:
         
       - name: Conditional 2
         id: conditional2
-        run: if git status | grep -q "${{ env.FILE_PATH }}"; then exit 0; fi
+        continue-on-error: true
+        run: if git status | grep -q "${{ env.FILE_PATH }}"; then exit 1; fi
 
-      - name: Test 2
-        run: echo ${{ steps.conditional2.conclusion }}
+      - name: Test 2a
+        run: echo "Outcome- ${{ steps.conditional2.outcome }}"
+
+      - name: Test 2b
+        run: echo "Conclusion- ${{ steps.conditional2.conclusion }}"
