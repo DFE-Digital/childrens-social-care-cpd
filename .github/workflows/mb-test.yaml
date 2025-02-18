@@ -25,7 +25,7 @@ jobs:
         run: echo ${{ steps.conditional1.outcome }}
 
       - name: Conditional execution 1
-        if: ${{ steps.conditional1.outcome }} == "failure"
+        if: steps.conditional1.outcome == 'failure'
         run: echo "ONLY DO THIS IF CONDITIONAL1 FAILED"
 
       - name: Update textfile
@@ -47,7 +47,7 @@ jobs:
         run: echo "Conclusion- ${{ steps.conditional2.conclusion }}"
 
       - name: Conditional execution 2
-        if: ${{ steps.conditional2.outcome }} == "failure"
+        if: steps.conditional2.outcome == 'failure'
         run: echo "ONLY DO THIS IF CONDITIONAL2 FAILED"
 
       - name: Final step
