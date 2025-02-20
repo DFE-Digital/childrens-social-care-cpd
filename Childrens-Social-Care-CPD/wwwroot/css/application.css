@@ -41,7 +41,7 @@
 
 @import url("https://rsms.me/inter/inter.css");
 :root {
-  --govuk-frontend-version: "5.6.0";
+  --govuk-frontend-version: "5.8.0";
   --govuk-frontend-breakpoint-mobile: 20rem;
   --govuk-frontend-breakpoint-tablet: 40.0625rem;
   --govuk-frontend-breakpoint-desktop: 48.0625rem;
@@ -3060,7 +3060,10 @@ p + .govuk-heading-s,
 }
 
 .govuk-details__summary {
-  display: inline-block;
+  display: block;
+}
+
+.govuk-details[open] .govuk-details__summary {
   margin-bottom: 5px;
 }
 
@@ -3108,6 +3111,8 @@ p + .govuk-heading-s,
 @supports not (-ms-ime-align: auto) {
   .govuk-details__summary {
     position: relative;
+    width: -webkit-fit-content;
+    width: fit-content;
     padding-left: 25px;
     color: #1d70b8;
     cursor: pointer;
@@ -3596,23 +3601,19 @@ p + .govuk-heading-s,
 
 .govuk-footer__licence-description {
   display: inline-block;
+  text-wrap: balance;
 }
 
 .govuk-footer__copyright-logo {
   display: inline-block;
   min-width: 125px;
   padding-top: 112px;
-  background-image: url("/assets/images/govuk-crest.png");
+  background-image: url("/assets/images/govuk-crest.svg");
   background-repeat: no-repeat;
   background-position: 50% 0%;
   background-size: 125px 102px;
   text-align: center;
   white-space: nowrap;
-}
-@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  .govuk-footer__copyright-logo {
-    background-image: url("/assets/images/govuk-crest-2x.png");
-  }
 }
 
 .govuk-footer__inline-list {
@@ -5242,7 +5243,7 @@ p + .govuk-heading-s,
   font-size: 1rem;
   line-height: 1.25;
   display: inline-flex;
-  margin: 0 0 10px;
+  margin: 10px 0;
   padding: 0;
   border: 0;
   color: #1a65a6;
@@ -5303,6 +5304,9 @@ p + .govuk-heading-s,
 }
 .govuk-service-navigation__toggle[hidden] {
   display: none;
+}
+.govuk-service-navigation__service-name + .govuk-service-navigation__wrapper .govuk-service-navigation__toggle {
+  margin-top: 0;
 }
 
 .govuk-service-navigation__list {
@@ -6249,6 +6253,7 @@ p + .govuk-heading-s,
   font-size: 1rem;
   line-height: 1.25;
   margin-bottom: 20px;
+  font-weight: 700;
   position: relative;
   padding: 10px 0;
 }
@@ -6276,7 +6281,6 @@ p + .govuk-heading-s,
 }
 
 .govuk-warning-text__icon {
-  font-weight: 700;
   box-sizing: border-box;
   display: inline-block;
   position: absolute;
@@ -6313,6 +6317,7 @@ p + .govuk-heading-s,
   color: #0b0c0c;
   display: block;
   padding-left: 45px;
+  font-weight: inherit;
 }
 @media print {
   .govuk-warning-text__text {
@@ -7712,286 +7717,6 @@ p + .govuk-heading-s,
 
 
 
-
-
-/* ==========================================================================
-   #FILTER
-   ========================================================================== */
-.moj-filter {
-  background-color: #ffffff;
-  box-shadow: inset 0 0 0 1px #b1b4b6;
-}
-.moj-filter:focus {
-  box-shadow: 0 -2px #ffdd00, 0 4px #0b0c0c;
-}
-
-.moj-filter__header {
-  background-color: #b1b4b6;
-  font-size: 0;
-  padding: 10px 20px;
-  text-align: justify;
-}
-.moj-filter__header:after {
-  content: "";
-  display: inline-block;
-  width: 100%;
-}
-.moj-filter__header [class^=govuk-heading-] {
-  margin-bottom: 0;
-}
-
-.moj-filter__legend {
-  overflow: visible;
-  width: 100%;
-}
-.moj-filter__legend button {
-  font-family: "GDS Transport", arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-weight: 700;
-  font-size: 1.125rem;
-  line-height: 1.1111111111;
-  background-color: transparent;
-  box-sizing: border-box;
-  border-radius: 0;
-  border: 0 none;
-  cursor: pointer;
-  display: block;
-  margin: 0;
-  padding: 0;
-  position: relative;
-  text-align: left;
-  width: 100%;
-  -webkit-appearance: none;
-}
-@media print {
-  .moj-filter__legend button {
-    font-family: sans-serif;
-  }
-}
-@media (min-width: 40.0625em) {
-  .moj-filter__legend button {
-    font-size: 1.5rem;
-    line-height: 1.25;
-  }
-}
-@media print {
-  .moj-filter__legend button {
-    font-size: 18pt;
-    line-height: 1.15;
-  }
-}
-.moj-filter__legend button::-moz-focus-inner {
-  padding: 0;
-  border: 0;
-}
-.moj-filter__legend button::after {
-  background-image: url(/assets/images/moj/icon-toggle-plus-minus.svg);
-  background-position: 0 0;
-  content: "";
-  display: block;
-  height: 16px;
-  margin-top: -8px;
-  position: absolute;
-  top: 50%;
-  right: 0;
-  width: 16px;
-}
-.moj-filter__legend button[aria-expanded=true]::after {
-  background-position: 16px 16px;
-}
-.moj-filter__header-title,
-.moj-filter__header-action {
-  display: inline-block;
-  text-align: left;
-  vertical-align: middle;
-}
-
-.moj-filter__close {
-  color: #0b0c0c;
-  cursor: pointer;
-  background-color: transparent;
-  border: none;
-  border-radius: 0;
-  margin: 0;
-  padding: 0;
-  -webkit-appearance: none;
-}
-.moj-filter__close:focus {
-  background-color: #ffdd00;
-  color: #0b0c0c;
-  box-shadow: 0 -2px #ffdd00, 0 4px #0b0c0c;
-  outline: none;
-}
-.moj-filter__close::-moz-focus-inner {
-  padding: 0;
-  border: 0;
-}
-.moj-filter__close::before {
-  background-image: url(/assets/images/moj/icon-close-cross-black.svg);
-  content: "";
-  display: inline-block;
-  height: 14px;
-  margin-right: 5px;
-  position: relative;
-  top: -1px;
-  vertical-align: middle;
-  width: 14px;
-}
-
-.moj-filter__close {
-  font-family: "GDS Transport", arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.25;
-}
-@media print {
-  .moj-filter__close {
-    font-family: sans-serif;
-  }
-}
-@media (min-width: 40.0625em) {
-  .moj-filter__close {
-    font-size: 1.1875rem;
-    line-height: 1.3157894737;
-  }
-}
-@media print {
-  .moj-filter__close {
-    font-size: 14pt;
-    line-height: 1.15;
-  }
-}
-
-.moj-filter__selected {
-  background-color: #f3f2f1;
-  box-shadow: inset 0 0 0 1px #b1b4b6;
-  padding: 20px;
-}
-.moj-filter__selected ul:last-of-type {
-  margin-bottom: 0;
-}
-
-.moj-filter__selected-heading {
-  font-size: 0;
-  text-align: justify;
-}
-.moj-filter__selected-heading:after {
-  content: "";
-  display: inline-block;
-  width: 100%;
-}
-
-.moj-filter__heading-title,
-.moj-filter__heading-action {
-  font-family: "GDS Transport", arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-weight: 400;
-  font-size: 0.875rem;
-  line-height: 1.1428571429;
-  display: inline-block;
-  text-align: left;
-  vertical-align: middle;
-}
-@media print {
-  .moj-filter__heading-title,
-  .moj-filter__heading-action {
-    font-family: sans-serif;
-  }
-}
-@media (min-width: 40.0625em) {
-  .moj-filter__heading-title,
-  .moj-filter__heading-action {
-    font-size: 1rem;
-    line-height: 1.25;
-  }
-}
-@media print {
-  .moj-filter__heading-title,
-  .moj-filter__heading-action {
-    font-size: 14pt;
-    line-height: 1.2;
-  }
-}
-
-.moj-filter-tags {
-  font-size: 0;
-  margin-bottom: 20px;
-  padding-left: 0;
-}
-.moj-filter-tags li {
-  display: inline-block;
-  margin-right: 10px;
-}
-
-.moj-filter__tag {
-  font-family: "GDS Transport", arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-weight: 400;
-  font-size: 0.875rem;
-  line-height: 1.1428571429;
-  background-color: #ffffff;
-  border: 1px solid #0b0c0c;
-  color: #0b0c0c;
-  display: inline-block;
-  margin-top: 5px;
-  padding: 5px;
-  text-decoration: none;
-}
-@media print {
-  .moj-filter__tag {
-    font-family: sans-serif;
-  }
-}
-@media (min-width: 40.0625em) {
-  .moj-filter__tag {
-    font-size: 1rem;
-    line-height: 1.25;
-  }
-}
-@media print {
-  .moj-filter__tag {
-    font-size: 14pt;
-    line-height: 1.2;
-  }
-}
-.moj-filter__tag:link, .moj-filter__tag:visited {
-  color: #0b0c0c;
-}
-.moj-filter__tag:focus {
-  color: #0b0c0c;
-  background-color: #ffdd00;
-}
-.moj-filter__tag:hover {
-  background-color: #0b0c0c;
-  color: #ffffff;
-}
-.moj-filter__tag:after {
-  background-image: url(/assets/images/moj/icon-tag-remove-cross.svg);
-  content: "";
-  display: inline-block;
-  font-weight: bold;
-  height: 10px;
-  margin-left: 5px;
-  vertical-align: middle;
-  width: 10px;
-}
-.moj-filter__tag:hover:after {
-  background-image: url(/assets/images/moj/icon-tag-remove-cross-white.svg);
-}
-
-.moj-filter__options {
-  box-shadow: inset 0 0 0 1px #b1b4b6;
-  margin-top: -1px;
-  padding: 20px;
-}
-.moj-filter__options div:last-of-type {
-  margin-bottom: 0;
-}
 
 /* stylelint-disable color-no-hex */
 /* stylelint-enable color-no-hex */
@@ -11864,7 +11589,7 @@ div#page-feedback a {
 
 @media (min-width: 40.0625em) {
   .blockquote-container blockquote.quote p {
-    padding-left: 40px;
+    padding-left: 60px;
   }
 }
 .blockquote-container blockquote.quote p::before {
@@ -11890,7 +11615,7 @@ div#page-feedback a {
 
 .blockquote-container blockquote.quote .quote-attribution-left p {
   text-align: left;
-  padding-left: 75px;
+  padding-left: 60px;
 }
 
 .blockquote-container blockquote.quote .quote-attribution-right p {
@@ -11898,6 +11623,11 @@ div#page-feedback a {
   padding-right: 75px;
 }
 
+@media (max-width: 768px) {
+  .blockquote-container blockquote.quote .quote-attribution-left p {
+    padding-left: 10px; /* Reduce indentation on smaller screens */
+  }
+}
 /*
     Pathways Modules
 */

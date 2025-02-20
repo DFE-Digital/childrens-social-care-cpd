@@ -38,7 +38,23 @@
         </div>
     </div>
 </div>
-@if (Model.PathwaysModule?.CreditBlock != null)
+
+@* Render credit line in Module Type: Introductory Module on page 1 of section 1*@
+@if (Model.PathwaysModule?.CreditBlock != null && Model.PathwaysModule.Type == PathwaysModuleType.IntroductoryModule && @contextModel.NavigationHelper.CurrentLocation.IsFirstPageOfFirstSection)
+{
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-three-quarters">
+            <hr />
+        </div>
+    </div>
+    <div class="govuk-grid-row pathways-nav">
+        <div class="govuk-grid-column-three-quarters">
+            <p><a href="https://thefrontline.org.uk/develop-your-career/pathways-programme/">Frontline 4C Leadership Framework</a> © 2024 by <a href="https://thefrontline.org.uk/">Frontline</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></p>
+        </div>
+    </div>
+}
+@* Render credit block in all other pages except for last page of last section*@
+else if (Model.PathwaysModule?.CreditBlock != null && !@contextModel.NavigationHelper.CurrentLocation.IsLastSection)
 {
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-three-quarters">
