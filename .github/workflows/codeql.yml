@@ -11,10 +11,6 @@
 #
 name: "CodeQL Advanced"
 
-############
-#for trigger
-############
-
 on:
   push:
     branches: [next, main]
