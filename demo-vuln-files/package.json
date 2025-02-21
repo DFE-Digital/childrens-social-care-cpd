@@ -1,0 +1,22 @@
+{
+    "name": "vulnerable-node-app",
+    "version": "1.0.0",
+    "description": "A Node.js app with known vulnerabilities for testing Trivy.",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "dependencies": {
+      "express": "4.16.0",            // Known vulnerability in Express 4.16.0 (CVE-2018-16469)
+      "lodash": "4.17.10",            // Known vulnerability in lodash 4.17.10 (CVE-2018-3721)
+      "debug": "2.6.9",               // Known vulnerability in debug 2.6.9 (CVE-2017-16137)
+      "moment": "2.18.1"              // Known vulnerability in Moment.js 2.18.1 (CVE-2017-18214)
+    },
+    "devDependencies": {
+      "mocha": "5.2.0",               // Known vulnerability in mocha 5.2.0 (CVE-2019-10747)
+      "nyc": "13.0.0"                 // Known vulnerability in nyc 13.0.0 (CVE-2020-7660)
+    },
+    "author": "",
+    "license": "ISC"
+  }
+  
