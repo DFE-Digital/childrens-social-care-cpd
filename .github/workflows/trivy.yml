@@ -25,6 +25,8 @@ jobs:
         uses: aquasecurity/trivy-action@18f2510ee396bbf400402947b394f2dd8c87dbb0
         with:
           scan-type: 'fs'
+          skip-files: '**/*terraform*'
+          skip-dirs: '**/*Terraform*' 
           scan-ref: '.'          
           ignore-unfixed: false
           format: 'sarif'
