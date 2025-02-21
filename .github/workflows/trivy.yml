@@ -12,9 +12,10 @@ jobs:
   build:
     name: Trivy File Scan
     runs-on: ubuntu-latest
-    # permissions:
-    #   contents: read
-    #   actions: write
+    permissions:
+      contents: read
+      actions: write
+      security-events: write
     steps:
 
       - name: Checkout code
