@@ -10570,8 +10570,6 @@ CONTENT TITLE BANNER
 --------------------------------------- */
 .dfe-card {
   position: relative;
-  background-color: #f3f2f1;
-  border-bottom: 3px solid #003a69;
   max-width: 100%;
   flex: 1;
 }
@@ -11623,9 +11621,10 @@ div#page-feedback a {
   padding-right: 75px;
 }
 
+/* Reduce indentation of left-aligned quote attribution on smaller screens */
 @media (max-width: 768px) {
   .blockquote-container blockquote.quote .quote-attribution-left p {
-    padding-left: 10px; /* Reduce indentation on smaller screens */
+    padding-left: 10px;
   }
 }
 /*
