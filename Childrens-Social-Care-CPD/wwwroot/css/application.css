@@ -10963,6 +10963,14 @@ p#content-banner-subtitle.govuk-body-l {
 }
 
 /*
+* Phase Banner
+*/
+.beta-banner .govuk-tag {
+  color: #fff;
+  background-color: #1D70B8;
+}
+
+/*
     This component is currently not part of the dfe-frontend-alpha npm package.
 
     Colours come from dfe-frontend-alpha/packages/core/setting/_colours.scss which is imported in application.scss
@@ -11819,6 +11827,13 @@ section.completed {
 
 a.section-nav-link {
   height: 20px;
+}
+
+/* 
+* Beta Banner
+*/
+.app-section-beta-banner {
+  background-color: #ebf2f6;
 }
 
 /*!
