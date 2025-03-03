@@ -10796,6 +10796,8 @@ p#content-banner-subtitle.govuk-body-l {
   line-height: 1.1428571429;
   color: #0b0c0c;
   margin-bottom: 10px;
+  margin-top: 0;
+  padding-top: 15px;
 }
 
 @media print {
