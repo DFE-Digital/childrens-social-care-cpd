@@ -10318,7 +10318,7 @@ CONTENT TITLE BANNER
 }
 
 .app-section-content {
-  padding-bottom: 35px;
+  padding-bottom: 40px;
 }
 
 p#content-banner-subtitle.govuk-body-l {
@@ -10964,6 +10964,7 @@ p#content-banner-subtitle.govuk-body-l {
 
 .govuk-breadcrumbs ul {
   padding-left: 0px;
+  margin-bottom: 15px;
 }
 
 /*
@@ -10976,6 +10977,17 @@ p#content-banner-subtitle.govuk-body-l {
 
 .beta-banner-home {
   border-bottom: 0;
+}
+
+/*
+* Page Banner
+*/
+h1#content-banner-title {
+  line-height: 1;
+}
+
+p#content-banner-subtitle {
+  line-height: 1;
 }
 
 /*
