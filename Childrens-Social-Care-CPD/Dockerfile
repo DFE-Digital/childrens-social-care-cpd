@@ -5,6 +5,8 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
+RUN useradd -m nonroot && chown -R nonroot /app
+
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 COPY ["Childrens-Social-Care-CPD.csproj", "."]
@@ -23,4 +25,5 @@ ARG VCSREF=0
 ENV VCS-REF=$VCSREF
 ARG VCSTAG=0.0.0
 ENV VCS-TAG=$VCSTAG
+USER nonroot
 ENTRYPOINT ["dotnet", "Childrens-Social-Care-CPD.dll"]
