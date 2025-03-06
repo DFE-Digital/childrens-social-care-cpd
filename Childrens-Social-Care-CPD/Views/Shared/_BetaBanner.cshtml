@@ -1,14 +1,18 @@
 ﻿@{
-    var additionalCss = ViewBag?.ContextModel?.Id == "home"
+    var bannerPaddingCss = ViewBag?.ContextModel?.PageHasBanner 
+        ? ""
+        : "beta-banner-no-header";
+
+    var bannerBorderCss = ViewBag?.ContextModel?.Id == "home"
         ? "beta-banner-home"
         : "";
 }    
 
 <section id="beta-banner" class="app-section-beta-banner">
     <div class="dfe-width-container beta-banner">
-        <div class="govuk-grid-row">
+        <div class="govuk-grid-row @bannerPaddingCss">
             <div class="govuk-grid-column-full">
-                <div class="govuk-phase-banner @additionalCss">
+                <div class="govuk-phase-banner @bannerBorderCss">
                     <p class="govuk-phase-banner__content">
                         <strong class="govuk-tag govuk-phase-banner__content__tag">
                             Beta
