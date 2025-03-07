@@ -1,16 +1,28 @@
-﻿<div class="dfe-width-container govuk-!-margin-bottom-6">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <div class="govuk-phase-banner">
-                <p class="govuk-phase-banner__content">
-                    <strong class="govuk-tag govuk-phase-banner__content__tag">
-                        BETA
-                    </strong>
-                    <span class="govuk-phase-banner__text">
-                        This is a new service – your <a class="govuk-link" href="https://dferesearch.fra1.qualtrics.com/jfe/form/SV_bmcLDedq5wipeTA">feedback</a>  will help us to improve it.
-                    </span>
-                </p>
+﻿@{
+    var containerClass = ViewBag.ContextModel?.PageHasBanner == true
+        ? ""
+        : "beta-banner-no-header";
+
+    var bannerClass = ViewBag.ContextModel?.Id == "home"
+        ? "beta-banner-home"
+        : "";
+}    
+
+<section id="beta-banner" class="app-section-beta-banner">
+    <div class="dfe-width-container beta-banner">
+        <div class="govuk-grid-row @containerClass">
+            <div class="govuk-grid-column-full">
+                <div class="govuk-phase-banner @bannerClass">
+                    <p class="govuk-phase-banner__content">
+                        <strong class="govuk-tag govuk-phase-banner__content__tag">
+                            Beta
+                        </strong>
+                        <span class="govuk-phase-banner__text">
+                            This is a new service – your <a class="govuk-link" href="https://dferesearch.fra1.qualtrics.com/jfe/form/SV_bmcLDedq5wipeTA">feedback</a>  will help us to improve it.
+                        </span>
+                    </p>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</section>
