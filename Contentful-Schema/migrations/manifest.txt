@@ -19,3 +19,4 @@
 0019-extend-column-layout-to-allow-four-columns.cjs
 0020-add-new-display-text-to-pathways-module-section.cjs
 0021-update-pathways-module-section-name-field-help-text.cjs
+0022-add-icon-field-to-content-link-component.cjs
