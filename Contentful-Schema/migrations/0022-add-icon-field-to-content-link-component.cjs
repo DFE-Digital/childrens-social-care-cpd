@@ -11,7 +11,7 @@ module.exports = async (migration) => {
     .required(false)
     .validations([
       {
-        in: ['Signpost icon', 'Compass icon']
+        in: ['Signpost icon', 'Compass icon', 'None']
       }
     ])
     .disabled(false)

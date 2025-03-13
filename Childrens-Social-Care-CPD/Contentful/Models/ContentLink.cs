@@ -2,7 +2,7 @@
 
 namespace Childrens_Social_Care_CPD.Contentful.Models;
 
-public static class contentLinkIcon
+public static class ContentLinkIcon
 {
     public const string SignpostIcon = "Signpost icon";
     public const string CompassIcon = "Compass icon";
