@@ -50,16 +50,16 @@ internal class ContentLinkRenderer(IContentLinkContext contentLinkContext) : IRe
 
 
         if (!string.IsNullOrEmpty(svg))
-
         {
             innerHtml.AppendHtml(svg);
         }
 
-            innerHtml.AppendHtml(item.Name);
-            tagBuilder.InnerHtml.SetHtmlContent(innerHtml);
+        // wrap the link text in a span to align with icon.  MB Note: Will prob need to only do this for content links that have an icon
+        innerHtml.AppendHtml("<span class=\"content-link-text\">" + item.Name + "</span>");
+        tagBuilder.InnerHtml.SetHtmlContent(innerHtml);
 
-            return tagBuilder;
-        }
+        return tagBuilder;
+    }
 
     public IHtmlContent Render(ContentLink item)
     {
