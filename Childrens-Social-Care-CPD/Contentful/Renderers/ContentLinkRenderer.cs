@@ -37,6 +37,7 @@ internal class ContentLinkRenderer(IContentLinkContext contentLinkContext) : IRe
 
         //Define SVGs
         string svg = "";
+        string linkText = item.Name;
 
         switch (item.Icon) {
             case ContentLinkIcon.SignpostIcon:
@@ -52,10 +53,11 @@ internal class ContentLinkRenderer(IContentLinkContext contentLinkContext) : IRe
         if (!string.IsNullOrEmpty(svg))
         {
             innerHtml.AppendHtml(svg);
+            linkText = "<span class=\"content-link-text\">" + linkText + "</span>";
         }
 
         // wrap the link text in a span to align with icon.  MB Note: Will prob need to only do this for content links that have an icon
-        innerHtml.AppendHtml("<span class=\"content-link-text\">" + item.Name + "</span>");
+        innerHtml.AppendHtml(linkText);
         tagBuilder.InnerHtml.SetHtmlContent(innerHtml);
 
         return tagBuilder;
