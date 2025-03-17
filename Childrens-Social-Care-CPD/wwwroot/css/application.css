@@ -11862,6 +11862,15 @@ a.section-nav-link {
   background-color: #ebf2f6;
 }
 
+/*
+* Content Links
+*/
+.content-link-text {
+  position: absolute;
+  padding-top: 6px;
+  text-decoration: underline;
+}
+
 /*!
  * Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
