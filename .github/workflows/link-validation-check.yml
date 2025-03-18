@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  test-slack-integration:
+  scan-website-links:
     runs-on: ubuntu-latest
     environment: dev
     env: 
