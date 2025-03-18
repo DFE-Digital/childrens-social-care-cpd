@@ -3,7 +3,9 @@ permissions:
   contents: read
 on:
   workflow_dispatch:
-
+  schedule:
+    - cron: "00 02 * * 1-5"
+    
 jobs:
   scan-website-links:
     runs-on: ubuntu-latest
