@@ -1,9 +1,6 @@
 name: Link Validation Check
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - SFSW-2912-broken-link-checker
 
 jobs:
   test-slack-integration:

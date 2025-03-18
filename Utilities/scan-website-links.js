@@ -65,7 +65,6 @@ const addBrokenLink = (url, pages, type) => {
     if (!Array.isArray(pages)) {
         pages = [pages];
     }
-    console.log('adding', url, pages, type);
     
     let idx = brokenLinks[type].findIndex(x => x.url === url);
     if (idx === -1) {
@@ -126,8 +125,6 @@ const scanPage = async (url, parent='') => {
         }
 
     } catch (error) {
-        // handle any error that occurs during the HTTP request
-        console.error(`Error fetching ${url}: ${error.message}`, 'parent', parent);
         addBrokenLink(url, parent, 'internal');
     }
 };
@@ -137,7 +134,7 @@ const delay = ms => new Promise(res => setTimeout(res, ms));
 const checkLink = async (link) => {
     var responseStatus;
     try {
-        // wait five second - we don't want to flood servers with loads of requests
+        // wait five seconds - we don't want to flood servers with loads of requests
         await delay (5000);
     
         const response = await axios.get(link, {
@@ -154,7 +151,7 @@ const checkLink = async (link) => {
             responseStatus = err.status;
         }
     }
-    console.log('status', responseStatus);
+
     return responseStatus;
 };
 
@@ -171,15 +168,50 @@ const checkLinks = async (externalLinks) => {
         if (status === 404) {
             addBrokenLink(externalLink.url, externalLink.pages, 'external');
         }
-        if (count == 9) return;
     }
 };
 
 const reportOutput = () => {
-    console.log(brokenLinks);
+    const outputLink = (link) => {
+        console.log('   ' + link.url);
+        console.log('   on page(s):');
+
+        if (link.pages.length >= 5) {
+            for (let count=0; count<=5; count++) {
+                console.log('      ' + link.pages[count]);
+
+            }
+            console.log('      ... and ' + (link.pages.length - 5) + ' other pages');
+        }
+        else {
+            for (let page of link.pages) {
+                console.log('      ' + page);
+            }    
+        }
+        console.log('  ');
+    };
+
+    if (brokenLinks.internal.length > 0) {
+        console.log('Broken Internal Link(s):');
+        for (let link of brokenLinks.internal) {
+            outputLink(link);
+        }
+        console.log('----------------------');
+    }
+    if (brokenLinks.external.length > 0) {
+        console.log('Broken External Link(s):');
+        for (let link of brokenLinks.external) {
+            outputLink(link);
+        }
+        console.log('----------------------');
+    }
 };
 
 setup();
 await scanPage(websiteRoot);
 await checkLinks(externalLinks);
 reportOutput();
+
+if (brokenLinks.internal.length > 0 || brokenLinks.external.length > 0) {
+    core.setFailed('Broken links found');
+}
