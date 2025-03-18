@@ -1,0 +1,28 @@
+name: Link Validation Check
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - SFSW-2912-broken-link-checker
+
+jobs:
+  test-slack-integration:
+    runs-on: ubuntu-latest
+    environment: dev
+    env: 
+      WEBSITE_ROOT: ${{ vars.CPD_WEBSITE_ROOT }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with: 
+          node-version: 20
+
+      - name: Install npm packages used by util scripts
+        working-directory: ./Utilities
+        run: npm ci
+
+      - name: Scan for broken links
+        working-directory: ./Utilities
+        run: node scan-website-links.js
