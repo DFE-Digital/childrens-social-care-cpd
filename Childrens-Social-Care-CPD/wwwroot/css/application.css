@@ -11867,8 +11867,9 @@ a.section-nav-link {
 */
 .content-link-text {
   position: absolute;
-  padding-top: 6px;
+  padding-top: 8px;
   text-decoration: underline;
+  vertical-align: middle;
 }
 
 /*!
