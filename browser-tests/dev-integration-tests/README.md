@@ -1,4 +1,4 @@
-# Playwright Tests
+# Playwright Tests 
 
 All tests can be found under the `tests/` folder.
 
