@@ -15,7 +15,7 @@ jobs:
     permissions:
       contents: write # to be able to publish a GitHub release
       issues: write # to be able to comment on released issues
-      pull-requests: write # to be able to comment on released pull requests
+      pull-requests: write # to be able to comment on released pull requests 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -27,5 +27,5 @@ jobs:
           node-version: "lts/*"
       - name: Release
         env:
-          GITHUB_TOKEN: ${{ secrets.PAT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx semantic-release@21
