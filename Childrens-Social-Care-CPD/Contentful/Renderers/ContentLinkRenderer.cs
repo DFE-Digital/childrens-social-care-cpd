@@ -33,7 +33,6 @@ internal class ContentLinkRenderer(IContentLinkContext contentLinkContext) : IRe
 
         tagBuilder.Attributes.Add("data-track-label", contentLinkContext.Path);
 
-        var innerHtml = new HtmlContentBuilder();
 
         //Define SVGs
         string svg = "";
@@ -49,16 +48,19 @@ internal class ContentLinkRenderer(IContentLinkContext contentLinkContext) : IRe
             break;
         }
 
-
-        if (!string.IsNullOrEmpty(svg))
+        if (string.IsNullOrEmpty(svg))
         {
+            tagBuilder.InnerHtml.Append(linkText);
+        }
+        
+        else 
+        {
+            var innerHtml = new HtmlContentBuilder();
             innerHtml.AppendHtml(svg);
             linkText = "<span class=\"content-link-text\">" + linkText + "</span>";
+            innerHtml.AppendHtml(linkText);
+            tagBuilder.InnerHtml.SetHtmlContent(innerHtml);
         }
-
-        // wrap the link text in a span to align with icon.  MB Note: Will prob need to only do this for content links that have an icon
-        innerHtml.AppendHtml(linkText);
-        tagBuilder.InnerHtml.SetHtmlContent(innerHtml);
 
         return tagBuilder;
     }
