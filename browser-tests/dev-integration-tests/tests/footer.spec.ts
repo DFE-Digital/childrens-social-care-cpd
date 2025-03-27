@@ -7,7 +7,7 @@ test.beforeEach(async ({ page }) => {
 test.describe('Page Footer', () => {
 
     const links = [
-        ['Privacy policy', '/privacy'],
+        ['Privacy policy', 'https://www.gov.uk/government/publications/privacy-information-business-contacts-and-stakeholders/privacy-information-business-contacts-and-stakeholders#using-your-data-to-carry-out-research'],
         ['Accessibility', '/accessibility'],
         ['Terms and conditions', '/termsconditions'],
         ['Sitemap', '/sitemap'],
