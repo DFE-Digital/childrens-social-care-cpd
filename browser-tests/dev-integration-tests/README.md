@@ -1,8 +1,14 @@
-# Playwright Tests
+# Playwright Tests 
 
 All tests can be found under the `tests/` folder.
 
 ## For Developers
+Set up a local environment variable called `PLAYWRIGHT_BASE_URL` with the value being the root url for the site to test against.  For example, testing against your locally running dev website you might execute:
+```
+export PLAYWRIGHT_BASE_URL=https://localhost:7112/
+```
+The integration tests have to be running against a contentful environment running in preview mode.  Make sure your local config has `CPD_CONTENTFUL_FORCE_PREVIEW` set to `true`
+
 You can run the tests by running the following:
 ```
 npm install
@@ -14,6 +20,7 @@ If you want to run with the UI then use:
 ```
 npx playwright test -ui
 ```
+
 
 ## Docker
 The tests are run inside docker for the CI pipeline. To run them you'll need to have built the web app docker image first.
