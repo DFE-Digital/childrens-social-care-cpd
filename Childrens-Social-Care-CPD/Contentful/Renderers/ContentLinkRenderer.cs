@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using Childrens_Social_Care_CPD.Contentful.Models;
+﻿using Childrens_Social_Care_CPD.Contentful.Models;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -70,8 +69,4 @@ internal class ContentLinkRenderer(IContentLinkContext contentLinkContext) : IRe
         return Render(item, null);
     }
 
-    // public IHtmlContent Render(ContentLink item, RendererOptions options = null)
-    // {
-    //     throw new NotImplementedException();
-    // }
 }
