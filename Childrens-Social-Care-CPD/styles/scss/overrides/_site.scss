@@ -659,3 +659,13 @@ a.section-nav-link {
 .app-section-beta-banner {
     background-color: #ebf2f6;
 }
+
+/*
+* Content Links
+*/
+.content-link-text {
+    position: absolute;
+    padding-top: 8px;
+    text-decoration: underline;
+    vertical-align: middle;
+}
