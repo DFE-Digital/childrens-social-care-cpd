@@ -10155,7 +10155,7 @@ a.dfe-header__link--service:focus {
 
 /* HOMEPAGE HERO BANNER ----------------------- */
 .app-section-beta {
-  padding: 40px 0 20px 0;
+  padding: 40px 0 35px 0;
 }
 
 .app-section-beta__blue {
@@ -10166,10 +10166,11 @@ a.dfe-header__link--service:focus {
   color: white;
 }
 
-h1.body-header-font {
-  margin-bottom: 0;
+@media (max-width: 63.99em) {
+  .body-header-font {
+    margin-bottom: 20px;
+  }
 }
-
 /* DFE HEADER - CODE FROM DFE DESIGN GUIDE AND WITH EDITS --------------------------------------------------------- */
 .govuk-header {
   background-color: #003a69;
@@ -10177,7 +10178,7 @@ h1.body-header-font {
 
 h1,
 .dfe-heading-xl, .govuk-heading-xl {
-  margin-bottom: 10px;
+  margin-bottom: 30px;
 }
 
 .govuk-header__container {
@@ -10318,11 +10319,11 @@ CONTENT TITLE BANNER
 }
 
 .app-section-content {
-  padding-bottom: 40px;
+  padding-bottom: 35px;
 }
 
 p#content-banner-subtitle.govuk-body-l {
-  margin-bottom: 0px;
+  margin-bottom: 20px;
 }
 
 /* Document list */
@@ -10988,12 +10989,12 @@ p#content-banner-subtitle.govuk-body-l {
 /*
 * Page Banner
 */
-h1#content-banner-title {
-  line-height: 1;
+.page-banner-with-breadcrumbs {
+  padding-top: 10px !important;
 }
 
-p#content-banner-subtitle {
-  line-height: 1;
+.page-banner-without-breadcrumbs {
+  padding-top: 40px !important;
 }
 
 /*
