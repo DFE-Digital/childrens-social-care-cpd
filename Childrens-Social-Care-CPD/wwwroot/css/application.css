@@ -10181,6 +10181,12 @@ h1,
   margin-bottom: 30px;
 }
 
+@media (max-width: 63.99em) {
+  h1,
+  .dfe-heading-xl, .govuk-heading-xl {
+    margin-bottom: 20px;
+  }
+}
 .govuk-header__container {
   position: relative;
   margin-bottom: -10px;
