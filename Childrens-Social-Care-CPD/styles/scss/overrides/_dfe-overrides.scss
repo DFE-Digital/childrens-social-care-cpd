@@ -911,6 +911,12 @@ content: "";
     margin-bottom: 30px;
 }
 
+@media (max-width: 32.375em) {
+    .beta-banner .govuk-tag {
+        margin-top: 5px;
+    }
+}
+
 /*
 * Page Banner
 */
