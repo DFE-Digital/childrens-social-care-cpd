@@ -10167,8 +10167,11 @@ a.dfe-header__link--service:focus {
 }
 
 @media (max-width: 63.99em) {
-  .body-header-font {
+  h1.body-header-font {
     margin-bottom: 20px;
+  }
+  p.body-header-font {
+    margin-bottom: 15px;
   }
 }
 /* DFE HEADER - CODE FROM DFE DESIGN GUIDE AND WITH EDITS --------------------------------------------------------- */
@@ -10332,6 +10335,11 @@ p#content-banner-subtitle.govuk-body-l {
   margin-bottom: 20px;
 }
 
+@media (max-width: 63.99em) {
+  p#content-banner-subtitle.govuk-body-l {
+    margin-bottom: 15px;
+  }
+}
 /* Document list */
 .dfeuk-document-list {
   padding: 0;
