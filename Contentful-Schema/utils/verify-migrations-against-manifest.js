@@ -7,7 +7,8 @@ const red = chalk.bold.red;
 
 try {
 
-    const file = await readFile(migrationsDir + 'manifest.txt', { encoding: 'utf8' });
+    let file = await readFile(migrationsDir + 'manifest.txt', { encoding: 'utf8' });
+    file = file.replaceAll("\r\n", "\n");
     const manifestFiles = file.split('\n').filter(x => x !== '');
 
     console.log(manifestFiles);
