@@ -20,7 +20,9 @@ public record ContextModel(
     bool FeedbackSubmitted = false,
     List<KeyValuePair<string, string>> BreadcrumbTrail = null,
     PublishDates PublishDates = null,
-    INavigationHelper NavigationHelper = null)
+    INavigationHelper NavigationHelper = null,
+    bool PageHasBanner = false
+)
 {
     public Stack<string> ContentStack { get; } = new Stack<string>();
 }

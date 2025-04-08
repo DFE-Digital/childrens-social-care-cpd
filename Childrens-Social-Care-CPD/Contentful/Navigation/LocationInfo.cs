@@ -7,5 +7,8 @@ public class LocationInfo
 {
     public string SectionName { get; set; }
     public int SectionNumber { get; set; }
+    public int PageNumber { get; set; }
     public int TotalSections { get; set; }
+    public bool IsFirstPageOfFirstSection {get; set; }
+    public bool IsLastSection {get; set; }
 }

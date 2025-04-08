@@ -122,7 +122,8 @@ public class ContentController(ICpdContentfulClient cpdClient) : Controller
                 FirstPublishedAt: content.Sys?.CreatedAt,
                 LastPublishedAt: content.Sys?.UpdatedAt
             ),
-            NavigationHelper: content.IsPathwaysPage ? new PathwaysNavigationHelper(content) : null);
+            NavigationHelper: content.IsPathwaysPage ? new PathwaysNavigationHelper(content) : null,
+            PageHasBanner: content.ShowContentHeader || content.Id == "home");
 
         ViewData["ContextModel"] = contextModel;
         ViewData["StateModel"] = new StateModel();

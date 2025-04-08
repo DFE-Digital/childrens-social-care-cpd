@@ -1,0 +1,62 @@
+name: Sitemap Generator Auto PR
+
+on:
+  schedule:
+    - cron: "00 00 * * 5"
+  workflow_dispatch:
+
+jobs:
+  generate-sitemap:
+    runs-on: ubuntu-latest
+    environment: prod
+
+    env:
+      DELIVERY_KEY: ${{ secrets.TF_VAR_CPD_DELIVERY_KEY }}
+      SPACE_ID: ${{ secrets.TF_VAR_CPD_SPACE_ID }}
+      CONTENTFUL_ENVIRONMENT: master
+      WEBSITE_ROOT: ${{ vars.CPD_WEBSITE_ROOT }}
+      SITEMAP_FILE_PATH: ${{ github.workspace }}/${{ vars.CPD_SITEMAP_FILE_PATH }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install npm packages used by util scripts
+        working-directory: ./Utilities
+        run: npm ci
+
+      - name: Generate sitemap
+        id: generate-sitemap
+        working-directory: ./Utilities
+        run: node generate-sitemap.js
+
+      - name: Test for local modifications
+        id: local-modifications
+        continue-on-error: true
+        run: if git status | grep -q "${{ vars.CPD_SITEMAP_FILE_PATH }}"; then exit 1; fi
+
+      - name: Set dynamic PR title with today's date
+        if: steps.local-modifications.outcome == 'failure'
+        run: echo "PR_TITLE=Sitemap change $(date '+%A %d-%m-%Y %H:%M:%S')" >> $GITHUB_ENV
+
+      - name: Create Pull Request
+        if: steps.local-modifications.outcome == 'failure'
+        uses: peter-evans/create-pull-request@v7
+        env:
+          BRANCH_NAME: create-pull-request/sitemap-${{ github.run_id }}
+          PR_TITLE: ${{ env.PR_TITLE }}
+        with:
+          token: ${{ secrets.PAT_TOKEN }}
+          commit-message: Sitemap latest updates
+          author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
+          signoff: false
+          branch: ${{ env.BRANCH_NAME }}
+          delete-branch: false
+          title: ${{ env.PR_TITLE }}
+          body: |
+            Please review the latest changes to the sitemap.
+          draft: false
+

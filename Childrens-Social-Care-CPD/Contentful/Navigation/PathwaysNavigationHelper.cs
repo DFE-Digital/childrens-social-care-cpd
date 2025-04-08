@@ -103,7 +103,7 @@ public class PathwaysNavigationHelper : INavigationHelper
                         {
                             SetTrainingPageNextNavigation(pageCounter, sectionCounter, page, section);
                             SetTrainingPagePreviousNavigation(pageCounter, sectionCounter, page, section);
-                            SetTrainingPageCurrentLocation(sectionCounter, page, section);
+                            SetTrainingPageCurrentLocation(sectionCounter, page, section, pageCounter);
                         }
 
                         pageCounter++;
@@ -203,14 +203,20 @@ public class PathwaysNavigationHelper : INavigationHelper
         }
     }
 
-    private void SetTrainingPageCurrentLocation(int currentSectionIdx, Content page, PathwaysModuleSection section)
-    {
+    private void SetTrainingPageCurrentLocation(int currentSectionIdx, Content page, PathwaysModuleSection section, int currentPageIdx)
+    {   
+        bool isFirstPageOfFirstSection = currentPageIdx == 0 && currentSectionIdx == 0;
+        bool isLastSection = currentSectionIdx + 1 == page.PathwaysModule.Sections.Count;
         this._currentLocation = new LocationInfo
         {
             SectionName = section.Name,
             SectionNumber = currentSectionIdx + 1,
-            TotalSections = page.PathwaysModule.Sections.Count
+            TotalSections = page.PathwaysModule.Sections.Count,
+            PageNumber = currentPageIdx + 1,
+            IsFirstPageOfFirstSection = isFirstPageOfFirstSection,
+            IsLastSection = isLastSection
         };
+
     }
 
     private string GetFirstSectionFirstPageId (Content page)
