@@ -27,6 +27,9 @@ public class Content : IContent
     public string ContentTitle { get; set; }
     public string ContentSubtitle { get; set; }
     public bool ShowContentHeader { get; set; }
+    public bool ShowPromoBanner {get; set; }
+    public string PromoBannerHeader {get; set; }
+    public string PromoBannerSubheading {get; set; }
     public string Category { get; set; }
     public ContentLink BackLink { get; set; }
     public List<IContent> Items { get; set; }

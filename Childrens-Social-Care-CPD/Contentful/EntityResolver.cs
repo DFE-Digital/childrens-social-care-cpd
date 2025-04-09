@@ -41,6 +41,7 @@ public class EntityResolver : IContentTypeResolver
             "pathwaysModule" => typeof(PathwaysModule),
             "pathwaysModuleSection" => typeof(PathwaysModuleSection),
             "pdfFileResource" => typeof(PdfFileResource),
+            "promoBanner" => typeof(PromoBanner),
             "quoteBox" => typeof(QuoteBox),
             "richTextBlock" => typeof(RichTextBlock),
             "roleList" => typeof(RoleList),
