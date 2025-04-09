@@ -22,7 +22,7 @@ public record ContextModel(
     PublishDates PublishDates = null,
     INavigationHelper NavigationHelper = null,
     bool PageHasBanner = false,
-    bool PageHasPromoBanner = false,
+    bool PageHasPromoBanner = false
 )
 {
     public Stack<string> ContentStack { get; } = new Stack<string>();
