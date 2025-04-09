@@ -34,8 +34,6 @@ public interface IApplicationConfiguration
     [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false, Obfuscate = false)]
     string ContentfulEnvironment { get; }
 
-    [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false)]
-
     [RequiredForEnvironment(ApplicationEnvironment.PreProduction, Hidden = false)]
     string ContentfulPreviewHost { get; }
 
