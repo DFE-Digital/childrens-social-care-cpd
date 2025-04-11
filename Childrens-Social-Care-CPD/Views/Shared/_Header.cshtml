@@ -57,10 +57,6 @@
                     RenderMenuItem("developmentProgrammes", "Development programmes", "development-programmes", category == "Development programmes");
                     RenderMenuItem("exploreRoles", "Explore roles", "explore-roles", category == "Explore roles");
 
-                    if (featuresConfig.IsEnabled(Features.ResourcesAndLearning))
-                    {
-                        RenderMenuItem("resources", "Resources and learning", "resources-learning", category == "Resources");
-                    }
                     if (featuresConfig.IsEnabled(Features.EmployerStandards))
                     {
                         RenderMenuItem("employerStandards", "Employer standards", "employer-standards", category == "Employer standards");
