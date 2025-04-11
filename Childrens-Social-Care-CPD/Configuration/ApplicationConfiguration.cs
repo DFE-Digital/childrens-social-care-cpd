@@ -12,7 +12,6 @@ public class ApplicationConfiguration(IConfiguration configuration) : IApplicati
     public string ClarityProjectId => configuration["CPD_CLARITY"];
     public string ContentfulDeliveryApiKey => configuration["CPD_DELIVERY_KEY"];
     public string ContentfulEnvironment => configuration["CPD_CONTENTFUL_ENVIRONMENT"];
-    public string ContentfulGraphqlConnectionString => $"https://graphql.contentful.com/content/v1/spaces/{ContentfulSpaceId}/environments/{ContentfulEnvironment}";
     public string ContentfulPreviewHost => "preview.contentful.com";
     public string ContentfulPreviewId => configuration["CPD_PREVIEW_KEY"];
     public bool ContentfulForcePreview => bool.TryParse(configuration["CPD_CONTENTFUL_FORCE_PREVIEW"], out var result) && result;
