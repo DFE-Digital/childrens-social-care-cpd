@@ -2,7 +2,6 @@
 
 public static class Features
 {
-    public const string ResourcesAndLearning = "resources-learning";
     public const string FeedbackControl = "feedback-control";
     public const string EmployerStandards = "employer-standards";
     public const string AgencyResources = "agency-resources";
