@@ -7,12 +7,12 @@
         
     ContextModel contextModel = (ContextModel)ViewBag.ContextModel;
 
-    <section id="promo-banner" class="app-section-content app-section-content--blue govuk-!-margin-bottom-8">
+    <section id="promo-banner" class="promo-banner govuk-!-margin-bottom-8">
         <div class="dfe-width-container">
             <div class="govuk-grid-row govuk-!-padding-bottom-0">
-                    <div class="@textCss">
-                    <h2 id="promo-banner-title" class="govuk-heading-l">@Model.PromoBannerHeader</h2>
-                    <p id="content-banner-subtitle" class="govuk-body-l">@Model.PromoBannerSubheading</p>
+                    <div class="">
+                    <h2 id="promo-banner-header" class="govuk-heading-l">@Model.PromoBannerHeader</h2>
+                    <p id="promo-banner-subheading" class="govuk-body-l">@Model.PromoBannerSubheading</p>
                     </div>
             </div>
         </div>
