@@ -674,13 +674,11 @@ a.section-nav-link {
 * Promo banner
 */
 .promo-banner {
-    background-color: #ebf2f6;
+    padding-top: 40px !important;
 }
-
-h2#promo-banner-header.govuk-heading-l {
+.promo-banner-header {
     margin-bottom: 10px;
 }
-
-p#promo-banner-subheading.govuk-body-l {
-    margin-bottom: 30px
+.promo-banner-subheading {
+    margin-bottom: 30px;
 }
