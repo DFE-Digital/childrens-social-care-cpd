@@ -21,8 +21,7 @@ public record ContextModel(
     List<KeyValuePair<string, string>> BreadcrumbTrail = null,
     PublishDates PublishDates = null,
     INavigationHelper NavigationHelper = null,
-    bool PageHasBanner = false,
-    bool PageHasPromoBanner = false
+    bool PageHasBanner = false
 )
 {
     public Stack<string> ContentStack { get; } = new Stack<string>();
