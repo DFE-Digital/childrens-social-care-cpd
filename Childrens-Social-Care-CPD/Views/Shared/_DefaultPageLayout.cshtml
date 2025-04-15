@@ -7,10 +7,6 @@
     @await RenderSectionAsync("PageBanner", required: false)
 }
 
-@section PromoBanner {
-    @await RenderSectionAsync("PromoBanner", required: false)
-}
-
 @section Scripts {
     @await RenderSectionAsync("Scripts", required: false)
 }
@@ -21,6 +17,7 @@
 
 
 @await RenderSectionAsync("Hero", required: false)
+@await RenderSectionAsync("PromoBanner", required: false)
 <div class="dfe-width-container">
     @RenderBody()
 </div>
