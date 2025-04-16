@@ -21,20 +21,6 @@ public class ApplicationConfigurationTests
     }
 
     [Test]
-    public void Returns_ContentfulGraphqlConnectionString_Value()
-    {
-        // arrange
-        _configuration["CPD_SPACE_ID"].Returns("foo");
-        _configuration["CPD_CONTENTFUL_ENVIRONMENT"].Returns("foo");
-
-        // act
-        var actual = _sut.ContentfulGraphqlConnectionString;
-
-        // assert
-        actual.Should().Be($"https://graphql.contentful.com/content/v1/spaces/foo/environments/foo");
-    }
-
-    [Test]
     public void Returns_ContentfulPreviewHost_Value()
     {
         // arrange
