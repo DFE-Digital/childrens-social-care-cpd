@@ -9,7 +9,6 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Microsoft.Extensions.Azure;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
