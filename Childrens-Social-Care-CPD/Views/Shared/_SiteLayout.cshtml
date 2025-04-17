@@ -34,6 +34,7 @@
     <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing govuk-!-padding-top-0" id="main-content" role="main">
         <partial name="_BetaBanner" />
         @await RenderSectionAsync("PageBanner", required: false)
+        @await RenderSectionAsync("PromoBanner", required: false)
         @RenderBody()
     </main>
 
