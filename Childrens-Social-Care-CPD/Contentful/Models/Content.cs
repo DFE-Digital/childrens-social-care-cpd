@@ -27,6 +27,9 @@ public class Content : IContent
     public string ContentTitle { get; set; }
     public string ContentSubtitle { get; set; }
     public bool ShowContentHeader { get; set; }
+    public string PromoBannerHeader {get; set; }
+    public string PromoBannerSubheading {get; set; }
+    public ColumnLayout PromoBannerColumnLayout {get; set; }
     public string Category { get; set; }
     public ContentLink BackLink { get; set; }
     public List<IContent> Items { get; set; }
@@ -53,6 +56,14 @@ public class Content : IContent
                 || PageType == Models.PageType.PathwaysOverviewPage
                 || PageType == Models.PageType.PathwaysTrainingContent
                 || PageType == Models.PageType.AllPathwaysOverviewPage;
+        }
+    }
+
+    public bool ShowPromoBanner
+    {
+        get
+        {
+            return !String.IsNullOrEmpty(PromoBannerHeader);
         }
     }
 }
