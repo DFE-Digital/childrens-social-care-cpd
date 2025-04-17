@@ -11867,9 +11867,14 @@ a.section-nav-link {
 */
 .content-link-text {
   position: absolute;
-  padding-top: 8px;
+  padding-top: 4px;
   text-decoration: underline;
   vertical-align: middle;
+}
+
+.content-link--with-icon {
+  font-size: 24px;
+  font-weight: 700;
 }
 
 /*!
