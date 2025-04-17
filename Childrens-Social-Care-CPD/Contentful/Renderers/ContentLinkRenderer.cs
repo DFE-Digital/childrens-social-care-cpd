@@ -37,6 +37,12 @@ internal class ContentLinkRenderer(IContentLinkContext contentLinkContext) : IRe
         string svg = "";
         string linkText = item.Name;
 
+        // Add different styling if link has an icon
+        if (!string.IsNullOrEmpty(item.Icon))
+        {
+            tagBuilder.AddCssClass("content-link--with-icon");
+        }
+
         switch (item.Icon) {
             case ContentLinkIcon.SignpostIcon:
                 svg = "<svg aria-label=\"signpost icon\" class=\"svg-inline--fa\" aria-hidden=\"true\" focusable=\"false\" data-prefix=\"fas\" data-icon=\"signpost\" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" style=\"margin-right:10px\" width=\"40\" height=\"40\" viewBox=\"0 0 40 40\" fill=\"none\" data-fa-i2svg=\"\"><path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M21.9938 1.99993C21.9938 0.895398 21.0984 0 19.9939 0C18.8893 0 17.9939 0.895399 17.9939 1.99993V3.99555H10.0023C8.89772 3.99555 8.00232 4.89094 8.00232 5.99547V13.9952C8.00232 15.0997 8.89772 15.9951 10.0023 15.9951H17.9939V17.9976L5.73313 17.9976C5.17879 17.9976 4.64931 18.2277 4.27107 18.633L0.53787 22.6328C-0.17929 23.4012 -0.17929 24.5936 0.53787 25.362L4.27107 29.3619C4.64931 29.7671 5.17879 29.9972 5.73313 29.9972L17.9939 29.9972V35.9996H12.0022C9.79312 35.9996 8.00232 37.7904 8.00232 39.9995H32.0015C32.0015 37.7904 30.2107 35.9996 28.0016 35.9996H21.9938V29.9972H29.9989C31.1035 29.9972 31.9989 29.1018 31.9989 27.9973V19.9976C31.9989 18.893 31.1035 17.9976 29.9989 17.9976H21.9938V15.9951H34.2681C34.8224 15.9951 35.3519 15.765 35.7301 15.3598L39.4633 11.3599C40.1805 10.5915 40.1805 9.39913 39.4633 8.63074L35.7301 4.63089C35.3519 4.22563 34.8224 3.99555 34.2681 3.99555H21.9938V1.99993ZM6.6022 21.9975L27.999 21.9975V25.9974L6.6022 25.9974L4.7356 23.9974L6.6022 21.9975ZM12.0022 7.9954V11.9953H33.399L35.2656 9.99533L33.399 7.9954H12.0022Z\" fill=\"#1D70B8\"></path></svg>";
