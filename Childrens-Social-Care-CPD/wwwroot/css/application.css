@@ -10155,7 +10155,7 @@ a.dfe-header__link--service:focus {
 
 /* HOMEPAGE HERO BANNER ----------------------- */
 .app-section-beta {
-  padding: 40px 0 20px 0;
+  padding: 40px 0 35px 0;
 }
 
 .app-section-beta__blue {
@@ -10166,10 +10166,14 @@ a.dfe-header__link--service:focus {
   color: white;
 }
 
-h1.body-header-font {
-  margin-bottom: 0;
+@media (max-width: 63.99em) {
+  h1.body-header-font {
+    margin-bottom: 20px;
+  }
+  p.body-header-font {
+    margin-bottom: 15px;
+  }
 }
-
 /* DFE HEADER - CODE FROM DFE DESIGN GUIDE AND WITH EDITS --------------------------------------------------------- */
 .govuk-header {
   background-color: #003a69;
@@ -10177,9 +10181,15 @@ h1.body-header-font {
 
 h1,
 .dfe-heading-xl, .govuk-heading-xl {
-  margin-bottom: 10px;
+  margin-bottom: 30px;
 }
 
+@media (max-width: 63.99em) {
+  h1,
+  .dfe-heading-xl, .govuk-heading-xl {
+    margin-bottom: 20px;
+  }
+}
 .govuk-header__container {
   position: relative;
   margin-bottom: -10px;
@@ -10318,13 +10328,18 @@ CONTENT TITLE BANNER
 }
 
 .app-section-content {
-  padding-bottom: 40px;
+  padding-bottom: 35px;
 }
 
 p#content-banner-subtitle.govuk-body-l {
-  margin-bottom: 0px;
+  margin-bottom: 20px;
 }
 
+@media (max-width: 63.99em) {
+  p#content-banner-subtitle.govuk-body-l {
+    margin-bottom: 15px;
+  }
+}
 /* Document list */
 .dfeuk-document-list {
   padding: 0;
@@ -10985,15 +11000,20 @@ p#content-banner-subtitle.govuk-body-l {
   margin-bottom: 30px;
 }
 
+@media (max-width: 32.375em) {
+  .beta-banner .govuk-tag {
+    margin-top: 5px;
+  }
+}
 /*
 * Page Banner
 */
-h1#content-banner-title {
-  line-height: 1;
+.page-banner-with-breadcrumbs {
+  padding-top: 10px !important;
 }
 
-p#content-banner-subtitle {
-  line-height: 1;
+.page-banner-without-breadcrumbs {
+  padding-top: 40px !important;
 }
 
 /*
@@ -11872,9 +11892,53 @@ a.section-nav-link {
   vertical-align: middle;
 }
 
+/*
+* Promo banner
+*/
+.promo-banner {
+  padding-top: 40px;
+  padding-bottom: 0px;
+}
+
+.promo-banner-header {
+  margin-bottom: 10px;
+}
+
+.promo-banner-subheading {
+  margin-bottom: 30px;
+}
+
+.promo-banner {
+  margin-top: -50px;
+}
+
+/*
+* Content link with icon
+*/
 .content-link--with-icon {
   font-size: 24px;
   font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  text-decoration: none;
+}
+
+.content-link--with-icon:focus-within,
+.content-link--with-icon:focus {
+  background-color: #fd0;
+  outline: none;
+}
+
+.content-link--with-icon svg {
+  flex-shrink: 0;
+}
+
+.content-link-text {
+  text-decoration: underline;
+  vertical-align: middle;
+  position: relative;
 }
 
 /*!

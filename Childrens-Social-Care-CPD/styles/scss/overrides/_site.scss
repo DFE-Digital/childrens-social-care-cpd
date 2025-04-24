@@ -670,7 +670,46 @@ a.section-nav-link {
     vertical-align: middle;
 }
 
+/*
+* Promo banner
+*/
+.promo-banner {
+    padding-top: 40px;
+    padding-bottom: 0px;
+}
+.promo-banner-header {
+    margin-bottom: 10px;
+}
+.promo-banner-subheading {
+    margin-bottom: 30px;
+}
+
+.promo-banner {
+    margin-top: -50px;
+}
+
+/*
+* Content link with icon
+*/
 .content-link--with-icon {
     font-size: 24px;
     font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    text-decoration: none;
+}
+.content-link--with-icon:focus-within,
+.content-link--with-icon:focus {
+    background-color: #fd0;
+    outline: none;
+}
+.content-link--with-icon svg {
+    flex-shrink: 0;
+}
+.content-link-text {
+    text-decoration: underline;
+    vertical-align: middle;
+    position: relative;
 }
