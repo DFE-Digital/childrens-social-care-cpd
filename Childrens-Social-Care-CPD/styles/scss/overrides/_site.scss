@@ -660,15 +660,15 @@ a.section-nav-link {
     background-color: #ebf2f6;
 }
 
-/*
-* Content Links
-*/
-.content-link-text {
-    position: absolute;
-    padding-top: 4px;
-    text-decoration: underline;
-    vertical-align: middle;
-}
+// /*
+// * Content Links
+// */
+// .content-link-text {
+//     position: absolute;
+
+//     text-decoration: underline;
+//     vertical-align: middle;
+// }
 
 /*
 * Promo banner
@@ -712,4 +712,8 @@ a.section-nav-link {
     text-decoration: underline;
     vertical-align: middle;
     position: relative;
+    padding-top: 4px;
+}
+.content-link-text:hover {
+    text-decoration-thickness: 3px;
 }

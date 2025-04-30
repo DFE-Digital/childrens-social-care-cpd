@@ -11883,16 +11883,6 @@ a.section-nav-link {
 }
 
 /*
-* Content Links
-*/
-.content-link-text {
-  position: absolute;
-  padding-top: 4px;
-  text-decoration: underline;
-  vertical-align: middle;
-}
-
-/*
 * Promo banner
 */
 .promo-banner {
@@ -11939,6 +11929,11 @@ a.section-nav-link {
   text-decoration: underline;
   vertical-align: middle;
   position: relative;
+  padding-top: 4px;
+}
+
+.content-link-text:hover {
+  text-decoration-thickness: 3px;
 }
 
 /*!
