@@ -708,33 +708,33 @@ a.section-nav-link {
 .content-link--with-icon svg {
     flex-shrink: 0;
 }
-
+.content-link--with-icon:visited svg path {
+    fill: #4c2c92
+}
 .content-link--with-icon:hover svg path {
-    fill: #4c2c92;
+    fill: #003078;
     text-decoration-thickness: 3px;
-
+}
+.content-link--with-icon:visited:hover svg path {
+    fill: #003078;
+    text-decoration-thickness: 3px;
 }
 .content-link--with-icon:focus-within svg path,
 .content-link--with-icon:focus path {
     fill: #000;
 }
-// .content-link--with-icon:visited svg path {
-//     fill: #4c2c92
-// }
+.content-link--with-icon:visited:focus-within svg path,
+.content-link--with-icon:visited:focus path {
+    fill: #000;
+}
+
+
 .content-link-text {
     text-decoration: underline;
     vertical-align: middle;
     position: relative;
     padding-top: 4px;
 }
-.content-link-text:hover {
+.content-link--with-icon:hover .content-link-text {
     text-decoration-thickness: 3px;
 }
-
-// .svg-inline--fa:focus-within path,
-// .svg-inline--fa:focus path {
-//     fill: #000;
-// }
-// .svg-inline--fa:hover path {
-//     fill: #4c2c92;
-// }
