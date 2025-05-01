@@ -11925,6 +11925,16 @@ a.section-nav-link {
   flex-shrink: 0;
 }
 
+.content-link--with-icon:hover svg path {
+  fill: #4c2c92;
+  text-decoration-thickness: 3px;
+}
+
+.content-link--with-icon:focus-within svg path,
+.content-link--with-icon:focus path {
+  fill: #000;
+}
+
 .content-link-text {
   text-decoration: underline;
   vertical-align: middle;
