@@ -674,18 +674,20 @@ a.section-nav-link {
 * Promo banner
 */
 .promo-banner {
-    padding-top: 40px;
-    padding-bottom: 0px;
+    padding-top: 30px;
+    margin-top: -50px;
 }
 .promo-banner-header {
-    margin-bottom: 10px;
+    margin-bottom: 24px;
 }
 .promo-banner-subheading {
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
-.promo-banner {
-    margin-top: -50px;
+@media (min-width: 40.0625em){
+    .promo-banner {
+        padding-left:20px;
+    }
 }
 
 /*
@@ -696,7 +698,6 @@ a.section-nav-link {
     font-weight: 700;
     display: flex;
     align-items: center;
-    gap: 10px;
     padding: 10px;
     text-decoration: none;
 }
