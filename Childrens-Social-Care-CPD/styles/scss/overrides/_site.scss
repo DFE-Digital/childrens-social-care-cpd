@@ -660,6 +660,16 @@ a.section-nav-link {
     background-color: #ebf2f6;
 }
 
+// /*
+// * Content Links
+// */
+// .content-link-text {
+//     position: absolute;
+
+//     text-decoration: underline;
+//     vertical-align: middle;
+// }
+
 /*
 * Promo banner
 */
@@ -685,7 +695,7 @@ a.section-nav-link {
 /*
 * Content link with icon
 */
-.content-link--with-icon, .content-link--in-promo-banner {
+.content-link--with-icon {
     font-size: 24px;
     font-weight: 700;
     display: flex;

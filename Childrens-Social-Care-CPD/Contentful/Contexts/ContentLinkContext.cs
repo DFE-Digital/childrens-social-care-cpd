@@ -10,11 +10,5 @@ namespace Childrens_Social_Care_CPD.Contentful.Contexts
             _httpContextAccessor = httpContextAccessor;
         }
         public string Path => _httpContextAccessor.HttpContext?.Request.Path;
-
-        public bool IsPromoBanner
-        {
-            get =>_httpContextAccessor.HttpContext.Items["IsPromoBanner"] as bool? ?? false;
-            set => _httpContextAccessor.HttpContext.Items["IsPromoBanner"] = value;
-        }
     }
 }

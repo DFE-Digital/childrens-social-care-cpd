@@ -7,7 +7,6 @@ namespace Childrens_Social_Care_CPD.Contentful.Renderers;
 interface IContentLinkContext
 {
     string Path { get; }
-    bool IsPromoBanner {get;}
 }
 
 internal class ContentLinkRenderer(IContentLinkContext contentLinkContext) : IRendererWithOptions<ContentLink>
@@ -32,12 +31,6 @@ internal class ContentLinkRenderer(IContentLinkContext contentLinkContext) : IRe
         }
 
         tagBuilder.Attributes.Add("data-track-label", contentLinkContext.Path);
-
-        if (contentLinkContext.IsPromoBanner)
-        {
-            tagBuilder.AddCssClass("content-link--in-promo-banner");
-        }
-
 
 
         //Define SVGs

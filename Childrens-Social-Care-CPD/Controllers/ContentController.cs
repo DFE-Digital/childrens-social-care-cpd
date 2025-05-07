@@ -7,9 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Childrens_Social_Care_CPD.Controllers;
 
-public class ContentController(ICpdContentfulClient cpdClient, IContentLinkContext contentLinkContext) : Controller
+public class ContentController(ICpdContentfulClient cpdClient) : Controller
 {
-    private readonly IContentLinkContext _contentLinkContext = contentLinkContext;
     private async Task<Content> FetchPageContentAsync(string contentId, CancellationToken cancellationToken)
     {
         var queryBuilder = QueryBuilder<Content>.New
@@ -100,10 +99,6 @@ public class ContentController(ICpdContentfulClient cpdClient, IContentLinkConte
         if (content == null)
         {
             return NotFound();
-        }
-        if (content.ShowPromoBanner)
-        {
-            _contentLinkContext.IsPromoBanner = true;
         }
 
         var pagesVisited = HttpContext.Session.Get<List<string>>("pagesVisited");
