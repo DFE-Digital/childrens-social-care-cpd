@@ -11889,7 +11889,6 @@ a.section-nav-link {
   padding-top: 30px;
   margin-top: -50px;
   padding-bottom: 0px;
-  padding-left: 15px;
 }
 
 .promo-banner-header {
@@ -11900,13 +11899,8 @@ a.section-nav-link {
   margin-bottom: 10px;
 }
 
-@media (min-width: 40.0625em) {
-  .promo-banner {
-    padding-left: 20px;
-  }
-}
 /*
-* Content link with icon
+* Promo banner content links
 */
 .promo-banner .govuk-link {
   font-size: 24px;
@@ -11967,6 +11961,15 @@ a.section-nav-link {
   text-decoration-thickness: 3px;
 }
 
+.promo-banner .promo-banner-links p {
+  margin-bottom: 0px;
+}
+
+@media (min-width: 769px) {
+  .promo-banner .columns-layout-col {
+    margin-bottom: 0px !important;
+  }
+}
 /*!
  * Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)

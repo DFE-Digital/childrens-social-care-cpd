@@ -7,15 +7,10 @@
     <section id="promo-banner" class="app-section-content app-section-content--blue govuk-!-margin-bottom-8 promo-banner">
         <div class="dfe-width-container">
             <div class="govuk-grid-row govuk-!-padding-bottom-0">
-                <div>
+                <div class="govuk-grid-column-full-from-desktop">
                     <h2 id="promo-banner-header" class="govuk-heading-l promo-banner-header">@Model.PromoBannerHeader</h2>
                     <p id="promo-banner-subheading" class="govuk-body-m promo-banner-subheading">
                         @Model.PromoBannerSubheading</p>
-                </div>
-                <p id="promo-banner-links" class="govuk-body-m promo-banner-links">
-                    @await Html.PartialAsync("_ColumnLayout", Model.PromoBannerColumnLayout)
-                </p>
-            </div>
-        </div>
-    </section>
+                    <div id="promo-banner-links" class="govuk-body-m promo-banner-links">
+                    @await Html.PartialAsync("_ColumnLayout", Model.PromoBannerColumnLayout)</div></div></div></div></section>
 }
