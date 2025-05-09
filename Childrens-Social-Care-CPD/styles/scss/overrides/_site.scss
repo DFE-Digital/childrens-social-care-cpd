@@ -660,16 +660,6 @@ a.section-nav-link {
     background-color: #ebf2f6;
 }
 
-// /*
-// * Content Links
-// */
-// .content-link-text {
-//     position: absolute;
-
-//     text-decoration: underline;
-//     vertical-align: middle;
-// }
-
 /*
 * Promo banner
 */
@@ -678,11 +668,29 @@ a.section-nav-link {
     margin-top: -50px;
     padding-bottom: 0px;
 }
+@media (max-width: 768px) { /*for mobile view*/
+    .promo-banner {
+        padding-bottom: 10px;
+    }
+}
 .promo-banner-header {
     margin-bottom: 24px;
 }
+@media (max-width: 768px) { /*for mobile view*/
+    .promo-banner .promo-banner-header {
+        margin-bottom: 16px;
+    }
+}
 .promo-banner-subheading {
     margin-bottom: 10px;
+}
+.promo-banner .columns-layout-col {
+    margin-bottom: 0px !important;
+}
+@media (max-width: 768px) { /*for mobile view*/
+    .promo-banner .promo-banner-subheading {
+        margin-bottom: 15px;
+    }
 }
 
 /*
@@ -724,46 +732,22 @@ a.section-nav-link {
 .promo-banner .govuk-link:visited:focus path {
     fill: #000;
 }
-
 .promo-banner .govuk-link .content-link-text {
     text-decoration: underline;
     vertical-align: middle;
     position: relative;
     padding-top: 4px;
 }
-
 .promo-banner .govuk-link:hover {
     text-decoration-thickness: 3px;
 }
-
 .promo-banner .govuk-link:visited:hover {
     text-decoration-thickness: 3px;
 }
-
 .promo-banner .promo-banner-links {
     margin-bottom: 0px;
 }
-
-    .promo-banner .columns-layout-col {
-        margin-bottom: 0px !important;
-    }
-
-@media (max-width: 768px) {
-    .promo-banner {
-        padding-bottom: 10px;
-    }
-}
-@media (max-width: 768px) {
-    .promo-banner .promo-banner-header {
-        margin-bottom: 16px;
-    }
-}
-@media (max-width: 768px) {
-    .promo-banner .promo-banner-subheading {
-        margin-bottom: 15px;
-    }
-}
-@media (max-width: 768px) {
+@media (max-width: 768px) { /*for mobile view*/
     .promo-banner .govuk-link {
         font-size: 20px;
         line-height: 27px;
