@@ -740,12 +740,33 @@ a.section-nav-link {
     text-decoration-thickness: 3px;
 }
 
-.promo-banner .promo-banner-links p {
+.promo-banner .promo-banner-links {
     margin-bottom: 0px;
 }
 
-@media (min-width: 769px) {
     .promo-banner .columns-layout-col {
         margin-bottom: 0px !important;
     }
+
+@media (max-width: 768px) {
+    .promo-banner {
+        padding-bottom: 10px;
+    }
 }
+@media (max-width: 768px) {
+    .promo-banner .promo-banner-header {
+        margin-bottom: 16px;
+    }
+}
+@media (max-width: 768px) {
+    .promo-banner .promo-banner-subheading {
+        margin-bottom: 15px;
+    }
+}
+@media (max-width: 768px) {
+    .promo-banner .govuk-link {
+        font-size: 20px;
+        line-height: 27px;
+    }
+}
+
