@@ -666,13 +666,13 @@ a.section-nav-link {
 .promo-banner {
     padding-top: 30px;
     margin-top: -50px;
-    padding-bottom: 0px;
+    padding-bottom: 10px;
 }
-@media (max-width: 768px) { /*for mobile view*/
-    .promo-banner {
-        padding-bottom: 10px;
-    }
-}
+// @media (max-width: 768px) { /*for mobile view*/
+//     .promo-banner {
+//         padding-bottom: 10px;
+//     }
+// }
 .promo-banner-header {
     margin-bottom: 24px;
 }
@@ -682,7 +682,7 @@ a.section-nav-link {
     }
 }
 .promo-banner-subheading {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 .promo-banner .columns-layout-col {
     margin-bottom: 0px !important;
