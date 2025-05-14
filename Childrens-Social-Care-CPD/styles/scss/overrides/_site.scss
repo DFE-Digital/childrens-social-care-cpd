@@ -661,55 +661,96 @@ a.section-nav-link {
 }
 
 /*
-* Content Links
-*/
-.content-link-text {
-    position: absolute;
-    padding-top: 4px;
-    text-decoration: underline;
-    vertical-align: middle;
-}
-
-/*
 * Promo banner
 */
 .promo-banner {
-    padding-top: 40px;
+    padding-top: 30px;
+    margin-top: -50px;
     padding-bottom: 0px;
 }
+@media (max-width: 768px) { /*for mobile view*/
+    .promo-banner {
+        padding-bottom: 10px;
+    }
+}
 .promo-banner-header {
-    margin-bottom: 10px;
+    margin-bottom: 24px;
+}
+@media (max-width: 768px) { /*for mobile view*/
+    .promo-banner .promo-banner-header {
+        margin-bottom: 16px;
+    }
 }
 .promo-banner-subheading {
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
-
-.promo-banner {
-    margin-top: -50px;
+.promo-banner .columns-layout-col {
+    margin-bottom: 0px !important;
+}
+@media (max-width: 768px) { /*for mobile view*/
+    .promo-banner .promo-banner-subheading {
+        margin-bottom: 15px;
+    }
 }
 
 /*
-* Content link with icon
+* Promo banner content links
 */
-.content-link--with-icon {
+.promo-banner .govuk-link {
     font-size: 24px;
     font-weight: 700;
     display: flex;
     align-items: center;
-    gap: 10px;
     padding: 10px;
-    text-decoration: none;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
 }
-.content-link--with-icon:focus-within,
-.content-link--with-icon:focus {
+.promo-banner .govuk-link:focus-within,
+.promo-banner .govuk-link:focus {
     background-color: #fd0;
     outline: none;
 }
-.content-link--with-icon svg {
+.promo-banner .govuk-link svg {
     flex-shrink: 0;
 }
-.content-link-text {
+.promo-banner .govuk-link:visited svg path {
+    fill: #4c2c92
+}
+.promo-banner .govuk-link:hover svg path {
+    fill: #003078;
+    text-decoration-thickness: 3px;
+}
+.promo-banner .govuk-link:visited:hover svg path {
+    fill: #003078;
+    text-decoration-thickness: 3px;
+}
+.promo-banner .govuk-link:focus-within svg path,
+.promo-banner .govuk-link:focus path {
+    fill: #000;
+}
+.promo-banner .govuk-link:visited:focus-within svg path,
+.promo-banner .govuk-link:visited:focus path {
+    fill: #000;
+}
+.promo-banner .govuk-link .content-link-text {
     text-decoration: underline;
     vertical-align: middle;
     position: relative;
+    padding-top: 4px;
 }
+.promo-banner .govuk-link:hover {
+    text-decoration-thickness: 3px;
+}
+.promo-banner .govuk-link:visited:hover {
+    text-decoration-thickness: 3px;
+}
+.promo-banner .promo-banner-links {
+    margin-bottom: 0px;
+}
+@media (max-width: 768px) { /*for mobile view*/
+    .promo-banner .govuk-link {
+        font-size: 20px;
+        line-height: 27px;
+    }
+}
+
