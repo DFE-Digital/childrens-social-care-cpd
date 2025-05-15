@@ -1,7 +1,4 @@
-using System.Reflection.Metadata.Ecma335;
-using Azure;
 using Childrens_Social_Care_CPD.Contentful.Models;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Childrens_Social_Care_CPD.Contentful.Navigation;
 

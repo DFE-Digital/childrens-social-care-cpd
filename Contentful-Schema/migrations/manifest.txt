@@ -20,3 +20,5 @@
 0020-add-new-display-text-to-pathways-module-section.cjs
 0021-update-pathways-module-section-name-field-help-text.cjs
 0022-add-icon-field-to-content-link-component.cjs
+0023-create-workload-page-category.cjs
+0024-add-promo-banner-fields-to-content-component.cjs

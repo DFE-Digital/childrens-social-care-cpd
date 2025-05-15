@@ -11883,15 +11883,109 @@ a.section-nav-link {
 }
 
 /*
-* Content Links
+* Promo banner
 */
-.content-link-text {
-  position: absolute;
-  padding-top: 8px;
-  text-decoration: underline;
-  vertical-align: middle;
+.promo-banner {
+  padding-top: 30px;
+  margin-top: -50px;
+  padding-bottom: 20px;
 }
 
+.promo-banner-header {
+  margin-bottom: 24px;
+}
+
+@media (max-width: 768px) { /*for mobile view*/
+  .promo-banner .promo-banner-header {
+    margin-bottom: 16px;
+  }
+}
+.promo-banner-subheading {
+  margin-bottom: 20px;
+}
+
+.promo-banner .columns-layout-col {
+  margin-bottom: 0px !important;
+}
+
+@media (max-width: 768px) { /*for mobile view*/
+  .promo-banner .promo-banner-subheading {
+    margin-bottom: 15px;
+  }
+}
+/*
+* Promo banner content links
+*/
+.promo-banner .govuk-link {
+  font-size: 24px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+}
+
+.promo-banner .govuk-link:focus-within,
+.promo-banner .govuk-link:focus {
+  background-color: #fd0;
+  outline: none;
+  text-decoration: none;
+  box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;
+}
+
+.promo-banner .govuk-link svg {
+  flex-shrink: 0;
+}
+
+.promo-banner .govuk-link:visited svg path {
+  fill: #4c2c92;
+}
+
+.promo-banner .govuk-link:hover svg path {
+  fill: #003078;
+  text-decoration-thickness: 3px;
+}
+
+.promo-banner .govuk-link:visited:hover svg path {
+  fill: #003078;
+  text-decoration-thickness: 3px;
+}
+
+.promo-banner .govuk-link:focus-within svg path,
+.promo-banner .govuk-link:focus path {
+  fill: #000;
+}
+
+.promo-banner .govuk-link:visited:focus-within svg path,
+.promo-banner .govuk-link:visited:focus path {
+  fill: #000;
+}
+
+.promo-banner .govuk-link .content-link-text {
+  text-decoration: underline;
+  vertical-align: middle;
+  position: relative;
+  padding-top: 4px;
+}
+
+.promo-banner .govuk-link:hover {
+  text-decoration-thickness: 3px;
+}
+
+.promo-banner .govuk-link:visited:hover {
+  text-decoration-thickness: 3px;
+}
+
+.promo-banner .promo-banner-links {
+  margin-bottom: 0px;
+}
+
+@media (max-width: 768px) { /*for mobile view*/
+  .promo-banner .govuk-link {
+    font-size: 20px;
+    line-height: 27px;
+  }
+}
 /*!
  * Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
