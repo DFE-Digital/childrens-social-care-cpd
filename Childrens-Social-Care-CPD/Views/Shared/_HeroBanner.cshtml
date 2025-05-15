@@ -2,12 +2,12 @@
 
 @model HeroBanner
 
-<section class="app-section-beta app-section-beta__blue govuk-!-margin-bottom-8">
+<section class="app-section-beta app-section-beta__blue govuk-!-margin-bottom-8" data-testid="hero-banner-container">
     <div class="dfe-width-container">
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-three-quarters-from-desktop">
-                <h1 class="body-header-font" data-testid="homepage-header">@Model.Title</h1>
-                <p class="govuk-body govuk-!-font-size-24 body-header-font">@Model.Text</p>
+                <h1 class="body-header-font" data-testid="hero-banner-title">@Model.Title</h1>
+                <p class="govuk-body govuk-!-font-size-24 body-header-font" data-testid="hero-banner-text">@Model.Text</p>
             </div>
         </div>
     </div>
