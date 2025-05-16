@@ -4,7 +4,7 @@ test.describe('Page banner', () => {
     
     test.describe('When enabled', () => {
         test.beforeEach(async ({ page }) => {
-            await page.goto('content-with-page-banner')
+            await page.goto('dev-integration')
         })
     
         test('Title is visible', async ({ page }) => {
