@@ -7,13 +7,123 @@
   </url>
   <url>
     <loc>https://www.support-for-social-workers.education.gov.uk/home</loc>
-    <lastmod>2024-10-30T14:20:54.333Z</lastmod>
+    <lastmod>2025-03-27T14:28:12.721Z</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://www.support-for-social-workers.education.gov.uk/career-stages/practitioner</loc>
     <lastmod>2024-08-07T15:12:13.485Z</lastmod>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/career-stages/experienced-practitioner</loc>
+    <lastmod>2024-12-11T10:36:25.366Z</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/explore-roles/senior-practitioner</loc>
+    <lastmod>2023-12-13T10:39:13.504Z</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/explore-areas-of-practice</loc>
+    <lastmod>2024-03-20T10:09:55.917Z</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/explore-areas-of-practice/assessment-intake</loc>
+    <lastmod>2023-12-13T10:39:12.324Z</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/explore-areas-of-practice/child-protection-safeguarding</loc>
+    <lastmod>2023-12-13T10:39:13.196Z</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/explore-areas-of-practice/courts</loc>
+    <lastmod>2023-12-13T10:39:13.086Z</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/explore-areas-of-practice/youth-justice</loc>
+    <lastmod>2023-12-13T10:39:12.192Z</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/explore-roles/team-manager</loc>
+    <lastmod>2023-12-13T10:39:12.821Z</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/explore-roles/service-manager</loc>
+    <lastmod>2023-12-13T10:39:13.354Z</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/aspirant-directors-programme</loc>
+    <lastmod>2024-12-18T07:54:31.051Z</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/explore-roles/practice-supervisor</loc>
+    <lastmod>2023-12-13T10:39:13.007Z</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/career-stages/manager</loc>
+    <lastmod>2024-11-21T08:00:23.872Z</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/explore-roles/practice-development-manager</loc>
+    <lastmod>2023-12-13T10:39:12.272Z</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/explore-roles/quality-improvement-manager</loc>
+    <lastmod>2023-12-13T10:39:13.225Z</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/explore-roles/independent-reviewing-officer</loc>
+    <lastmod>2023-12-13T10:39:12.959Z</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/career-stages/senior-manager</loc>
+    <lastmod>2024-12-11T10:36:25.311Z</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/explore-roles/principal-social-worker</loc>
+    <lastmod>2023-12-13T10:39:12.868Z</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/explore-roles/head-of-service</loc>
+    <lastmod>2023-12-13T10:39:13.119Z</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/explore-roles/assistant-director</loc>
+    <lastmod>2023-12-13T10:39:13.274Z</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/explore-roles/director-children-services</loc>
+    <lastmod>2023-12-13T10:39:13.555Z</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/new-directors-programme</loc>
+    <lastmod>2024-10-16T10:39:20.573Z</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/career-stages/senior-leader</loc>
+    <lastmod>2024-03-05T08:43:47.763Z</lastmod>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.support-for-social-workers.education.gov.uk/asye</loc>
@@ -36,83 +146,18 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/explore-roles/senior-practitioner</loc>
-    <lastmod>2023-12-13T10:39:13.504Z</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/explore-roles/team-manager</loc>
-    <lastmod>2023-12-13T10:39:12.821Z</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/explore-roles/service-manager</loc>
-    <lastmod>2023-12-13T10:39:13.354Z</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/aspirant-directors-programme</loc>
-    <lastmod>2024-12-18T07:54:31.051Z</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.support-for-social-workers.education.gov.uk/development-programmes</loc>
-    <lastmod>2025-02-03T15:59:07.377Z</lastmod>
+    <lastmod>2025-04-15T12:30:23.525Z</lastmod>
     <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/new-directors-programme</loc>
-    <lastmod>2024-10-16T10:39:20.573Z</lastmod>
-    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.support-for-social-workers.education.gov.uk/explore-roles</loc>
-    <lastmod>2023-12-13T10:39:12.359Z</lastmod>
+    <lastmod>2025-04-15T12:30:23.577Z</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/explore-roles/practice-supervisor</loc>
-    <lastmod>2023-12-13T10:39:13.007Z</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/explore-roles/practice-development-manager</loc>
-    <lastmod>2023-12-13T10:39:12.272Z</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/explore-roles/quality-improvement-manager</loc>
-    <lastmod>2023-12-13T10:39:13.225Z</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/explore-roles/independent-reviewing-officer</loc>
-    <lastmod>2023-12-13T10:39:12.959Z</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/explore-roles/principal-social-worker</loc>
-    <lastmod>2023-12-13T10:39:12.868Z</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/explore-roles/head-of-service</loc>
-    <lastmod>2023-12-13T10:39:13.119Z</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/explore-roles/assistant-director</loc>
-    <lastmod>2023-12-13T10:39:13.274Z</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/explore-roles/director-children-services</loc>
-    <lastmod>2023-12-13T10:39:13.555Z</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards</loc>
-    <lastmod>2024-12-18T07:54:30.917Z</lastmod>
+    <lastmod>2025-04-15T12:30:23.461Z</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
@@ -157,8 +202,128 @@
   </url>
   <url>
     <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards/standard-1/critical-incident-analysis</loc>
-    <lastmod>2025-02-27T11:16:28.436Z</lastmod>
+    <lastmod>2025-04-16T09:43:54.168Z</lastmod>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards/standard-5/promoting-psychological-safety</loc>
+    <lastmod>2025-02-27T11:16:27.412Z</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards/standard-5/expectations-of-leaders</loc>
+    <lastmod>2024-10-30T14:17:15.184Z</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards/standard-5/benefits-of-achieving-supervision-standard</loc>
+    <lastmod>2024-12-18T07:54:31.277Z</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards/standard-5/action-planning-to-achieve-standard</loc>
+    <lastmod>2024-10-30T14:17:16.942Z</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards/standard-5/improve-how-you-meet-standard</loc>
+    <lastmod>2024-10-30T14:17:17.066Z</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards/standard-5/manage-challenges</loc>
+    <lastmod>2024-10-30T14:17:17.523Z</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards/standard-5/developing-leadership</loc>
+    <lastmod>2025-02-27T11:50:20.432Z</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards/standard-4/expectations-of-leaders</loc>
+    <lastmod>2024-10-30T14:15:37.806Z</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards/standard-4/benefits-of-achieving-standard</loc>
+    <lastmod>2024-11-04T13:24:43.023Z</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards/standard-4/action-planning-to-achieve-standard</loc>
+    <lastmod>2024-10-30T14:15:37.694Z</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards/standard-4/improve-how-you-meet-standard</loc>
+    <lastmod>2024-12-18T07:54:31.193Z</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards/standard-4/manage-challenges</loc>
+    <lastmod>2025-02-27T11:34:45.749Z</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/agency-resources/how-to-use-the-tools-and-resources</loc>
+    <lastmod>2024-11-04T13:22:17.697Z</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/agency-resources/overview</loc>
+    <lastmod>2024-10-30T14:09:57.773Z</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/agency-resources/statutory-guidance-components</loc>
+    <lastmod>2024-10-30T14:09:59.798Z</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/agency-resources/implementing-the-agency-rules</loc>
+    <lastmod>2024-11-04T13:22:41.534Z</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/agency-resources/governance</loc>
+    <lastmod>2024-10-30T14:10:01.373Z</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/agency-resources/agency-worker-recruitment</loc>
+    <lastmod>2024-10-30T14:09:59.621Z</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/agency-resources/retention-overview</loc>
+    <lastmod>2024-10-30T14:10:01.284Z</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards/standard-4/increase-wellbeing-with-initiatives</loc>
+    <lastmod>2025-02-27T11:16:29.590Z</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards/standard-4/improve-support-access</loc>
+    <lastmod>2025-02-27T11:16:29.638Z</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards/standard-5/understanding-your-leadership-approach</loc>
+    <lastmod>2025-02-27T11:16:26.628Z</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards/standard-5/practising-emotion-regulation</loc>
+    <lastmod>2025-02-27T11:52:01.520Z</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards/standard-5/supporting-neurodivergent-social-workers</loc>
+    <lastmod>2025-02-27T11:16:29.378Z</lastmod>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards/standard-1/developing-strategies</loc>
@@ -204,41 +369,6 @@
     <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards/standard-2/meeting-community-needs</loc>
     <lastmod>2025-02-27T13:06:44.749Z</lastmod>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/agency-resources/how-to-use-the-tools-and-resources</loc>
-    <lastmod>2024-11-04T13:22:17.697Z</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/agency-resources/overview</loc>
-    <lastmod>2024-10-30T14:09:57.773Z</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/agency-resources/statutory-guidance-components</loc>
-    <lastmod>2024-10-30T14:09:59.798Z</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/agency-resources/implementing-the-agency-rules</loc>
-    <lastmod>2024-11-04T13:22:41.534Z</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/agency-resources/governance</loc>
-    <lastmod>2024-10-30T14:10:01.373Z</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/agency-resources/agency-worker-recruitment</loc>
-    <lastmod>2024-10-30T14:09:59.621Z</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/agency-resources/retention-overview</loc>
-    <lastmod>2024-10-30T14:10:01.284Z</lastmod>
-    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards/standard-2/roadmap</loc>
@@ -306,93 +436,8 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards/standard-4/expectations-of-leaders</loc>
-    <lastmod>2024-10-30T14:15:37.806Z</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards/standard-4/benefits-of-achieving-standard</loc>
-    <lastmod>2024-11-04T13:24:43.023Z</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards/standard-4/action-planning-to-achieve-standard</loc>
-    <lastmod>2024-10-30T14:15:37.694Z</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards/standard-4/improve-how-you-meet-standard</loc>
-    <lastmod>2024-12-18T07:54:31.193Z</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards/standard-4/manage-challenges</loc>
-    <lastmod>2025-02-27T11:34:45.749Z</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards/standard-4/increase-wellbeing-with-initiatives</loc>
-    <lastmod>2025-02-27T11:16:29.590Z</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards/standard-4/improve-support-access</loc>
-    <lastmod>2025-02-27T11:16:29.638Z</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards/standard-5/overview</loc>
     <lastmod>2024-10-30T14:17:15.326Z</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards/standard-5/expectations-of-leaders</loc>
-    <lastmod>2024-10-30T14:17:15.184Z</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards/standard-5/benefits-of-achieving-supervision-standard</loc>
-    <lastmod>2024-12-18T07:54:31.277Z</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards/standard-5/action-planning-to-achieve-standard</loc>
-    <lastmod>2024-10-30T14:17:16.942Z</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards/standard-5/improve-how-you-meet-standard</loc>
-    <lastmod>2024-10-30T14:17:17.066Z</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards/standard-5/manage-challenges</loc>
-    <lastmod>2024-10-30T14:17:17.523Z</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards/standard-5/promoting-psychological-safety</loc>
-    <lastmod>2025-02-27T11:16:27.412Z</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards/standard-5/developing-leadership</loc>
-    <lastmod>2025-02-27T11:50:20.432Z</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards/standard-5/understanding-your-leadership-approach</loc>
-    <lastmod>2025-02-27T11:16:26.628Z</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards/standard-5/practising-emotion-regulation</loc>
-    <lastmod>2025-02-27T11:52:01.520Z</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/employer-standards/standard-5/supporting-neurodivergent-social-workers</loc>
-    <lastmod>2025-02-27T11:16:29.378Z</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
@@ -512,12 +557,12 @@
   </url>
   <url>
     <loc>https://www.support-for-social-workers.education.gov.uk/agency-resources</loc>
-    <lastmod>2024-10-30T14:09:58.116Z</lastmod>
+    <lastmod>2025-04-15T12:30:23.670Z</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://www.support-for-social-workers.education.gov.uk/pathways-social-work-leadership-modules/about-pathways</loc>
-    <lastmod>2025-01-30T10:45:04.366Z</lastmod>
+    <lastmod>2025-04-15T12:30:23.626Z</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
@@ -879,51 +924,6 @@
     <loc>https://www.support-for-social-workers.education.gov.uk/pathways-social-work-leadership-modules/pathway-4/end-of-pathway-6-1</loc>
     <lastmod>2025-01-30T10:12:41.522Z</lastmod>
     <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/career-stages/experienced-practitioner</loc>
-    <lastmod>2024-12-11T10:36:25.366Z</lastmod>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/career-stages/manager</loc>
-    <lastmod>2024-11-21T08:00:23.872Z</lastmod>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/career-stages/senior-manager</loc>
-    <lastmod>2024-12-11T10:36:25.311Z</lastmod>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/career-stages/senior-leader</loc>
-    <lastmod>2024-03-05T08:43:47.763Z</lastmod>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/explore-areas-of-practice</loc>
-    <lastmod>2024-03-20T10:09:55.917Z</lastmod>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/explore-areas-of-practice/assessment-intake</loc>
-    <lastmod>2023-12-13T10:39:12.324Z</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/explore-areas-of-practice/child-protection-safeguarding</loc>
-    <lastmod>2023-12-13T10:39:13.196Z</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/explore-areas-of-practice/courts</loc>
-    <lastmod>2023-12-13T10:39:13.086Z</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.support-for-social-workers.education.gov.uk/explore-areas-of-practice/youth-justice</loc>
-    <lastmod>2023-12-13T10:39:12.192Z</lastmod>
-    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.support-for-social-workers.education.gov.uk/accessibility</loc>

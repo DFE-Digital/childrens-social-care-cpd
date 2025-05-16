@@ -1,27 +1,15 @@
-﻿using Azure.Search.Documents;
-using Azure;
-using Childrens_Social_Care_CPD.Configuration;
+﻿using Childrens_Social_Care_CPD.Configuration;
+using Childrens_Social_Care_CPD.Configuration.Features;
 using Childrens_Social_Care_CPD.Contentful;
 using Childrens_Social_Care_CPD.Contentful.Contexts;
 using Childrens_Social_Care_CPD.Contentful.Renderers;
-using Childrens_Social_Care_CPD.DataAccess;
-using Childrens_Social_Care_CPD.Search;
-using Childrens_Social_Care_CPD.Services;
 using Contentful.AspNetCore;
 using Contentful.Core.Configuration;
-using GraphQL.Client.Abstractions.Websocket;
-using GraphQL.Client.Http;
-using GraphQL.Client.Serializer.SystemTextJson;
 using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 using Microsoft.Extensions.Logging.ApplicationInsights;
 using Microsoft.Extensions.Logging.AzureAppServices;
-using System.Diagnostics.CodeAnalysis;
-using System.Net.Http.Headers;
-using Microsoft.AspNetCore.DataProtection;
-using Azure.Storage.Blobs;
-using Azure.Identity;
-using Childrens_Social_Care_CPD.Configuration.Features;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Childrens_Social_Care_CPD;
 
@@ -38,22 +26,9 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddSingleton<ICookieHelper, CookieHelper>();
         builder.Services.AddTransient<IFeaturesConfig, FeaturesConfig>();
         builder.Services.AddTransient<IFeaturesConfigUpdater, FeaturesConfigUpdater>();
-        builder.Services.AddTransient<IResourcesRepository, ResourcesRepository>();
-
-        builder.Services.AddScoped<IGraphQLWebSocketClient>(services =>
-        {
-            var config = services.GetRequiredService<IApplicationConfiguration>();
-            var client = new GraphQLHttpClient(config.ContentfulGraphqlConnectionString, new SystemTextJsonSerializer());
-            var key = ContentfulConfiguration.IsPreviewEnabled(config) ? config.ContentfulPreviewId : config.ContentfulDeliveryApiKey;
-
-            client.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", key);
-            return client;
-        });
-
         builder.Services.AddScoped<IContentLinkContext, ContentLinkContext>();
 
         AddContentRenderers(builder.Services);
-        AddSearch(builder.Services);
     }
 
     private static void AddContentRenderers(IServiceCollection services)
@@ -78,23 +53,6 @@ public static class WebApplicationBuilderExtensions
                 var serviceType = assignedTypes.GetInterfaces().First(i => i.GetGenericTypeDefinition() == typeof(IRendererWithOptions<>));
                 services.AddScoped(serviceType, assignedTypes);
             });
-    }
-
-    private static void AddSearch(IServiceCollection services)
-    {
-        services.AddScoped<ISearchResultsVMFactory, SearchResultsVMFactory>();
-
-        services.AddScoped(services =>
-        {
-            var config = services.GetRequiredService<IApplicationConfiguration>();
-
-            var searchEndpointUri = new Uri(config.SearchEndpoint);
-            return new SearchClient(searchEndpointUri,
-                config.SearchIndexName,
-                new AzureKeyCredential(config.SearchApiKey));
-        });
-
-        services.AddScoped<ISearchService, SearchService>();
     }
 
     public static void AddFeatures(this WebApplicationBuilder builder, Stopwatch sw)
@@ -124,9 +82,6 @@ public static class WebApplicationBuilderExtensions
 
         AddHealthChecks(builder.Services);
         Console.WriteLine($"After AddHealthChecks: {sw.ElapsedMilliseconds}ms");
-
-        AddDataProtection(builder.Services, applicationConfiguration, sw);
-        Console.WriteLine($"After AddDataProtection: {sw.ElapsedMilliseconds}ms");
     }
 
     private static void AddLogging(WebApplicationBuilder builder, ApplicationConfiguration applicationConfiguration)
@@ -176,24 +131,5 @@ public static class WebApplicationBuilderExtensions
 #pragma warning disable CA1861 // Avoid constant arrays as arguments
         services.AddHealthChecks().AddCheck<ConfigurationHealthCheck>("Configuration Health Check", tags: new[] { "configuration" });
 #pragma warning restore CA1861 // Avoid constant arrays as arguments
-    }
-
-    private static void AddDataProtection(IServiceCollection services, ApplicationConfiguration applicationConfiguration, Stopwatch sw)
-    {
-        if (!string.IsNullOrEmpty(applicationConfiguration.AzureDataProtectionContainerName))
-        {
-            var url = string.Format(applicationConfiguration.AzureStorageAccountUriFormatString,
-                applicationConfiguration.AzureStorageAccount,
-                applicationConfiguration.AzureDataProtectionContainerName);
-
-            var managedIdentityCredential = new ManagedIdentityCredential(clientId: applicationConfiguration.AzureManagedIdentityId);
-            Console.WriteLine($"After AddDataProtection:new ManagedIdentityCredential: {sw.ElapsedMilliseconds}ms");
-
-            var blobUri = new Uri($"{url}/data-protection");
-            services
-                .AddDataProtection()
-                .SetApplicationName($"Childrens-Social-Care-CPD-{applicationConfiguration.AzureEnvironment}")
-                .PersistKeysToAzureBlobStorage(blobUri, managedIdentityCredential);
-        }
     }
 }

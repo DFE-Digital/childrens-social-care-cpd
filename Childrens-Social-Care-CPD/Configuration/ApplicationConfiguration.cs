@@ -4,15 +4,10 @@ public class ApplicationConfiguration(IConfiguration configuration) : IApplicati
 {
     public string AppInsightsConnectionString => configuration["CPD_INSTRUMENTATION_CONNECTIONSTRING"];
     public string AppVersion => configuration["VCS-TAG"];
-    public string AzureDataProtectionContainerName => configuration["CPD_AZURE_DATA_PROTECTION_CONTAINER_NAME"];
     public string AzureEnvironment => configuration["CPD_AZURE_ENVIRONMENT"];
-    public string AzureManagedIdentityId => configuration["CPD_AZURE_MANAGED_IDENTITY_ID"];
-    public string AzureStorageAccount => configuration["CPD_AZURE_STORAGE_ACCOUNT"];
-    public string AzureStorageAccountUriFormatString => configuration["CPD_AZURE_STORAGE_ACCOUNT_URI_FORMAT_STRING"];
     public string ClarityProjectId => configuration["CPD_CLARITY"];
     public string ContentfulDeliveryApiKey => configuration["CPD_DELIVERY_KEY"];
     public string ContentfulEnvironment => configuration["CPD_CONTENTFUL_ENVIRONMENT"];
-    public string ContentfulGraphqlConnectionString => $"https://graphql.contentful.com/content/v1/spaces/{ContentfulSpaceId}/environments/{ContentfulEnvironment}";
     public string ContentfulPreviewHost => "preview.contentful.com";
     public string ContentfulPreviewId => configuration["CPD_PREVIEW_KEY"];
     public bool ContentfulForcePreview => bool.TryParse(configuration["CPD_CONTENTFUL_FORCE_PREVIEW"], out var result) && result;
