@@ -21,20 +21,6 @@ public class ApplicationConfigurationTests
     }
 
     [Test]
-    public void Returns_ContentfulGraphqlConnectionString_Value()
-    {
-        // arrange
-        _configuration["CPD_SPACE_ID"].Returns("foo");
-        _configuration["CPD_CONTENTFUL_ENVIRONMENT"].Returns("foo");
-
-        // act
-        var actual = _sut.ContentfulGraphqlConnectionString;
-
-        // assert
-        actual.Should().Be($"https://graphql.contentful.com/content/v1/spaces/foo/environments/foo");
-    }
-
-    [Test]
     public void Returns_ContentfulPreviewHost_Value()
     {
         // arrange
@@ -52,11 +38,7 @@ public class ApplicationConfigurationTests
         get
         {
             // Set values
-            yield return ("CPD_AZURE_DATA_PROTECTION_CONTAINER_NAME", (ApplicationConfiguration sut) => sut.AzureDataProtectionContainerName, "foo", "foo");
             yield return ("CPD_AZURE_ENVIRONMENT", (ApplicationConfiguration sut) => sut.AzureEnvironment, "foo", "foo");
-            yield return ("CPD_AZURE_MANAGED_IDENTITY_ID", (ApplicationConfiguration sut) => sut.AzureManagedIdentityId, "foo", "foo");
-            yield return ("CPD_AZURE_STORAGE_ACCOUNT", (ApplicationConfiguration sut) => sut.AzureStorageAccount, "foo", "foo");
-            yield return ("CPD_AZURE_STORAGE_ACCOUNT_URI_FORMAT_STRING", (ApplicationConfiguration sut) => sut.AzureStorageAccountUriFormatString, "foo", "foo");
             yield return ("CPD_CLARITY", (ApplicationConfiguration sut) => sut.ClarityProjectId, "foo", "foo");
             yield return ("CPD_DELIVERY_KEY", (ApplicationConfiguration sut) => sut.ContentfulDeliveryApiKey, "foo", "foo");
             yield return ("CPD_CONTENTFUL_ENVIRONMENT", (ApplicationConfiguration sut) => sut.ContentfulEnvironment, "foo", "foo");
@@ -73,11 +55,7 @@ public class ApplicationConfigurationTests
             yield return ("CPD_SEARCH_INDEX_NAME", (ApplicationConfiguration sut) => sut.SearchIndexName, "foo", "foo");
 
             // Default values
-            yield return ("CPD_AZURE_DATA_PROTECTION_CONTAINER_NAME", (ApplicationConfiguration sut) => sut.AzureDataProtectionContainerName, null, null);
             yield return ("CPD_AZURE_ENVIRONMENT", (ApplicationConfiguration sut) => sut.AzureEnvironment, null, null);
-            yield return ("CPD_AZURE_MANAGED_IDENTITY_ID", (ApplicationConfiguration sut) => sut.AzureManagedIdentityId, null, null);
-            yield return ("CPD_AZURE_STORAGE_ACCOUNT", (ApplicationConfiguration sut) => sut.AzureStorageAccount, null, null);
-            yield return ("CPD_AZURE_STORAGE_ACCOUNT_URI_FORMAT_STRING", (ApplicationConfiguration sut) => sut.AzureStorageAccountUriFormatString, null, null);
             yield return ("CPD_CLARITY", (ApplicationConfiguration sut) => sut.ClarityProjectId, null, null);
             yield return ("CPD_DELIVERY_KEY", (ApplicationConfiguration sut) => sut.ContentfulDeliveryApiKey, null, null);
             yield return ("CPD_CONTENTFUL_ENVIRONMENT", (ApplicationConfiguration sut) => sut.ContentfulEnvironment, null, null);

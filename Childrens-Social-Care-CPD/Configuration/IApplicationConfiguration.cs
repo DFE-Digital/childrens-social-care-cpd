@@ -10,20 +10,8 @@ public interface IApplicationConfiguration
     [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false, Obfuscate = false)]
     string AppVersion { get; }
 
-    [RequiredForEnvironment(ApplicationEnvironment.Production, Hidden = false, Obfuscate = false)]
-    string AzureDataProtectionContainerName { get; }
-
     [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false, Obfuscate = false)]
     string AzureEnvironment { get; }
-
-    [RequiredForEnvironment(ApplicationEnvironment.Production, Hidden = false)]
-    string AzureManagedIdentityId { get; }
-
-    [RequiredForEnvironment(ApplicationEnvironment.Production, Hidden = false)]
-    string AzureStorageAccount { get; }
-
-    [RequiredForEnvironment(ApplicationEnvironment.Production, Hidden = false, Obfuscate = false)]
-    string AzureStorageAccountUriFormatString { get; }
 
     [RequiredForEnvironment(ApplicationEnvironment.Production, Hidden = false)]
     string ClarityProjectId { get; }
@@ -33,9 +21,6 @@ public interface IApplicationConfiguration
 
     [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false, Obfuscate = false)]
     string ContentfulEnvironment { get; }
-
-    [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false)]
-    string ContentfulGraphqlConnectionString { get; }
 
     [RequiredForEnvironment(ApplicationEnvironment.PreProduction, Hidden = false)]
     string ContentfulPreviewHost { get; }
@@ -62,13 +47,4 @@ public interface IApplicationConfiguration
 
     [RequiredForEnvironment(ApplicationEnvironment.All, Hidden = false)]
     string GoogleTagManagerKey { get; }
-
-    [RequiredForEnvironment(ApplicationEnvironment.None, Hidden = false)]
-    string SearchApiKey { get; }
-
-    [RequiredForEnvironment(ApplicationEnvironment.None, Hidden = false)]
-    string SearchEndpoint { get; }
-
-    [RequiredForEnvironment(ApplicationEnvironment.None, Hidden = false, Obfuscate = false)]
-    string SearchIndexName { get; }
 }

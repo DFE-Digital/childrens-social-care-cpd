@@ -30,6 +30,13 @@
     }
 }
 
+@section PromoBanner {
+    @if (Model.ShowPromoBanner)
+    {
+        <partial name="_PromoBanner" model="Model" />
+    }
+}
+
 @section SideMenu {
     @if (Model.Navigation != null)
     {
