@@ -2,6 +2,8 @@
 name: Run regression tests
 on:
   workflow_dispatch:
+  push: 
+    branches: SFSW-3090-playwright-tests-for-hero-banner
 
 jobs:
   build-test-scan:
