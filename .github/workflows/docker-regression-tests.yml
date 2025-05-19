@@ -25,7 +25,7 @@ jobs:
         run: cd Childrens-Social-Care-CPD; docker build . --file Dockerfile --tag childrens-social-care-cpd:ContainerizeRegressionTests
         
       - name: Install Docker Compose
-        uses: ndeloof/install-compose-action@4a33bc3 # using specific commit reference rather than v0.0.1, per CodeQL code smell alert
+        uses: ndeloof/install-compose-action@4a33bc31f327b8231c4f343f6fba704fedc0fa23 # using specific commit reference rather than v0.0.1, per CodeQL code smell alert
         with:
           version: latest
           legacy: true  # install in PATH as `docker-compose`
