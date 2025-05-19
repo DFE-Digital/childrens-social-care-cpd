@@ -16,7 +16,7 @@ services:
       - CPD_DISABLE_SECURE_COOKIES=true
       - CPD_FEATURE_POLLING_INTERVAL=0
       - CPD_CONTENTFUL_FORCE_PREVIEW=true
-  content-regression-tests:
+  regression-tests:
     build:
       context: ./
     environment:
