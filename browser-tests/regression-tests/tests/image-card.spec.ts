@@ -28,7 +28,7 @@ test.describe('Image Card', () => {
 
         const imageElement = page.locator('img:right-of(:text("left-positioned"))');
         await expect(imageElement).toBeVisible();
-        await expect(imageElement).toHaveAttribute('src', '//images.ctfassets.net/ltt4ovp0xx0f/76OfDltxPI65epOQjChzWM/a44b1a1c559de7679a43a49916d21d6b/A_framework_for_embedding_successful_digital_practice.png')
+        await expect(imageElement).toHaveAttribute('src', '//images.ctfassets.net/ltt4ovp0xx0f/76OfDltxPI65epOQjChzWM/a44b1a1c559de7679a43a49916d21d6b/A_framework_for_embedding_successful_digital_practice.png');
     });
 
     test('Image Card with right-positioned text', async ({ page }) => {
@@ -44,7 +44,7 @@ test.describe('Image Card', () => {
 
         const imageElement = page.locator('img:left-of(:text("right-positioned"))').first();
         await expect(imageElement).toBeVisible();
-        await expect(imageElement).toHaveAttribute('src', '//images.ctfassets.net/ltt4ovp0xx0f/6YnUgWjoR4oelhwhegcAsP/e4d717f00f45f59bb15bb23c17dcedd7/Employer-Standards_Fishbone-diagram.png')
+        await expect(imageElement).toHaveAttribute('src', '//images.ctfassets.net/ltt4ovp0xx0f/6YnUgWjoR4oelhwhegcAsP/e4d717f00f45f59bb15bb23c17dcedd7/Employer-Standards_Fishbone-diagram.png');
     });
 });
 
