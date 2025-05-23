@@ -4,9 +4,9 @@ services:
   children-social-care-cpd:
     image: childrens-social-care-cpd:ContainerizeRegressionTests
     environment:
-      - CPD_AZURE_ENVIRONMENT=${CPD_AZURE_ENVIRONMENT}
+      - CPD_AZURE_ENVIRONMENT=dev
       - CPD_CLARITY=${CPD_CLARITY}
-      - CPD_CONTENTFUL_ENVIRONMENT=${CPD_CONTENTFUL_ENVIRONMENT}
+      - CPD_CONTENTFUL_ENVIRONMENT=dev
       - CPD_DELIVERY_KEY=${CPD_DELIVERY_KEY}
       - CPD_GOOGLEANALYTICSTAG=${CPD_GOOGLEANALYTICSTAG}
       - CPD_PREVIEW_KEY=${CPD_PREVIEW_KEY}
@@ -15,7 +15,8 @@ services:
       - ASPNETCORE_ENVIRONMENT=
       - CPD_DISABLE_SECURE_COOKIES=true
       - CPD_FEATURE_POLLING_INTERVAL=0
-  content-regression-tests:
+      - CPD_CONTENTFUL_FORCE_PREVIEW=true
+  regression-tests:
     build:
       context: ./
     environment:
