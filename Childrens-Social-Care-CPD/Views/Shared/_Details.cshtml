@@ -4,13 +4,13 @@
 
 @model Details
 
-<details class="govuk-details">
-    <summary class="govuk-details__summary">
+<details class="govuk-details" data-testid="details-container">
+    <summary class="govuk-details__summary" data-testid="details-summary">
         <span class="govuk-details__summary-text">
             @Model.SummaryText
         </span>
     </summary>
-    <div class="govuk-details__text">
+    <div class="govuk-details__text" data-testid="details-text">
         <partial name="_RichText" model="Model.DetailsText" />
     </div>
 </details>
