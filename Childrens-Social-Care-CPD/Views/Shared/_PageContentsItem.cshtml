@@ -5,7 +5,7 @@
 @model PageContentsItem
 
 <li>
-    <a href="#swcd-contents-anchor-@Model.AnchorLink" class="govuk-link">
+    <a href="#swcd-contents-anchor-@Model.AnchorLink.Trim()" class="govuk-link">
         @Model.ItemText
     </a>
 </li>
