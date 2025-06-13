@@ -10314,6 +10314,9 @@ DFE banner
   .dfe-o-banner .dfe-a-image img {
     position: relative;
   }
+  .dfe-header__navigation-item.dfe-header__navigation-item--current a {
+    color: #0b0c0c;
+  }
 }
 .dfe-o-banner__inner-content-container {
   width: 80%;
