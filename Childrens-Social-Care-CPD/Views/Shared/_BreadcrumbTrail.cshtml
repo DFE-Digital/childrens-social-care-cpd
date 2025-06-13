@@ -49,11 +49,13 @@
             default:
                 @foreach(KeyValuePair<string, string> trailItem in breadcrumbs)
                 {
-                    <li class="govuk-breadcrumbs__list-item">
-                        <a class="govuk-breadcrumbs__link" href="/@trailItem.Value">
-                            @trailItem.Key
-                        </a>
-                    </li>
+                    if (@trailItem.Value != @Model.Id) {
+                        <li class="govuk-breadcrumbs__list-item">
+                            <a class="govuk-breadcrumbs__link" href="/@trailItem.Value">
+                                @trailItem.Key
+                            </a>
+                        </li>
+                    }
                 }
             break;
         }
