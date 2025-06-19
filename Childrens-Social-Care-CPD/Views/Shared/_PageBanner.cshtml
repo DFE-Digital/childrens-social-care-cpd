@@ -4,7 +4,8 @@
 
 @if (Model != null && Model.ShowContentHeader)
 {
-    var useBreadcrumbs = ((ContextModel)ViewData["ContextModel"]).BreadcrumbTrail.Count() > 0;
+    var useBreadcrumbs = ((ContextModel)ViewData["ContextModel"]).BreadcrumbTrail.Count() > 0 
+        || Model.PageType == PageType.PathwaysTrainingContent;
     var textCss = "govuk-grid-column-three-quarters-from-desktop govuk-!-padding-top-4";
     textCss += useBreadcrumbs
         ? " page-banner-with-breadcrumbs"
