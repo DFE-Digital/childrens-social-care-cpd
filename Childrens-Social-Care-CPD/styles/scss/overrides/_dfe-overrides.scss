@@ -219,6 +219,12 @@ DFE banner
     }
 }
 
+@media (max-width: 61.874em) {
+    .dfe-header__navigation-item.dfe-header__navigation-item--current a {
+        color: #0b0c0c;
+    }
+}
+
 .dfe-o-banner__inner-content-container {
     width: 80%;
     padding: 3rem;

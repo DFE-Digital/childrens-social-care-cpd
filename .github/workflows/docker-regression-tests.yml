@@ -2,29 +2,20 @@
 name: Run regression tests
 on:
   workflow_dispatch:
-    inputs:
-      workspace:
-        description: 'Environment to run'
-        required: true
-        default: 'Dev'
-        type: choice
-        options:
-          - dev
-          - test
-          - Pre-Prod
+  pull_request:
+    branches: [ "main", "next" ]
+
 jobs:
   build-test-scan:
     name: Build image and regression test
     runs-on: ubuntu-latest
-    environment: ${{inputs.workspace}}
+    environment: dev
     env:
       CPD_GOOGLEANALYTICSTAG: ${{secrets.TF_VAR_CPD_GOOGLEANALYTICSTAG}}
       CPD_SPACE_ID: ${{secrets.TF_VAR_CPD_SPACE_ID}}
       CPD_PREVIEW_KEY: ${{secrets.TF_VAR_CPD_PREVIEW_KEY}}
       CPD_DELIVERY_KEY: ${{secrets.TF_VAR_CPD_DELIVERY_KEY}}
       CPD_CLARITY: ${{secrets.TF_VAR_CPD_CLARITY}}
-      CPD_AZURE_ENVIRONMENT: ${{inputs.workspace}}
-      CPD_CONTENTFUL_ENVIRONMENT: ${{ inputs.workspace == 'Pre-Prod' && 'master' || inputs.workspace }}
       CPD_FEATURE_POLLING_INTERVAL: 0 
       CPD_INSTRUMENTATION_CONNECTIONSTRING: ""
     steps:
@@ -33,8 +24,17 @@ jobs:
       - name: Build the Docker App Image
         run: cd Childrens-Social-Care-CPD; docker build . --file Dockerfile --tag childrens-social-care-cpd:ContainerizeRegressionTests
         
-      - name: Run the content regression tests
-        run: cd browser-tests/content-regression-tests; docker-compose up --exit-code-from content-regression-tests
+      - name: Install Docker Compose
+        uses: ndeloof/install-compose-action@4a33bc31f327b8231c4f343f6fba704fedc0fa23 # using specific commit reference rather than v0.0.1, per CodeQL code smell alert
+        with:
+          version: latest
+          legacy: true  # install in PATH as `docker-compose`
+
+      - name: Verify Docker Compose installation
+        run: docker-compose --version
+
+      - name: Run the regression tests
+        run: cd browser-tests/regression-tests; docker-compose up --exit-code-from regression-tests
 
       - uses: actions/upload-artifact@v4
         name: Playwright report
@@ -43,8 +43,8 @@ jobs:
           name: playwright-report
           retention-days: 7
           path: |
-            ${{ github.workspace }}/browser-tests/content-regression-tests/playwright-report
+            ${{ github.workspace }}/browser-tests/regression-tests/playwright-report
       
       - name: Run Tidy up
         if: always()
-        run: cd browser-tests/content-regression-tests; docker-compose down --volumes      
+        run: cd browser-tests/regression-tests; docker-compose down --volumes      
