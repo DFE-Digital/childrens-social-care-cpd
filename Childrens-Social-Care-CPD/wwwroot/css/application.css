@@ -10314,6 +10314,8 @@ DFE banner
   .dfe-o-banner .dfe-a-image img {
     position: relative;
   }
+}
+@media (max-width: 61.874em) {
   .dfe-header__navigation-item.dfe-header__navigation-item--current a {
     color: #0b0c0c;
   }
