@@ -36,7 +36,7 @@ jobs:
       - name: Run the regression tests
         run: cd browser-tests/regression-tests; docker-compose up --exit-code-from regression-tests
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         name: Playwright report
         if: always()
         with:
